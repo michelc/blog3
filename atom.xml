@@ -2,21 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
-    <link href="https://blog3.pagesd.info/" rel="alternate" hreflang="fr-FR" />
+    <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
     <updated>2021-12-08T17:47:27.000Z</updated>
-    <id>https://blog3.pagesd.info/atom.xml</id>
-    <link href="https://blog3.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
+    <id>https://blog.pagesd.info/atom.xml</id>
+    <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
     <entry>
         <title type="html">Migration sous Eleventy</title>
-        <link href="https://blog3.pagesd.info/2021/12/08/migration-sous-eleventy/" rel="alternate" hreflang="fr-FR" />
+        <link href="https://blog.pagesd.info/2021/12/08/migration-sous-eleventy/" rel="alternate" hreflang="fr-FR" />
         <updated>2021-12-08T17:47:27.000Z</updated>
         <published>2021-12-08T17:47:27.000Z</published>
-        <id>https://blog3.pagesd.info/2021/12/08/migration-sous-eleventy/</id>
+        <id>https://blog.pagesd.info/2021/12/08/migration-sous-eleventy/</id>
         <summary>Après presque 4 ans avec Jekyll, je passe sous Eleventy ce qui me permet de publier un nouveau billet pour dire que je change d&#39;outil de blogue...</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
 &lt;p&gt;Après presque 4 ans sous &lt;a href=&quot;/2017/01/04/migration-sous-jekyll/&quot;&gt;Jekyll&lt;/a&gt; (merci &lt;a href=&quot;https://twitter.com/jekyllrb&quot;&gt;@jekyllrb&lt;/a&gt; et merci &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;), j&#39;ai décidé de migrer mon blogue sous &lt;a href=&quot;https://11ty.dev&quot;&gt;Eleventy&lt;/a&gt;. C&#39;est un de ces trucs intéressants à faire quand on a un blogue : même si on n&#39;a rien à raconter, on peut toujours écrire un billet à chaque fois qu&#39;on change d&#39;outil pour le mettre à jour ou bien quand on renouvelle la charte graphique de son site. Dans le genre marronnier, on trouve aussi le billet pour s&#39;excuser d&#39;avoir délaissé son blog depuis un petit moment :)&lt;/p&gt;
 &lt;p&gt;C&#39;est pour ça que je me contente de migrer le &amp;quot;moteur&amp;quot; mais que je ne touche surtout pas à la &lt;a href=&quot;/2019/12/16/nouvelle-css-quelques-trucs/&quot;&gt;charte graphique&lt;/a&gt;. En un, elle a à peine 2 ans ! En deux, je n&#39;en suis toujours pas lassé. En trois, ça me fera du grain à moudre en cas de besoin.&lt;/p&gt;
 &lt;p&gt;Ces derniers temps, j&#39;ai traficoté les markdowns de Jekyll, adaptouillé les templates Liquid en Nunjucks, révisé les frontmatters et les excerpts, réajusté les illustrations, testé et débugué à n&#39;en plus pouvoir, mais ça y est, j&#39;ai une nouvelle fois un blogue tout neuf, toujours aussi statique et miracle de la technologie, encore hébergé sur GitHub Pages.&lt;/p&gt;
@@ -26,17 +26,17 @@
         </content>
         <category term="11ty" />
         <category term="jekyll" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2021/virginia-opossums.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2021/virginia-opossums.jpg" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/virginia-opossums.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/virginia-opossums.jpg" />
     </entry>
     <entry>
         <title type="html">Display a friendly name with Enum.ToString()</title>
-        <link href="https://blog3.pagesd.info/2021/11/26/display-friendly-name-with-enum-tostring/" rel="alternate" hreflang="en-US" />
+        <link href="https://blog.pagesd.info/2021/11/26/display-friendly-name-with-enum-tostring/" rel="alternate" hreflang="en-US" />
         <updated>2021-11-26T11:12:40.000Z</updated>
         <published>2021-11-26T11:12:40.000Z</published>
-        <id>https://blog3.pagesd.info/2021/11/26/display-friendly-name-with-enum-tostring/</id>
+        <id>https://blog.pagesd.info/2021/11/26/display-friendly-name-with-enum-tostring/</id>
         <summary>One day I needed to display a label based on the value of one Enum. So I did like every time and I used the Description attribute to define some nice labels.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog3.pagesd.info">
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
 &lt;p&gt;One day I needed to display a label based on the value of one &lt;code&gt;Enum&lt;/code&gt;. So I did like every time and I used the &lt;code&gt;Description&lt;/code&gt; attribute to define some nice labels.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.ComponentModel;
 
@@ -110,17 +110,17 @@ public enum NatureType
         </content>
         <category term="csharp" />
         <category term="enum" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
     </entry>
     <entry>
         <title type="html">Afficher un joli libellé avec Enum.ToString()</title>
-        <link href="https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/" rel="alternate" hreflang="fr-FR" />
+        <link href="https://blog.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/" rel="alternate" hreflang="fr-FR" />
         <updated>2021-11-25T12:41:28.000Z</updated>
         <published>2021-11-25T12:41:28.000Z</published>
-        <id>https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/</id>
+        <id>https://blog.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/</id>
         <summary>Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un Enum. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut Description pour définir de jolis libellés.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
 &lt;p&gt;Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un &lt;code&gt;Enum&lt;/code&gt;. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut &lt;code&gt;Description&lt;/code&gt; pour définir de jolis libellés.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.ComponentModel;
 
@@ -194,17 +194,17 @@ public enum NatureType
         </content>
         <category term="csharp" />
         <category term="enum" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
     </entry>
     <entry>
         <title type="html">Sidebar animation with CSS</title>
-        <link href="https://blog3.pagesd.info/2020/06/02/sidebar-css-animation/" rel="alternate" hreflang="en-US" />
+        <link href="https://blog.pagesd.info/2020/06/02/sidebar-css-animation/" rel="alternate" hreflang="en-US" />
         <updated>2020-06-02T11:28:16.000Z</updated>
         <published>2020-06-02T11:28:16.000Z</published>
-        <id>https://blog3.pagesd.info/2020/06/02/sidebar-css-animation/</id>
+        <id>https://blog.pagesd.info/2020/06/02/sidebar-css-animation/</id>
         <summary>How to show or hide the sidebar with a small CSS animation, an icon and a jsfiddle to test it.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog3.pagesd.info">
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
 &lt;p&gt;I&#39;ve already made a &lt;a href=&quot;/2020/05/20/create-template-sidebar-content/&quot;&gt;template with content + sidebar&lt;/a&gt;, then to &lt;a href=&quot;/2020/05/28/hide-show-sidebar/&quot;&gt;hide or show the sidebar&lt;/a&gt; quite simply. I will now try to improve these basic attemps with some CSS animations and a few icons.&lt;/p&gt;
 &lt;h2&gt;Animate the change of state&lt;/h2&gt;
 &lt;p&gt;It&#39;s very simple: I just complete the &amp;quot;sidebar&amp;quot; and &amp;quot;content&amp;quot; styles with:&lt;/p&gt;
@@ -303,17 +303,17 @@ public enum NatureType
 
         </content>
         <category term="css" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2020/swing.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2020/swing.jpg" />
     </entry>
     <entry>
         <title type="html">Animer une sidebar avec CSS</title>
-        <link href="https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/" rel="alternate" hreflang="fr-FR" />
+        <link href="https://blog.pagesd.info/2020/06/01/animation-css-sidebar/" rel="alternate" hreflang="fr-FR" />
         <updated>2020-06-01T15:35:16.000Z</updated>
         <published>2020-06-01T15:35:16.000Z</published>
-        <id>https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/</id>
+        <id>https://blog.pagesd.info/2020/06/01/animation-css-sidebar/</id>
         <summary>Comment faire apparaitre ou disparaitre la &quot;sidebar&quot; grâce à une animation CSS toute simple, une icone et un jsfiddle pour tester tout ça.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
 &lt;p&gt;J&#39;ai déjà réussi à faire un &lt;a href=&quot;/2020/05/19/creer-template-sidebar-contenu/&quot;&gt;template avec contenu + sidebar&lt;/a&gt;, puis à &lt;a href=&quot;/2020/05/27/masquer-afficher-menu-lateral/&quot;&gt;masquer la sidebar&lt;/a&gt; assez simplement. Je vais maintenant voir comment améliorer le côté très basique de mes premiers essais grâce à quelques animations CSS et autres icônes.&lt;/p&gt;
 &lt;h2&gt;Animer le changement d&#39;état&lt;/h2&gt;
 &lt;p&gt;C&#39;est tout simple, il suffit de compléter les styles de &amp;quot;sidebar&amp;quot; et &amp;quot;content&amp;quot; avec :&lt;/p&gt;
@@ -412,17 +412,17 @@ public enum NatureType
 
         </content>
         <category term="css" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2020/swing.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2020/swing.jpg" />
     </entry>
     <entry>
         <title type="html">Hide or show sidebar</title>
-        <link href="https://blog3.pagesd.info/2020/05/28/hide-show-sidebar/" rel="alternate" hreflang="en-US" />
+        <link href="https://blog.pagesd.info/2020/05/28/hide-show-sidebar/" rel="alternate" hreflang="en-US" />
         <updated>2020-05-28T11:20:08.000Z</updated>
         <published>2020-05-28T11:20:08.000Z</published>
-        <id>https://blog3.pagesd.info/2020/05/28/hide-show-sidebar/</id>
+        <id>https://blog.pagesd.info/2020/05/28/hide-show-sidebar/</id>
         <summary>Today goal: hide or show the vertical menu used for navigation.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog3.pagesd.info">
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
 &lt;p&gt;I&#39;m still working on a &lt;a href=&quot;/2020/05/20/create-template-sidebar-content/&quot;&gt;simple 2-column template&lt;/a&gt;. Today my goal is to hide the &amp;quot;sidebar&amp;quot; used for navigation.&lt;/p&gt;
 &lt;p&gt;An easy solution would be to add a &amp;quot;d-none&amp;quot; class to the &amp;quot;sidebar&amp;quot; (since I use Bootstrap), but that won&#39;t be enough because the &amp;quot;content&amp;quot; doesn&#39;t automatically take all the width.&lt;/p&gt;
 &lt;p&gt;Let&#39;s go step by step and see what we need to do:&lt;/p&gt;
@@ -554,7 +554,7 @@ public enum NatureType
 
         </content>
         <category term="css" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2020/switches.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2020/switches.jpg" />
     </entry>
 </feed>

@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://blog3.pagesd.info/sitemap.xml
+Sitemap: https://blog.pagesd.info/sitemap.xml
