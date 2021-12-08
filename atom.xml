@@ -3,12 +3,32 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog3.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2021-11-26T11:12:40.000Z</updated>
+    <updated>2021-12-08T17:47:27.000Z</updated>
     <id>https://blog3.pagesd.info/atom.xml</id>
     <link href="https://blog3.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Migration sous Eleventy</title>
+        <link href="https://blog3.pagesd.info/2021/12/08/migration-sous-eleventy/" rel="alternate" hreflang="fr-FR" />
+        <updated>2021-12-08T17:47:27.000Z</updated>
+        <published>2021-12-08T17:47:27.000Z</published>
+        <id>https://blog3.pagesd.info/2021/12/08/migration-sous-eleventy/</id>
+        <summary>Après presque 4 ans avec Jekyll, je passe sous Eleventy ce qui me permet de publier un nouveau billet pour dire que je change d&#39;outil de blogue...</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
+&lt;p&gt;Après presque 4 ans sous &lt;a href=&quot;/2017/01/04/migration-sous-jekyll/&quot;&gt;Jekyll&lt;/a&gt; (merci &lt;a href=&quot;https://twitter.com/jekyllrb&quot;&gt;@jekyllrb&lt;/a&gt; et merci &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;), j&#39;ai décidé de migrer mon blogue sous &lt;a href=&quot;https://11ty.dev&quot;&gt;Eleventy&lt;/a&gt;. C&#39;est un de ces trucs intéressants à faire quand on a un blogue : même si on n&#39;a rien à raconter, on peut toujours écrire un billet à chaque fois qu&#39;on change d&#39;outil pour le mettre à jour ou bien quand on renouvelle la charte graphique de son site. Dans le genre marronnier, on trouve aussi le billet pour s&#39;excuser d&#39;avoir délaissé son blog depuis un petit moment :)&lt;/p&gt;
+&lt;p&gt;C&#39;est pour ça que je me contente de migrer le &amp;quot;moteur&amp;quot; mais que je ne touche surtout pas à la &lt;a href=&quot;/2019/12/16/nouvelle-css-quelques-trucs/&quot;&gt;charte graphique&lt;/a&gt;. En un, elle a à peine 2 ans ! En deux, je n&#39;en suis toujours pas lassé. En trois, ça me fera du grain à moudre en cas de besoin.&lt;/p&gt;
+&lt;p&gt;Ces derniers temps, j&#39;ai traficoté les markdowns de Jekyll, adaptouillé les templates Liquid en Nunjucks, révisé les frontmatters et les excerpts, réajusté les illustrations, testé et débugué à n&#39;en plus pouvoir, mais ça y est, j&#39;ai une nouvelle fois un blogue tout neuf, toujours aussi statique et miracle de la technologie, encore hébergé sur GitHub Pages.&lt;/p&gt;
+&lt;p&gt;Normalement les gens sont dithyrambiques au sujet de Eleventy et du fait qu&#39;il soit tellement simple et intuitif. Mais comme moi j&#39;ai un peu galéré avec son côté super personnalisable, ça me donnera peut-être l&#39;occasion de faire quelques billets pour expliquer comment je m&#39;y suis pris.&lt;/p&gt;
+&lt;p&gt;Accrochez-vous ! Encore des billets pour ne parler que du blog et en plus par quelqu&#39;un qui avoue ne pas trop maitriser le sujet...&lt;/p&gt;
+
+        </content>
+        <category term="11ty" />
+        <category term="jekyll" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2021/virginia-opossums.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2021/virginia-opossums.jpg" />
+    </entry>
     <entry>
         <title type="html">Display a friendly name with Enum.ToString()</title>
         <link href="https://blog3.pagesd.info/2021/11/26/display-friendly-name-with-enum-tostring/" rel="alternate" hreflang="en-US" />
@@ -530,148 +550,6 @@ public enum NatureType
 &lt;/ul&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2020/05/27/masquer-afficher-menu-lateral/&quot; hreflang=&quot;fr-FR&quot;&gt;Masquer ou afficher le menu latéral&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="css" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Masquer ou afficher le menu latéral</title>
-        <link href="https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/" rel="alternate" hreflang="fr-FR" />
-        <updated>2020-05-27T10:08:34.000Z</updated>
-        <published>2020-05-27T10:08:34.000Z</published>
-        <id>https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/</id>
-        <summary>L&#39;objectif du jour : pouvoir masquer le menu latéral qui sert pour la navigation.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
-&lt;p&gt;Je continue à travailler sur un &lt;a href=&quot;/2020/05/19/creer-template-sidebar-contenu/&quot;&gt;template simplissime à 2 colonnes&lt;/a&gt;. L&#39;objectif du jour étant de pouvoir masquer le menu latéral qui sert pour la navigation.&lt;/p&gt;
-&lt;p&gt;La solution simple, ce serait de mettre une classe &amp;quot;d-none&amp;quot; à la &amp;quot;sidebar&amp;quot; (puisque j&#39;utilise Bootstrap), mais cela ne sera pas suffisant parce que le &amp;quot;content&amp;quot; ne prend pas automatiquement toute la largeur.&lt;/p&gt;
-&lt;p&gt;Allons y pas à pas et voyons ce qu&#39;il faut faire :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Masquer la &amp;quot;sidebar&amp;quot; =&amp;gt; lui ajouter une classe &amp;quot;hidden&amp;quot;,&lt;/li&gt;
-&lt;li&gt;Faire en sorte que le &amp;quot;content&amp;quot; occupe tout l&#39;écran =&amp;gt; ajouter une classe &amp;quot;full-width&amp;quot;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ce qui côté HTML donnerait :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;hidden&amp;quot;&amp;gt;
-    ...
-&amp;lt;/nav&amp;gt;
-&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;full-width&amp;quot;&amp;gt;
-    ...
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et côté CSS :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.hidden {
-    display: none;
-}
-#content.full-width {
-    width: 100%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et inversement, quand je veux ré-afficher la barre de navigation :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;visible&amp;quot;&amp;gt;
-    ...
-&amp;lt;/nav&amp;gt;
-&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;less-width&amp;quot;&amp;gt;
-    ...
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Plus :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.visible {
-    display: block;
-}
-#content.less-width {
-    width: calc(100% - 299px);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ça marche ! Voyons maintenant comment obtenir le même résultat un peu plus intelligement...&lt;/p&gt;
-&lt;p&gt;Mon premier essai mobilise 4 classes différentes alors qu&#39;en gros il n&#39;y a que 2 possibilités :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;On a une &amp;quot;sidebar&amp;quot; et le &amp;quot;content&amp;quot; =&amp;gt; sidebar = true (par défaut),&lt;/li&gt;
-&lt;li&gt;On n&#39;a que le &amp;quot;content&amp;quot; =&amp;gt; sidebar = false (à la demande).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ce que je peux faire en utilisant une seule classe &amp;quot;no-sidebar&amp;quot; :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Par défaut cette classe n&#39;est pas utilisée =&amp;gt; la &amp;quot;sidebar&amp;quot; est visible,&lt;/li&gt;
-&lt;li&gt;Et pour masquer la &amp;quot;sidebar&amp;quot; il suffit d&#39;ajouter cette classe.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Pour être malin, je fais ça au niveau du &amp;quot;wrapper&amp;quot; qui englobe &amp;quot;sidebar&amp;quot; et &amp;quot;content&amp;quot; :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;div id=&amp;quot;wrapper&amp;quot; class=&amp;quot;no-sidebar&amp;quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et ce coup-ci je n&#39;ai besoin que de 2 règles CSS :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.no-sidebar #sidebar {
-    display: none;
-}
-.no-sidebar #content {
-    width: 100%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Bien mieux !&lt;/p&gt;
-&lt;p&gt;Maintenant, il suffit d&#39;un bouton et d&#39;un rien de Javascript pour afficher ou masquer la &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;button id=&amp;quot;sidebar-toggle&amp;quot;&amp;gt;Masquer / Afficher&amp;lt;/button&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Le code Javascript vraiment tout simple (et qui utilise jQuery parce que j&#39;en aurai aussi besoin pour mes formulaires) :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&amp;lt;script src=&amp;quot;js/jquery-3.4.1.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;script&amp;gt;
-    $(document).ready(function () {
-
-        $(&amp;quot;#sidebar-toggle&amp;quot;).on(&amp;quot;click&amp;quot;, function () {
-            $(&amp;quot;#wrapper&amp;quot;).toggleClass(&amp;quot;no-sidebar&amp;quot;);
-        });
-
-    });
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Pour récapituler, il suffit de 4 éléments pour réaliser une présentation sur 2 colonnes, avec une barre latérale rétractable :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Une div &amp;quot;#wrapper&amp;quot; pour englober tout le contenu,&lt;/li&gt;
-&lt;li&gt;Un nav &amp;quot;#sidebar&amp;quot; pour contenir la barre latérale pour le menu de navigation,&lt;/li&gt;
-&lt;li&gt;Une div &amp;quot;#content&amp;quot; pour contenir le contenu principal,&lt;/li&gt;
-&lt;li&gt;Une classe .no-sidebar quand il faut masquer la barre latérale.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Et finalement, de très peu de CSS (si on enlève tout ce qui sert à présenter le contenu) :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#wrapper {
-    display: flex;
-    width: 100%;
-}
-
-#sidebar {
-    min-height: 100vh;
-    position: fixed;
-    width: 299px;
-}
-
-#content {
-    min-height: 100vh;
-    position: absolute;
-    right: 0;
-    width: calc(100% - 299px);
-}
-
-.no-sidebar #sidebar {
-    display: none;
-}
-
-.no-sidebar #content {
-    width: 100%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Plus éventuellement pour ne pas imprimer la &amp;quot;sidebar&amp;quot; (comme elle destinée à contenir des éléments de navigation uniquement) :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;@media print {
-    #sidebar { display: none;}
-    #content { width: 100%; }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;On peut aussi se contenter d&#39;ajouter la classe Bootstrap &amp;quot;d-print-none&amp;quot; à &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2020/clic2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Youpi ! Mon 1° GIF animé depuis des siècles, ou en tout cas depuis le siècle dernier (créé grâce à &lt;a href=&quot;https://ezgif.com/&quot;&gt;https://ezgif.com/&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;C&#39;était pas très compliqué... Aussi je ferais sans doute une 3° partie pour améliorer le côté &amp;quot;artistique&amp;quot; :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Utiliser une icone pour afficher ou cacher la &amp;quot;sidebar&amp;quot;,&lt;/li&gt;
-&lt;li&gt;Ajouter une animation pour passer d&#39;un état à l&#39;autre.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2020/05/28/hide-show-sidebar/&quot; hreflang=&quot;en-US&quot;&gt;Hide or show sidebar&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
         </content>
