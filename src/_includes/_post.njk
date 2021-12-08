@@ -1,0 +1,33 @@
+<article>
+
+{{ post.data.cover | coverFigure | safe }}
+
+  <header>
+    <h1>
+      <a href="{{ post.url }}">{{ post.data.title }}</a>
+    </h1>
+    <p>
+      <span>{{ post.date | date("yyyy-MM-dd") }}</span>
+      {% for tag in post.data.tags %}<span>#{{ tag }}</span>{% endfor %}
+    </p>
+  </header>
+
+  <div>
+
+{{ post.templateContent | safe }}
+
+  </div>
+
+</article>
+
+{%- set prev = collections.posts | getNextCollectionItem(post) -%}
+{%- set next = collections.posts | getPreviousCollectionItem(post) -%}
+
+<nav class="paginate">
+{%- if prev %}
+  <a rel="prev" href="{{ prev.url }}" hreflang="{{ prev.data.lang | default(site.lang) }}">{{ prev.data.title }}</a>
+{%- endif %}
+{%- if next %}
+  <a rel="next" href="{{ next.url }}" hreflang="{{ next.data.lang | default(site.lang) }}">{{ next.data.title }}</a>
+{%- endif %}
+</nav>

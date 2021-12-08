@@ -1,0 +1,22 @@
+{%- if page.url === "/" -%}
+  {%- set post = collections.posts | first -%}
+{%- else -%}
+  {%- set post = collections.all | getCollectionItem(page) -%}
+{%- endif -%}
+<meta name="author" content="{{ site.author }}" />
+<link rel="canonical" href="{{ site.url + post.url }}" />
+<meta property="og:title" content="{{ post.data.title }}" />
+{%- if post.data.excerpt %}
+<meta name="description" content="{{ post.data.excerpt }}" />
+<meta property="og:description" content="{{ post.data.excerpt }}" />
+{%- endif %}
+<meta property="og:locale" content="{{ post.data.lang | default(site.lang) }}" />
+<meta property="og:url" content="{{ site.url + post.url }}" />
+<meta property="og:site_name" content="{{ site.title }}" />
+<meta property="og:type" content="article" />
+{%- if post.data.cover %}
+<meta property="og:image" content="{{ site.url + post.data.cover.image }}" />
+<meta name="twitter:card" content="summary_large_image" />
+{%- endif %}
+<meta property="article:published_time" content="{{ post.date | isodate }}" />
+{% scriptLdJson site, post %}

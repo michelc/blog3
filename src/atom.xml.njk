@@ -1,0 +1,40 @@
+---
+# https://github.com/11ty/eleventy-base-blog/blob/master/feed/feed.njk
+# https://blog.pagesd.info/atom.xml
+# https://stackoverflow.com/questions/29798315/adding-images-or-thumbnails-to-atom-1-0-entries => <![CDATA[ ... ]]>
+permalink: /atom.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ site.title }}</title>
+    <subtitle>{{ site.description }}</subtitle>
+    <link href="{{ site.url }}/" rel="alternate" hreflang="{{ site.lang }}" />
+    {%- set last = collections.posts | first %}
+    <updated>{{ last.date | isodate }}</updated>
+    <id>{{ site.url }}/atom.xml</id>
+    <link href="{{ site.url }}/atom.xml" rel="self" type="application/atom+xml" />
+    <author>
+        <name>{{ site.author }}</name>
+    </author>
+    {%- for post in collections.posts | head(6) %}
+    <entry>
+        <title type="html">{{ post.data.title }}</title>
+        <link href="{{ site.url }}{{ post.url }}" rel="alternate" hreflang="{{ post.data.lang | default(site.lang) }}" />
+        <updated>{{ post.date | isodate }}</updated>
+        <published>{{ post.date | isodate }}</published>
+        <id>{{ site.url }}{{ post.url }}</id>
+        <summary>{{ post.data.excerpt }}</summary>
+        <content type="html" xml:lang="{{ post.data.lang | default(site.lang) }}" xml:base="{{ site.url }}">
+{{ post.templateContent }}
+        </content>
+        {%- for tag in post.data.tags %}
+        <category term="{{ tag }}" />
+        {%- endfor %}
+        {%- if post.data.cover %}
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ site.url + post.data.cover.image }}" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="{{ site.url + post.data.cover.image }}" />
+        {%- endif %}
+    </entry>
+    {%- endfor %}
+</feed>

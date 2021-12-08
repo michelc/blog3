@@ -1,0 +1,21 @@
+---
+layout: default.njk
+---
+<article>
+
+  <header>
+    <h1>
+      <a href="">{{ title }}</a>
+    </h1>
+    {% if date %}<p>
+      <span>{{ date | date("yyyy-MM-dd") }}</span>
+    </p>{% endif %}
+  </header>
+
+  <div>
+
+{{ content | safe }}
+
+  </div>
+
+</article>
