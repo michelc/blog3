@@ -1,5 +1,5 @@
 ---
-date: 2009-11-20 15:41:00
+date: 2009-11-20 15:41:00 +02:00
 layout: page
 permalink: nerddinner/presentation-tutoriel/
 redirect_from: "pages/NerdDinner/Presentation-tutoriel"

@@ -149,6 +149,16 @@ figcaption {
   line-height: 1;
 }
 
+.cover-image figcaption {
+  font-size: x-small;
+  margin-top: -5px;
+  text-align: right;
+  visibility: hidden;
+}
+.cover-image:hover figcaption {
+  visibility: visible;
+}
+
 
 /* Lists
    ========================================================================== */
@@ -243,16 +253,12 @@ nav.paginate a, nav.paginate a:visited {
   text-decoration: none;
 }
 
-nav.paginate a:first-child:before {
+nav.paginate a[rel="prev"]:before {
   content: '← ';
 }
 
-nav.paginate a:last-child:after {
+nav.paginate a[rel="next"]:after {
   content: ' →';
-}
-
-nav.paginate a:first-child:after {
-  content: '';
 }
 
 

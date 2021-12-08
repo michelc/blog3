@@ -1,8 +1,7 @@
 ---
-date: 2006-02-03 08:33:00
-layout: post
+date: 2006-02-03 08:33:00 +02:00
 redirect_from: "post/2006/02/03/Semantique-HTML-et-PageRank"
-tags: html, referencement
+tags: [ html, referencement ]
 title: "Sémantique HTML et PageRank"
 ---
 

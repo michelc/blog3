@@ -1,13 +1,12 @@
 ---
-date: 2007-04-03 12:02:00
-layout: post
+date: 2007-04-03 12:02:00 +02:00
 redirect_from: "post/2007/04/03/Evolutions-QC-au-3-avril-2007"
-tags: qc
+tags: [ qc ]
 title: "Evolutions QC au 3 avril 2007"
 ---
 
 Récapitulatif de ce qui a été fait depuis le [25 octobre
-2006]({% post_url 2006-10-25-evolutions-qc-25-octobre-2006 %}) :
+2006]({% post_url "2006-10-25-evolutions-qc-25-octobre-2006" %}) :
 
 * _dumpdb.aspx : Utilisation de StringBuilder
 * _dumpdb.aspx : Fichier dump.sql zippé et mailé en fonction de la ligne

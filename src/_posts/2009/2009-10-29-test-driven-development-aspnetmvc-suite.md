@@ -1,12 +1,11 @@
 ---
-date: 2009-10-29 19:44:00
-layout: post
+date: 2009-10-29 19:44:00 +02:00
 redirect_from: "post/2009/10/29/Test-Driven-Development-avec-ASP.NET-MVC-(suite)"
-tags: mvc, unit-test
+tags: [ mvc, unit-test ]
 title: "Test-Driven Development avec ASP.NET MVC (suite)"
 ---
 
-Je dois avouer que j'ai pas mal dévié de l'objectif de cette [6° partie du tutoriel de Gestion des Contacts]({% post_url 2009-10-20-test-driven-development-aspnetmvc-suite %}). Son but était
+Je dois avouer que j'ai pas mal dévié de l'objectif de cette [6° partie du tutoriel de Gestion des Contacts]({% post_url "2009-10-20-test-driven-development-aspnetmvc-suite" %}). Son but était
 d'illustrer l'intérêt du test-driven-development en prenant pour exemple
 l'ajout d'une notion de groupes de contacts. Comme je trouvais que la fin du
 tutoriel passait un peu vite sur la réalisation concrète des modifications
@@ -167,7 +166,7 @@ C'est quand même plus joli.
 Je continue donc avec la vue Edit.aspx où je refais <s>quasiment</s> la
 même chose.
 
-Ca avance ! Je peux maintenant associer un contact au groupe de
+Ça avance ! Je peux maintenant associer un contact au groupe de
 contacts de mon choix. Y'a plus qu'à faire en sorte que ce choix soit
 enregistré dans la base de données.
 
@@ -287,7 +286,7 @@ c'est bien le cas.
 
 ## Utilisation du groupe pour modifier un contact
 
-Ca consiste très simplement à refaire à peu près pareil avec la vue
+Ça consiste très simplement à refaire à peu près pareil avec la vue
 Edit.aspx et les méthode Edit() qu'on trouve un peu partout dans le contrôleur,
 le service et le repository.
 
@@ -478,4 +477,4 @@ c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\Temporary ASP.NET Files\root\01b85
 Finalement, c'est pas ce soir que je vais finir...
 
 ---
-Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (fin)]({% post_url 2009-10-30-test-driven-development-aspnetmvc-fin %})
+Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (fin)]({% post_url "2009-10-30-test-driven-development-aspnetmvc-fin" %})

@@ -1,14 +1,15 @@
 ---
-date: 2010-09-08 17:23:00
-layout: post
+date: 2010-09-08 17:23:00 +02:00
 redirect_from: "post/2010/09/08/asp-net-mvc-2-nouvelle-syntaxe-pour-encoder-la-sortie-html"
-tags: mvc
+tags: [ mvc ]
 title: "ASP.NET MVC 2 : Nouvelle syntaxe ‹%: %› pour encoder la sortie HTML"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[New &lt;%: %&gt; Syntax for HTML Encoding Output in ASP.NET 4
-(and ASP.NET MVC 2)](http://weblogs.asp.net/scottgu/archive/2010/04/06/new-lt-gt-syntax-for-html-encoding-output-in-asp-net-4-and-asp-net-mvc-2.aspx)" de Scott Guthrie.
+<div class="encart">
+
+Ceci est la traduction du billet "[New &lt;%: %&gt; Syntax for HTML Encoding Output in ASP.NET 4 (and ASP.NET MVC 2)](http://weblogs.asp.net/scottgu/archive/2010/04/06/new-lt-gt-syntax-for-html-encoding-output-in-asp-net-4-and-asp-net-mvc-2.aspx)" de Scott Guthrie.
+
+</div>
 
 Le billet d'aujourd'hui va couvrir une petite (mais malgré tout très utile)
 nouveauté syntaxique qui est apparue avec ASP.NET 4. Il s'agit de la
@@ -94,7 +95,7 @@ encodées implémentent bien l'interface IHtmlString.
 
 Prenons le cas où vous utilisez des méthodes helpers en ASP.NET MVC pour
 avoir un exemple concret qui montre dans quel cas ce mécanisme d'encodage HTML
-s'avère utile. Les méthodes helper renvoient habituellement du HTML. A titre
+s'avère utile. Les méthodes helper renvoient habituellement du HTML.À titre
 d'exemple, la méthode helper Html.TextBox() renvoie une balise du style
 `<input type="text"/>`. Avec ASP.NET MVC 2, ces méthodes
 helper renvoient maintenant des types HtmlString par défaut, de façon à
@@ -141,7 +142,3 @@ rendre votre code un peu moins verbeux et d'assez facilement vérifier /
 contrôler que vous faites toujours de l'encodage HTML dans tout votre site. Ce
 qui participe à la protection de votre application contre les attaques de type
 Cross-site scripting (XSS) et injection HTML.
-
-{:.encart}
-Ceci est la traduction du billet "[New &lt;%: %&gt; Syntax for HTML Encoding Output in ASP.NET 4
-(and ASP.NET MVC 2)](http://weblogs.asp.net/scottgu/archive/2010/04/06/new-lt-gt-syntax-for-html-encoding-output-in-asp-net-4-and-asp-net-mvc-2.aspx)" de Scott Guthrie.

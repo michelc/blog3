@@ -1,21 +1,16 @@
 ---
-date: 2019-11-19 12:22:52+200
-layout: post
-tags: javascript
+date: 2019-11-19 12:22:52 +02:00
+tags: [ javascript ]
 lang: en-US
 title: "How to define a JavaScript function"
-image: "/public/2019/butterfly-collection.jpg"
+cover:
+  image: /public/2019/butterfly-collection.jpg
+  link: https://unsplash.com/photos/X8pnAEjqmqI
+  text: Wall decorations with colorful butterflies - __ drz __
 excerpt: "A personal reminder post to list some of the JavaScript methods to define a function: declaration, expression and arrow syntax."
 ---
 
 As I always have a little trouble remembering everything and also because there is a little collection side that I like, here is a summary of the different ways that exist to define functions in JavaScript.
-
-<figure>
-  <img src="{{ page.image }}" alt="butterfly-collection" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/X8pnAEjqmqI">Wall decorations with colorful butterflies - __ drz __</a>
-  </figcaption>
-</figure>
 
 
 ## Through a declaration
@@ -46,7 +41,7 @@ Even if this is not obvious, this function is anonymous:
 * It is created without giving it a name (just "function (...) { ... }")
 * Although it is assigned to a variable that has a name
 
-Note: Since this is an assignment to a variable (in this case it's a function that is assigned), the command ends with a semicolon, exactly as is the case for all other assignments: `const pi = 3.14;`.
+*Note: Since this is an assignment to a variable (in this case it's a function that is assigned), the command ends with a semicolon, exactly as is the case for all other assignments: `const pi = 3.14;`.*
 
 
 ## Through the arrow syntax
@@ -99,5 +94,8 @@ test.map((x) => { return x * 2; });         // [2, 4, 6]
 test.map(x => x * 2);                       // [2, 4, 6] Bingo!
 ```
 
-{:.encart}
-Version en français : [Comment définir une fonction JavaScript]({% post_url 2019-11-18-comment-definir-fonction-javascript %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Comment définir une fonction JavaScript", "2019-11-18-comment-definir-fonction-javascript" %}.
+
+</div>

@@ -1,8 +1,7 @@
 ---
-date: 2004-10-07 11:33:00
-layout: post
+date: 2004-10-07 11:33:00 +02:00
 redirect_from: "post/2004/10/07/Ajouter-un-module-SlideShow"
-tags: qc
+tags: [ qc ]
 title: "Ajouter un module SlideShow ?"
 ---
 

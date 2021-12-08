@@ -1,8 +1,7 @@
 ---
-date: 2006-03-19 10:33:00
-layout: post
+date: 2006-03-19 10:33:00 +02:00
 redirect_from: "post/2006/03/19/Correction-de-Google-Sitemap"
-tags: qc, referencement
+tags: [ qc, referencement ]
 title: "Correction de Google Sitemap"
 ---
 
@@ -15,5 +14,5 @@ site,
 autres pages.
 
 Et modification de Common.TrackFileUpdate() pour employer la nouvelle
-méthode [Common.MapPath()]({% post_url 2006-03-14-mappath-plus-souple %})
+méthode [Common.MapPath()]({% post_url "2006-03-14-mappath-plus-souple" %})
 en lieu et place de Server.MapPath().

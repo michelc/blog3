@@ -1,8 +1,7 @@
 ---
-date: 2005-01-31 13:43:00
-layout: post
+date: 2005-01-31 13:43:00 +02:00
 redirect_from: "post/2005/01/31/Wdevs-User-management"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) User management"
 ---

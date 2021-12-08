@@ -1,20 +1,15 @@
 ---
-date: 2019-12-03 12:13:15+200
-layout: post
-tags: javascript
+date: 2019-12-03 12:13:15 +02:00
+tags: [ javascript ]
 title: "Générer un nombre aléatoire en JavaScript"
-image: "/public/2019/xkcd-221.jpg"
+cover:
+  image: /public/2019/xkcd-221.jpg
+  link: https://xkcd.com/221/
+  text: "XKCD #221 - Random Number"
 excerpt: "Comment générer un nombre aléatoire en JavaScript, mais aussi comment utiliser le module 'seedrandom' pour rendre le hasard plus prévisible."
 ---
 
 ## La méthode "Math.random()"
-
-<figure>
-  <img src="{{ page.image }}" alt="random-number" />
-  <figcaption>
-    <a href="https://xkcd.com/221/">XKCD #221 - Random Number</a>
-  </figcaption>
-</figure>
 
 Pour obtenir un nombre au hasard, il faut utiliser la fonction `Math.random()`
 qui renvoie un pseudo nombre aléatoire qui est :
@@ -36,8 +31,8 @@ entre 0.0 et 51.999...
 const cardNumber = 1 + Math.floor(52 * Math.random());
 ```
 
-Note: On parle de "pseudo" nombre aléatoire, parce que pour un ordinateur, ça
-n'est pas facile de reproduire le hasard et qu'il est plus simple de simuler.
+*Note: On parle de "pseudo" nombre aléatoire, parce que pour un ordinateur, ça
+n'est pas facile de reproduire le hasard et qu'il est plus simple de simuler.*
 
 
 ## Le module "Math.seedrandom()"
@@ -105,5 +100,8 @@ permettra de mieux voir les progrès accomplis par mon système de conseils, au
 fur et à mesure que je le ferai évoluer. Le but étant bien entendu d'arriver au
 minimum à un résultat de 50% de réussite...
 
-{:.encart}
-English version: [Generate a random number with JavaScript]({% post_url 2019-12-04-generate-random-number-javascript %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Generate a random number with JavaScript", "2019-12-04-generate-random-number-javascript" %}.
+
+</div>

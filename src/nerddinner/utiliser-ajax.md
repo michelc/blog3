@@ -1,5 +1,5 @@
 ---
-date: 2010-01-27 09:25:00
+date: 2010-01-27 09:25:00 +02:00
 layout: page
 permalink: nerddinner/utiliser-ajax/
 redirect_from: "pages/NerdDinner/Utiliser-Ajax"
@@ -232,7 +232,7 @@ fonctionnalités, dont une très sympathique manipulation des éléments du DOM
 HTML et une abondante bibliothèque d'effets.
 
 Pour utiliser la librairie jQuery, nous devons commencer par ajouter une
-référence à celle-ci. Etant donné que nous prévoyons de l'utiliser un grand
+référence à celle-ci. Étant donné que nous prévoyons de l'utiliser un grand
 nombre de fois dans notre application, nous allons ajouter cette référence au
 niveau du fichier Site.master pour que toutes les pages puissent en
 profiter :

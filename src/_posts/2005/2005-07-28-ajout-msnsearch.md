@@ -1,8 +1,7 @@
 ---
-date: 2005-07-28 09:47:00
-layout: post
+date: 2005-07-28 09:47:00 +02:00
 redirect_from: "post/2005/07/28/Ajout-de-MsnSearch"
-tags: qc
+tags: [ qc ]
 title: "Ajout de MsnSearch"
 ---
 

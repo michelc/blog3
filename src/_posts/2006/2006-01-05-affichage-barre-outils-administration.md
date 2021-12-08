@@ -1,8 +1,7 @@
 ---
-date: 2006-01-05 14:08:00
-layout: post
+date: 2006-01-05 14:08:00 +02:00
 redirect_from: "post/2006/01/05/Affichage-de-la-barre-doutils-dadministration"
-tags: qc
+tags: [ qc ]
 title: "Affichage de la barre d'outils d'administration"
 ---
 

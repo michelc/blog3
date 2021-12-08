@@ -1,8 +1,7 @@
 ---
-date: 2009-11-26 10:10:00
-layout: post
+date: 2009-11-26 10:10:00 +02:00
 redirect_from: "post/2009/11/26/Creation-controleur-DinnersController"
-tags: mvc
+tags: [ mvc ]
 title: "Création du contrôleur DinnersController.cs"
 ---
 

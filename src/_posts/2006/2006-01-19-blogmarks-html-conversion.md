@@ -1,8 +1,7 @@
 ---
-date: 2006-01-19 08:18:00
-layout: post
+date: 2006-01-19 08:18:00 +02:00
 redirect_from: "post/2006/01/19/Blogmarks-to-Html-conversion"
-tags: code-snippets, html, xml
+tags: [ code-snippets, html, xml ]
 title: "Blogmarks to Html conversion"
 ---
 

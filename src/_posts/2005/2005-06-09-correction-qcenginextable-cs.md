@@ -1,8 +1,7 @@
 ---
-date: 2005-06-09 10:29:00
-layout: post
+date: 2005-06-09 10:29:00 +02:00
 redirect_from: "post/2005/06/09/Correction-qcEngineXTablecs"
-tags: qc
+tags: [ qc ]
 title: "Correction qc.Engine.XTable.cs"
 ---
 

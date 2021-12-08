@@ -1,8 +1,7 @@
 ---
-date: 2009-09-10 17:25:00
-layout: post
+date: 2009-09-10 17:25:00 +02:00
 redirect_from: "post/2009/09/10/Placer-un-libell%C3%A9-semi-transparent-sur-une-image"
-tags: code-snippets, html
+tags: [ code-snippets, html ]
 title: "Placer un libellé semi-transparent sur une image"
 ---
 

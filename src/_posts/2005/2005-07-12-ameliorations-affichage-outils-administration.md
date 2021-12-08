@@ -1,8 +1,7 @@
 ---
-date: 2005-07-12 15:10:00
-layout: post
+date: 2005-07-12 15:10:00 +02:00
 redirect_from: "post/2005/07/12/Am%C3%A9liorations-affichage-des-outils-d-administration"
-tags: qc
+tags: [ qc ]
 title: "Améliorations affichage des outils d'administration"
 ---
 

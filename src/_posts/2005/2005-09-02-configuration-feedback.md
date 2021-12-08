@@ -1,8 +1,7 @@
 ---
-date: 2005-09-02 14:30:00
-layout: post
+date: 2005-09-02 14:30:00 +02:00
 redirect_from: "post/2005/09/02/Configuration-Feedback"
-tags: qc
+tags: [ qc ]
 title: "Configuration Feedback"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2004-09-29 18:26:00
-layout: post
+date: 2004-09-29 18:26:00 +02:00
 redirect_from: "post/2004/09/29/Erreurs-de-mails"
-tags: qc
+tags: [ qc ]
 title: "Erreurs de mails"
 ---
 

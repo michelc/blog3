@@ -1,8 +1,7 @@
 ---
-date: 2008-10-07 18:53:00
-layout: post
+date: 2008-10-07 18:53:00 +02:00
 redirect_from: "post/2008/10/07/Configuration-de-TortoiseSVN"
-tags: svn
+tags: [ svn ]
 title: "Configuration de TortoiseSVN"
 ---
 

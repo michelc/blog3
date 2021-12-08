@@ -1,8 +1,7 @@
 ---
-date: 2005-09-06 14:34:00
-layout: post
+date: 2005-09-06 14:34:00 +02:00
 redirect_from: "post/2005/09/06/Correction-retour-adminBox"
-tags: qc
+tags: [ qc ]
 title: "Correction retour adminBox"
 ---
 

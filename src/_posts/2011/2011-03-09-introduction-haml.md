@@ -1,13 +1,12 @@
 ---
-date: 2011-03-09 18:53:00
-layout: post
+date: 2011-03-09 18:53:00 +02:00
 redirect_from: "post/2011/03/09/introduction-a-haml"
-tags: ruby
+tags: [ ruby ]
 title: "Introduction à Haml"
 ---
 
 J'aime bien les vidéos de Screencasts.org, surtout leur côté 5/10 minutes
-vite fait pour aborder (ou réviser) un sujet. Après l'[introduction à Sinatra]({% post_url 2011-03-08-introduction-sinatra %}), j'ai donc décidé de suivre l'[introduction à Haml](http://screencasts.org/episodes/introduction-to-haml). [Haml](http://haml-lang.com/) (qui se prononce AMeul, comme dans meule) est un langage de
+vite fait pour aborder (ou réviser) un sujet. Après l'[introduction à Sinatra]({% post_url "2011-03-08-introduction-sinatra" %}), j'ai donc décidé de suivre l'[introduction à Haml](http://screencasts.org/episodes/introduction-to-haml). [Haml](http://haml-lang.com/) (qui se prononce AMeul, comme dans meule) est un langage de
 template très concis destiné à remplacer HTML dans les applications Rails ou
 Sinatra.
 

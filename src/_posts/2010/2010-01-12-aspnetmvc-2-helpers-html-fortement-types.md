@@ -1,14 +1,15 @@
 ---
-date: 2010-01-12 18:26:00
-layout: post
+date: 2010-01-12 18:26:00 +02:00
 redirect_from: "post/2010/01/12/asp-net-mvc-2-helpers-html_fortement-types"
-tags: mvc
+tags: [ mvc ]
 title: "ASP.NET MVC 2 : Des helpers HTML fortement typés"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[ASP.NET MVC 2: Strongly Typed Html Helpers](http://weblogs.asp.net/scottgu/archive/2010/01/10/asp-net-mvc-2-strongly-typed-html-helpers.aspx)" de Scott
-Guthrie.
+<div class="encart">
+
+Ceci est la traduction du billet "[ASP.NET MVC 2: Strongly Typed Html Helpers](http://weblogs.asp.net/scottgu/archive/2010/01/10/asp-net-mvc-2-strongly-typed-html-helpers.aspx)" de Scott Guthrie.
+
+</div>
 
 Ceci est le premier billet d'une série consacrée à la prochaine sortie de
 ASP.NET MVC 2. Ce billet présente les nouveaux helpers fortement typés qui ont
@@ -56,7 +57,7 @@ d'utiliser la chaine "ProductName". Les expressions lambda sont suffisamment
 souples pour permettre de retrouver le nom de la propriété ou du champ dans
 notre modèle d'objets en plus de sa valeur.
 
-Etant donné que les helpers HTML sont fortement typés, cela nous permet
+Étant donné que les helpers HTML sont fortement typés, cela nous permet
 d'avoir accès à l'intellisense de Visual Studio lorsque nous écrivons
 l'expression lambda :
 
@@ -131,7 +132,3 @@ nos vues. Ils permettent un meilleur contrôle de nos vues dès la compilation
 (ce qui vous permet de détecter les erreurs à la compilation et pas à
 l'utilisation) et ils offrent un support de l'intellisense plus puissant
 lorsque vous codez vos vues depuis Visual Studio.
-
-{:.encart}
-Ceci est la traduction du billet "[ASP.NET MVC 2: Strongly Typed Html Helpers](http://weblogs.asp.net/scottgu/archive/2010/01/10/asp-net-mvc-2-strongly-typed-html-helpers.aspx)" de Scott
-Guthrie.

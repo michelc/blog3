@@ -1,8 +1,7 @@
 ---
-date: 2009-12-01 14:12:00
-layout: post
+date: 2009-12-01 14:12:00 +02:00
 redirect_from: "post/2009/12/01/Test-T4MVC-avec-Contact-Manager"
-tags: mvc
+tags: [ mvc ]
 title: "Test de T4MVC avec le projet Contact Manager"
 ---
 
@@ -39,7 +38,7 @@ en traitant successivement les éléments suivants :
 * Html.BeginForm()
 
 Je n'ai pas eu à m'occuper des `Ajax.ActionLink()` puisque pour
-ma part, j'ai totalement laissé tombé Ajax.NET au profit de [jQuery]({% post_url 2009-11-03-gestion-contacts-aspnetmvc-jquery %} "Gestion de contacts avec ASP.NET MVC et jQuery").
+ma part, j'ai totalement laissé tombé Ajax.NET au profit de [jQuery]({% post_url "2009-11-03-gestion-contacts-aspnetmvc-jquery" %} "Gestion de contacts avec ASP.NET MVC et jQuery").
 
 Je ne me suis pas non plus occupé des `routes.MapRoute()` dans le
 Global.asax parce qu'il contient seulement la route par défaut et qu'en plus je

@@ -1,20 +1,16 @@
 ---
-date: 2020-02-25 12:23:34+200
-layout: post
+date: 2020-02-25 12:23:34 +02:00
 lang: en-US
-tags: mail
+tags: [ mail ]
 title: "How to access Office 365 email from GMail"
-image: "/public/2020/office365-gmail.jpg"
+cover:
+  image: /public/2020/office365-gmail.jpg
+  link: https://funny.pho.to/fr/antique-oil-painting/
+  text: Antique Oil Painting - PHO.TO
+excerpt: So I don't forget how I did it and find it again the day I need it, I'm writing down how to handle my Office 365 email address from the GMail client.
 ---
 
 I'm writing this so I don't forget how I did and so that I can find this setting one day. Here's how I handle my Office365 email address from my GMail client. Because generally, the internet mostly explains how to migrate from GMail to Office 365 or vice versa...
-
-<figure>
-  <img src="{{ page.image }}" alt="office365-gmail" />
-  <figcaption>
-    <a href="https://funny.pho.to/fr/antique-oil-painting/">Antique Oil Painting - PHO.TO</a>
-  </figcaption>
-</figure>
 
 The purpose of this manipulation is to allow me to continue to use GMail web interface for:
 
@@ -76,5 +72,8 @@ It works. And most importantly, I now have access to my Office 365 address from 
 
 But for the record, I tested different methods until I found something that works (and I didn't look any further). I'm interested if someone knows a better solution and ideally the "official" settings.
 
-{:.encart}
-Version en français : [Accéder à Office 365 Mail depuis GMail]({% post_url 2020-02-24-acceder-office-365-mail-depuis-gmail %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Accéder à Office 365 Mail depuis GMail", "2020-02-24-acceder-office-365-mail-depuis-gmail" %}.
+
+</div>

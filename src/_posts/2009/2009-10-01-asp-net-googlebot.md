@@ -1,8 +1,7 @@
 ---
-date: 2009-10-01 13:48:00
-layout: post
+date: 2009-10-01 13:48:00 +02:00
 redirect_from: "post/2009/10/01/ASP.NET-et-Googlebot"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "ASP.NET 2.0 et Googlebot"
 ---
 

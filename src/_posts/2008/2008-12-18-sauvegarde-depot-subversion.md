@@ -1,8 +1,7 @@
 ---
-date: 2008-12-18 11:58:00
-layout: post
+date: 2008-12-18 11:58:00 +02:00
 redirect_from: "post/2008/12/18/Sauvegarde-d-un-depot-Subversion"
-tags: svn
+tags: [ svn ]
 title: "Sauvegarder un dépôt Subversion"
 ---
 
@@ -34,13 +33,13 @@ Mais ce matin, j'ai voulu faire ça sur un vrai dépôt Subversion distant et
 SvnAdmin dump svn://srv02-svn/replu/ -q > replu.dump
 ```
 
-A quoi on m'a répondu :
+À quoi on m'a répondu :
 
 ```
 svnadmin: 'svn://srv02-svn/replu/' is an URL when it should be a path
 ```
 
-Ca a été l'occasion de faire un petit tour des différentes méthodes
+Ça a été l'occasion de faire un petit tour des différentes méthodes
 possibles pour sauvegarder un dépôt.
 
 ## SvnAdmin hotcopy

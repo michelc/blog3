@@ -1,16 +1,15 @@
 ---
-date: 2010-05-21 13:27:00
-layout: post
+date: 2010-05-21 13:27:00 +02:00
 redirect_from: "post/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : Refaire HomeController, méthode map/reduce"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Porting the HomeController, the
-map/reduce way](http://ayende.com/Blog/archive/2010/05/21/porting-mvc-music-store-to-raven-porting-the-homecontroller-the.aspx)", le quatrième de la série consacrée au portage de
-l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende
-Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Porting the HomeController, the map/reduce way](http://ayende.com/Blog/archive/2010/05/21/porting-mvc-music-store-to-raven-porting-the-homecontroller-the.aspx)", le quatrième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Actuellement, le contrôleur HomeController contient le code
 suivant :
@@ -33,7 +32,7 @@ documents.
 Il existe plusieurs méthodes pour résoudre cela. Une des façon de faire
 serait de définir un index [map / reduce](http://ayende.com/Blog/archive/2010/03/14/map-reduce-ndash-a-visual-explanation.aspx) au niveau des documents orders.
 
-Note: Oui, je sais [ce que vous allez dire](http://browsertoolkit.com/fault-tolerance.png).
+*Note: Oui, je sais [ce que vous allez dire](http://browsertoolkit.com/fault-tolerance.png).*
 
 La méthode que je suis sur le point de vous montrer n'est pas celle que je
 conseillerais dans la réalité. Mais je veux malgré tout vous la présenter. Dans

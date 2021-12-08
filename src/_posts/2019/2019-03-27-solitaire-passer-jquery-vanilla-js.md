@@ -1,9 +1,11 @@
 ---
-date: 2019-03-27 12:22:32
-layout: post
-tags: javascript
+date: 2019-03-27 12:22:32 +02:00
+tags: [ javascript ]
 title: "Solitaire - Passer de jQuery à Vanilla JS"
-image: "/public/2019/vanille.jpg"
+cover:
+  image: /public/2019/vanille.jpg
+  text: Vanille Bourbon - La Réunion
+excerpt: Au départ, jQuery c'était la meilleure solution possible. Mais aujourd'hui, il est de plus en plus simple de s'en passer...
 ---
 
 <div class="encart" markdown="1">
@@ -11,19 +13,14 @@ image: "/public/2019/vanille.jpg"
 Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
 solitaires et aux évolutions que je souhaite y apporter :
 
-1. [Introduction]({% post_url 2019-03-23-solitaire-feuille-route-javascript %})
-2. [Passer de jQuery à Vanilla JS]({% post_url 2019-03-27-solitaire-passer-jquery-vanilla-js %})
-3. [Améliorer FreeCell]({% post_url 2019-04-01-solitaire-ameliorer-freecell %})
-4. [Ajouter des animations CSS]({% post_url 2019-04-08-solitaire-ajouter-animations-css %})
-5. [Drag and drop sans jQuery UI]({% post_url 2019-04-15-solitaire-drag-and-drop-sans-jquery-ui %})
-6. [Remplacer AjaxMin, etc...]({% post_url 2019-04-25-solitaire-remplacer-ajaxmin %})
+1. [Introduction]({% post_url "2019-03-23-solitaire-feuille-route-javascript" %})
+2. [Passer de jQuery à Vanilla JS]({% post_url "2019-03-27-solitaire-passer-jquery-vanilla-js" %})
+3. [Améliorer FreeCell]({% post_url "2019-04-01-solitaire-ameliorer-freecell" %})
+4. [Ajouter des animations CSS]({% post_url "2019-04-08-solitaire-ajouter-animations-css" %})
+5. [Drag and drop sans jQuery UI]({% post_url "2019-04-15-solitaire-drag-and-drop-sans-jquery-ui" %})
+6. [Remplacer AjaxMin, etc...]({% post_url "2019-04-25-solitaire-remplacer-ajaxmin" %})
 
 </div>
-
-<figure>
-  <img src="{{ page.image }}" alt="vanille-bourbon" />
-  <figcaption>Vanille Bourbon - La Réunion</figcaption>
-</figure>
 
 Au départ, j'ai utilisé [jQuery](https://jquery.com/) (et
 [jQuery UI](https://jqueryui.com/)) parce que c'était encore ce qui se faisait

@@ -1,8 +1,7 @@
 ---
-date: 2010-07-02 09:27:00
-layout: post
+date: 2010-07-02 09:27:00 +02:00
 redirect_from: "post/2010/07/02/view-models-belong-to-web-project"
-tags: mvc
+tags: [ mvc ]
 title: "View models belong to Web-project"
 ---
 

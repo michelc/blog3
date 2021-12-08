@@ -1,8 +1,7 @@
 ---
-date: 2004-10-04 14:24:00
-layout: post
+date: 2004-10-04 14:24:00 +02:00
 redirect_from: "post/2004/10/04/Liens-DataGrid"
-tags: qc
+tags: [ qc ]
 title: "Liens DataGrid"
 ---
 

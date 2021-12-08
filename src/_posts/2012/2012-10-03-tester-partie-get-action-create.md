@@ -1,13 +1,12 @@
 ---
-date: 2012-10-03 20:39:00
-layout: post
+date: 2012-10-03 20:39:00 +02:00
 redirect_from: "post/2012/10/03/tester-partie-get-action-create"
-tags: ef, mvc, unit-test
+tags: [ ef, mvc, unit-test ]
 title: "Tester la partie GET d'une action Create()"
 ---
 
 Pour compléter mes deux billets sur les tests unitaires concernant la partie
-POST de l'action Create() dans le contrôleur PeopleController ([partie 1]({% post_url 2012-10-01-tester-partie-post-action-create %}) et [partie 2]({% post_url 2012-10-02-tester-partie-post-action-create-2 %})), je me suis dit que ça serait une bonne idée de
+POST de l'action Create() dans le contrôleur PeopleController ([partie 1]({% post_url "2012-10-01-tester-partie-post-action-create" %}) et [partie 2]({% post_url "2012-10-02-tester-partie-post-action-create-2" %})), je me suis dit que ça serait une bonne idée de
 présenter aussi les tests unitaires qui concernent la partie GET de
 l'action.
 
@@ -46,7 +45,7 @@ la vue et permettre de rattacher la personne à créer à une société.
 
 Par ailleurs, lorsque le paramètre optionnel `ParentID` est
 défini, l'action l'utilise pour pré-rattacher la personne qui va être créée à
-une société donnée. Ca me permet de gérer un bouton "Ajouter une personne à
+une société donnée. Ça me permet de gérer un bouton "Ajouter une personne à
 cette société" dans la vue société et ainsi faciliter la vie de l'utilisateur
 quand il veut créer des contacts pour une société.
 
@@ -88,10 +87,10 @@ var result = controller.Create();
 
 => appelle l'action Create() sans argument.
 
-Note : ce test "attaque" la version GET de l'action
+*Note : Ce test "attaque" la version GET de l'action
 car il l'appelle sans paramètre et que fort heureusement pour moi, la version
 GET n'attend pas de paramètre (ou plutôt un paramètre facultatif de type int)
-alors que la version POST attend un paramètre de type ViewPerson.
+alors que la version POST attend un paramètre de type ViewPerson.*
 
 ```
 Assert.IsNotNull(result, "...");
@@ -224,7 +223,7 @@ suivante dans le code de l'action Create() :
 person.Companies = ListCompanies(person.Company_ID);
 ```
 
-Note : en rédigeant ce billet, je me demande si c'est
+Tout en rédigeant ce billet, je me demande si c'est
 "bon". Parce que j'aurais très bien pu coder :
 
 ```
@@ -281,7 +280,7 @@ var check = ... / Assert.IsTrue(check > 0, "...");
 
 => vérifie que la liste contient la société qui vient d'être créée.
 
-"A ce coup", je suis certain que j'ai bien rempli ma liste avec les sociétés
+"À ce coup", je suis certain que j'ai bien rempli ma liste avec les sociétés
 présentes en base de données. Mais je me demande aussi si ça fait pas un tout
 petit peu trop ?
 
@@ -338,11 +337,11 @@ Assert.AreEqual(societe.Contact_ID, model.Company_ID,
 => teste que l'ID de la société transmise à la vue correspond à l'ID qui
 avait été passée à l'action du contrôleur.
 
-Note : En fait, je ne teste pas que la société passée
+*Note : En fait, je ne teste pas que la société passée
 en paramètre soit bien sélectionnée dans la SelectList model.Companies puisque
 ce n'est pas l'action Create() qui s'occupe de ça. Par contre, il faut que je
 prévoie de faire des tests unitaires pour ma fonction ListCompanies() dont
-c'est le boulot.
+c'est le boulot.*
 
 ## Conclusion
 

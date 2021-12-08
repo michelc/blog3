@@ -1,8 +1,7 @@
 ---
-date: 2016-10-27 22:04:00
-layout: post
+date: 2016-10-27 22:04:00 +02:00
 redirect_from: "post/2016/10/27/creer-projet-node-js-typescript"
-tags: javascript
+tags: [ javascript ]
 title: "Créer un projet Node.js en TypeScript"
 ---
 
@@ -12,7 +11,7 @@ title: "Créer un projet Node.js en TypeScript"
 C:\Code> md Test3 && cd Test3 && code .
 ```
 
-Ca dépote !
+Ça dépote !
 
 ## Créer le fichier tsconfig.json
 
@@ -90,7 +89,7 @@ faut utiliser la syntaxe d'import des modules de ES6 :
 import * as path from 'path';
 ```
 
-Ca ne change absolument rien au JS qui est généré :
+Ça ne change absolument rien au JS qui est généré :
 
 ```
 "use strict";
@@ -174,7 +173,7 @@ Et par contre, on dispose maintenant d'une intellisense complète :
 
 * F5 pour continuer l'exécution
 
-Note : une fois le programme terminé, la barre d'outils pour le débugage est
+Une fois le programme terminé, la barre d'outils pour le débugage est
 toujours présente et il faut faire Shift+F5 pour arrêter l'exécution. Pour
 éviter cela, on peut ajouter la ligne suivante à la fin du fichier "test.ts" :
 

@@ -1,8 +1,7 @@
 ---
-date: 2009-06-19 09:27:00
-layout: post
+date: 2009-06-19 09:27:00 +02:00
 redirect_from: "post/2009/06/19/Une-fonction-XSLT-avec-des-parametres"
-tags: code-snippets, xml
+tags: [ code-snippets, xml ]
 title: "Une fonction XSLT avec des paramètres"
 ---
 

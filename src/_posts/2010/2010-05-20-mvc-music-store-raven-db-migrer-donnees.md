@@ -1,15 +1,15 @@
 ---
-date: 2010-05-20 13:12:00
-layout: post
+date: 2010-05-20 13:12:00 +02:00
 redirect_from: "post/2010/05/20/mvc-music-store-raven-db-migrer-donnees"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : Migrer les données"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Data migration](http://ayende.com/Blog/archive/2010/05/20/porting-mvc-music-store-to-raven-data-migration.aspx)", le
-troisième de la série consacrée au portage de l'application MVC Music Store
-sous RavenDB par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Data migration](http://ayende.com/Blog/archive/2010/05/20/porting-mvc-music-store-to-raven-data-migration.aspx)", le troisième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Voici le code nécessaire pour lire les données dans la base de données de
 [MVC Music Store](http://mvcmusicstore.codeplex.com/)

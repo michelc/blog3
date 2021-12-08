@@ -1,17 +1,16 @@
 ---
-date: 2010-01-28 20:22:00
-layout: post
+date: 2010-01-28 20:22:00 +02:00
 redirect_from: "post/2010/01/28/encore-plus-de-traduction-de-nerddinner"
-tags: mvc
+tags: [ mvc ]
 title: "Encore plus de traduction de NerdDinner"
 ---
 
-Ca va faire un bon moment que je n'ai pas publié de billet sur l'avancement
+Ça va faire un bon moment que je n'ai pas publié de billet sur l'avancement
 de ma traduction du tutoriel NerdDinner en français, mais heureusement, ça ne
-veut absolument pas dire que je n'ai pas progressé depuis [décembre]({% post_url 2009-12-17-formulaires-aspnetmvc %}) !
+veut absolument pas dire que je n'ai pas progressé depuis [décembre]({% post_url "2009-12-17-formulaires-aspnetmvc" %}) !
 
 En presque un mois, j'ai même ajouté 5 parties supplémentaires à la liste
-des traductions. A fin décembre, j'avais réussi à traduire près de la moitié du
+des traductions. À fin décembre, j'avais réussi à traduire près de la moitié du
 tutoriel ce qui n'était déjà pas si mal. Et maintenant, j'en suis arrivé à un
 peu plus des trois quarts du tutoriel traduit à ce jour :
 
@@ -41,7 +40,7 @@ pages !
 Malgré tout, je vais sans doute un peu lever le pied sur ce travail de
 traduction parce que :
 
-* A titre personnel je suis en plein dans la partie sur le plan d'accès (et
+* À titre personnel je suis en plein dans la partie sur le plan d'accès (et
 ça ne me passionne pas des masses) et j'aimerai quand même bien avoir fini le
 tutoriel pour la première semaine de février (et pas seulement à la va-vite en
 faisant du simple copier / coller)
@@ -72,7 +71,7 @@ Pour l'instant, j'ai déjà réussi à boucler la traduction de la première
 partie consacrée aux helpers HTML fortement typés en un peu moins d'une heure
 (mais elle était vraiment très très courte). Malgré tout, c'est un temps tout à
 fait convenable comparé aux presque quatre heures que j'ai passées sur le
-billet de Rob Conery pour inciter tout un chacun à [apprendre ASP.NET MVC]({% post_url 2010-01-12-vous-devriez-apprendre-mvc %}).
+billet de Rob Conery pour inciter tout un chacun à [apprendre ASP.NET MVC]({% post_url "2010-01-12-vous-devriez-apprendre-mvc" %}).
 
 Pour la suite, je croise les doigts pour que j'arrive à tenir le rythme,
 mais la seconde partie m'a posé plus de soucis. Il faut dire qu'elle est

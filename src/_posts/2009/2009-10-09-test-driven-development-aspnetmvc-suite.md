@@ -1,13 +1,12 @@
 ---
-date: 2009-10-09 11:55:00
-layout: post
+date: 2009-10-09 11:55:00 +02:00
 redirect_from: "post/2009/10/09/Test-Driven-Development-avec-ASP.NET-MVC-(suite)"
-tags: mvc, unit-test
+tags: [ mvc, unit-test ]
 title: "Test-Driven Development avec ASP.NET MVC (suite)"
 ---
 
 Je continue ma formation ASP.NET MVC avec la suite de la [6°
-partie du tutoriel pour gérer des contacts]({% post_url 2009-10-06-test-driven-development-aspnetmvc %} "Test-Driven Development avec ASP.NET MVC (le début)") qui est consacrée à la
+partie du tutoriel pour gérer des contacts]({% post_url "2009-10-06-test-driven-development-aspnetmvc" %} "Test-Driven Development avec ASP.NET MVC (le début)") qui est consacrée à la
 Programmation Pilotée par les Tests (ou Test-Driven Development en
 anglais).
 
@@ -45,7 +44,7 @@ casser quoi que ce soit d'important.
 
 Dans le cas présent, le refactoring va consister à réviser le code du
 contrôleur GroupController qui mélange un peu tout pour le rendre plus conforme
-au Single Responsibility Principle comme on l'avait déjà fait dans la [4° partie du tutoriel]({% post_url 2009-09-23-troisieme-etape-aspnetmvc %} "Refactoring avec ASP.NET MVC")
+au Single Responsibility Principle comme on l'avait déjà fait dans la [4° partie du tutoriel]({% post_url "2009-09-23-troisieme-etape-aspnetmvc" %} "Refactoring avec ASP.NET MVC")
 pour le contrôleur ContactController.
 
 Pour cela, on va modifier le contrôleur pour qu'il utilise la couche de
@@ -56,7 +55,7 @@ ContactManager.Models.Validation;` et il faut bien penser à modifier
 aussi les fichiers interfaces, mais c'est **OK pour la 3° étape du
 TDD**.
 
-Ca avance, mais je me pose quand même des questions.
+Ça avance, mais je me pose quand même des questions.
 
 * Est-ce que ça prendrait vraiment beaucoup plus de temps si on avait fait
 "bien" dès le premier coup ?
@@ -75,7 +74,7 @@ seulement dans le cas de la table Contact. C'est d'ailleurs pour ça qu'elles
 s'appellent ContactManagerRepository et ContactManagerService et pas seulement
 ContactRepository et ContactService.
 
-Ca non plus, je sais pas trop si ça me plait bien. J'ai un peu peur qu'à la
+Ça non plus, je sais pas trop si ça me plait bien. J'ai un peu peur qu'à la
 fin on risque de se retrouver avec un source énorme si notre application doit
 gérer un très grand nombre de tables. Sans compter que ça devient génant dans
 le cas des FakeRepository où on devra donc tout implémenter à coup de
@@ -112,4 +111,4 @@ France
 * Un [compte-rendu d'une formation au TDD](http://blog.olivier-duval.info/?post/2008/09/29/TDD-integration-continue) par Olivier Duval
 
 ---
-Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (suite)]({% post_url 2009-10-20-test-driven-development-aspnetmvc-suite %})
+Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (suite)]({% post_url "2009-10-20-test-driven-development-aspnetmvc-suite" %})

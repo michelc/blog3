@@ -1,8 +1,7 @@
 ---
-date: 2013-02-11 22:15:50
-layout: post
+date: 2013-02-11 22:15:50 +02:00
 redirect_from: "post/2013/02/11/conditions-ruby"
-tags: ruby
+tags: [ ruby ]
 title: "Les conditions en Ruby"
 ---
 
@@ -612,7 +611,7 @@ toto est définie, parce qu'en Ruby, quelque chose qui n'existe pas est
 considéré (évalué) comme faux et quelque chose qui existe est considéré comme
 vrai.
 
-Etant donné que le test porte uniquement sur le fait que la variable toto
+Étant donné que le test porte uniquement sur le fait que la variable toto
 est définie ou non, l'opérateur " `||` " (le `or`) permet
 de réaliser le même genre de test mais de façon implicite :
 

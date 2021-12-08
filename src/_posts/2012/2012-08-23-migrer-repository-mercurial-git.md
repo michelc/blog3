@@ -1,12 +1,11 @@
 ---
-date: 2012-08-23 00:50:00
-layout: post
+date: 2012-08-23 00:50:00 +02:00
 redirect_from: "post/2012/08/23/migrer-repository-mercurial-vers-git"
-tags: git, mercurial
+tags: [ git, mercurial ]
 title: "Migrer un repository de Mercurial vers Git"
 ---
 
-Ca m'a demandé quand même un peu de temps pour réussir à trouver un système
+Ça m'a demandé quand même un peu de temps pour réussir à trouver un système
 qui marche et qui soit assez simple à refaire.
 
 Grosso-modo, il existe 3 méthodes :
@@ -22,7 +21,7 @@ donc pris cette option.
 
 Au début, ça fait un peu [peur](http://stackoverflow.com/questions/4585776/installing-hg-git-on-windows-7-64bit), mais en fait y'a quasiment [rien à faire](http://tortoisehg.bitbucket.org/manual/1.0/nonhg.html#hg-git-git).
 
-Etant donné que j'ai la chance d'avoir déjà installé [TortoiseHg](http://tortoisehg.bitbucket.org/) sur mon PC, il
+Étant donné que j'ai la chance d'avoir déjà installé [TortoiseHg](http://tortoisehg.bitbucket.org/) sur mon PC, il
 s'avère que je n'ai pas à m'embarrasser avec Python, MSysGit et
 tutti-quanti.
 
@@ -77,10 +76,10 @@ C:\Hgs\MongoContacts> hg push C:/Gits/MongoContacts/Bare
 
 => `creating and sending data`
 
-Ca y est, mon historique est dans mon repository Git "bare". Reste plus qu'à
+Ça y est, mon historique est dans mon repository Git "bare". Reste plus qu'à
 *clone the bare repository to a working directory*.
 
-Ca aurait été mieux s'il avait expliqué comment faire, mais j'y suis
+Ça aurait été mieux s'il avait expliqué comment faire, mais j'y suis
 arrivé :
 
 ```

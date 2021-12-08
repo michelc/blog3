@@ -1,8 +1,7 @@
 ---
-date: 2012-12-18 21:50:00
-layout: post
+date: 2012-12-18 21:50:00 +02:00
 redirect_from: "post/2012/12/18/windows-powershell-ruby-accents"
-tags: ruby
+tags: [ ruby ]
 title: "Windows, PowerShell, Ruby et les accents"
 ---
 
@@ -61,7 +60,7 @@ irb(main):001:0> str = "Réel"
 => "Réel"
 ```
 
-Ca marche !!!
+Ça marche !!!
 
 Je vérifie :
 

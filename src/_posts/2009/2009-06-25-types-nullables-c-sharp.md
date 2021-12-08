@@ -1,8 +1,7 @@
 ---
-date: 2009-06-25 11:39:00
-layout: post
+date: 2009-06-25 11:39:00 +02:00
 redirect_from: "post/2009/06/25/Les-types-nullables-en-c"
-tags: csharp
+tags: [ csharp ]
 title: "Les types nullables en c#"
 ---
 
@@ -135,7 +134,7 @@ int? titi = 12;
 tutu = titi; // Erreur de compilation: Cannot implicitly convert type 'int?' to 'int.
 ```
 
-A la rigueur, il est possible de caster la variable de type nullable à une
+À la rigueur, il est possible de caster la variable de type nullable à une
 variable de type valeur. Cela ne provoquera pas d'erreur de compilation mais
 attendra l'exécution pour planter :
 

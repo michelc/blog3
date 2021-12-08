@@ -1,8 +1,7 @@
 ---
-date: 2005-12-01 08:51:00
-layout: post
+date: 2005-12-01 08:51:00 +02:00
 redirect_from: "post/2005/12/01/Amelioration-XxxxxxSearch-etape-2"
-tags: qc
+tags: [ qc ]
 title: "Amélioration XxxxxxSearch - étape 2"
 ---
 

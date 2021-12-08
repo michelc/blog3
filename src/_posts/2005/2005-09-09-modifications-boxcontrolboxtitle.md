@@ -1,8 +1,7 @@
 ---
-date: 2005-09-09 15:55:00
-layout: post
+date: 2005-09-09 15:55:00 +02:00
 redirect_from: "post/2005/09/09/Modifications-pour-BoxControlboxTitle"
-tags: qc
+tags: [ qc ]
 title: "Modifications pour BoxControl.boxTitle"
 ---
 

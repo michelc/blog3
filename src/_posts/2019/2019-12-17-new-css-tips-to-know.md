@@ -1,21 +1,16 @@
 ---
-date: 2019-12-17 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-17 12:09:42 +02:00
+tags: [ css ]
 lang: en-US
 title: "A new CSS and 5 tips to know"
-image: "/public/2019/sapin-de-noel.jpg"
+cover:
+  image: /public/2019/sapin-de-noel.jpg
+  link: https://unsplash.com/photos/ySNkCkdKyTY
+  text: Christmas tree - Rodion Kutsaev
 excerpt: "For the coming new year, I have refreshed the visual style of my blog. Besides the 'tout nouveau, tout beau' point, it allowed me to find 2 or 3 things from CSS and Jekyll that I didn't know."
 ---
 
 For the coming new year, I have refreshed the visual style of my blog. Besides the "tout nouveau, tout beau" point, it allowed me to find 2 or 3 things from CSS and [Jekyll](https://jekyllrb.com/) that I didn't know.
-
-<figure>
-  <img src="{{ page.image }}" alt="sapin-de-noel" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/ySNkCkdKyTY">Christmas tree - Rodion Kutsaev</a>
-  </figcaption>
-</figure>
 
 I started by changing the font. Until recently, I used to like the "Century Gothic" font a lot, but lately I've preferred to stick to system fonts.
 
@@ -172,12 +167,12 @@ And lately, I have sometimes used an "encart" div to display a table of contents
 ```markdown
 <div class="encart">
 
-1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url 2019-04-30-dquery-remplacer-jquery %})
-2. [Une version compatible IE9 / ES5]({% post_url 2019-05-07-dquery-compatibilite-ie9-es5 %})
-3. [Ma librairie pour manipuler le DOM]({% post_url 2019-05-14-dquery-librairie-js-manipulation-dom %})
-4. [La délégation des évènements en JS]({% post_url 2019-05-21-dquery-delegation-evenement-javascript %})
-5. [Délégation d'évènements et « event.target »]({% post_url 2019-05-28-dquery-delegation-evenement-event-target %})
-6. [Délégation d'évènements et iOS]({% post_url 2019-06-04-dquery-delegation-evenement-ios %})
+1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url "2019-04-30-dquery-remplacer-jquery" %})
+2. [Une version compatible IE9 / ES5]({% post_url "2019-05-07-dquery-compatibilite-ie9-es5" %})
+3. [Ma librairie pour manipuler le DOM]({% post_url "2019-05-14-dquery-librairie-js-manipulation-dom" %})
+4. [La délégation des évènements en JS]({% post_url "2019-05-21-dquery-delegation-evenement-javascript" %})
+5. [Délégation d'évènements et « event.target »]({% post_url "2019-05-28-dquery-delegation-evenement-event-target" %})
+6. [Délégation d'évènements et iOS]({% post_url "2019-06-04-dquery-delegation-evenement-ios" %})
 
 </div>
 ```
@@ -185,8 +180,11 @@ And lately, I have sometimes used an "encart" div to display a table of contents
 Well, that doesn't work... The Markdown code inside the `div` tag is not transformed into html :( For the simplest cases with only one link, I used to replace the `div.encart` tag by its Markdown equivalent, using the `{:.encart}` syntax:
 
 ```
-{:.encart}
-Version en français : [Gérer le menu hamburger de Bootstrap 4 en Vanilla JS]({% post_url 2019-12-09-menu-hamburger-bootstrap-vanilla-js %}).
+<div class="encart">
+
+Version en français : {% goto_fr "Gérer le menu hamburger de Bootstrap 4 en Vanilla JS", "2019-12-09-menu-hamburger-bootstrap-vanilla-js" %}.
+
+</div>
 ```
 
 For more complicated cases, I had given up and written everything in HTML. But during the revision of my CSS style, I look a little further and fortunately there is a solution: [Embedding Markdown in Jekyll HTML](https://stackoverflow.com/a/23384161).
@@ -203,5 +201,8 @@ For more complicated cases, I had given up and written everything in HTML. But d
 
 I know I insist, but here's a **5th tip**: always create a print CSS to ensure a good result when printing.
 
-{:.encart}
-Version en français : [Nouvelle CSS et 5 trucs bons à savoir]({% post_url 2019-12-16-nouvelle-css-quelques-trucs %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Nouvelle CSS et 5 trucs bons à savoir", "2019-12-16-nouvelle-css-quelques-trucs" %}.
+
+</div>

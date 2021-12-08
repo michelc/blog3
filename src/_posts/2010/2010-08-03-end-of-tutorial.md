@@ -1,8 +1,7 @@
 ---
-date: 2010-08-03 15:53:00
-layout: post
+date: 2010-08-03 15:53:00 +02:00
 redirect_from: "post/2010/08/03/end-of-tutorial"
-tags: mvc
+tags: [ mvc ]
 title: "End of Tutorial"
 ---
 

@@ -1,19 +1,15 @@
 ---
-date: 2020-02-24 12:27:34+200
-layout: post
-tags: mail
+date: 2020-02-24 12:27:34 +02:00
+tags: [ mail ]
 title: "Accéder à Office 365 Mail depuis GMail"
-image: "/public/2020/office365-gmail.jpg"
+cover:
+  image: /public/2020/office365-gmail.jpg
+  link: https://funny.pho.to/fr/antique-oil-painting/
+  text: Antique Oil Painting - PHO.TO
+excerpt: Pour ne pas oublier comment j'ai fait et retrouver ça le jour où j'en aurai besoin, je note comment gérer mon adresse mél Office 365 depuis le client GMail.
 ---
 
 Pour ne pas oublier comment j'ai fait et retrouver ce paramétrage le jour où j'en aurai besoin, je note ici comment j'ai procédé pour gérer mon adresse mél Office 365 depuis mon client GMail. Parce que généralement, ce qu'on trouve sur internet explique surtout comment migrer de GMail à Office 365 ou inversement...
-
-<figure>
-  <img src="{{ page.image }}" alt="office365-gmail" />
-  <figcaption>
-    <a href="https://funny.pho.to/fr/antique-oil-painting/">Antique Oil Painting - PHO.TO</a>
-  </figcaption>
-</figure>
 
 Le but de cette manipulation, c'est de me permettre de continuer à utiliser le webmail GMail pour :
 
@@ -71,9 +67,12 @@ Juste en dessous, il est préférable de définir que l'on souhaite par défaut 
 
 ## Conclusion
 
-Ca marche et surtout, j'ai maintenant accès à mon adresse Office 365 aussi bien depuis GMail que Outlook.
+Ça marche et surtout, j'ai maintenant accès à mon adresse Office 365 aussi bien depuis GMail que Outlook.
 
 Mais pour information, j'ai testé différentes méthodes jusqu'à ce que je trouve quelque chose qui fonctionne (et je n'ai pas cherché plus loin). Je suis donc preneur si quelqu'un connait une meilleure solution et idéalement la méthode "officielle".
 
-{:.encart}
-English version: [How to access Office 365 email from GMail]({% post_url 2020-02-25-access-office-365-mail-from-gmail %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "How to access Office 365 email from GMail", "2020-02-25-access-office-365-mail-from-gmail" %}.
+
+</div>

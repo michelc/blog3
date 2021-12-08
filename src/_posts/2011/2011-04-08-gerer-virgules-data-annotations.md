@@ -1,12 +1,11 @@
 ---
-date: 2011-04-08 13:43:00
-layout: post
+date: 2011-04-08 13:43:00 +02:00
 redirect_from: "post/2011/04/08/gerer-virgules-avec-data-annotations"
-tags: jquery, mvc
+tags: [ jquery, mvc ]
 title: "Gérer les virgules avec les Data Annotations"
 ---
 
-Après avoir "réparé" mon [Visual Studio 2010]({% post_url 2011-03-30-vs-2010-sql-server-2008-express-windows-7-64-bits %}), j'ai pu me remettre à la version 2 du
+Après avoir "réparé" mon [Visual Studio 2010]({% post_url "2011-03-30-vs-2010-sql-server-2008-express-windows-7-64-bits" %}), j'ai pu me remettre à la version 2 du
 tutoriel [MVC Music
 Store](http://mvcmusicstore.codeplex.com/) pour me confronter aux dernières (pour moi) technologies ASP.NET MVC
 3 et entre autre Razor et les Data Annotations.
@@ -199,7 +198,7 @@ valeur maximum de 100). Personne lui a jamais dit qu'on ne peut pas comparer
 les points et les virgules ?
 
 Et le pire, c'est qu'il fait pareil avec les fonctions "min" et max" le
-bougre ! Ca va pas se passer comme ça :
+bougre ! Ça va pas se passer comme ça :
 
 ```
 /* ----- methods_fr.js ----- */
@@ -234,7 +233,7 @@ function replaceComma(value) {
 
 Et après ça, 8,90 passe enfin alors que 100,01 est bien refusé !
 
-Ouf ! Ca devrait faire l'affaire jusqu'à la sortie de [jQuery Validation 2.0](https://github.com/jzaefferer/jquery-validation/issues#issue/55).
+Ouf ! Ça devrait faire l'affaire jusqu'à la sortie de [jQuery Validation 2.0](https://github.com/jzaefferer/jquery-validation/issues#issue/55).
 
 Mise à jour : si j'avais cherché mieux, j'aurais pu
 trouver le billet [Using MVC 3 with non-English Locales](http://blogs.msdn.com/b/rickandy/archive/2011/02/17/using-mvc-3-with-non-english-locales.aspx) de Rick Anderson, le

@@ -1,8 +1,7 @@
 ---
-date: 2009-12-07 18:53:00
-layout: post
+date: 2009-12-07 18:53:00 +02:00
 redirect_from: "post/2009/12/07/formulaires-mise-a-jour-asp-net-mvc"
-tags: boulot, mvc
+tags: [ boulot, mvc ]
 title: "Les formulaires de mise à jour en ASP.NET MVC"
 ---
 
@@ -20,7 +19,7 @@ vue pour les vues Create et Edit](http://stackoverflow.com/questions/399914/asp-
 tombé parce que ce que je faisais n'avait plus vraiment le parfum MVC
 * j'ai regardé vite fait la présentation / démonstration de Scott Hanselman
 sur les [nouvelles fonctionnalités de ASP.NET MVC 2](http://www.hanselman.com/blog/PDC09ASPNETMVC2NinjasStillOnFireBlackBeltTips.aspx)
-* j'ai fait quelques tests avec [T4MVC]({% post_url 2009-12-01-test-t4mvc-contact-manager %}), notamment sur le projet Contact Manager qui me sert de
+* j'ai fait quelques tests avec [T4MVC]({% post_url "2009-12-01-test-t4mvc-contact-manager" %}), notamment sur le projet Contact Manager qui me sert de
 bac à sable
 
 Ces petits écarts ont quand même réussi à me maintenir à peu près d'attaque
@@ -41,7 +40,7 @@ le désordre, je ne suis pas sûr de pouvoir mettre en ligne les pages consacré
 au ModelState avant mercredi).
 
 Alors pour me reposer de ma semaine, je me suis laissé aller à programmer
-pour de vrai. Ca m'a permis de pas mal améliorer le système de rechercher /
+pour de vrai. Ça m'a permis de pas mal améliorer le système de rechercher /
 remplacer qui fait passer le fichier de dans lequel j'enregistre la traduction
 du format Word au format Wiki de Dotclear. Pour cela, je suis parti de
 l'application [CleanWordHtml](http://www.codinghorror.com/blog/archives/000485.html) de

@@ -1,8 +1,7 @@
 ---
-date: 2008-06-05 15:32:00
-layout: post
+date: 2008-06-05 15:32:00 +02:00
 redirect_from: "post/2008/06/05/Verifier-que-les-identifiants-automatiques-sont-a-jour"
-tags: boulot
+tags: [ boulot ]
 title: "Vérifier que les identifiants automatiques sont à jour"
 ---
 

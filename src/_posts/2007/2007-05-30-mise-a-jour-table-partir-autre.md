@@ -1,18 +1,14 @@
 ---
-date: 2007-05-30 21:04:00
-layout: post
+date: 2007-05-30 21:04:00 +02:00
 redirect_from: "post/2007/05/30/Mise-a-jour-dune-table-a-partir-dune-autre"
-tags: code-snippets, sql
+tags: [ code-snippets, sql ]
 title: "Mise à jour d'une table à partir d'une autre"
-image: "/public/2019/sql-database.jpg"
+cover:
+  image: /public/2019/sql-database.jpg
+  link: https://dbdiagram.io/
+  text: dbdiagram.io
+excerpt: Je note ici la commande SQL qui me permet de mettre à jour la colonne d'une table à partir d'une auytre colonne dans une autre table (versions Access, SqlServer et Oracle).
 ---
-
-<figure>
-  <img src="{{ page.image }}" alt="sql-database" />
-  <figcaption>
-    <a href="https://dbdiagram.io/">dbdiagram.io</a>
-  </figcaption>
-</figure>
 
 Pour mettre à jour un champ d'une table à partir du champ équivalent d'une
 autre table, Access accepte deux noms de tables pour la commande UPDATE, mais
@@ -48,5 +44,8 @@ SET    LignesFactures.TauxTva = (SELECT Articles.TauxTva
                                  WHERE  Articles.ArticleID = LignesFactures.ArticleID)
 ```
 
-{:.encart}
-English version: [Updating a table from another table]({% post_url 2019-12-23-update-table-from-another-table %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Updating a table from another table", "2019-12-23-update-table-from-another-table" %}.
+
+</div>

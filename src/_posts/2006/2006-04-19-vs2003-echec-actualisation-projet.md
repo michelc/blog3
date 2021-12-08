@@ -1,8 +1,7 @@
 ---
-date: 2006-04-19 09:52:00
-layout: post
+date: 2006-04-19 09:52:00 +02:00
 redirect_from: "post/2006/04/19/VS2003-Echec-de-lactualisation-du-projet"
-tags: .net, code-snippets
+tags: [ .net, code-snippets ]
 title: "VS2003 - Echec de l'actualisation du projet"
 ---
 

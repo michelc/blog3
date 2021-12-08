@@ -1,8 +1,7 @@
 ---
-date: 2006-01-12 18:32:00
-layout: post
+date: 2006-01-12 18:32:00 +02:00
 redirect_from: "post/2006/01/12/VistaDB-21-database-for-NET-has-been-released"
-tags: .net
+tags: [ .net ]
 title: "VistaDB 2.1 database for .NET has been released"
 ---
 

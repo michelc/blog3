@@ -1,8 +1,7 @@
 ---
-date: 2016-10-19 23:51:00
-layout: post
+date: 2016-10-19 23:51:00 +02:00
 redirect_from: "post/2016/10/19/creer-projet-node-js-visual-code"
-tags: javascript
+tags: [ javascript ]
 title: "Créer un projet Node.js sous Visual Code"
 ---
 
@@ -31,7 +30,7 @@ console.log(msg);
 
 ## Exécuter le fichier test.js
 
-A faire depuis le terminal intégré de Visual Studio Code (Ctrl+ù) ou depuis
+À faire depuis le terminal intégré de Visual Studio Code (Ctrl+ù) ou depuis
 l'invite de commande de Windows :
 
 ```

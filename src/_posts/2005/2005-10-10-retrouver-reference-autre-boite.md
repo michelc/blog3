@@ -1,8 +1,7 @@
 ---
-date: 2005-10-10 13:46:00
-layout: post
+date: 2005-10-10 13:46:00 +02:00
 redirect_from: "post/2005/10/10/Retrouver-la-reference-a-une-autre-boite"
-tags: qc
+tags: [ qc ]
 title: "Retrouver la référence à une autre boite"
 ---
 

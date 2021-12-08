@@ -1,8 +1,7 @@
 ---
-date: 2004-10-25 12:08:00
-layout: post
+date: 2004-10-25 12:08:00 +02:00
 redirect_from: "post/2004/10/25/Wdevs-My-week-end-with-MySQL"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) My week-end with MySQL"
 ---

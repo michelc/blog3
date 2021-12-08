@@ -1,22 +1,18 @@
 ---
-date: 2019-10-29 12:33:18+200
-layout: post
+date: 2019-10-29 12:33:18 +02:00
 lang: en-US
-tags: javascript, node, sql
+tags: [ javascript, node, sql ]
 title: "Use SQlite3 in async / await mode"
-image: "/public/2019/grand-bain.jpg"
+cover:
+  image: /public/2019/grand-bain.jpg
+  link: https://www.rottentomatoes.com/m/sink_or_swim_2018
+  text: Sink or Swim - Gilles Lellouche
+excerpt: In this tutorial, I update my previous code so that I no longer have to use callback functions to access the SQLite database.
 ---
 
-I go on my series of tutorials to learn Node JS and more specifically how to develop small web applications with ExpressJS. I have already seen how to access a [SQlite]({% post_url 2019-10-08-crud-with-express-sqlite-10-steps %}) database, then [PostgreSQL]({% post_url 2019-10-15-crud-with-express-postgresql-10-steps %}). In the previous tutorial, I compared how to access [SQlite and PostgreSQL with Express]({% post_url 2019-10-22-comparing-sqlite-postgresql-express %}) to be able to write the same code to access both databases.
+I go on my series of tutorials to learn Node JS and more specifically how to develop small web applications with ExpressJS. I have already seen how to access a [SQlite]({% post_url "2019-10-08-crud-with-express-sqlite-10-steps" %}) database, then [PostgreSQL]({% post_url "2019-10-15-crud-with-express-postgresql-10-steps" %}). In the previous tutorial, I compared how to access [SQlite and PostgreSQL with Express]({% post_url "2019-10-22-comparing-sqlite-postgresql-express" %}) to be able to write the same code to access both databases.
 
 In this tutorial, I will modify the existing code so that I no longer have to use a callback function when I make a query on the database.
-
-<figure>
-  <img src="{{ page.image }}" alt="grand-bain" />
-  <figcaption>
-    <a href="https://www.rottentomatoes.com/m/sink_or_swim_2018">Sink or Swim - Gilles Lellouche</a>
-  </figcaption>
-</figure>
 
 
 ## Asynchronous operation / callback
@@ -55,7 +51,7 @@ In a nutshell, you have to:
 * when the request is completed, the `.query()` method calls this callback function by sending it an `Error` parameter and the result of executing the request,
 * and finally, the callback function must handle this error (if any) and this result...
 
-Note: It's difficult to read, difficult to write, and also difficult to explain.
+*Note: It's difficult to read, difficult to write, and also difficult to explain.*
 
 
 ## Async / await operation
@@ -108,11 +104,11 @@ app.get("/books", async (req, res) => {
 ...
 ```
 
-Note: We are not looking at the fact that there is always a callback for `app.get()` and we stay focus on the database...
+*Note: We are not looking at the fact that there is always a callback for `app.get()` and we stay focus on the database...*
 
 In case of problem, the error is recovered via `try / catch` and when all goes well, the result of the request is returned and the current processing can resume its normal course....
 
-Note: It looks like synchronous operation, it's written like synchronous, but it's still asynchronous since we code "async" and "await".
+*Note: It looks like synchronous operation, it's written like synchronous, but it's still asynchronous since we code "async" and "await".*
 
 It's much more beautiful and it works too! But sadly only when I use PostgreSQL and node-postgres... Because with SQlite, everything is broken:
 
@@ -400,5 +396,8 @@ app.post("/delete/:id", async (req, res) => {
 });
 ```
 
-{:.encart}
-Version en français : [Utiliser SQlite3 en mode async / await]({% post_url 2019-10-21-utiliser-sqlite-node-async-await %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Utiliser SQlite3 en mode async / await", "2019-10-21-utiliser-sqlite-node-async-await" %}.
+
+</div>

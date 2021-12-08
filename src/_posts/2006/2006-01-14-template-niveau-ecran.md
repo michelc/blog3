@@ -1,8 +1,7 @@
 ---
-date: 2006-01-14 11:13:00
-layout: post
+date: 2006-01-14 11:13:00 +02:00
 redirect_from: "post/2006/01/14/Template-au-niveau-ecran"
-tags: qc
+tags: [ qc ]
 title: "Template au niveau écran"
 ---
 
@@ -25,6 +24,6 @@ représentant ce modèle de page :
 * template = "azerty" => utiliser /res/_azerty/default.aspx,
 * template = "azerty/autre" => utiliser /res/_azerty/autre.aspx.
 
-Note : pour l'instant, il n'est pas encore possible de
+*Note : Pour l'instant, il n'est pas encore possible de
 définir la valeur du champ "template" des écrans autrement que par une mise à
-jour manuelle de la base de données.
+jour manuelle de la base de données.*

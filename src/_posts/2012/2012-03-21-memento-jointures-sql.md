@@ -1,21 +1,16 @@
 ---
-date: 2012-03-21 19:57:00
-layout: post
+date: 2012-03-21 19:57:00 +02:00
 redirect_from: "post/2012/03/21/memento-jointures-sql"
-tags: sql
+tags: [ sql ]
 title: "Mémento des jointures en SQL"
-image: "/public/2020/sql-join.jpg"
+cover:
+  image: /public/2020/sql-join.jpg
+  link: https://blog.jooq.org/2016/07/05/say-no-to-venn-diagrams-when-explaining-joins/
+  text: Say NO to Venn Diagrams When Explaining JOINs
 excerpt: "J'essaie encore une fois de comprendre comment faire des jointures SQL sans passer par un bête «WHERE Table1.Foreign_ID = Table2.ID»..."
 ---
 
-Dernièrement, j'ai eu besoin de faire une comparaison assez compliquée entre deux tables, pour faire ressortir toutes les <s>anomalies</s> différences entre les deux, y compris les données qui n'apparaissent que dans une des deux tables. Etant donné mon niveau en jointures, impossible de me souvenir comment faire de mémoire.
-
-<figure>
-  <img src="{{ page.image }}" alt="sql-join" />
-  <figcaption>
-    <a href="https://blog.jooq.org/2016/07/05/say-no-to-venn-diagrams-when-explaining-joins/">Say NO to Venn Diagrams When Explaining JOINs</a>
-  </figcaption>
-</figure>
+Dernièrement, j'ai eu besoin de faire une comparaison assez compliquée entre deux tables, pour faire ressortir toutes les <s>anomalies</s> différences entre les deux, y compris les données qui n'apparaissent que dans une des deux tables. Étant donné mon niveau en jointures, impossible de me souvenir comment faire de mémoire.
 
 Heureusement, un passage par la page [Join (SQL)](https://en.wikipedia.org/wiki/Join_(SQL)) sur Wikipedia m'a fait (re?)découvrir les FULL OUTER JOIN, ce que j'ai complété par le billet [A Visual Explanation of SQL Joins](http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html) de Jeff Atwood.
 
@@ -254,5 +249,8 @@ ID  Libelle  Caption
 3   Trois
 ```
 
-{:.encart}
-English version: [SQL Join Memento]({% post_url 2020-01-21-sql-join-memento %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "SQL Join Memento", "2020-01-21-sql-join-memento" %}.
+
+</div>

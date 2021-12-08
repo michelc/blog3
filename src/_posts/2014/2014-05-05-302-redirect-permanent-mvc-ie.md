@@ -1,8 +1,7 @@
 ---
-date: 2014-05-05 13:40:00
-layout: post
+date: 2014-05-05 13:40:00 +02:00
 redirect_from: "post/2014/05/05/302-redirect-permanent-mvc-ie"
-tags: mvc
+tags: [ mvc ]
 title: "302 Redirect Permanent, MVC et IE"
 ---
 

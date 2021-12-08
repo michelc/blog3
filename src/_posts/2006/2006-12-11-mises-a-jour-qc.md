@@ -1,12 +1,11 @@
 ---
-date: 2006-12-11 16:54:00
-layout: post
+date: 2006-12-11 16:54:00 +02:00
 redirect_from: "post/2006/12/11/Mises-a-jour-QC"
-tags: ap, qc
+tags: [ ap, qc ]
 title: "Mises à jour QC"
 ---
 
-Pour rattraper le [retard]({% post_url 2006-09-20-trucs-a-faire %}) pris dans le suivi des mises à
+Pour rattraper le [retard]({% post_url "2006-09-20-trucs-a-faire" %}) pris dans le suivi des mises à
 jours / évolutions, la liste des quelques modifications apportées à QC depuis
 septembre.
 

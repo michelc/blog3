@@ -1,15 +1,15 @@
 ---
-date: 2010-05-26 13:29:00
-layout: post
+date: 2010-05-26 13:29:00 +02:00
 redirect_from: "post/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : Faire une migration plus poussée"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Advanced Migrations](http://ayende.com/Blog/archive/2010/05/24/porting-mvc-music-store-to-raven-advanced-migrations.aspx)", le
-septième de la série consacrée au portage de l'application MVC Music Store sous
-RavenDB par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Advanced Migrations](http://ayende.com/Blog/archive/2010/05/24/porting-mvc-music-store-to-raven-advanced-migrations.aspx)", le septième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Je me suis rendu compte qu'à cause d'une faute de frappe lorsque j'avais
 fait la reprise des données, les informations sur l'artiste étaient

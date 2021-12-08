@@ -1,8 +1,7 @@
 ---
-date: 2007-05-03 14:28:00
-layout: post
+date: 2007-05-03 14:28:00 +02:00
 redirect_from: "post/2007/05/03/Comment-cibler-le-contenu-reference"
-tags: referencement
+tags: [ referencement ]
 title: "Comment cibler le contenu référencé"
 ---
 
@@ -17,4 +16,4 @@ faire ignorer des zones de page pour Yahoo (robots-nocontent)](http://www.webran
 * Yahoo! Search Blog : [Introducing Robots-Nocontent
 for Page Sections](http://www.ysearchblog.com/archives/000444.html)
 * Et aussi : [
-Comment cibler les publicités AdSense]({% post_url 2006-01-20-comment-cibler-publicites-adsense %})
+Comment cibler les publicités AdSense]({% post_url "2006-01-20-comment-cibler-publicites-adsense" %})

@@ -1,8 +1,7 @@
 ---
-date: 2005-08-08 09:54:00
-layout: post
+date: 2005-08-08 09:54:00 +02:00
 redirect_from: "post/2005/08/08/Notion-visibilite-boites"
-tags: qc
+tags: [ qc ]
 title: "Notion de visibilité des boites"
 ---
 

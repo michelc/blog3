@@ -1,8 +1,7 @@
 ---
-date: 2005-07-22 10:55:00
-layout: post
+date: 2005-07-22 10:55:00 +02:00
 redirect_from: "post/2005/07/22/Correction-bug-sur-isConfigurable"
-tags: qc
+tags: [ qc ]
 title: "Correction bug sur isConfigurable"
 ---
 

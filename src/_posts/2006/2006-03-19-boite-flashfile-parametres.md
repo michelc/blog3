@@ -1,12 +1,11 @@
 ---
-date: 2006-03-19 11:21:00
-layout: post
+date: 2006-03-19 11:21:00 +02:00
 redirect_from: "post/2006/03/19/Boite-Flashfile-et-parametres"
-tags: qc
+tags: [ qc ]
 title: "Boite Flashfile et paramètres"
 ---
 
-L'utilisation de la nouvelle méthode [Common.MapPath()]({% post_url 2006-03-14-mappath-plus-souple %})
+L'utilisation de la nouvelle méthode [Common.MapPath()]({% post_url "2006-03-14-mappath-plus-souple" %})
 (après lui avoir apporté une dernière petite modification) permet dorénavant de
 définir une source dans laquelle il apparait des paramètres, sans que cela pose
 de problème par rapport au test d'existence du fichier.

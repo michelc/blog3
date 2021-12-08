@@ -1,14 +1,13 @@
 ---
-date: 2005-01-14 14:21:00
-layout: post
+date: 2005-01-14 14:21:00 +02:00
 redirect_from: "post/2005/01/14/Wdevs-SystemWebMail-and-smtpgmailcom"
-tags: code-snippets, csharp, qc, wdevs
+tags: [ code-snippets, csharp, qc, wdevs ]
 lang: en-US
 title: "(Wdevs) System.Web.Mail and smtp.gmail.com"
 ---
 
 Important update: there is another snippet to [use
-smtp.gmail.com with System.Net.Mail]({% post_url 2009-04-21-systemnetmail-smtpgmailcom %}) for .NET 2.
+smtp.gmail.com with System.Net.Mail]({% post_url "2009-04-21-systemnetmail-smtpgmailcom" %}) for .NET 2.
 
 Since I had difficulties to find examples on Google, I publish my code that
 uses smtp.gmail.com as smtp server to send emails.

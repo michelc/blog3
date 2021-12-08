@@ -1,8 +1,7 @@
 ---
-date: 2012-06-14 22:56:00
-layout: post
+date: 2012-06-14 22:56:00 +02:00
 redirect_from: "post/2012/06/14/abondance-de-bien-ne-nuit-pas"
-tags: ruby
+tags: [ ruby ]
 title: "Abondance de bien ne nuit pas"
 ---
 

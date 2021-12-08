@@ -1,8 +1,7 @@
 ---
-date: 2006-03-29 08:38:00
-layout: post
+date: 2006-03-29 08:38:00 +02:00
 redirect_from: "post/2006/03/29/Gestion-des-utilisateurs"
-tags: qc
+tags: [ qc ]
 title: "Gestion des utilisateurs"
 ---
 

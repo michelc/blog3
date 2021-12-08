@@ -1,8 +1,7 @@
 ---
-date: 2005-03-18 12:02:00
-layout: post
+date: 2005-03-18 12:02:00 +02:00
 redirect_from: "post/2005/03/18/Wdevs-IBuySpy-Roles-are-not-enough"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) IBuySpy Roles are not enough"
 ---

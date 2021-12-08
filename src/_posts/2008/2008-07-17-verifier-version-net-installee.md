@@ -1,8 +1,7 @@
 ---
-date: 2008-07-17 11:11:00
-layout: post
+date: 2008-07-17 11:11:00 +02:00
 redirect_from: "post/2008/07/17/Verifier-la-version-du-NET-installee"
-tags: .net, code-snippets
+tags: [ .net, code-snippets ]
 title: "Vérifier la version du .NET installée"
 ---
 

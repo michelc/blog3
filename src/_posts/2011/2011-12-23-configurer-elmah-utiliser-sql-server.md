@@ -1,12 +1,11 @@
 ---
-date: 2011-12-23 13:27:00
-layout: post
+date: 2011-12-23 13:27:00 +02:00
 redirect_from: "post/2011/12/23/configurer-elmah-pour-utiliser-sql-server"
-tags: .net, sql-server
+tags: [ .net, sql-server ]
 title: "Configurer ELMAH pour utiliser SQL Server"
 ---
 
-Pour avancer un peu plus dans mon [utilisation d'ELMAH]({% post_url 2011-09-28-installer-elmah-nuget %}), j'ai cherché à enregistrer les informations qu'il
+Pour avancer un peu plus dans mon [utilisation d'ELMAH]({% post_url "2011-09-28-installer-elmah-nuget" %}), j'ai cherché à enregistrer les informations qu'il
 collecte dans une base de données.
 
 Pour cela, j'ai réalisé quelques essais pour voir comment faire et pour
@@ -25,7 +24,7 @@ Sous NuGet, je recherche "elmah" puis choisis le package "ELMAH on MS SQL
 Server Compact". Sa description indique qu'il s'agit d'une configuration pour
 démarrer rapidement avec une base de données Microsoft SQL Server Compact.
 
-Ca semble être un meilleur choix que "ELMAH on MS SQL Server (requires
+Ça semble être un meilleur choix que "ELMAH on MS SQL Server (requires
 manual config)" puisque à priori, l'absence de "requires manual config" devant
 logiquement signifier que je n'aurai rien à faire.
 

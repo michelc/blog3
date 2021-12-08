@@ -1,8 +1,7 @@
 ---
-date: 2004-09-23 01:10:00
-layout: post
+date: 2004-09-23 01:10:00 +02:00
 redirect_from: "post/2004/09/23/Utils-applicationPath"
-tags: qc
+tags: [ qc ]
 title: "Utils.applicationPath"
 ---
 

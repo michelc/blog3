@@ -1,8 +1,7 @@
 ---
-date: 2009-07-17 11:16:00
-layout: post
+date: 2009-07-17 11:16:00 +02:00
 redirect_from: "post/2009/07/17/Premier-essai-ASPNET-MVC"
-tags: mvc
+tags: [ mvc ]
 title: "Premier pas avec ASP.NET MVC et NerdDinner"
 ---
 
@@ -19,7 +18,7 @@ truc bizarre c'est qu'il faut souvent redémarrer la machine...
 Enfin je peux lancer Microsoft Visual Web Developer 2008 Express Edition (ou
 VWD pour parler plus vite) et faire **File - New Project**,
 sélectionner Visual C# / Web et le template ASP.NET MVC Web Application, donner
-le nom NerdDinner et cliquer sur OK. Ca marche ! Mais ça ne me propose pas
+le nom NerdDinner et cliquer sur OK. Ça marche ! Mais ça ne me propose pas
 la création du projet de test puisque je n'ai que la version Express et que je
 n'ai pas installé d'outil de test unitaire.
 
@@ -37,7 +36,7 @@ j'efface mon projet NerdDinner pour tout recommencer une fois que j'aurais
 installé un framework de tests unitaires.
 
 Après quelques recherches sur internet, il semblerait qu'il existe un
-[template NUnit / MVC pour VWD](http://blogs.msdn.com/webdevtools/archive/2009/04/28/updated-nunit-templates-for-asp-net-mvc-1-0-rtm.aspx). Ca date de la version RTM de
+[template NUnit / MVC pour VWD](http://blogs.msdn.com/webdevtools/archive/2009/04/28/updated-nunit-templates-for-asp-net-mvc-1-0-rtm.aspx). Ça date de la version RTM de
 ASP.NET MVC mais ça vaut quand même le coup d'essayer...
 
 * Télécharger et installer NUnit à partir de <http://www.nunit.org/>
@@ -56,7 +55,7 @@ Après avoir cliqué sur le bouton OK, je lance ma seconde application ASP.NET
 MVC et là c'est KO : *There where build errors* (et plus précisément
 *The type or namespace name 'NUnit' could not be found*). En fait, cela
 vient du fait qu'il y a un petit triangle jaune devant nunit.framework dans le
-dossier References du projet NerdDinner.Tests. Ca se corrige très facilement en
+dossier References du projet NerdDinner.Tests. Ça se corrige très facilement en
 supprimant la référence puis en la re-ajoutant.
 
 Quand on relance l'exécution, il y a encore un souci parce que c'est le
@@ -80,4 +79,4 @@ touché à rien, tout les tests sont réussis :)
 [![NUnit-Run.png](/public/2009/nunit-run.png)](/public/2009/nunit-run.png "NUnit-Run.png, juil 2009")
 
 ---
-Billet suivant dans la série : [Seconds pas avec ASP.NET MVC et NerdDinner]({% post_url 2009-07-30-seconds-pas-aspnet-mvc-nerddinner %})
+Billet suivant dans la série : [Seconds pas avec ASP.NET MVC et NerdDinner]({% post_url "2009-07-30-seconds-pas-aspnet-mvc-nerddinner" %})

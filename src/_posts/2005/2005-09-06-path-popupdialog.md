@@ -1,8 +1,7 @@
 ---
-date: 2005-09-06 14:42:00
-layout: post
+date: 2005-09-06 14:42:00 +02:00
 redirect_from: "post/2005/09/06/Path-des-popupDialog"
-tags: qc
+tags: [ qc ]
 title: "Path des popupDialog"
 ---
 

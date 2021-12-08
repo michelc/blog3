@@ -1,8 +1,7 @@
 ---
-date: 2005-10-12 10:35:00
-layout: post
+date: 2005-10-12 10:35:00 +02:00
 redirect_from: "post/2005/10/12/Nouveau-DataHelper"
-tags: qc
+tags: [ qc ]
 title: "Nouveau DataHelper"
 ---
 
@@ -18,7 +17,7 @@ ExecuteXxxxxx(sql, cnxObject)
 sqloledb.
 
 En ce qui concerne la [configuration
-de la base de données]({% post_url 2005-07-18-configuration-base-donnees %}) dans le web.config, le mappage d'une url sur
+de la base de données]({% post_url "2005-07-18-configuration-base-donnees" %}) dans le web.config, le mappage d'une url sur
 l'identifiant de base de donnés doit être préfixé par "CnxString_" de façon
 explicite :
 

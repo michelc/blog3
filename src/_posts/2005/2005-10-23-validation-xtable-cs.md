@@ -1,8 +1,7 @@
 ---
-date: 2005-10-23 09:28:00
-layout: post
+date: 2005-10-23 09:28:00 +02:00
 redirect_from: "post/2005/10/23/Validation-XTablecs"
-tags: qc
+tags: [ qc ]
 title: "Validation XTable.cs"
 ---
 

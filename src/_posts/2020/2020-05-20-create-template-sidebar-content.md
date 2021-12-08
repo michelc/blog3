@@ -1,23 +1,19 @@
 ---
-date: 2020-05-20 13:38:40+200
-layout: post
+date: 2020-05-20 13:38:40 +02:00
 lang: en-US
-tags: css
+tags: [ css ]
 title: "Create a basic template with sidebar + content"
-image: "/public/2020/first-plan.jpg"
+cover:
+  image: /public/2020/first-plan.jpg
+  link: https://www.pexels.com/fr-fr/photo/a-l-interieur-architecte-architecture-art-323645/
+  text: Photo de Karol Dach
+excerpt: For a new site, I'm looking at how to create a basic template with only a vertical sidebar and everything else for content.
 ---
 
 I'm doing some tests on a management application and rather than having a "complicated" navigation bar at the top of the screen, I'd like to test what a basic template with only 2 columns would look like:
 
 * a sidebar for navigation,
 * a main area for all site content.
-
-<figure>
-  <img src="{{ page.image }}" alt="first sketches..." />
-  <figcaption>
-    <a href="https://www.pexels.com/fr-fr/photo/a-l-interieur-architecte-architecture-art-323645/">Photo by Karol Dach</a>
-  </figcaption>
-</figure>
 
 I've found a lot of examples and even ready-made templates to achieve this result, but they usually do much more than I need, and above all, I'd like to understand how it works.
 
@@ -150,5 +146,8 @@ Well, it's not a bad start:
 
 That's exactly what I'd look for, plus I did it! Well, to tell the truth, I wish I could hide the "sidebar"...
 
-{:.encart}
-Version en français : [Créer un template simple avec sidebar + contenu]({% post_url 2020-05-19-creer-template-sidebar-contenu %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Créer un template simple avec sidebar + contenu", "2020-05-19-creer-template-sidebar-contenu" %}.
+
+</div>

@@ -1,8 +1,7 @@
 ---
-date: 2010-07-23 09:03:00
-layout: post
+date: 2010-07-23 09:03:00 +02:00
 redirect_from: "post/2010/07/23/tout-vient-a-point-a-qui-peut-attendre"
-tags: mvc
+tags: [ mvc ]
 title: "Tout vient à point à qui peut attendre"
 ---
 

@@ -1,22 +1,18 @@
 ---
-date: 2020-05-19 19:42:12+200
-layout: post
-tags: css
+date: 2020-05-19 19:42:12 +02:00
+tags: [ css ]
 title: "Créer un template simple avec sidebar + contenu"
-image: "/public/2020/first-plan.jpg"
+cover:
+  image: /public/2020/first-plan.jpg
+  link: https://www.pexels.com/fr-fr/photo/a-l-interieur-architecte-architecture-art-323645/
+  text: Photo de Karol Dach
+excerpt: Pour un nouveau site, je cherche comment créer un template basique avec seulement une "sidebar" latérale et tout le reste pour le contenu.
 ---
 
 Je fais quelques essais sur une application de gestion et plutôt que d'avoir une barre de navigation "compliquée" en haut de l'écran, j'aimerai tester ce que donnerait un template basique avec seulement 2 colonnes :
 
 * Une barre latérale pour la navigation,
 * Une zone principale pour tout le contenu du site.
-
-<figure>
-  <img src="{{ page.image }}" alt="premiers croquis..." />
-  <figcaption>
-    <a href="https://www.pexels.com/fr-fr/photo/a-l-interieur-architecte-architecture-art-323645/">Photo de Karol Dach</a>
-  </figcaption>
-</figure>
 
 J'ai trouvé pas mal d'exemples et même des modèles de pages tout faits pour arriver à ce résultat, mais ils font généralement beaucoup plus que ce dont j'ai besoin, et surtout, j'aimerai arriver à comprendre comme cela fonctionne.
 
@@ -148,5 +144,8 @@ Et ben c'est pas mal du tout pour un début :
 
 C'est exactement ce que je voudrais et en plus, c'est moi qui l'ai fait ! Bon, en vrai, je voulais aussi pouvoir masquer la "sidebar"...
 
-{:.encart}
-English version: [Create a basic template with sidebar + content]({% post_url 2020-05-20-create-template-sidebar-content %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Create a basic template with sidebar + content", "2020-05-20-create-template-sidebar-content" %}.
+
+</div>

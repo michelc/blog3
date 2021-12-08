@@ -1,8 +1,7 @@
 ---
-date: 2005-07-27 17:25:00
-layout: post
+date: 2005-07-27 17:25:00 +02:00
 redirect_from: "post/2005/07/27/Server-unavailable-fixup"
-tags: code-snippets
+tags: [ code-snippets ]
 title: "Server unavailable fixup"
 ---
 

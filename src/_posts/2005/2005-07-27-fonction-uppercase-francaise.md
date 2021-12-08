@@ -1,8 +1,7 @@
 ---
-date: 2005-07-27 16:40:00
-layout: post
+date: 2005-07-27 16:40:00 +02:00
 redirect_from: "post/2005/07/27/Fonction-upperCase-a-la-francaise"
-tags: code-snippets
+tags: [ code-snippets ]
 title: "Fonction upperCase à la française"
 ---
 

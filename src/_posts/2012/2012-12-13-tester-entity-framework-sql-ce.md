@@ -1,21 +1,20 @@
 ---
-date: 2012-12-13 00:22:00
-layout: post
+date: 2012-12-13 00:22:00 +02:00
 redirect_from: "post/2012/12/13/tester-entity-framework-avec-sql-ce"
-tags: ef, unit-test
+tags: [ ef, unit-test ]
 title: "Tester Entity Framework avec SQL CE"
 ---
 
 ## Un petit rappel
 
 Au cours de mes recherches pour faire des [tests
-unitaires avec Entity Framework]({% post_url 2012-11-05-tests-unitaires-entity-framework %}), j'étais tombé sur un article de Code
+unitaires avec Entity Framework]({% post_url "2012-11-05-tests-unitaires-entity-framework" %}), j'étais tombé sur un article de Code
 Project qui présentait deux méthodes plus ou moins complémentaires pour cela,
 dont l'utilisation d'une base de données SQL Server CE créée "au vol"
 spécialement pour faire tourner les tests unitaires : [Two strategies for testing Entity Framework - Effort and SQL
 CE](http://www.codeproject.com/Articles/460175/Two-strategies-for-testing-Entity-Framework-Effort).
 
-Etant donné qu'en développement j'ai déjà tendance à privilégier SQL Server
+Étant donné qu'en développement j'ai déjà tendance à privilégier SQL Server
 CE plutôt que SQL Server Express, ça ne pouvait pas mieux tomber...
 
 En plus de ça, j'avais dans mes favoris un autre article de chez [Arrange Act Assert](http://www.arrangeactassert.com/) qui me
@@ -125,7 +124,7 @@ public void ContactsIndex_doit_renvoyer_la_vue_par_defaut()
 }
 ```
 
-Jusqu'ici tout va bien... Ca fonctionne en local. Mais qu'est-ce que ça va
+Jusqu'ici tout va bien... Ça fonctionne en local. Mais qu'est-ce que ça va
 donner quand je vais déployer vers AppHarbor ? Est-ce qu'il va me
 permettre de créer une base SQL CE temporaire pendant et pour mes
 tests ?
@@ -134,7 +133,7 @@ tests ?
 * Je pousse vers GitHub
 * Je compte jusqu'à 3
 * je vais voir ce que ça donne sur AppHarbor
-* Ca a marché !!!
+* Ça a marché !!!
 
 ## Une conclusion
 

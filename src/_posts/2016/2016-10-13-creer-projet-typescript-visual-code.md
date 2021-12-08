@@ -1,8 +1,7 @@
 ---
-date: 2016-10-13 23:10:00
-layout: post
+date: 2016-10-13 23:10:00 +02:00
 redirect_from: "post/2016/10/13/creer-projet-typescript-visual-code"
-tags: javascript
+tags: [ javascript ]
 title: "Créer un projet TypeScript sous Visual Code"
 ---
 
@@ -53,7 +52,7 @@ class Startup {
 Startup.main();
 ```
 
-Note : Shilt+Alt+P permet de reformater le code.
+*Note : Shilt+Alt+P permet de reformater le code.*
 
 ## Créer le fichier tasks.json
 
@@ -78,8 +77,8 @@ Ce fichier sert à paramétrer les tâches dans Visual Code.
 }
 ```
 
-Note : cette tâche compile un projet TypeScript, il faut donc avoir un fichier
-"tsconfig.json" pour que le répertoire soit considéré comme un projet.
+*Note : Cette tâche compile un projet TypeScript, il faut donc avoir un fichier
+"tsconfig.json" pour que le répertoire soit considéré comme un projet.*
 
 ## Générer le fichier test.js via Visual Code
 
@@ -113,8 +112,8 @@ c:\Code\Test1> _
 
 => génère le fichier test.js (et aussi test.js.map).
 
-Note : ça marche aussi avec un terminal externe tel que l'invite de commande de
-Windows.
+*Note : Ça marche aussi avec un terminal externe tel que l'invite de commande de
+Windows.*
 
 ## Générer le fichier à chaque enregistrement
 
@@ -137,13 +136,13 @@ Il faut modifier le fichier "tasks.json" de la façon suivante :
 Puis Ctrl+Shift+B pour lancer la tâche et se mettre à observer les
 modifications.
 
-Note : pour créer directement une tâche qui compile à chaque enregistrement, il
+*Note : Pour créer directement une tâche qui compile à chaque enregistrement, il
 est possible de configurer l'exécuteur de tâche en sélectionnant "TypeScript -
-Watch Mode : Compiles a TypeScript project in watch mode".
+Watch Mode : Compiles a TypeScript project in watch mode".*
 
 ## Exécuter le fichier test.js
 
-A faire depuis le terminal :
+À faire depuis le terminal :
 
 ```
 c:\Code\Test1> node test.js

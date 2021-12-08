@@ -1,8 +1,7 @@
 ---
-date: 2010-03-24 22:10:00
-layout: post
+date: 2010-03-24 22:10:00 +02:00
 redirect_from: "pages/developper-une-application-de-contacts-avec-asp-net-mvc-mongo-db-et-norm"
-tags: net, mongodb, mvc, nosql, tutoriel
+tags: [ net, mongodb, mvc, nosql, tutoriel ]
 title: "Développer une application de contacts avec ASP.NET MVC et MongoDB"
 ---
 
@@ -24,9 +23,9 @@ fenêtre "Nouveau projet" apparait (Figure 1), choisissez le type de projet
 "Web" puis le modèle "ASP.NET MVC Web Application" et donnez le nom
 MongoContact à votre projet avant de cliquer sur OK.
 
-Note: Il faut bien avoir sélectionné .NET Framework 3.5
+*Note: Il faut bien avoir sélectionné .NET Framework 3.5
 dans la liste déroulante en haut à droite de la fenêtre "Nouveau projet" sans
-quoi le modèle de projet ASP.NET MVC n'apparaîtra pas.
+quoi le modèle de projet ASP.NET MVC n'apparaîtra pas.*
 
 ![](/public/2010/image001.jpg)
 
@@ -41,9 +40,9 @@ conserver l'option "Yes, create a unit test project" parce qu'il est beaucoup
 plus simple de définir un projet de tests dès la création d'une solution
 ASP.NET MVC.
 
-Note: Etant donné que Visual Web Developer ne gère pas les
+*Note: Étant donné que Visual Web Developer ne gère pas les
 projets de type MS Test, cette fenêtre ne vous sera proposée que si vous avez
-installé un autre framework de tests unitaires tel que NUnit.
+installé un autre framework de tests unitaires tel que NUnit.*
 
 ![](/public/2010/image002.jpg)
 
@@ -116,7 +115,7 @@ données MongoDB avec C#. Jusqu'à présent, il existait le projet mongodb-cshar
 (<http://github.com/samus/mongodb-csharp>) pour cela, mais le but de ce
 tutoriel est d'expérimenter NoRM, une librairie LINQ pour MongoDB.
 
-A l'heure où j'écris ce tutoriel, ce pilote en est à ses toutes premières
+À l'heure où j'écris ce tutoriel, ce pilote en est à ses toutes premières
 versions et il est téléchargeable sur GitHub. Personnellement, je suis parti de
 la version de Rob disponible à l'URL: <http://github.com/robconery/NoRM>. Une fois celui-ci récupéré, il faut
 commencer par le compiler en mode Release pour pouvoir recopier le fichier
@@ -526,8 +525,8 @@ vous verrez apparaître la fenêtre de la Figure 9. Sélectionnez l'option
 "Modifier le fichier Web.config pour activer le débogage" et cliquez sur le
 bouton OK.
 
-Note: Vérifiez que le daemon "mongod.exe" est toujours en
-cours d'exécution avant de démarrer l'application MongoContact.
+*Note: Vérifiez que le daemon "mongod.exe" est toujours en
+cours d'exécution avant de démarrer l'application MongoContact.*
 
 ![](/public/2010/image009.jpg)
 
@@ -550,7 +549,7 @@ données parce qu'on avait inséré quelques enregistrements dans la table
 Contacts immédiatement après l'avoir créée.
 
 Par contre, la table Contacts de notre base de données MongoDB est encore
-vide pour l'instant. Etant donné que nous n'avons pas de logiciel pour
+vide pour l'instant. Étant donné que nous n'avons pas de logiciel pour
 administrer les bases de données MongoDB, nous allons créer quelques contacts
 directement dans l'application.
 
@@ -612,9 +611,9 @@ Remarquez que la vue Index inclus un lien intitulé "Create New" (Créer un
 nouveau contact) au bas de la vue. Dans la section suivante, vous allez
 apprendre comment créer de nouveaux contacts.
 
-Note: Si vous le souhaitez, vous pouvez supprimer le code
+*Note: Si vous le souhaitez, vous pouvez supprimer le code
 qui a servi à créer quelques contacts d'exemple avant de continuer ce
-tutoriel.
+tutoriel.*
 
 ## Créer de nouveaux contacts
 
@@ -873,9 +872,9 @@ ObjectId puis utilisé par NoRM pour retrouver le contact correspondant à cette
 identifiant. Ensuite, une vue contenant un formulaire HTML permettant d'éditer
 cet enregistrement est retournée.
 
-Note: pour l'instant, la version de NoRM employée ne permet
+*Note: Pour l'instant, la version de NoRM employée ne permet
 pas d'utiliser des ObjectId dans les requêtes LINQ. Par conséquent, le contact
-est retrouvé en passant par les objets collections.
+est retrouvé en passant par les objets collections.*
 
 De manière analogue à la création d'un contact, vous pouvez ensuite générer
 une vue contenant le formulaire d'édition en cliquant-droit sur la méthode
@@ -1125,7 +1124,7 @@ Cliquez-droit sur la méthode Delete() dans le contrôleur Home et choisissez d'
 ajouter une vue. La fenêtre classique d'ajout de vue apparaît (Figure 21).
 
 Contrairement aux vues pour lister, créer et éditer les vues, nous n'aurons
-pas ici la possibilité de créer directement une vue de suppression. A la place,
+pas ici la possibilité de créer directement une vue de suppression. À la place,
 choisissez comme toujours la classe MongoContact.Models.Contact mais cette fois
 sélectionnez la valeur Empty (vide) pour View content. Le fait de choisir une
 vue vide nous obligera simplement à créer le contenue de la vue nous-mêmes.
@@ -1171,10 +1170,10 @@ supprimé.
 </asp:Content>
 ```
 
-Note: il est nécessaire de faire un import du namespace
+*Note: Il est nécessaire de faire un import du namespace
 MongoContact.Models en début de cette vue pour pouvoir utiliser la méthode
 d'extension IdString() destinée à faire passer l'identifiant du contact à
-supprimer à la méthode HTTP POST Delete().
+supprimer à la méthode HTTP POST Delete().*
 
 Nous pouvons alors relancer l'application et demander la suppression d'un
 contact (Figure 22).

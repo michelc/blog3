@@ -1,19 +1,16 @@
 ---
-date: 2021-11-26 13:12:40+200
-layout: post
-tags: csharp, enum
+date: 2021-11-26 13:12:40 +02:00
+lang: en-US
+tags: [ csharp, enum ]
 title: "Display a friendly name with Enum.ToString()"
-image: "/public/2021/cute-puppies.jpg"
+cover:
+  image: /public/2021/cute-puppies.jpg
+  link: https://unsplash.com/photos/fliwkBbS7oM
+  text: Australian Shepherd babies - Jametlene Reskp
+excerpt: One day I needed to display a label based on the value of one Enum. So I did like every time and I used the Description attribute to define some nice labels.
 ---
 
 One day I needed to display a label based on the value of one `Enum`. So I did like every time and I used the `Description` attribute to define some nice labels.
-
-<figure>
-  <img src="{{ page.image }}" alt="cute puppies" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/fliwkBbS7oM">Australian Shepherd babies - Jametlene Reskp</a>
-  </figcaption>
-</figure>
 
 ```csharp
 using System.ComponentModel;
@@ -101,5 +98,8 @@ I had to decide with `.ToFriendlyName()` which seems more popular, but `.ToCapti
 
 So okay, that forces me to accept having accents in variable names (well, only in enum value names). But I think I'll use this method from now on, at least in my personal projects.
 
-{:.encart}
-Version en français : [Afficher un joli libellé avec Enum.ToString()]({% post_url 2021-11-25-afficher-joli-libelle-avec-enum-tostring %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Afficher un joli libellé avec Enum.ToString()", "2021-11-25-afficher-joli-libelle-avec-enum-tostring" %}.
+
+</div>

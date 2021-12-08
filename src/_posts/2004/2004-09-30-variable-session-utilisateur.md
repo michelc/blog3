@@ -1,8 +1,7 @@
 ---
-date: 2004-09-30 13:14:00
-layout: post
+date: 2004-09-30 13:14:00 +02:00
 redirect_from: "post/2004/09/30/Variable-session-utilisateur"
-tags: qc
+tags: [ qc ]
 title: "Variable session utilisateur"
 ---
 
@@ -28,4 +27,4 @@ ce que les données soient disponibles et à jour pour toutes les briques.
 
 Par ailleurs, cette procédure met à jour la propriété Uzer.lastLogin
 permettant de connaitre la date de la dernière connection de l'utilisateur (cf
-[User.Login]({% post_url 2004-09-22-users-lastlogin %})).
+[User.Login]({% post_url "2004-09-22-users-lastlogin" %})).

@@ -1,8 +1,7 @@
 ---
-date: 2005-07-27 17:20:00
-layout: post
+date: 2005-07-27 17:20:00 +02:00
 redirect_from: "post/2005/07/27/Generer-une-chaine-aleatoire"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Générer une chaine aléatoire"
 ---
 

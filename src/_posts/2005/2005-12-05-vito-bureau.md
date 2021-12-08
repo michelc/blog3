@@ -1,8 +1,7 @@
 ---
-date: 2005-12-05 15:20:00
-layout: post
+date: 2005-12-05 15:20:00 +02:00
 redirect_from: "post/2005/12/05/Vito-Bureau"
-tags: referencement
+tags: [ referencement ]
 title: "Vit'o Bureau"
 ---
 

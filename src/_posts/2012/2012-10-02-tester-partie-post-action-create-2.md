@@ -1,15 +1,14 @@
 ---
-date: 2012-10-02 19:51:00
-layout: post
+date: 2012-10-02 19:51:00 +02:00
 redirect_from: "post/2012/10/02/tester-partie-post-action-create-2"
-tags: ef, mvc, unit-test
+tags: [ ef, mvc, unit-test ]
 title: "Tester la partie POST d'une action Create() - 2/2"
 ---
 
 ## L'action à tester
 
 Après avoir codé la [première partie des tests unitaires du POST sur l'action
-Create()]({% post_url 2012-10-01-tester-partie-post-action-create %}) dans le cas où la saisie est incorrecte, je vais maintenant
+Create()]({% post_url "2012-10-01-tester-partie-post-action-create" %}) dans le cas où la saisie est incorrecte, je vais maintenant
 traiter les POST vers Create() lorsque les données sont ok et qu'il est
 possible de créer le nouveau contact.
 
@@ -202,9 +201,9 @@ Assert.IsTrue(flash.ToString().Contains("..."), "...");
 
 => test pour vérifier que le message contient le texte prévu.
 
-Note : J'essaierai de faire un autre billet pour
+*Note : J'essaierai de faire un autre billet pour
 présenter comment je gère les messages "flash" et éventuellement comment je
-créée des objets mock pour tester ce qui se rapporte au contexte HTTP.
+créée des objets mock pour tester ce qui se rapporte au contexte HTTP.*
 
 ## 3° test : Si ok Alors on redirige vers la fiche créée
 

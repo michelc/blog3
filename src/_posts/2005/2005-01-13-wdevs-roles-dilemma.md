@@ -1,8 +1,7 @@
 ---
-date: 2005-01-13 09:06:00
-layout: post
+date: 2005-01-13 09:06:00 +02:00
 redirect_from: "post/2005/01/13/Wdevs-Roles-dilemma"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Roles dilemma"
 ---

@@ -1,14 +1,15 @@
 ---
-date: 2010-09-02 20:21:00
-layout: post
+date: 2010-09-02 20:21:00 +02:00
 redirect_from: "post/2010/09/02/superdo-une-todo-liste-avec-sinatra-et-datamapper"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "SuperDo : Une todo liste avec Sinatra et DataMapper"
 ---
 
-{:.encart}
-Ceci est la traduction du tutoriel "[SuperDo - A Sinatra and DataMapper To Do List](http://ididitmyway.herokuapp.com/past/2010/3/30/superdo_a_sinatra_and_datamapper_to_do_list/)" de Darren
-Jones.
+<div class="encart">
+
+Ceci est la traduction du tutoriel "[SuperDo - A Sinatra and DataMapper To Do List](http://ididitmyway.herokuapp.com/past/2010/3/30/superdo_a_sinatra_and_datamapper_to_do_list/)" de Darren Jones.
+
+</div>
 
 Dans ce nouveau tutoriel dédié à Sinatra, [Darren](http://dazzl.co.uk/) explique comment construire une petite application de
 type Todo liste qui utilisera une base de données pour enregistrer les
@@ -21,7 +22,7 @@ suivants :
 * Utiliser des URLs de type RESTFul
 
 Avant de commencer, il est bien entendu nécessaire d'avoir procédé à
-l'[installation de Ruby, de Ruby Gems et de Sinatra]({% post_url 2010-07-22-installer-sinatra-windows-7 %}).
+l'[installation de Ruby, de Ruby Gems et de Sinatra]({% post_url "2010-07-22-installer-sinatra-windows-7" %}).
 
 L'application que nous allons développer s'appellera [Superdo](http://superdo.heroku.com/) et nous pouvons d'ores
 et déjà voir ce qu'elle donnera sur la version que Darren à déployé sur
@@ -68,8 +69,8 @@ Successfully installed sqlite3-ruby-1.3.1-x86-mingw32
 1 gem installed
 ```
 
-Note : les paramètres `--no-rdoc --no-ri`
-ont permis d'éviter d'installer la documentation en local.
+*Note : Les paramètres `--no-rdoc --no-ri`
+ont permis d'éviter d'installer la documentation en local.*
 
 On installe ensuite le gem Datamapper :
 
@@ -160,7 +161,7 @@ end
 DataMapper.auto_upgrade!
 ```
 
-Ca fait pas mal de nouveaux trucs d'un coup, aussi je vais les expliquer un
+Ça fait pas mal de nouveaux trucs d'un coup, aussi je vais les expliquer un
 par un.
 
 Les 4 premières lignes déclarent les gems nécessaires :
@@ -563,7 +564,7 @@ le formulaire de saisie reproduit ci-dessous :
 
 ![](/public/2010/todo-2.png)
 
-Continuez et ajoutez plusieurs nouvelles tâches. A chaque fois que vous
+Continuez et ajoutez plusieurs nouvelles tâches. À chaque fois que vous
 validez le formulaire, vous devez voir apparaitre une nouvelle page qui affiche
 le nom de la nouvelle tâche créée.
 
@@ -1080,7 +1081,7 @@ beaucoup plus intuitive :
 Après ces modifications visibles par l'utilisateur, je vais réaliser
 quelques modifications destinées à simplifier le code de l'application. Pour
 commencer, je vais ajouter quelques méthodes pour faciliter la gestion des
-tâches terminées. Etant donné qu'il s'agit de méthodes liées aux tâches, il
+tâches terminées. Étant donné qu'il s'agit de méthodes liées aux tâches, il
 faut les placer dans la définition de la classe :
 
 ```
@@ -1181,7 +1182,7 @@ utiliser ces différents méthodes, ce qui donne le code suivant :
 
 Notre source est devenu bien plus lisible et par conséquent beaucoup plus
 facile à maintenir. Pour devenir parfait, il ne nous reste plus qu'à faire
-ressortir les tâches qui ont été accomplies. Etant donné que celles-ci sont
+ressortir les tâches qui ont été accomplies. Étant donné que celles-ci sont
 d'ores et déjà marquées d'une classe CSS "completed" (il vous suffit d'afficher
 le code source de la page pour contrôler ça), on a juste besoin d'ajouter une
 ligne de CSS dans le fichier "layout.erb" :

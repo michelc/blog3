@@ -1,13 +1,12 @@
 ---
-date: 2006-10-20 14:29:00
-layout: post
+date: 2006-10-20 14:29:00 +02:00
 redirect_from: "post/2006/10/20/Access-2000-et-le-Microsoft-Jet-SQL"
-tags: sql
+tags: [ sql ]
 title: "Access 2000 et le Microsoft Jet SQL"
 ---
 
 Une liste d'articles intéressants sur MSDN à propos de l'utilisation du
-language SQL avec les bases de données Access 2000. A lire, imprimer et voir
+language SQL avec les bases de données Access 2000. À lire, imprimer et voir
 s'ils existe des trucs dans le même style pour les dernières versions
 d'Access.
 

@@ -1,8 +1,7 @@
 ---
-date: 2005-08-13 16:41:00
-layout: post
+date: 2005-08-13 16:41:00 +02:00
 redirect_from: "post/2005/08/13/Bug-configuration-droits"
-tags: qc
+tags: [ qc ]
 title: "Bug en configuration des droits"
 ---
 

@@ -1,13 +1,15 @@
 ---
-date: 2011-06-08 19:50:00
-layout: post
+date: 2011-06-08 19:50:00 +02:00
 redirect_from: "post/2011/06/08/utiliser-rack-flash-avec-sinatra"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Utiliser Rack Flash avec Sinatra"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel Sinatra "[Rack Flash](http://ididitmyway.herokuapp.com/past/2011/3/15/rack_flash_/)" de Darren Jones.
+
+</div>
 
 ![The Flash](/public/2011/the-flash.jpg)
 

@@ -1,8 +1,7 @@
 ---
-date: 2007-10-04 12:55:00
-layout: post
+date: 2007-10-04 12:55:00 +02:00
 redirect_from: "post/2007/10/04/Quatre-etapes-cest-deux-de-trop"
-tags: ap
+tags: [ ap ]
 title: "Quatre étapes, c'est deux de trop"
 ---
 
@@ -38,7 +37,7 @@ fenêtre se ferme et qu'on atteigne l'écran voulu.
 Tout ça c'est vraiment trop confusionnant voire même carrément mal
 foutu!
 
-## A chaque problème sa solution
+## À chaque problème sa solution
 
 Récapitulons. Je suis sur un écran A et je veux aller sur un écran B. La
 meilleure solution serait d'y aller en ligne droite ou tout du moins avec le

@@ -1,8 +1,7 @@
 ---
-date: 2005-06-21 08:30:00
-layout: post
+date: 2005-06-21 08:30:00 +02:00
 redirect_from: "post/2005/06/21/Mise-a-jour-de-defaultaspxcs"
-tags: qc
+tags: [ qc ]
 title: "Mise à jour de default.aspx.cs"
 ---
 

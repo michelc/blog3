@@ -1,8 +1,7 @@
 ---
-date: 2014-03-11 14:38:00
-layout: post
+date: 2014-03-11 14:38:00 +02:00
 redirect_from: "post/2014/03/11/upload-gros-fichiers-asp-net-mvc"
-tags: mvc
+tags: [ mvc ]
 title: "Upload de gros fichiers avec ASP.NET MVC"
 ---
 

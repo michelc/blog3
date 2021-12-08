@@ -1,5 +1,5 @@
 ---
-date: 2009-12-01 13:35:00
+date: 2009-12-01 13:35:00 +02:00
 layout: page
 permalink: nerddinner/controleurs-vues/
 redirect_from: "pages/NerdDinner/Controleurs-Vues"
@@ -218,7 +218,7 @@ fonction de la règle de routage "/{controller}/{action}/{id}" :
 </table>
 
 Les trois dernières lignes de ce tableau montrent l'utilisation des valeurs
-par défaut (contrôleur = "Home", action = "Index" et id = ""). Etant donné que
+par défaut (contrôleur = "Home", action = "Index" et id = ""). Étant donné que
 la méthode "Index" est définie comme étant le nom de l'action par défaut quand
 il n'y en a pas de définie, les URL "/Dinners" et "/Home" déclenchent l'appel
 de la méthode action "Index()" pour la classe contrôleur correspondante. De
@@ -445,7 +445,7 @@ ci-dessous :
 ```
 
 Nous pouvons dès maintenant faire un essai en appelant l'URL
-"/Dinners/Details/9999" dans notre navigateur. Etant donné que cette URL fait
+"/Dinners/Details/9999" dans notre navigateur. Étant donné que cette URL fait
 référence à un dîner qui n'existe pas dans la base de données, notre méthode
 action DinnersController.Details() va renvoyer la vue "NotFound" :
 
@@ -575,7 +575,7 @@ servent pour exécuter le code contenu à l'intérieur de celles-ci et les balis
 &lt;%=%&gt; pour exécuter le code et renvoyer son résultat dans la vue en
 cours.
 
-A l'intérieur de notre vue, nous pouvons écrire du code qui accède à l'objet
+À l'intérieur de notre vue, nous pouvons écrire du code qui accède à l'objet
 "Dinner" que nous lui avons fait passer depuis le contrôleur à l'aide de la
 propriété fortement typée "Model". Nous bénéficions ainsi de l'IntelliSense
 lorsque nous utilisons la propriété "Model" dans l'éditeur de Visual
@@ -629,7 +629,7 @@ la présentation suivante :
 
 ## Réalisation de la vue "Index"
 
-A présent, nous allons réaliser la vue "Index" qui servira à générer la
+À présent, nous allons réaliser la vue "Index" qui servira à générer la
 liste des dîners à venir. Pour cela, nous plaçons le curseur dans la méthode
 action "Index" puis nous choisissons la commande "Add View" après avoir fait un
 clic-droit (ou Ctrl-M puis Ctrl-V au clavier).
@@ -725,7 +725,7 @@ notre cas) et le troisième argument représente une série de paramètres à fa
 passer à l'action du contrôleur. Ce dernier élément est implémenté en tant que
 type anonyme sous forme de paires de propriétés nom / valeur. Dans notre
 exemple, nous déclarons un paramètre dont le nom est "id" en lui donnant comme
-valeur l'identifiant du dîner que nous voulons lier. Etant donné que par défaut
+valeur l'identifiant du dîner que nous voulons lier. Étant donné que par défaut
 la règle de routage est "{controller}/{action}/{id}", le helper
 "Html.ActionLink()" va générer le code HTML suivant :
 

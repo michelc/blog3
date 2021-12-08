@@ -1,9 +1,10 @@
 ---
-date: 2019-04-15 12:32:26
-layout: post
-tags: javascript
+date: 2019-04-15 12:32:26 +02:00
+tags: [ javascript ]
 title: "Solitaire - Drag and drop sans jQuery UI"
-image: "/public/2019/drag-and-drop.jpg"
+cover:
+  image: /public/2019/drag-and-drop.jpg
+excerpt: À assez long terme par rapport à tout le reste, j'aimerai revoir la gestion du glisser / déposer dans mes jeux. Mais comme il y a du choix, c'est pas facile de se lancer...
 ---
 
 <div class="encart" markdown="1">
@@ -11,20 +12,16 @@ image: "/public/2019/drag-and-drop.jpg"
 Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
 solitaires et aux évolutions que je souhaite y apporter :
 
-1. [Introduction]({% post_url 2019-03-23-solitaire-feuille-route-javascript %})
-2. [Passer de jQuery à Vanilla JS]({% post_url 2019-03-27-solitaire-passer-jquery-vanilla-js %})
-3. [Améliorer FreeCell]({% post_url 2019-04-01-solitaire-ameliorer-freecell %})
-4. [Ajouter des animations CSS]({% post_url 2019-04-08-solitaire-ajouter-animations-css %})
-5. [Drag and drop sans jQuery UI]({% post_url 2019-04-15-solitaire-drag-and-drop-sans-jquery-ui %})
-6. [Remplacer AjaxMin, etc...]({% post_url 2019-04-25-solitaire-remplacer-ajaxmin %})
+1. [Introduction]({% post_url "2019-03-23-solitaire-feuille-route-javascript" %})
+2. [Passer de jQuery à Vanilla JS]({% post_url "2019-03-27-solitaire-passer-jquery-vanilla-js" %})
+3. [Améliorer FreeCell]({% post_url "2019-04-01-solitaire-ameliorer-freecell" %})
+4. [Ajouter des animations CSS]({% post_url "2019-04-08-solitaire-ajouter-animations-css" %})
+5. [Drag and drop sans jQuery UI]({% post_url "2019-04-15-solitaire-drag-and-drop-sans-jquery-ui" %})
+6. [Remplacer AjaxMin, etc...]({% post_url "2019-04-25-solitaire-remplacer-ajaxmin" %})
 
 </div>
 
-<figure>
-  <img src="{{ page.image }}" alt="drag-and-drop" />
-</figure>
-
-A assez long terme par rapport à tout le reste (remplacer jQuery, terminr
+À assez long terme par rapport à tout le reste (remplacer jQuery, terminr
 FreeCell, ajouter quelques animations...), j'aimerai revoir la gestion du
 glisser / déposer dans mes jeux.
 
@@ -77,7 +74,7 @@ orientée ES6 qui est compatible IE11+.
 * Dernière mise à jour : 03/04/2019
 * Dernière release : 07/09/2018 (beta)
 
-A l'origine, c'était un projet issu de la plateforme de eCommerce Shopify, mais
+À l'origine, c'était un projet issu de la plateforme de eCommerce Shopify, mais
 il est désormais géré par d'autres personnes.
 
 
@@ -114,7 +111,7 @@ quand même 2 points intéressants :
 
 ## Conclusion
 
-Ca va me demander pas mal de travail pour étudier et tester tout ça avant de
+Ça va me demander pas mal de travail pour étudier et tester tout ça avant de
 pouvoir sélectionner la "bonne" librairie dans un premier temps. Et après, il
 faudra encore parvenir à la maitriser suffisament pour réussir à l'intégrer dans
 mes jeux (et dans la mesure du possible avec dQuery.js).

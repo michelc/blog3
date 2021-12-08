@@ -1,20 +1,16 @@
 ---
-date: 2020-06-02 13:28:16+200
-layout: post
+date: 2020-06-02 13:28:16 +02:00
 lang: en-US
-tags: css
+tags: [ css ]
 title: "Sidebar animation with CSS"
-image: "/public/2020/swing.jpg"
+cover:
+  image: /public/2020/swing.jpg
+  link: https://unsplash.com/photos/HTCQCvwV9XY
+  text: Flying - ckturistando
+excerpt: How to show or hide the sidebar with a small CSS animation, an icon and a jsfiddle to test it.
 ---
 
-I've already made a [template with content + sidebar]({% post_url 2020-05-20-create-template-sidebar-content %}), then to [hide or show the sidebar]({% post_url 2020-05-28-hide-show-sidebar %}) quite simply. I will now try to improve these basic attemps with some CSS animations and a few icons.
-
-<figure>
-  <img src="{{ page.image }}" alt="swings" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/HTCQCvwV9XY">Flying - ckturistando</a>
-  </figcaption>
-</figure>
+I've already made a [template with content + sidebar]({% post_url "2020-05-20-create-template-sidebar-content" %}), then to [hide or show the sidebar]({% post_url "2020-05-28-hide-show-sidebar" %}) quite simply. I will now try to improve these basic attemps with some CSS animations and a few icons.
 
 
 ## Animate the change of state
@@ -75,7 +71,7 @@ transition: all 0.25s;
 
 Well, it seems perfect to me.
 
-Note: the `transition: all 0.25s` must be defined twice: once for the CSS of "#sidebar" and a second time for the CSS code of "#content".
+*Note: the `transition: all 0.25s` must be defined twice: once for the CSS of "#sidebar" and a second time for the CSS code of "#content".*
 
 
 ## Use an icon to switch between states
@@ -122,7 +118,7 @@ Then I add the CSS code:
 }
 ```
 
-Note: For both arrows, I picked from [Unicode Arrows](http://xahlee.info/comp/unicode_arrows.html).
+*Note: For both arrows, I picked from [Unicode Arrows](http://xahlee.info/comp/unicode_arrows.html).*
 
 Good, it works.
 
@@ -153,5 +149,8 @@ This will do the trick :)
 
 Well, now that I have the template I looked for and even more thanks to these last additions, I can work for real and start coding my application...
 
-{:.encart}
-Version en français : [Animer une sidebar avec CSS]({% post_url 2020-06-01-animation-css-sidebar %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Animer une sidebar avec CSS", "2020-06-01-animation-css-sidebar" %}.
+
+</div>

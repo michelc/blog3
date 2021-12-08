@@ -1,8 +1,7 @@
 ---
-date: 2010-03-18 21:09:00
-layout: post
+date: 2010-03-18 21:09:00 +02:00
 redirect_from: "post/2010/03/18/simplifier-la-balise-head-pour-asp-net-mvc"
-tags: html, mvc
+tags: [ html, mvc ]
 title: "Simplifier la balise head pour ASP.NET MVC"
 ---
 
@@ -48,7 +47,7 @@ Par du code qui s'adresse au PlaceHolder HeadContent :
 </asp:Content>
 ```
 
-Ca marchait bien, mais à l'occasion d'un affichage du source HTML, je me
+Ça marchait bien, mais à l'occasion d'un affichage du source HTML, je me
 suis rendu compte qu'il y avait comme un défaut :
 
 ```

@@ -1,8 +1,7 @@
 ---
-date: 2010-07-26 16:50:00
-layout: post
+date: 2010-07-26 16:50:00 +02:00
 redirect_from: "post/2010/07/26/contexte-recherche-exalead-sdk"
-tags: boulot, csharp
+tags: [ boulot, csharp ]
 title: "Contexte d'une recherche Exalead SDK"
 ---
 

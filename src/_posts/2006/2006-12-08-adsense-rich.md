@@ -1,8 +1,7 @@
 ---
-date: 2006-12-08 14:15:00
-layout: post
+date: 2006-12-08 14:15:00 +02:00
 redirect_from: "post/2006/12/08/My-AdSense-is-Rich"
-tags: adsense
+tags: [ adsense ]
 title: "My AdSense is Rich"
 ---
 

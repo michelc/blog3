@@ -1,8 +1,7 @@
 ---
-date: 2009-12-17 11:11:00
-layout: post
+date: 2009-12-17 11:11:00 +02:00
 redirect_from: "post/2009/12/17/Formulaires-ASP-NET-MVC"
-tags: mvc
+tags: [ mvc ]
 title: "Les formulaires en ASP.NET MVC"
 ---
 
@@ -27,7 +26,7 @@ Le binding consiste à utiliser les données en provenance du formulaire de
 saisie (mais aussi de l'URL) pour initialiser ou mettre à jour des objets issus
 du modèle de l'application.
 
-Etant donné que cette correspondance se fait plus ou moins magiquement (ou
+Étant donné que cette correspondance se fait plus ou moins magiquement (ou
 en tout cas de façon automatique), c'est maintenant de notre responsabilité de
 bien penser à sécuriser tout ça pour éviter les effets de bords. Pour cela, il
 est entre autre possible d'utiliser un attribut [Bind] pour définir la liste

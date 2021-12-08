@@ -1,13 +1,12 @@
 ---
-date: 2009-03-26 19:01:00
-layout: post
+date: 2009-03-26 19:01:00 +02:00
 redirect_from: "post/2009/03/26/Creer-une-boite-encore-plus-facilement"
-tags: ap
+tags: [ ap ]
 title: "Créer une boite encore plus facilement"
 ---
 
 Et beaucoup plus vite ! Il y a quelque temps, j'avais déjà un peu
-[simplifié la façon de créer une nouvelle boite]({% post_url 2007-10-17-creer-boite-peu-plus-facilement %}) dans Altrr-Press, en
+[simplifié la façon de créer une nouvelle boite]({% post_url "2007-10-17-creer-boite-peu-plus-facilement" %}) dans Altrr-Press, en
 passant de 7 à 5 étapes :
 
 * cliquer sur le bouton ![Ajouter une boite](/public/2009/addbox.gif) pour créer une nouvelle

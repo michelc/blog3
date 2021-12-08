@@ -1,8 +1,7 @@
 ---
-date: 2010-02-19 08:06:00
-layout: post
+date: 2010-02-19 08:06:00 +02:00
 redirect_from: "post/2010/02/19/afficher-le-sql-genere-par-nhibernate"
-tags: nhibernate
+tags: [ nhibernate ]
 title: "Afficher le SQL généré par NHibernate"
 ---
 

@@ -1,13 +1,15 @@
 ---
-date: 2010-07-22 13:47:00
-layout: post
+date: 2010-07-22 13:47:00 +02:00
 redirect_from: "post/2010/07/22/Installer-Sinatra-sous-Windows-7"
-tags: mvc, ruby, sinatra
+tags: [ mvc, ruby, sinatra ]
 title: "Installer Sinatra sous Windows 7"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est une adaptation en français du tutoriel "[Installing Sinatra](http://ididitmyway.herokuapp.com/past/2010/1/10/installing_sinatra/)" de Darren Jones.
+
+</div>
 
 Je suis tombé sur une super série de tutoriels pour apprendre à utiliser
 Sinatra. C'est le résultat de la bonne résolution de Daz (Darren Jones) pour
@@ -66,7 +68,7 @@ Installing RDoc documentation for sinatra-1.0...
 C:\Ruby>
 ```
 
-Ca y est, mon PC devrait contenir Ruby + Sinatra !
+Ça y est, mon PC devrait contenir Ruby + Sinatra !
 
 ## Créer une première application Sinatra
 
@@ -97,7 +99,7 @@ Ce qui donne :
 [2010-07-22 12:07:23] INFO  WEBrick::HTTPServer#start: pid=952 port=4567
 ```
 
-Ca marche ! Il ne reste plus qu'à lancer un des navigateurs installé
+Ça marche ! Il ne reste plus qu'à lancer un des navigateurs installé
 sur le PC pour aller voir ce que donne l'adresse
 « http://localhost:4567/hi ». Et là, je retrouve bien le message attendu,
 à savoir "I Dit It My Way !".

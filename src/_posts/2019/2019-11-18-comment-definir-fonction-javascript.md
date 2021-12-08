@@ -1,22 +1,17 @@
 ---
-date: 2019-11-18 12:31:14+200
-layout: post
-tags: javascript
+date: 2019-11-18 12:31:14 +02:00
+tags: [ javascript ]
 title: "Comment définir une fonction JavaScript"
-image: "/public/2019/butterfly-collection.jpg"
+cover:
+  image: /public/2019/butterfly-collection.jpg
+  link: https://unsplash.com/photos/X8pnAEjqmqI
+  text: Wall decorations with colorful butterflies - __ drz __
 excerpt: "Pour moi essentiellement, un petit mémo sur les différentes façons de déclarer une fonction en JavaScript."
 ---
 
 Comme j'ai toujours un peu de mal à me rappeler de tout et aussi parce qu'il y a
 un petit côté collection que j'aime bien, voici un récapitulatif sommaire des
 différentes façons qui existent pour définir des fonctions en JavaScript.
-
-<figure>
-  <img src="{{ page.image }}" alt="butterfly-collection" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/X8pnAEjqmqI">Wall decorations with colorful butterflies - __ drz __</a>
-  </figcaption>
-</figure>
 
 ## Via une déclaration
 
@@ -49,9 +44,9 @@ Même si cela ne se remarque pas, la fonction est anonyme :
 * Elle est créée sans lui donner de nom (juste "function (...) { ... }")
 * Elle est affectée à une variable qui elle a un nom
 
-Note : Comme il s'agit d'une affectation à une variable (en l'occurrence on lui
+*Note : Comme il s'agit d'une affectation à une variable (en l'occurrence on lui
 affecte une fonction), la commande se termine par un point-virgule, exactement
-comme c'est le cas pour toutes les autres affectations : `const pi = 3.14;`.
+comme c'est le cas pour toutes les autres affectations : `const pi = 3.14;`.*
 
 
 ## Via la syntaxe arrow
@@ -108,5 +103,8 @@ test.map((x) => { return x * 2; });         // [2, 4, 6]
 test.map(x => x * 2);                       // [2, 4, 6] Bingo !
 ```
 
-{:.encart}
-English version: [How to define a JavaScript function]({% post_url 2019-11-19-how-to-define-javascript-function %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "How to define a JavaScript function", "2019-11-19-how-to-define-javascript-function" %}.
+
+</div>

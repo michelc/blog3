@@ -1,8 +1,7 @@
 ---
-date: 2008-11-06 18:17:00
-layout: post
+date: 2008-11-06 18:17:00 +02:00
 redirect_from: "post/2008/11/06/Utiliser-Subversion-en-local"
-tags: svn
+tags: [ svn ]
 title: "Utiliser Subversion en local"
 ---
 
@@ -125,7 +124,7 @@ Il apparaît alors la boite de dialogue suivante :
 ![](/public/2008/11-co-dlg.png)
 
 Bien vérifier que l'url du dépôt (URL of repository) et le répertoire de
-travail (Checkout directory) sont corrects puis valider. Etant donné que le
+travail (Checkout directory) sont corrects puis valider. Étant donné que le
 répertoire choisi contient déjà les sources de mon projet, cela provoque
 l'apparition du message d'erreur suivant :
 
@@ -192,7 +191,7 @@ a le temps de reconnaître les différents fichiers de la solution
 
 ![](/public/2008/19-commited.png)
 
-A ce point, j'ai créé un dépôt Subversion stocké dans D:\SVN\Tests et
+À ce point, j'ai créé un dépôt Subversion stocké dans D:\SVN\Tests et
 celui-ci contient les fichiers sources versionnés de mon projet. Par ailleurs,
 le répertoire D:\Portals\Tests n'est plus un simple répertoire de mon disque
 dur, mais il est devenu une copie de travail de mon dépôt Subversion :

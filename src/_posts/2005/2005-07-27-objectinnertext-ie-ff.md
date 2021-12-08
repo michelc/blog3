@@ -1,8 +1,7 @@
 ---
-date: 2005-07-27 16:21:00
-layout: post
+date: 2005-07-27 16:21:00 +02:00
 redirect_from: "post/2005/07/27/objectinnerText-for-IE-and-FF"
-tags: code-snippets, javascript
+tags: [ code-snippets, javascript ]
 title: "object.innerText for IE and FF"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2008-12-19 13:47:00
-layout: post
+date: 2008-12-19 13:47:00 +02:00
 redirect_from: "post/2008/12/19/Creer-un-tag-dans-Subversion"
-tags: svn
+tags: [ svn ]
 title: "Créer un tag dans Subversion"
 ---
 

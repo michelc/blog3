@@ -1,0 +1,5 @@
+{
+    "layout": "post.njk",
+    "lang": "fr-FR",
+    "permalink": "/{{ page.date | date('yyyy/MM/dd') }}/{{ page.fileSlug }}/"
+}

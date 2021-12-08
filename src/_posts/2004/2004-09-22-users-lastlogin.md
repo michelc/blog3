@@ -1,8 +1,7 @@
 ---
-date: 2004-09-22 01:03:00
-layout: post
+date: 2004-09-22 01:03:00 +02:00
 redirect_from: "post/2004/09/22/Users-lastLogin"
-tags: qc
+tags: [ qc ]
 title: "Users.lastLogin"
 ---
 
@@ -25,4 +24,4 @@ Users
 
 Note: il reste à faire la mise à jour de lastLogin lorsque l'utilisateur se
 connecte, y compris dans le cas où il avait coché "Connexion automatique"
-([fait le 30 septembre]({% post_url 2004-09-30-variable-session-utilisateur %})).
+([fait le 30 septembre]({% post_url "2004-09-30-variable-session-utilisateur" %})).

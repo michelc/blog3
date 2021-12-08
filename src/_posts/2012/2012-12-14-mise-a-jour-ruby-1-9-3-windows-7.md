@@ -1,8 +1,7 @@
 ---
-date: 2012-12-14 00:17:00
-layout: post
+date: 2012-12-14 00:17:00 +02:00
 redirect_from: "post/2012/12/14/mise-a-jour-ruby-1-9-3-sous-windows-7"
-tags: ruby
+tags: [ ruby ]
 title: "Mise à jour Ruby 1.9.3 sous Windows 7"
 ---
 

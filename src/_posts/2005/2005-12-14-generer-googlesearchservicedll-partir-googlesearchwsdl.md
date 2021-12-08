@@ -1,8 +1,7 @@
 ---
-date: 2005-12-14 08:29:00
-layout: post
+date: 2005-12-14 08:29:00 +02:00
 redirect_from: "post/2005/12/14/Generer-GoogleSearchServicedll-a-partir-de-GoogleSearchwsdl"
-tags: .net, code-snippets
+tags: [ .net, code-snippets ]
 title: "Générer GoogleSearchService.dll à partir de GoogleSearch.wsdl"
 ---
 

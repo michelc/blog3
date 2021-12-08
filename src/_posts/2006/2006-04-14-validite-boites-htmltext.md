@@ -1,8 +1,7 @@
 ---
-date: 2006-04-14 13:43:00
-layout: post
+date: 2006-04-14 13:43:00 +02:00
 redirect_from: "post/2006/04/14/Validite-des-boites-Htmltext"
-tags: qc
+tags: [ qc ]
 title: "Validité des boites Htmltext"
 ---
 

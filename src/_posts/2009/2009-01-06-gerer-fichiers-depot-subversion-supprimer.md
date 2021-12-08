@@ -1,8 +1,7 @@
 ---
-date: 2009-01-06 12:54:00
-layout: post
+date: 2009-01-06 12:54:00 +02:00
 redirect_from: "post/2009/01/06/Gerer-les-fichiers-d-un-depot-Subversion-%3A-supprimer"
-tags: svn
+tags: [ svn ]
 title: "Gérer les fichiers d'un dépôt Subversion : supprimer"
 ---
 
@@ -57,6 +56,6 @@ valider :
 
 ![](/public/2009/03-fichier-supprimer.png)
 
-Ca y est, le fichier Extract.cs a été définitivement supprimé du dépôt
+Ça y est, le fichier Extract.cs a été définitivement supprimé du dépôt
 Subversion commen en témoigne l'action "Deleting
 D:\Portals\Tests\Extracts.cs".

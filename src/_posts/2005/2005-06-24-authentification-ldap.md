@@ -1,8 +1,7 @@
 ---
-date: 2005-06-24 15:00:00
-layout: post
+date: 2005-06-24 15:00:00 +02:00
 redirect_from: "post/2005/06/24/Authentification-LDAP"
-tags: qc
+tags: [ qc ]
 title: "Authentification LDAP"
 ---
 

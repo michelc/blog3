@@ -1,8 +1,7 @@
 ---
-date: 2006-10-18 20:03:00
-layout: post
+date: 2006-10-18 20:03:00 +02:00
 redirect_from: "post/2006/10/18/Installer-et-compiler-les-sources-de-QC"
-tags: qc
+tags: [ qc ]
 title: "Installer et compiler les sources de QC"
 ---
 

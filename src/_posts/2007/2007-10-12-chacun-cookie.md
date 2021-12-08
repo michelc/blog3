@@ -1,9 +1,8 @@
 ---
-date: 2007-10-12 10:58:00
-layout: post
+date: 2007-10-12 10:58:00 +02:00
 redirect_from: "post/2007/10/12/A-chacun-son-cookie"
-tags: ap
-title: "A chacun son cookie"
+tags: [ ap ]
+title: "À chacun son cookie"
 ---
 
 Altrr-Press utilise pour l'instant 3 cookies :

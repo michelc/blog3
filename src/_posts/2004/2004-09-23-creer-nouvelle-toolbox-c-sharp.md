@@ -1,8 +1,7 @@
 ---
-date: 2004-09-23 15:01:00
-layout: post
+date: 2004-09-23 15:01:00 +02:00
 redirect_from: "post/2004/09/23/Creer-nouvelle-Toolbox-CSharp"
-tags: qc
+tags: [ qc ]
 title: "Créer une nouvelle Toolbox en C#"
 ---
 

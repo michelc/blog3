@@ -1,8 +1,7 @@
 ---
-date: 2005-06-24 08:09:00
-layout: post
+date: 2005-06-24 08:09:00 +02:00
 redirect_from: "post/2005/06/24/Modification-boites-login"
-tags: qc
+tags: [ qc ]
 title: "Modification boites login"
 ---
 

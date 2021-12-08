@@ -1,8 +1,7 @@
 ---
-date: 2004-10-06 18:25:00
-layout: post
+date: 2004-10-06 18:25:00 +02:00
 redirect_from: "post/2004/10/06/Reutilisation-FileExplorer"
-tags: qc
+tags: [ qc ]
 title: "Réutilisation FileExplorer"
 ---
 

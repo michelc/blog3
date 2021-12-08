@@ -1,8 +1,7 @@
 ---
-date: 2005-11-28 15:21:00
-layout: post
+date: 2005-11-28 15:21:00 +02:00
 redirect_from: "post/2005/11/28/Fonction-BoolParse"
-tags: qc
+tags: [ qc ]
 title: "Fonction BoolParse()"
 ---
 

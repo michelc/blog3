@@ -1,8 +1,7 @@
 ---
-date: 2011-03-08 18:25:00
-layout: post
+date: 2011-03-08 18:25:00 +02:00
 redirect_from: "post/2011/03/08/introduction-a-sinatra"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Introduction à Sinatra"
 ---
 
@@ -22,4 +21,4 @@ d'une URL
 Notes :
 
 * Il est même possible de faire encore plus court !
-* Screencasts.orgs propose aussi une [introduction à Haml]({% post_url 2011-03-09-introduction-haml %})
+* Screencasts.orgs propose aussi une [introduction à Haml]({% post_url "2011-03-09-introduction-haml" %})

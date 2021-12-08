@@ -1,8 +1,7 @@
 ---
-date: 2006-01-11 14:35:00
-layout: post
+date: 2006-01-11 14:35:00 +02:00
 redirect_from: "post/2006/01/11/Gestion-de-repertoires-caches"
-tags: qc
+tags: [ qc ]
 title: "Gestion de répertoires cachés"
 ---
 

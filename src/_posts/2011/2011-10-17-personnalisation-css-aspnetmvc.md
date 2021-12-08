@@ -1,8 +1,7 @@
 ---
-date: 2011-10-17 20:25:00
-layout: post
+date: 2011-10-17 20:25:00 +02:00
 redirect_from: "post/2011/10/17/personnalisation-css-asp-net-mvc"
-tags: html, mvc
+tags: [ html, mvc ]
 title: "Personnalisation de la CSS pour ASP.NET MVC"
 ---
 
@@ -37,7 +36,7 @@ la vue _Layout.cshtml :
 ## Undo
 
 Comme j'aime très moyennement les coins arrondis, je commence par m'en
-débarrasser. Ca m'amuse toujours de commencer de façon radicale en lançant un
+débarrasser. Ça m'amuse toujours de commencer de façon radicale en lançant un
 rechercher / remplacer de `-radius` par `-no-radius`.
 Cela me permet de venir à bout de `border-radius`,
 `-moz-border-radius` et autre `-webkit-border-radius`.
@@ -200,6 +199,6 @@ c'est que c'est tout un ensemble entre les helpers et le système de validation
 alors c'est un peu compliqué et que je résiste encore pour conserver tel quel
 le html généré par Visual Studio. Ce qui fait que je n'arrive pas à me fixer
 sur quelque chose de "définitif". Enfin bref, y'a rien qui me plait pour
-l'instant. A suivre donc…
+l'instant. À suivre donc…
 
 ![](/public/2011/mysite02.png)

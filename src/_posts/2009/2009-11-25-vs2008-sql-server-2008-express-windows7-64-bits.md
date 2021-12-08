@@ -1,8 +1,7 @@
 ---
-date: 2009-11-25 15:23:00
-layout: post
+date: 2009-11-25 15:23:00 +02:00
 redirect_from: "post/2009/11/25/VS2008-SQL-Server-2008-Express-Windows7-64-bits"
-tags: boulot, sql-server
+tags: [ boulot, sql-server ]
 title: "VS 2008, SQL Server 2008 Express et Windows 7 64 bits"
 ---
 

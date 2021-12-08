@@ -1,22 +1,22 @@
 ---
-date: 2010-05-18 18:04:00
-layout: post
+date: 2010-05-18 18:04:00 +02:00
 redirect_from: "post/2010/05/18/mvc-music-store-sous-raven-db-modele-donnees"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : Modèle de données"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: The data model](http://ayende.com/Blog/archive/2010/05/18/porting-mvc-music-store-to-raven-the-data-model.aspx)", le premier
-d'une série consacrée au portage de l'application MVC Music Store sous RavenDB
-par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: The data model](http://ayende.com/Blog/archive/2010/05/18/porting-mvc-music-store-to-raven-the-data-model.aspx)", le premier d'une série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Le tutoriel "[MVC Music Store](http://www.asp.net/mvc/samples/mvc-music-store/)" est venu à point nommé pour moi. Je
 souhaitais faire une application de démonstration pour [Raven DB](http://ravendb.net/) et le fait que quelqu'un
 d'autre ait déjà fait tout le travail ingrat (l'interface utilisateur :) à ma
 place et que je n'ai plus qu'à refaire l'accès aux données est une situation
 rêvée. Mon objectif est de ne rien toucher du tout au Javascript ou au code
-HTML et de me contenter de remplacer les contrôleurs. Ca devrait être
+HTML et de me contenter de remplacer les contrôleurs. Ça devrait être
 intéressant de voir si je peux y arriver.
 
 Le modèle de base de données dans le tutoriel d'origine est le
@@ -33,7 +33,7 @@ puisqu'elle stocke une ligne par article dans le panier
 ou l'identifiant de la session
 * La table Artist gère uniquement le nom de l'artiste et rien d'autre.
 
-A partir de ces informations, je considère que le modèle de données suivant
+À partir de ces informations, je considère que le modèle de données suivant
 devrait convenir.
 
 ## Albums

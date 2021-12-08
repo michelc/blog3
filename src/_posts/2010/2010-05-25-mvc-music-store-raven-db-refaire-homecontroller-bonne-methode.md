@@ -1,15 +1,15 @@
 ---
-date: 2010-05-25 13:11:00
-layout: post
+date: 2010-05-25 13:11:00 +02:00
 redirect_from: "post/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : Refaire HomeController, la bonne méthode"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Porting the HomeController, the
-Right Way](http://ayende.com/Blog/archive/2010/05/22/porting-mvc-music-store-to-raven-porting-the-homecontroller-the-again.aspx)", le cinquième de la série consacrée au portage de l'application
-MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Porting the HomeController, the Right Way](http://ayende.com/Blog/archive/2010/05/22/porting-mvc-music-store-to-raven-porting-the-homecontroller-the-again.aspx)", le cinquième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Comme je l'ai indiqué dans le billet précédent, nous pouvons solutionner le
 problème de la méthode GetTopSellingAlbums() grâce au map/reduce, mais cela

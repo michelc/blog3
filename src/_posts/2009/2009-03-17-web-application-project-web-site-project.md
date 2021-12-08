@@ -1,8 +1,7 @@
 ---
-date: 2009-03-17 18:39:00
-layout: post
+date: 2009-03-17 18:39:00 +02:00
 redirect_from: "post/2009/03/17/Web-Application-Project-et-Web-Site-Project"
-tags: .net, ap
+tags: [ .net, ap ]
 title: "Web Application Project et Web Site Project"
 ---
 

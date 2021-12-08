@@ -1,8 +1,7 @@
 ---
-date: 2010-06-23 14:51:00
-layout: post
+date: 2010-06-23 14:51:00 +02:00
 redirect_from: "post/2010/06/23/intellisense-mapping-nhibernate-visual-studio"
-tags: nhibernate
+tags: [ nhibernate ]
 title: "Activer l'intellisense pour le mapping NHibernate dans Visual Studio"
 ---
 

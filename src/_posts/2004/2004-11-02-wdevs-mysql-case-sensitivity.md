@@ -1,8 +1,7 @@
 ---
-date: 2004-11-02 20:06:00
-layout: post
+date: 2004-11-02 20:06:00 +02:00
 redirect_from: "post/2004/11/02/Wdevs-MySQL-case-sensitivity"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) MySQL case sensitivity"
 ---

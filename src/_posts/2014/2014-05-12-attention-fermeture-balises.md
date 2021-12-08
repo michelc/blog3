@@ -1,8 +1,7 @@
 ---
-date: 2014-05-12 13:49:00
-layout: post
+date: 2014-05-12 13:49:00 +02:00
 redirect_from: "post/2014/05/12/attention-fermeture-balises"
-tags: html
+tags: [ html ]
 title: "Attention à la fermeture des balises"
 ---
 

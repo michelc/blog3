@@ -1,8 +1,7 @@
 ---
-date: 2008-10-17 09:53:00
-layout: post
+date: 2008-10-17 09:53:00 +02:00
 redirect_from: "post/2008/10/17/Utilisation-des-dates-dans-les-fichiers-BAT"
-tags: code-snippets
+tags: [ code-snippets ]
 title: "Utilier des dates dans les fichiers BAT"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2012-10-17 22:49:00
-layout: post
+date: 2012-10-17 22:49:00 +02:00
 redirect_from: "post/2012/10/17/tests-unitaires-people-controller"
-tags: ef, mvc, unit-test
+tags: [ ef, mvc, unit-test ]
 title: "Tests unitaires de PeopleController"
 ---
 
@@ -34,7 +33,7 @@ Les 3 tests unitaires :
 * PeopleDetails doit renvoyer un objet ViewPerson a la vue
 * PeopleDetails doit renvoyer le contact demande a la vue
 
-Référence : [Tester l'action Detail()]({% post_url 2012-10-04-tester-action-details %})
+Référence : [Tester l'action Detail()]({% post_url "2012-10-04-tester-action-details" %})
 
 ## Tests unitaires action Create()
 
@@ -67,7 +66,7 @@ renseignee
 * PeopleCreate get doit initialiser la societe parente si elle est
 renseignee
 
-Référence : [Tester la partie GET d'une action Create()]({% post_url 2012-10-03-tester-partie-get-action-create %})
+Référence : [Tester la partie GET d'une action Create()]({% post_url "2012-10-03-tester-partie-get-action-create" %})
 
 ### Le code POST testé :
 
@@ -106,8 +105,8 @@ incorrecte
 
 Références :
 
-* [Tester la partie POST d'une action Create() - 1/2]({% post_url 2012-10-01-tester-partie-post-action-create %})
-* [Tester la partie POST d'une action Create() - 2/2]({% post_url 2012-10-02-tester-partie-post-action-create-2 %})
+* [Tester la partie POST d'une action Create() - 1/2]({% post_url "2012-10-01-tester-partie-post-action-create" %})
+* [Tester la partie POST d'une action Create() - 2/2]({% post_url "2012-10-02-tester-partie-post-action-create-2" %})
 
 ## Tests unitaires de l'action Edit()
 

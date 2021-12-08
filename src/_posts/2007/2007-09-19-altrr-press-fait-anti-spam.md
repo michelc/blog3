@@ -1,8 +1,7 @@
 ---
-date: 2007-09-19 12:23:00
-layout: post
+date: 2007-09-19 12:23:00 +02:00
 redirect_from: "post/2007/09/19/Altrr-Press-fait-de-lanti-spam"
-tags: ap
+tags: [ ap ]
 title: "Altrr-Press fait de l'anti-spam"
 ---
 

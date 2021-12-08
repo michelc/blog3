@@ -1,8 +1,7 @@
 ---
-date: 2010-03-18 10:03:00
-layout: post
+date: 2010-03-18 10:03:00 +02:00
 redirect_from: "post/2010/03/18/localhost-lent-firefox-safari-chrome"
-tags: html, mvc
+tags: [ html, mvc ]
 title: "Localhost lent avec Firefox, Safari et Chrome"
 ---
 
@@ -15,7 +14,7 @@ J'avais l'impression que tout allait bien, mais ces derniers temps je me
 suis rendu compte que l'affichage était vraiment lent. Et pourtant, je fais mes
 essais avec le projet ASP.NET MVC quasi vide créé par défaut par Visual Studio
 2008. En particulier, l'image de fond mettait une bonne seconde avant de
-s'afficher. Alors que c'est un bête PNG de 350 octets ! Ca y est, mon
+s'afficher. Alors que c'est un bête PNG de 350 octets ! Ça y est, mon
 disque dur SSD est devenu lent :(
 
 Au début, je me suis dit que je verrai ça plus tard jusqu'à ce que je

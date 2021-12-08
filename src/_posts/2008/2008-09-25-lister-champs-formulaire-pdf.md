@@ -1,8 +1,7 @@
 ---
-date: 2008-09-25 19:34:00
-layout: post
+date: 2008-09-25 19:34:00 +02:00
 redirect_from: "post/2008/09/25/Lister-les-champs-d-un-formulaire-PDF"
-tags: boulot, csharp
+tags: [ boulot, csharp ]
 title: "Lister les champs d'un formulaire PDF"
 ---
 
@@ -139,7 +138,7 @@ de saisie, ni même dans l'ordre alphabétique. Et comme les noms des champs son
 moyennement clairs, c'est assez galère pour savoir à quoi correspond chaque
 champ.
 
-Ca vaudrait peut être le coup d'essayer la fonction
+Ça vaudrait peut être le coup d'essayer la fonction
 pdfReader.AcroFields.GetFieldPositions(key) qui renvoie la position du champ
 pour essayer de trier cette liste de haut en bas et de gauche à droite. Ou
 alors, simplement remplir chaque champ avec une valeur numérique croissante et

@@ -1,21 +1,16 @@
 ---
-date: 2019-12-04 12:23:15+200
-layout: post
-tags: javascript
+date: 2019-12-04 12:23:15 +02:00
+tags: [ javascript ]
 lang: en-US
 title: "Generate a random number with JavaScript"
-image: "/public/2019/xkcd-221.jpg"
+cover:
+  image: /public/2019/xkcd-221.jpg
+  link: https://xkcd.com/221/
+  text: "XKCD #221 - Random Number"
 excerpt: "How to generate random numbers with Math.random() + How to force chance and be sure to always generate the same set of random numbers (useful for testing)."
 ---
 
 ## The "Math.random()" method
-
-<figure>
-  <img src="{{ page.image }}" alt="random-number" />
-  <figcaption>
-    <a href="https://xkcd.com/221/">XKCD #221 - Random Number</a>
-  </figcaption>
-</figure>
 
 To create a random number, we have to use the `Math.random()` function. This method returns a "pseudo" random number which is:
 
@@ -33,7 +28,7 @@ So, if you want to get a card number to play (an integer number between 1 and 52
 const cardNumber = 1 + Math.floor(52 * Math.random());
 ```
 
-Note: We talk about "pseudo" random number, because for a computer, it's not easy to reproduce chance, so it's easier to simulate.
+*Note: We talk about "pseudo" random number, because for a computer, it's not easy to reproduce chance, so it's easier to simulate.*
 
 
 ## The "Math.seedrandom()" module
@@ -78,5 +73,8 @@ I tryed with several values for "seed" and got the following results:
 
 By playing my system as best I can, I can therefore hope to win 4 out of 10 games. Which is already not bad for "if ... else" code. And so, by using the "randomize" string as initialization value, I will have a better view of the progress made by my hint system as I develop it. The goal being of course to achieve at least a 50% success rate...
 
-{:.encart}
-Version en français : [Générer un nombre aléatoire en JavaScript]({% post_url 2019-12-03-generer-nombre-aleatoire-javascript %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Générer un nombre aléatoire en JavaScript", "2019-12-03-generer-nombre-aleatoire-javascript" %}.
+
+</div>

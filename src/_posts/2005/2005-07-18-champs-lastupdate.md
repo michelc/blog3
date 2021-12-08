@@ -1,8 +1,7 @@
 ---
-date: 2005-07-18 13:43:00
-layout: post
+date: 2005-07-18 13:43:00 +02:00
 redirect_from: "post/2005/07/18/Champs-lastUpdate"
-tags: qc
+tags: [ qc ]
 title: "Champs lastUpdate"
 ---
 

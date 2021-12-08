@@ -1,19 +1,15 @@
 ---
-date: 2020-02-18 19:12:28+200
-layout: post
-tags: sql, csharp
+date: 2020-02-18 19:12:28 +02:00
+tags: [ sql, csharp ]
 title: "How to map column names to class properties with Dapper"
-image: "/public/2020/operatrice.jpg"
+cover:
+  image: /public/2020/operatrice.jpg
+  link: https://en.wikipedia.org/wiki/Switchboard_operator
+  text: Demoiselle du téléphone
+excerpt: Let's see if Dapper allows us to map the columns of a table with the properties of a class like EF or Nhibernate?
 ---
 
 Last week, I used [Dapper](https://stackexchange.github.io/Dapper/) instead of [NHibernate](https://nhibernate.info/) to perform a simple processing on a table in our Oracle database. Since this is an ancient table, the column names are "old-fashioned" and I don't want to end up with overly convoluted property names, even if it's only for a one-shot process.
-
-<figure>
-  <img src="{{ page.image }}" alt="operatrice" />
-  <figcaption>
-    <a href="https://en.wikipedia.org/wiki/Switchboard_operator">Demoiselle du téléphone</a>
-  </figcaption>
-</figure>
 
 Let's say my table has the following structure:
 
@@ -144,5 +140,8 @@ public class Contact
 
 Thinking about it, I'm not sure it's more elegant than SQL aliases... But new!
 
-{:.encart}
-Version en français : [Comment mapper colonnes et propriétés avec Dapper]({% post_url 2020-02-17-mapper-colonnes-proprietes-dapper %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Comment mapper colonnes et propriétés avec Dapper", "2020-02-17-mapper-colonnes-proprietes-dapper" %}.
+
+</div>

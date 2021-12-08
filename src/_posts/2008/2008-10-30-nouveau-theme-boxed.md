@@ -1,12 +1,11 @@
 ---
-date: 2008-10-30 18:45:00
-layout: post
+date: 2008-10-30 18:45:00 +02:00
 redirect_from: "post/2008/10/30/Nouveau-theme-Boxed"
-tags: blog, html
+tags: [ blog, html ]
 title: "Nouveau thème Boxed"
 ---
 
-Ca faisait un bon moment que j'y pensais et je l'ai enfin fait : mon
+Ça faisait un bon moment que j'y pensais et je l'ai enfin fait : mon
 blog a maintenant une nouvelle charte graphique ! Quittez donc 5 secondes
 votre agrégateur et venez vous rendre compte par vous-même :)
 
@@ -163,7 +162,7 @@ en :
 ```
 
 La partie `@media print`, c'est pour la feuille de style à
-l'impression. Ca fait disparaitre tout ce qui est navigation ou accessoire de
+l'impression. Ça fait disparaitre tout ce qui est navigation ou accessoire de
 façon à n'imprimer que le contenu central, et surtout sans qu'il manque la fin
 des lignes (comme c'est quelquefois le cas sur certains blogs).
 

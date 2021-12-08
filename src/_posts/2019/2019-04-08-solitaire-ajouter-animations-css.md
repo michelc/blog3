@@ -1,9 +1,12 @@
 ---
-date: 2019-04-08 12:29:24
-layout: post
-tags: javascript
+date: 2019-04-08 12:29:24 +02:00
+tags: [ javascript ]
 title: "Solitaire - Ajouter des animations CSS"
-image: "/public/2019/animation.jpg"
+cover:
+  image: /public/2019/animation.jpg
+  link: https://www.skrekkogle.com/projects/solitaire/
+  text: Skrekkogle - Solitaire Win Sculpture
+excerpt: Comme je dois ajouter un "AutoMove" à mon jeu de FreeCell, il faut que je me replonge dans les animations CSS pour donner un peu plus de peps à mes jeux.
 ---
 
 <div class="encart" markdown="1">
@@ -11,21 +14,14 @@ image: "/public/2019/animation.jpg"
 Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
 solitaires et aux évolutions que je souhaite y apporter :
 
-1. [Introduction]({% post_url 2019-03-23-solitaire-feuille-route-javascript %})
-2. [Passer de jQuery à Vanilla JS]({% post_url 2019-03-27-solitaire-passer-jquery-vanilla-js %})
-3. [Améliorer FreeCell]({% post_url 2019-04-01-solitaire-ameliorer-freecell %})
-4. [Ajouter des animations CSS]({% post_url 2019-04-08-solitaire-ajouter-animations-css %})
-5. [Drag and drop sans jQuery UI]({% post_url 2019-04-15-solitaire-drag-and-drop-sans-jquery-ui %})
-6. [Remplacer AjaxMin, etc...]({% post_url 2019-04-25-solitaire-remplacer-ajaxmin %})
+1. [Introduction]({% post_url "2019-03-23-solitaire-feuille-route-javascript" %})
+2. [Passer de jQuery à Vanilla JS]({% post_url "2019-03-27-solitaire-passer-jquery-vanilla-js" %})
+3. [Améliorer FreeCell]({% post_url "2019-04-01-solitaire-ameliorer-freecell" %})
+4. [Ajouter des animations CSS]({% post_url "2019-04-08-solitaire-ajouter-animations-css" %})
+5. [Drag and drop sans jQuery UI]({% post_url "2019-04-15-solitaire-drag-and-drop-sans-jquery-ui" %})
+6. [Remplacer AjaxMin, etc...]({% post_url "2019-04-25-solitaire-remplacer-ajaxmin" %})
 
 </div>
-
-<figure>
-  <img src="{{ page.image }}" alt="victoire-solitaire" />
-  <figcaption>
-    <a href="http://www.skrekkogle.com/projects/solitaire/">Skrekkogle - Solitaire Win Sculpture</a>
-  </figcaption>
-</figure>
 
 Il y a 2 ou 3 ans, j'avais déjà regardé comment gérer quelques animations pour
 représenter le déplacement des cartes quand on double-clique dessus pour les
@@ -37,19 +33,19 @@ Mais pour ajouter un "AutoMove" à FreeCell comme envisagé dans un précédent
 billet, il faut que je réfléchisse à nouveau sur le sujet pour (enfin) intégrer
 quelques animations à mes jeux :
 
-* Ca les rendrait un peu plus "vivants" et attractifs
+* Ça les rendrait un peu plus "vivants" et attractifs
 * Certains coups seraient plus "clairs" pour les joueurs
 
 J'ai déjà débuté avec un truc très simple en ajoutant une petite animation en
 fin de partie. Jusqu'à il y a peu de temps, le joueur voyait immédiatement
 apparaitre une popup en cas de victoire ou de "Game Over". Maintenant, il y a
 une petit effet "shake" pendant 2 secondes lorsque cette boite de dialogue
-apparait. Ca réveille un peu le jeu et c'est plus festif, que l'on ait gagné ou
+apparait. Ça réveille un peu le jeu et c'est plus festif, que l'on ait gagné ou
 perdu...
 
 Et donc, un autre effet judicieux serait de "montrer" le déplacement d'une carte
 d'une pile vers une autre. Comme vu dans le billet sur les
-[améliorations de FreeCell]({% post_url 2019-04-01-solitaire-ameliorer-freecell %}),
+[améliorations de FreeCell]({% post_url "2019-04-01-solitaire-ameliorer-freecell" %}),
 cela serait très utile pour que le joueur voit ce qui se passe quand un
 "AutoPlay" a lieu.
 

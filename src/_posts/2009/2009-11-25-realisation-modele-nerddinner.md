@@ -1,8 +1,7 @@
 ---
-date: 2009-11-25 08:54:00
-layout: post
+date: 2009-11-25 08:54:00 +02:00
 redirect_from: "post/2009/11/25/R%C3%A9alisation-du-mod%C3%A8le-pour-NerdDinner"
-tags: mvc
+tags: [ mvc ]
 title: "Réalisation du modèle pour NerdDinner"
 ---
 

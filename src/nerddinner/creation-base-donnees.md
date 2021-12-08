@@ -1,5 +1,5 @@
 ---
-date: 2009-11-23 10:26:00
+date: 2009-11-23 10:26:00 +02:00
 layout: page
 permalink: nerddinner/creation-base-donnees/
 redirect_from: "pages/NerdDinner/Creation-base-donnees"
@@ -147,7 +147,7 @@ table" et associons la colonne "RSVP.DinnerID" comme clé étrangère :
 
 ![](http://nerddinnerbook.s3.amazonaws.com/Images/image038.png)
 
-A partir de maintenant, chaque ligne de la table RSVP sera associée à une
+À partir de maintenant, chaque ligne de la table RSVP sera associée à une
 ligne dans la table Dinners. SQL Server maintiendra l'intégrité référentielle
 pour nous - et nous évitera d'ajouter une nouvelle ligne dans la table RSVP si
 elle ne fait pas référence à une ligne existante de la table Dinners. Il se

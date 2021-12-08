@@ -1,8 +1,7 @@
 ---
-date: 2004-09-23 17:25:00
-layout: post
+date: 2004-09-23 17:25:00 +02:00
 redirect_from: "post/2004/09/23/Creation-brique-Integration-HtmlPart"
-tags: qc
+tags: [ qc ]
 title: "Création de la brique Integration.HtmlPart"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2006-03-19 10:08:00
-layout: post
+date: 2006-03-19 10:08:00 +02:00
 redirect_from: "post/2006/03/19/Boite-Feedback"
-tags: qc
+tags: [ qc ]
 title: "Boite Feedback"
 ---
 

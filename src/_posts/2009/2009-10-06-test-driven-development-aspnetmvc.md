@@ -1,8 +1,7 @@
 ---
-date: 2009-10-06 17:12:00
-layout: post
+date: 2009-10-06 17:12:00 +02:00
 redirect_from: "post/2009/10/06/Test-Driven-Development-avec-ASP.NET-MVC"
-tags: mvc, unit-test
+tags: [ mvc, unit-test ]
 title: "Test-Driven Development avec ASP.NET MVC"
 ---
 
@@ -182,7 +181,7 @@ namespace ContactManager.Controllers
 }
 ```
 
-Zut! Ca ne compile toujours pas ! Il y a un problème au niveau de la
+Zut! Ça ne compile toujours pas ! Il y a un problème au niveau de la
 ligne
 
 ```
@@ -207,7 +206,7 @@ laissant juste :
 CollectionAssert.Contains(groups, groupToCreate);
 ```
 
-Ca compile et le test réussit. Que demander de plus ? Ca fait ma
+Ça compile et le test réussit. Que demander de plus ? Ça fait ma
 seconde 2° étape TDD OK de la journée. La suite sera pour plus tard...
 
 > Mise à jour du 2/12/9 : En fait, il manquait un `using
@@ -259,13 +258,13 @@ controller.Create(groupToCreate);
 ...
 ```
 
-Ca ne compile plus <=> le test unitaire échoue => on peut coder
+Ça ne compile plus <=> le test unitaire échoue => on peut coder
 vite fait quelque chose pour le passer. (Finalement, c'est assez rigolo comme
 méthode).
 
 Déjà, pour que cela ait une chance de marcher, il faut ajouter une propriété
 Name à notre classe Group. Pour cela, on a seulement besoin d'insérer une ligne
-pour définir une [propriété automatique]({% post_url 2009-06-25-proprietes-automatiques-c-sharp %}) :
+pour définir une [propriété automatique]({% post_url "2009-06-25-proprietes-automatiques-c-sharp" %}) :
 
 ```
 namespace ContactManager.Models
@@ -277,7 +276,7 @@ namespace ContactManager.Models
 }
 ```
 
-Ca re-compile, le test "Create" réussi toujours mais le test
+Ça re-compile, le test "Create" réussi toujours mais le test
 "CreateRequiredName" échoue => c'est pas fini : il faut encore vérifier
 que le nom du groupe n'est pas vide avant de le créer. Pour cela, il suffit
 d'ajouter quelques lignes à l'action "Create" du contrôleur
@@ -313,4 +312,4 @@ vue que ce n'est que le tout début du chemin :
 "vrai" !
 
 ---
-Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (suite)]({% post_url 2009-10-09-test-driven-development-aspnetmvc-suite %})
+Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (suite)]({% post_url "2009-10-09-test-driven-development-aspnetmvc-suite" %})

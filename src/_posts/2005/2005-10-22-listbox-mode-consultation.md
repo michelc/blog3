@@ -1,8 +1,7 @@
 ---
-date: 2005-10-22 13:00:00
-layout: post
+date: 2005-10-22 13:00:00 +02:00
 redirect_from: "post/2005/10/22/ListBox-en-mode-consultation"
-tags: qc
+tags: [ qc ]
 title: "ListBox en mode consultation"
 ---
 

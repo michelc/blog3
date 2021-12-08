@@ -1,8 +1,7 @@
 ---
-date: 2012-11-12 19:04:00
-layout: post
+date: 2012-11-12 19:04:00 +02:00
 redirect_from: "post/2012/11/12/heritage-generation-routes-asp-net-mvc"
-tags: mvc
+tags: [ mvc ]
 title: "Héritage en génération des routes ASP.NET MVC"
 ---
 
@@ -22,7 +21,7 @@ l'élément à traiter. On a donc :
 
 Dans mon cas, j'avais besoin d'avoir en permanence l'identifiant de la
 brochure dans l'URL pour pouvoir afficher facilement son titre dans l'en-tête
-des pages. Ca aurait pu donner quelque chose dans ce genre :
+des pages. Ça aurait pu donner quelque chose dans ce genre :
 
 * /brochures/edit/12
 * /voyages/delete/34?brochure_id=12

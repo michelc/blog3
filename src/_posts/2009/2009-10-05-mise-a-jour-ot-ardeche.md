@@ -1,8 +1,7 @@
 ---
-date: 2009-10-05 13:13:00
-layout: post
+date: 2009-10-05 13:13:00 +02:00
 redirect_from: "post/2009/10/05/Mise-%C3%A0-jour-des-OT-de-l-Ard%C3%A8che"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Mise à jour des OT de l'Ardèche"
 ---
 
@@ -62,7 +61,7 @@ Au passage, c'est quand même assez fou le nombre de fois où il est difficile
 (voire impossible) de trouver les coordonnées ou les heures d'ouvertures sur
 leur site internet...
 
-Ca n'a pas été facile, mais au final j'ai maintenant une base de données
+Ça n'a pas été facile, mais au final j'ai maintenant une base de données
 asse cohérente (au moins jusqu'à l'année prochaine) et j'ai même réussi à
 récupérer 4 ou 5 photos supplémentaires pour illustrer la situation de l'office
 de tourisme. Après ce travail un peu fastidieux, j'ai reporté ces mises à jour

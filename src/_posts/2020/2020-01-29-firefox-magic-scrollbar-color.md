@@ -1,21 +1,16 @@
 ---
-date: 2020-01-29 12:38:22+200
-layout: post
+date: 2020-01-29 12:38:22 +02:00
 lang: en-US
-tags: livres
+tags: [ livres ]
 title: "Hey! Firefox scrollbar-color is magical"
-image: "/public/2020/firefox-scrollbar-color.jpg"
+cover:
+  image: /public/2020/firefox-scrollbar-color.jpg
+  link: https://www.solitaire-play.com/klondike-turn-three/
+  text: Look! Scrollbar is green
 excerpt: "With Firefox, the scrollbar for my Solitaire-Play games is in the «green» tones, like the rest of the website, but I don't know why..."
 ---
 
 I think so. I just came back from my site [Solitaire-Play](https://www.solitaire-play.com/) and I realized that the vertical scrollbar is "green", which is the dominant color of any solitaire game. Cool!
-
-<figure>
-  <img src="{{ page.image }}" alt="firefox-scrollbar-color" />
-  <figcaption>
-    <a href="https://www.solitaire-play.com/klondike-turn-three/">Look! Scrollbar is green</a>
-  </figcaption>
-</figure>
 
 I check with Chrome and there, the scrollbar is "gray" as usual. No matter where I look, I can't find anything to explain this behavior.
 
@@ -40,5 +35,8 @@ Since I haven't yet set up a "manifest.json" file, I don't have any "theme_color
 
 For now, I'm going to put this in an added bonus of switching from Chrome to Firefox. We don't see any other explanation...
 
-{:.encart}
-Version en français : [Waouh ! La scrollbar de Firefox est magique]({% post_url 2020-01-28-firefox-couleur-scrollbar-magique %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Waouh ! La scrollbar de Firefox est magique", "2020-01-28-firefox-couleur-scrollbar-magique" %}.
+
+</div>

@@ -1,8 +1,7 @@
 ---
-date: 2005-05-10 16:11:00
-layout: post
+date: 2005-05-10 16:11:00 +02:00
 redirect_from: "post/2005/05/10/Fermer-la-fenetre-du-navigateur"
-tags: code-snippets, javascript
+tags: [ code-snippets, javascript ]
 title: "Fermer la fenêtre du navigateur"
 ---
 

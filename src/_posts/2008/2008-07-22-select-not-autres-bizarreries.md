@@ -1,8 +1,7 @@
 ---
-date: 2008-07-22 16:02:00
-layout: post
+date: 2008-07-22 16:02:00 +02:00
 redirect_from: "post/2008/07/22/Select-Not-IN-et-autres-bizarreries"
-tags: sql
+tags: [ sql ]
 title: "Select ... Not IN et autres bizarreries"
 ---
 

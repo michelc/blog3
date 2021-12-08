@@ -1,8 +1,7 @@
 ---
-date: 2010-07-02 09:43:00
-layout: post
+date: 2010-07-02 09:43:00 +02:00
 redirect_from: "post/2010/07/02/data-annotation-belong-to-view-models"
-tags: mvc
+tags: [ mvc ]
 title: "Data annotation belong to View models"
 ---
 

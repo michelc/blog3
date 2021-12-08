@@ -1,8 +1,7 @@
 ---
-date: 2006-04-11 18:47:00
-layout: post
+date: 2006-04-11 18:47:00 +02:00
 redirect_from: "post/2006/04/11/Validation-XHTML"
-tags: qc
+tags: [ qc ]
 title: "Validation XHTML"
 ---
 

@@ -1,15 +1,14 @@
 ---
-date: 2009-10-20 16:30:00
-layout: post
+date: 2009-10-20 16:30:00 +02:00
 redirect_from: "post/2009/10/20/Test-Driven-Development-avec-ASP.NET-MVC-(suite)"
-tags: mvc, unit-test
+tags: [ mvc, unit-test ]
 title: "Test-Driven Development avec ASP.NET MVC (suite)"
 ---
 
 Enfin, ça y est, je vais enfin faire des trucs pour de vrai : modifier
 la base de données, écrire du code qui permet à l'utilisateur de réellement
 gérer des groupes de contacts... et venir à bout de la [6°
-partie du tutoriel pour gérer des contacts]({% post_url 2009-10-09-test-driven-development-aspnetmvc-suite %} "Test-Driven Development avec ASP.NET MVC (suite)").
+partie du tutoriel pour gérer des contacts]({% post_url "2009-10-09-test-driven-development-aspnetmvc-suite" %} "Test-Driven Development avec ASP.NET MVC (suite)").
 
 ## Mises à jour comme dans le tutoriel
 
@@ -33,7 +32,7 @@ Zut ! Le tutoriel donne bien les modifications à apporter repository
 (l'interface et la classe), mais pas un seul mot sur les autres modifications
 nécessaires...
 
-* Au début de cette 6° partie, on avait créé une [classe Group]({% post_url 2009-10-06-test-driven-development-aspnetmvc %}) à la main puisqu'on n'avait pas encore touché à
+* Au début de cette 6° partie, on avait créé une [classe Group]({% post_url "2009-10-06-test-driven-development-aspnetmvc" %}) à la main puisqu'on n'avait pas encore touché à
 la base de données. Ce coup-ci, pour que ça marche il faut la supprimer sinon
 on ne peut pas compiler parce que "*Missing partial modifier on declaration
 of type 'ContactManager.Models.Group'; another partial declaration of this type
@@ -71,7 +70,7 @@ table "Groups"
 
 ## Ajout de la vue Index
 
-Ca avance bien, donc je continue :
+Ça avance bien, donc je continue :
 
 * création d'une vue Groups/Index en automatique
 * modification de site.master pour ajouter un onglet "Manage Contact
@@ -184,7 +183,7 @@ Create ? J'ai rien demandé moi !
 
 ...
 
-Ca y est, j'ai trouvé le coupable dans GroupController.cs :
+Ça y est, j'ai trouvé le coupable dans GroupController.cs :
 
 ```
 public ActionResult Create(Group groupToCreate)
@@ -205,7 +204,7 @@ coup-ci je me retrouve dans le débugueur avec une erreur
 
 ...
 
-Ca va bien finir par marcher. Mais pour gagner du temps, je vais pomper sur
+Ça va bien finir par marcher. Mais pour gagner du temps, je vais pomper sur
 le source de GroupController.cs du tutoriel où il y a un `return
 View("Index", _service.ListGroups());`. J'aurai pu trouver ! Dans
 l'action Index il y a déjà un `return View(_service.ListGroups());`.
@@ -335,4 +334,4 @@ Allez hop ! Encore un coup de tests unitaires pour me conditionner et
 c'est tout pour aujourd'hui.
 
 ---
-Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (suite)]({% post_url 2009-10-29-test-driven-development-aspnetmvc-suite %})
+Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC (suite)]({% post_url "2009-10-29-test-driven-development-aspnetmvc-suite" %})

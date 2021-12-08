@@ -1,8 +1,7 @@
 ---
-date: 2012-10-01 19:35:00
-layout: post
+date: 2012-10-01 19:35:00 +02:00
 redirect_from: "post/2012/10/01/tester-partie-post-action-create"
-tags: mvc, unit-test
+tags: [ mvc, unit-test ]
 title: "Tester la partie POST d'une action Create() - 1/2"
 ---
 
@@ -148,9 +147,9 @@ person);` dans l'action et je relance le test pour pour vérifier que j'ai
 bien le message "People.Create() aurait dû utiliser la vue par défaut" :
 OK
 
-Note : Je n'ai pas à tester que la vue par défaut sera
+*Note : Je n'ai pas à tester que la vue par défaut sera
 bien Create.cshtml. Ca, c'est le travail de ceux qui ont développé ASP.NET
-MVC.
+MVC.*
 
 Conclusion : Grâce à ce test unitaire, je suis
 maintenant certain qu'en cas d'erreur de saisie l'action People.Create() me
@@ -191,11 +190,11 @@ Assert.IsTrue(result.ViewData.ModelState.Count > 0,
 
 => test pour vérifier que le ModelState contient bien des erreurs.
 
-Note : En fait, c'est un test idiot ! S'il y a
+*Note : En fait, c'est un test idiot ! S'il y a
 des erreurs dans le ModelState en entrée, c'est le boulot de ASP.NET MVC de
 mettre ModelState.IsValid à false et de renvoyer ces erreurs dans
 `result.ViewData.ModelState`. Et c'est donc le boulot de ceux qui
-ont développé ça d'avoir unitairement testé tout ce qui va bien.
+ont développé ça d'avoir unitairement testé tout ce qui va bien.*
 
 Conclusion : un test pour rien à supprimer.
 
@@ -244,11 +243,11 @@ liste des sociétés existantes (c'est ce que fait la ligne
 `person.Companies = ListCompanies(person.Company_ID);` dans le
 source de l'action).
 
-Note : ce test créée le contrôleur en lui passant un
+*Note : Ce test créée le contrôleur en lui passant un
 paramètre "db" pour définir un objet RepertoirContext spécifique au test. Il
 s'agit d'un objet de type DbContext car la méthode ListCompanies() appelée par
 l'action Create() passe par Entity Framework pour retrouver la liste des
-sociétés existantes dans la base de données.
+sociétés existantes dans la base de données.*
 
 Conclusion : je reviendrai une autre fois sur la
 méthode que j'ai choisi d'utiliser pour effectuer mes tests liés à Entity
@@ -304,7 +303,7 @@ Assert.AreEqual(person.Phone1, model.Phone1, "...");
 => 2° test pour vérifier que l'action retransmet bien ce qu'elle a
 reçu.
 
-Note : En fait, le "vrai" but de ce test n'est pas de
+Au passage, il est à noter que le "vrai" but de ce test n'est pas de
 vérifier que le ViewPerson en entrée est le "même" que le ViewPerson transmis à
 la vue (c'est pas mon boulot...). Ce que je teste, c'est que l'objet ViewPerson
 est bien re-transmis à la vue en cas d'erreur de saisie et que dans mon code de
@@ -349,7 +348,7 @@ public ActionResult Create(ViewPerson person)
 
 Après ça, il faudra que je teste le POST quand ça marche et que l'action
 Create() enregistre la nouvelle personne (màj : c'est fait avec la
-[2° partie de ce billet]({% post_url 2012-10-02-tester-partie-post-action-create-2 %})).
+[2° partie de ce billet]({% post_url "2012-10-02-tester-partie-post-action-create-2" %})).
 
 ## Ce que je ne teste pas
 

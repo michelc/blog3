@@ -1,14 +1,16 @@
 ---
-date: 2010-01-12 15:00:00
-layout: post
+date: 2010-01-12 15:00:00 +02:00
 redirect_from: "post/2010/01/12/Vous-devriez-apprendre-MVC"
-tags: mvc
+tags: [ mvc ]
 title: "Je peux le dire : Vous devriez apprendre MVC"
+excerpt: "Un plaidoyer pour ASP.NET MVC de Rob Conery qui se résume en 3 mots : 'WebForms is a lie'."
 ---
 
-{:.encart}
-Ceci est la traduction du billet [I Spose I'll Just Say It: You Should Learn MVC](http://blog.wekeroad.com/2009/04/22/i-spose-ill-just-say-it-you-should-learn-mvc) de Rob
-Conery.
+<div class="encart">
+
+Ceci est la traduction du billet [I Spose I'll Just Say It: You Should Learn MVC](http://blog.wekeroad.com/2009/04/22/i-spose-ill-just-say-it-you-should-learn-mvc) de Rob Conery.
+
+</div>
 
 ## Le Gros Mensonge
 
@@ -104,7 +106,7 @@ ControlTree afin qu'il s'affiche quand on a besoin de lui ? MVC ne vous
 enferme jamais dans quoi que ce soit - vous êtes libre de faire ce que vous
 voulez.
 
-**4 - Ca vous fait réfléchir...** C'est un truc que je n'ai
+**4 - Ça vous fait réfléchir...** C'est un truc que je n'ai
 jamais aimé avec les WebForms - je n'avais jamais l'impression de réfléchir –
 juste d'exécuter. Vous trouvez peut-être que je cherche à couper es cheveux en
 quatre, mais pas moi. On cherche un peu l'inspiration et on essaie de
@@ -163,6 +165,3 @@ toujours mon propre cerveau à moi capable d'avoir ses propres idées !
 J'adore MVC et je pense que vous l'aimerez aussi - alors s'il vous plait,
 essayez le avant de vous forger votre propre opinion.
 
-{:.encart}
-Ceci est la traduction du billet [I Spose I'll Just Say It: You Should Learn MVC](http://blog.wekeroad.com/2009/04/22/i-spose-ill-just-say-it-you-should-learn-mvc) de Rob
-Conery.

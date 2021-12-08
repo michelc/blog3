@@ -1,8 +1,7 @@
 ---
-date: 2010-01-25 13:30:00
-layout: post
+date: 2010-01-25 13:30:00 +02:00
 redirect_from: "post/2010/01/25/nouvelle-charte-graphique-prisca"
-tags: blog, html
+tags: [ blog, html ]
 title: "Nouvelle charte graphique Prisca"
 ---
 
@@ -26,8 +25,8 @@ ancienne charte graphique. En plus du cadre général pour le contenu principal,
 j'avais utilisé une couleur de fond plus foncée pour dessiner une sorte de
 cadre pour les blocs d'en-tête des billets. Et pour bien insister, j'étais allé
 jusqu'à présenter les tags et même quelques éléments de navigation sous forme
-de boutons avec un léger effet 3D... A tel point que j'avais d'ailleurs appelé
-cette charte graphique "[Boxed]({% post_url 2008-10-30-nouveau-theme-boxed %})" :)
+de boutons avec un léger effet 3D... À tel point que j'avais d'ailleurs appelé
+cette charte graphique "[Boxed]({% post_url "2008-10-30-nouveau-theme-boxed" %})" :)
 
 Ce coup-ci, j'ai commencé par essayer de corriger ça en démarrant encore une
 fois avec un grand bloc blanc mais en y disposant des marges beaucoup plus
@@ -102,9 +101,9 @@ moins visibles.
 La première de ces évolutions, c'est que j'ai enfin terminé de reprendre
 tous les billets que j'avais publiés à l'origine sur mes précédentes tentatives
 de blogues sous [
-Blogger et WordPress]({% post_url 2006-10-12-avancement-mise-a-jour-site-gandiblog %}), sans compter tous les billets consacrés à QC que je
+Blogger et WordPress]({% post_url "2006-10-12-avancement-mise-a-jour-site-gandiblog" %}), sans compter tous les billets consacrés à QC que je
 suis allé récupérer dans les [archives de
-l'internet]({% post_url 2008-09-24-je-me-souviens %}). Ca m'a pris du temps, mais je suis bien content de l'avoir
+l'internet]({% post_url "2008-09-24-je-me-souviens" %}). Ça m'a pris du temps, mais je suis bien content de l'avoir
 fait.
 
 En ce qui concerne la seconde de ces évolutions, elle n'est pas vraiment de

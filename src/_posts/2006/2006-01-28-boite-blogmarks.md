@@ -1,8 +1,7 @@
 ---
-date: 2006-01-28 10:35:00
-layout: post
+date: 2006-01-28 10:35:00 +02:00
 redirect_from: "post/2006/01/28/Boite-Blogmarks"
-tags: qc
+tags: [ qc ]
 title: "Boite Blogmarks"
 ---
 
@@ -15,4 +14,4 @@ définir les éléments suivants :
 * nombre d'entrées à afficher.
 
 Le fil atom renvoyé par Blogmarks est ensuite transformé en code html par
-application du fichier [feed-blogmarks.xslt]({% post_url 2006-01-19-blogmarks-html-conversion %})
+application du fichier [feed-blogmarks.xslt]({% post_url "2006-01-19-blogmarks-html-conversion" %})

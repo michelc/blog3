@@ -1,12 +1,11 @@
 ---
-date: 2006-10-25 12:00:00
-layout: post
+date: 2006-10-25 12:00:00 +02:00
 redirect_from: "post/2006/10/25/Evolutions-QC-au-25-octobre-2006"
-tags: qc
+tags: [ qc ]
 title: "Evolutions QC au 25 octobre 2006"
 ---
 
-Récapitulatif de ce qui a été fait depuis le [29 juin 2006]({% post_url 2006-06-29-evolutions-qc-29-juin-2006 %})
+Récapitulatif de ce qui a été fait depuis le [29 juin 2006]({% post_url "2006-06-29-evolutions-qc-29-juin-2006" %})
 (essentiellement lié à la fusion des sources de OTT) :
 
 * _dumpdb.aspx : Fichier dump.sql généré dans le sous-répertoire data

@@ -1,8 +1,7 @@
 ---
-date: 2005-11-08 09:38:00
-layout: post
+date: 2005-11-08 09:38:00 +02:00
 redirect_from: "post/2005/11/08/Mise-a-jour-de-XTablecs"
-tags: qc
+tags: [ qc ]
 title: "Mise à jour de XTable.cs"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2007-04-11 18:13:00
-layout: post
+date: 2007-04-11 18:13:00 +02:00
 redirect_from: "post/2007/04/11/Auto-decouverte-du-sitemap-dans-robotstxt"
-tags: referencement
+tags: [ referencement ]
 title: "Auto-découverte du sitemap dans robots.txt"
 ---
 

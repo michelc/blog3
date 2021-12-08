@@ -1,8 +1,7 @@
 ---
-date: 2004-11-04 19:32:00
-layout: post
+date: 2004-11-04 19:32:00 +02:00
 redirect_from: "post/2004/11/04/Wdevs-Of-controls-and-boxes"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Of controls and boxes"
 ---

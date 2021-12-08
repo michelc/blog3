@@ -1,20 +1,16 @@
 ---
-date: 2020-05-28 13:20:08+200
-layout: post
+date: 2020-05-28 13:20:08 +02:00
 lang: en-US
-tags: css
+tags: [ css ]
 title: "Hide or show sidebar"
-image: "/public/2020/switches.jpg"
+cover:
+  image: /public/2020/switches.jpg
+  link: https://www.heure-industrielle.com/petit-musee-de-l-interrupteur/
+  text: Le petit musée de l'interrupteur
+excerpt: "Today goal: hide or show the vertical menu used for navigation."
 ---
 
-I'm still working on a [simple 2-column template]({% post_url 2020-05-20-create-template-sidebar-content %}). Today my goal is to hide the "sidebar" used for navigation.
-
-<figure>
-  <img src="{{ page.image }}" alt="switches..." />
-  <figcaption>
-    <a href="https://www.heure-industrielle.com/petit-musee-de-l-interrupteur/">Le petit musée de l'interrupteur</a>
-  </figcaption>
-</figure>
+I'm still working on a [simple 2-column template]({% post_url "2020-05-20-create-template-sidebar-content" %}). Today my goal is to hide the "sidebar" used for navigation.
 
 An easy solution would be to add a "d-none" class to the "sidebar" (since I use Bootstrap), but that won't be enough because the "content" doesn't automatically take all the width.
 
@@ -175,5 +171,8 @@ It wasn't complicated... So I would probably write a third part to work on the "
 * Use an icon to show or hide the sidebar,
 * Add an animation to switch from one state to another.
 
-{:.encart}
-Version en français : [Masquer ou afficher le menu latéral]({% post_url 2020-05-27-masquer-afficher-menu-lateral %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Masquer ou afficher le menu latéral", "2020-05-27-masquer-afficher-menu-lateral" %}.
+
+</div>

@@ -1,8 +1,7 @@
 ---
-date: 2010-04-02 15:54:00
-layout: post
+date: 2010-04-02 15:54:00 +02:00
 redirect_from: "post/2010/04/02/faire-fonctionner-asp-net-mvc-sur-iis-6"
-tags: mvc
+tags: [ mvc ]
 title: "Faire fonctionner ASP.NET MVC sur IIS 6"
 ---
 
@@ -64,7 +63,7 @@ Index.htm...).
 
 ### Attention
 
-Etant donné que nos URLs prennent des ".aspx", il faut aussi modifier le
+Étant donné que nos URLs prennent des ".aspx", il faut aussi modifier le
 fichier Web.Config pour mettre à jour l'URL qui y est paramétrée pour effectuer
 l'authentification. Rechercher "loginUrl=" et remplacer :
 

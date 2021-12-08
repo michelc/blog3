@@ -1,8 +1,7 @@
 ---
-date: 2006-04-10 16:59:00
-layout: post
+date: 2006-04-10 16:59:00 +02:00
 redirect_from: "post/2006/04/10/Wdevs-An-academic-case-for-QC"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) An academic case for QC"
 ---

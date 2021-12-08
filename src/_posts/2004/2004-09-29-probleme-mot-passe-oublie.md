@@ -1,8 +1,7 @@
 ---
-date: 2004-09-29 18:55:00
-layout: post
+date: 2004-09-29 18:55:00 +02:00
 redirect_from: "post/2004/09/29/Probleme-mot-de-passe-oublie"
-tags: qc
+tags: [ qc ]
 title: "Problème mot de passe oublié"
 ---
 
@@ -19,5 +18,5 @@ Solution en deux temps dans Login.ascx.\*:
 * supprimer le test `if (Page.IsValid == true)` dans la procédure
 btnReminder_Click.
 
-Ca marche dans la mesure où le seul test de validité pour la perte de mot de
+Ça marche dans la mesure où le seul test de validité pour la perte de mot de
 passe se fait côté serveur.

@@ -1,8 +1,7 @@
 ---
-date: 2006-04-12 08:53:00
-layout: post
+date: 2006-04-12 08:53:00 +02:00
 redirect_from: "post/2006/04/12/Configuration-AdSense"
-tags: adsense, qc
+tags: [ adsense, qc ]
 title: "Configuration AdSense"
 ---
 

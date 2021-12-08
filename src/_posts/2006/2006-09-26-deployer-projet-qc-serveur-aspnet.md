@@ -1,8 +1,7 @@
 ---
-date: 2006-09-26 18:00:00
-layout: post
+date: 2006-09-26 18:00:00 +02:00
 redirect_from: "post/2006/09/26/Deployer-un-projet-QC-sur-un-serveur-ASPNET"
-tags: qc
+tags: [ qc ]
 title: "Déployer un projet QC sur un serveur ASP.NET"
 ---
 

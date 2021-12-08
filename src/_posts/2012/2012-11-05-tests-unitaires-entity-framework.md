@@ -1,8 +1,7 @@
 ---
-date: 2012-11-05 19:34:00
-layout: post
+date: 2012-11-05 19:34:00 +02:00
 redirect_from: "post/2012/11/05/tests-unitaires-entity-framework"
-tags: ef, unit-test
+tags: [ ef, unit-test ]
 title: "Tests unitaires pour Entity Framework"
 ---
 
@@ -120,7 +119,7 @@ Framework avaient un peu plus préparé le terrain.
 
 Dans le même genre de truc, je suis tombé sur un article sur Code Project
 qui présente [Two strategies for testing Entity Framework](http://www.codeproject.com/Articles/460175/Two-strategies-for-testing-Entity-Framework-Effort), dont [Effort](http://effort.codeplex.com/), un provider ADO.NET
-pour Entity Framework qui travaille entièrement en mémoire. Ca commence à
+pour Entity Framework qui travaille entièrement en mémoire. Ça commence à
 devenir intéressant, mais comme le dit l'article, on ne travaille pas
 réellement avec une "vraie" base de données et surtout tout n'est pas
 géré...
@@ -173,4 +172,4 @@ Framework Code First Ready, un tout bête SQL Server CE devrait pouvoir faire
 l'affaire...
 
 Je vais maintenant essayer de ne pas trop tarder pour faire un billet
-expliquant comment je m'y suis pris. C'est enfin fait : [Tester Entity Framework avec SQL CE]({% post_url 2012-12-13-tester-entity-framework-sql-ce %}).
+expliquant comment je m'y suis pris. C'est enfin fait : [Tester Entity Framework avec SQL CE]({% post_url "2012-12-13-tester-entity-framework-sql-ce" %}).

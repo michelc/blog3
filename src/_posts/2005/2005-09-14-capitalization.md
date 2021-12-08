@@ -1,8 +1,7 @@
 ---
-date: 2005-09-14 16:58:00
-layout: post
+date: 2005-09-14 16:58:00 +02:00
 redirect_from: "post/2005/09/14/Capitalization"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Capitalization"
 ---
 

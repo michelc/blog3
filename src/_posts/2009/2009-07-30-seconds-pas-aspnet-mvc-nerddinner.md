@@ -1,13 +1,12 @@
 ---
-date: 2009-07-30 16:24:00
-layout: post
+date: 2009-07-30 16:24:00 +02:00
 redirect_from: "post/2009/07/30/Seconds-pas-avec-ASPNET-MVC-et-NerdDinner"
-tags: mvc
+tags: [ mvc ]
 title: "Seconds pas avec ASP.NET MVC et NerdDinner"
 ---
 
 La fois d'avant, j'avais seulement fait la toute [première étape du
-tutoriel NerdDinner]({% post_url 2009-07-17-premier-essai-aspnet-mvc %}) de Scott Guthrie, à savoir :
+tutoriel NerdDinner]({% post_url "2009-07-17-premier-essai-aspnet-mvc" %}) de Scott Guthrie, à savoir :
 
 * créer le projet NerdDinner,
 * vérifier qu'il fonctionnait bien comme prévu,
@@ -41,9 +40,9 @@ concerne LINQ to SQL et le pattern "Repository", mais c'est déjà ça de
 pris...
 
 Et pour finir, j'ai décidé d'installer "SQL Server Management Studio". Après
-bien des péripéties, ça a enfin (et assez inexplicablement) réussi. Ca m'a
+bien des péripéties, ça a enfin (et assez inexplicablement) réussi. Ça m'a
 permis de générer le script pour créer les deux tables Dinners et RSVP et pour
 initialiser leur contenu avec quelques données de tests.
 
 ---
-Billet suivant dans la série : [Troisième étape avec ASP.NET MVC]({% post_url 2009-09-23-troisieme-etape-aspnetmvc %})
+Billet suivant dans la série : [Troisième étape avec ASP.NET MVC]({% post_url "2009-09-23-troisieme-etape-aspnetmvc" %})

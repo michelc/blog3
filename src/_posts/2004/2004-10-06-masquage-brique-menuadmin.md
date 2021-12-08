@@ -1,8 +1,7 @@
 ---
-date: 2004-10-06 20:56:00
-layout: post
+date: 2004-10-06 20:56:00 +02:00
 redirect_from: "post/2004/10/06/Masquage-brique-menuAdmin"
-tags: qc
+tags: [ qc ]
 title: "Masquage brique menuAdmin"
 ---
 

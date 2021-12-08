@@ -1,24 +1,18 @@
 ---
-date: 2019-12-09 12:24:10+200
-layout: post
-tags: javascript, bootstrap
+date: 2019-12-09 12:24:10 +02:00
+tags: [ javascript, bootstrap ]
 title: "Gérer le menu hamburger de Bootstrap 4 en Vanilla JS"
-image: "/public/2019/hamburger-menu.jpg"
+cover:
+  image: /public/2019/hamburger-menu.jpg
+  link: https://unsplash.com/photos/Nb_Q-M3Cdzg
+  text: Hamburger with a beer - Edward Franklin
 excerpt: "Bootstrap 4 c'est super pour le côté responsive, mais 57 ko de JavaScript juste pour gérer le menu hamburger, c'est trop."
 ---
 
 ## Présentation
 
 J'ai développé il y a quelque temps une petite application en ASP.NET MVC pour
-laquelle j'ai déjà eu besoin de [filtrer les tables en JavaScript]({% post_url
-2019-09-30-rechercher-filtrer-table-javascript %}).
-
-<figure>
-  <img src="{{ page.image }}" alt="hamburger-menu" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/Nb_Q-M3Cdzg">Hamburger with a beer - Edward Franklin</a>
-  </figcaption>
-</figure>
+laquelle j'ai déjà eu besoin de [filtrer les tables en JavaScript]({% post_url "2019-09-30-rechercher-filtrer-table-javascript" %}).
 
 Ce site utilise Bootstrap 4, ce qui me permet d'avoir un résultat totalement
 responsive sans trop d'efforts. En particulier la barre de navigation qui
@@ -177,5 +171,8 @@ src="/js/js-navbar-toggler.js"></script>` :
 })();
 ```
 
-{:.encart}
-English version: [Switch Bootstrap 4 hamburger menu with Vanilla JS]({% post_url 2019-12-10-bootstrap-hamburger-menu-vanilla-js %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Switch Bootstrap 4 hamburger menu with Vanilla JS", "2019-12-10-bootstrap-hamburger-menu-vanilla-js" %}.
+
+</div>

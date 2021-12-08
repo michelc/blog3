@@ -1,8 +1,7 @@
 ---
-date: 2005-08-08 09:52:00
-layout: post
+date: 2005-08-08 09:52:00 +02:00
 redirect_from: "post/2005/08/08/Correction-Announcements-box"
-tags: qc
+tags: [ qc ]
 title: "Correction Announcements box"
 ---
 

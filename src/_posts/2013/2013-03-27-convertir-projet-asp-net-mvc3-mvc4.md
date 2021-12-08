@@ -1,8 +1,7 @@
 ---
-date: 2013-03-27 22:06:00
-layout: post
+date: 2013-03-27 22:06:00 +02:00
 redirect_from: "post/2013/03/27/convertir-un-projet-asp-net-mvc3-en-mvc4"
-tags: mvc
+tags: [ mvc ]
 title: "Convertir un projet ASP.NET MVC 3 en MVC 4"
 ---
 
@@ -14,8 +13,8 @@ J'ai migré mon application [Répertoir](http://repertoir.apphb.com/) vers ASP.N
 
 ## Créer un projet ASP.NET MVC 4 réellement vide
 
-Note : le projet vide est déjà pas mal vide, mais il
-intègre Web API par défaut et je n'en ai pas l'utilité.
+*Note : Le projet vide est déjà pas mal vide, mais il
+intègre Web API par défaut et je n'en ai pas l'utilité.*
 
 ### Créer un projet "Empty"
 

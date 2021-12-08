@@ -1,8 +1,7 @@
 ---
-date: 2006-01-28 18:59:00
-layout: post
+date: 2006-01-28 18:59:00 +02:00
 redirect_from: "post/2006/01/28/Mise-en-cache-cote-serveur"
-tags: qc
+tags: [ qc ]
 title: "Mise en cache côté serveur"
 ---
 

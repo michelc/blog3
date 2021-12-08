@@ -1,13 +1,15 @@
 ---
-date: 2011-04-29 13:22:00
-layout: post
+date: 2011-04-29 13:22:00 +02:00
 redirect_from: "post/2011/04/29/un-formulaire-de-contact-avec-Sinatra"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Un formulaire de contact avec Sinatra"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel "[An Email Contact Form in Sinatra](http://ididitmyway.herokuapp.com/past/2010/12/4/an_email_contact_form_in_sinatra/)" de Darren Jones.
+
+</div>
 
 Dans cet épisode, je vais vous montrer les étapes nécessaires pour créer une
 page avec un formulaire de contact qui vous enverra un email. Cet exemple peut
@@ -75,8 +77,8 @@ post '/contact' do
 end
 ```
 
-Note : en local sur mon PC j'ai dû utiliser le port 25 au lieu du port
-587 pour que l'[envoi de mail marche avec le SMTP de GMail]({% post_url 2009-04-21-systemnetmail-smtpgmailcom %}).
+*Note : En local sur mon PC j'ai dû utiliser le port 25 au lieu du port
+587 pour que l'[envoi de mail marche avec le SMTP de GMail]({% post_url "2009-04-21-systemnetmail-smtpgmailcom" %}).*
 
 Grosso modo, nous nous contentons de remplir les informations attendues par
 Pony et d'envoyer le mail en utilisant notre compte GMail personnel (par

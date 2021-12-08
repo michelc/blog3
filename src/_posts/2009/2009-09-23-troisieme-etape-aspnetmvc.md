@@ -1,8 +1,7 @@
 ---
-date: 2009-09-23 19:25:00
-layout: post
+date: 2009-09-23 19:25:00 +02:00
 redirect_from: "post/2009/09/23/Troisi%C3%A8me-%C3%A9tape-avec-ASP.NET-MVC"
-tags: mvc
+tags: [ mvc ]
 title: "Troisième étape avec ASP.NET MVC"
 ---
 
@@ -86,4 +85,4 @@ soit je poursuis avec la [cinquième étape](http://msdn.microsoft.com/fr-fr/asp
 Management...
 
 ---
-Billet suivant dans la série : [ASP.NET MVC et les tests unitaires]({% post_url 2009-09-28-aspnetmvc-tests-unitaires %})
+Billet suivant dans la série : [ASP.NET MVC et les tests unitaires]({% post_url "2009-09-28-aspnetmvc-tests-unitaires" %})

@@ -1,8 +1,7 @@
 ---
-date: 2005-08-05 14:16:00
-layout: post
+date: 2005-08-05 14:16:00 +02:00
 redirect_from: "post/2005/08/05/Gestion-du-RedirectFromLoginPage"
-tags: qc
+tags: [ qc ]
 title: "Gestion du RedirectFromLoginPage"
 ---
 

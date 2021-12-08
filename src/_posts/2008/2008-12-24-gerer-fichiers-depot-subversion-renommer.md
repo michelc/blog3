@@ -1,8 +1,7 @@
 ---
-date: 2008-12-24 15:32:00
-layout: post
+date: 2008-12-24 15:32:00 +02:00
 redirect_from: "post/2008/12/24/Gerer-les-fichiers-d-un-depot-Subversion-%3A-renommer"
-tags: svn
+tags: [ svn ]
 title: "Gérer les fichiers d'un dépôt Subversion : renommer"
 ---
 
@@ -100,5 +99,5 @@ juste subi un changement de nom.
 
 ![](/public/2008/10-fichier-ok-renommer.png)
 
-Note : bien entendu, vous ne devez pas essayer de faire la mauvaise
-méthode chez vous.
+*Note : Bien entendu, vous ne devez pas essayer de faire la mauvaise
+méthode chez vous.*

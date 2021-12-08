@@ -1,8 +1,7 @@
 ---
-date: 2007-10-10 09:57:00
-layout: post
+date: 2007-10-10 09:57:00 +02:00
 redirect_from: "post/2007/10/10/Sql-injection"
-tags: sql
+tags: [ sql ]
 title: "Sql injection"
 ---
 

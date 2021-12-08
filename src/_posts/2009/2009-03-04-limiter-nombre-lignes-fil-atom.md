@@ -1,8 +1,7 @@
 ---
-date: 2009-03-04 13:50:00
-layout: post
+date: 2009-03-04 13:50:00 +02:00
 redirect_from: "post/2009/03/04/Limiter-le-nombre-de-lignes-dans-un-fil-Atom"
-tags: ap, xml
+tags: [ ap, xml ]
 title: "Limiter le nombre de lignes dans un fil Atom"
 ---
 
@@ -10,10 +9,10 @@ La boite XmlFile d'Altrr-Press permet depuis quelque temps d'afficher le
 contenu d'un flux RSS, RDF ou Atom en indiquant l'url du fil de syndication et
 la feuille de style XSLT à lui appliquer :
 
-* [feed-atom.xslt]({% post_url 2006-01-16-atom-html-conversion %})
-* [feed-blogmarks.xslt]({% post_url 2006-01-19-blogmarks-html-conversion %})
-* [feed-rdf.xslt]({% post_url 2006-01-16-rdf-html-conversion %})
-* [feed-rss.xslt]({% post_url 2006-01-16-rss-html-conversion %})
+* [feed-atom.xslt]({% post_url "2006-01-16-atom-html-conversion" %})
+* [feed-blogmarks.xslt]({% post_url "2006-01-19-blogmarks-html-conversion" %})
+* [feed-rdf.xslt]({% post_url "2006-01-16-rdf-html-conversion" %})
+* [feed-rss.xslt]({% post_url "2006-01-16-rss-html-conversion" %})
 
 Par défaut, ces feuilles de styles XSLT affichent le titre du billet suivi
 de son contenu. Mais dans Altrr-Press, il existe aussi une version qui affiche
@@ -38,7 +37,7 @@ pour cacher les billets que je ne saurais voir, j'ai fait chat et demandé à un
 spécialiste XSLT s'il existerait un truc pour faire ça. Et ben oui, et pour une
 fois c'est même carrément simple.
 
-Au lieu d'appliquer bêtement le [template]({% post_url 2006-01-16-atom-html-conversion %})
+Au lieu d'appliquer bêtement le [template]({% post_url "2006-01-16-atom-html-conversion" %})
 aux différents items du fil Atom :
 
 ```

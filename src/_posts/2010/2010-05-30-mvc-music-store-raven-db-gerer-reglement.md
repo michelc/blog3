@@ -1,15 +1,15 @@
 ---
-date: 2010-05-30 17:41:00
-layout: post
+date: 2010-05-30 17:41:00 +02:00
 redirect_from: "post/2010/05/30/mvc-music-store-raven-db-gerer-le-reglement"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : Gérer le règlement"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Porting the checkout
-process](http://ayende.com/Blog/archive/2010/05/28/porting-mvc-music-store-to-raven-porting-the-checkout-process.aspx)", le onzième de la série consacrée au portage de l'application MVC
-Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Porting the checkout process](http://ayende.com/Blog/archive/2010/05/28/porting-mvc-music-store-to-raven-porting-the-checkout-process.aspx)", le onzième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Dans MVC Music Store, la gestion du règlement est composée de deux
 parties : renseigner l'adresse et le mode de paiement puis terminer la

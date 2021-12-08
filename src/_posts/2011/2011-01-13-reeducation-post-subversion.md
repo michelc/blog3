@@ -1,8 +1,7 @@
 ---
-date: 2011-01-13 10:42:00
-layout: post
+date: 2011-01-13 10:42:00 +02:00
 redirect_from: "post/2011/01/13/reeducation-post-subversion"
-tags: git, mercurial, svn
+tags: [ git, mercurial, svn ]
 title: "Rééducation post-Subversion"
 ---
 
@@ -26,7 +25,7 @@ title: "Rééducation post-Subversion"
 > Et chacune de ces équipes m'a dit qu'ils jurèrent au grand jamais qu'on ne
 > les y reprendrait plus et ils bannirent les branches. Et depuis, voici comment
 > ils font : chaque nouvelle fonctionnalité est codée à l'intérieur d'un
-> gros bloc #ifdef. Ca leur permet de tous travailler dans le tronc, sans que les
+> gros bloc #ifdef. Ça leur permet de tous travailler dans le tronc, sans que les
 > clients ne soient impactés par le nouveau code tant qu'il n'est pas débugué. Et
 > franchement, c'est ni fait, ni à faire.
 

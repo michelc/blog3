@@ -1,14 +1,13 @@
 ---
-date: 2005-03-10 20:09:00
-layout: post
+date: 2005-03-10 20:09:00 +02:00
 redirect_from: "post/2005/03/10/Wdevs-Screens-and-boxes-authorizations"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Screens and boxes authorizations"
 ---
 
 Finally, I decided to use specific [tables rather
-than fields]({% post_url 2005-01-13-wdevs-roles-dilemma %}) to manage authorizations for screens and boxes. So I created
+than fields]({% post_url "2005-01-13-wdevs-roles-dilemma" %}) to manage authorizations for screens and boxes. So I created
 two tables:
 
 ```

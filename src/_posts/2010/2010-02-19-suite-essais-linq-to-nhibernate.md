@@ -1,13 +1,12 @@
 ---
-date: 2010-02-19 08:55:00
-layout: post
+date: 2010-02-19 08:55:00 +02:00
 redirect_from: "post/2010/02/19/suite-essais-linq-to-nhibernate"
-tags: linq, nhibernate
+tags: [ linq, nhibernate ]
 title: "Suite des essais LINQ to NHibernate"
 ---
 
 Cette fois-ci je vais me contenter de refaire le même genre de tests que
-lors de mes [premiers essais avec LINQ to NHibernate]({% post_url 2010-02-17-premiers-essais-linq-to-nhibernate %}) d'hier. Mais
+lors de mes [premiers essais avec LINQ to NHibernate]({% post_url "2010-02-17-premiers-essais-linq-to-nhibernate" %}) d'hier. Mais
 aujourd'hui, au lieu de partir d'un contact pour accéder au groupe auquel il
 est lié, je vais explorer l'autre côté de la relation entre les deux tables et
 partir d'un groupe puis accéder aux contacts qui lui sont rattachés.
@@ -203,7 +202,7 @@ problème.
 
 Par contre, j'ai encore pas mal de difficultés en ce qui concerne le
 mapping. Pour l'instant je fais surtout du copié / collé de différents trucs
-trouvés sur internet (dont le tutoriel [Utiliser ASP.NET MVC et NHibernate]({% post_url 2010-01-29-utiliser-aspnetmvc-nhibernate-1 %})) => je ne sais pas trop
+trouvés sur internet (dont le tutoriel [Utiliser ASP.NET MVC et NHibernate]({% post_url "2010-01-29-utiliser-aspnetmvc-nhibernate-1" %})) => je ne sais pas trop
 (et je me demande) s'il est nécessaire / obligatoire / conseillé de définir la
 relation dans les deux fichiers de mapping ou si on peut se contenter de faire
 ça d'un seul côté (c'est à dire dans un seul fichier de mapping). C'est

@@ -1,8 +1,8 @@
 ---
-date: 2019-05-14 12:24:08
-layout: post
-tags: javascript, jquery
+date: 2019-05-14 12:24:08 +02:00
+tags: [ javascript, jquery ]
 title: "dQuery - Ma librairie JS pour manipuler le DOM"
+excerpt: "Un troisième billet où je dévoile le nom de ma future librairie : une étape importante pour remplacer un jour jQuery dans mon site de jeux de solitaires."
 ---
 
 <div class="encart" markdown="1">
@@ -11,12 +11,12 @@ Cette série de billets retrace quelques-unes des étapes pour développer une
 mini-librairie JavaScript qui remplacera(it) un jour jQuery sur mon site de jeux
 de solitaires.
 
-1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url 2019-04-30-dquery-remplacer-jquery %})
-2. [Une version compatible IE9 / ES5]({% post_url 2019-05-07-dquery-compatibilite-ie9-es5 %})
-3. [Ma librairie pour manipuler le DOM]({% post_url 2019-05-14-dquery-librairie-js-manipulation-dom %})
-4. [La délégation des évènements en JS]({% post_url 2019-05-21-dquery-delegation-evenement-javascript %})
-5. [Délégation d'évènements et « event.target »]({% post_url 2019-05-28-dquery-delegation-evenement-event-target %})
-6. [Délégation d'évènements et iOS]({% post_url 2019-06-04-dquery-delegation-evenement-ios %})
+1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url "2019-04-30-dquery-remplacer-jquery" %})
+2. [Une version compatible IE9 / ES5]({% post_url "2019-05-07-dquery-compatibilite-ie9-es5" %})
+3. [Ma librairie pour manipuler le DOM]({% post_url "2019-05-14-dquery-librairie-js-manipulation-dom" %})
+4. [La délégation des évènements en JS]({% post_url "2019-05-21-dquery-delegation-evenement-javascript" %})
+5. [Délégation d'évènements et « event.target »]({% post_url "2019-05-28-dquery-delegation-evenement-event-target" %})
+6. [Délégation d'évènements et iOS]({% post_url "2019-06-04-dquery-delegation-evenement-ios" %})
 
 </div>
 

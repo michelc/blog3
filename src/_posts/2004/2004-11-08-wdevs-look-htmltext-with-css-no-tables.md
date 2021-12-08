@@ -1,8 +1,7 @@
 ---
-date: 2004-11-08 19:19:00
-layout: post
+date: 2004-11-08 19:19:00 +02:00
 redirect_from: "post/2004/11/08/Wdevs-Look-Ma-Htmltext-with-CSS-no-tables"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Look Ma! Htmltext with CSS, no tables"
 ---

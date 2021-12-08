@@ -1,23 +1,20 @@
 ﻿---
-date: 2019-12-23 14:36:42+200
-layout: post
-tags: sql
+date: 2019-12-23 14:36:42 +02:00
+tags: [ sql ]
 lang: en
 title: "Updating a table from another table"
-image: "/public/2019/sql-database.jpg"
+cover:
+  image: /public/2019/sql-database.jpg
+  link: https://dbdiagram.io/
+  text: dbdiagram.io
+excerpt: I save here the SQL command that allows me to update a column in a table from another column in another table (Access, SqlServer and Oracle versions).
 ---
 
-{:.encart}
-It's the end of the year, so I'm just going to translate an old post from 2007
-that I still refer to once in a while : [Mise à jour d'une table à partir d'une
-autre]({% post_url 2007-05-30-mise-a-jour-table-partir-autre %}){:hreflang="fr"}.
+<div class="encart">
 
-<figure>
-  <img src="{{ page.image }}" alt="sql-database" />
-  <figcaption>
-    <a href="https://dbdiagram.io/">dbdiagram.io</a>
-  </figcaption>
-</figure>
+It's the end of the year, so I'm just going to translate an old post from 2007 that I still refer to once in a while: {% goto_fr "Mise à jour d'une table à partir d'une autre", "2007-05-30-mise-a-jour-table-partir-autre" %}.
+
+</div>
 
 To update a column in a table from the equivalent column of another table, MS
 Access easily accepts two table names for the UPDATE command, but not SQL

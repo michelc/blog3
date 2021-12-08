@@ -1,16 +1,15 @@
 ---
-date: 2010-03-24 22:09:00
-layout: post
+date: 2010-03-24 22:09:00 +02:00
 redirect_from: "post/2010/03/24/contact-manager-avec-mongo-db-et-norm"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "Contact Manager avec MongoDB et NoRM"
 ---
 
 Maintenant que j'ai enfin expédié mon billet consacré au portage hyper
-passionnant de l'application [ContactManager sous NHibernate]({% post_url 2010-03-23-porter-contact-manager-nhibernate %}), je peux enfin revenir à des
+passionnant de l'application [ContactManager sous NHibernate]({% post_url "2010-03-23-porter-contact-manager-nhibernate" %}), je peux enfin revenir à des
 trucs beaucoup plus amusants.
 
-Ca faisait un petit moment que j'avais envie de tester pour de bon une de
+Ça faisait un petit moment que j'avais envie de tester pour de bon une de
 ces nouvelles bases de données NoSQL dont on nous rabat les oreilles ces
 derniers temps.
 
@@ -38,7 +37,7 @@ Le faire, c'est bien et ça va même assez vite. Le dire, c'est mieux mais
 c'est un peu plus long.
 
 Et donc, après quelques heures d'efforts, voici mon tutorial sur le [développement d'une application de gestion de contacts avec
-ASP.NET MVC, MongoDB et NoRM]({% post_url 2010-03-24-developper-application-contacts-aspnetmvc-mongo-db %}) qui reprend quasiment mot à mot la première
+ASP.NET MVC, MongoDB et NoRM]({% post_url "2010-03-24-developper-application-contacts-aspnetmvc-mongo-db" %}) qui reprend quasiment mot à mot la première
 étape du tutoriel de Microsoft. Comme l'original, ce tutoriel présente donc
 comment créer une application de gestion de contact de la façon la plus simple
 qui soit. Tout au long de celui-ci, vous pourrez voir comment mettre en place

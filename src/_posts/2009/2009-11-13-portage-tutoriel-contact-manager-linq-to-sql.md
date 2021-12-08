@@ -1,12 +1,11 @@
 ---
-date: 2009-11-13 11:15:00
-layout: post
+date: 2009-11-13 11:15:00 +02:00
 redirect_from: "post/2009/11/13/Portage-du-tutoriel-Contact-Manager-sous-LINQ-to-SQL"
-tags: linq, mvc, sql
+tags: [ linq, mvc, sql ]
 title: "Portage du tutoriel Contact Manager sous LINQ to SQL"
 ---
 
-Encouragé par un premier succès pour faire [passer le tutoriel ContactManager en tout jQuery]({% post_url 2009-11-03-gestion-contacts-aspnetmvc-jquery %}), j'ai décidé
+Encouragé par un premier succès pour faire [passer le tutoriel ContactManager en tout jQuery]({% post_url "2009-11-03-gestion-contacts-aspnetmvc-jquery" %}), j'ai décidé
 de continuer ma formation ASP.NET MVC en modifiant l'application ContactManager
 pour remplacer Entity Framework par LINQ to SQL.
 
@@ -318,7 +317,7 @@ mise à jour. Par conséquent, si on fait les choses comme il faut, on ne se
 retrouve pas lié corps et âme à un ORM mais au contraire complètement libre
 d'en changer dans le cas où il ne serait pas satisfaisant.
 
-[Dans la pratique]({% post_url 2009-10-08-tuer-code-reussir %} "Tuer du code pour réussir"), cela veut
+[Dans la pratique]({% post_url "2009-10-08-tuer-code-reussir" %} "Tuer du code pour réussir"), cela veut
 dire qu'il ne faut pas se focaliser sur des détails techniques mais sur des
 problèmes réels. Et notamment décider si on conserve une base de données
 <s>pourrie</s> pléthorique et mal conçue ou si on fait table rase des

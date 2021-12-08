@@ -1,8 +1,7 @@
 ---
-date: 2008-09-22 13:52:00
-layout: post
+date: 2008-09-22 13:52:00 +02:00
 redirect_from: "post/2008/09/22/Recapitulatif-un-peu-long"
-tags: ap, code-killer
+tags: [ ap, code-killer ]
 title: "Récapitulatif un peu long"
 ---
 
@@ -150,7 +149,7 @@ J'ai aussi supprimé la boite SqlRepeat qui ne servait que sur le site de
 Saint-Privat (et la preuve que je suis prêt à tout pour diminuer la quantité de
 code, c'est que j'ai utilisé du XML pour la remplacer).
 
-Pour plus d'explications, vous pouvez vous reporter au billet [Régime XML]({% post_url 2008-09-02-regime-d-ete %}).
+Pour plus d'explications, vous pouvez vous reporter au billet [Régime XML]({% post_url "2008-09-02-regime-d-ete" %}).
 
 ### Un nouveau Wysiwyg
 
@@ -178,13 +177,13 @@ Pour l'instant, le source de default.aspx.cs contient encore les fonctions
 siteMacro() et RenderLegacy() pour gérer toutes les anciennes syntaxes, mais je
 compte bien m'en débarrasser le plus vide possible.
 
-A noter : à part {@department.xxxx} qui est devenu
+*Note : À part {@department.xxxx} qui est devenu
 [%AP.Department.Xxxxx%], toutes les autres macros de PI utilisées dans les
 templates /data/##/_xxxxx.txt sont restées sous la forme
-{@objet.propriete}.
+{@objet.propriete}.*
 
 Et accessoirement, les macros ne sont plus statiques (je me demande bien
-comment il pouvait y avoir du statique là dedans ?). A mon avis, il y a une
+comment il pouvait y avoir du statique là dedans ?). À mon avis, il y a une
 petite chance que ça permette de résoudre les plantages pour le Gîte de
 Julie.
 

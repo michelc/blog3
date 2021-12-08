@@ -1,8 +1,7 @@
 ---
-date: 2010-09-01 14:21:00
-layout: post
+date: 2010-09-01 14:21:00 +02:00
 redirect_from: "post/2010/09/01/departements-limitrophes"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Départements limitrophes"
 ---
 

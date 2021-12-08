@@ -1,8 +1,7 @@
 ---
-date: 2005-01-17 18:24:00
-layout: post
+date: 2005-01-17 18:24:00 +02:00
 redirect_from: "post/2005/01/17/Wdevs-TOAD-for-MySQL"
-tags: sql, wdevs
+tags: [ sql, wdevs ]
 lang: en-US
 title: "(Wdevs) TOAD for MySQL"
 ---

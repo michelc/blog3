@@ -1,8 +1,7 @@
 ---
-date: 2012-08-14 18:33:00
-layout: post
+date: 2012-08-14 18:33:00 +02:00
 redirect_from: "post/2012/08/14/view-loading-vs-eager-loading"
-tags: ef, linq, mvc, sql
+tags: [ ef, linq, mvc, sql ]
 title: "View Loading vs Eager loading"
 ---
 
@@ -116,10 +115,10 @@ FROM ( SELECT TOP (2)
         WHERE [Extent1].[PriceID] = @p0)  AS [Limit1]
 ```
 
-Note : il y a un article sur StackOverflow qui
+*Note : Il y a un article sur StackOverflow qui
 explique [Why
 does the Entity Framework's DbContext.Find() generate a query with select top
-2?](http://stackoverflow.com/a/7823952/17316)
+2?](http://stackoverflow.com/a/7823952/17316).*
 
 Puis je passais mon objet Travel à la vue chargée d'afficher les
 informations sur le prix du voyage :

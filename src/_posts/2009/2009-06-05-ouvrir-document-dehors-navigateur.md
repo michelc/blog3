@@ -1,8 +1,7 @@
 ---
-date: 2009-06-05 16:50:00
-layout: post
+date: 2009-06-05 16:50:00 +02:00
 redirect_from: "post/2009/06/05/Ouvrir-un-document-en-dehors-du-navigateur"
-tags: boulot, html
+tags: [ boulot, html ]
 title: "Ouvrir un document en dehors du navigateur"
 ---
 

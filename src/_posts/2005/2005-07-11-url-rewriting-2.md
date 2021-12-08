@@ -1,8 +1,7 @@
 ---
-date: 2005-07-11 11:21:00
-layout: post
+date: 2005-07-11 11:21:00 +02:00
 redirect_from: "post/2005/07/11/Url-rewriting-2"
-tags: qc
+tags: [ qc ]
 title: "Url rewriting #2"
 ---
 

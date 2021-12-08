@@ -1,8 +1,7 @@
 ---
-date: 2005-06-17 10:25:00
-layout: post
+date: 2005-06-17 10:25:00 +02:00
 redirect_from: "post/2005/06/17/Validite-XHtml"
-tags: qc
+tags: [ qc ]
 title: "Validité XHtml"
 ---
 

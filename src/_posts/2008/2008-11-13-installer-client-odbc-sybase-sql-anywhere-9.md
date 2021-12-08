@@ -1,8 +1,7 @@
 ---
-date: 2008-11-13 18:40:00
-layout: post
+date: 2008-11-13 18:40:00 +02:00
 redirect_from: "post/2008/11/13/Installer-le-client-ODBC-pour-Sybase-SQL-Anywhere-9"
-tags: boulot, sql
+tags: [ boulot, sql ]
 title: "Installer le client ODBC pour Sybase SQL Anywhere 9"
 ---
 
@@ -58,7 +57,7 @@ chaines suivantes :
 Puis pour chacune de ces deux chaines, enregistrer la valeur "C:\SQL
 Anywhere 9\dbodbc9.dll".
 
-Ca y est, c'est quasiment fini.
+Ça y est, c'est quasiment fini.
 
 On peut maintenant lancer l'administrateur de sources de données ODBC,
 cliquer sur le bouton "Ajouter" dans l'onglet "Sources de données système" et
@@ -67,7 +66,7 @@ de configurer la connexion ODBC au serveur SQL Anywhere 9 :
 
 ![](/public/2008/odbc-sql-anywhere-9.png)
 
-A partir de là, il suffit de renseigner les différents informations qui vont
+À partir de là, il suffit de renseigner les différents informations qui vont
 bien, soit dans mon cas à peu près :
 
 * Onglet ODBC - Nom de source de données : BasePayeProd

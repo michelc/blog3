@@ -1,8 +1,7 @@
 ---
-date: 2011-01-26 14:30:00
-layout: post
+date: 2011-01-26 14:30:00 +02:00
 redirect_from: "post/2011/01/26/un-string-format-ameliore"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Un String.Format() amélioré"
 ---
 

@@ -1,21 +1,16 @@
 ---
-date: 2020-01-07 12:16:55+200
-layout: post
+date: 2020-01-07 12:16:55 +02:00
 lang: en-US
-tags: css, javascript
+tags: [ css, javascript ]
 title: "5 improvements for a better solitaire on smartphone"
-image: "/public/2020/responsive-solitaire.jpg"
+cover:
+  image: /public/2020/responsive-solitaire.jpg
+  link: http://ami.responsivedesign.is/
+  text: Am I Responsive ? - Justin Avery
 excerpt: "Solitaire-Play is already a responsive site, but there is always room for improvement with smartphones: disable 'pull-to-refresh', switch from 'hover' to 'ripple', enlarge the buttons, move stock to the right..."
 ---
 
 The different solitaires on my [Solitaire-Play](https://www.solitaire-play.com/) game website are all "responsive". Which is very interesting since it means that they work properly on a desktop PC as well as a laptop, but also on a tablet or iPad and especially on Android or iPhone smartphones ...
-
-<figure>
-  <img src="{{ page.image }}" alt="responsive-solitaire" />
-  <figcaption>
-    <a href="http://ami.responsivedesign.is/">Am I Responsive ? - Justin Avery</a>
-  </figcaption>
-</figure>
 
 I write HTML code that's valid enough, fairly correct CSS code, and JavaScript that's pretty much all-purpose. This allows me to be quite quiet and to make a lot of changes without having to check everything on different systems every time.
 
@@ -160,5 +155,8 @@ For the future, I have to work again on the transformation of the site into [PWA
 
 Or, I could also try to save the progress of a game with [window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to come back to current game?
 
-{:.encart}
-Version en français : [5 améliorations pour un meilleur solitaire sur smartphone]({% post_url 2020-01-06-meilleur-solitaire-smartphone %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "5 améliorations pour un meilleur solitaire sur smartphone", "2020-01-06-meilleur-solitaire-smartphone" %}.
+
+</div>

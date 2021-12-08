@@ -1,8 +1,7 @@
 ---
-date: 2008-12-17 13:56:00
-layout: post
+date: 2008-12-17 13:56:00 +02:00
 redirect_from: "post/2008/12/17/Group-By-d-un-champ-Memo-sous-Access"
-tags: ap, sql
+tags: [ ap, sql ]
 title: "Group By d'un champ Mémo sous Access"
 ---
 
@@ -56,7 +55,7 @@ avoir agrandi la colonne "description", j'ai pu constater qu'en effet celle-ci
 était bel et bien coupée et à première vue à quelque chose comme 255
 caractères.
 
-Etant donné que je n'avais pas vraiment besoin de faire un GROUP BY sur la
+Étant donné que je n'avais pas vraiment besoin de faire un GROUP BY sur la
 description, j'ai donc modifié ma requête pour faire sortir la colonne
 "description" de la clause GROUP BY :
 

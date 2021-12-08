@@ -1,17 +1,19 @@
 ---
-date: 2010-01-29 11:50:00
-layout: post
+date: 2010-01-29 11:50:00 +02:00
 redirect_from: "post/2010/01/29/utiliser-asp-net-mvc-et-nhibernate-2"
-tags: mvc, nhibernate
+tags: [ mvc, nhibernate ]
 title: "Utiliser ASP.NET MVC et NHibernate (2° partie)"
+excerpt: La suite de la traduction du tutoriel de César Intriago sur ASP.NET MVC et NHibernate, consacrée au modèle de données et à la création de l'application.
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 2)](http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-2/)" de César
-Intriago.
+<div class="encart">
+
+Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 2)](http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-2/)" de César Intriago.
+
+</div>
 
 Et voici la deuxième partie d'une série d'article consacré à l'utilisation
-de NHibernate dans une application ASP.NET MVC. Vous pouvez lire la [première partie de ce tutoriel ici]({% post_url 2010-01-29-utiliser-aspnetmvc-nhibernate-1 %}).
+de NHibernate dans une application ASP.NET MVC. Vous pouvez lire la [première partie de ce tutoriel ici]({% post_url "2010-01-29-utiliser-aspnetmvc-nhibernate-1" %}).
 
 ## Représenter une relation many-to-many
 
@@ -164,10 +166,7 @@ la nouvelle catégorie dans la base de données :
 ![](http://forerunnerg34.files.wordpress.com/2009/11/postandcategory.png)
 
 Il s'agit là des rudiments de NHibernate. Je vous encourage à vous
-documenter plus en détail sur le site de la [communauté NHibernate](http://nhforge.org/). Dans la [prochaine partie]({% post_url 2010-01-29-utiliser-aspnetmvc-nhibernate-3-fin %}) de ce tutoriel nous commencerons à
+documenter plus en détail sur le site de la [communauté NHibernate](http://nhforge.org/). Dans la [prochaine partie]({% post_url "2010-01-29-utiliser-aspnetmvc-nhibernate-3-fin" %}) de ce tutoriel nous commencerons à
 développer notre application ASP.NET MVC pour gérer les billets et les
 catégories !
 
-{:.encart}
-Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 2)](http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-2/)" de César
-Intriago.

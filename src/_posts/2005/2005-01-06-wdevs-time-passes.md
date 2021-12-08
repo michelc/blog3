@@ -1,8 +1,7 @@
 ---
-date: 2005-01-06 13:00:00
-layout: post
+date: 2005-01-06 13:00:00 +02:00
 redirect_from: "post/2005/01/06/Wdevs-Time-passes"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Time passes"
 ---

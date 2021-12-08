@@ -1,8 +1,7 @@
 ---
-date: 2012-09-05 18:47:00
-layout: post
+date: 2012-09-05 18:47:00 +02:00
 redirect_from: "post/2012/09/05/verifier-numero-siret-la-poste"
-tags: boulot
+tags: [ boulot ]
 title: "Vérifier un numéro de siret de la Poste"
 ---
 
@@ -57,7 +56,7 @@ du nombre obtenu : 7 x 2 = 14 => on prend 14 - 9 = 5
 
 ## Cas des siret de La Poste
 
-Ca c'est le truc habituel. Sauf que depuis que la Poste a changé de statut
+Ça c'est le truc habituel. Sauf que depuis que la Poste a changé de statut
 et qu'elle est devenue une société anonyme, elle n'a plus droit qu'à un seul
 Siren : 356 000 000. (je ne sais pas comment c'était avant : pas de
 siren, plusieurs siren... / après vérification, plusieurs siren). Et tous ses

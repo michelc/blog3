@@ -1,20 +1,16 @@
 ---
-date: 2012-03-08 08:28:00
-layout: post
+date: 2012-03-08 08:28:00 +02:00
 redirect_from: "post/2012/03/08/optimiser-insert-multiples-oracle"
-tags: sql
+tags: [ sql ]
 title: "Optimiser les INSERT multiples (dans Oracle)"
-image: "/public/2020/pumpkin-patch.jpg"
+cover:
+  image: /public/2020/pumpkin-patch.jpg
+  link: https://unsplash.com/photos/svIdk6Ai94w
+  text: Un vieux camion au milieu des citrouilles - Priscilla Du Preez
+excerpt: Pour contrôler l'intégrité de certaines données, j'ai eu besoin de ramener une partie du contenu d'une grosse table clients d'une base de donnée DB2 dans une base Oracle.
 ---
 
 Pour contrôler l'intégrité de certaines données, j'ai eu besoin de ramener une partie du contenu d'une grosse table clients d'une base de donnée DB2 dans une base Oracle. Je sais qu'il existe SQL*Loader mais c'est pas encore cette fois que je vais m'y remettre.
-
-<figure>
-  <img src="{{ page.image }}" alt="potirons" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/svIdk6Ai94w">Un vieux camion au milieu des citrouilles - Priscilla Du Preez</a>
-  </figcaption>
-</figure>
 
 
 ## Une commande INSERT par ligne à traiter
@@ -48,7 +44,7 @@ END;
 
 => 6,37 secondes pour insérer 4579 lignes => déjà 2 fois plus rapide.
 
-Note : sous [Dapper](https://stackexchange.github.io/Dapper/) (et ADO.NET en général je suppose), Oracle ne supporte pas la présence de retours à la ligne dans la commande SQL : on obtient une erreur `@@PLS-00103: Encountered the symbol "" when expecting one of the following@`.
+*Note : Sous [Dapper](https://stackexchange.github.io/Dapper/) (et ADO.NET en général je suppose), Oracle ne supporte pas la présence de retours à la ligne dans la commande SQL : on obtient une erreur `@@PLS-00103: Encountered the symbol "" when expecting one of the following@`.*
 
 Pour résoudre ça, il suffit de ne pas faire de retour à la ligne quand on génère la grosse requête :
 
@@ -75,7 +71,7 @@ etc...
 
 ![](/public/2012/tests-vitesse-insert.png)
 
-Ca valait quand même le coup de faire quelques essais, parce qu'au final, je suis passé de 379 insertions à la seconde à plus de 1600 ! Et comme j'ai près de 300.000 lignes à traiter, ça prendra dans les 3 minutes et pas 1/4 d'heure.
+Ça valait quand même le coup de faire quelques essais, parce qu'au final, je suis passé de 379 insertions à la seconde à plus de 1600 ! Et comme j'ai près de 300.000 lignes à traiter, ça prendra dans les 3 minutes et pas 1/4 d'heure.
 
 
 ## Mise en oeuvre
@@ -137,5 +133,8 @@ private string Sql_FromSelect(StringBuilder batch)
 
 Mise à jour : Pour les plus curieux, les sources du projet qui m'a servi pour tester tout ça sont désormais sur [GitHub](https://github.com/michelc/TestInsert).
 
-{:.encart}
-English version: [Optimize multiple INSERTs (for Oracle)]({% post_url 2020-02-04-optimize-multiple-insert-oracle %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Optimize multiple INSERTs (for Oracle)", "2020-02-04-optimize-multiple-insert-oracle" %}.
+
+</div>

@@ -1,8 +1,7 @@
 ---
-date: 2013-01-29 14:20:00
-layout: post
+date: 2013-01-29 14:20:00 +02:00
 redirect_from: "post/2013/01/29/vs-2010-tres-lent-bloque"
-tags: nhibernate
+tags: [ nhibernate ]
 title: "VS 2010 très très lent voire bloqué"
 ---
 
@@ -20,7 +19,7 @@ Après avoir passé des éternités à tout essayer :
 * <s>ajouter des tonnes de mémoire</s>
 * etc...
 
-Ca ne donnait jamais rien et la seule vrai solution c'était de quitter tant
+Ça ne donnait jamais rien et la seule vrai solution c'était de quitter tant
 bien que mal Visual Studio, éteindre le PC, redémarrer et partir en pause café
 avant de relancer VS 2010 et d'attendre le prochain ralentissement...
 

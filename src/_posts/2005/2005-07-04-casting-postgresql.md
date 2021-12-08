@@ -1,8 +1,7 @@
 ---
-date: 2005-07-04 11:32:00
-layout: post
+date: 2005-07-04 11:32:00 +02:00
 redirect_from: "post/2005/07/04/Casting-et-PostgreSQL"
-tags: qc
+tags: [ qc ]
 title: "Casting et PostgreSQL"
 ---
 

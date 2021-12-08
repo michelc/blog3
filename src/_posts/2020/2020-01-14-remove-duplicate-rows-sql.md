@@ -1,21 +1,16 @@
 ---
-date: 2020-01-14 12:16:21+200
-layout: post
+date: 2020-01-14 12:16:21 +02:00
 lang: en-US
-tags: sql
+tags: [ sql ]
 title: "Remove duplicates rows with SQL"
-image: "/public/2020/rita-hayworth.jpg"
+cover:
+  image: /public/2020/rita-hayworth.jpg
+  link: https://en.wikipedia.org/wiki/The_Lady_from_Shanghai
+  text: The Lady from Shanghai - Rita Hayworth<
 excerpt: "I was a bit worried, but it's not that complicated to delete duplicate rows from a table in SQL Server."
 ---
 
 Last week I made a small update error on my application and I ended up with duplicates values in a table. Of course, this would not have happened if I had a unique key, but as I check before inserting, I thought I was safe.
-
-<figure>
-  <img src="{{ page.image }}" alt="the-lady-from-shangai" />
-  <figcaption>
-    <a href="https://en.wikipedia.org/wiki/The_Lady_from_Shanghai">The Lady from Shanghai - Rita Hayworth</a>
-  </figcaption>
-</figure>
 
 Unfortunately, as I couldn't delete everything and just start updating data again, I had to figure out how to delete duplicates rows.
 
@@ -56,5 +51,8 @@ WHERE  Showing_ID IN (
 
 Sometimes, IT is not that complicated.
 
-{:.encart}
-Version en français : [Supprimer des doublons en SQL]({% post_url 2020-01-13-supprimer-doublon-sql %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Supprimer des doublons en SQL", "2020-01-13-supprimer-doublon-sql" %}.
+
+</div>

@@ -1,8 +1,7 @@
 ---
-date: 2012-04-05 21:07:00
-layout: post
+date: 2012-04-05 21:07:00 +02:00
 redirect_from: "post/2012/04/05/se-former-a-jquery-en-30-jours"
-tags: javascript, jquery
+tags: [ javascript, jquery ]
 title: "Se former à jQuery en 30 jours"
 ---
 

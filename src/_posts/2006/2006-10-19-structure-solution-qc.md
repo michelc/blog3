@@ -1,8 +1,7 @@
 ---
-date: 2006-10-19 10:55:00
-layout: post
+date: 2006-10-19 10:55:00 +02:00
 redirect_from: "post/2006/10/19/Structure-dune-solution-sous-QC"
-tags: qc
+tags: [ qc ]
 title: "Structure d'une solution sous QC"
 ---
 

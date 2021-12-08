@@ -1,20 +1,16 @@
 ---
-date: 2019-11-05 12:11:04+200
-layout: post
+date: 2019-11-05 12:11:04 +02:00
 lang: en-US
-tags: javascript, tutoriel
+tags: [ javascript, tutoriel ]
 title: "How I wrote a Node JS tutorial"
-image: "/public/2019/ididitmyself.jpg"
+cover:
+  image: /public/2019/ididitmyself.jpg
+  link: https://commons.wikimedia.org/wiki/File:Dirty_dishes.jpg
+  text: C'est moi qui l'ait fait !
+excerpt: I've been trying to code  a "real" web application with Node JS for a while. And so, a few weeks ago, I wrote my own tutorial to create a Note JS application with Express and SQLite. 
 ---
 
-A few weeks ago, I started writing a tutorial on developing a Node JS application with Express to manage an SQlite database. I published it on my blog under the title [CRUD Application with Express and SQlite in 10 steps]({% post_url 2019-10-08-crud-with-express-sqlite-10-steps %}) and I did some publicity about it in the hope that it could be used by others.
-
-<figure>
-  <img src="{{ page.image }}" alt="#ididitmyself" />
-  <figcaption>
-    <a href="https://commons.wikimedia.org/wiki/File:Dirty_dishes.jpg">C'est moi qui l'ait fait !</a>
-  </figcaption>
-</figure>
+A few weeks ago, I started writing a tutorial on developing a Node JS application with Express to manage an SQlite database. I published it on my blog under the title [CRUD Application with Express and SQlite in 10 steps]({% post_url "2019-10-08-crud-with-express-sqlite-10-steps" %}) and I did some publicity about it in the hope that it could be used by others.
 
 But anyway, I wrote this tutorial primarily for my own account. I am trying to improve myself gradually in JavaScript (and therefore Node) and my objective is to achieve some console programs or small web applications.
 
@@ -24,7 +20,7 @@ But sometimes it's still difficult to "really" get started. For example, for the
 
 So I had been trying to develop a small web application with Node for a while. This meant using Express since it is the most popular framework on the market. I don't have too much time to devote to it, so don't bother getting lost with Koa, Hapi, Polka and others...
 
-The dream would have been to find something that tinkered with, like when I discovered Sinatra with "[I did it my way]({% post_url 2010-07-22-installer-sinatra-windows-7 %})". But well, [Darren Jones](https://twitter.com/daz4126)  doesn't seem determined to do it again with Node :)
+The dream would have been to find something that tinkered with, like when I discovered Sinatra with "[I did it my way]({% post_url "2010-07-22-installer-sinatra-windows-7" %})". But well, [Darren Jones](https://twitter.com/daz4126)  doesn't seem determined to do it again with Node :)
 
 One day (I had just finished a quick application with ASP.NET MVC 5 and Bootstrap 4 that I could have done in Node if I had known how), I told myself that apart from time, I didn't really need much to get around it:
 
@@ -54,5 +50,8 @@ The other advantage is that from this initial application, I was able to extend 
 * Validate the data entry form
 * And so on...
 
-{:.encart}
-Version en français : [Comment j'ai écrit un tutoriel Node JS]({% post_url 2019-11-04-comment-j-ai-ecrit-un-tutoriel %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Comment j'ai écrit un tutoriel Node JS", "2019-11-04-comment-j-ai-ecrit-un-tutoriel" %}.
+
+</div>

@@ -1,12 +1,11 @@
 ---
-date: 2011-09-29 20:57:00
-layout: post
+date: 2011-09-29 20:57:00 +02:00
 redirect_from: "post/2011/09/29/configurer-elmah-envoi-email-erreur"
-tags: .net
+tags: [ .net ]
 title: "Configurer ELMAH pour envoyer les erreurs par email"
 ---
 
-Après avoir vu [comment installer ELMAH avec NuGet]({% post_url 2011-09-28-installer-elmah-nuget %}), j'ai fait quelques tests avec pour
+Après avoir vu [comment installer ELMAH avec NuGet]({% post_url "2011-09-28-installer-elmah-nuget" %}), j'ai fait quelques tests avec pour
 voir ce que ça pouvait donner avec différents types d'erreurs.
 
 Et quand je repense au peu d'effort que ça m'a demandé pour l'installer, le
@@ -17,7 +16,7 @@ application.
 Un premier truc intéressant, c'est de s'occuper de paramétrer ELMAH afin de
 recevoir un email quand qu'il détecte un problème. De cette façon, je serai
 averti quasiment instantanément chaque fois que mon application provoquera une
-exception. Ca fait un peu peur quand même...
+exception. Ça fait un peu peur quand même...
 
 Concrètement, ELMAH est plutôt bien fait et il n'y a pas besoin de grand
 chose pour paramétrer l'envoi d'email. Mais ce qui est encore plus génial,
@@ -53,10 +52,10 @@ Pour ma part, il ne me reste plus qu'à ajouter une section
   </elmah>
 ```
 
-Note : étant donné que j'utilise GMail comme serveur
+*Note : Étant donné que j'utilise GMail comme serveur
 SMTP, il est nécessaire d'activer SSL (d'où le `useSsl="true"`) et
 de préciser qu'il faut utiliser le port 587 (quoique ?, voir mon billet
-[System.Net.Mail et smtp.gmail.com]({% post_url 2009-04-21-systemnetmail-smtpgmailcom %})).
+[System.Net.Mail et smtp.gmail.com]({% post_url "2009-04-21-systemnetmail-smtpgmailcom" %})).*
 
 Après ça, je n'ai plus qu'à relancer mon application et à provoquer quelques
 erreurs pour aussitôt voir ma boite mail se remplir. Heureusement que c'est

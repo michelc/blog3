@@ -1,8 +1,7 @@
 ---
-date: 2005-04-11 13:07:00
-layout: post
+date: 2005-04-11 13:07:00 +02:00
 redirect_from: "post/2005/04/11/Confirmer-la-sortie-dun-formulaire"
-tags: code-snippets, javascript
+tags: [ code-snippets, javascript ]
 title: "Confirmer la sortie d’un formulaire"
 ---
 

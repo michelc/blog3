@@ -1,8 +1,7 @@
 ---
-date: 2005-09-27 19:29:00
-layout: post
+date: 2005-09-27 19:29:00 +02:00
 redirect_from: "post/2005/09/27/Algorithme-pour-calculer-Paques"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Algorithme pour calculer Pâques"
 ---
 

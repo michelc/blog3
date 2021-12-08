@@ -1,8 +1,7 @@
 ---
-date: 2005-06-06 10:35:00
-layout: post
+date: 2005-06-06 10:35:00 +02:00
 redirect_from: "post/2005/06/06/Ameliorations-des-boites-de-dialogue"
-tags: qc
+tags: [ qc ]
 title: "Améliorations des boites de dialogue"
 ---
 

@@ -1,9 +1,11 @@
 ---
-date: 2019-12-16 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-16 12:09:42 +02:00
+tags: [ css ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
-image: "/public/2019/sapin-de-noel.jpg"
+cover:
+  image: /public/2019/sapin-de-noel.jpg
+  link: https://unsplash.com/photos/ySNkCkdKyTY
+  text: Sapin de Noël - Rodion Kutsaev
 excerpt: "Pour la nouvelle année à venir, j'ai un peu rafraichi la charte graphique de mon
 blogue. Outre le côté 'tout nouveau, tout beau', cela m'a permis de voir 2 ou 3
 trucs de CSS et de Jekyll que je ne connaissais pas."
@@ -12,13 +14,6 @@ trucs de CSS et de Jekyll que je ne connaissais pas."
 Pour la nouvelle année à venir, j'ai un peu rafraichi la charte graphique de mon
 blogue. Outre le côté "tout nouveau, tout beau", cela m'a permis de voir 2 ou 3
 trucs de CSS et de [Jekyll](https://jekyllrb.com/) que je ne connaissais pas.
-
-<figure>
-  <img src="{{ page.image }}" alt="sapin-de-noel" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/ySNkCkdKyTY">Sapin de Noël - Rodion Kutsaev</a>
-  </figcaption>
-</figure>
 
 J'ai commencé par changer la police de caractères. Jusqu'à il y a peu de temps,
 j'utilisais beaucoup la police "Century Gothic", mais depuis quelque temps, je
@@ -214,12 +209,12 @@ présenter une table des matières. Par exemple :
 ```markdown
 <div class="encart">
 
-1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url 2019-04-30-dquery-remplacer-jquery %})
-2. [Une version compatible IE9 / ES5]({% post_url 2019-05-07-dquery-compatibilite-ie9-es5 %})
-3. [Ma librairie pour manipuler le DOM]({% post_url 2019-05-14-dquery-librairie-js-manipulation-dom %})
-4. [La délégation des évènements en JS]({% post_url 2019-05-21-dquery-delegation-evenement-javascript %})
-5. [Délégation d'évènements et « event.target »]({% post_url 2019-05-28-dquery-delegation-evenement-event-target %})
-6. [Délégation d'évènements et iOS]({% post_url 2019-06-04-dquery-delegation-evenement-ios %})
+1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url "2019-04-30-dquery-remplacer-jquery" %})
+2. [Une version compatible IE9 / ES5]({% post_url "2019-05-07-dquery-compatibilite-ie9-es5" %})
+3. [Ma librairie pour manipuler le DOM]({% post_url "2019-05-14-dquery-librairie-js-manipulation-dom" %})
+4. [La délégation des évènements en JS]({% post_url "2019-05-21-dquery-delegation-evenement-javascript" %})
+5. [Délégation d'évènements et « event.target »]({% post_url "2019-05-28-dquery-delegation-evenement-event-target" %})
+6. [Délégation d'évènements et iOS]({% post_url "2019-06-04-dquery-delegation-evenement-ios" %})
 
 </div>
 ```
@@ -230,8 +225,11 @@ lien, j'avais pris l'habitude de bidouiller en remplaçant la balise `div.encart
 par son équivalent en Markdown, grâce à la syntaxe `{:.encart}` :
 
 ```
-{:.encart}
-Version en français : [Gérer le menu hamburger de Bootstrap 4 en Vanilla JS]({% post_url 2019-12-09-menu-hamburger-bootstrap-vanilla-js %}).
+<div class="encart">
+
+Version en français : {% goto_fr "Gérer le menu hamburger de Bootstrap 4 en Vanilla JS", "2019-12-09-menu-hamburger-bootstrap-vanilla-js" %}.
+
+</div>
 ```
 
 Pour les cas plus compliqués, j'avais laissé tomber et tout écrit en HTML. Mais
@@ -253,5 +251,8 @@ Markdown à l'intérieur d'une balise HTML soit lui aussi correctement transform
 Et pour insister légèrement, voici le **truc n° 5** : toujours avoir une feuille
 de style qui donne un bon résultat quand on imprime la page.
 
-{:.encart}
-English version: [A new CSS and 5 tips to know]({% post_url 2019-12-17-new-css-tips-to-know %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "A new CSS and 5 tips to know", "2019-12-17-new-css-tips-to-know" %}.
+
+</div>

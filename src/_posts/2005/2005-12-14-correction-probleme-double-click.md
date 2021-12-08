@@ -1,8 +1,7 @@
 ---
-date: 2005-12-14 13:37:00
-layout: post
+date: 2005-12-14 13:37:00 +02:00
 redirect_from: "post/2005/12/14/Correction-probleme-double-click"
-tags: qc
+tags: [ qc ]
 title: "Correction problème double click"
 ---
 
@@ -34,9 +33,9 @@ protected override void Render(HtmlTextWriter output) {
 }
 ```
 
-Note: la modification de default.aspx.cs est suffisante étant donné qu'il
+*Note: La modification de default.aspx.cs est suffisante étant donné qu'il
 s'agit de la seule "vrai" page de Quick-Content et que toutes les autres pages
-ne sont que de l'url rewriting.
+ne sont que de l'url rewriting.*
 
 Voir aussi : [
-Comment résoudre le problème du "double-clic" en asp.net]({% post_url 2005-12-14-comment-resoudre-probleme-double-clic-aspnet %})
+Comment résoudre le problème du "double-clic" en asp.net]({% post_url "2005-12-14-comment-resoudre-probleme-double-clic-aspnet" %})

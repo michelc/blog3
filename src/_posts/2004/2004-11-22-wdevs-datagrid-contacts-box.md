@@ -1,8 +1,7 @@
 ---
-date: 2004-11-22 11:59:00
-layout: post
+date: 2004-11-22 11:59:00 +02:00
 redirect_from: "post/2004/11/22/Wdevs-A-DataGrid-for-my-Contacts-box"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) A DataGrid for my Contacts box"
 ---

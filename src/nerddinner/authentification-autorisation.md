@@ -1,5 +1,5 @@
 ---
-date: 2010-01-20 21:56:00
+date: 2010-01-20 21:56:00 +02:00
 layout: page
 permalink: nerddinner/authentification-autorisation/
 redirect_from: "pages/NerdDinner/Authentification-Autorisation"
@@ -129,7 +129,7 @@ ces éléments et ceux d'autres services pour ASP.NET à une base de données.
 Nous n'avons pas eu à écrire la moindre ligne de code pour que l'application
 NerdDinner dispose d'un système d'authentification sécurisé et d'une gestion
 des utilisateurs. Les utilisateurs peuvent créer un compte dans notre
-application et se connecter au site ou s'en déconnecter. A partir de
+application et se connecter au site ou s'en déconnecter. À partir de
 maintenant, nous allons pouvoir mettre en place une gestion des droits et nous
 appuyer sur l'état connecté ou non des visiteurs et sur leur identifiant pour
 déterminer ce qu'ils peuvent faire ou pas dans l'application.
@@ -249,7 +249,7 @@ public ActionResult Create(Dinner dinner) {
 }
 ```
 
-Etant donné que nous avons ajouté un attribut [Authorize] à la méthode
+Étant donné que nous avons ajouté un attribut [Authorize] à la méthode
 Create(), ASP.NET MVC va faire attention à ce que cette méthode d'action ne
 s'exécute que si le visiteur arrivant sur l'URL /Dinner/Create est connecté au
 site. Et si c'est le cas, la propriété User.Identity.Name contiendra

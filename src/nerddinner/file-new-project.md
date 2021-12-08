@@ -1,5 +1,5 @@
 ---
-date: 2009-11-20 15:49:00
+date: 2009-11-20 15:49:00 +02:00
 layout: page
 permalink: nerddinner/file-new-project/
 redirect_from: "pages/NerdDinner/File-New-project"

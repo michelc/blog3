@@ -1,8 +1,7 @@
 ---
-date: 2005-08-08 09:53:00
-layout: post
+date: 2005-08-08 09:53:00 +02:00
 redirect_from: "post/2005/08/08/Table-des-utilisateurs"
-tags: qc
+tags: [ qc ]
 title: "Table des utilisateurs"
 ---
 

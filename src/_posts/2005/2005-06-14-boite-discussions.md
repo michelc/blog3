@@ -1,8 +1,7 @@
 ---
-date: 2005-06-14 14:50:00
-layout: post
+date: 2005-06-14 14:50:00 +02:00
 redirect_from: "post/2005/06/14/Boite-Discussions"
-tags: qc
+tags: [ qc ]
 title: "Boite Discussions"
 ---
 

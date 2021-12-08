@@ -1,12 +1,15 @@
 ---
-date: 2017-08-18 12:25:43
-layout: post
-tags: pwa
+date: 2017-08-18 12:25:43 +02:00
+tags: [ pwa ]
 title: "Comment transformer votre site web en PWA"
+excerpt: La traduction d'un billet très didactique de Max Böck qui donne une vision claire sur la façon de procéder pour créer une première Application Web progressive à partir d'un simple site internet.
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du billet "[How to turn your website into a PWA](https://mxb.at/blog/how-to-turn-your-website-into-a-pwa/)" de Max Böck.
+
+</div>
 
 <p class="accroche">Une Application Web Progressive, ou PWA, utilise des
 fonctionnalités web modernes pour offrir une expérience utilisateur similaire à
@@ -236,7 +239,7 @@ place**.
 
 Vous lui donnez simplement une liste de fichiers et il suivra automatiquement
 toutes leurs modifications afin de mettre à jour votre cache Service Worker.
-Etant donné que `sw-precache` s'intègre dans le processus de génération de votre
+Étant donné que `sw-precache` s'intègre dans le processus de génération de votre
 site, vous pouvez utiliser des caractères génériques pour définir *tous* les
 éléments à mettre en pré-cache de la façon suivante :
 

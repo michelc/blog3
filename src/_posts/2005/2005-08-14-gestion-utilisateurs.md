@@ -1,8 +1,7 @@
 ---
-date: 2005-08-14 16:43:00
-layout: post
+date: 2005-08-14 16:43:00 +02:00
 redirect_from: "post/2005/08/14/Gestion-utilisateurs"
-tags: qc
+tags: [ qc ]
 title: "Gestion des utilisateurs"
 ---
 

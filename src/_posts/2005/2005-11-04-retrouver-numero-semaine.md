@@ -1,8 +1,7 @@
 ---
-date: 2005-11-04 16:39:00
-layout: post
+date: 2005-11-04 16:39:00 +02:00
 redirect_from: "post/2005/11/04/Retrouver-un-numero-de-semaine"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Retrouver un numéro de semaine"
 ---
 

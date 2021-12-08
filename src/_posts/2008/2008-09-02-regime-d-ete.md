@@ -1,8 +1,7 @@
 ---
-date: 2008-09-02 11:29:00
-layout: post
+date: 2008-09-02 11:29:00 +02:00
 redirect_from: "post/2008/09/02/Regime-d-ete"
-tags: ap, code-killer, xml
+tags: [ ap, code-killer, xml ]
 title: "Régime XML"
 ---
 
@@ -26,11 +25,11 @@ macro [%AP.Redirect:url%])
 * Sitemenu : menu ou sous-menu de navigation (remplacé par la macro
 [%AP.Site.Menu:level1-level2%])
 
-Note : si vous connaissez des sites qui ont encore besoin de ces
-boites, 20071029_update.sql et 20071030_update.sql sont vos amis.
+*Note : Si vous connaissez des sites qui ont encore besoin de ces
+boites, 20071029_update.sql et 20071030_update.sql sont vos amis.*
 
 Pour continuer sur ma lancée, j'ai aussi cherché comment éliminer la
-[boite SqlRepeat]({% post_url 2006-01-29-boite-sqlrepeat %})
+[boite SqlRepeat]({% post_url "2006-01-29-boite-sqlrepeat" %})
 qui prend le résultat d'une requête sous forme de DataReader pour générer un
 tableau HTML à l'aide d'un système de template très primaire.
 
@@ -70,12 +69,12 @@ html.Append(templateFoot);
 ```
 
 Pour chaque ligne du DataReader, la fonction ToHtmlRow() génère une ligne en
-remplaçant les marqueurs {#} par la colonne correspondante dans la ligne en
+remplaçant les marqueurs `{ # }` par la colonne correspondante dans la ligne en
 cours DataReader.
 
 Le but étant de supprimer une boite, il faut donc trouver par quoi la
 remplacer. Le plus simple est de passer par la boite à tout faire RawContent et
-d'y coller le tableau HTML final. Etant donné que cette boite n'est utilisée
+d'y coller le tableau HTML final. Étant donné que cette boite n'est utilisée
 que sur le site de [Saint-Privat](http://saint-privat.au-quotidien.info/), cela semble une
 solution raisonnable. Malgré tout, la boite RawContent est plutôt destinée aux
 petits bouts de codes de quelques lignes et là les tableaux HTML dépassent la
@@ -96,9 +95,9 @@ Un premier bon point, c'est qu'il existe déjà une boite XmlFile qui prend un
 fichier XML pour générer du HTML en lui appliquant un fichier XSLT. C'est un
 truc qui existe depuis toujours dans IBuySpy et que j'ai adapté dans
 Altrr-Press. Dans la pratique, je ne m'en sers presque jamais, sauf de temps en
-temps pour afficher des fils [RSS]({% post_url 2006-01-16-rss-html-conversion %}) ou
-[Atom]({% post_url 2006-01-16-atom-html-conversion %}) ou
-bien des liens enregistrés dans [Blogmarks]({% post_url 2006-01-19-blogmarks-html-conversion %}).
+temps pour afficher des fils [RSS]({% post_url "2006-01-16-rss-html-conversion" %}) ou
+[Atom]({% post_url "2006-01-16-atom-html-conversion" %}) ou
+bien des liens enregistrés dans [Blogmarks]({% post_url "2006-01-19-blogmarks-html-conversion" %}).
 
 Dans le cas présent, il fallait donc que je me débrouille pour prendre le
 résultat de ma requête comme source XML et surtout que je réussisse à créer un

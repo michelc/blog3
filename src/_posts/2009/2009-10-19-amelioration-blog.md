@@ -1,8 +1,7 @@
 ---
-date: 2009-10-19 18:42:00
-layout: post
+date: 2009-10-19 18:42:00 +02:00
 redirect_from: "post/2009/10/19/Am%C3%A9lioration-du-blog"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Amélioration du blog de l'Ardèche"
 ---
 

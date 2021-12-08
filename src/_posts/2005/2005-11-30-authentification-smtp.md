@@ -1,8 +1,7 @@
 ---
-date: 2005-11-30 14:24:00
-layout: post
+date: 2005-11-30 14:24:00 +02:00
 redirect_from: "post/2005/11/30/Authentification-SMTP"
-tags: .net, qc
+tags: [ .net, qc ]
 title: "Authentification SMTP"
 ---
 
@@ -12,7 +11,7 @@ before SMTP” Authentication](http://www.corephp.co.uk/archives/18-POP-before-S
 machine effectuant la connexion dans une table de façon à ensuite autoriser les
 connexions SMTP (au coup par coup, temporairement ou à vie ?).
 
-Etant donné qu'il n'existe pas de classe System.Pop en ASP.NET 1.1, il reste
+Étant donné qu'il n'existe pas de classe System.Pop en ASP.NET 1.1, il reste
 à trouver une classe POP qui fasse l'affaire. Voir éventuellement l'article
 “[How to POP3 in C#](http://www.developerfusion.co.uk/show/4071/)”
 de Randy Charles Morin.

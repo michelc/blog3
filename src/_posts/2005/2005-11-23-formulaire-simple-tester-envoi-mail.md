@@ -1,8 +1,7 @@
 ---
-date: 2005-11-23 16:30:00
-layout: post
+date: 2005-11-23 16:30:00 +02:00
 redirect_from: "post/2005/11/23/Un-formulaire-simple-pour-tester-lenvoi-de-mail"
-tags: .net, code-snippets
+tags: [ .net, code-snippets ]
 title: "Un formulaire simple pour tester l'envoi de mail"
 ---
 

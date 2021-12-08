@@ -1,8 +1,7 @@
 ---
-date: 2009-10-15 19:23:00
-layout: post
+date: 2009-10-15 19:23:00 +02:00
 redirect_from: "post/2009/10/15/Faire-un-site-pour-rien"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Faire un site pour rien"
 ---
 

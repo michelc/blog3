@@ -1,8 +1,7 @@
 ---
-date: 2004-09-22 16:33:00
-layout: post
+date: 2004-09-22 16:33:00 +02:00
 redirect_from: "post/2004/09/22/Bricks-configSource"
-tags: qc
+tags: [ qc ]
 title: "Bricks.configSource"
 ---
 

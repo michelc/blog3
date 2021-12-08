@@ -1,15 +1,15 @@
 ---
-date: 2010-05-27 22:14:00
-layout: post
+date: 2010-05-27 22:14:00 +02:00
 redirect_from: "post/2010/05/27/mvc-music-store-raven-db-shoppingcart"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : ShoppingCart"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: ShoppingCart](http://ayende.com/Blog/archive/2010/05/26/porting-the-mvc-music-store-to-raven-shoppingcart.aspx)", le neuvième
-de la série consacrée au portage de l'application MVC Music Store sous RavenDB
-par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: ShoppingCart](http://ayende.com/Blog/archive/2010/05/26/porting-the-mvc-music-store-to-raven-shoppingcart.aspx)", le neuvième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 ![ShoppingCart](http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb.png)
 
@@ -136,7 +136,7 @@ initialisant cet identifiant (soit avec le nom de l'utilisateur soit avec une
 valeur stockée en session), nous pouvons charger le panier à l'aide d'une
 méthode Load (sur la clé primaire pour faire une comparaison avec le monde des
 bases relationnelles). Le transfert du panier est alors une opération toute
-simple. Tout ce que vous avez à faire, c'est de changer sa clé. Etant donné que
+simple. Tout ce que vous avez à faire, c'est de changer sa clé. Étant donné que
 Raven ne permet pas de la renommer, nous allons faire une suppression puis une
 insertion qui s'exécuteront dans la même transaction.
 
@@ -144,7 +144,7 @@ Le code pour appeler la méthode MigrateCart() est le suivant :
 
 ![](http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_16.png)
 
-Etant donné que SaveChanges est atomique et transactionnel, cela a le même
+Étant donné que SaveChanges est atomique et transactionnel, cela a le même
 effet que de faire un Rename.
 
 Et c'est tout pour le panier. Je consacrerai mon prochain billet au

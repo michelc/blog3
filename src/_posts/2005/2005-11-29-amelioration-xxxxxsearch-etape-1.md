@@ -1,8 +1,7 @@
 ---
-date: 2005-11-29 11:06:00
-layout: post
+date: 2005-11-29 11:06:00 +02:00
 redirect_from: "post/2005/11/29/Amelioration-XxxxxSearch-Etape-1"
-tags: qc
+tags: [ qc ]
 title: "Amélioration XxxxxSearch - Etape 1"
 ---
 
@@ -40,7 +39,7 @@ Layout](http://simplyaccessible.org/article/search-form-layout))
 Reste à faire :
 
 * DONE: Améliorer le fonctionnement en mode GET (cf. [étape
-2]({% post_url 2005-12-01-amelioration-xxxxxxsearch-etape-2 %})),
+2]({% post_url "2005-12-01-amelioration-xxxxxxsearch-etape-2" %})),
 * Ne plus passer par le postback ?
 * Remplacer GoogleSearchService.dll, Msn.API.dll et Yahoo.API.dll par une
 seule DLL.

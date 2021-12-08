@@ -1,8 +1,7 @@
 ---
-date: 2010-09-15 21:58:00
-layout: post
+date: 2010-09-15 21:58:00 +02:00
 redirect_from: "post/2010/09/15/installer-nesta-sous-windows"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Installer Nesta sous Windows"
 ---
 
@@ -27,7 +26,7 @@ adapté pour gérer de petits blogues ou sites internet. Il est développé en R
 et il utilise bien entendu le framework Sinatra.
 
 Pour pouvoir installer Nesta sur Windows, j'ai dû commencer par mettre à
-jour mon [installation du Ruby]({% post_url 2010-07-22-installer-sinatra-windows-7 %}) parce que je n'avais pas [installé le toolkit DevKit](http://github.com/oneclick/rubyinstaller/wiki/development-kit). Je n'en avait pas eu besoin jusqu'à
+jour mon [installation du Ruby]({% post_url "2010-07-22-installer-sinatra-windows-7" %}) parce que je n'avais pas [installé le toolkit DevKit](http://github.com/oneclick/rubyinstaller/wiki/development-kit). Je n'en avait pas eu besoin jusqu'à
 présent, mais il s'est avéré indispensable pour terminer l'installation du gem
 [RedCloth](http://redcloth.org/) qui nécessite une
 compilation de je ne sais trop quoi.

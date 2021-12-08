@@ -1,12 +1,11 @@
 ---
-date: 2011-03-30 12:45:00
-layout: post
+date: 2011-03-30 12:45:00 +02:00
 redirect_from: "post/2011/03/30/vs-2010-sql-server-2008-express-windows-7-64-bits"
-tags: boulot, sql-server
+tags: [ boulot, sql-server ]
 title: "VS 2010, SQL Server 2008 Express et Windows 7 64 bits"
 ---
 
-J'ai rechuté. Après mes problèmes d'incompatibilités entre [VS 2008, SQL Server et Windows 7 64 bits]({% post_url 2009-11-25-vs2008-sql-server-2008-express-windows7-64-bits %}), j'ai encore trouvé
+J'ai rechuté. Après mes problèmes d'incompatibilités entre [VS 2008, SQL Server et Windows 7 64 bits]({% post_url "2009-11-25-vs2008-sql-server-2008-express-windows7-64-bits" %}), j'ai encore trouvé
 le moyen d'avoir un autre problème tout aussi bizarroïde.
 
 Suite à je ne sais trop quelles mises à jour sur mon PC (peut-être .NET 4 ou
@@ -34,7 +33,7 @@ correctement alors qu'elle utilisait bel et bien une base de données SQL
 Server ! La seule différence, c'est qu'elle utilisait LINQ to SQL et pas
 EF.
 
-A partir de ça j'ai réussi à trouver comment régler le problème en réparant
+À partir de ça j'ai réussi à trouver comment régler le problème en réparant
 le client .NET Framework 4, ce qui a eu pour effet de re-créer le fichier
 machine.config : [Visual Studio 2010 Add Connection dialogue not populating
 databases](http://stackoverflow.com/questions/3503957/visual-studio-2010-add-connection-dialogue-not-populating-databases/4138842#4138842) :

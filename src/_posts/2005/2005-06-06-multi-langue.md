@@ -1,8 +1,7 @@
 ---
-date: 2005-06-06 10:04:00
-layout: post
+date: 2005-06-06 10:04:00 +02:00
 redirect_from: "post/2005/06/06/Multi-langue"
-tags: qc
+tags: [ qc ]
 title: "Multi-langue"
 ---
 

@@ -1,13 +1,15 @@
 ---
-date: 2011-05-04 19:06:00
-layout: post
+date: 2011-05-04 19:06:00 +02:00
 redirect_from: "post/2011/05/04/erreurs-404-et-autres-avec-sinatra"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Erreurs 404 et autres avec Sinatra"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel "[404 and other Errors in Sinatra](http://ididitmyway.herokuapp.com/past/2010/11/16/404_and_other_errors_in_sinatra/)" de Darren Jones.
+
+</div>
 
 Un truc super bien quand on débute avec Sinatra c'est sa page
 d'erreur :

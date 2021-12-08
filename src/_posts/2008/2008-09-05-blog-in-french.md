@@ -1,8 +1,7 @@
 ---
-date: 2008-09-05 09:17:00
-layout: post
+date: 2008-09-05 09:17:00 +02:00
 redirect_from: "post/2008/09/05/Blog-in-French"
-tags: .net
+tags: [ .net ]
 title: "Blog in French"
 ---
 

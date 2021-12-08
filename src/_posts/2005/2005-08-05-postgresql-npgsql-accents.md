@@ -1,8 +1,7 @@
 ---
-date: 2005-08-05 10:08:00
-layout: post
+date: 2005-08-05 10:08:00 +02:00
 redirect_from: "post/2008/08/05/PostgreSQL-Npgsql-accents"
-tags: qc
+tags: [ qc ]
 title: "PostgreSQL, Npgsql et les accents"
 ---
 

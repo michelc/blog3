@@ -1,13 +1,12 @@
 ---
-date: 2009-04-17 12:09:00
-layout: post
+date: 2009-04-17 12:09:00 +02:00
 redirect_from: "post/2009/04/17/Evolutions-QC-au-17-avril-2009"
-tags: qc
+tags: [ qc ]
 title: "Evolutions QC au 17 avril 2009"
 ---
 
 Récapitulatif de ce qui a été fait depuis le [7 janvier
-2008]({% post_url 2008-01-07-evolutions-qc-7-janvier-2008 %}) (pour l'intranet Classeurs Projets) :
+2008]({% post_url "2008-01-07-evolutions-qc-7-janvier-2008" %}) (pour l'intranet Classeurs Projets) :
 
 * Reprise du code de Luxhor
 * listContacts.ascx.cs : Colonnes téléphones élargies de 75px à 20%

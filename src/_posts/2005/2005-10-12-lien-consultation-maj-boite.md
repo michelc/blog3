@@ -1,8 +1,7 @@
 ---
-date: 2005-10-12 12:11:00
-layout: post
+date: 2005-10-12 12:11:00 +02:00
 redirect_from: "post/2005/10/12/Lien-consultation-/-maj-boite"
-tags: qc
+tags: [ qc ]
 title: "Lien consultation / màj boite"
 ---
 

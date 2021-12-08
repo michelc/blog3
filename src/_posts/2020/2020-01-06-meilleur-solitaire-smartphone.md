@@ -1,20 +1,15 @@
 ---
-date: 2020-01-06 13:10:55+200
-layout: post
-tags: css, javascript
+date: 2020-01-06 13:10:55 +02:00
+tags: [ css, javascript ]
 title: "5 améliorations pour un meilleur solitaire sur smartphone"
-image: "/public/2020/responsive-solitaire.jpg"
+cover:
+  image: /public/2020/responsive-solitaire.jpg
+  link: http://ami.responsivedesign.is/
+  text: Am I Responsive ? - Justin Avery
 excerpt: "Solitaire-Play est déjà un site responsive, mais il y a toujours à faire pour améliorer le fonctionnement sur les smartphones : désactiver le «pull-to-refresh», passer du «hover» au «ripple», agrandir les boutons, placer la pioche à droite..."
 ---
 
 Les différents solitaires de mon site de jeux [Solitaire-Play](https://www.solitaire-play.com/) sont tous "responsive". Ce qui super intéressant puisque ça veut dire qu'ils fonctionnent correctement aussi bien sur un PC de bureau qu'un ordinateur portable, mais aussi sur une tablette ou un iPad et surtout sur des smartphones Android ou iPhone...
-
-<figure>
-  <img src="{{ page.image }}" alt="responsive-solitaire" />
-  <figcaption>
-    <a href="http://ami.responsivedesign.is/">Am I Responsive ? - Justin Avery</a>
-  </figcaption>
-</figure>
 
 J'écris du code HTML suffisament valide, du code CSS assez correct et du JavaScript à peu près passe-partout. Cela me permet d'être assez tranquille et de faire pas mal de modifications sans avoir à chaque fois à tout vérifier sur différents systèmes.
 
@@ -42,7 +37,7 @@ body {
 
 ## Désactiver le "hover" / Activer le "ripple"
 
-Ca c'est un problème classique avec les smartphones : comme il n'y a pas de souris, ils ne peuvent pas savoir quand on survole un truc avec le doigt et donc appliquer les styles définis pour des `:hover`. A la place, ils appliquent ces styles `:hover` dans le cas des `:focus`. Et une fois qu'on a appuyé sur un bouton, c'est lui qui prend le "focus" avec les styles qui vont avec le "hover".
+Ça c'est un problème classique avec les smartphones : comme il n'y a pas de souris, ils ne peuvent pas savoir quand on survole un truc avec le doigt et donc appliquer les styles définis pour des `:hover`. À la place, ils appliquent ces styles `:hover` dans le cas des `:focus`. Et une fois qu'on a appuyé sur un bouton, c'est lui qui prend le "focus" avec les styles qui vont avec le "hover".
 
 Dans mon cas, je colore les boutons en bleu au survol de la souris pour bien montrer que c'est là qu'il faut cliquer. Et sur un téléphone, après avoir appuyé sur le bouton "HINT", il restait bleu pour bien montrer que j'avais besoin d'aide pour jouer à Klondike Solitaire.
 
@@ -117,7 +112,7 @@ J'ai remarqué en jouant plus régulièrement que j'avais un problème dans ma f
 * J'enlève ma main pour pouvoir voir le tableau et vérifier si la nouvelle carte peut aller quelque part
 * Je réavance ma main droite vers la gauche de l'écran pour repiocher...
 
-Ca serait quand même plus simple si la pioche était à droite de l'écran (ou si j'étais gaucher). Ou alors, peut-être que si je savais me servir de tous mes doigts, je n'aurais pas ce genre de problème. Cependant, quand on recherche des images pour "Klondike Solitaire Mobile", on peut remarquer que bien souvent la pioche est à droite.
+Ça serait quand même plus simple si la pioche était à droite de l'écran (ou si j'étais gaucher). Ou alors, peut-être que si je savais me servir de tous mes doigts, je n'aurais pas ce genre de problème. Cependant, quand on recherche des images pour "Klondike Solitaire Mobile", on peut remarquer que bien souvent la pioche est à droite.
 
 Par conséquent, j'ai moi aussi transvasé la pioche du côté gauche vers le côté droit de l'écran :
 
@@ -159,5 +154,8 @@ Pour la suite, il faudrait que je retravaille sur la transformation du site en [
 
 Sinon, je pourrais aussi essayer de sauvegarder l'avancement d'un jeu dans [window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) pour retrouver la partie en cours ?
 
-{:.encart}
-English version: [5 improvements for a better solitaire on smartphone]({% post_url 2020-01-07-better-solitaire-smartphone %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "5 improvements for a better solitaire on smartphone", "2020-01-07-better-solitaire-smartphone" %}.
+
+</div>

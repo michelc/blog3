@@ -1,26 +1,21 @@
 ---
-date: 2019-07-04 12:28:18
-layout: post
-tags: CSS
+date: 2019-07-04 12:28:18 +02:00
+tags: [ CSS ]
 title: "Solitaire - Animation CSS en fin de partie"
-image: "/public/2019/fireworks.jpg"
+cover:
+  image: /public/2019/fireworks.jpg
+  link: https://unsplash.com/photos/HxeBUWUiA1A
+  text: New year's eve fireworks in the sky - Roven Images
 excerpt: "Comment utiliser @keyframes, transform, translate et rotate pour créer une première animation CSS en cas de victoire à Solitaire-Play."
 ---
 
 J'ai finalement réussi à gérer l'animation pour le déplacement des cartes pour
 que l'AutoPlay de [FreeCell](https://www.solitaire-play.com/freecell/) fonctionne
-[comme je le souhaitais]({% post_url 2019-04-08-solitaire-ajouter-animations-css %}).
+[comme je le souhaitais]({% post_url "2019-04-08-solitaire-ajouter-animations-css" %}).
 
 C'est un peu compliqué de documenter ça => je vais déjà faire un billet pour
 revenir sur la première animation de
 [Solitaire-Play](https://www.solitaire-play.com/).
-
-<figure>
-  <img src="{{ page.image }}" alt="fireworks" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/HxeBUWUiA1A">New year's eve fireworks in the sky - Roven Images</a>
-  </figcaption>
-</figure>
 
 Normalement, je préfère que mes applications soient assez basiques et sobres,
 sans trop de fioritures. C'est pourquoi tout ce qui est animation me parait
@@ -40,7 +35,7 @@ moment d'afficher la popup qui signale la fin d'une partie :
 * c'est plus festif
 
 Mais c'était surtout un bon premier pas pour voir ce qui est faisable en matière
-d'animation de pas web, avec uniquement du CSS. A l'époque, j'imaginais très bien
+d'animation de pas web, avec uniquement du CSS. À l'époque, j'imaginais très bien
 dans ma tête ce que je voulais obtenir et je présumais que cela devait être
 réalisable en CSS pur.
 
@@ -78,7 +73,7 @@ quoi ça sert :
   (étape 0%) à la fin (étape 100%).
 * Chaque étape correspond à un pourcentage d'avancement de l'animation, de façon
   assez libre : 0%, 33%, 66%, 100% ou 0%, 10%, 25%, 50%, 100% ...
-* A chaque étape, on associe un bloc CSS qui contient les styles correspondants
+* À chaque étape, on associe un bloc CSS qui contient les styles correspondants
   à cette étape.
 
 Dans mon cas, j'ai donc :
@@ -87,10 +82,9 @@ Dans mon cas, j'ai donc :
 * 9 étapes intermédiaires correspondant à un avancement de 10%, 20%, 30% ...
 * La fin de l'animation qui correspond à l'avancement de 100%
 
-**Note** : Le début / point de départ peut être noté `0% { ... }` ou  `from { ... }`
-et la fin de l'animation peut s'écrire `100% { ... }` ou `to { ... }`.
+*Note : Le début / point de départ peut être noté `0% { ... }` ou  `from { ... }` et la fin de l'animation peut s'écrire `100% { ... }` ou `to { ... }`.*
 
-A chaque étape, je ne modifie que la propriété CSS
+À chaque étape, je ne modifie que la propriété CSS
 [transform](https://developer.mozilla.org/fr/docs/Web/CSS/transform), pour
 appliquer 2 fonctions de transformation :
 
@@ -100,7 +94,7 @@ appliquer 2 fonctions de transformation :
 * [rotate()](https://developer.mozilla.org/fr/docs/Web/CSS/transform-function/rotate)
   pour faire tourner la popup d'un petit degré dans un sens ou dans l'autre.
 
-Ca c'était pour la partie définition / description de l'animation. Il faut ensuite
+Ça c'était pour la partie définition / description de l'animation. Il faut ensuite
 appliquer cette animation à un élément du DOM, en l'occurence la fenêtre popup que
 j'affiche à la fin d'une partie de solitaire.
 

@@ -1,8 +1,7 @@
 ---
-date: 2005-09-03 14:33:00
-layout: post
+date: 2005-09-03 14:33:00 +02:00
 redirect_from: "post/2005/09/03/Gestion-des-urls-relatives"
-tags: qc
+tags: [ qc ]
 title: "Gestion des urls relatives"
 ---
 

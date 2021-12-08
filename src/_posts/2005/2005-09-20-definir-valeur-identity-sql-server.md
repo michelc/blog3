@@ -1,8 +1,7 @@
 ---
-date: 2005-09-20 21:12:00
-layout: post
+date: 2005-09-20 21:12:00 +02:00
 redirect_from: "post/2005/09/20/Definir-une-valeur-Identity-sous-Sql-Server"
-tags: code-snippets, sql
+tags: [ code-snippets, sql ]
 title: "Définir une valeur Identity sous Sql Server"
 ---
 

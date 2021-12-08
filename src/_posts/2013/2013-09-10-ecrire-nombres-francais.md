@@ -1,8 +1,7 @@
 ---
-date: 2013-09-10 22:35:00
-layout: post
+date: 2013-09-10 22:35:00 +02:00
 redirect_from: "post/2013/09/10/ecrire-nombres-en-francais"
-tags: csharp, unit-test
+tags: [ csharp, unit-test ]
 title: "Ecrire des nombres en français"
 ---
 
@@ -17,7 +16,7 @@ français est plus compliqué que l'anglais...
 Heureusement, il y a très longtemps j'avais déjà fait un petit programme
 pour écrire les nombres en lettres parce qu'en ces temps reculés c'était encore
 nécessaire pour pouvoir imprimer des chèques (sur une imprimante matricielle).
-A l'époque l'Internet n'existait pas trop (Compuserve peut être ?) et j'avais
+À l'époque l'Internet n'existait pas trop (Compuserve peut être ?) et j'avais
 adapté une macro Lotus 123 (sans doute trouvée sur l'Ordinateur Individuel) en
 Quick Basic.
 
@@ -721,7 +720,7 @@ public static string ToWords(this int number)
 }
 ```
 
-Ca a été un peu compliqué, mais c'est passé !
+Ça a été un peu compliqué, mais c'est passé !
 
 ## 7° étape : Le pluriel de cent
 

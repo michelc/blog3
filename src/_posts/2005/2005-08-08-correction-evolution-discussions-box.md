@@ -1,8 +1,7 @@
 ---
-date: 2005-08-08 09:51:00
-layout: post
+date: 2005-08-08 09:51:00 +02:00
 redirect_from: "post/2005/08/08/Correction-evolution-Discussions-box"
-tags: qc
+tags: [ qc ]
 title: "Correction/évolution Discussions box"
 ---
 

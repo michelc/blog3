@@ -1,8 +1,7 @@
 ---
-date: 2009-11-20 16:03:00
-layout: post
+date: 2009-11-20 16:03:00 +02:00
 redirect_from: "post/2009/11/20/Traduction-du-tutoriel-NerdDinner"
-tags: mvc
+tags: [ mvc ]
 title: "Traduction du tutoriel NerdDinner"
 ---
 
@@ -22,5 +21,5 @@ traduire et de relire les 2 ou 3 étapes suivantes qui concernent la création d
 la base de données, la réalisation du modèle et peut-être même la présentation
 du fonctionnement des contrôleurs et des vues.
 
-Je devrais ainsi réussir à rattraper [le fil de ma formation]({% post_url 2009-09-23-troisieme-etape-aspnetmvc %}) où je l'avais laissé et être fin prêt
+Je devrais ainsi réussir à rattraper [le fil de ma formation]({% post_url "2009-09-23-troisieme-etape-aspnetmvc" %}) où je l'avais laissé et être fin prêt
 pour attaquer la suite.

@@ -1,8 +1,7 @@
 ---
-date: 2011-11-17 19:53:00
-layout: post
+date: 2011-11-17 19:53:00 +02:00
 redirect_from: "post/2011/11/17/mvc-scaffolding-eager-loading-viewmodel"
-tags: ef, mvc
+tags: [ ef, mvc ]
 title: "MVC Scaffolding, Eager loading et ViewModel"
 ---
 
@@ -293,17 +292,17 @@ Tarifs.
 
 ## Action Index et ViewModel
 
-A titre personnel, je trouve malgré tout que la requête SQL générée par
+À titre personnel, je trouve malgré tout que la requête SQL générée par
 Entity Framework est un peu lourde pour ce qu'on en fait. Alors que le but est
 simplement d'afficher le nombre de parties et de tarifs d'un voyage, on se
 retrouve quand même à charger toutes les parties et tous les tarifs de tous les
 voyages, ce qui revient donc à charger l'intégralité des tables Parties et
 Tarifs.
 
-Note : Si on avait une pagination par paquet de 20
+*Note : Si on avait une pagination par paquet de 20
 voyages, ça serait un peu mieux puisque cela reviendrait "seulement" à charger
 toutes les parties et tous les tarifs correspondant à 20 voyages
-uniquement.
+uniquement.*
 
 Dans l'idéal, il faudrait donc récupérer les informations de base de chaque
 voyage sans ses propriétés voyage.Parties et voyage.Tarifs, plus le nombre de
@@ -362,9 +361,9 @@ public class VoyagesIndex
 }
 ```
 
-Note : `public VoyageType TypeVoyage` est
+*Note : `public VoyageType TypeVoyage` est
 une bidouille qui n'a rien à voir avec le sujet et que j'essairai d'expliquer
-plus tard si je persiste à passer par elle.
+plus tard si je persiste à passer par elle.*
 
 Il faut ensuite modifier le code de l'action Index pour qu'elle récupère une
 collection de VoyagesIndex et plus une collection d'objets Voyage :

@@ -1,24 +1,22 @@
 ---
-date: 2020-01-21 12:28:02
-layout: post
+date: 2020-01-21 12:28:02 +02:00
 lang: en-US
-tags: sql
+tags: [ sql ]
 title: "SQL Join Memento"
-image: "/public/2020/sql-join.jpg"
+cover:
+  image: /public/2020/sql-join.jpg
+  link: https://blog.jooq.org/2016/07/05/say-no-to-venn-diagrams-when-explaining-joins/
+  text: Say NO to Venn Diagrams When Explaining JOINs
 excerpt: "I'm still learning how to write SQL joins, without getting stuck with a basic «WHERE Table1.Foreign_ID = Table2.ID»..."
 ---
 
-{:.encart}
-As I'm a bit slow on JavaScript and also I need to revive my SQL knowledge, I take this opportunity to revisit and translate some of my old posts: [Mémento des jointures en SQL]({% post_url 2012-03-21-memento-jointures-sql %}){:hreflang="fr"}.
+<div class="encart">
+
+As I'm a bit slow on JavaScript and also I need to revive my SQL knowledge, I take this opportunity to revisit and translate some of my old posts: {% goto_fr "Mémento des jointures en SQL", "2012-03-21-memento-jointures-sql" %}.
+
+</div>
 
 Recently (i.e. March 2012), I needed to make a rather complicated comparison between two tables, to highlight all the <s>errors</s> differences between them, including data that only appear in one of the two tables. Given my level in SQL joins, it's impossible to remember how to do this from memory.
-
-<figure>
-  <img src="{{ page.image }}" alt="sql-join" />
-  <figcaption>
-    <a href="https://blog.jooq.org/2016/07/05/say-no-to-venn-diagrams-when-explaining-joins/">Say NO to Venn Diagrams When Explaining JOINs</a>
-  </figcaption>
-</figure>
 
 Fortunately, a visit to the [Join (SQL)](https://en.wikipedia.org/wiki/Join_(SQL)) page on Wikipedia made me (re?)discover the FULL OUTER JOIN, which I completed with Jeff Atwood's post [A Visual Explanation of SQL Joins](http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html).
 

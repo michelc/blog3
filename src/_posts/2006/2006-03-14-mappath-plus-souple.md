@@ -1,8 +1,7 @@
 ---
-date: 2006-03-14 07:51:00
-layout: post
+date: 2006-03-14 07:51:00 +02:00
 redirect_from: "post/2006/03/14/Un-MapPath-plus-souple"
-tags: .net, qc
+tags: [ .net, qc ]
 title: "Un MapPath() plus souple"
 ---
 

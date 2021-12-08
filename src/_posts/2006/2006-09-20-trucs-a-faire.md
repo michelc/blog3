@@ -1,8 +1,7 @@
 ---
-date: 2006-09-20 10:03:00
-layout: post
+date: 2006-09-20 10:03:00 +02:00
 redirect_from: "post/2006/09/20/Trucs-a-faire"
-tags: ap, qc
+tags: [ ap, qc ]
 title: "Trucs à faire"
 ---
 

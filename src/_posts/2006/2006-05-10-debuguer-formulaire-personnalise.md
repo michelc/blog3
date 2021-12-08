@@ -1,8 +1,7 @@
 ---
-date: 2006-05-10 12:36:00
-layout: post
+date: 2006-05-10 12:36:00 +02:00
 redirect_from: "post/2006/05/10/Debuguer-un-formulaire-personnalise"
-tags: qc
+tags: [ qc ]
 title: "Débuguer un formulaire personnalisé"
 ---
 
@@ -13,6 +12,6 @@ personnalisé :
 <input type="hidden" name="_debug" value="true" />
 ```
 
-A partir du moment où ce champ est présent dans le formulaire (et quelle que
+À partir du moment où ce champ est présent dans le formulaire (et quelle que
 soit sa valeur), le destinataire, le sujet et contenu du mél sont affichés
 ainsi que le message d'erreur éventuel.

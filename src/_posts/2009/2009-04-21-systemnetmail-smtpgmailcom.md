@@ -1,14 +1,13 @@
 ---
-date: 2009-04-21 17:17:00
-layout: post
+date: 2009-04-21 17:17:00 +02:00
 redirect_from: "post/2009/04/21/SystemNetMail-et-smtpgmailcom"
-tags: ap, code-snippets, csharp
+tags: [ ap, code-snippets, csharp ]
 title: "System.Net.Mail et smtp.gmail.com"
 ---
 
-Poursuivant mes essais de [migration d'Altrr-Press vers ASP.NET 2.0]({% post_url 2008-10-02-migration-altrr-press-net-1-net-2 %}), j'ai enfin étudié comment
+Poursuivant mes essais de [migration d'Altrr-Press vers ASP.NET 2.0]({% post_url "2008-10-02-migration-altrr-press-net-1-net-2" %}), j'ai enfin étudié comment
 remplacer System.Web.Mail par System.Net.Mail. Jusqu'à présent, j'utilisais la
-méthode décrite dans mon plus célèbre billet [System.Web.Mail and smtp.gmail.com]({% post_url 2005-01-14-wdevs-systemwebmail-smtpgmailcom %}).
+méthode décrite dans mon plus célèbre billet [System.Web.Mail and smtp.gmail.com]({% post_url "2005-01-14-wdevs-systemwebmail-smtpgmailcom" %}).
 
 Par rapport à cette méthode, les modifications à apporter n'ont finalement
 pas été si compliquées que ça :

@@ -1,8 +1,7 @@
 ---
-date: 2012-03-01 13:22:00
-layout: post
+date: 2012-03-01 13:22:00 +02:00
 redirect_from: "post/2012/03/01/ruby-or-parentheses"
-tags: ruby
+tags: [ ruby ]
 title: "Ruby, or et parenthèses"
 ---
 

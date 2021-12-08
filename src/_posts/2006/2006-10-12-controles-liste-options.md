@@ -1,8 +1,7 @@
 ---
-date: 2006-10-12 11:29:00
-layout: post
+date: 2006-10-12 11:29:00 +02:00
 redirect_from: "post/2006/10/12/Controles-de-liste-doptions"
-tags: qc
+tags: [ qc ]
 title: "Contrôles de liste d'options"
 ---
 

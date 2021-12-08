@@ -1,8 +1,7 @@
 ---
-date: 2008-10-20 13:34:00
-layout: post
+date: 2008-10-20 13:34:00 +02:00
 redirect_from: "post/2008/10/20/Ceci-n-est-pas-Subversion"
-tags: svn
+tags: [ svn ]
 title: "Ceci n'est pas du Subversion"
 ---
 

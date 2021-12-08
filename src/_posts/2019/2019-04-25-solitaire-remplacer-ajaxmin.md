@@ -1,9 +1,10 @@
 ---
-date: 2019-04-25 12:19:02
-layout: post
-tags: javascript
+date: 2019-04-25 12:19:02 +02:00
+tags: [ javascript ]
 title: "Solitaire - Remplacer AjaxMin, etc..."
-image: "/public/2019/printemps.jpg"
+cover:
+  image: /public/2019/printemps.jpg
+excerpt: J'utilise encore "Microsoft Ajax Minifier" pour  compresser les fichiers JavaScript et CSS de mon site de jeux de solitaires. Peut-être qu'il est temps de passer à autre chose ?
 ---
 
 <div class="encart" markdown="1">
@@ -11,18 +12,14 @@ image: "/public/2019/printemps.jpg"
 Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
 solitaires et aux évolutions que je souhaite y apporter :
 
-1. [Introduction]({% post_url 2019-03-23-solitaire-feuille-route-javascript %})
-2. [Passer de jQuery à Vanilla JS]({% post_url 2019-03-27-solitaire-passer-jquery-vanilla-js %})
-3. [Améliorer FreeCell]({% post_url 2019-04-01-solitaire-ameliorer-freecell %})
-4. [Ajouter des animations CSS]({% post_url 2019-04-08-solitaire-ajouter-animations-css %})
-5. [Drag and drop sans jQuery UI]({% post_url 2019-04-15-solitaire-drag-and-drop-sans-jquery-ui %})
-6. [Remplacer AjaxMin, etc...]({% post_url 2019-04-25-solitaire-remplacer-ajaxmin %})
+1. [Introduction]({% post_url "2019-03-23-solitaire-feuille-route-javascript" %})
+2. [Passer de jQuery à Vanilla JS]({% post_url "2019-03-27-solitaire-passer-jquery-vanilla-js" %})
+3. [Améliorer FreeCell]({% post_url "2019-04-01-solitaire-ameliorer-freecell" %})
+4. [Ajouter des animations CSS]({% post_url "2019-04-08-solitaire-ajouter-animations-css" %})
+5. [Drag and drop sans jQuery UI]({% post_url "2019-04-15-solitaire-drag-and-drop-sans-jquery-ui" %})
+6. [Remplacer AjaxMin, etc...]({% post_url "2019-04-25-solitaire-remplacer-ajaxmin" %})
 
 </div>
-
-<figure>
-  <img src="{{ page.image }}" alt="printemps" />
-</figure>
 
 Lorsque j'aurai réussi à réaliser tout ce que j'ai en vue dans les billets
 précédents, cela sera déjà pas mal. Mais j'aimerais aussi parvenir à moderniser

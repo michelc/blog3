@@ -1,12 +1,11 @@
 ---
-date: 2009-11-23 12:11:00
-layout: post
+date: 2009-11-23 12:11:00 +02:00
 redirect_from: "post/2009/11/23/Suite-de-la-traduction-du-NerdDinner"
-tags: mvc
+tags: [ mvc ]
 title: "Suite de la traduction du NerdDinner"
 ---
 
-Je n'ai pas aussi bien avancé que ce que j'aurai souhaité dans la [traduction du tutoriel NerdDinner]({% post_url 2009-11-20-traduction-tutoriel-nerddinner %}), mais j'ai malgré tout
+Je n'ai pas aussi bien avancé que ce que j'aurai souhaité dans la [traduction du tutoriel NerdDinner]({% post_url "2009-11-20-traduction-tutoriel-nerddinner" %}), mais j'ai malgré tout
 réussi à terminer la troisième étape qui concerne la [création de la base de données NerdDinner.mdf](/nerddinner/creation-base-donnees/) sous SQL Server. Et j'ai
 quasiment fini de corriger la traduction de la partie suivante consacrés à la
 [réalisation du modèle](/nerddinner/construire-modele/) (le "M" de MVC) et à la mise en oeuvre des

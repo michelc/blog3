@@ -1,8 +1,7 @@
 ---
-date: 2008-09-22 10:29:00
-layout: post
+date: 2008-09-22 10:29:00 +02:00
 redirect_from: "post/2008/09/22/Regroupement-de-code"
-tags: ap, code-killer
+tags: [ ap, code-killer ]
 title: "Regroupement de code"
 ---
 
@@ -17,11 +16,11 @@ fourre-tout qui servait pour générer beaucoup de choses :
 * le plan du site : une espèce de menu général
 * le sitemap pour Google : un menu général mais généré pas pareil
 
-A l'origine, cette fonction parcourait la liste des écrans et représentait
+À l'origine, cette fonction parcourait la liste des écrans et représentait
 le menu d'une page sous forme de blocs ul / li en tenant compte des
 autorisations définies.
 
-A côté de ça, il y avait aussi 3 autres procédures qui parcouraient la liste
+À côté de ça, il y avait aussi 3 autres procédures qui parcouraient la liste
 des écrans pour proposer une liste de liens possibles, sauf qu'on y gérait un
 peu moins bien les autorisations :
 
@@ -53,7 +52,7 @@ Même problème => même solution : la classe Browse a été complétée
 pour permettre aussi de parcourir les fichiers et ainsi remplacer les
 différentes procédures par une seule façon de faire.
 
-A final, au lieu de plusieurs morceaux de codes dispersés un peu partout,
+Au final, au lieu de plusieurs morceaux de codes dispersés un peu partout,
 tout est rassemblé dans la classe Browse où on n'a plus que :
 
 * ArrayList Browse.ScreenList () : liste des écrans filtrés en fonction

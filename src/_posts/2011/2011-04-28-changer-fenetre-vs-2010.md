@@ -1,8 +1,7 @@
 ---
-date: 2011-04-28 09:30:00
-layout: post
+date: 2011-04-28 09:30:00 +02:00
 redirect_from: "post/2011/04/28/changer-de-fenetre-sous-vs-2010"
-tags: code-snippets
+tags: [ code-snippets ]
 title: "Changer de fenêtre sous VS 2010"
 ---
 

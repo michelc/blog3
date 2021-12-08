@@ -1,8 +1,7 @@
 ---
-date: 2012-03-27 23:09:00
-layout: post
+date: 2012-03-27 23:09:00 +02:00
 redirect_from: "post/2012/03/27/ebook-c-sharp-francais"
-tags: csharp
+tags: [ csharp ]
 title: "Ebook de 550 pages, sur C#, en français, par Microsoft"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2006-01-28 14:04:00
-layout: post
+date: 2006-01-28 14:04:00 +02:00
 redirect_from: "post/2006/01/28/Google-Sitemap-et-mise-a-jour-fichiers"
-tags: qc, referencement
+tags: [ qc, referencement ]
 title: "Google Sitemap et mise à jour fichiers"
 ---
 

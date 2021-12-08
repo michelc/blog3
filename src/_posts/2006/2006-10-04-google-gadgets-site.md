@@ -1,8 +1,7 @@
 ---
-date: 2006-10-04 10:19:00
-layout: post
+date: 2006-10-04 10:19:00 +02:00
 redirect_from: "post/2006/10/04/Google-Gadgets-sur-mon-site"
-tags: qc
+tags: [ qc ]
 title: "Google Gadgets sur mon site"
 ---
 

@@ -1,13 +1,12 @@
 ---
-date: 2012-08-06 23:39:00
-layout: post
+date: 2012-08-06 23:39:00 +02:00
 redirect_from: "post/2012/08/06/utilisation-cdn-pour-jquery-ui"
-tags: jquery, mvc
+tags: [ jquery, mvc ]
 title: "Utilisation d'un CDN pour jQuery UI"
 ---
 
 Pour faire suite à mon billet d'il y a [
-quelques jours]({% post_url 2012-07-12-utilisation-cdn-jquery-jquery-validation %}), je me suis rendu compte que je n'avais pas mentionné la
+quelques jours]({% post_url "2012-07-12-utilisation-cdn-jquery-jquery-validation" %}), je me suis rendu compte que je n'avais pas mentionné la
 méthode pour intégrer jQuery UI depuis un CDN (essentiellement parce que je ne
 l'utilise pas encore dans mon projet).
 

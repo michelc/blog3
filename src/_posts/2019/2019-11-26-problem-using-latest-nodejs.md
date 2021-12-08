@@ -1,21 +1,16 @@
 ---
-date: 2019-11-26 12:28:44+200
-layout: post
-tags: javascript
+date: 2019-11-26 12:28:44 +02:00
+tags: [ javascript ]
 lang: en-US
 title: "The problem with blindly using the latest Node"
-image: "/public/2019/le-corniaud.jpg"
+cover:
+  image: /public/2019/le-corniaud.jpg
+  link: https://en.wikipedia.org/wiki/The_Sucker
+  text: It will not work as well... - Le Corniaud
 excerpt: "Until a few days ago, I've always used the latest version of Node. Usually it works well, but this time I had to go back."
 ---
 
 Since I started doing some testing with Node, I've always worked with the latest version of Node. And that's why I am used to do `choco upgrade -y nodejs` quite regularly.
-
-<figure>
-  <img src="{{ page.image }}" alt="le-corniaud" />
-  <figcaption>
-    <a href="https://en.wikipedia.org/wiki/The_Sucker">It will not work as well... - Le Corniaud</a>
-  </figcaption>
-</figure>
 
 This allows me to use the latest JavaScript features without going through Babel or TypeScript. It works because I only do test runs and code and execute everything locally. No doubt that the day I want to put my code into production and deploy it, I will have to review this mode of operation.
 
@@ -145,5 +140,8 @@ And this time, `npm start` successfully launched the application.
 
 Conclusion: I should pay a little more attention in the future to what I use and the compatibility problems it can cause. But on the other hand, it's the first time I've encountered such a problem...
 
-{:.encart}
-Version en français : [De l'inconvénient d'utiliser aveuglément la dernière version de Node]({% post_url 2019-11-25-inconvenient-derniere-version-node-js %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "De l'inconvénient d'utiliser aveuglément la dernière version de Node", "2019-11-25-inconvenient-derniere-version-node-js" %}.
+
+</div>

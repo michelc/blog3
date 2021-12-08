@@ -1,8 +1,7 @@
 ---
-date: 2006-01-05 14:12:00
-layout: post
+date: 2006-01-05 14:12:00 +02:00
 redirect_from: "post/2006/01/05/Correction-SiteTree"
-tags: qc
+tags: [ qc ]
 title: "Correction SiteTree"
 ---
 

@@ -1,13 +1,15 @@
 ---
-date: 2010-09-13 18:41:00
-layout: post
+date: 2010-09-13 18:41:00 +02:00
 redirect_from: "post/2010/09/13/D%C3%A9ployer-des-applications-Sinatra-sur-Heroku"
-tags: git, ruby, sinatra
+tags: [ git, ruby, sinatra ]
 title: "Déployer des applications Sinatra sur Heroku"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel "[Deploying Sinatra Apps on Heroku](http://ididitmyway.herokuapp.com/past/2010/1/16/deploying_sinatra_apps_on_heroku/)" de Darren Jones.
+
+</div>
 
 Vous avez enfin terminé votre super application web, mais ça n'a pas
 beaucoup d'intérêt si personne en peut s'en servir. Ce qu'il vous faut, c'est
@@ -25,7 +27,7 @@ Heroku s'occupe de tous les trucs compliqués en matière d'hébergement et
 convient parfaitement pour mettre en production des sites à grande échelle. le
 tout accompagné d'un excellent support et d'une large documentation.
 
-**Avant d'aller plus loin, vous devez avoir [installé Git]({% post_url 2010-07-29-guide-demarrer-git %}) étant donné qu'il est nécessaire pour faire un
+**Avant d'aller plus loin, vous devez avoir [installé Git]({% post_url "2010-07-29-guide-demarrer-git" %}) étant donné qu'il est nécessaire pour faire un
 déploiement sur Heroku.**
 
 ## Inscription
@@ -35,7 +37,7 @@ gratuitement à l'adresse <http://heroku.com/signup>.
 
 ## Installer le gem Heroku
 
-On part du principe que vous avez déjà [installé Ruby, Gems et Sinatra]({% post_url 2010-07-22-installer-sinatra-windows-7 %}) et par conséquent vous n'avez
+On part du principe que vous avez déjà [installé Ruby, Gems et Sinatra]({% post_url "2010-07-22-installer-sinatra-windows-7" %}) et par conséquent vous n'avez
 plus qu'à lancer la commande suivante à partir d'une invite de
 commande :
 
@@ -98,7 +100,7 @@ om.utilisateur/.ssh/id_rsa.pub
 ```
 
 **Ce paramétrage de la clé SSH ne doit être réalisé qu'une seule fois.
-A partir de maintenant, vous n'aurez plus qu'à effectuer les étapes décrites
+À partir de maintenant, vous n'aurez plus qu'à effectuer les étapes décrites
 dans la suite de ce tutoriel à chaque fois que vous souhaiterez mettre en ligne
 une de vos applications Sinatra.**
 
@@ -143,7 +145,7 @@ Git :
 $ git commit -a -m "Ajout du manifeste gem pour déployer sur Heroku"
 ```
 
-Note : dans le cas de l'application SuperDo, le
+Notez que dans le cas de l'application SuperDo, le
 fichier ".gems" devra contenir les 3 lignes suivantes pour que l'application
 fonctionne correctement une fois déployée :
 
@@ -221,5 +223,5 @@ utiliser une autre branche pour la version en production.
 
 J'espère que ce billet aura réussi à vous convaincre qu'il est très facile
 de déployer des applications développées avec Sinatra et que Heroku est un
-service parfaitement adapté pour cela. A votre tour de mettre votre application
+service parfaitement adapté pour cela. À votre tour de mettre votre application
 en ligne !

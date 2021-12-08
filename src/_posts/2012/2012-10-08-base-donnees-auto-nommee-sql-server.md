@@ -1,8 +1,7 @@
 ---
-date: 2012-10-08 22:27:00
-layout: post
+date: 2012-10-08 22:27:00 +02:00
 redirect_from: "post/2012/10/08/base-donnees-auto-nommee-sql-server"
-tags: .net, ef, sql-server
+tags: [ .net, ef, sql-server ]
 title: "Base de données auto-nommée sous SQL Server"
 ---
 

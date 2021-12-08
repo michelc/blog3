@@ -1,8 +1,7 @@
 ---
-date: 2011-10-06 20:47:00
-layout: post
+date: 2011-10-06 20:47:00 +02:00
 redirect_from: "post/2011/10/06/generer-url-minuscule-asp-net-mvc"
-tags: mvc, referencement
+tags: [ mvc, referencement ]
 title: "Générer des URLs en minuscules avec ASP.NET MVC"
 ---
 

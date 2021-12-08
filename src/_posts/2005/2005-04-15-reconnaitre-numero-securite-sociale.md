@@ -1,8 +1,7 @@
 ---
-date: 2005-04-15 15:30:00
-layout: post
+date: 2005-04-15 15:30:00 +02:00
 redirect_from: "post/2005/04/15/Reconnaitre-un-numero-de-securite-sociale"
-tags: boulot, code-snippets
+tags: [ boulot, code-snippets ]
 title: "Reconnaitre un numéro de sécurité sociale"
 ---
 

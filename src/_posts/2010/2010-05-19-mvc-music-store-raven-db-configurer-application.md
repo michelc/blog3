@@ -1,15 +1,15 @@
 ---
-date: 2010-05-19 13:12:00
-layout: post
+date: 2010-05-19 13:12:00 +02:00
 redirect_from: "post/2010/05/19/mvc-music-store-raven-db-configurer-application"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : Configurer l'application"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Setting up the
-application](http://ayende.com/Blog/archive/2010/05/19/porting-mvc-music-store-to-raven-setting-up-the-application.aspx)", le deuxième de la série consacrée au portage de l'application
-MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: Setting up the application](http://ayende.com/Blog/archive/2010/05/19/porting-mvc-music-store-to-raven-setting-up-the-application.aspx)", le deuxième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Juste quelques mots sur la façon de configurer Raven pour l'utiliser avec
 l'application MVC Music Store avant de me lancer dans le développement du reste

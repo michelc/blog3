@@ -1,8 +1,7 @@
 ---
-date: 2005-08-30 16:46:00
-layout: post
+date: 2005-08-30 16:46:00 +02:00
 redirect_from: "post/2005/08/30/Correction-macro-SiteMenu"
-tags: qc
+tags: [ qc ]
 title: "Correction de la macro SiteMenu"
 ---
 

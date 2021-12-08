@@ -1,5 +1,5 @@
 ---
-date: 2010-02-01 18:33:00
+date: 2010-02-01 18:33:00 +02:00
 layout: page
 permalink: nerddinner/ajouter-carte-ajax/
 redirect_from: "pages/NerdDinner/Ajouter-une-carte-Ajax"
@@ -272,7 +272,7 @@ pour faire le rendu de la vue Map :
 La fonction JavaScript que nous avons ajoutée à la vue partielle utilise
 jQuery pour attacher un évènement "blur" à la zone de saisie "Address". Vous
 avez probablement déjà entendu parler des évènements "focus" qui se produisent
-lorsque l'utilisateur clique ou arrive sur une textbox. A l'opposé, l'évènement
+lorsque l'utilisateur clique ou arrive sur une textbox. À l'opposé, l'évènement
 "blur" se déclenche quand l'utilisateur sort de la textbox. Le gestionnaire
 d'évènement ci-dessus efface le contenu des champs latitude et longitude
 lorsque cela se produit puis indique le nouvel emplacement correspondant à

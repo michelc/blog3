@@ -1,19 +1,15 @@
 ---
-date: 2020-02-04 12:21:18+200
-layout: post
-tags: sql
+date: 2020-02-04 12:21:18 +02:00
+tags: [ sql ]
 title: "Optimize multiple INSERTs (for Oracle)"
-image: "/public/2020/pumpkin-patch.jpg"
+cover:
+  image: /public/2020/pumpkin-patch.jpg
+  link: https://unsplash.com/photos/svIdk6Ai94w
+  text: Rusty old truck in a pumpkin patch - Priscilla Du Preez
+excerpt: In order to check the integrity of some data, I had to copy the contents of a large customer table from a DB2 database into an Oracle database. 
 ---
 
 In order to check the integrity of some data, I had to copy the contents of a large customer table from a DB2 database into an Oracle database. I know SQL*Loader exists, but this is not the time I'm gonna learn how to use it.
-
-<figure>
-  <img src="{{ page.image }}" alt="pumpkins" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/svIdk6Ai94w">Rusty old truck in a pumpkin patch - Priscilla Du Preez</a>
-  </figcaption>
-</figure>
 
 
 ## One INSERT command for each row to process
@@ -48,7 +44,7 @@ END;
 
 => 6.37 seconds to insert 4579 lines => already twice as fast.
 
-Note: with [Dapper](https://stackexchange.github.io/Dapper/) (and ADO.NET in general I suppose), Oracle doesn't support line breaks in the SQL command: I get an error `@@PLS-00103: Encountered the symbol "" when expecting one of the following@`.
+*Note: with [Dapper](https://stackexchange.github.io/Dapper/) (and ADO.NET in general I suppose), Oracle doesn't support line breaks in the SQL command: I get an error `@@PLS-00103: Encountered the symbol "" when expecting one of the following@`.*
 
 To avoid this problem, just don't add a line break when generating the big query :
 
@@ -135,5 +131,8 @@ private string Sql_FromSelect(StringBuilder batch)
 }
 ```
 
-{:.encart}
-Version en français : [Optimiser les INSERT multiples (dans Oracle)]({% post_url 2012-03-08-optimiser-insert-multiples-oracle %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Optimiser les INSERT multiples (dans Oracle)", "2012-03-08-optimiser-insert-multiples-oracle" %}.
+
+</div>

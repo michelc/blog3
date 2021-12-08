@@ -1,8 +1,7 @@
 ---
-date: 2005-09-07 14:53:00
-layout: post
+date: 2005-09-07 14:53:00 +02:00
 redirect_from: "post/2005/09/07/Correction-XTableLastAdd"
-tags: qc
+tags: [ qc ]
 title: "Correction XTable.LastAdd"
 ---
 

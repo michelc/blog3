@@ -1,8 +1,7 @@
 ---
-date: 2006-01-11 13:13:00
-layout: post
+date: 2006-01-11 13:13:00 +02:00
 redirect_from: "post/2006/01/11/Filtrage-de-la-boite-Documents"
-tags: qc
+tags: [ qc ]
 title: "Filtrage de la boite Documents"
 ---
 

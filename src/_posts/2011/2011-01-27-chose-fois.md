@@ -1,8 +1,7 @@
 ---
-date: 2011-01-27 09:32:00
-layout: post
+date: 2011-01-27 09:32:00 +02:00
 redirect_from: "post/2011/01/27/une-chose-a-la-fois"
-tags: code-killer
+tags: [ code-killer ]
 title: "Une chose à la fois"
 ---
 

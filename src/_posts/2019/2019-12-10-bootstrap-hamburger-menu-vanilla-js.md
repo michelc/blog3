@@ -1,23 +1,18 @@
 ---
-date: 2019-12-10 12:24:10+200
-layout: post
-tags: javascript, bootstrap
+date: 2019-12-10 12:24:10 +02:00
+tags: [ javascript, bootstrap ]
 lang: en-US
 title: "Switch Bootstrap 4 hamburger menu with Vanilla JS"
-image: "/public/2019/hamburger-menu.jpg"
+cover:
+  image: /public/2019/hamburger-menu.jpg
+  link: https://unsplash.com/photos/Nb_Q-M3Cdzg
+  text: Hamburger with a beer - Edward Franklin
 excerpt: "I only use 'bootstrap.min.js' to handle the Bootstrap hamburger menu. So I 'replaced' the 57 ko of this file with 3 lines of JS."
 ---
 
 ## Introduction
 
-Some weeks ago, I wrote a small ASP.NET MVC application where I already have to [Search and filter a table with JavaScript]({% post_url 2019-10-01-search-filter-table-javascript %}).
-
-<figure>
-  <img src="{{ page.image }}" alt="hamburger-menu" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/Nb_Q-M3Cdzg">Hamburger with a beer - Edward Franklin</a>
-  </figcaption>
-</figure>
+Some weeks ago, I wrote a small ASP.NET MVC application where I already have to [Search and filter a table with JavaScript]({% post_url "2019-10-01-search-filter-table-javascript" %}).
 
 This application uses Bootstrap 4, which allows me to have a totally responsive result without too much effort. In particular the navigation bar is fully displayed when there is enough space or is replaced by a "hamburger" menu on smaller screens.
 
@@ -143,5 +138,8 @@ This gives the following source file, ready to be integrated with a `<script src
 })();
 ```
 
-{:.encart}
-Version en français : [Gérer le menu hamburger de Bootstrap 4 en Vanilla JS]({% post_url 2019-12-09-menu-hamburger-bootstrap-vanilla-js %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Gérer le menu hamburger de Bootstrap 4 en Vanilla JS", "2019-12-09-menu-hamburger-bootstrap-vanilla-js" %}.
+
+</div>

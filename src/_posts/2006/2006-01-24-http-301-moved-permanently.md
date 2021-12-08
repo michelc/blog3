@@ -1,8 +1,7 @@
 ---
-date: 2006-01-24 13:13:00
-layout: post
+date: 2006-01-24 13:13:00 +02:00
 redirect_from: "post/2006/01/24/HTTP-301-Moved-Permanently"
-tags: .net, code-snippets, referencement
+tags: [ .net, code-snippets, referencement ]
 title: "HTTP 301 - Moved Permanently"
 ---
 

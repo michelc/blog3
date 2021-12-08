@@ -1,21 +1,15 @@
 ---
-date: 2019-12-30 13:16:12+200
-layout: post
-tags: jekyll
-lang: fr-FR
+date: 2019-12-30 13:16:12 +02:00
+tags: [ jekyll ]
 title: "Mise à jour de la configuration de Jekyll"
-image: "/public/2019/source-code.jpg"
+cover:
+  image: /public/2019/source-code.jpg
+  link: https://unsplash.com/photos/5Ntkpxqt54Y
+  text: Source code on a screen - Sai Kiran Anagani
 excerpt: "Après avoir un peu rafraîchi la charte graphique de mon blogue, je me suis lancé dans sa mise à jour. Depuis que j'étais passé de GandiBlog à Jekyll il restait toujours quelques bricoles à faire. Comme je me suis remis à bloguer, ça vaut le coup de m'y attaquer."
 ---
 
 Après avoir un peu rafraîchi la charte graphique de mon blogue, je me suis lancé dans sa mise à jour. En fait, depuis que j'étais passé de GandiBlog à Jekyll il y a près de 3 ans, il restait toujours quelques bricoles à faire pour finaliser la migration. Et comme cette année je me suis remis à bloguer, ça vaut le coup de m'y attaquer.
-
-<figure>
-  <img src="{{ page.image }}" alt="source-code" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/5Ntkpxqt54Y">Source code on a screen - Sai Kiran Anagani</a>
-  </figcaption>
-</figure>
 
 
 ## Correction du fil Atom
@@ -52,9 +46,8 @@ Pour l'instant, l'image sur mon blog est dimensionnée en 640 x 480 pixels alors
 
 ```markdown
 ---
-date: 2019-12-16 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-16 12:09:42 +02:00
+tags: [ css ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 ---
@@ -102,7 +95,7 @@ Puis j'ajoute `{% raw %}{% seo %}{% endraw %}` dans le template "\_layout/defaul
   </head>
 ```
 
-Note : je ne fais pas de `gem 'jekyll-seo-tag'` pour ajouter le plugin à mon fichier "Gemfile" parce que je n'ai pas installé Jekyll en local. Je compte exclusivement sur Github Pages pour publier mon blogue.
+*Note : je ne fais pas de `gem 'jekyll-seo-tag'` pour ajouter le plugin à mon fichier "Gemfile" parce que je n'ai pas installé Jekyll en local. Je compte exclusivement sur Github Pages pour publier mon blogue.*
 
 J'ai ajouté `title=false` pour éviter que le plugin ajoute la balise `<title>` que j'insère déjà à ma sauce un peu plus haut. Et magie de l'informatique, mes billets comprennent désormais tout un tas de truc en plus pour améliorer le référencement :
 
@@ -143,9 +136,8 @@ Pour l'instant, je pars sur la méthode n° 3 et je modifie le Front Matter de m
 
 ```markdown
 ---
-date: 2019-12-16 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-16 12:09:42 +02:00
+tags: [ css ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 excerpt: "Pour la nouvelle année à venir, j'ai un peu rafraîchi la charte graphique de mon blogue. Outre le côté 'tout nouveau, tout beau', cela m'a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas."
@@ -229,15 +221,14 @@ author: michel
 lang: fr-FR
 ```
 
-Note : Je ne sais pas trop ce qui est le mieux : `fr-FR`, `fr-fr` ou `fr` tout court.
+*Note : Je ne sais pas trop ce qui est le mieux : `fr-FR`, `fr-fr` ou `fr` tout court.*
 
 Puis pour tous les billets en anglais, je modifie le Front Matter pour redéfinir l'attribut `lang` :
 
 ```markdown
 ---
-date: 2019-12-17 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-17 12:09:42 +02:00
+tags: [ css ]
 lang: en-US
 title: "A new CSS and 5 tips to know"
 ---
@@ -269,16 +260,19 @@ Pour faire bonne mesure, je précise aussi la langue dans les liens suivant / pr
 Et aussi dans les liens entre les traductions :
 
 ```html
-{% raw %}English version: [A new CSS ...]({% post_url ... %}){:hreflang="en"}.{% endraw %}
+{% raw %}English version: [A new CSS ...]({% post_url "..." %}){:hreflang="en"}.{% endraw %}
 ```
 
 Ou :
 
 ```html
-{% raw %}Version en français : [Nouvelle CSS ...]({% post_url ... %}){:hreflang="fr"}.{% endraw %}
+{% raw %}Version en français : [Nouvelle CSS ...]({% post_url "..." %}){:hreflang="fr"}.{% endraw %}
 ```
 
 Le coup du `{% raw %}{:hreflang="xx"}{% endraw %}` n'a pas été facile à trouver, mais pourtant ça existe bel et bien : [Additional link attributes can be added by using a span IAL after the inline link](https://kramdown.gettalong.org/syntax.html#inline-links).
 
-{:.encart}
-English version: [Jekyll configuration update]({% post_url 2019-12-30-jekyll-configuration-update %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Jekyll configuration update", "2019-12-30-jekyll-configuration-update" %}.
+
+</div>

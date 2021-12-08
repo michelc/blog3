@@ -1,13 +1,12 @@
 ---
-date: 2008-09-26 10:09:00
-layout: post
+date: 2008-09-26 10:09:00 +02:00
 redirect_from: "post/2008/09/26/Remplir-les-champs-d-un-formulaire-PDF"
-tags: boulot, csharp
+tags: [ boulot, csharp ]
 title: "Remplir les champs d'un formulaire PDF"
 ---
 
 Après avoir réussi à [lister les champs d'un
-formulaire PDF]({% post_url 2008-09-25-lister-champs-formulaire-pdf %}), ce coup-ci je fais un premier essai pour mettre des données
+formulaire PDF]({% post_url "2008-09-25-lister-champs-formulaire-pdf" %}), ce coup-ci je fais un premier essai pour mettre des données
 dans mon formulaire. Pour commencer, je me contente d'y mettre un compteur
 numérique, ce qui va me permettre de repérer chaque champ dans le
 formulaire.
@@ -108,7 +107,7 @@ namespace Altrr.iText {
 ```
 
 Maintenant, il me reste à trouver comment éviter de créer physiquement un
-nouveau fichier à chaque fois. Etant donné que c'est destiné à être utilisé
+nouveau fichier à chaque fois. Étant donné que c'est destiné à être utilisé
 dans une application ASP.NET, je préfèrerais trouver une méthode qui me
 permette de renvoyer directement le résultat vers le poste client. Normalement,
 c'est le genre de chose qui devrait se trouver facilement sur Google (à

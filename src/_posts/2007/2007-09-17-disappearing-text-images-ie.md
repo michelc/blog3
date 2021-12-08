@@ -1,9 +1,8 @@
 ---
-date: 2007-09-17 11:24:00
-layout: post
+date: 2007-09-17 11:24:00 +02:00
 redirect_from: "post/2007/09/17/Disappearing-Text-or-Images-in-IE"
 lang: en-US
-tags: html
+tags: [ html ]
 title: "Disappearing Text or Images in IE?"
 ---
 

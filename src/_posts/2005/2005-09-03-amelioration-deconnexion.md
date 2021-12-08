@@ -1,8 +1,7 @@
 ---
-date: 2005-09-03 14:32:00
-layout: post
+date: 2005-09-03 14:32:00 +02:00
 redirect_from: "post/2005/09/03/Amelioration-deconnexion"
-tags: qc
+tags: [ qc ]
 title: "Amélioration déconnexion"
 ---
 

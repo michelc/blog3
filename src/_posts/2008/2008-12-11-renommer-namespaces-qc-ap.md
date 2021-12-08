@@ -1,12 +1,11 @@
 ---
-date: 2008-12-11 18:47:00
-layout: post
+date: 2008-12-11 18:47:00 +02:00
 redirect_from: "post/2008/12/11/Renommer-les-namespaces-de-QC-en-AP"
-tags: ap
+tags: [ ap ]
 title: "Renommer les namespaces de QC en AP"
 ---
 
-Comme j'ai un peu tendance à stagner dans ma [migration vers ASP.NET 2.0]({% post_url 2008-10-02-migration-altrr-press-net-1-net-2 %}), j'ai décidé de consacrer un peu de temps
+Comme j'ai un peu tendance à stagner dans ma [migration vers ASP.NET 2.0]({% post_url "2008-10-02-migration-altrr-press-net-1-net-2" %}), j'ai décidé de consacrer un peu de temps
 pour renommer les différents éléments du projet de qc.\* en ap.\*.
 
 Dans un premier temps (étapes 1 à 3), je vais remplacer qc.Xxxxxx par

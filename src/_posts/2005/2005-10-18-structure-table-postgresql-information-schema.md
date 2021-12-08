@@ -1,8 +1,7 @@
 ---
-date: 2005-10-18 13:50:00
-layout: post
+date: 2005-10-18 13:50:00 +02:00
 redirect_from: "post/2005/10/18/Structure-dune-table-PostgreSQL-depuis-Information_Schema"
-tags: code-snippets, sql
+tags: [ code-snippets, sql ]
 title: "Structure d'une table PostgreSQL depuis Information_Schema"
 ---
 

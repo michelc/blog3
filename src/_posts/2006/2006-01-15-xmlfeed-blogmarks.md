@@ -1,8 +1,7 @@
 ---
-date: 2006-01-15 20:03:00
-layout: post
+date: 2006-01-15 20:03:00 +02:00
 redirect_from: "post/2006/01/15/Xmlfeed-et-Blogmarks"
-tags: qc, xml
+tags: [ qc, xml ]
 title: "Xmlfeed et Blogmarks"
 ---
 
@@ -27,15 +26,15 @@ feuille de style adéquate si besoin est,
 sans message d'erreur pour trouver comment gérer ça plus proprement).
 
 En configuration, les types de fils xml sont passés de 6 (atom, sommaire
-atom, rss2, rss1, rdf et rss0.9) à 4 ([atom]({% post_url 2006-01-16-atom-html-conversion %}),
-[rdf]({% post_url 2006-01-16-rdf-html-conversion %}),
-[rss]({% post_url 2006-01-16-rss-html-conversion %}) et
+atom, rss2, rss1, rdf et rss0.9) à 4 ([atom]({% post_url "2006-01-16-atom-html-conversion" %}),
+[rdf]({% post_url "2006-01-16-rdf-html-conversion" %}),
+[rss]({% post_url "2006-01-16-rss-html-conversion" %}) et
 automatique).
 
 Par ailleurs, une feuille de style spéciale a été créée pour convertir le
 fil atom de [Blogmarks
-en html]({% post_url 2006-01-19-blogmarks-html-conversion %}), afin de gérer la miniature écran et la liste des tags.
+en html]({% post_url "2006-01-19-blogmarks-html-conversion" %}), afin de gérer la miniature écran et la liste des tags.
 
-Note : l'utilisation des propriétés Document et Transform
+*Note : L'utilisation des propriétés Document et Transform
 en lieu et place de DocumentSource et TransformSource a été également mise en
-place au niveau de la boite Xmlfile.
+place au niveau de la boite Xmlfile.*

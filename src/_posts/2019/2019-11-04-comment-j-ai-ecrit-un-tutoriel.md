@@ -1,24 +1,20 @@
 ---
-date: 2019-11-04 12:26:04+200
-layout: post
-tags: javascript, tutoriel
+date: 2019-11-04 12:26:04 +02:00
+tags: [ javascript, tutoriel ]
 title: "Comment j'ai écrit un tutoriel Node JS"
-image: "/public/2019/ididitmyself.jpg"
+cover:
+  image: /public/2019/ididitmyself.jpg
+  link: https://commons.wikimedia.org/wiki/File:Dirty_dishes.jpg
+  text: C'est moi qui l'ait fait !
+excerpt: Ça faisait un moment que j'essayais de développer une "vraie" application web avec Node JS. Et donc, Il y a quelques semaines, j'ai écrit mon propre tutorial pour développer une application Note JS avec Express et SQLite. 
 ---
 
 Il y a quelques semaines, je me suis lancé dans la rédaction d'un tutoriel sur
 le développement d'une application Node JS avec Express pour gérer une base de
 données SQlite. Je l'ai publié sur mon blogue sous le titre [Application CRUD
-avec Express et SQlite en 10 étapes]({% post_url 2019-09-11-crud-avec-express-sqlite-10-etapes %})
+avec Express et SQlite en 10 étapes]({% post_url "2019-09-11-crud-avec-express-sqlite-10-etapes" %})
 et j'ai fait un peu de publicité dessus en espérant que ça puisse servir à
 d'autres que moi.
-
-<figure>
-  <img src="{{ page.image }}" alt="#ididitmyself" />
-  <figcaption>
-    <a href="https://commons.wikimedia.org/wiki/File:Dirty_dishes.jpg">C'est moi qui l'ait fait !</a>
-  </figcaption>
-</figure>
 
 Mais de toute façon, j'ai écrit ce tutoriel avant tout pour mon propre compte.
 J'essaie de m'améliorer petit à petit en JavaScript (et donc Node) et mon
@@ -46,7 +42,7 @@ le framework le plus populaire sur le marché. Je n'ai pas trop de temps à y
 consacrer, donc pas la peine de m'égarer avec Koa, Hapi, Polka et consorts...
 
 Le rêve, ça aurait été de trouver un truc qui fasse tilt, comme lorsque j'avais
-découvert Sinatra avec "[I did it my way]({% post_url 2010-07-22-installer-sinatra-windows-7 %})".
+découvert Sinatra avec "[I did it my way]({% post_url "2010-07-22-installer-sinatra-windows-7" %})".
 Mais bon, [Darren Jones](https://twitter.com/daz4126) ne semble pas décidé à
 refaire le coup avec Node :)
 
@@ -95,5 +91,8 @@ prolonger mes expérimentations et voir comment :
 * Valider le formulaire de saisie
 * Etc...
 
-{:.encart}
-English version: [How I wrote a Node JS tutorial]({% post_url 2019-11-05-how-i-wrote-a-tutorial %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "How I wrote a Node JS tutorial", "2019-11-05-how-i-wrote-a-tutorial" %}.
+
+</div>

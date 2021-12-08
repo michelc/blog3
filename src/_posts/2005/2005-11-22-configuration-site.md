@@ -1,8 +1,7 @@
 ---
-date: 2005-11-22 23:55:00
-layout: post
+date: 2005-11-22 23:55:00 +02:00
 redirect_from: "post/2005/11/22/Configuration-du-site"
-tags: qc
+tags: [ qc ]
 title: "Configuration du site"
 ---
 

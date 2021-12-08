@@ -1,8 +1,7 @@
 ---
-date: 2004-10-04 11:33:00
-layout: post
+date: 2004-10-04 11:33:00 +02:00
 redirect_from: "post/2004/10/04/Macro-ClassScreen"
-tags: qc
+tags: [ qc ]
 title: "Macro ClassScreen()"
 ---
 
@@ -23,4 +22,4 @@ Pourrait aussi s'employer pour référencer un fichier CSS spécifique :
 `<link rel="stylesheet" href="<%= ClassScreen() %>.css" type="text/css"
 media="screen" />`.
 
-Voir aussi: [&lt;body&gt; Styling]({% post_url 2004-09-22-body-styling %})
+Voir aussi: [&lt;body&gt; Styling]({% post_url "2004-09-22-body-styling" %})

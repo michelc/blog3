@@ -1,8 +1,7 @@
 ---
-date: 2007-10-17 14:06:00
-layout: post
+date: 2007-10-17 14:06:00 +02:00
 redirect_from: "post/2007/10/17/Creer-une-boite-un-peu-plus-facilement"
-tags: ap
+tags: [ ap ]
 title: "Créer une boite un peu plus facilement"
 ---
 

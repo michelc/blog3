@@ -1,8 +1,7 @@
 ---
-date: 2007-07-11 14:57:00
-layout: post
+date: 2007-07-11 14:57:00 +02:00
 redirect_from: "post/2007/07/11/Faire-un-Join-sur-un-ArrayList"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Faire un Join sur un ArrayList"
 ---
 

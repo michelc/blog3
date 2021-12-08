@@ -1,9 +1,12 @@
 ---
-date: 2019-09-21 15:11:46
-layout: post
-tags: javascript, node, sql
+date: 2019-09-21 15:11:46 +02:00
+tags: [ javascript, node, sql ]
 title: "Application CRUD avec Express et PostgreSQL en 10 étapes"
-image: "/public/2019/elephant-bookshelf.jpg"
+cover:
+  image: /public/2019/elephant-bookshelf.jpg
+  link: https://www.instagram.com/victorzastolskiy/
+  text: An elephant in the room with book shelves - Victor Zastolskiy
+excerpt: Un tutoriel "copié/collé" pour apprendre à développer une application Node JS avec le framework web Express et la base de données PostgreSQL.
 ---
 
 Le but de ce projet ultra simple est de développer une application Node JS pour
@@ -11,13 +14,6 @@ apprendre comment :
 
 * Créer réellement un site web très-très basique avec Express.
 * Gérer la mise à jour d'une base de données SQL (PostgreSQL en l'occurence).
-
-<figure>
-  <img src="{{ page.image }}" alt="elephant-bookshelf" />
-  <figcaption>
-    <a href="https://www.instagram.com/victorzastolskiy/">An elephant in the room with book shelves - Victor Zastolskiy</a>
-  </figcaption>
-</figure>
 
 Ce billet n'est qu'un tutoriel pour voir comment ça marche et avoir une base de
 départ pour me former petit à petit à Node et à Express (et sans doute plus tard
@@ -35,13 +31,13 @@ pas (encore) trouvé de solution facile pour l'héberger.
 Je ferai peut-être un autre tutoriel le jour où je m'attaquerai
 à ce problème.
 
-Note : Ce tutoriel est un quasi copier / coller du tutoriel [Application CRUD
-avec Express et SQlite en 10 étapes]({% post_url 2019-09-11-crud-avec-express-sqlite-10-etapes %}).
+*Note : Ce tutoriel est un quasi copier / coller du tutoriel [Application CRUD
+avec Express et SQlite en 10 étapes]({% post_url "2019-09-11-crud-avec-express-sqlite-10-etapes" %}).
 Si comme moi vous l'avez déjà suivi, cela ira assez vite et c'est une bonne
 révision de ce qui y avait été présenté. Sinon, ce n'est finalement pas beaucoup
 plus compliqué et comme tout est ré-expliqué, il n'est pas nécessaire d'avoir
 suivi le premier tutoriel avec SQlite avant d'aborder celui avec Express et
-PostgreSQL.
+PostgreSQL.*
 
 **Sommaire**
 
@@ -86,7 +82,7 @@ E:\Code> cd AppTestPG
 E:\Code\AppTestPG> code .
 ```
 
-A partir de là, l'invite de commande de Windows ne sert plus à rien et peut être
+À partir de là, l'invite de commande de Windows ne sert plus à rien et peut être
 fermée. La suite se déroulera dans Visual Code ou dans son terminal.
 
 
@@ -123,9 +119,9 @@ Wrote to E:\Code\AppTestPG\package.json:
 }
 ```
 
-Note : Pour cet exemple, il est plus rapide de faire un `npm init -y` (ou `npm
+*Note : Pour cet exemple, il est plus rapide de faire un `npm init -y` (ou `npm
 init --yes`) que de taper <Entrée> à chaque question pour accepter la valeur par
-défaut.
+défaut.*
 
 Dans Visual Code, il apparait maintenant le fichier "package.json" créé par
 NPM dans le dossier racine du projet ("E:\Code\AppTestPG" dans le cas présent).
@@ -162,8 +158,8 @@ PS E:\Code\AppTestPG> npm install ejs
 PS E:\Code\AppTestPG> npm install pg
 ```
 
-Note : Assez bizarrement, il faut bien utiliser le nom/identifiant "pg" pour
-installer le module "node-postgres".
+*Note : Assez bizarrement, il faut bien utiliser le nom/identifiant "pg" pour
+installer le module "node-postgres".*
 
 Ou pour aller plus vite :
 
@@ -195,9 +191,9 @@ section "dependencies" qui enregistre la liste des dépendances du projet :
 }
 ```
 
-Note : Dans des tutoriels un peu anciens, on voit encore la syntaxe `npm install
+*Note : Dans des tutoriels un peu anciens, on voit encore la syntaxe `npm install
 --save xxxxx` pour enregistrer la liste des dépendances dans le fichier
-"package.json", mais ce n'est plus nécessaire depuis la version 5 de NPM.
+"package.json", mais ce n'est plus nécessaire depuis la version 5 de NPM.*
 
 
 ### Le dossier "node_modules"
@@ -218,8 +214,8 @@ Pour tester, on peut supprimer le dossier "node_modules" :
 PS E:\Code\AppTestPG> rd node_modules /s /q
 ```
 
-Note : Sous Windows, les options `/s /q` permettent de tout supprimer sans se
-poser de question.
+*Note : Sous Windows, les options `/s /q` permettent de tout supprimer sans se
+poser de question.*
 
 Puis on installe toutes les dépendances listées dans le fichier "package.json" :
 
@@ -348,7 +344,7 @@ envoyé grâce à la méthode `Response.send()`, qui fait "juste" deux trucs :
 * Elle renvoie le texte dans la partie body de la réponse HTTP
 * Elle met fin à la connection
 
-Note : C'est quand même pas mal de technique pour ce tutoriel.
+*Note : C'est quand même pas mal de technique pour ce tutoriel.*
 
 
 ### Améliorer le lancement de l'application Node JS
@@ -401,9 +397,9 @@ Serveur démarré (http://localhost:3000/) !
 
 Et ne pas oublier le Ctrl+C pour arrêter le serveur Express à la fin.
 
-Note : Il est possible d'utiliser le module "nodemon" pour ne plus devoir
+*Note : Il est possible d'utiliser le module "nodemon" pour ne plus devoir
 arrêter / redémarrer le serveur à chaque modification du code source. Mais je
-préfère éviter d'aborder trop de choses à la fois dans ce tutoriel.
+préfère éviter d'aborder trop de choses à la fois dans ce tutoriel.*
 
 
 <a id="crud4"></a>
@@ -420,8 +416,8 @@ Dans le cas de la vue correspondant à la requête vers la racine du site (soit
 un "GET /"), il faudra donc créer la vue "index.ejs" et les deux vues partielles
 réutilisables "_header.ejs" et "_footer.ejs".
 
-Note : Ces trois fichiers doivent être enregistrés dans un dossier "views" qui
-doit donc être créé en premier lieu.
+*Note : Ces trois fichiers doivent être enregistrés dans un dossier "views" qui
+doit donc être créé en premier lieu.*
 
 
 ### Vue partielle "views/_header.ejs"
@@ -483,9 +479,9 @@ doit donc être créé en premier lieu.
 </html>
 ```
 
-Note : A part les deux `<%- include(vue_partielle) -%>`, ce n'est que du HTML.
+*Note : À part les deux `<%- include(vue_partielle) -%>`, ce n'est que du HTML.
 C'est un des avantages de EJS par rapport à d'autres moteurs de template pour
-éviter d'avoir à se disperser quand on débute.
+éviter d'avoir à se disperser quand on débute.*
 
 
 ### Ajouter une feuille de style
@@ -502,8 +498,8 @@ correspondant à la version 4.3.1 de Bootstrap dans mon cas.
 
 ## 5. Utiliser les vues dans Express
 
-Note : Si cela n'avait pas été fait en début de projet, il aurait été nécessaire
-d'installer le module "EJS" par un `npm install ejs` pour pouvoir l'utiliser.
+*Note : Si cela n'avait pas été fait en début de projet, il aurait été nécessaire
+d'installer le module "EJS" par un `npm install ejs` pour pouvoir l'utiliser.*
 
 
 ### Modifications de "index.js"
@@ -517,8 +513,8 @@ quelque peu le fichier "index.js".
 app.set("view engine", "ejs");
 ```
 
-Note : Il n'est pas nécessaire de faire un `const ejs = require("ejs")` avant
-car Express s'en charge pour nous.
+*Note : Il n'est pas nécessaire de faire un `const ejs = require("ejs")` avant
+car Express s'en charge pour nous.*
 
 * Indiquer que les vues sont enregistrées dans le dossier "views".
 
@@ -534,8 +530,8 @@ const path = require("path");
 app.set("views", path.join(__dirname, "views"));
 ```
 
-Note : Il n'y a pas besoin d'installer auparavant le module `path` par NPM,
-parce que c'est un module standard de Node JS.
+*Note : Il n'y a pas besoin d'installer auparavant le module `path` par NPM,
+parce que c'est un module standard de Node JS.*
 
 * Indiquer que les fichiers statiques sont enregistrés dans le dossier "public"
 et ses sous-répertoires. C'est un paramétrage qui est nécessaire pour que le
@@ -646,10 +642,10 @@ les données qui lui sont transmises par l'application.
 <%- include("_footer") -%>
 ```
 
-Note : Le but de ce tutoriel n'est pas trop d'expliquer le fonctionnement d'EJS.
+*Note : Le but de ce tutoriel n'est pas trop d'expliquer le fonctionnement d'EJS.
 J'ai justement choisi ce moteur de template parce que sa syntaxe à base de `<%
 ... %>` est assez répandue, que ce soit avec ASP, PHP, Ruby... Et pour le reste,
-c'est du JavaScript (d'où le nom Embedded JavaScript).
+c'est du JavaScript (d'où le nom Embedded JavaScript).*
 
 Et maintenant, quand on navigue vers "http://localhost:3000/data" après avoir
 redémarré le site, on obtient :
@@ -702,9 +698,9 @@ app.get("/data", (req, res) => {
 
 ## 6. Premiers pas avec le module node-postgres
 
-Note : Si cela n'avait pas été fait en début de projet, il aurait été nécessaire
+*Note : Si cela n'avait pas été fait en début de projet, il aurait été nécessaire
 d'installer le module node-postgres par un `npm install pg` pour pouvoir accéder
-à une base de données PostgreSQL sous Node.
+à une base de données PostgreSQL sous Node.*
 
 
 ### Accéder à une base de données PostgreSQL
@@ -775,10 +771,10 @@ const pool = new Pool({
 console.log("Connexion réussie à la base de données");
 ```
 
-Note : Il ne faut bien entendu pas écrire toutes ces informations de connexion à
+*Note : Il ne faut bien entendu pas écrire toutes ces informations de connexion à
 la base de données comme ça en clair dans le code. Dans une vraie application,
 elles seraient par défaut récupérées à partir de variables d'environnement ou
-paramétrées dans un fichier ".env" à l'aide du module "dotenv".
+paramétrées dans un fichier ".env" à l'aide du module "dotenv".*
 
 Après que ce code ait été exécuté, la variable "pool" est un objet `Pool` du
 module node-postgres qui représente une connexion à la base de données. Cet objet va
@@ -811,7 +807,7 @@ Ce qui donne :
 ![Structure de la table Livres](/public/2019/crud-pg-00-desc.png)
 
 Pour savoir comment on peut faire ça dans Node, on va créer la table depuis
-l'application. A cette fin, il suffit d'ajouter le code ci-dessous juste après
+l'application. À cette fin, il suffit d'ajouter le code ci-dessous juste après
 s'être connecté à la base de données.
 
 ```
@@ -836,9 +832,9 @@ appelle la fonction callback correspondant au 3° paramètre, en lui passant un
 objet `err` pour pouvoir vérifier si l'exécution de la requête s'est déroulée
 correctement et un objet `result` contenant le résultat de la requête.
 
-Note : La table ne sera créée que si elle n'existe pas encore, grâce à la clause
+*Note : La table ne sera créée que si elle n'existe pas encore, grâce à la clause
 SQL "IF NOT EXISTS". Ça ne serait pas super pour une vraie application, mais là
-c'est juste un tutoriel.
+c'est juste un tutoriel.*
 
 
 ### Alimenter la table "Livres"
@@ -891,7 +887,7 @@ ré-initialiser la séquence qui sert à alimenter l'identifiant "Livre_ID". C'e
 ce qui est fait en exécutant la requête "SELECT SETVAL('Livres_Livre_ID_Seq',
 MAX(Livre_ID)) FROM Livres;".
 
-A présent, la table "Livres" contient les 3 lignes suivantes :
+À présent, la table "Livres" contient les 3 lignes suivantes :
 
 ![Contenu de la table Livres](/public/2019/crud-pg-00-livres.png)
 
@@ -964,9 +960,9 @@ suivant en cliquant sur le menu "Livres" :
 
 ![La liste des livres](/public/2019/crud-pg-05-list.png)
 
-Note : Il faut faire attention et bien écrire "book.titre" et pas "book.Titre"
+*Note : Il faut faire attention et bien écrire "book.titre" et pas "book.Titre"
 parce que même si la la table "Livres" a été créée en utilisant des majuscules comme
-initiales pour les noms des colonnes, PostgreSQL a transformé ces noms en minuscules.
+initiales pour les noms des colonnes, PostgreSQL a transformé ces noms en minuscules.*
 
 
 ### Afficher les livres sous forme de tableau
@@ -1141,9 +1137,9 @@ Là aussi, l'identifiant est retrouvé via le paramètre "id" de l'objet `Reques
 Et les données saisies sont disponibles via la propriété `body` de cet objet
 `Request` pour être stockées dans un tableau temporaire avec l'identifiant.
 
-Note : pour que `Request.body` récupère les valeurs postées, il est nécessaire
+*Note : Pour que `Request.body` récupère les valeurs postées, il est nécessaire
 d'ajouter un middleware à la configuration du serveur. Ce point sera expliqué
-plus précisément dans la partie suivante...
+plus précisément dans la partie suivante...*
 
 La modification en base de donnée se fait via une requête "UPDATE ...", toujours exécutée
 avec la méthode `pool.query` de node-postgres à laquelle on passe cette fois le tableau
@@ -1166,9 +1162,9 @@ app.post("/edit/:id", (req, res) => {
 });
 ```
 
-Note : Dans le cadre d'une vraie application, il faudrait impérativement avoir
+*Note : Dans le cadre d'une vraie application, il faudrait impérativement avoir
 un contrôle de saisie côté client et côté serveur, mais ce n'est pas le sujet de
-ce tutoriel.
+ce tutoriel.*
 
 
 ### Le middleware "express.urlencoded()"
@@ -1192,8 +1188,8 @@ les valeurs postées depuis un formulaire. Pour information, on l'utilise très
 souvent avec le middleware "express.json()" pour les données envoyées en tant
 que "Content-Type: application/json", mais ici ce n'est pas nécessaire.
 
-Note : Il y a des exemples qui utilisent encore le module "body-parser" à la
-place, mais ce n'est plus utile depuis la version 4.1.6 de Express.
+*Note : Il y a des exemples qui utilisent encore le module "body-parser" à la
+place, mais ce n'est plus utile depuis la version 4.1.6 de Express.*
 
 
 <a id="crud8"></a>
@@ -1478,8 +1474,8 @@ quelques petits chiffres :
 * 3 dépendances NPM (ejs, express et pg)
 * 3 modules importés (express, path et pg)
 
-Note : Le code complet de l'application est également disponible sur
-[GitHub](https://github.com/michelc/AppTestPG).
+*Note : Le code complet de l'application est également disponible sur
+[GitHub](https://github.com/michelc/AppTestPG).*
 
 ```
 const express = require("express");
@@ -1640,5 +1636,8 @@ app.post("/delete/:id", (req, res) => {
 });
 ```
 
-{:.encart}
-English version: [CRUD application with Express and PostgresSQL in 10 steps]({% post_url 2019-10-15-crud-with-express-postgresql-10-steps %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "CRUD application with Express and PostgresSQL in 10 steps", "2019-10-15-crud-with-express-postgresql-10-steps" %}.
+
+</div>

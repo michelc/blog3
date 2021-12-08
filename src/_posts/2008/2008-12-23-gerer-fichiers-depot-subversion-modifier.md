@@ -1,8 +1,7 @@
 ---
-date: 2008-12-23 12:16:00
-layout: post
+date: 2008-12-23 12:16:00 +02:00
 redirect_from: "post/2008/12/23/Gerer-les-fichiers-d-un-depot-Subversion-%3A-modifier"
-tags: svn
+tags: [ svn ]
 title: "Gérer les fichiers d'un dépôt Subversion : modifier"
 ---
 

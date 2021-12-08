@@ -1,18 +1,17 @@
 ---
-date: 2010-02-23 22:51:00
-layout: post
+date: 2010-02-23 22:51:00 +02:00
 redirect_from: "post/2010/02/23/convertir-sql-en-linq-from-et-select"
-tags: csharp, linq
+tags: [ csharp, linq ]
 title: "Convertir SQL en LINQ : FROM et SELECT"
 ---
 
-{:.encart}
-Ceci est une traduction assez libre de la série de billets rédigés par Bill
-Horst pour apprendre comment [passer du langage SQL au langage LINQ](http://blogs.msdn.com/vbteam/archive/tags/Converting SQL to LINQ/default.aspx) et plus spécialement en
-VB LINQ. Pour ma part, j'ai adapté les explications et les exemples de codes
-pour cibler la syntaxe C# du langage LINQ.
+<div class="encart">
 
-Après un premier billet pour [comparer SQL et LINQ]({% post_url 2010-02-22-convertir-sql-linq-introduction %}), ce deuxième billet de la série va
+Ceci est une traduction assez libre de la série de billets rédigés par Bill Horst pour apprendre comment [passer du langage SQL au langage LINQ](https://devblogs.microsoft.com/vbteam/category/series/converting-sql-to-linq/) et plus spécialement en VB LINQ. Pour ma part, j'ai adapté les explications et les exemples de codes pour cibler la syntaxe C# du langage LINQ.
+
+</div>
+
+Après un premier billet pour [comparer SQL et LINQ]({% post_url "2010-02-22-convertir-sql-linq-introduction" %}), ce deuxième billet de la série va
 présenter comment gérer des clauses plus spécifiques du SQL, en commençant par
 deux des clauses les plus importantes : FROM et SELECT.
 

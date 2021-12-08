@@ -1,9 +1,11 @@
 ---
-date: 2019-09-30 12:23:34
-layout: post
-tags: javascript, jquery
+date: 2019-09-30 12:23:34 +02:00
+tags: [ javascript, jquery ]
 title: "Rechercher et filtrer une table en JavaScript"
-image: "/public/2019/filter-table-js.jpg"
+cover:
+  image: /public/2019/table-filter.jpg
+  link: https://www.harborfreight.com/4-piece-funnel-set-744.html
+  text: Ensemble d'entonnoir 4 pièces + JavaScript
 excerpt: "Comment faire une recherche et filtrer le contenu d'une table HTML en JavaScript. Depuis le script trouvé sur codepen.io et après quelques explications arrive à une version finale légèrement retravaillée."
 ---
 
@@ -11,13 +13,6 @@ Il y a quelque temps, j'ai eu besoin de proposer une recherche simple dans un
 tableau. Normalement, je préfère le bon vieux `Ctrl+F` mais ça ne plaît pas à
 tout le monde (et aussi le but était plus de limiter l'affichage aux seules
 lignes trouvées, ce que ne permet pas la recherche de Chrome).
-
-<figure>
-  <img src="{{ page.image }}" alt="filtrer-table-js" />
-  <figcaption>
-    <a href="https://www.harborfreight.com/4-piece-funnel-set-744.html">Ensemble d'entonnoir 4 pièces + JavaScript</a>
-  </figcaption>
-</figure>
 
 Comme mon site n'utilisait pas encore jQuery, j'ai cherché un petit truc tout
 fait en Vanilla JS et j'ai trouvé un exemple très simple et facilement
@@ -262,7 +257,7 @@ function dquery(selector) {
 }
 ```
 
-Note : C'est du copier / coller de ma mini-librairie JavaScript [dQuery]({% post_url 2019-04-30-dquery-remplacer-jquery %}).
+*Note : C'est du copier / coller de ma mini-librairie JavaScript [dQuery]({% post_url "2019-04-30-dquery-remplacer-jquery" %}).*
 
 J'ai alors pu modifier la façon de sélectionner les zones de saisie concernées :
 
@@ -294,14 +289,14 @@ var lignes = dquery(e.target.getAttribute("data-table") + " tbody tr");
 [].forEach.call(lignes, filter);
 ```
 
-Note : L'attribut "data-table" qui contenait jusqu'à présent "livres" (un nom de
+*Note : L'attribut "data-table" qui contenait jusqu'à présent "livres" (un nom de
 classe qui était attendu par `.getElementsByClassName()`) doit désormais être
-modifié en ".livres" (un sélecteur CSS qui est destiné à `.querySelectorAll()`).
+modifié en ".livres" (un sélecteur CSS qui est destiné à `.querySelectorAll()`).*
 
 
 ## 4° modification : une légère optimisation
 
-A chaque fois qu'on déclenche une recherche, toutes les lignes de la table sont
+À chaque fois qu'on déclenche une recherche, toutes les lignes de la table sont
 transformées en minuscule pour pouvoir effectuer la comparaison... Supposons que
 j'ai une petite table avec 200 livres, si je veux filtrer sur les éléments qui
 contiennent le mot "CHAT", je fais :
@@ -321,8 +316,8 @@ if (!row.lowerTextContent) {
 row.style.display = row.lowerTextContent.indexOf(search) === -1 ? "none" : "table-row";
 ```
 
-Note : Vu la taille des tableaux sur lesquels j'utilise "js-table-filter.js",
-c'est plus par sens du détail que pour une réelle optimisation.
+*Note : Vu la taille des tableaux sur lesquels j'utilise "js-table-filter.js",
+c'est plus par sens du détail que pour une réelle optimisation.*
 
 
 ## 5° modification : une fonctionnalité de plus
@@ -371,13 +366,13 @@ l'exemple ci-dessous :
 ...
 ```
 
-Note : Si l'attribut "data-count" n'existe pas, alors le test `if (writer)
-{ ... }` permet d'éviter de chercher à compter les lignes dans ce cas.
+*Note : Si l'attribut "data-count" n'existe pas, alors le test `if (writer)
+{ ... }` permet d'éviter de chercher à compter les lignes dans ce cas.*
 
 
 ## 6° modification : simplifications
 
-A cette occasion, on peut aussi remarquer que la classe "table-filter" n'est
+À cette occasion, on peut aussi remarquer que la classe "table-filter" n'est
 pas vraiment indispensable. On peut aussi bien se baser sur la présence de
 l'attribut "data-table" pour déterminer quels sont les contrôles de saisie
 destinés à effectuer une recherche.
@@ -484,5 +479,8 @@ Bootstrap 4 :
 </div>
 ```
 
-{:.encart}
-English version: [Search and filter a table with JavaScript]({% post_url 2019-10-01-search-filter-table-javascript %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Search and filter a table with JavaScript", "2019-10-01-search-filter-table-javascript" %}.
+
+</div>

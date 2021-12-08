@@ -1,8 +1,7 @@
 ---
-date: 2008-07-15 11:38:00
-layout: post
+date: 2008-07-15 11:38:00 +02:00
 redirect_from: "post/2008/07/15/Creer-un-fichier-Excel-en-NET"
-tags: boulot, csharp
+tags: [ boulot, csharp ]
 title: "Créer un fichier Excel en .NET"
 ---
 

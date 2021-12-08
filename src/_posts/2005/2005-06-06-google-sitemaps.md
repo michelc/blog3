@@ -1,8 +1,7 @@
 ---
-date: 2005-06-06 15:50:00
-layout: post
+date: 2005-06-06 15:50:00 +02:00
 redirect_from: "post/2005/06/06/Google-Sitemaps"
-tags: qc, referencement
+tags: [ qc, referencement ]
 title: "Google Sitemaps"
 ---
 

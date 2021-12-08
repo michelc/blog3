@@ -1,8 +1,7 @@
 ---
-date: 2006-11-22 08:55:00
-layout: post
+date: 2006-11-22 08:55:00 +02:00
 redirect_from: "post/2006/11/22/Faire-des-sous-avec-son-blogue"
-tags: adsense
+tags: [ adsense ]
 title: "Faire des sous avec son blogue"
 ---
 

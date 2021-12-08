@@ -1,18 +1,17 @@
 ---
-date: 2010-02-15 19:58:00
-layout: post
+date: 2010-02-15 19:58:00 +02:00
 redirect_from: "post/2010/02/15/NerdDinner-en-francais-fin"
-tags: mvc
+tags: [ mvc ]
 title: "NerdDinner (en français) : Fin !"
 ---
 
-Ca y est ! Ce week-end j'ai complètement terminé la traduction du
+Ça y est ! Ce week-end j'ai complètement terminé la traduction du
 [tutoriel NerdDinner en
-français](http://tinyurl.com/NerdDinnerFR). Et finalement, j'ai réussi à tout finir beaucoup [plus vite que prévu]({% post_url 2010-01-28-encore-plus-traduction-nerddinner %}) et surtout j'ai même pris de l'avance par
+français](http://tinyurl.com/NerdDinnerFR). Et finalement, j'ai réussi à tout finir beaucoup [plus vite que prévu]({% post_url "2010-01-28-encore-plus-traduction-nerddinner" %}) et surtout j'ai même pris de l'avance par
 rapport à la réalisation du tutoriel.
 
 Vu que la partie consacrée à l'ajout de la carte ne m'emballait pas des
-masses, j'ai préféré m'atteler à sa traduction. Ca m'a remotivé et j'ai alors
+masses, j'ai préféré m'atteler à sa traduction. Ça m'a remotivé et j'ai alors
 pu finir la réalisation de cette partie en me basant directement sur ma
 traduction plutôt que sur le tutoriel en VO.
 
@@ -29,7 +28,7 @@ en fait) sans jamais me décourager.
 
 Même si le fait d'avoir tout traduit et aussi d'avoir réellement réécrit
 moi-même la totalité du code (à part les expressions régulières et les
-procédures SQL Server) m'a demandé [beaucoup de temps]({% post_url 2009-11-20-traduction-tutoriel-nerddinner %}), je suis convaincu que ça m'a permis de
+procédures SQL Server) m'a demandé [beaucoup de temps]({% post_url "2009-11-20-traduction-tutoriel-nerddinner" %}), je suis convaincu que ça m'a permis de
 bien mieux comprendre comment utiliser ASP.NET MVC, en tout cas beaucoup mieux
 que si je m'étais contenté de lire vite fait le tutoriel et de faire un peu de
 copier / coller pour le réaliser.

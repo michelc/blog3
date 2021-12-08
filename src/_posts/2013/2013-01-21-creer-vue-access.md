@@ -1,8 +1,7 @@
 ---
-date: 2013-01-21 22:57:00
-layout: post
+date: 2013-01-21 22:57:00 +02:00
 redirect_from: "post/2013/01/21/creer-vue-access"
-tags: sql
+tags: [ sql ]
 title: "Créer une vue sous Access"
 ---
 

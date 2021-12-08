@@ -1,5 +1,5 @@
 ---
-date: 2009-12-17 11:42:00
+date: 2009-12-17 11:42:00 +02:00
 layout: page
 permalink: nerddinner/viewdata-viewmodel/
 redirect_from: "pages/NerdDinner/ViewData-et-ViewModel"
@@ -96,7 +96,7 @@ modifiée pour afficher une liste déroulante au lieu de la zone de texte :
 
 ![](http://nerddinnerbook.s3.amazonaws.com/Images/image097.png)
 
-Etant donné que nous renvoyons aussi la vue Edit dans le cas où l'action
+Étant donné que nous renvoyons aussi la vue Edit dans le cas où l'action
 Edit() est appelée en mode HTTP GET (dans le cas où une erreur s'est produite),
 nous devons faire en sorte que la SelectList soit également ajoutée au
 dictionnaire ViewData avant que la vue soit appelée :

@@ -1,8 +1,7 @@
 ---
-date: 2006-03-03 08:45:00
-layout: post
+date: 2006-03-03 08:45:00 +02:00
 redirect_from: "post/2006/03/03/TreeView-et-guillemets"
-tags: qc
+tags: [ qc ]
 title: "TreeView et guillemets"
 ---
 

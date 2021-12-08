@@ -1,13 +1,12 @@
 ---
-date: 2009-02-26 19:50:00
-layout: post
+date: 2009-02-26 19:50:00 +02:00
 redirect_from: "post/2009/02/26/Requetes-SQL-pour-la-mise-a-jour-d-Altrr-Press"
-tags: ap
+tags: [ ap ]
 title: "Requêtes SQL pour la mise à jour d'Altrr-Press"
 ---
 
 En attendant d'adapter pour Altrr-Press ma documentation pour [développer des
-boites]({% post_url 2006-10-19-structure-solution-qc %}) qui date de QC, je vais commencer par faire un petit récapitulatif
+boites]({% post_url "2006-10-19-structure-solution-qc" %}) qui date de QC, je vais commencer par faire un petit récapitulatif
 afin de passer en revue les scripts SQL utiles pour mettre à jour le contenu
 d'une base de données Altrr-Press.
 
@@ -284,9 +283,9 @@ et la modifier (edit)
 
 * le profil 'all-users' peut seulement visualiser la boite (view)
 
-Note: Etant donné que le type de boite TypeToto n'a pas de contrôle prévu
+*Note: Étant donné que le type de boite TypeToto n'a pas de contrôle prévu
 pour la configuration (cnfgSource laissé vide), il ne sert à rien de paramétrer
-que profil peut configurer (cnfg) la boite.
+que profil peut configurer (cnfg) la boite.*
 
 Ce qui nous donne les requêtes suivantes :
 

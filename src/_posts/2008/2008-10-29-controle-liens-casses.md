@@ -1,12 +1,11 @@
 ---
-date: 2008-10-29 18:23:00
-layout: post
+date: 2008-10-29 18:23:00 +02:00
 redirect_from: "post/2008/10/29/Controle-des-liens-casses"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Contrôle des liens cassés"
 ---
 
-A force de référencer des sites dans l'[annuaire sur l'Ardèche](http://07-ardeche.com/), il faut aussi de temps en
+À force de référencer des sites dans l'[annuaire sur l'Ardèche](http://07-ardeche.com/), il faut aussi de temps en
 temps penser à vérifier que tout les liens enregistrés sont toujours bien
 valides.
 

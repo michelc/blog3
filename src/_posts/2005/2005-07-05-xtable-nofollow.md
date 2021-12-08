@@ -1,8 +1,7 @@
 ---
-date: 2005-07-05 10:16:00
-layout: post
+date: 2005-07-05 10:16:00 +02:00
 redirect_from: "post/2005/07/05/XTable-et-NoFollow"
-tags: qc
+tags: [ qc ]
 title: "XTable et NoFollow"
 ---
 

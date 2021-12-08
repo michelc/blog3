@@ -1,13 +1,15 @@
 ---
-date: 2011-05-03 19:37:00
-layout: post
+date: 2011-05-03 19:37:00 +02:00
 redirect_from: "post/2011/05/03/configuration-et-parametrage-avec-sinatra"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Configuration et paramétrage avec Sinatra"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel "[Sinatra Settings and Configuration](http://ididitmyway.herokuapp.com/past/2010/11/9/sinatra_settings_and_configuration/)" de Darren Jones.
+
+</div>
 
 ## Définir des paramètres
 

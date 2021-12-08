@@ -1,8 +1,7 @@
 ---
-date: 2006-09-27 13:24:00
-layout: post
+date: 2006-09-27 13:24:00 +02:00
 redirect_from: "post/2006/09/27/Ecrire-du-code-SQL-portable"
-tags: sql
+tags: [ sql ]
 title: "Ecrire du code SQL portable"
 ---
 

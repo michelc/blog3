@@ -1,8 +1,7 @@
 ---
-date: 2008-09-18 18:37:00
-layout: post
+date: 2008-09-18 18:37:00 +02:00
 redirect_from: "post/2008/09/18/Mefiez-vous-des-variables-statiques"
-tags: .net
+tags: [ .net ]
 title: "Méfiez-vous des variables statiques"
 ---
 
@@ -15,5 +14,5 @@ title: "Méfiez-vous des variables statiques"
 [
 ASP.NET Tips: Careful Use of Static's](http://blogs.msdn.com/tom/archive/2008/09/18/asp-net-tips-careful-use-of-static-s.aspx)
 
-Ca me rappelle quelque chose :) Et surtout, c'est comme les poux : quand on
+Ça me rappelle quelque chose :) Et surtout, c'est comme les poux : quand on
 croit en être débarrassé, y'en a encore...

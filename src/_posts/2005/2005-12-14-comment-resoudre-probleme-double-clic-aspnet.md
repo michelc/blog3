@@ -1,8 +1,7 @@
 ---
-date: 2005-12-14 19:32:00
-layout: post
+date: 2005-12-14 19:32:00 +02:00
 redirect_from: "post/2005/12/14/Comment-resoudre-le-probleme-du-double-clic-en-aspnet"
-tags: .net, code-snippets
+tags: [ .net, code-snippets ]
 title: "Comment résoudre le problème du \"double-clic\" en asp.net"
 ---
 

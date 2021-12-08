@@ -1,8 +1,7 @@
 ---
-date: 2005-06-03 08:35:00
-layout: post
+date: 2005-06-03 08:35:00 +02:00
 redirect_from: "post/2005/06/03/Liste-des-modifications-de-qcEngine"
-tags: qc
+tags: [ qc ]
 title: "Liste des modifications de qc.Engine"
 ---
 

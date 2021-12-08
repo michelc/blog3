@@ -1,8 +1,7 @@
 ---
-date: 2009-10-08 10:57:00
-layout: post
+date: 2009-10-08 10:57:00 +02:00
 redirect_from: "post/2009/10/08/Tuer-du-code-pour-r%C3%A9ussir"
-tags: boulot, code-killer
+tags: [ boulot, code-killer ]
 title: "Tuer du code pour réussir"
 ---
 

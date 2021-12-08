@@ -1,8 +1,7 @@
 ---
-date: 2005-08-14 16:42:00
-layout: post
+date: 2005-08-14 16:42:00 +02:00
 redirect_from: "post/2005/08/14/Nouvelle-box-ShowActions"
-tags: qc
+tags: [ qc ]
 title: "Nouvelle box ShowActions"
 ---
 

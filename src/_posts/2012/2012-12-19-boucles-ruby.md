@@ -1,8 +1,7 @@
 ---
-date: 2012-12-19 22:05:00
-layout: post
+date: 2012-12-19 22:05:00 +02:00
 redirect_from: "post/2012/12/19/boucles-ruby"
-tags: ruby
+tags: [ ruby ]
 title: "Les boucles en Ruby"
 ---
 
@@ -97,7 +96,7 @@ un nombre précis de fois, on aura plus tendance à utiliser cette méthode
 end
 ```
 
-Note : si le traitement à l'intérieur de la boucle n'a
+Pour information, si le traitement à l'intérieur de la boucle n'a
 pas besoin de la valeur de l'indice, il n'est pas nécessaire de le faire
 apparaître :
 

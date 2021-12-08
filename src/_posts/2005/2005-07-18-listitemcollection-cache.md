@@ -1,8 +1,7 @@
 ---
-date: 2005-07-18 13:34:00
-layout: post
+date: 2005-07-18 13:34:00 +02:00
 redirect_from: "post/2005/07/18/ListItemCollection_Cache"
-tags: qc
+tags: [ qc ]
 title: "ListItemCollection_Cache"
 ---
 

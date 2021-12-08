@@ -1,8 +1,7 @@
 ---
-date: 2008-09-24 13:45:00
-layout: post
+date: 2008-09-24 13:45:00 +02:00
 redirect_from: "post/2008/09/24/Je-me-souviens"
-tags: ap, blog, qc, wdevs
+tags: [ ap, blog, qc, wdevs ]
 title: "Je me souviens..."
 ---
 
@@ -21,12 +20,12 @@ de l'internet](http://www.archive.org/web/web.php) , je me suis enfin décidé (
 dirait que tout est encore là : [http://blogs.wdevs.com/qc](http://web.archive.org/web/*/http://blogs.wdevs.com/qc/),
 en attendant le backup complet ici même : </tags/wdevs/>.
 
-Ca parle pas mal de QC (enfin quand je m'astreignais à bloguer), mais pas
+Ça parle pas mal de QC (enfin quand je m'astreignais à bloguer), mais pas
 que (y'a notamment mon "célèbre" billet sur l'[utilisation
-du SMTP de GMail avec System.Web.Mail]({% post_url 2005-01-14-wdevs-systemwebmail-smtpgmailcom %}). Les liens sont un peu cassés, parce
+du SMTP de GMail avec System.Web.Mail]({% post_url "2005-01-14-wdevs-systemwebmail-smtpgmailcom" %}). Les liens sont un peu cassés, parce
 que 4 ans pour internet c'est vieux, mais c'est quand même agréable de
 retrouver et relire tout ça.
 
 Edit: ça pourrait être l'occasion de terminer la [
-mise à jour du site]({% post_url 2006-10-12-avancement-mise-a-jour-site-gandiblog %}) à partir des différents essais sous Wordpress et
+mise à jour du site]({% post_url "2006-10-12-avancement-mise-a-jour-site-gandiblog" %}) à partir des différents essais sous Wordpress et
 Blogger.

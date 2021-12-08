@@ -1,13 +1,15 @@
 ---
-date: 2011-05-17 19:33:00
-layout: post
+date: 2011-05-17 19:33:00 +02:00
 redirect_from: "post/2011/05/17/authentification-super-simple-avec-sinatra"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Authentification super simple avec Sinatra"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel "[Really Simple Authentication in Sinatra](http://ididitmyway.herokuapp.com/past/2011/2/22/really_simple_authentication_in_sinatra/)" de Darren Jones.
+
+</div>
 
 Une demande répétée des lecteurs de [I Dit It My Way](http://ididitmyway.herokuapp.com/) est un
 billet sur l'authentification. Il existe des tas de gems qui permettent de
@@ -30,7 +32,7 @@ Puis les handlers pour les différentes routes. En commençant par l'URL
 get('/admin') { haml :admin }
 ```
 
-Ca ne prend qu'une ligne parce que tout ce qu'il y a à faire c'est
+Ça ne prend qu'une ligne parce que tout ce qu'il y a à faire c'est
 d'afficher la vue "admin.haml" :
 
 ```

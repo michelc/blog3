@@ -1,14 +1,16 @@
 ---
-date: 2010-01-29 11:49:00
-layout: post
+date: 2010-01-29 11:49:00 +02:00
 redirect_from: "post/2010/01/29/utiliser-asp-net-mvc-et-nhibernate-1"
-tags: mvc, nhibernate
+tags: [ mvc, nhibernate ]
 title: "Utiliser ASP.NET MVC et NHibernate (1° partie)"
+excerpt: Pour accompagner mes premiers essais avec NHibernate, j'ai traduit le tutoriel que César Intriago a publié sous forme d'une série de 3 articles.
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 1)](http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-1/)" de César
-Intriago.
+<div class="encart">
+
+Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 1)](http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-1/)" de César Intriago.
+
+</div>
 
 Dans cet article je vais expliquer comment installer et configurer
 NHibernate pour l'utiliser dans une application ASP.NET MVC. Ceci est le
@@ -33,7 +35,7 @@ rédaction de cet article).
 
 ## Installer NHibernate
 
-Téléchargez et dézippez NHibernate sur votre ordinateur. Ca y est,
+Téléchargez et dézippez NHibernate sur votre ordinateur. Ça y est,
 NHibernate est installé.
 
 ## Créer le projet ASP.NET MVC
@@ -414,10 +416,7 @@ catégorie a bien été ajoutée :
 
 ![](http://forerunnerg34.files.wordpress.com/2009/11/database.jpg)
 
-Dans la [prochaine partie]({% post_url 2010-01-29-utiliser-aspnetmvc-nhibernate-2 %}) de ce tutoriel, nous complèterons le modèle
+Dans la [prochaine partie]({% post_url "2010-01-29-utiliser-aspnetmvc-nhibernate-2" %}) de ce tutoriel, nous complèterons le modèle
 et les tests unitaires puis nous attaquerons la création de notre application
 ASP.NET MVC.
 
-{:.encart}
-Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 1)](http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-1/)" de César
-Intriago.

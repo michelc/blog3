@@ -1,8 +1,7 @@
 ---
-date: 2005-06-07 09:29:00
-layout: post
+date: 2005-06-07 09:29:00 +02:00
 redirect_from: "post/2005/06/07/Controler-le-telechargements-des-fichiers"
-tags: csharp
+tags: [ csharp ]
 title: "Contrôler le téléchargements des fichiers"
 ---
 

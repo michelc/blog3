@@ -1,8 +1,7 @@
 ---
-date: 2008-09-17 19:05:00
-layout: post
+date: 2008-09-17 19:05:00 +02:00
 redirect_from: "post/2008/09/17/Tableau-d-ArrayList"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Tableau d'ArrayList"
 ---
 

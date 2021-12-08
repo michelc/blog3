@@ -1,13 +1,15 @@
 ---
-date: 2010-07-27 19:45:00
-layout: post
+date: 2010-07-27 19:45:00 +02:00
 redirect_from: "post/2010/07/27/creation-premier-projet-sinatra"
-tags: mvc, ruby, sinatra
+tags: [ mvc, ruby, sinatra ]
 title: "Création d'un premier projet avec Sinatra"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel Sinatra "[Project 1: Reverse](http://ididitmyway.herokuapp.com/past/2010/1/10/project_1_reverse/)" de Darren Jones.
+
+</div>
 
 Après avoir brillamment suivi pas à pas mon premier tutoriel pour installer
 [Ruby](http://www.ruby-lang.org/) et [Sinatra](http://www.sinatrarb.com/) sur mon PC Windows 7, je
@@ -16,7 +18,7 @@ continue sur ma lancée avec la réalisation du deuxième tutoriel proposé par
 
 Le but de ce tutoriel est de programmer une première application très très
 simple qui va se contenter d'afficher un texte à l'envers, d'où son nom :
-[Projet 1 : Reverse](http://ididitmyway.herokuapp.com/past/2010/1/10/project_1_reverse/). A travers cette mini-application, on
+[Projet 1 : Reverse](http://ididitmyway.herokuapp.com/past/2010/1/10/project_1_reverse/). À travers cette mini-application, on
 peut déjà apprendre quelques trucs sur le fonctionnement de Sinatra, voire sur
 Ruby si on débute comme moi.
 
@@ -379,7 +381,7 @@ end
 L'avant-avant dernière ligne (l'antépénultième pour les érudits) défini la
 nouvelle action qui va gérer la route "/reverse". Cette action est définie pour
 une route de type POST, ce qui signifie qu'elle ne sera activé que pour une
-requête POST (ce qui correspond à l'envoi d'un formulaire). Ca c'est bon ?
+requête POST (ce qui correspond à l'envoi d'un formulaire). Ça c'est bon ?
 Mais par contre, c'est quoi cette ligne `params.inspect` ?
 "params" est une collection qui contient toutes les informations qui ont été
 envoyées en tant que paramètre (aussi bien à travers un formulaire que via

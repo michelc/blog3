@@ -1,8 +1,8 @@
 ---
-date: 2019-04-30 14:01:46
-layout: post
-tags: javascript, jquery
+date: 2019-04-30 14:01:46 +02:00
+tags: [ javascript, jquery ]
 title: "dQuery - Comment j'ai (bientôt) remplacé jQuery"
+excerpt: Le premier billet d'une série consacrée au développement de "dQuery.js", une mini-librairie JavaScript ultra simple pour remplacer en partie jQuery sur site de jeux de solitaires.
 ---
 
 <div class="encart" markdown="1">
@@ -11,12 +11,12 @@ Ce billet est le premier d'une nouvelle petite série consacrée au développeme
 de "dQuery.js", une mini-librairie JavaScript ultra simple pour remplacer en
 partie jQuery.
 
-1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url 2019-04-30-dquery-remplacer-jquery %})
-2. [Une version compatible IE9 / ES5]({% post_url 2019-05-07-dquery-compatibilite-ie9-es5 %})
-3. [Ma librairie pour manipuler le DOM]({% post_url 2019-05-14-dquery-librairie-js-manipulation-dom %})
-4. [La délégation des évènements en JS]({% post_url 2019-05-21-dquery-delegation-evenement-javascript %})
-5. [Délégation d'évènements et « event.target »]({% post_url 2019-05-28-dquery-delegation-evenement-event-target %})
-6. [Délégation d'évènements et iOS]({% post_url 2019-06-04-dquery-delegation-evenement-ios %})
+1. [Comment j'ai (bientôt) remplacé jQuery]({% post_url "2019-04-30-dquery-remplacer-jquery" %})
+2. [Une version compatible IE9 / ES5]({% post_url "2019-05-07-dquery-compatibilite-ie9-es5" %})
+3. [Ma librairie pour manipuler le DOM]({% post_url "2019-05-14-dquery-librairie-js-manipulation-dom" %})
+4. [La délégation des évènements en JS]({% post_url "2019-05-21-dquery-delegation-evenement-javascript" %})
+5. [Délégation d'évènements et « event.target »]({% post_url "2019-05-28-dquery-delegation-evenement-event-target" %})
+6. [Délégation d'évènements et iOS]({% post_url "2019-06-04-dquery-delegation-evenement-ios" %})
 
 </div>
 
@@ -27,7 +27,7 @@ Ces derniers temps, jQuery évolue peu (surtout jQuery UI) et les différents
 navigateurs encore existants ont beaucoup moins de particularités. Je savais que
 ce qui pouvait "bloquer" pour mes jeux de solitaire, c'était le drag and drop à
 base de jQuery UI. Mais vu qu'il existe suffisamment de [librairies
-indépendantes de jQuery pour le d&d]({% post_url 2019-04-15-solitaire-drag-and-drop-sans-jquery-ui %}),
+indépendantes de jQuery pour le d&d]({% post_url "2019-04-15-solitaire-drag-and-drop-sans-jquery-ui" %}),
 le "problème" serait donc résolu en temps voulu. D'autant plus que tous mes jeux
 n'utilisent pas le glisser-déplacer.
 

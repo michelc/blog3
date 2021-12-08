@@ -1,8 +1,7 @@
 ---
-date: 2013-02-11 22:30:00
-layout: post
+date: 2013-02-11 22:30:00 +02:00
 redirect_from: "post/2013/02/11/erreur-generation-controleur-sql-ce"
-tags: ef, mvc, sql-server
+tags: [ ef, mvc, sql-server ]
 title: "Erreur génération template contrôleur avec SQL CE"
 ---
 

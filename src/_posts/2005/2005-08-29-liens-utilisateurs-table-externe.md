@@ -1,8 +1,7 @@
 ---
-date: 2005-08-29 16:44:00
-layout: post
+date: 2005-08-29 16:44:00 +02:00
 redirect_from: "post/2005/08/29/Liens-utilisateurs-table-externe"
-tags: qc
+tags: [ qc ]
 title: "Liens utilisateurs / table externe"
 ---
 

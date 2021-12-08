@@ -1,8 +1,7 @@
 ---
-date: 2005-10-23 09:40:00
-layout: post
+date: 2005-10-23 09:40:00 +02:00
 redirect_from: "post/2005/10/23/Validation-XHtmlcs"
-tags: qc
+tags: [ qc ]
 title: "Validation XHtml.cs"
 ---
 

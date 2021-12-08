@@ -1,13 +1,16 @@
 ---
-date: 2010-03-03 21:49:00
-layout: post
+date: 2010-03-03 21:49:00 +02:00
 redirect_from: "post/2010/03/03/asp-net-mvc-c-est-pas-forcement-linq-to-sql"
-tags: mvc
+tags: [ mvc ]
 title: "ASP.NET MVC c'est pas forcément LINQ to SQL"
+excerpt: La traduction d'un tutoriel intéressant à suivre parce qu'il présente un exemple d'application très complet et très concret et qu'il sort des sentiers (re)battus de LINQ to SQL, Entity Framework et autres ORMs.
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du billet "[ASP.NET MVC is not all about Linq to SQL](http://www.mikesdotnetting.com/Article/132/ASP.NET-MVC-is-not-all-about-Linq-to-SQL)" de Mike Brind.
+
+</div>
 
 La plupart des exemples destinés à illustrer l'utilisation de ASP.NET MVC
 sont tous basés sur l'utilisation de LINQ to SQL ou d'Entity Framework pour
@@ -990,6 +993,4 @@ ré-affiche directement la sous-liste correspondante mise à jour. Cela
 impliquerait de faire passer l'identifiant ContactPersonId à l'action Delete()
 et devrait être relativement facile à réaliser.
 
-{:.encart}
-Il est possible de télécharger le code source de cette application à la fin
-du billet "[ASP.NET MVC is not all about Linq to SQL](http://www.mikesdotnetting.com/Article/132/ASP.NET-MVC-is-not-all-about-Linq-to-SQL)" de Mike Brind.
+*Note : Il est possible de télécharger le code source de cette application à la fin du billet "[ASP.NET MVC is not all about Linq to SQL](http://www.mikesdotnetting.com/Article/132/ASP.NET-MVC-is-not-all-about-Linq-to-SQL)" de Mike Brind.*

@@ -1,13 +1,15 @@
 ---
-date: 2011-06-16 19:35:00
-layout: post
+date: 2011-06-16 19:35:00 +02:00
 redirect_from: "post/2011/06/16/telecharger-fichiers-avec-sinatra"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Télécharger des fichiers avec Sinatra"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel "[Uploading Files In Sinatra](http://ididitmyway.herokuapp.com/past/2011/1/16/uploading_files_in_sinatra/)" de Darren Jones.
+
+</div>
 
 Il arrive fréquemment qu'on ait besoin de télécharger un fichier dans nos
 applications, que ce soit une image ou un fichier PDF. Dans ce tutoriel, je
@@ -89,7 +91,7 @@ Pour avoir plus d'informations sur l'objet `file` en Ruby, je
 vous invite à consulter le chapitre qui est consacré à la classe
 `File` sur la version en ligne du [Ruby Pickaxe Book](http://ruby-doc.org/docs/ProgrammingRuby/html/ref_c_file.html).
 
-Note du traducteur : plutôt que de copier "manuellement" le
+Note du traducteur : Plutôt que de copier "manuellement" le
 contenu du fichier, on aurait pu utiliser la méthode `cp` (ou
 `copy`) de la classe FileUtils :
 
@@ -161,7 +163,7 @@ set :s3_secret, Thi$isJu5taNExamp/etO0itSh0u1dBel0NgeR
 
 Bien entendu, pour un site en production il faut définir ces variables en
 passant par des paramètres d'environnement de Heroku pour que vos clés restent
-secrètes. Vous pouvez vous reporter au billet [Configuration et paramétrage avec Sinatra]({% post_url 2011-05-03-configuration-parametrage-sinatra %}) pour avoir plus
+secrètes. Vous pouvez vous reporter au billet [Configuration et paramétrage avec Sinatra]({% post_url "2011-05-03-configuration-parametrage-sinatra" %}) pour avoir plus
 d'explications à ce sujet.
 
 Nous devons ensuite nous occuper de nos handlers. Le premier handler pour le

@@ -1,8 +1,7 @@
 ---
-date: 2005-06-23 09:57:00
-layout: post
+date: 2005-06-23 09:57:00 +02:00
 redirect_from: "post/2005/06/23/Prise-en-compte-urlRewriting-1"
-tags: qc
+tags: [ qc ]
 title: "Prise en compte urlRewriting (#1)"
 ---
 

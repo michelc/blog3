@@ -1,8 +1,7 @@
 ---
-date: 2009-09-28 19:33:00
-layout: post
+date: 2009-09-28 19:33:00 +02:00
 redirect_from: "post/2009/09/28/ASP.NET-MVC-et-les-tests-unitaires"
-tags: mvc, unit-test
+tags: [ mvc, unit-test ]
 title: "ASP.NET MVC et les tests unitaires"
 ---
 
@@ -94,7 +93,7 @@ Il ne faut pas non plus faire de tests sur l'accès aux bases de données. Si
 on doit en passer par une vraie base de données, le temps d'exécution des tests
 unitaires va devenir beaucoup trop long. Et c'est là que l'empilement des
 couches évoqué dans la [partie
-précédente]({% post_url 2009-09-23-troisieme-etape-aspnetmvc %} "Vers du code ASP.NET MVC plus facile à maintenir et à modifier") dévoile tout son intérêt. On va "émuler" l'accès à la base de
+précédente]({% post_url "2009-09-23-troisieme-etape-aspnetmvc" %} "Vers du code ASP.NET MVC plus facile à maintenir et à modifier") dévoile tout son intérêt. On va "émuler" l'accès à la base de
 données grâce à des classes Mock qui simulent l'implémentation de l'interface
 IRepository vue précédemment, sans réellement interagir avec la base de
 données. Par conséquent, la réalisation de cette interface IRepository ne doit
@@ -118,4 +117,4 @@ détail les problématiques liées à l'accès à la base de données) et commen
 résoudre.
 
 ---
-Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC]({% post_url 2009-10-06-test-driven-development-aspnetmvc %})
+Billet suivant dans la série : [Test-Driven Development avec ASP.NET MVC]({% post_url "2009-10-06-test-driven-development-aspnetmvc" %})

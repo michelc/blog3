@@ -1,8 +1,7 @@
 ---
-date: 2006-10-13 11:26:00
-layout: post
+date: 2006-10-13 11:26:00 +02:00
 redirect_from: "post/2006/10/13/Recherche-et-mots-vides"
-tags: .net, ap, referencement
+tags: [ .net, ap, referencement ]
 title: "Recherche et mots vides"
 ---
 

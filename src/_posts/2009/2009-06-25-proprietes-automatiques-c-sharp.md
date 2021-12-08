@@ -1,8 +1,7 @@
 ---
-date: 2009-06-25 13:34:00
-layout: post
+date: 2009-06-25 13:34:00 +02:00
 redirect_from: "post/2009/06/25/Les-proprietes-automatiques-du-c-sharp"
-tags: csharp
+tags: [ csharp ]
 title: "Les propriétés automatiques du c#"
 ---
 

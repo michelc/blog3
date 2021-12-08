@@ -1,5 +1,5 @@
 ---
-date: 2010-02-02 14:17:00
+date: 2010-02-02 14:17:00 +02:00
 layout: page
 permalink: nerddinner/realiser-tests-unitaires/
 redirect_from: "pages/NerdDinner/Realiser-des-tests-unitaires"
@@ -7,7 +7,7 @@ title: "NerdDinner(fr) : Réaliser des tests unitaires"
 ---
 
 Nous allons développer une série de tests unitaires automatisés pour
-vérifier les fonctionnalités de NerdDinner. A l'avenir, cela nous permettra
+vérifier les fonctionnalités de NerdDinner.À l'avenir, cela nous permettra
 d'apporter des modifications et des améliorations à notre application en toute
 confiance.
 
@@ -212,7 +212,7 @@ et comme vous pouvez le voir ils ont tous les deux réussis. Nous pouvons donc
 aller plus loin et compléter ceux-ci en créant des tests supplémentaires pour
 vérifier la validation de règles spécifiques et le fonctionnement des deux
 méthodes d'assistance IsUserHost() et IsUserRegistered() que nous avons
-ajoutées à la classe Dinner. A l'avenir, grâce à ces tests, la mise à jour des
+ajoutées à la classe Dinner. À l'avenir, grâce à ces tests, la mise à jour des
 traitements métiers ou des règles de validation va devenir plus simple et moins
 risquée. Nous pourrons alors ajouter une nouvelle règle de validation puis
 contrôler en quelques secondes que cela n'a pas eu d'impact sur les
@@ -285,7 +285,7 @@ En consultant les messages d'erreur, on peut voir que nos deux tests ont
 échoués parce que la classe DinnerRepository n'a pas pu se connecter à la base
 de données. Notre application NerdDinner utilise une chaine de connexion vers
 un fichier de base de données SQL Server Express local, présent dans le
-répertoire \App_Data du projet NerdDinner. Etant donné que le projet
+répertoire \App_Data du projet NerdDinner. Étant donné que le projet
 NerdDinner.Tests se compile et s'exécute dans un autre répertoire que celui du
 projet NerdDinner, le chemin relatif pour accéder à la base de données n'est
 pas valable.
@@ -340,7 +340,7 @@ public class DinnersController : Controller {
    }
 ```
 
-Etant donné que la classe DinnerRepository a besoin d'accéder à la base de
+Étant donné que la classe DinnerRepository a besoin d'accéder à la base de
 données, le fait que la classe DinnersController soit étroitement liée à cette
 classe DinnerRepository nous oblige à avoir une base de données pour que les
 méthodes d'action de DinnersController puissent être testées.
@@ -653,7 +653,7 @@ deux :
 
 Et encore mieux, ils ne prennent qu'une fraction de secondes pour s'exécuter
 et il n'y a pas besoin de prévoir de traitements compliqués à faire pour les
-préparer et remettre au propre après leur exécution. A partir de maintenant,
+préparer et remettre au propre après leur exécution.À partir de maintenant,
 nous avons la possibilité de tester tout le code des méthodes d'action de la
 classe DinnersController (depuis la liste jusqu'à la pagination, la fiche
 détail, la création, la modification et la suppression) sans avoir le moindre
@@ -736,7 +736,7 @@ Dinner.IsHostedBy().
 
 L'objet User disponible au niveau de la classe contrôleur regroupe toutes
 les informations relatives à l'utilisateur connecté et il est initialisé par
-ASP.NET MVC au moment de la création du contrôleur. Etant donné que notre test
+ASP.NET MVC au moment de la création du contrôleur. Étant donné que notre test
 ne s'exécute pas à partir d'un serveur web, l'objet User n'est donc pas
 initialisé par ASP.NET MVC, ce qui fait que nous nous retrouvons avec une
 référence nulle.
@@ -932,7 +932,7 @@ unitaires qui s'appliquent aux classes contrôleurs. Nous pouvons maintenant
 utiliser ces techniques pour créer très facilement des centaines de tests très
 simples afin de contrôler le fonctionnement de notre application.
 
-Etant donné que ces tests n'ont pas besoin de se connecter à une vraie base
+Étant donné que ces tests n'ont pas besoin de se connecter à une vraie base
 de données, ils sont ultra-rapides et super-faciles à exécuter. Il nous serait
 donc possible de réaliser des centaines de tests en quelques secondes et
 d'obtenir immédiatement un retour pour savoir si telle ou telle modification a

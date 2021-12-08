@@ -1,8 +1,7 @@
 ---
-date: 2011-10-18 18:59:00
-layout: post
+date: 2011-10-18 18:59:00 +02:00
 redirect_from: "post/2011/10/18/utilisation-expressions-lambda-en-10-etapes"
-tags: csharp
+tags: [ csharp ]
 title: "Utilisation d’expressions lambda en 10 étapes"
 ---
 

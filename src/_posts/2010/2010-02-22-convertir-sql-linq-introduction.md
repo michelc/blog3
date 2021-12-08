@@ -1,16 +1,15 @@
 ---
-date: 2010-02-22 19:32:00
-layout: post
+date: 2010-02-22 19:32:00 +02:00
 redirect_from: "post/2010/02/22/convertir-sql-en-linq-introduction"
-tags: csharp, linq
+tags: [ csharp, linq ]
 title: "Convertir SQL en LINQ : Introduction"
 ---
 
-{:.encart}
-Ceci est une traduction assez libre de la série de billets rédigés par Bill
-Horst pour apprendre comment [passer du langage SQL au langage LINQ](http://blogs.msdn.com/vbteam/archive/tags/Converting SQL to LINQ/default.aspx) et plus spécialement en
-VB LINQ. Pour ma part, j'ai adapté les explications et les exemples de codes
-pour cibler la syntaxe C# du langage LINQ.
+<div class="encart">
+
+Ceci est une traduction assez libre de la série de billets rédigés par Bill Horst pour apprendre comment [passer du langage SQL au langage LINQ](https://devblogs.microsoft.com/vbteam/category/series/converting-sql-to-linq/) et plus spécialement en VB LINQ. Pour ma part, j'ai adapté les explications et les exemples de codes pour cibler la syntaxe C# du langage LINQ.
+
+</div>
 
 Comme vous le savez sans doute déjà, les commandes LINQ permettent d'écrire
 des requêtes en C# en utilisant une syntaxe inspirée de SQL. Cependant, la
@@ -124,8 +123,8 @@ spécifiques au cours des billets suivants. Mon objectif tout au long de ces
 petits tutoriels consacrés à la traduction du SQL en LINQ est de présenter les
 points suivants :
 
-* [FROM et SELECT]({% post_url 2010-02-23-convertir-sql-linq-from-select %})
-* [DISTINCT, WHERE et ORDER BY]({% post_url 2010-02-24-convertir-sql-linq-distinct-where-order-by %})
+* [FROM et SELECT]({% post_url "2010-02-23-convertir-sql-linq-from-select" %})
+* [DISTINCT, WHERE et ORDER BY]({% post_url "2010-02-24-convertir-sql-linq-distinct-where-order-by" %})
 * Les fonctions (scalaires et agrégations)
 * GROUP BY et HAVING
 * Les jointures

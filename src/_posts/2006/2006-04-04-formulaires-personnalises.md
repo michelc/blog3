@@ -1,8 +1,7 @@
 ---
-date: 2006-04-04 13:05:00
-layout: post
+date: 2006-04-04 13:05:00 +02:00
 redirect_from: "post/2006/04/04/Formulaires-personnalises"
-tags: qc
+tags: [ qc ]
 title: "Formulaires personnalisés"
 ---
 

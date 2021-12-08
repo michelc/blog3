@@ -1,8 +1,7 @@
 ---
-date: 2009-09-29 12:03:00
-layout: post
+date: 2009-09-29 12:03:00 +02:00
 redirect_from: "post/2009/09/29/Unit-Test-Definition-2.0"
-tags: .net, unit-test
+tags: [ .net, unit-test ]
 title: "Unit Test Definition 2.0"
 ---
 

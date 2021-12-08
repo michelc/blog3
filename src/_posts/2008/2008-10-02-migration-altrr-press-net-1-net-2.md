@@ -1,16 +1,17 @@
 ---
-date: 2008-10-02 18:53:00
-layout: post
+date: 2008-10-02 18:53:00 +02:00
 redirect_from: "post/2008/10/02/Migration-de-Altrr-Press-de-NET-1-vers-NET-2"
-tags: .net, ap
+tags: [ .net, ap ]
 title: "Migration de Altrr-Press de .NET 1 vers .NET 2"
+excerpt: "Un récapitulatif pour détailler où j'en suis des différentes étapes à suivre pour convertir AP en ASP.NET 2"
 ---
 
 ## Carnet de route
 
 ### Les pré-requis
 
-* Renommer les projets, les assemblys et les namespaces de qc.  - en ap.*
+* Renommer les projets, les assemblys et les namespaces de qc.  
+  - en ap.*
 * Supprimer les trucs inutiles :
   - les boites obsolètes
   - SqlRepeat et BangGrid.cs
@@ -39,7 +40,7 @@ de migration
 ap.Department et ap.Devel dans le projet ap.Framework (pas sûr)
 * Une fois terminé, faire clic-droit, Convertir en application Web sur les
 projets ap.Engine, ap.Classic, ap.Department et ap.Devel
-* A la fin, on se retrouve avec des fichiers *.ascx.designer.cs en plus
+* À la fin, on se retrouve avec des fichiers *.ascx.designer.cs en plus
 (suite à Convertir en application Web)
 
 Deuxième bon point : depuis la mise au point de ApCopy.bat, c'est
@@ -214,7 +215,7 @@ un PC un peu plus récent.
 
 ## Est-ce que ça marche ?
 
-Ca dépend.
+Ça dépend.
 
 En ce qui concerne les fichiers statiques générés par PI, une comparaison
 avec [WinMerge](http://winmerge.org/) de tous les fichiers produits
@@ -229,7 +230,7 @@ coince un peu. J'obtiens presque toujours des contenus identiques pour les deux
 versions, sauf quand il y a des formulaires dans la page.
 
 Il y a un premier problème avec ma technique pour [
-éviter le double-clic]({% post_url 2005-12-14-comment-resoudre-probleme-double-clic-aspnet %}) en validation de saisie. Normalement, je remplace
+éviter le double-clic]({% post_url "2005-12-14-comment-resoudre-probleme-double-clic-aspnet" %}) en validation de saisie. Normalement, je remplace
 l'évènement onclick du bouton de validation :
 
 ```

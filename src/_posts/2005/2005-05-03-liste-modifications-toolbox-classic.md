@@ -1,8 +1,7 @@
 ---
-date: 2005-05-03 08:29:00
-layout: post
+date: 2005-05-03 08:29:00 +02:00
 redirect_from: "post/2005/05/03/Liste-des-modifications-de-la-toolbox-Classic"
-tags: qc
+tags: [ qc ]
 title: "Liste des modifications de la toolbox Classic"
 ---
 

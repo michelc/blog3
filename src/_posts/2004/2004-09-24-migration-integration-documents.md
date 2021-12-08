@@ -1,8 +1,7 @@
 ---
-date: 2004-09-24 10:00:00
-layout: post
+date: 2004-09-24 10:00:00 +02:00
 redirect_from: "post/2004/09/24/Migration-Integration-Documents"
-tags: qc
+tags: [ qc ]
 title: "Migration de Integration.Documents"
 ---
 

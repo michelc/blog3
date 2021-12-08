@@ -1,8 +1,7 @@
 ---
-date: 2005-07-18 13:41:00
-layout: post
+date: 2005-07-18 13:41:00 +02:00
 redirect_from: "post/2005/07/18/UrlRewriting-en-mode-admin-4"
-tags: qc
+tags: [ qc ]
 title: "UrlRewriting en mode admin #4"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2011-06-16 19:56:00
-layout: post
+date: 2011-06-16 19:56:00 +02:00
 redirect_from: "post/2011/06/16/utiliser-jquery-ui-datepicker-avec-asp-net-mvc"
-tags: jquery, mvc
+tags: [ jquery, mvc ]
 title: "Utiliser jQuery UI Datepicker avec ASP.NET MVC"
 ---
 
@@ -167,12 +166,12 @@ App_Data\Livres.sdf dans mon cas) puis qu'elle avait changé. Chercher "Changing
 our Model and Database Schema" sur le billet [VS 2010 SP1 and SQL CE](http://weblogs.asp.net/scottgu/archive/2011/01/11/vs-2010-sp1-and-sql-ce.aspx) de Scott Guthrie pour plus
 d'explications.
 
-Note : j'ai vu des exemples qui initialisent une valeur par
+*Note : J'ai vu des exemples qui initialisent une valeur par
 défaut lorsque la date est nulle (genre `Model.HasValue ?
 Model.Value.Date.To...() : DateTime.Today.To...()`). Mais selon moi,
 ce n'est pas quelque chose qui doit être décidé et accompli au niveau d'un
 template. Il est préférable de prévoir ce genre d'initialisation dans une
-classe ViewModel.
+classe ViewModel.*
 
 ## Moderniser le code HTML
 

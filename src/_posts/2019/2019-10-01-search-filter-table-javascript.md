@@ -1,10 +1,12 @@
 ---
-date: 2019-10-01 12:23:34
-layout: post
+date: 2019-10-01 12:23:34 +02:00
 lang: en-US
-tags: javascript, jquery
+tags: [ javascript, jquery ]
 title: "Search and filter a table with JavaScript"
-image: "/public/2019/filter-table-js.jpg"
+cover:
+  image: /public/2019/table-filter.jpg
+  link: https://www.harborfreight.com/4-piece-funnel-set-744.html
+  text: Funnel Set 4 Pc + JavaScript
 excerpt: "How to search and filter the content of an HTML table in JavaScript. From the script found on codepen.io to a final version slightly reworked after some explanations."
 ---
 
@@ -12,13 +14,6 @@ Some time ago, I needed to propose a simple search in a table. Normally, I
 prefer the good old `Ctrl+F` but not everyone likes it (and also the goal was
 more to filter the display to the data found, which is not possible with a
 Chrome search).
-
-<figure>
-  <img src="{{ page.image }}" alt="filter-table-js" />
-  <figcaption>
-    <a href="https://www.harborfreight.com/4-piece-funnel-set-744.html">Funnel Set 4 Pc + JavaScript</a>
-  </figcaption>
-</figure>
 
 As my site wasn't yet using jQuery, I looked for a ready-made Vanilla JS script
 and found a very simple and easily understandable example with a demonstration
@@ -260,8 +255,8 @@ function dquery(selector) {
 }
 ```
 
-Note: This is copy/paste from my JavaScript mini-library
-[dQuery]({% post_url 2019-04-30-dquery-remplacer-jquery %}) (post in french).
+*Note: This is copy/paste from my JavaScript mini-library
+[dQuery]({% post_url "2019-04-30-dquery-remplacer-jquery" %}) (post in french).*
 
 Then I was able to change the way the relevant input fields were selected:
 
@@ -293,9 +288,9 @@ var lignes = dquery(e.target.getAttribute("data-table") + " tbody tr");
 [].forEach.call(lignes, filter);
 ```
 
-Note: The "data-table" attribute that previously contained "books" (a class name
+*Note: The "data-table" attribute that previously contained "books" (a class name
 that was expected by `.getElementsByClassName()`) must now be changed to
-".books" (a CSS selector that is intended for `.querySelectorAll()`).
+".books" (a CSS selector that is intended for `.querySelectorAll()`).*
 
 
 ## Modification #4: a slight optimization
@@ -320,8 +315,8 @@ if (!row.lowerTextContent) {
 row.style.display = row.lowerTextContent.indexOf(search) === -1 ? "none" : "table-row";
 ```
 
-Note: Given the size of the tables on which I use "js-table-filter.js", it's
-more for the sake of detail than for real optimization.
+*Note: Given the size of the tables on which I use "js-table-filter.js", it's
+more for the sake of detail than for real optimization.*
 
 
 ## Modification #5: a new feature
@@ -369,8 +364,8 @@ example below :
 ...
 ```
 
-Note: If the attribute "data-count" does not exist, then the condition `if
-(writer) { ... }` avoids trying to count lines.
+*Note: If the attribute "data-count" does not exist, then the condition `if
+(writer) { ... }` avoids trying to count lines.*
 
 
 ## Modification #6: simplifications
@@ -479,5 +474,8 @@ As a bonus, the HTML part, ready for when I add this to a Bootstrap 4 template:
 </div>
 ```
 
-{:.encart}
-Version en français : [Rechercher et filtrer une table en JavaScript]({% post_url 2019-09-30-rechercher-filtrer-table-javascript %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Rechercher et filtrer une table en JavaScript", "2019-09-30-rechercher-filtrer-table-javascript" %}.
+
+</div>

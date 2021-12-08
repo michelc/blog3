@@ -1,19 +1,15 @@
 ---
-date: 2020-05-27 12:08:34+200
-layout: post
-tags: css
+date: 2020-05-27 12:08:34 +02:00
+tags: [ css ]
 title: "Masquer ou afficher le menu latéral"
-image: "/public/2020/switches.jpg"
+cover:
+  image: /public/2020/switches.jpg
+  link: https://www.heure-industrielle.com/petit-musee-de-l-interrupteur/
+  text: Le petit musée de l'interrupteur
+excerpt: "L'objectif du jour : pouvoir masquer le menu latéral qui sert pour la navigation."
 ---
 
-Je continue à travailler sur un [template simplissime à 2 colonnes]({% post_url 2020-05-19-creer-template-sidebar-contenu %}). L'objectif du jour étant de pouvoir masquer le menu latéral qui sert pour la navigation.
-
-<figure>
-  <img src="{{ page.image }}" alt="interrupteurs..." />
-  <figcaption>
-    <a href="https://www.heure-industrielle.com/petit-musee-de-l-interrupteur/">Le petit musée de l'interrupteur</a>
-  </figcaption>
-</figure>
+Je continue à travailler sur un [template simplissime à 2 colonnes]({% post_url "2020-05-19-creer-template-sidebar-contenu" %}). L'objectif du jour étant de pouvoir masquer le menu latéral qui sert pour la navigation.
 
 La solution simple, ce serait de mettre une classe "d-none" à la "sidebar" (puisque j'utilise Bootstrap), mais cela ne sera pas suffisant parce que le "content" ne prend pas automatiquement toute la largeur.
 
@@ -66,7 +62,7 @@ Plus :
 }
 ```
 
-Ca marche ! Voyons maintenant comment obtenir le même résultat un peu plus intelligement...
+Ça marche ! Voyons maintenant comment obtenir le même résultat un peu plus intelligement...
 
 Mon premier essai mobilise 4 classes différentes alors qu'en gros il n'y a que 2 possibilités :
 
@@ -175,5 +171,8 @@ C'était pas très compliqué... Aussi je ferais sans doute une 3° partie pour 
 * Utiliser une icone pour afficher ou cacher la "sidebar",
 * Ajouter une animation pour passer d'un état à l'autre.
 
-{:.encart}
-English version: [Hide or show sidebar]({% post_url 2020-05-28-hide-show-sidebar %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Hide or show sidebar", "2020-05-28-hide-show-sidebar" %}.
+
+</div>

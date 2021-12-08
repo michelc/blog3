@@ -1,21 +1,16 @@
 ---
-date: 2019-12-30 14:02:34+200
-layout: post
-tags: jekyll
+date: 2019-12-30 14:02:34 +02:00
+tags: [ jekyll ]
 lang: en
 title: "Jekyll configuration update"
-image: "/public/2019/source-code.jpg"
+cover:
+  image: /public/2019/source-code.jpg
+  link: https://unsplash.com/photos/5Ntkpxqt54Y
+  text: Source code on a screen - Sai Kiran Anagani
 excerpt: "After having refreshed the CSS of my blog, I started to upgrade it. Since I switched from GandiBlog to Jekyll there were still a few things left to do. Since this year I've started blogging again, it's worth it."
 ---
 
 After having refreshed the CSS of my blog, I started to upgrade it. In fact, since I switched from GandiBlog to Jekyll almost 3 years ago, there were still a few things left to do to finalize the migration. And since this year I've started blogging again, it's worth it.
-
-<figure>
-  <img src="{{ page.image }}" alt="source-code" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/5Ntkpxqt54Y">Source code on a screen - Sai Kiran Anagani</a>
-  </figcaption>
-</figure>
 
 
 ## Debugging Atom feed
@@ -52,9 +47,8 @@ Currently, images on my blog are 640 x 480 pixels while those on dev.to are 1000
 
 ```markdown
 ---
-date: 2019-12-16 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-16 12:09:42 +02:00
+tags: [ css ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 ---
@@ -102,7 +96,7 @@ Then I add `{% raw %}{% seo %}{% endraw %}` in the template "\_layout/default.ht
   </head>
 ```
 
-Note: I don't do `gem 'jekyll-seo-tag'` to add the plugin to my "Gemfile" because I didn't install Jekyll locally. I rely exclusively on Github Pages to publish my blog.
+*Note: I don't do `gem 'jekyll-seo-tag'` to add the plugin to my "Gemfile" because I didn't install Jekyll locally. I rely exclusively on Github Pages to publish my blog.*
 
 I added `title=false` to prevent the plugin from adding the `<title>` tag which I already insert manually before. Voilà! Now my posts include a whole bunch more stuff to improve SEO:
 
@@ -143,9 +137,8 @@ For now, I'm going to use method #3 and I'm modifying the Front Matter of my pos
 
 ```markdown
 ---
-date: 2019-12-16 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-16 12:09:42 +02:00
+tags: [ css ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 excerpt: "Pour la nouvelle année à venir, j'ai un peu rafraîchi la charte graphique de mon blogue. Outre le côté 'tout nouveau, tout beau', cela m'a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas."
@@ -230,15 +223,14 @@ author: michel
 lang: fr-FR
 ```
 
-Note: I'm not sure which is better: `fr-FR`, `fr-fr` or `fr`.
+*Note: I'm not sure which is better: `fr-FR`, `fr-fr` or `fr`.*
 
 Then for all English posts, I change the Front Matter to redefine the `lang` attribute:
 
 ```markdown
 ---
-date: 2019-12-17 12:09:42+200
-layout: post
-tags: css
+date: 2019-12-17 12:09:42 +02:00
+tags: [ css ]
 lang: en-US
 title: "A new CSS and 5 tips to know"
 ---
@@ -270,16 +262,19 @@ To be complete, I also specify the language in the next / previous links at the 
 And also in links between the translations:
 
 ```html
-{% raw %}English version: [A new CSS ...]({% post_url ... %}){:hreflang="en"}.{% endraw %}
+{% raw %}English version: [A new CSS ...]({% post_url "..." %}){:hreflang="en"}.{% endraw %}
 ```
 
 Or:
 
 ```html
-{% raw %}Version en français : [Nouvelle CSS ...]({% post_url ... %}){:hreflang="fr"}.{% endraw %}
+{% raw %}Version en français : [Nouvelle CSS ...]({% post_url "..." %}){:hreflang="fr"}.{% endraw %}
 ```
 
 The `{% raw %}{:hreflang="xx"}{% endraw %}` trick wasn't easy to find, but it does exist: [Additional link attributes can be added by using a span IAL after the inline link](https://kramdown.gettalong.org/syntax.html#inline-links).
 
-{:.encart}
-Version en français : [Mise à jour de la configuration de Jekyll]({% post_url 2019-12-30-maj-configuration-jekyll %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Mise à jour de la configuration de Jekyll", "2019-12-30-maj-configuration-jekyll" %}.
+
+</div>

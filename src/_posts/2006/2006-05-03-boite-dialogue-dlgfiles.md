@@ -1,8 +1,7 @@
 ---
-date: 2006-05-03 09:38:00
-layout: post
+date: 2006-05-03 09:38:00 +02:00
 redirect_from: "post/2006/05/03/Boite-de-dialogue-dlgFiles"
-tags: qc
+tags: [ qc ]
 title: "Boite de dialogue dlgFiles"
 ---
 

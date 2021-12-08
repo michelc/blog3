@@ -1,8 +1,7 @@
 ---
-date: 2006-12-13 19:42:00
-layout: post
+date: 2006-12-13 19:42:00 +02:00
 redirect_from: "post/2006/12/13/Compacter-une-base-de-donnees-Microsoft-Access-a-laide-de-C"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Compacter une base de données Microsoft Access à l'aide de C#"
 ---
 

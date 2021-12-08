@@ -1,13 +1,12 @@
 ---
-date: 2004-09-22 18:39:00
-layout: post
+date: 2004-09-22 18:39:00 +02:00
 redirect_from: "post/2004/09/22/Modules-configRoles"
-tags: qc
+tags: [ qc ]
 title: "Modules.configRoles"
 ---
 
 Ajouté le champ configRoles à la table Modules pour gérer les droits
-concernant le paramétrage du module suite à la mise en œuvre de [configSource]({% post_url 2004-09-22-bricks-configsource %}).
+concernant le paramétrage du module suite à la mise en œuvre de [configSource]({% post_url "2004-09-22-bricks-configsource" %}).
 
 * /Core/Components/Modules.cs : ajout de la propriété configRoles à la
 classe Module

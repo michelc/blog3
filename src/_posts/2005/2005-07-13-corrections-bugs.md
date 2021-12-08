@@ -1,8 +1,7 @@
 ---
-date: 2005-07-13 17:52:00
-layout: post
+date: 2005-07-13 17:52:00 +02:00
 redirect_from: "post/2005/07/13/Corrections-de-bugs"
-tags: qc
+tags: [ qc ]
 title: "Corrections de bugs"
 ---
 

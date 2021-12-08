@@ -1,8 +1,7 @@
 ---
-date: 2007-09-10 14:05:00
-layout: post
+date: 2007-09-10 14:05:00 +02:00
 redirect_from: "post/2007/09/10/Comment-je-me-suis-debarrasse-des-sessions"
-tags: .net, ap
+tags: [ .net, ap ]
 title: "Comment je me suis débarrassé des sessions"
 ---
 
@@ -44,7 +43,7 @@ private static string _applicationPath;
 
 ## Quoique ?
 
-Ca a été un peu moins simple en ce qui concerne le stockage des informations
+Ça a été un peu moins simple en ce qui concerne le stockage des informations
 sur l'utilisateur connecté puisque dans ce cas il s'agit bel et bien
 d'informations distinctes pour chaque utilisateur.
 
@@ -114,7 +113,7 @@ Et de deux! Reste plus qu'à se débarrasser de la dernière variable de
 session qui me sert à passer des données d'une page à une autre.
 
 Concrètement, j'ai une classe XTable pour générer facilement un tableau HTML
-à partir d'une requête SQL. Ca ne permet sans doute pas tout ce que font un
+à partir d'une requête SQL. Ça ne permet sans doute pas tout ce que font un
 DataGrid ou un Repeater mais c'est optimisé, ça produit à coup sûr du code
 XHTML valide et jusqu'à présent je n'ai pas eu besoin de plus.
 

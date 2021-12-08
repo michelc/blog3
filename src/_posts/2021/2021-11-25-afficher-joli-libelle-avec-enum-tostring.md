@@ -1,19 +1,15 @@
 ---
-date: 2021-11-25 14:41:28+200
-layout: post
-tags: csharp, enum
+date: 2021-11-25 14:41:28 +02:00
+tags: [ csharp, enum ]
 title: "Afficher un joli libellé avec Enum.ToString()"
-image: "/public/2021/cute-puppies.jpg"
+cover:
+  image: /public/2021/cute-puppies.jpg
+  link: https://unsplash.com/photos/fliwkBbS7oM
+  text: Australian Shepherd babies - Jametlene Reskp
+excerpt: Un jour, j'ai eu besoin d'afficher un libellé en fonction de la valeur d'un Enum. J'ai donc fait comme à chaque fois et j'ai utilisé l'attribut Description pour définir de jolis libellés.
 ---
 
 Un jour, j'ai eu besoin d'afficher un libellé en fonction de la valeur d'un `Enum`. J'ai donc fait comme à chaque fois et j'ai utilisé l'attribut `Description` pour définir de jolis libellés.
-
-<figure>
-  <img src="{{ page.image }}" alt="cute puppies" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/fliwkBbS7oM">Australian Shepherd babies - Jametlene Reskp</a>
-  </figcaption>
-</figure>
 
 ```csharp
 using System.ComponentModel;
@@ -50,9 +46,9 @@ public static string GetCaption(this Enum value)
 }
 ```
 
-Vraiment rien de compliqué. A part d'ajouter cette méthode au fichier StringHelpers.cs de mon projet.
+Vraiment rien de compliqué. À part d'ajouter cette méthode au fichier StringHelpers.cs de mon projet.
 
-Mais quand même, ça ne me coûte rien d'essayer de voir si depuis le temps C# n'aurait rien inventé d'encore plus simple ou plus pratique. A part un Google Search "c# enum friendly name" + Tools + Past year.
+Mais quand même, ça ne me coûte rien d'essayer de voir si depuis le temps C# n'aurait rien inventé d'encore plus simple ou plus pratique. À part un Google Search "c# enum friendly name" + Tools + Past year.
 
 Bonne nouvelle, il y a des personnes qui s'y sont attelées, mais malheureusement, rien de bien nouveau :
 
@@ -86,7 +82,7 @@ public static string ToString(this Enum value)
 }
 ```
 
-Ben non :( Ca compile sans provoquer d'erreur, mais ensuite c'est comme si ça n'existait pas ! J'ai beau mettre un point d'arrêt, je n'y passe même pas et cela renvoie toujours le `.ToString()` de base avec les soulignés ???
+Ben non :( Ça compile sans provoquer d'erreur, mais ensuite c'est comme si ça n'existait pas ! J'ai beau mettre un point d'arrêt, je n'y passe même pas et cela renvoie toujours le `.ToString()` de base avec les soulignés ???
 
 C'est pas ça qui va m'arrêter. Soit je prends mon parti des soulignés. Soit je le fais quand même :
 
@@ -101,5 +97,8 @@ J'ai hésité avec `.ToFriendlyName()` qui semble un peu plus tendance, mais  `.
 
 Alors d'accord, ça m'oblige à accepter d'avoir quelquefois des accents dans les noms de variables (enfin seulement dans les noms de valeurs d'enum). Mais je pense que désormais ça va être ma nouvelle façon de faire, au moins dans mes projets personnels.
 
-{:.encart}
-English version: [Display a friendly name with Enum.ToString()]({% post_url 2021-11-26-display-friendly-name-with-enum-tostring %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Display a friendly name with Enum.ToString()", "2021-11-26-display-friendly-name-with-enum-tostring" %}.
+
+</div>

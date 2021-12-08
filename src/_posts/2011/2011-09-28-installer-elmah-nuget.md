@@ -1,8 +1,7 @@
 ---
-date: 2011-09-28 20:39:00
-layout: post
+date: 2011-09-28 20:39:00 +02:00
 redirect_from: "post/2011/09/28/installer-elmah-avec-nuget"
-tags: .net
+tags: [ .net ]
 title: "Installer ELMAH avec NuGet"
 ---
 
@@ -21,10 +20,10 @@ l'option "Manage NuGet Packages...".
 
 ![](/public/2011/elmah01.png)
 
-Note : cette option est également disponible quand on
+*Note : Cette option est également disponible quand on
 fait un clic droit sur la solution ou le nom du projet, mais dans ce cas elle
 plus difficile à repérer étant donné le plus grand nombre d'options
-proposées.
+proposées.*
 
 Il apparait alors la fenêtre "Manage NuGet Packages" qui liste par défaut
 tous les packages du monde en commençant par les plus téléchargés. Une fois là,
@@ -43,7 +42,7 @@ opportunément lorsque la souris le survole. Et c'est parti !
 
 ![](/public/2011/elmah03.png)
 
-Note : si j'avais accédé à la fenêtre "Manage NuGet
+Par contre, si j'avais accédé à la fenêtre "Manage NuGet
 Packages" par un clic-droit sur la solution, j'aurai eu droit à un préliminaire
 me demandant d'indiquer pour quels projet je souhaitais installer le
 package :

@@ -1,13 +1,12 @@
 ---
-date: 2006-10-05 10:06:00
-layout: post
+date: 2006-10-05 10:06:00 +02:00
 redirect_from: "post/2006/10/05/Definition-de-donnees-avec-QC"
-tags: qc, sql
+tags: [ qc, sql ]
 title: "Définition de données avec QC"
 ---
 
 Les ["pseudo-types"
-de données de QC]({% post_url 2006-09-27-pseudo-types-donnees-qc %}) présentaient quels types de données utiliser avec QC.
+de données de QC]({% post_url "2006-09-27-pseudo-types-donnees-qc" %}) présentaient quels types de données utiliser avec QC.
 
 Pour parvenir à ce résultat, on peut créer les tables dont on a besoin
 directement dans Access, TOAD, SQL Server Enterprise Manager… pour la base de
@@ -124,7 +123,7 @@ ALTER TABLE test_Donnees DROP COLUMN autreTexte;
 GO;
 ```
 
-Note : RENAME COLUMN ne fonctionne pas avec Access et MySQL.
+*Note : RENAME COLUMN ne fonctionne pas avec Access et MySQL.*
 
 ## Faire du ménage
 

@@ -1,12 +1,11 @@
 ---
-date: 2010-04-26 19:35:00
-layout: post
+date: 2010-04-26 19:35:00 +02:00
 redirect_from: "post/2010/04/26/nouvelle-css-pour-ap"
-tags: ap, html
+tags: [ ap, html ]
 title: "Nouvelle CSS pour AP"
 ---
 
-Ca fait une éternité que j'ai envie de donner un coup de jeune à la charte
+Ça fait une éternité que j'ai envie de donner un coup de jeune à la charte
 graphique de [07 Ardèche](http://07-ardeche.com/) qui
 date des tous premiers jours du site et qui n'a quasiment jamais évolué depuis,
 si ce n'est pour gérer de plus en plus de trucs.
@@ -118,7 +117,7 @@ sur 3 colonnes :
 + espacement (20 pixels) + bandeau latéral (160 pixels)
 
 Une fois ces nouvelles mesures décidées, il a fallu mettre à jour les CSS
-pour que tout rentre dans le moule. Ca n'a pas été facile facile à faire. J'ai
+pour que tout rentre dans le moule. Ça n'a pas été facile facile à faire. J'ai
 dû y aller petit morceau par petit morceau et m'y reprendre à plusieurs fois
 avant d'en venir à bout. Et j'ai dû passer par des tas de background-color:
 pink, yellow, green, blue ... pour bien vérifier que chaque morceau était bien

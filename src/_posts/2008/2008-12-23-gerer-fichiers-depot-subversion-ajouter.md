@@ -1,8 +1,7 @@
 ---
-date: 2008-12-23 11:11:00
-layout: post
+date: 2008-12-23 11:11:00 +02:00
 redirect_from: "post/2008/12/23/Gerer-les-fichiers-d-un-depot-Subversion-%3A-ajouter"
-tags: svn
+tags: [ svn ]
 title: "Gérer les fichiers d'un dépôt Subversion : ajouter"
 ---
 
@@ -71,7 +70,7 @@ valider :
 
 ![](/public/2008/05-fichier-ajouter.png)
 
-Ca y est, le dépôt Subversion contient un fichier de plus.
+Ça y est, le dépôt Subversion contient un fichier de plus.
 
-Note : dans la vrai vie, il aurait fallu recompiler le projet et
-vérifier que tout fonctionnait avant de faire le commit !
+*Note : Dans la vrai vie, il aurait fallu recompiler le projet et
+vérifier que tout fonctionnait avant de faire le commit !*

@@ -1,22 +1,24 @@
 ---
-date: 2010-01-29 11:51:00
-layout: post
+date: 2010-01-29 11:51:00 +02:00
 redirect_from: "post/2010/01/29/utiliser-asp-net-mvc-et-nhibernate-3-fin"
-tags: mvc, nhibernate
+tags: [ mvc, nhibernate ]
 title: "Utiliser ASP.NET MVC et NHibernate (3° partie)"
+excerpt: La traduction de la dernière partie du tutoriel de César Intriago sur ASP.NET MVC et NHibernate qui entre dans le vif du sujet en développant la gestion des billets et des catégories.
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 3)](http://forerunnerg34.wordpress.com/2009/11/05/using-asp-net-mvc-and-nhibernate-part-3-final/)" de César
-Intriago.
+<div class="encart">
+
+Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 3)](http://forerunnerg34.wordpress.com/2009/11/05/using-asp-net-mvc-and-nhibernate-part-3-final/)" de César Intriago.
+
+</div>
 
 Voici le troisième et dernier billet d'une série d'articles consacré à
 l'utilisation de NHibernate pour développer des applications ASP.NET MVC. Les
 liens vers les deux premières parties de ce tutoriel sont disponibles
 ci-dessous :
 
-* [Utiliser ASP.NET MVC et NHibernate (1° partie)]({% post_url 2010-01-29-utiliser-aspnetmvc-nhibernate-1 %})
-* [Utiliser ASP.NET MVC et NHibernate (2° partie)]({% post_url 2010-01-29-utiliser-aspnetmvc-nhibernate-2 %})
+* [Utiliser ASP.NET MVC et NHibernate (1° partie)]({% post_url "2010-01-29-utiliser-aspnetmvc-nhibernate-1" %})
+* [Utiliser ASP.NET MVC et NHibernate (2° partie)]({% post_url "2010-01-29-utiliser-aspnetmvc-nhibernate-2" %})
 
 Dans cet article, nous allons créer notre application ASP.NET MVC pour gérer
 les Posts et les Categories. Notre projet aura la structure suivante :
@@ -55,7 +57,7 @@ faciliter leur utilisation au niveau de la vue.
 
 Par conséquent, dans le cas des vues destinées aux Posts, je n'ai pas
 utilisé directement les objets du modèle (c'est à dire les classes Post et
-Category). A la place, j'ai créé une classe PostViewModel qui contient ces deux
+Category).À la place, j'ai créé une classe PostViewModel qui contient ces deux
 objets du modèle. De cette façon, je peux simplifier la manipulation des Posts
 et des Categories auxquelles ils sont rattachés comme s'il s'agissait d'une
 seule entité.
@@ -78,8 +80,4 @@ automatiser la création des vues.
 C'est extraordinaire tellement c'est facile et rapide de créer une
 application avec ASP.NET MVC. J'attends avec impatience la sortie de la version
 2.0 (en fait je teste d'ores et déjà sa Preview). C'est vraiment le moment
-idéal pour [apprendre ASP.NET MVC]({% post_url 2010-01-12-vous-devriez-apprendre-mvc %}) et NHibernate.
-
-{:.encart}
-Ceci est la traduction du billet "[Using ASP.NET MVC and NHibernate (Part 3)](http://forerunnerg34.wordpress.com/2009/11/05/using-asp-net-mvc-and-nhibernate-part-3-final/)" de César
-Intriago.
+idéal pour [apprendre ASP.NET MVC]({% post_url "2010-01-12-vous-devriez-apprendre-mvc" %}) et NHibernate.

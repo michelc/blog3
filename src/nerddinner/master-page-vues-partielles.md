@@ -1,5 +1,5 @@
 ---
-date: 2010-01-07 17:29:00
+date: 2010-01-07 17:29:00 +02:00
 layout: page
 permalink: nerddinner/master-page-vues-partielles/
 redirect_from: "pages/NerdDinner/Master-Page-et-Vues-Partielles"
@@ -37,7 +37,7 @@ Et maintenant voici à quoi ressemble le formulaire de modification :
 
 ![](http://nerddinnerbook.s3.amazonaws.com/Images/image101.png)
 
-On ne peut pas dire qu'il y ait beaucoup de différence. A part le titre, la
+On ne peut pas dire qu'il y ait beaucoup de différence. À part le titre, la
 présentation du formulaire et les contrôles utilisés semblent parfaitement
 identiques.
 
@@ -377,7 +377,7 @@ Ou dans le cas de l'URL /Dinners/Edit/[id] :
 ![](http://nerddinnerbook.s3.amazonaws.com/Images/image106.png)
 
 Les vues partielles et les pages maîtres procurent une très grande souplesse
-pour organiser les  vues le plus clairement possible. A l'usage, vous
+pour organiser les  vues le plus clairement possible. À l'usage, vous
 verrez qu'elles évitent d'avoir du code en double au sein des vues, ce qui les
 rend plus faciles à relire et donc à maintenir.
 

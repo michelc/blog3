@@ -1,8 +1,7 @@
 ---
-date: 2005-06-06 10:46:00
-layout: post
+date: 2005-06-06 10:46:00 +02:00
 redirect_from: "post/2005/06/06/Documents-Box"
-tags: qc
+tags: [ qc ]
 title: "Documents Box"
 ---
 

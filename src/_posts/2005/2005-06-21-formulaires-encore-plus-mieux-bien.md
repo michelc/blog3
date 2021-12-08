@@ -1,8 +1,7 @@
 ---
-date: 2005-06-21 09:10:00
-layout: post
+date: 2005-06-21 09:10:00 +02:00
 redirect_from: "post/2005/06/21/Des-formulaires-encore-plus-mieux-bien"
-tags: html, qc
+tags: [ html, qc ]
 title: "Des formulaires encore plus mieux bien"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2010-03-11 00:04:00
-layout: post
+date: 2010-03-11 00:04:00 +02:00
 redirect_from: "post/2010/03/11/faire-une-liste-html-radio-button"
-tags: html, mvc
+tags: [ html, mvc ]
 title: "Faire une liste Html.RadioButton"
 ---
 

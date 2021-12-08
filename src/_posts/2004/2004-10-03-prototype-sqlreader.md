@@ -1,8 +1,7 @@
 ---
-date: 2004-10-03 20:01:00
-layout: post
+date: 2004-10-03 20:01:00 +02:00
 redirect_from: "post/2004/10/03/Prototype-SqlReader"
-tags: qc
+tags: [ qc ]
 title: "Prototype SqlReader"
 ---
 

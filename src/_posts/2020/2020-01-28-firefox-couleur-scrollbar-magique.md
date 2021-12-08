@@ -1,20 +1,15 @@
 ---
-date: 2020-01-27 19:04:18+200
-layout: post
-tags: livres
+date: 2020-01-27 19:04:18 +02:00
+tags: [ livres ]
 title: "Waouh ! La scrollbar de Firefox est magique"
-image: "/public/2020/firefox-scrollbar-color.jpg"
+cover:
+  image: /public/2020/firefox-scrollbar-color.jpg
+  link: https://www.solitaire-play.com/klondike-turn-three/
+  text: L'ascenseur est vert !
 excerpt: "Avec Firefox, la barre de défilement de mes jeux Solitaire-Play est dans les tons «vert», comme le reste du site, et je ne sais pas pourquoi..."
 ---
 
 Il me semble. Je reviens de mon site [Solitaire-Play](https://www.solitaire-play.com/) et je viens de m'apercevoir que la barre de l'ascenseur vertical est "verte", ce qui est la couleur dominante de tout jeux de solitaire qui se respecte :)
-
-<figure>
-  <img src="{{ page.image }}" alt="firefox-scrollbar-color" />
-  <figcaption>
-    <a href="https://www.solitaire-play.com/klondike-turn-three/">L'ascenseur est vert !</a>
-  </figcaption>
-</figure>
 
 Je vérifie dans Chrome et là, la barre est "grise" comme à l'habitude. J'ai beau chercher, et je ne trouve rien qui explique ce comportement.
 
@@ -39,5 +34,8 @@ Comme je n'ai pas encore mis en place de fichier "manifest.json", je n'ai pas no
 
 Pour l'instant, je vais ranger ça dans la case des bénéfices qu'il y a à passer de Chrome à Firefox. Nous ne voyons pas d'autre explication...
 
-{:.encart}
-English version: [Hey! Firefox scrollbar-color is magical]({% post_url 2020-01-29-firefox-magic-scrollbar-color %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Hey! Firefox scrollbar-color is magical", "2020-01-29-firefox-magic-scrollbar-color" %}.
+
+</div>

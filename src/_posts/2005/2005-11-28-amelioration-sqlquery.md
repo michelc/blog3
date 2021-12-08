@@ -1,8 +1,7 @@
 ---
-date: 2005-11-28 14:34:00
-layout: post
+date: 2005-11-28 14:34:00 +02:00
 redirect_from: "post/2005/11/28/Amelioration-SqlQuery"
-tags: qc
+tags: [ qc ]
 title: "Amélioration SqlQuery"
 ---
 

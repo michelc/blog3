@@ -1,9 +1,11 @@
 ---
-date: 2019-11-25 12:16:55+200
-layout: post
-tags: javascript
+date: 2019-11-25 12:16:55 +02:00
+tags: [ javascript ]
 title: "De l'inconvénient d'utiliser aveuglément la dernière version de Node"
-image: "/public/2019/le-corniaud.jpg"
+cover:
+  image: /public/2019/le-corniaud.jpg
+  link: https://fr.wikipedia.org/wiki/Le_Corniaud
+  text: Elle va marcher beaucoup moins bien... - Le Corniaud
 excerpt: "Jusqu'à présent, j'utilise toujours la dernière version de Node. D'habitude ça marche mais ce coup-ci j'ai dû revenir en arrière."
 ---
 
@@ -11,15 +13,8 @@ Depuis que j'ai commencé à faire quelques trucs avec Node, j'ai toujours
 travaillé avec la toute dernière version de Node. Pour cela, j'ai l'habitude de
 faire des `choco upgrade -y nodejs` assez régulièrement.
 
-<figure>
-  <img src="{{ page.image }}" alt="le-corniaud" />
-  <figcaption>
-    <a href="https://fr.wikipedia.org/wiki/Le_Corniaud">Elle va marcher beaucoup moins bien... - Le Corniaud</a>
-  </figcaption>
-</figure>
-
 Cela me permet de tester les dernières nouveautés de JavaScript sans passer par
-Babel ou TypeScript. Ca marche parce que je ne fais que des bouts d'essais et
+Babel ou TypeScript. Ça marche parce que je ne fais que des bouts d'essais et
 que je code et j'exécute tout en local. Sans doute que le jour où je voudrai
 mettre en production et déployer mon code, j'aurai à revoir ce mode de
 fonctionnement.
@@ -165,5 +160,8 @@ Conclusion : il faudrait qu'à l'avenir je fasse un peu plus attention à ce que
 j'utilise et aux problèmes de compatibilité que cela peut causer. Mais d'un
 autre côté, c'est la première fois que je rencontre un tel problème...
 
-{:.encart}
-English version: [The problem with blindly using the latest Node]({% post_url 2019-11-26-problem-using-latest-nodejs %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "The problem with blindly using the latest Node", "2019-11-26-problem-using-latest-nodejs" %}.
+
+</div>

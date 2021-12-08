@@ -1,8 +1,7 @@
 ---
-date: 2012-10-04 21:27:00
-layout: post
+date: 2012-10-04 21:27:00 +02:00
 redirect_from: "post/2012/10/04/tester-action-details"
-tags: ef, mvc, unit-test
+tags: [ ef, mvc, unit-test ]
 title: "Tester l'action Details()"
 ---
 
@@ -27,7 +26,7 @@ public ViewResult Details(int id)
 ```
 
 Il s'agit de l'action standard en ASP.NET MVC pour afficher une fiche
-particulière. Ca correspondrait à l'action "show" dans un contrôleur Ruby on
+particulière. Ça correspondrait à l'action "show" dans un contrôleur Ruby on
 Rails.
 
 Cette action reçoit en paramètre (`int id`) l'identifiant de la
@@ -235,11 +234,11 @@ de gérer.
 Ca, c'est fait. Il faut maintenant que je teste les autres actions du
 contrôleur : Edit() en versions GET et POST, Delete() en mode GET,
 DeleteConfirmed() en mode POST() et si possible accompagner ça d'un nouveau
-billet ([c'est fait !]({% post_url 2012-10-17-tests-unitaires-people-controller %})).
+billet ([c'est fait !]({% post_url "2012-10-17-tests-unitaires-people-controller" %})).
 
 Puis il faudra reporter ces tests au niveau du contrôleur
 CompaniesController qui gère les contacts de type sociétés.
 
 Et pour finir, essayer de me motiver suffisamment pour faire un billet qui
 explique comment j'ai décidé de gérer les tests unitaires pour ce qui touche à
-Entity Framework (c'est [presque]({% post_url 2012-11-05-tests-unitaires-entity-framework %}) fait).
+Entity Framework (c'est [presque]({% post_url "2012-11-05-tests-unitaires-entity-framework" %}) fait).

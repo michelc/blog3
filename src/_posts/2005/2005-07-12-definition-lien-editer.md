@@ -1,8 +1,7 @@
 ---
-date: 2005-07-12 16:18:00
-layout: post
+date: 2005-07-12 16:18:00 +02:00
 redirect_from: "post/2005/07/12/D%C3%A9finition-du-lien-Editer"
-tags: qc
+tags: [ qc ]
 title: "Définition du lien Editer"
 ---
 

@@ -1,10 +1,13 @@
 ---
-date: 2019-10-15 10:59:46
-layout: post
+date: 2019-10-15 10:59:46 +02:00
 lang: en-US
-tags: javascript, node, sql
+tags: [ javascript, node, sql ]
 title: "CRUD application with Express and PostgresSQL in 10 steps"
-image: "/public/2019/elephant-bookshelf.jpg"
+cover:
+  image: /public/2019/elephant-bookshelf.jpg
+  link: https://www.instagram.com/victorzastolskiy/
+  text: An elephant in the room with book shelves - Victor Zastolskiy
+excerpt: A "copy/paste" tutorial to learn how to develop a Node JS application with the Express web framework and a PostgreSQL database.
 ---
 
 The goal of this very simple project is to develop a Node JS application to learn how to:
@@ -12,20 +15,13 @@ The goal of this very simple project is to develop a Node JS application to lear
 * Create a very basic website with Express.
 * Manage an SQL database (PostgresSQL in this case).
 
-<figure>
-  <img src="{{ page.image }}" alt="elephant-bookshelf" />
-  <figcaption>
-    <a href="https://www.instagram.com/victorzastolskiy/">An elephant in the room with book shelves - Victor Zastolskiy</a>
-  </figcaption>
-</figure>
-
 This post is only a tutorial to understand how it works and to have a starting point to train myself gradually to Node and Express (and probably later to Sequelize). It is by no means a guide to good practice for developing "real" applications. Nor is it an article to learn how to program or to convince anyone to use Node, Express or SQL...
 
 The final JavaScript code is visible in the appendix at the end of the post. The complete code of the application (in french) is available on [GitHub](https://github.com/michelc/AppTestPG).
 
 At the moment, there is no demonstration site for the completed project. I have not (yet) found an easy solution to host it. Maybe I'll do another tutorial the day I deal with this problem.
 
-Note: This tutorial is pretty much a copy/paste of the tutorial [CRUD application with Express and SQlite in 10 steps]({% post_url 2019-10-08-crud-with-express-sqlite-10-steps %}). If, like me, you have already followed it, it will go quite quickly and it's a good review of what was presented there. Otherwise, it's not much more complicated and as everything is re-explained, it's not necessary to have followed the first tutorial with SQlite before starting this one with Express and PostgreSQL.
+*Note: This tutorial is pretty much a copy/paste of the tutorial [CRUD application with Express and SQlite in 10 steps]({% post_url "2019-10-08-crud-with-express-sqlite-10-steps" %}). If, like me, you have already followed it, it will go quite quickly and it's a good review of what was presented there. Otherwise, it's not much more complicated and as everything is re-explained, it's not necessary to have followed the first tutorial with SQlite before starting this one with Express and PostgreSQL.*
 
 
 **Table of Contents**
@@ -103,7 +99,7 @@ Wrote to E:\Code\AppTestPG\package.json:
 }
 ```
 
-Note: For this example, it is faster to do `npm init -y` (or `npm init -yes`) than to type <Enter> at each question to accept the default value.
+*Note: For this example, it is faster to do `npm init -y` (or `npm init -yes`) than to type <Enter> at each question to accept the default value.*
 
 In Visual Code, the "package.json" file created by NPM now appears in the root folder of the project ("E:\Code\AppTestPG" in this case).
 
@@ -132,7 +128,7 @@ PS E:\Code\AppTestPG> npm install ejs
 PS E:\Code\AppTestPG> npm install pg
 ```
 
-Note: Strangely enough, you have to use the name/identifier "pg" to install the "node-postgres" module.
+*Note: Strangely enough, you have to use the name/identifier "pg" to install the "node-postgres" module.*
 
 Or to go faster:
 
@@ -162,7 +158,7 @@ When the installation of these three dependencies (and their own dependencies) i
 }
 ```
 
-Note: In older tutorials, we still see the syntax `npm install --save xxxxx` to save the list of dependencies in the "package.json" file, but this is no longer necessary since NPM version 5.
+*Note: In older tutorials, we still see the syntax `npm install --save xxxxx` to save the list of dependencies in the "package.json" file, but this is no longer necessary since NPM version 5.*
 
 
 ### The "node_modules" folder
@@ -180,7 +176,7 @@ To test this, you can delete the "node_modules" folder:
 PS E:\Code\AppTestPG> rd node_modules /s /q
 ```
 
-Note: Under Windows, the `/s /q` options allow you to delete everything without question.
+*Note: Under Windows, the `/s /q` options allow you to delete everything without question.*
 
 Then we install all the dependencies listed in the "package.json" file:
 
@@ -297,7 +293,7 @@ In our program, the answer will be the text "Hello world..." that is sent using 
 * It returns the text in the body part of the HTTP response
 * It terminates the connection
 
-Note: It's quite technical for this tutorial.
+*Note: It's quite technical for this tutorial.*
 
 
 ### Improve the launch of the Node application
@@ -348,7 +344,7 @@ Server started (http://localhost:3000/) !
 
 And don't forget the Ctrl+C to stop the Express server at the end.
 
-Note: It is possible to use the "nodemon" module to avoid having to stop / restart the server each time the source code is modified. But I prefer not to talk about too many things at once in this tutorial.
+*Note: It is possible to use the "nodemon" module to avoid having to stop / restart the server each time the source code is modified. But I prefer not to talk about too many things at once in this tutorial.*
 
 
 <a name="crud4"></a>
@@ -359,7 +355,7 @@ Since the purpose of the application is to have several functionalities, you nee
 
 In the case of the view corresponding to the request to the site root (i.e. a "GET /"), it will therefore be necessary to create the "index.ejs" view and the two reusable partial views "_header.ejs" and "_footer.ejs".
 
-Note: These three files must be saved in a "views" folder, which must therefore be created first.
+*Note: These three files must be saved in a "views" folder, which must therefore be created first.*
 
 
 ### Partial view "views/_header.ejs"
@@ -421,7 +417,7 @@ Note: These three files must be saved in a "views" folder, which must therefore 
 </html>
 ```
 
-Note: Apart from the two `<%- include(partial_view) -%>`, it is only HTML. This is one of the advantages of EJS over other template engines to avoid having to get distracted when you start.
+*Note: Apart from the two `<%- include(partial_view) -%>`, it is only HTML. This is one of the advantages of EJS over other template engines to avoid having to get distracted when you start.*
 
 
 ### Add a style sheet
@@ -435,7 +431,7 @@ To do this, you have to create a "public" folder in which you create a sub-folde
 
 ## 5. Use views in Express
 
-Note: If this had not been done at the beginning of the project, it would have been necessary to install the "EJS" module by an `npm install ejs` to be able to use it.
+*Note: If this had not been done at the beginning of the project, it would have been necessary to install the "EJS" module by an `npm install ejs` to be able to use it.*
 
 ### Changes to "index.js"
 
@@ -447,7 +443,7 @@ To use the views created in the Express application, you need to modify the "ind
 app.set("view engine", "ejs");
 ```
 
-Note: It is not necessary to do a `const ejs = require("ejs")` before because Express does it for us.
+*Note: It is not necessary to do a `const ejs = require("ejs")` before because Express does it for us.*
 
 * Specify that the views are saved in the "views" folder.
 
@@ -463,7 +459,7 @@ const path = require("path");
 app.set("views", path.join(__dirname, "views"));
 ```
 
-Note: There is no need to install the `path` module with NPM beforehand, because it's a standard module of Node JS.
+*Note: There is no need to install the `path` module with NPM beforehand, because it's a standard module of Node JS.*
 
 * Indicate that static files are saved in the "public" folder and its subdirectories. It is a setting that is necessary for the file "bootstrap.min.css" previously copied into "public/css" to be accessible.
 
@@ -558,7 +554,7 @@ Then you must add a "data.ejs" view in the "views" folder to display the data tr
 <%- include("_footer") -%>
 ```
 
-Note: The purpose of this tutorial is not too much to explain how EJS works. I chose this template engine because its syntax is based on `<%... %>` which is quite common, whether with ASP, PHP, Ruby... And for the rest, it is JavaScript (hence the name Embedded JavaScript).
+*Note: The purpose of this tutorial is not too much to explain how EJS works. I chose this template engine because its syntax is based on `<%... %>` which is quite common, whether with ASP, PHP, Ruby... And for the rest, it is JavaScript (hence the name Embedded JavaScript).*
 
 And now, when you navigate to "http://localhost:3000/data" after restarting the site, you get:
 
@@ -610,7 +606,7 @@ app.get("/data", (req, res) => {
 
 ## 6. First steps with the node-postgres module
 
-Note: If this had not been done at the beginning of the project, it would have been necessary to install the node-postgres module by an `npm install pg` to be able to access a PostgreSQL database under Node.
+*Note: If this had not been done at the beginning of the project, it would have been necessary to install the node-postgres module by an `npm install pg` to be able to access a PostgreSQL database under Node.*
 
 
 ### Access a PostgreSQL database
@@ -671,7 +667,7 @@ const pool = new Pool({
 console.log("Successful connection to the database");
 ```
 
-Note: Of course, you don't write all this connection information in plain text in the code. In a real application, they would be retrieved by default from environment variables or set in a ".env" file using the "dotenv" module.
+*Note: Of course, you don't write all this connection information in plain text in the code. In a real application, they would be retrieved by default from environment variables or set in a ".env" file using the "dotenv" module.*
 
 After this code has been executed, the variable "pool" is a `Pool` object from the node-postgres module which represents a connection to the database. This object will later be used to access the contents of the database and to make queries on this database.
 
@@ -720,7 +716,7 @@ pool.query(sql_create, [], (err, result) => {
 
 This code uses the `.query()` method of the `Pool` object fom the node-postgres module. This method executes the SQL query that is passed to it in 1st parameter then calls the callback function corresponding to the 3rd parameter, by passing it an object `err` to be able to check if the execution of the request was proceeded correctly and a `result` object containing the result of the query.
 
-Note: The table will only be created if it does not exist yet, thanks to the SQL clause "IF NOT EXISTS". It wouldn't be great for a real application, right now it's just a tutorial.
+*Note: The table will only be created if it does not exist yet, thanks to the SQL clause "IF NOT EXISTS". It wouldn't be great for a real application, right now it's just a tutorial.*
 
 
 ### Seeding the "Books" table
@@ -820,7 +816,7 @@ After restarting the application with `npm start`, the following result is obtai
 
 ![List of books](/public/2019/crud-pg-05-list.png)
 
-Note: You have to be careful and write "book.title" and not "book.Title" because even though the "Books" table was created using capital letters as initials for column names, PostgreSQL has transformed these names into lower case letters.
+*Note: You have to be careful and write "book.title" and not "book.Title" because even though the "Books" table was created using capital letters as initials for column names, PostgreSQL has transformed these names into lower case letters.*
 
 
 ### Display books in tabular form
@@ -961,7 +957,7 @@ And finally, all that remains is to code the route to save the changes made to t
 
 Here again, the identifier is found via the "id" parameter of the `Request` object. And the data entered are available via the `body` property of this `Request` object to be stored in a temporary array with the identifier.
 
-Note: In order for `Request.body` to retrieve the posted values, it is necessary to add a middleware to the server configuration. This point will be explained in more detail in the next section...
+*Note: In order for `Request.body` to retrieve the posted values, it is necessary to add a middleware to the server configuration. This point will be explained in more detail in the next section...*
 
 The modification in the database is done via an "UPDATE..." query, again executed with the `pool.query` method of node-postgres to which we also pass this time an array containing the modified data and the identifier of the book to be updated.
 
@@ -980,7 +976,7 @@ app.post("/edit/:id", (req, res) => {
 });
 ```
 
-Note: With a real application, it is essential to have a client-side and server-side input control, but this is not the subject of this tutorial.
+*Note: With a real application, it is essential to have a client-side and server-side input control, but this is not the subject of this tutorial.*
 
 
 ### The middleware "express.urlencoded()"
@@ -997,7 +993,7 @@ app.use(express.urlencoded({ extended: false })); // <--- middleware configurati
 
 This middleware allows you to retrieve the data sent as "Content-Type: application/x-www-form-urlencoded", which is the standard for values posted from a form. For information, it is very often used with "express.json()" middleware for data sent as "Content-Type: application/json", but here it is not necessary.
 
-Note: There are examples that still use the "body-parser" module instead, but this is no longer useful since version 4.1.6 of Express.
+*Note: There are examples that still use the "body-parser" module instead, but this is no longer useful since version 4.1.6 of Express.*
 
 
 <a name="crud8"></a>
@@ -1234,7 +1230,7 @@ This is not to extend the post, but for those like me who like to have an overvi
 * 3 NPM dependencies (ejs, express and pg)
 * 3 imported modules (express, path and pg)
 
-Note: The complete code of the application is also available on [GitHub] (https://github.com/michelc/AppTestPG) (french version).
+*Note: The complete code of the application is also available on [GitHub](https://github.com/michelc/AppTestPG) (french version).*
 
 ```javascript
 const express = require("express");
@@ -1395,5 +1391,8 @@ app.post("/delete/:id", (req, res) => {
 });
 ```
 
-{:.encart}
-Version en français : [Application CRUD avec Express et PostgreSQL en 10 étapes]({% post_url 2019-09-21-crud-avec-express-postgresql-10-etapes %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Application CRUD avec Express et PostgreSQL en 10 étapes", "2019-09-21-crud-avec-express-postgresql-10-etapes" %}.
+
+</div>

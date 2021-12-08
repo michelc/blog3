@@ -1,8 +1,7 @@
 ---
-date: 2006-01-14 16:37:00
-layout: post
+date: 2006-01-14 16:37:00 +02:00
 redirect_from: "post/2006/01/14/Google-Sitemap"
-tags: qc, referencement
+tags: [ qc, referencement ]
 title: "Google Sitemap"
 ---
 
@@ -50,7 +49,7 @@ void Page_Load(object sender, System.EventArgs e) {
 Il est également nécessaire d'inscrire l'url du fichier sitemap sur Google
 Sitemaps pour qu'il soit pris en compte.
 
-Note : même si selon Google un fichier sitemap n'est pas
+Au passage, même si selon Google un fichier sitemap n'est pas
 censé améliorer le référencement du site, cela présente au moins les avantages
 suivants :
 

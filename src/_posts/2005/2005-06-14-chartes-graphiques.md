@@ -1,8 +1,7 @@
 ---
-date: 2005-06-14 14:44:00
-layout: post
+date: 2005-06-14 14:44:00 +02:00
 redirect_from: "post/2005/06/14/Chartes-graphiques"
-tags: qc
+tags: [ qc ]
 title: "Chartes graphiques"
 ---
 

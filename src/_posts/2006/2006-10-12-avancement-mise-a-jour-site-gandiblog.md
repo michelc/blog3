@@ -1,8 +1,7 @@
 ---
-date: 2006-10-12 21:48:00
-layout: post
+date: 2006-10-12 21:48:00 +02:00
 redirect_from: "post/2006/10/12/Avancement-mise-a-jour-du-site-gandiblog"
-tags: blog
+tags: [ blog ]
 title: "Avancement mise à jour du site (gandiblog)"
 ---
 

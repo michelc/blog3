@@ -1,8 +1,7 @@
 ---
-date: 2005-06-21 08:01:00
-layout: post
+date: 2005-06-21 08:01:00 +02:00
 redirect_from: "post/2005/06/21/Gestion-des-chaines-vides-avec-Oracle"
-tags: qc
+tags: [ qc ]
 title: "Gestion des chaines vides avec Oracle"
 ---
 

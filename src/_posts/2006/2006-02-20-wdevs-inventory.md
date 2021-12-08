@@ -1,8 +1,7 @@
 ---
-date: 2006-02-20 12:52:00
-layout: post
+date: 2006-02-20 12:52:00 +02:00
 redirect_from: "post/2006/02/20/Wdevs-Inventory"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Inventory"
 ---
@@ -13,10 +12,10 @@ which was to track my work as I develop another IBuySpy clone.
 On the other hand, I succeeded in holding my development
 objectives :
 
-* QC provide [standard xhtml code]({% post_url 2004-10-22-wdevs-start %})
+* QC provide [standard xhtml code]({% post_url "2004-10-22-wdevs-start" %})
 and use CSS compliant templates,
 * [a Private
-Assembly architecture]({% post_url 2004-11-02-wdevs-project-fundations %}) with qc.Engine.dll and qc.Classics.dll (with 32 boxes
+Assembly architecture]({% post_url "2004-11-02-wdevs-project-fundations" %}) with qc.Engine.dll and qc.Classics.dll (with 32 boxes
 !!!),
 * the data layer works with Access, Sql Server, Oracle, MySQL and PostgreSQL
 (although that made a few months that I didn't test with MySQL and

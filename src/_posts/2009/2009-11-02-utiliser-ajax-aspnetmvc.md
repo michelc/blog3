@@ -1,8 +1,7 @@
 ---
-date: 2009-11-02 18:31:00
-layout: post
+date: 2009-11-02 18:31:00 +02:00
 redirect_from: "post/2009/11/02/Utiliser-Ajax-avec-ASP.NET-MVC"
-tags: mvc
+tags: [ mvc ]
 title: "Utiliser Ajax avec ASP.NET MVC"
 ---
 
@@ -237,7 +236,7 @@ moi.
 
 ## Faire des suppressions en Ajax
 
-Ca c'est quelque chose de beaucoup plus intéressant. Pas vraiment d'un point
+Ça c'est quelque chose de beaucoup plus intéressant. Pas vraiment d'un point
 de vue interface utilisateur (je préfère afficher un écran de détail où on voit
 clairement la fiche qui va être supprimée si on confirme), mais plus pour le
 côté "si je veux faire une suppression, j'utilise une méthode HTTP DELETE".
@@ -293,14 +292,14 @@ Index.
 
 ## Conclusion
 
-Ouf ! Ca a été long ([plus d'un mois]({% post_url 2009-09-23-troisieme-etape-aspnetmvc %})) et [pas]({% post_url 2009-10-20-test-driven-development-aspnetmvc-suite %}) [toujours]({% post_url 2009-10-29-test-driven-development-aspnetmvc-suite %}) [facile]({% post_url 2009-10-30-test-driven-development-aspnetmvc-fin %}), mais j'ai finalement réussi à suivre ce tutoriel d'un
+Ouf ! Ça a été long ([plus d'un mois]({% post_url "2009-09-23-troisieme-etape-aspnetmvc" %})) et [pas]({% post_url "2009-10-20-test-driven-development-aspnetmvc-suite" %}) [toujours]({% post_url "2009-10-29-test-driven-development-aspnetmvc-suite" %}) [facile]({% post_url "2009-10-30-test-driven-development-aspnetmvc-fin" %}), mais j'ai finalement réussi à suivre ce tutoriel d'un
 bout à l'autre. Avec du recul, je me rend compte qu'il aurait été préférable de
 suivre les [tutoriels ASP.NET MVC](http://www.asp.net/learn/mvc/)
 dans l'ordre, plutôt que d'attaquer directement avec l'exercice de fin de
 cours ! Mais il n'est jamais trop tard pour bien faire, surtout maintenant
 que la [traduction
 française](http://dotnet.developpez.com/mvc/) est disponible. Je vais donc pouvoir continuer mon apprentissage
-avant de retrouver le [tutoriel NerdDinner]({% post_url 2009-07-17-premier-essai-aspnet-mvc %}).
+avant de retrouver le [tutoriel NerdDinner]({% post_url "2009-07-17-premier-essai-aspnet-mvc" %}).
 
 Plus tard, j'aimerais utiliser cette application de Gestion de Contacts
 comme une base. Je pense qu'il serait intéressant de la refaire en remplaçant
@@ -309,4 +308,4 @@ si les différences sont bien cantonnées au niveau du repository. Et puis
 continuer en testant ça avec [SubSonic](http://www.subsonicproject.com/) ou [NHibernate](http://www.nhforge.org/), en particulier avec [Fluent NHibernate](http://www.bengtbe.com/blog/post/2009/08/10/NerdDinner-with-Fluent-NHibernate-Part-1-The-domain-model.aspx)...
 
 ---
-Billet suivant dans la série : [Gestion de contacts avec ASP.NET MVC et jQuery]({% post_url 2009-11-03-gestion-contacts-aspnetmvc-jquery %})
+Billet suivant dans la série : [Gestion de contacts avec ASP.NET MVC et jQuery]({% post_url "2009-11-03-gestion-contacts-aspnetmvc-jquery" %})

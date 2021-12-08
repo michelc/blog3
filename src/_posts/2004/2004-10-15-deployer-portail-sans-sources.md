@@ -1,8 +1,7 @@
 ---
-date: 2004-10-15 13:08:00
-layout: post
+date: 2004-10-15 13:08:00 +02:00
 redirect_from: "post/2004/10/15/D%C3%A9ployer-un-portail-sans-les-sources"
-tags: qc
+tags: [ qc ]
 title: "Déployer un portail sans les sources"
 ---
 

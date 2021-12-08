@@ -1,8 +1,7 @@
 ---
-date: 2005-03-24 09:40:00
-layout: post
+date: 2005-03-24 09:40:00 +02:00
 redirect_from: "post/2005/03/24/Wdevs-Gestion-des-erreurs-d-une-application-Web"
-tags: wdevs
+tags: [ wdevs ]
 title: "(Wdevs) Gestion des erreurs d'une application Web"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2012-05-31 23:24:00
-layout: post
+date: 2012-05-31 23:24:00 +02:00
 redirect_from: "post/2012/05/31/application-asp-net-mvc-avec-ef-code-first-sur-appharbor"
-tags: ef, mvc
+tags: [ ef, mvc ]
 title: "Application ASP.NET MVC avec EF Code First sur AppHarbor"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2005-06-21 09:00:00
-layout: post
+date: 2005-06-21 09:00:00 +02:00
 redirect_from: "post/2005/06/21/Modifications-et-evolutions-generales"
-tags: qc
+tags: [ qc ]
 title: "Modifications et évolutions générales"
 ---
 

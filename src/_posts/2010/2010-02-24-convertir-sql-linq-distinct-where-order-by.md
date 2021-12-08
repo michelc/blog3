@@ -1,18 +1,17 @@
 ---
-date: 2010-02-24 13:41:00
-layout: post
+date: 2010-02-24 13:41:00 +02:00
 redirect_from: "post/2010/02/24/convertir-sql-en-linq-distinct-where-order-by"
-tags: csharp, linq
+tags: [ csharp, linq ]
 title: "Convertir SQL en LINQ : DISTINCT, WHERE et ORDER BY"
 ---
 
-{:.encart}
-Ceci est une traduction assez libre de la série de billets rédigés par Bill
-Horst pour apprendre comment [passer du langage SQL au langage LINQ](http://blogs.msdn.com/vbteam/archive/tags/Converting SQL to LINQ/default.aspx) et plus spécialement en
-VB LINQ. Pour ma part, j'ai adapté les explications et les exemples de codes
-pour cibler la syntaxe C# du langage LINQ.
+<div class="encart">
 
-Ce troisième billet de la série continue la [description des clauses spécifiques]({% post_url 2010-02-23-convertir-sql-linq-from-select %}) et il va porter sur la
+Ceci est une traduction assez libre de la série de billets rédigés par Bill Horst pour apprendre comment [passer du langage SQL au langage LINQ](https://devblogs.microsoft.com/vbteam/category/series/converting-sql-to-linq/) et plus spécialement en VB LINQ. Pour ma part, j'ai adapté les explications et les exemples de codes pour cibler la syntaxe C# du langage LINQ.
+
+</div>
+
+Ce troisième billet de la série continue la [description des clauses spécifiques]({% post_url "2010-02-23-convertir-sql-linq-from-select" %}) et il va porter sur la
 façon de transformer les clauses DISTINCT, WHERE et ORDER BY en clauses
 LINQ.
 

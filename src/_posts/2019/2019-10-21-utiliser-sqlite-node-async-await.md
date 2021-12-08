@@ -1,29 +1,25 @@
 ---
-date: 2019-10-21 12:12:36+200
-layout: post
-tags: javascript, node, sql
+date: 2019-10-21 12:12:36 +02:00
+tags: [ javascript, node, sql ]
 title: "Utiliser SQlite3 en mode async / await"
-image: "/public/2019/grand-bain.jpg"
+cover:
+  image: /public/2019/grand-bain.jpg
+  link: https://fr.wikipedia.org/wiki/Le_Grand_Bain_(film)
+  text: Le Grand Bain - Gilles Lellouche
+excerpt: Dans ce tutoriel, je modifie le code développé auparavant afin de ne plus avoir à utiliser des fonctions callback pour accéder à la base de données SQLite.
 ---
 
 Je continue ma série de tutoriels pour apprendre Node JS et plus
 particulièrement voir comment développer de petites applications web avec
 ExpressJS. J'ai déjà vu comment accéder à une base de données
-[SQlite]({% post_url 2019-09-11-crud-avec-express-sqlite-10-etapes %}), puis à
-[PostgreSQL]({% post_url 2019-09-21-crud-avec-express-postgresql-10-etapes %}).
+[SQlite]({% post_url "2019-09-11-crud-avec-express-sqlite-10-etapes" %}), puis à
+[PostgreSQL]({% post_url "2019-09-21-crud-avec-express-postgresql-10-etapes" %}).
 Dans le tutoriel précédent, j'ai comparé la façon d'accéder à [SQlite et
-PostgreSQL avec Express]({% post_url 2019-10-07-comparaison-sqlite-postgresql-express %})
+PostgreSQL avec Express]({% post_url "2019-10-07-comparaison-sqlite-postgresql-express" %})
 pour parvenir à écrire le même code pour accéder aux deux bases de données.
 
 Dans ce tutoriel, je vais modifier le code existant pour ne plus avoir à
 utiliser de fonction callback quand je fais une requête sur la base de données.
-
-<figure>
-  <img src="{{ page.image }}" alt="grand-bain" />
-  <figcaption>
-    <a href="https://fr.wikipedia.org/wiki/Le_Grand_Bain_(film)">Le Grand Bain - Gilles Lellouche</a>
-  </figcaption>
-</figure>
 
 
 ## Fonctionnement asynchrone / callback
@@ -70,8 +66,8 @@ la requête,
 * et pour finir, la fonction callback doir gérer cette erreur (éventuelle) et ce
 résultat...
 
-Note : C'est difficile à lire, c'est difficile à écrire, et c'est aussi
-difficile à expliquer.
+*Note : C'est difficile à lire, c'est difficile à écrire, et c'est aussi
+difficile à expliquer.*
 
 
 ## Fonctionnement async / await
@@ -95,7 +91,7 @@ app.get("/livres", async (req, res) => {
 });
 ```
 
-A ce coup :), on exécute la requête par un `await db.query(...)` sans callback.
+À ce coup :), on exécute la requête par un `await db.query(...)` sans callback.
 
 Mais (!) pour pouvoir utiliser "await", il faut que la fonction dans laquelle
 on fait l'await soit décorée d'un attribut "async". Et dans notre cas, la
@@ -129,16 +125,16 @@ app.get("/livres", async (req, res) => {
 ...
 ```
 
-Note : On ne parle pas du fait qu'il y a toujours un callback pour `app.get()`
-et on se concentre sur la base de données...
+*Note : On ne parle pas du fait qu'il y a toujours un callback pour `app.get()`
+et on se concentre sur la base de données...*
 
 En cas de problème, l'erreur est récupérée via le `try / catch` et quand tout va
 bien, le résultat de la requête est renvoyée et le traitement en cours peut
 reprendre son cours normal...
 
-Note : Ça ressemble à un fonctionnement synchrone, ça se code comme du
+*Note : Ça ressemble à un fonctionnement synchrone, ça se code comme du
 synchrone, mais c'est quand même de l'asynchrone puisqu'on a écrit "async" et
-"await".
+"await".*
 
 C'est beaucoup plus beau et en plus ça marche ! Mais que quand j'utilise
 PostgreSQL et node-postgres... Parce qu'avec SQlite, tout est cassé :
@@ -443,5 +439,8 @@ app.post("/delete/:id", async (req, res) => {
 });
 ```
 
-{:.encart}
-English version: [Use SQlite3 in async / await mode]({% post_url 2019-10-29-use-sqlite-node-async-await %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Use SQlite3 in async / await mode", "2019-10-29-use-sqlite-node-async-await" %}.
+
+</div>

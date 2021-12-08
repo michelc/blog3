@@ -1,13 +1,15 @@
 ---
-date: 2010-07-29 10:25:00
-layout: post
+date: 2010-07-29 10:25:00 +02:00
 redirect_from: "post/2010/07/29/guide-pour-demarrer-avec-git"
-tags: git, ruby, sinatra
+tags: [ git, ruby, sinatra ]
 title: "Guide pour démarrer avec Git"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel "[Git Beginners Guide](http://ididitmyway.herokuapp.com/past/2010/1/14/git_beginners_guide/)" de Darren Jones.
+
+</div>
 
 Dans ce nouveau tutoriel, Darren présente les bases de Git et aborde les
 éléments suivants :
@@ -55,8 +57,7 @@ $ git config --global user.name "Votre Nom"
 $ git config --global user.email "votremail@example.com"
 ```
 
-Note : pour quitter Git Bash, on peut taper la commande
-`exit`.
+*Note : Pour quitter Git Bash, on peut taper la commande `exit`.*
 
 ![](/public/2010/git-1.png)
 
@@ -83,7 +84,7 @@ stocker le repository.
 
 ## Ajouter et Commiter avec Git
 
-A présent, nous allons ajouter tous les fichiers et les sous-répertoire de
+À présent, nous allons ajouter tous les fichiers et les sous-répertoire de
 notre projet Reverse dans le repository que nous venons de créer. On effectue
 cela en tapant la commande suivante :
 
@@ -301,7 +302,7 @@ Twitter :
 $ git merge feature-twitter
 ```
 
-A partir de maintenant, les modifications que vous aviez faites dans la
+À partir de maintenant, les modifications que vous aviez faites dans la
 branche "feature-twitter" sont bel et bien incluses dans la branche
 développement. Par conséquent, vous n'avez plus besoin de la branche Twitter
 qui ne vous a servi que pour les tests. Vous pouvez donc la supprimer
@@ -394,4 +395,4 @@ pouvez retrouver sur le [tutoriel d'origine](http://ididitmyway.herokuapp.com/pa
 Git est une application super puissante qui va révolutionner la façon dont
 vous gérez vos projets. Et il est extrêmement précieux quand il s'agit de gérer
 et de déployer des applications Sinatra sur la plateforme [Heroku](http://heroku.com/), ce dont je parlerai dans un
-[prochain billet]({% post_url 2010-09-13-deployer-applications-sinatra-heroku %}).
+[prochain billet]({% post_url "2010-09-13-deployer-applications-sinatra-heroku" %}).

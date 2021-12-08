@@ -1,13 +1,15 @@
 ---
-date: 2010-08-06 17:42:00
-layout: post
+date: 2010-08-06 17:42:00 +02:00
 redirect_from: "post/2010/08/06/asp-net-mvc-2-model-validation"
-tags: mvc
+tags: [ mvc ]
 title: "ASP.NET MVC 2 : Validation basée sur le modèle"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du billet "[ASP.NET MVC 2: Model Validation](http://weblogs.asp.net/scottgu/archive/2010/01/15/asp-net-mvc-2-model-validation.aspx)" de Scott Guthrie.
+
+</div>
 
 Ceci est le deuxième billet d'une série consacrée à la prochaine sortie de
 ASP.NET MVC 2. Ce billet aborde les améliorations apportées à la validation
@@ -74,7 +76,7 @@ nouveau projet ASP.NET MVC 2 :
 
 ![](http://weblogs.asp.net/blogs/scottgu/image_thumb_36B8A031.png)
 
-Celle-ci contient 4 propriétés, implémentées en utilisant les [propriétés automatiques de C#]({% post_url 2009-06-25-proprietes-automatiques-c-sharp %}) (un truc que VB gère aussi dans
+Celle-ci contient 4 propriétés, implémentées en utilisant les [propriétés automatiques de C#]({% post_url "2009-06-25-proprietes-automatiques-c-sharp" %}) (un truc que VB gère aussi dans
 VS 2010 - Youhou !).
 
 Nous allons ensuite ajouter une classe contrôleur "FriendsController" à
@@ -170,7 +172,7 @@ d'action Create qui gère la requête POST envoyée par le formulaire :
 ![](http://weblogs.asp.net/blogs/scottgu/image_thumb_3A366F74.png)
 
 Quand notre formulaire HTML est envoyé vers le serveur, la méthode ci-dessus
-est appelée. Etant donnée que cette méthode d'action attend un objet "Person"
+est appelée. Étant donnée que cette méthode d'action attend un objet "Person"
 en paramètre, ASP.NET MVC va créer un objet "Person" et automatiquement
 initialiser ses propriétés à partir des informations du formulaire. Au cours de
 cette phase, il va aussi contrôler si les attributs de validation
@@ -410,6 +412,3 @@ possibilités d'extension au niveau de l'infrastructure de validation de ASP.NET
 MVC 2 vous permettent de gérer un grande variété de scénarios de validation
 plus poussés - et d'intégrer n'importe quel framework ou système de validation
 existant ou personnalisé.
-
-{:.encart}
-Ceci est la traduction du billet "[ASP.NET MVC 2: Model Validation](http://weblogs.asp.net/scottgu/archive/2010/01/15/asp-net-mvc-2-model-validation.aspx)" de Scott Guthrie.

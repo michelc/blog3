@@ -1,8 +1,7 @@
 ---
-date: 2005-07-29 17:33:00
-layout: post
+date: 2005-07-29 17:33:00 +02:00
 redirect_from: "post/2005/07/29/Set-ValueToCompare-at-run-time"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Set ValueToCompare at run time"
 ---
 

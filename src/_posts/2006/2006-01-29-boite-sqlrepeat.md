@@ -1,8 +1,7 @@
 ---
-date: 2006-01-29 19:07:00
-layout: post
+date: 2006-01-29 19:07:00 +02:00
 redirect_from: "post/2006/01/29/Boite-SqlRepeat"
-tags: qc, sql
+tags: [ qc, sql ]
 title: "Boite SqlRepeat"
 ---
 

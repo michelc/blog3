@@ -1,8 +1,7 @@
 ---
-date: 2010-04-16 14:44:00
-layout: post
+date: 2010-04-16 14:44:00 +02:00
 redirect_from: "post/2010/04/16/gmail-notifier-hs"
-tags: boulot
+tags: [ boulot ]
 title: "GMail Notifier HS"
 ---
 

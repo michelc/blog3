@@ -1,8 +1,7 @@
 ---
-date: 2005-07-18 13:47:00
-layout: post
+date: 2005-07-18 13:47:00 +02:00
 redirect_from: "post/2005/07/18/TrackUpdateContent()"
-tags: qc
+tags: [ qc ]
 title: "TrackUpdateContent()"
 ---
 

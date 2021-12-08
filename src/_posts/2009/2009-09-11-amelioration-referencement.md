@@ -1,12 +1,11 @@
 ---
-date: 2009-09-11 13:29:00
-layout: post
+date: 2009-09-11 13:29:00 +02:00
 redirect_from: "post/2009/09/11/Am%C3%A9lioration-du-r%C3%A9f%C3%A9rencement"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Amélioration du référencement"
 ---
 
-Je persiste et poursuis mes [efforts]({% post_url 2009-09-09-nouvelles-ardeche %})
+Je persiste et poursuis mes [efforts]({% post_url "2009-09-09-nouvelles-ardeche" %})
 entamés ce week-end en continuant de travailler à améliorer le référencement de
 mon site sur l'Ardèche. Par rapport à avant hier, j'ai finalement trouvé une
 description très convenable pour les pages de cinéma :

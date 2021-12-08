@@ -1,8 +1,7 @@
 ---
-date: 2006-01-16 14:59:00
-layout: post
+date: 2006-01-16 14:59:00 +02:00
 redirect_from: "post/2006/01/16/Atom-to-Html-conversion"
-tags: code-snippets, html, xml
+tags: [ code-snippets, html, xml ]
 title: "Atom to Html conversion"
 ---
 

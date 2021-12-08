@@ -1,8 +1,7 @@
 ---
-date: 2005-07-18 13:35:00
-layout: post
+date: 2005-07-18 13:35:00 +02:00
 redirect_from: "post/2005/07/18/Configuration-base-de-donnees"
-tags: qc
+tags: [ qc ]
 title: "Configuration base de données"
 ---
 

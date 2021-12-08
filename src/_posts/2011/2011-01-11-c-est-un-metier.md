@@ -1,8 +1,7 @@
 ---
-date: 2011-01-11 13:03:00
-layout: post
+date: 2011-01-11 13:03:00 +02:00
 redirect_from: "post/2011/01/11/c-est-un-metier"
-tags: code-killer
+tags: [ code-killer ]
 title: "C'est un métier"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2006-02-20 13:19:00
-layout: post
+date: 2006-02-20 13:19:00 +02:00
 redirect_from: "post/2006/02/20/Et-de-trois-auto-promotion-%3A"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Et de trois (auto-promotion :)"
 ---
 

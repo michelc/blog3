@@ -1,8 +1,7 @@
 ---
-date: 2008-11-12 19:17:00
-layout: post
+date: 2008-11-12 19:17:00 +02:00
 redirect_from: "post/2008/11/12/Ajout-de-fichiers-au-depot-Subversion"
-tags: svn
+tags: [ svn ]
 title: "Ajout de fichiers au dépôt Subversion"
 ---
 

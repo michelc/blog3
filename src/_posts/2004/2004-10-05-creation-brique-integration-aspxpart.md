@@ -1,8 +1,7 @@
 ---
-date: 2004-10-05 11:41:00
-layout: post
+date: 2004-10-05 11:41:00 +02:00
 redirect_from: "post/2004/10/05/Creation-brique-Integration-AspxPart"
-tags: qc
+tags: [ qc ]
 title: "Création de la brique Integration.AspxPart"
 ---
 

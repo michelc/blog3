@@ -1,15 +1,14 @@
 ---
-date: 2009-03-10 18:35:00
-layout: post
+date: 2009-03-10 18:35:00 +02:00
 redirect_from: "post/2009/03/10/Premier-essai-pour-organiser-le-plan-d-un-site"
-tags: ap, jquery
+tags: [ ap, jquery ]
 title: "Premier essai pour organiser le plan d'un site"
 ---
 
 Avant Altrr-Press il y avait QC et avant QC il y avait inPortal. Et à
 l'époque, il existait un module pour mettre à jour le plan du site.
 
-Ca permettait de déplacer un écran avant ou après un autre écran en cliquant
+Ça permettait de déplacer un écran avant ou après un autre écran en cliquant
 sur les flèches haut et bas et aussi de le changer de niveau en cliquant sur
 les flèches gauche et droite. Et même si ça devenait un peu compliqué à
 manipuler dès que le site commençait à avoir un peu trop de pages mais ça
@@ -91,11 +90,10 @@ spectaculaire
 que la propriété dropOnEmpty me le permettrait mais apparemment ça n'est pas
 ça.
 * et en plus, il faudra que je cherche comment [limiter
-le nombre de sous-niveau à 3]({% post_url 2004-10-25-wdevs-week-end-with-mysql %})
+le nombre de sous-niveau à 3]({% post_url "2004-10-25-wdevs-week-end-with-mysql" %})
 
-A creuser donc...
+À creuser donc...
 
-Note : la liste que j'utilise en exemple est tirée de l'article
-[Complex
-Dynamic Lists: Your Order Please](http://www.alistapart.com/articles/complexdynamiclists) de Christian Heilmann et publié sur A List
-Apart.
+*Note : La liste que j'utilise en exemple est tirée de l'article
+[Complex Dynamic Lists: Your Order Please](http://www.alistapart.com/articles/complexdynamiclists)
+de Christian Heilmann et publié sur A List Apart.*

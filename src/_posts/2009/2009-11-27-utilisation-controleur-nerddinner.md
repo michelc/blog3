@@ -1,8 +1,7 @@
 ---
-date: 2009-11-27 16:12:00
-layout: post
+date: 2009-11-27 16:12:00 +02:00
 redirect_from: "post/2009/11/27/Utilisation-contr%C3%B4leur-NerdDinner"
-tags: mvc
+tags: [ mvc ]
 title: "Utilisation du contrôleur NerdDinner"
 ---
 

@@ -1,20 +1,16 @@
 ---
-date: 2019-10-22 12:20:34+200
-layout: post
+date: 2019-10-22 12:20:34 +02:00
 lang: en-US
-tags: javascript, node, sql
+tags: [ javascript, node, sql ]
 title: "Comparing SQlite or PostgreSQL with Express"
-image: "/public/2019/microscope.jpg"
+cover:
+  image: /public/2019/microscope.jpg
+  link: https://unsplash.com/photos/6q5QG8iIgRo
+  text: Observing samples under the microscope - Trust "Tru" Katsande
+excerpt: After writing two Node JS + Express tutorials to access SQlite then PostgreSQL databases, I found that there were not such big gaps between the two systems.
 ---
 
-After writing two tutorials on Express to access [SQlite]({% post_url 2019-10-08-crud-with-express-sqlite-10-steps %}) and [PostgreSQL]({% post_url 2019-10-15-crud-with-express-postgresql-10-steps %}) databases, I realized that there were not such big gaps between the two systems.
-
-<figure>
-  <img src="{{ page.image }}" alt="microscope" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/6q5QG8iIgRo">Observing samples under the microscope - Trust "Tru" Katsande</a>
-  </figcaption>
-</figure>
+After writing two tutorials on Express to access [SQlite]({% post_url "2019-10-08-crud-with-express-sqlite-10-steps" %}) and [PostgreSQL]({% post_url "2019-10-15-crud-with-express-postgresql-10-steps" %}) databases, I realized that there were not such big gaps between the two systems.
 
 For the moment, I have seen 5 differences, more or less important:
 
@@ -141,7 +137,7 @@ db.query = function (sql, params, callback) {
 };
 ```
 
-Note: I throw an error if "params" is not an array because the goal during development on SQlite is to be the closest to what will work in production with PostgreSQL. And so, if I forget to use an array, it's better to crash during development rather than in production.
+*Note: I throw an error if "params" is not an array because the goal during development on SQlite is to be the closest to what will work in production with PostgreSQL. And so, if I forget to use an array, it's better to crash during development rather than in production.*
 
 Thanks to this new method, we can finally write the same code for SQlite (via the SQlite3 module) as for PostgreSQL (via the node-postgres module), excepted for the main object name:
 
@@ -268,7 +264,7 @@ if (process.env.NODE_ENV === "production") {
 console.log("Successful connection to the database");
 ```
 
-Note: I should search how to isolate this confusing things in 2 separate files. But later...
+*Note: I should search how to isolate this confusing things in 2 separate files. But later...*
 
 
 ## Conclusion
@@ -299,7 +295,7 @@ db.query = function (sql, params, callback) {
 };
 ```
 
-Note: It must slow down a tad, but we're in development, it gives us time to think.
+*Note: It must slow down a tad, but we're in development, it gives us time to think.*
 
 
 ## The complete code for "index.js"
@@ -484,5 +480,8 @@ app.post("/delete/:id", (req, res) => {
 });
 ```
 
-{:.encart}
-Version en français : [Comparaison de l'utilisation de SQlite ou PostgreSQL avec Express]({% post_url 2019-10-07-comparaison-sqlite-postgresql-express %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Comparaison de l'utilisation de SQlite ou PostgreSQL avec Express", "2019-10-07-comparaison-sqlite-postgresql-express" %}.
+
+</div>

@@ -1,13 +1,15 @@
 ---
-date: 2010-09-29 22:45:00
-layout: post
+date: 2010-09-29 22:45:00 +02:00
 redirect_from: "post/2010/09/29/des-lapins-a-la-sauce-rest"
-tags: ruby, sinatra
+tags: [ ruby, sinatra ]
 title: "Des lapins à la sauce REST"
 ---
 
-{:.encart}
+<div class="encart">
+
 Ceci est la traduction du tutoriel Sinatra "[Restful Rabbits](http://ididitmyway.herokuapp.com/past/2010/9/21/restful_rabbits/)" de Darren Jones.
+
+</div>
 
 Dans ce billet, je vais explorer la façon de créer une ressource en
 construisant une [architecture REST](http://fr.wikipedia.org/wiki/Representational_State_Transfer) et en utilisant Sinatra et DataMapper.
@@ -354,7 +356,7 @@ formulaire avec des données incorrectes.
 
 Le formulaire dans la vue "new" utilise une méthode HTTP POST et celui de la
 vue "edit" une méthode HTTP PUT afin d'utiliser le verbe HTTP adéquat pour
-viser le bon gestionnaire. Etant donné que les navigateurs ne savent pas
+viser le bon gestionnaire. Étant donné que les navigateurs ne savent pas
 envoyer une requête PUT, on triche en envoyant une requête POST (ce que savent
 faire les navigateurs) accompagnée d'un champ caché nommé "_method" ayant la
 valeur "PUT". Sinatra est alors assez conciliant pour considérer cela comme une
@@ -447,12 +449,12 @@ sait gérer de façon native.
 
 ## Conclusion
 
-Ca y est, c'est fait. Vous avez maintenant un parfait exemple de la façon de
+Ça y est, c'est fait. Vous avez maintenant un parfait exemple de la façon de
 gérer des ressources à la sauce REST et vous pouvez voir ce que donne la
 version originale développée par Darren (<http://rabbits.herokuapp.com/rabbits>) ou ma version francisée
 (<http://lapins.herokuapp.com/lapins>).
 
-Etant donné que ce coup-ci j'ai également complètement traduit l'application
+Étant donné que ce coup-ci j'ai également complètement traduit l'application
 développée, j'ai aussi cherché si le plugin datamapper-validations pouvait
 renvoyer des messages d'erreurs en français. Mais comme je n'ai pas trouvé
 comment faire, je suis passé par des messages d'erreurs

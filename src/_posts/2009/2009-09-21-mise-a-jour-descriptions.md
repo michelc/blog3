@@ -1,8 +1,7 @@
 ---
-date: 2009-09-21 13:38:00
-layout: post
+date: 2009-09-21 13:38:00 +02:00
 redirect_from: "post/2009/09/21/Mise-%C3%A0-jour-des-descriptions"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Mise à jour des descriptions"
 ---
 

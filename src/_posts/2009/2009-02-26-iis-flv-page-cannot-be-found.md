@@ -1,8 +1,7 @@
 ---
-date: 2009-02-26 17:44:00
-layout: post
+date: 2009-02-26 17:44:00 +02:00
 redirect_from: "post/2009/02/26/IIS-et-FLV-%3A-The-page-cannot-be-found"
-tags: qc
+tags: [ qc ]
 title: "IIS et FLV : The page cannot be found"
 ---
 

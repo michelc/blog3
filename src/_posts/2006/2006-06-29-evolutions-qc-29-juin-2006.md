@@ -1,8 +1,7 @@
 ---
-date: 2006-06-29 11:57:00
-layout: post
+date: 2006-06-29 11:57:00 +02:00
 redirect_from: "post/2006/06/29/Evolutions-QC-au-29-juin-2006"
-tags: qc
+tags: [ qc ]
 title: "Evolutions QC au 29 juin 2006"
 ---
 

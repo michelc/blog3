@@ -1,15 +1,14 @@
 ---
-date: 2010-03-23 13:05:00
-layout: post
+date: 2010-03-23 13:05:00 +02:00
 redirect_from: "post/2010/03/23/porter-contact-manager-sous-nhibernate"
-tags: mvc, nhibernate
+tags: [ mvc, nhibernate ]
 title: "Porter Contact Manager sous NHibernate"
 ---
 
 Après avoir fait quelques essais très basiques avec NHibernate, j'ai voulu
 essayer d'être plus concret et d'aller un peu plus loin en tentant de porter
-l'application Contact Manager sous NHibernate. A priori, ça ne devait pas être
-trop compliqué dans la mesure où il y a quelques temps j'avais déjà [remplacé Entity Framework par LINQ to SQL]({% post_url 2009-11-13-portage-tutoriel-contact-manager-linq-to-sql %}) et que ça ne
+l'application Contact Manager sous NHibernate. À priori, ça ne devait pas être
+trop compliqué dans la mesure où il y a quelques temps j'avais déjà [remplacé Entity Framework par LINQ to SQL]({% post_url "2009-11-13-portage-tutoriel-contact-manager-linq-to-sql" %}) et que ça ne
 s'était pas trop mal passé. Sans compter, que je souhaitais juste faire en
 sorte que ça marche à peu près tel quel, sans trop chercher à découvrir ou à
 mettre au point la "bonne" façon d'utiliser NHibernate avec ASP.NET MVC.
@@ -24,7 +23,7 @@ de l'art pour utiliser NHibernate dans le cadre d'une application ASP.NET.
 
 Voici donc parmi tous mes essais (avec des réussites, des ratés et des
 abandons) une des façons de faire à laquelle je suis arrivé et qui est assez
-"simple" à expliquer. Ca marche correctement, mais je ne peux absolument pas
+"simple" à expliquer. Ça marche correctement, mais je ne peux absolument pas
 affirmer que c'est la méthode à suivre.
 
 ## Etape 1 : Installer NHibernate

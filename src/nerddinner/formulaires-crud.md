@@ -1,5 +1,5 @@
 ---
-date: 2009-12-02 10:12:00
+date: 2009-12-02 10:12:00 +02:00
 layout: page
 permalink: nerddinner/formulaires-crud/
 redirect_from: "pages/NerdDinner/Formulaires-CRUD"
@@ -305,7 +305,7 @@ apparaitre les secondes :
 On peut aussi renseigner un troisième paramètre pour renvoyer des attributs
 HTML supplémentaires. Le bout de code ci-dessous montre comment ajouter des
 attributs size="30" et class="mycssclass" à la balise &lt;input type="text"
-/&gt;. Etant donné que "class" est un mot clé du C#, on utilise le caractère
+/&gt;. Étant donné que "class" est un mot clé du C#, on utilise le caractère
 "@" devant comme séquence d'échappement pour pouvoir l'utiliser comme nom
 d'attribut :
 
@@ -581,7 +581,7 @@ pour afficher la propriété EventDate de notre objet Dinner :
 
 Lorsque la vue est renvoyée suite à une erreur, le helper Html.TextBox()
 contrôle dans la collection ModelState s'il existe des erreurs pour la
-propriété "EventDate" de l'objet Dinner. Etant donné qu'il y a eu une erreur,
+propriété "EventDate" de l'objet Dinner. Étant donné qu'il y a eu une erreur,
 il renvoie la saisie de l'utilisateur ("BOGUS") comme valeur de la balise
 &lt;input type="textbox" /&gt; et lui ajoute une classe CSS pour indiquer
 l'erreur :
@@ -765,7 +765,7 @@ public ActionResult Create() {
 
 Le code ci-dessus crée un nouvel objet Dinner et initialise sa propriété
 EventDate à J + 7. Il renvoie ensuite une vue basée sur ce nouvel objet Dinner.
-Etant donné que nous n'avons pas explicitement passé de nom à la méthode
+Étant donné que nous n'avons pas explicitement passé de nom à la méthode
 View(), celle-ci va se baser sur les conventions de nommage pour retrouver
 l'emplacement et le nom de la vue à utiliser : /Views/Dinners/Create.aspx.
 

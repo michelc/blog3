@@ -1,20 +1,15 @@
 ---
-date: 2020-02-11 12:24:08+200
-layout: post
-lang: fr-FR
-tags: javascript, node, sql
+date: 2020-02-11 12:24:08 +02:00
+tags: [ javascript, node, sql ]
 title: "Déployer une application sur Glitch en 5 étapes"
-image: "/public/2020/ichthyology.jpg"
+cover:
+  image: /public/2020/ichthyology.jpg
+  link: https://www.biodiversitylibrary.org/page/9665742
+  text: An introduction to the natural history of fishes - BHL
+excerpt: Ça faisait un petit moment que je voulais tester Glitch "pour de vrai" et déployer le projet réalisé pour mon tutoriel "Application CRUD avec Express et SQlite".
 ---
 
-Ça faisait un petit moment que je voulais tester Glitch "pour de vrai" et déployer le projet réalisé pour mon tutoriel [Application CRUD avec Express et SQlite en 10 étapes]({% post_url 2019-09-11-crud-avec-express-sqlite-10-etapes %}). J'ai enfin trouvé le temps de m'y mettre et ça marche super bien.
-
-<figure>
-  <img src="{{ page.image }}" alt="ichthyology" />
-  <figcaption>
-    <a href="https://www.biodiversitylibrary.org/page/9665742">An introduction to the natural history of fishes - BHL</a>
-  </figcaption>
-</figure>
+Ça faisait un petit moment que je voulais tester Glitch "pour de vrai" et déployer le projet réalisé pour mon tutoriel [Application CRUD avec Express et SQlite en 10 étapes]({% post_url "2019-09-11-crud-avec-express-sqlite-10-etapes" %}). J'ai enfin trouvé le temps de m'y mettre et ça marche super bien.
 
 
 ## 1. Créer un compte sur Glitch
@@ -99,5 +94,8 @@ Mais quand même, il manque les poissons ! Je regarde vite fait comment c'est fa
 
 Pour un premier essai, c'était super facile. Ça vaut donc le coup d'investir un peu de temps dessus pour mieux maîtriser et faire des trucs un peu plus concrets...
 
-{:.encart}
-English version: [Deploy an application on Glitch in 5 steps]({% post_url 2020-02-12-deploy-application-glitch-5-steps %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Deploy an application on Glitch in 5 steps", "2020-02-12-deploy-application-glitch-5-steps" %}.
+
+</div>

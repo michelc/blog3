@@ -1,8 +1,7 @@
 ---
-date: 2009-03-19 07:22:00
-layout: post
+date: 2009-03-19 07:22:00 +02:00
 redirect_from: "post/2009/03/19/Limiter-l-acces-a-BlogEngineNET"
-tags: .net, referencement
+tags: [ .net, referencement ]
 title: "Limiter l'accès à BlogEngine.NET"
 ---
 

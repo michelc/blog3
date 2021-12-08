@@ -1,15 +1,15 @@
 ---
-date: 2010-06-01 18:40:00
-layout: post
+date: 2010-06-01 18:40:00 +02:00
 redirect_from: "post/2010/06/01/mvc-music-store-raven-db-storemanagercontroller-2"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : StoreManagerController (2° partie)"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: StoreManagerController, part
-2](http://ayende.com/Blog/archive/2010/05/31/porting-mvc-music-store-to-raven-storemanagercontroller-part-2.aspx)", le dernier de la série consacrée au portage de l'application MVC Music
-Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: StoreManagerController, part 2](http://ayende.com/Blog/archive/2010/05/31/porting-mvc-music-store-to-raven-storemanagercontroller-part-2.aspx)", le dernier de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Le contrôleur StoreManagerController contient encore deux méthodes que nous
 n'avons pas étudiées. Nous allons devoir les aborder de façon un peu

@@ -1,8 +1,7 @@
 ---
-date: 2005-09-20 20:42:00
-layout: post
+date: 2005-09-20 20:42:00 +02:00
 redirect_from: "post/2005/09/20/Literal-DateTime-pour-SQL-Server"
-tags: code-snippets, sql
+tags: [ code-snippets, sql ]
 title: "Literal DateTime pour SQL Server"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2006-07-26 15:05:00
-layout: post
+date: 2006-07-26 15:05:00 +02:00
 redirect_from: "post/2006/07/26/Wdevs-Free-Download%3A-MSDN-Library-May-2006-Edition"
-tags: wdevs
+tags: [ wdevs ]
 lang: en-US
 title: "(Wdevs) Free Download: MSDN Library May 2006 Edition"
 ---

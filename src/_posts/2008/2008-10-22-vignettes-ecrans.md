@@ -1,8 +1,7 @@
 ---
-date: 2008-10-22 14:04:00
-layout: post
+date: 2008-10-22 14:04:00 +02:00
 redirect_from: "post/2008/10/22/Vignettes-d-ecrans"
-tags: html
+tags: [ html ]
 title: "Faire des vignettes d'écrans de sites internet"
 ---
 

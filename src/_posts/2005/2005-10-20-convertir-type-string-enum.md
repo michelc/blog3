@@ -1,8 +1,7 @@
 ---
-date: 2005-10-20 13:15:00
-layout: post
+date: 2005-10-20 13:15:00 +02:00
 redirect_from: "post/2005/10/20/Convertir-un-type-String-en-Enum"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "Convertir un type String en Enum"
 ---
 

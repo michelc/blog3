@@ -1,20 +1,15 @@
 ---
-date: 2020-01-13 18:52:45+200
-layout: post
-tags: sql
+date: 2020-01-13 18:52:45 +02:00
+tags: [ sql ]
 title: "Supprimer des doublons en SQL"
-image: "/public/2020/rita-hayworth.jpg"
+cover:
+  image: /public/2020/rita-hayworth.jpg
+  link: https://fr.wikipedia.org/wiki/La_Dame_de_Shanghai
+  text: La Dame de Shanghai - Rita Hayworth
 excerpt: "J'ai eu un peu peur, mais finalement c'est pas si compliqué que ça de supprimer des lignes en doubles dans une table SQL Server."
 ---
 
 La semaine dernière j'ai fait une petite erreur de mise à jour sur une application et je me suis retrouvé avec des données enregistrées deux fois dans une table. Bien entendu, ça ne serait pas arrivé si j'avais créé une clé unique, mais comme je teste avant d'insérer, je pensais être à l'abri.
-
-<figure>
-  <img src="{{ page.image }}" alt="la-dame-de-shangai" />
-  <figcaption>
-    <a href="https://fr.wikipedia.org/wiki/La_Dame_de_Shanghai">La Dame de Shanghai - Rita Hayworth</a>
-  </figcaption>
-</figure>
 
 Et malheureusement, comme je ne pouvais pas tout supprimer et simplement relancer la mise à jour des données, j'ai dû chercher comment dédoublonner.
 
@@ -55,5 +50,8 @@ WHERE  Showing_ID IN (
 
 Des fois, l'informatique c'est pas plus compliqué que ça.
 
-{:.encart}
-English version: [Remove duplicates rows with SQL]({% post_url 2020-01-14-remove-duplicate-rows-sql %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Remove duplicates rows with SQL", "2020-01-14-remove-duplicate-rows-sql" %}.
+
+</div>

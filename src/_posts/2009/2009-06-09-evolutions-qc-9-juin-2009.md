@@ -1,13 +1,12 @@
 ---
-date: 2009-06-09 12:12:00
-layout: post
+date: 2009-06-09 12:12:00 +02:00
 redirect_from: "post/2009/06/09/Evolutions-QC-au-9-juin-2009"
-tags: qc
+tags: [ qc ]
 title: "Evolutions QC au 9 juin 2009"
 ---
 
 Récapitulatif de ce qui a été fait depuis le [17 avril
-2009]({% post_url 2009-04-17-evolutions-qc-17-avril-2009 %}) (pour l'intranet Classeurs Projets) :
+2009]({% post_url "2009-04-17-evolutions-qc-17-avril-2009" %}) (pour l'intranet Classeurs Projets) :
 
 * Documents.cs : Ajout d'un constructeur basé sur le fichier (pour
 tester s'il existe)

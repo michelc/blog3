@@ -1,8 +1,7 @@
 ---
-date: 2005-09-29 10:47:00
-layout: post
+date: 2005-09-29 10:47:00 +02:00
 redirect_from: "post/2005/09/29/Initialisation-listes-Combo"
-tags: qc
+tags: [ qc ]
 title: "Initialisation listes Combo"
 ---
 

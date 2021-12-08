@@ -1,13 +1,12 @@
 ---
-date: 2009-11-03 16:15:00
-layout: post
+date: 2009-11-03 16:15:00 +02:00
 redirect_from: "post/2009/11/03/Gestion-de-contacts-avec-ASP.NET-MVC-et-jQuery"
-tags: jquery, mvc
+tags: [ jquery, mvc ]
 title: "Gestion de contacts avec ASP.NET MVC et jQuery"
 ---
 
 La dernière étape du tutoriel [Développer une application de gestion de contacts avec ASP.NET
-MVC]({% post_url 2009-11-02-utiliser-ajax-aspnetmvc %}) consistait à ajouter de l'Ajax dans l'application pour la rendre plus
+MVC]({% post_url "2009-11-02-utiliser-ajax-aspnetmvc" %}) consistait à ajouter de l'Ajax dans l'application pour la rendre plus
 performante et plus moderne. Pour parvenir à cela, le tutoriel utilisait
 Ajax.NET pour les requêtes Ajax et jQuery pour les animations.
 
@@ -252,4 +251,4 @@ Au final, cela donne donc le source javascript suivant :
 ```
 
 ---
-Billet suivant dans la série : [Portage du tutoriel Contact Manager sous LINQ to SQL]({% post_url 2009-11-13-portage-tutoriel-contact-manager-linq-to-sql %})
+Billet suivant dans la série : [Portage du tutoriel Contact Manager sous LINQ to SQL]({% post_url "2009-11-13-portage-tutoriel-contact-manager-linq-to-sql" %})

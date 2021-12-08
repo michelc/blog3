@@ -1,14 +1,16 @@
 ---
-date: 2010-04-28 18:02:00
-layout: post
+date: 2010-04-28 18:02:00 +02:00
 redirect_from: "post/2010/04/28/c-est-quoi-cette-expression-lambda"
-tags: .net
+tags: [ .net ]
 title: "C'est Quoi cette Expression Lambda ?"
+excerpt: Ayant entrepris de me mettre à jour sur les nouveautés de C#, j'avais trouvé cet article qui explique les expressions lambda (et les lamas) de façon amusante.
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[What on Earth is a Lambda Expression?](http://blogs.msdn.com/simonince/archive/2010/04/16/what-on-earth-is-a-lambda-expression.aspx)"
-de Simon Ince.
+<div class="encart">
+
+Ceci est la traduction du billet "[What on Earth is a Lambda Expression?](http://blogs.msdn.com/simonince/archive/2010/04/16/what-on-earth-is-a-lambda-expression.aspx)" de Simon Ince.
+
+</div>
 
 Ces derniers temps, j'ai eu à faire à quelques clients qui se demandaient ce
 qu'était une Expression Lambda, ce qui n'a pas manqué de me surprendre. Il
@@ -108,7 +110,7 @@ var results = Lamas.Where(
     });
 ```
 
-Ca c'est fait. Et en plus on s'est débarrassé du mot clé private puisque la
+Ça c'est fait. Et en plus on s'est débarrassé du mot clé private puisque la
 méthode n'est plus un membre de la classe. Mais alors, à quoi ça sert qu'elle
 ait encore un nom ? Y'a qu'à le virer :
 
@@ -120,7 +122,7 @@ var results = Lamas.Where(
     });
 ```
 
-Ca c'est déjà plus concis. Suivez-bien et je vous traduis ce que ça veut
+Ça c'est déjà plus concis. Suivez-bien et je vous traduis ce que ça veut
 dire : "cette méthode renvoie un Booléen, et attend un Lama en
 entrée", suivi du code pour le corps de la méthode.
 
@@ -222,6 +224,3 @@ plus qu'à approfondir tout ça et à vous documenter un peu pour comprendre des
 trucs comme Expression&lt;&gt;, Func&lt;&gt;, Action&lt;&gt;, etc…
 
 Amusez-vous bien !
-
-{:.encart}
-Ceci est la traduction du billet "[What on Earth is a Lambda Expression?](http://blogs.msdn.com/simonince/archive/2010/04/16/what-on-earth-is-a-lambda-expression.aspx)" de Simon Ince.

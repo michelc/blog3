@@ -1,8 +1,7 @@
 ---
-date: 2009-06-24 08:49:00
-layout: post
+date: 2009-06-24 08:49:00 +02:00
 redirect_from: "post/2009/06/24/Une-nouvelle-boite-de-recherche"
-tags: ap, code-killer
+tags: [ ap, code-killer ]
 title: "Une nouvelle boite de recherche"
 ---
 
@@ -14,7 +13,7 @@ par Google. Dans la pratique, il y a tellement peu de sites Altrr-Press qui
 utilise ce type de boite qu'il aurait aussi bien pu passer à la trappe comme
 cela avait été le cas pour les boites Msn Search et Yahoo Search.
 
-Ca faisait quelque temps que je savais que Google allait mettre
+Ça faisait quelque temps que je savais que Google allait mettre
 définitivement fin au support de son interface SOAP à partir du 31 août, mais
 étant donné le peu d'utilité que j'en avais, j'avais un peu de mal à me plonger
 dans leur [API de recherche en AJAX](http://code.google.com/apis/ajaxsearch/web.html/). Heureusement pour moi, ce que Google prend
@@ -24,7 +23,7 @@ sans trop me casser la tête.
 Pour commencer, rendez-vous sur la page des [Google Web Elements](http://www.google.com/webelements/) ou
 il suffit de cliquer sur le lien "Custom Search" pour obtenir immédiatement le
 code javascript à utiliser pour insérer une boite de recherche sur son site.
-Etant donné que que je cherche à disposer d'un système de recherche à
+Étant donné que que je cherche à disposer d'un système de recherche à
 l'intérieur de mon site exclusivement, cela me convient et je peux donc
 utiliser ce code tel quel :
 

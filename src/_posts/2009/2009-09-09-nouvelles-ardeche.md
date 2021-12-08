@@ -1,8 +1,7 @@
 ---
-date: 2009-09-09 08:37:00
-layout: post
+date: 2009-09-09 08:37:00 +02:00
 redirect_from: "post/2009/09/09/Des-nouvelles-de-l-Ard%C3%A8che"
-tags: ap, referencement
+tags: [ ap, referencement ]
 title: "Des nouvelles de l'Ardèche"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2006-01-20 15:10:00
-layout: post
+date: 2006-01-20 15:10:00 +02:00
 redirect_from: "post/2006/01/20/Comment-cibler-les-publicites-AdSense"
-tags: adsense, html, referencement
+tags: [ adsense, html, referencement ]
 title: "Comment cibler les publicités AdSense"
 ---
 

@@ -1,8 +1,7 @@
 ---
-date: 2005-08-08 16:48:00
-layout: post
+date: 2005-08-08 16:48:00 +02:00
 redirect_from: "post/2005/08/08/Gestion-erreurs-dans-Engine.Data"
-tags: qc
+tags: [ qc ]
 title: "Gestion d'erreurs dans Engine.Data"
 ---
 

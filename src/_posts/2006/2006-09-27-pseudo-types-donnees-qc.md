@@ -1,8 +1,7 @@
 ---
-date: 2006-09-27 17:42:00
-layout: post
+date: 2006-09-27 17:42:00 +02:00
 redirect_from: "post/2006/09/27/Les-pseudo-types-de-donnees-de-QC"
-tags: qc, sql
+tags: [ qc, sql ]
 title: "Les \"pseudo-types\" de données de QC"
 ---
 

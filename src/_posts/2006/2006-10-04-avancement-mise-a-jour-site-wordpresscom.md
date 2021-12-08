@@ -1,8 +1,7 @@
 ---
-date: 2006-10-04 08:44:00
-layout: post
+date: 2006-10-04 08:44:00 +02:00
 redirect_from: "post/2006/10/04/Avancement-mise-a-jour-du-site-wordpresscom"
-tags: blog
+tags: [ blog ]
 title: "Avancement mise à jour du site (wordpress.com)"
 ---
 

@@ -1,21 +1,20 @@
 ---
-date: 2009-11-27 10:06:00
-layout: post
+date: 2009-11-27 10:06:00 +02:00
 redirect_from: "post/2009/11/27/Pluralisation-noms-LINQ-to-SQL"
-tags: linq, mvc, sql
+tags: [ linq, mvc, sql ]
 title: "Pluralisation des noms avec LINQ to SQL"
 ---
 
-J'avais [commencé le tutoriel NerdDinner]({% post_url 2009-07-17-premier-essai-aspnet-mvc %}) sur mon ancien PC, en utilisant Web
+J'avais [commencé le tutoriel NerdDinner]({% post_url "2009-07-17-premier-essai-aspnet-mvc" %}) sur mon ancien PC, en utilisant Web
 Developer 2008 Express en anglais. Depuis mon changement de machine, je suis
 passé à Visual Studio 2008 Professional mais en français.
 
-Etant donné que j'avais dû utiliser NUnit et pas MSTest et qu'en plus ça
+Étant donné que j'avais dû utiliser NUnit et pas MSTest et qu'en plus ça
 faisait un bon moment que je n'avais rien fait dessus, j'ai préféré tout
 recommencer à zéro sous VS 2008 Professional. Avec comme avantage
 supplémentaire de m'encourager à travailler sur la traduction du tutoriel.
 
-Ca avançait plutôt bien jusqu'au moment d'arriver à la [quatrième étape](/nerddinner/construire-modele/) et d'avoir à utiliser LINQ to SQL pour créer le modèle
+Ça avançait plutôt bien jusqu'au moment d'arriver à la [quatrième étape](/nerddinner/construire-modele/) et d'avoir à utiliser LINQ to SQL pour créer le modèle
 de données basé sur la base de données NerdDinner.mdf. Une fois que j'avais
 glissé-déposé les tables Dinners et RSVP dans le concepteur LINQ to SQL, je ne
 me retrouvais pas avec les classes Dinner et RSVP comme prévu.

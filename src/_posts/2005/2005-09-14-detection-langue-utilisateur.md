@@ -1,8 +1,7 @@
 ---
-date: 2005-09-14 20:24:00
-layout: post
+date: 2005-09-14 20:24:00 +02:00
 redirect_from: "post/2005/09/14/Detection-langue-utilisateur"
-tags: qc
+tags: [ qc ]
 title: "Détection langue utilisateur"
 ---
 

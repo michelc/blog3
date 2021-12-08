@@ -1,8 +1,7 @@
 ---
-date: 2004-10-22 08:55:00
-layout: post
+date: 2004-10-22 08:55:00 +02:00
 redirect_from: "post/2004/10/22/Wdevs-Start"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Start"
 ---

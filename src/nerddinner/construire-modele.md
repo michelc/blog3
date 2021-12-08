@@ -1,5 +1,5 @@
 ---
-date: 2009-11-25 08:33:00
+date: 2009-11-25 08:33:00 +02:00
 layout: page
 permalink: nerddinner/construire-modele/
 redirect_from: "pages/NerdDinner/Construire-Modele"
@@ -9,7 +9,7 @@ title: "NerdDinner(fr) : Construire le modèle"
 Dans le cas d'un framework Model-View-Controller, le terme "Modèle" fait
 référence aux objets qui représentent les données de l'application, ainsi qu'à
 la logique du domaine correspondant qui comprend la validation des données et
-les règles métiers associées. A bien des égards, le modèle est le "cœur" d'une
+les règles métiers associées. À bien des égards, le modèle est le "cœur" d'une
 application MVC, et comme nous le verrons plus tard détermine sa façon de
 fonctionner.
 
@@ -143,7 +143,7 @@ défaut.
 Visual Studio génère automatiquement des classes .NET qui représentent le
 modèle et les relations de la base de données définie avec le concepteur LINQ
 to SQL. Une classe DataContext est également générée pour chaque fichier LINQ
-to SQL ajouté à la solution. Etant donné que notre classe LINQ to SQL s'appelle
+to SQL ajouté à la solution. Étant donné que notre classe LINQ to SQL s'appelle
 "NerdDinner", la classe DataContext créée se nomme "NerdDinnerDataContext".
 Cette classe NerdDinnerDataContext va constituer la méthode principale pour
 interagir avec la base de données.
@@ -642,7 +642,7 @@ catch {
 }
 ```
 
-Etant donné que nos contrôles de validité et nos règles métiers sont
+Étant donné que nos contrôles de validité et nos règles métiers sont
 programmés dans notre couche modèle, et pas dans la partie interface
 utilisateur, ils sont appliqués et pris en compte dans tous les cas de figure.
 Si par la suite nous modifions ou ajoutons certaines règles de validation, tout

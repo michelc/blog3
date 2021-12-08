@@ -1,15 +1,15 @@
 ---
-date: 2010-05-26 22:35:00
-layout: post
+date: 2010-05-26 22:35:00 +02:00
 redirect_from: "post/2010/05/26/mvc-music-store-raven-db-storecontroller"
-tags: mvc, nosql
+tags: [ mvc, nosql ]
 title: "MVC Music Store / Raven DB : StoreController"
 ---
 
-{:.encart}
-Ceci est la traduction du billet "[Porting MVC Music Store to Raven: StoreController](http://ayende.com/Blog/archive/2010/05/25/porting-mvc-music-store-to-raven-storecontroller.aspx)", le
-huitième de la série consacrée au portage de l'application MVC Music Store sous
-RavenDB par Oren Eini, alias Ayende Rahien.
+<div class="encart">
+
+Ceci est la traduction du billet "[Porting MVC Music Store to Raven: StoreController](http://ayende.com/Blog/archive/2010/05/25/porting-mvc-music-store-to-raven-storecontroller.aspx)", le huitième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.
+
+</div>
 
 Commençons par la méthode Index() :
 

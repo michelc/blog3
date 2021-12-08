@@ -1,8 +1,7 @@
 ---
-date: 2005-08-02 16:56:00
-layout: post
+date: 2005-08-02 16:56:00 +02:00
 redirect_from: "post/2005/08/02/yyyymmdd-to-DateTime"
-tags: code-snippets, csharp
+tags: [ code-snippets, csharp ]
 title: "yyyymmdd to DateTime"
 ---
 

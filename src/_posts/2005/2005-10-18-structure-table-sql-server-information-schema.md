@@ -1,8 +1,7 @@
 ---
-date: 2005-10-18 13:45:00
-layout: post
+date: 2005-10-18 13:45:00 +02:00
 redirect_from: "post/2005/10/18/Structure-dune-table-SQL-Server-depuis-Information_Schema"
-tags: code-snippets, sql
+tags: [ code-snippets, sql ]
 title: "Structure d'une table SQL Server depuis Information_Schema"
 ---
 

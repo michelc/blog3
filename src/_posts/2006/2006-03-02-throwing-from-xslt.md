@@ -1,8 +1,7 @@
 ---
-date: 2006-03-02 07:27:00
-layout: post
+date: 2006-03-02 07:27:00 +02:00
 redirect_from: "post/2006/03/02/Throwing-from-XSLT"
-tags: code-snippets, xml
+tags: [ code-snippets, xml ]
 lang: en-US
 title: "Throwing from XSLT"
 ---

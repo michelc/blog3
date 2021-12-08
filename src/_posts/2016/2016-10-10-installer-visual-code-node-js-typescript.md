@@ -1,8 +1,7 @@
 ---
-date: 2016-10-10 23:43:00
-layout: post
+date: 2016-10-10 23:43:00 +02:00
 redirect_from: "post/2016/10/10/installer-visual-code-node-js-typescript"
-tags: javascript
+tags: [ javascript ]
 title: "Installer Visual Code, Node.js et TypeScript"
 ---
 

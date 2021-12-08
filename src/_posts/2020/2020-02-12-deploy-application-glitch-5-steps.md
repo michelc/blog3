@@ -1,20 +1,16 @@
 ---
-date: 2020-02-12 12:21:34+200
-layout: post
+date: 2020-02-12 12:21:34 +02:00
 lang: en-US
-tags: javascript, node, sql
+tags: [ javascript, node, sql ]
 title: "Deploy an application on Glitch in 5 steps"
-image: "/public/2020/ichthyology.jpg"
+cover:
+  image: /public/2020/ichthyology.jpg
+  link: https://www.biodiversitylibrary.org/page/9665742
+  text: An introduction to the natural history of fishes - BHL
+excerpt: It's been a while since I wanted to test Glitch "for real" and deploy the project I made for my "CRUD application with Express and SQlite".
 ---
 
-It's been a while since I wanted to test Glitch "for real" and deploy the project I made for my [CRUD application with Express and SQlite in 10 steps]({% post_url 2019-10-08-crud-with-express-sqlite-10-steps %}) tutorial. I finally found the time to get started and it's working great.
-
-<figure>
-  <img src="{{ page.image }}" alt="ichthyology" />
-  <figcaption>
-    <a href="https://www.biodiversitylibrary.org/page/9665742">An introduction to the natural history of fishes - BHL</a>
-  </figcaption>
-</figure>
+It's been a while since I wanted to test Glitch "for real" and deploy the project I made for my [CRUD application with Express and SQlite in 10 steps]({% post_url "2019-10-08-crud-with-express-sqlite-10-steps" %}) tutorial. I finally found the time to get started and it's working great.
 
 
 ## 1. Create an account on Glitch
@@ -99,5 +95,8 @@ That's it. After a page refresh, I see the famous Glitch fish button in case som
 
 For a first try, it was super easy. Now, it's worth investing some time on it to master and do more concrete things...
 
-{:.encart}
-Version en français : [Déployer une application sur Glitch en 5 étapes]({% post_url 2020-02-11-deployer-application-glitch-5-etapes %}){:hreflang="fr"}.
+<div class="encart">
+
+Version en français : {% goto_fr "Déployer une application sur Glitch en 5 étapes", "2020-02-11-deployer-application-glitch-5-etapes" %}.
+
+</div>

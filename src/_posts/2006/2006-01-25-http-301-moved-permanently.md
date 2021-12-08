@@ -1,8 +1,7 @@
 ---
-date: 2006-01-25 08:28:00
-layout: post
+date: 2006-01-25 08:28:00 +02:00
 redirect_from: "post/2006/01/25/HTTP-301-Moved-Permanently"
-tags: qc, referencement
+tags: [ qc, referencement ]
 title: "HTTP 301 - Moved Permanently"
 ---
 
@@ -29,4 +28,4 @@ Références :
 - <http://www.ietf.org/rfc/rfc2616.txt>
 
 * Extrait du code pour gérer le [Moved
-Permanently]({% post_url 2006-01-24-http-301-moved-permanently %}) en ASP.NET
+Permanently]({% post_url "2006-01-24-http-301-moved-permanently" %}) en ASP.NET

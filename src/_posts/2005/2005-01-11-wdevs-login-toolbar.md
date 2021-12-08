@@ -1,8 +1,7 @@
 ---
-date: 2005-01-11 18:21:00
-layout: post
+date: 2005-01-11 18:21:00 +02:00
 redirect_from: "post/2005/01/11/Wdevs-Login-and-toolbar"
-tags: qc, wdevs
+tags: [ qc, wdevs ]
 lang: en-US
 title: "(Wdevs) Login and toolbar"
 ---

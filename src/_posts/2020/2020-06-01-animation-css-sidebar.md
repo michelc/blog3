@@ -1,19 +1,15 @@
 ---
-date: 2020-06-01 17:35:16+200
-layout: post
-tags: css
+date: 2020-06-01 17:35:16 +02:00
+tags: [ css ]
 title: "Animer une sidebar avec CSS"
-image: "/public/2020/swing.jpg"
+cover:
+  image: /public/2020/swing.jpg
+  link: https://unsplash.com/photos/HTCQCvwV9XY
+  text: Flying - ckturistando
+excerpt: Comment faire apparaitre ou disparaitre la "sidebar" grâce à une animation CSS toute simple, une icone et un jsfiddle pour tester tout ça.
 ---
 
-J'ai déjà réussi à faire un [template avec contenu + sidebar]({% post_url 2020-05-19-creer-template-sidebar-contenu %}), puis à [masquer la sidebar]({% post_url 2020-05-27-masquer-afficher-menu-lateral %}) assez simplement. Je vais maintenant voir comment améliorer le côté très basique de mes premiers essais grâce à quelques animations CSS et autres icônes.
-
-<figure>
-  <img src="{{ page.image }}" alt="balançoires" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/HTCQCvwV9XY">Flying - ckturistando</a>
-  </figcaption>
-</figure>
+J'ai déjà réussi à faire un [template avec contenu + sidebar]({% post_url "2020-05-19-creer-template-sidebar-contenu" %}), puis à [masquer la sidebar]({% post_url "2020-05-27-masquer-afficher-menu-lateral" %}) assez simplement. Je vais maintenant voir comment améliorer le côté très basique de mes premiers essais grâce à quelques animations CSS et autres icônes.
 
 
 ## Animer le changement d'état
@@ -48,7 +44,7 @@ Il s'agit d'une propriété CSS qui en 1 seconde (pour avoir le temps de voir ce
 
 Maintenant, quand je vais cliquer sur le bouton "sidebar-toggle", le fait d'ajouter la classe "no-sidebar" à la div "wrapper" ne devrait pas immédiatement masquer la "sidebar" et élargir le "content". Cela devrait durer 1 seconde et se faire progressivement.
 
-Ça marche du 1° coup ! A moitié...
+Ça marche du 1° coup ! À moitié...
 
 Pour le "content", on le voit bien "bouger" quand on clique sur le bouton pour occuper toute la largeur de l'écran.
 
@@ -74,7 +70,7 @@ transition: all 0.25s;
 
 Et ben c'est parfait pour moi.
 
-Note : le `transition: all 0.25s` doit être défini 2 fois : une fois au niveau du CSS de "#sidebar" et une seconde fois pour le code CSS de "#content".
+*Note : le `transition: all 0.25s` doit être défini 2 fois : une fois au niveau du CSS de "#sidebar" et une seconde fois pour le code CSS de "#content".*
 
 
 ## Utiliser une icône pour basculer d'un état à l'autre
@@ -121,7 +117,7 @@ Puis j'ajoute le CSS :
 }
 ```
 
-Note : Pour les 2 flèches, j'ai pioché dans [Unicode Arrows](http://xahlee.info/comp/unicode_arrows.html).
+*Note : Pour les 2 flèches, j'ai pioché dans [Unicode Arrows](http://xahlee.info/comp/unicode_arrows.html).*
 
 Et voila, ça marche.
 
@@ -152,5 +148,8 @@ Et penser à la masquer lors des impressions :
 
 Bon, maintenant que j'ai à peu près le template que je voulais et même plus grâce à ces derniers ajouts, je vais pouvoir travailler pour de vrai et commencer à coder mon application...
 
-{:.encart}
-English version: [Sidebar animation with CSS]({% post_url 2020-06-02-sidebar-css-animation %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Sidebar animation with CSS", "2020-06-02-sidebar-css-animation" %}.
+
+</div>

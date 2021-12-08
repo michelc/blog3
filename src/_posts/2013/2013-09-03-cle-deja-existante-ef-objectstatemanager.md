@@ -1,8 +1,7 @@
 ---
-date: 2013-09-03 13:29:00
-layout: post
+date: 2013-09-03 13:29:00 +02:00
 redirect_from: "post/2013/09/03/cle-deja-existante-dans-ef-objectstatemanager"
-tags: ef, unit-test
+tags: [ ef, unit-test ]
 title: "Clé déjà existante dans EF.ObjectStateManager"
 ---
 

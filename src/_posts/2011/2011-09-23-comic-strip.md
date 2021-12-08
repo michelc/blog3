@@ -1,8 +1,7 @@
 ---
-date: 2011-09-23 13:47:00
-layout: post
+date: 2011-09-23 13:47:00 +02:00
 redirect_from: "post/2011/09/23/comic-strip"
-tags: ef
+tags: [ ef ]
 title: "Comic strip"
 ---
 

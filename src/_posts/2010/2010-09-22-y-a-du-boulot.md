@@ -1,8 +1,7 @@
 ---
-date: 2010-09-22 08:13:00
-layout: post
+date: 2010-09-22 08:13:00 +02:00
 redirect_from: "post/2010/09/22/y-a-du-boulot"
-tags: boulot
+tags: [ boulot ]
 title: "Y'a du boulot !"
 ---
 

@@ -1,12 +1,11 @@
 ---
-date: 2009-10-30 15:46:00
-layout: post
+date: 2009-10-30 15:46:00 +02:00
 redirect_from: "post/2009/10/30/Test-Driven-Development-avec-ASP.NET-MVC-(fin)"
-tags: mvc, unit-test
+tags: [ mvc, unit-test ]
 title: "Test-Driven Development avec ASP.NET MVC (fin)"
 ---
 
-Cette fois je termine cette [6° partie du tutoriel de Gestion des Contacts]({% post_url 2009-10-29-test-driven-development-aspnetmvc-suite %}). En un, il me
+Cette fois je termine cette [6° partie du tutoriel de Gestion des Contacts]({% post_url "2009-10-29-test-driven-development-aspnetmvc-suite" %}). En un, il me
 reste pas grand chose à faire. En deux, j'utilise les grands moyens et je lance
 deux Visual Web Developper, un avec ma solution en cours de finition et un avec
 la solution "finie" de l'étape 6 du tutoriel.
@@ -21,8 +20,7 @@ public ActionResult Index()
     return View(_service.ListContacts());
 }
 ```
-
-A tout ça :
+À tout ça :
 
 ```
 public ActionResult Index(int? id)
@@ -143,4 +141,4 @@ Je vais enfin pouvoir passer à la [7° partie du tutoriel](http://msdn.microsof
 là tout de suite, c'est le week-end !
 
 ---
-Billet suivant dans la série : [Utiliser Ajax avec ASP.NET MVC]({% post_url 2009-11-02-utiliser-ajax-aspnetmvc %})
+Billet suivant dans la série : [Utiliser Ajax avec ASP.NET MVC]({% post_url "2009-11-02-utiliser-ajax-aspnetmvc" %})

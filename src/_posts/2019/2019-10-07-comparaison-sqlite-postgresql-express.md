@@ -1,23 +1,19 @@
 ---
-date: 2019-10-07 12:36:44
-layout: post
-tags: javascript, node, sql
+date: 2019-10-07 12:36:44 +02:00
+tags: [ javascript, node, sql ]
 title: "Comparaison de l'utilisation de SQlite ou PostgreSQL avec Express"
-image: "/public/2019/microscope.jpg"
+cover:
+  image: /public/2019/microscope.jpg
+  link: https://unsplash.com/photos/6q5QG8iIgRo
+  text: Observing samples under the microscope - Trust "Tru" Katsande
+excerpt: Après avoir rédigé deux tutoriels Node JS + Express pour accéder aux bases de données SQlite puis PostgreSQL, j'ai constaté qu'il n'y avait pas de gros écarts entre les deux systèmes.
 ---
 
 Après avoir rédigé deux tutoriels sur Express pour accéder à des bases de données
-[SQlite]({% post_url 2019-09-11-crud-avec-express-sqlite-10-etapes %}) puis
-[PostgreSQL]({% post_url 2019-09-21-crud-avec-express-postgresql-10-etapes %}),
+[SQlite]({% post_url "2019-09-11-crud-avec-express-sqlite-10-etapes" %}) puis
+[PostgreSQL]({% post_url "2019-09-21-crud-avec-express-postgresql-10-etapes" %}),
 j'ai pu me rendre compte qu'il n'y avait pas de si gros écarts que çà entre les
 deux systèmes.
-
-<figure>
-  <img src="{{ page.image }}" alt="microscope" />
-  <figcaption>
-    <a href="https://unsplash.com/photos/6q5QG8iIgRo">Observing samples under the microscope - Trust "Tru" Katsande</a>
-  </figcaption>
-</figure>
 
 Pour l'instant, j'ai compté 5 différences, plus ou moins importantes :
 
@@ -161,10 +157,10 @@ db.query = function (sql, params, callback) {
 };
 ```
 
-Note : je déclenche une erreur si "params" n'est pas un tableau parce que le but
+*Note : je déclenche une erreur si "params" n'est pas un tableau parce que le but
 pendant le développement sur SQlite est d'être le plus proche de ce qui devra
 fonctionner en production avec PostgreSQL. Et donc, si j'oublie d'utiliser un
-tableau, autant que ça plante pendant le développement plutôt qu'en prod.
+tableau, autant que ça plante pendant le développement plutôt qu'en prod.*
 
 Grâce à cette nouvelle méthode, on peut finalement écrire le **même** code pour
 SQlite (via le module SQlite3) que pour PostgreSQL (via le module
@@ -185,7 +181,7 @@ Et de quatre !
 J'ai pour habitude de mettre les mots-clés SQL en majucule et les noms de
 tables, colonnes, vues, séquences... en PascalCase.
 
-Ca marche très bien en C# avec ADO.NET / [Dapper](https://stackexchange.github.io/Dapper/).
+Ça marche très bien en C# avec ADO.NET / [Dapper](https://stackexchange.github.io/Dapper/).
 En Ruby, je n'ai pas eu de problèmes (sans doute parce que j'ai toujours utilisé
 [DataMapper](https://datamapper.org/) ou [Sequel](https://sequel.jeremyevans.net/)).
 Mais en JavaScript ça devient embêtant vu qu'il est très sensitif sur la casse.
@@ -305,8 +301,8 @@ if (process.env.NODE_ENV === 'production') {
 console.log("Connexion réussie à la base de données");
 ```
 
-Note : Il faudrait voir comment isoler ce système un peu confus dans 2 fichiers
-séparés. Mais chaque chose en son temps.
+*Note : Il faudrait voir comment isoler ce système un peu confus dans 2 fichiers
+séparés. Mais chaque chose en son temps.*
 
 
 ## Conclusion
@@ -347,8 +343,8 @@ db.query = function (sql, params, callback) {
 };
 ```
 
-Note : Ca doit bien ralentir un chouilla, mais on est en développement, ça
-laisse du temps pour réfléchir.
+*Note : Ça doit bien ralentir un chouilla, mais on est en développement, ça
+laisse du temps pour réfléchir.*
 
 
 ## Le code complet de "index.js"
@@ -534,5 +530,8 @@ app.post("/delete/:id", (req, res) => {
 });
 ```
 
-{:.encart}
-English version: [Comparing SQlite or PostgreSQL with Express]({% post_url 2019-10-22-comparing-sqlite-postgresql-express %}){:hreflang="en"}.
+<div class="encart">
+
+English version: {% goto_en "Comparing SQlite or PostgreSQL with Express", "2019-10-22-comparing-sqlite-postgresql-express" %}.
+
+</div>

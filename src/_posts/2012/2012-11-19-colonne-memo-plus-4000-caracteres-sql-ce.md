@@ -1,8 +1,7 @@
 ---
-date: 2012-11-19 22:01:00
-layout: post
+date: 2012-11-19 22:01:00 +02:00
 redirect_from: "post/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce"
-tags: ef, sql-server
+tags: [ ef, sql-server ]
 title: "Mémo de plus de 4000 caractères sous SQL CE"
 ---
 
@@ -58,4 +57,4 @@ Et donc, avec :
 public string Content { get; set; }
 ```
 
-Ca marche !
+Ça marche !
