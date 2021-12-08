@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Optimiser les INSERT multiples (dans Oracle) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/03/08/optimiser-insert-multiples-oracle/" />
+<meta property="og:title" content="Optimiser les INSERT multiples (dans Oracle)" />
+<meta name="description" content="Pour contrôler l&#39;intégrité de certaines données, j&#39;ai eu besoin de ramener une partie du contenu d&#39;une grosse table clients d&#39;une base de donnée DB2 dans une base Oracle." />
+<meta property="og:description" content="Pour contrôler l&#39;intégrité de certaines données, j&#39;ai eu besoin de ramener une partie du contenu d&#39;une grosse table clients d&#39;une base de donnée DB2 dans une base Oracle." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/03/08/optimiser-insert-multiples-oracle/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/pumpkin-patch.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2012-03-08T06:28:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-03-08T06:28:00.000Z","datePublished":"2012-03-08T06:28:00.000Z","description":"Pour contrôler l'intégrité de certaines données, j'ai eu besoin de ramener une partie du contenu d'une grosse table clients d'une base de donnée DB2 dans une base Oracle.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/03/08/optimiser-insert-multiples-oracle/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/pumpkin-patch.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/03/08/optimiser-insert-multiples-oracle/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/pumpkin-patch.jpg" alt="Un vieux camion au milieu des citrouilles - Priscilla Du Preez" /><figcaption><a href="https://unsplash.com/photos/svIdk6Ai94w">Un vieux camion au milieu des citrouilles - Priscilla Du Preez</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2012/03/08/optimiser-insert-multiples-oracle/">Optimiser les INSERT multiples (dans Oracle)</a>
+    </h1>
+    <p>
+      <span>2012-03-08</span>
+      <span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour contrôler l'intégrité de certaines données, j'ai eu besoin de ramener une partie du contenu d'une grosse table clients d'une base de donnée DB2 dans une base Oracle. Je sais qu'il existe SQL*Loader mais c'est pas encore cette fois que je vais m'y remettre.</p>
+<h2>Une commande INSERT par ligne à traiter</h2>
+<p>Pour commencer, j'ai testé sur un sous-ensemble de données et j'ai tenté de faire ça au plus simple. Tellement simple que je me suis contenté de générer et d'exécuter une requête INSERT par ligne à insérer.</p>
+<pre><code class="language-sql">INSERT INTO MaTable (Colonne1, Colonne2, Colonne3) VALUES ('Un_1', 'Deux_1', 'Trois_1');
+puis
+INSERT INTO MaTable (Colonne1, Colonne2, Colonne3) VALUES ('Un_2', 'Deux_2', 'Trois_2');
+puis
+INSERT INTO MaTable (Colonne1, Colonne2, Colonne3) VALUES ('Un_3', 'Deux_3', 'Trois_3');
+etc...
+</code></pre>
+<p>=&gt; 12,07 secondes pour insérer 4579 lignes (soit 379 requêtes à la secondes).</p>
+<h2>Des commandes INSERT groupées dans un BEGIN / END</h2>
+<p>Plutôt que de faire un <code>connexion.Execute()</code> pour chaque ligne, j'ai regroupé les commandes INSERT à l'intérieur d'une expression BEGIN ... INSERT (un peu comme dans une procédure stockée) de façon à ne soliciter le serveur que pour un seul <code>connexion.Execute()</code>.</p>
+<pre><code class="language-sql">BEGIN
+  INSERT INTO MaTable (Colonne1, Colonne2, Colonne3) VALUES ('Un_1', 'Deux_1', 'Trois_1');
+  INSERT INTO MaTable (Colonne1, Colonne2, Colonne3) VALUES ('Un_2', 'Deux_2', 'Trois_2');
+  INSERT INTO MaTable (Colonne1, Colonne2, Colonne3) VALUES ('Un_3', 'Deux_3', 'Trois_3');
+  etc...
+END;
+</code></pre>
+<p>=&gt; 6,37 secondes pour insérer 4579 lignes =&gt; déjà 2 fois plus rapide.</p>
+<p><em>Note : Sous <a href="https://stackexchange.github.io/Dapper/">Dapper</a> (et ADO.NET en général je suppose), Oracle ne supporte pas la présence de retours à la ligne dans la commande SQL : on obtient une erreur <code>@@PLS-00103: Encountered the symbol &quot;&quot; when expecting one of the following@</code>.</em></p>
+<p>Pour résoudre ça, il suffit de ne pas faire de retour à la ligne quand on génère la grosse requête :</p>
+<pre><code class="language-sql">BEGIN INSERT INTO MaTable (...) VALUES (...); INTO MaTable (...) VALUES (...); ...; END;
+</code></pre>
+<h2>Une commande INSERT à partir de plusieurs SELECT</h2>
+<p>Cette fois, au lieu de faire 1 accès au serveur pour malgré tout lui faire faire plusieurs INSERT, j'ai encore plus optimisé en lui envoyant une seule requête INSERT. Pour ça, j'ai transformé les &quot;INSERT ... VALUES ...&quot; en &quot;INSERT ... SELECT FROM ...&quot; :)</p>
+<pre><code class="language-sql">INSERT INTO MaTable (Colonne1, Colonne2, Colonne3)
+SELECT ('Un_1', 'Deux_1', 'Trois_1') FROM DUAL
+UNION SELECT ('Un_2', 'Deux_2', 'Trois_2') FROM DUAL
+UNION SELECT ('Un_3', 'Deux_3', 'Trois_3') FROM DUAL
+etc...
+</code></pre>
+<p>=&gt; 2,84 secondes pour insérer 4579 lignes (soit 1612 requêtes à la seconde) =&gt; 4 fois plus rapide.</p>
+<h2>Résultat des courses</h2>
+<p><img src="/public/2012/tests-vitesse-insert.png" alt=""></p>
+<p>Ça valait quand même le coup de faire quelques essais, parce qu'au final, je suis passé de 379 insertions à la seconde à plus de 1600 ! Et comme j'ai près de 300.000 lignes à traiter, ça prendra dans les 3 minutes et pas 1/4 d'heure.</p>
+<h2>Mise en oeuvre</h2>
+<p>Dans la pratique, je copie l'intégralité des données par bloc de 500 clients pour éviter de saturer la mémoire :</p>
+<pre><code class="language-c#">public int SaveClients(IEnumerable&lt;Client&gt; clients)
+{
+    var sql = @&quot;UNION SELECT '{0}', '{1}', '{2}', '{3}', '{4}' FROM DUAL &quot;;
+
+    int count = 0;
+    try
+    {
+        connexion.Open();
+        var batch = new StringBuilder();
+        foreach (var c in clients)
+        {
+            batch.Append(string.Format(sql, c.Agence, c.Code, c.Siret, c.Type));
+            count++;
+            if ((count % 500) == 0)
+            {
+                connexion.Execute(Sql_FromSelect(batch));
+                batch = new StringBuilder();
+            }
+        }
+        connexion.Execute(Sql_FromSelect(batch));
+    }
+    catch (Exception ex)
+    {
+        throw ex;
+    }
+    finally
+    {
+        connexion.Close();
+    }
+
+    return count;
+}
+
+private string Sql_FromSelect(StringBuilder batch)
+{
+    // Au départ :
+    // &quot;UNION SELECT '...', '...', '...', '...', '...' FROM DUAL UNION SELECT ... &quot;
+
+    batch.Remove(0, 5);
+    // =&gt; &quot; SELECT '...', '...', '...', '...', '...' FROM DUAL UNION SELECT ... &quot;
+
+    var start = @&quot;BEGIN INSERT INTO Clients (Agence, Code, Siret, Type) &quot;;
+    batch.Insert(0, start);
+    // =&gt; &quot;BEGIN INSERT INTO Clients (...) SELECT '...', '...', ... &quot;
+
+    batch.Append(&quot;; END;&quot;);
+    // =&gt; &quot;BEGIN INSERT INTO Clients (...) SELECT ... FROM DUAL; END;&quot;
+
+    return batch.ToString();
+}
+</code></pre>
+<p>Mise à jour : Pour les plus curieux, les sources du projet qui m'a servi pour tester tout ça sont désormais sur <a href="https://github.com/michelc/TestInsert">GitHub</a>.</p>
+<div class="encart">
+<p>English version: <a href="/2020/02/04/optimize-multiple-insert-oracle/" hreflang="en-US">Optimize multiple INSERTs (for Oracle)</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/03/01/ruby-parentheses/" hreflang="fr-FR">Ruby, or et parenthèses</a>
+  <a rel="next" href="/2012/03/21/memento-jointures-sql/" hreflang="fr-FR">Mémento des jointures en SQL</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

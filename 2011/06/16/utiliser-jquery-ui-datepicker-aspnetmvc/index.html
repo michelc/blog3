@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser jQuery UI Datepicker avec ASP.NET MVC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/06/16/utiliser-jquery-ui-datepicker-aspnetmvc/" />
+<meta property="og:title" content="Utiliser jQuery UI Datepicker avec ASP.NET MVC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/06/16/utiliser-jquery-ui-datepicker-aspnetmvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-06-16T17:56:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-06-16T17:56:00.000Z","datePublished":"2011-06-16T17:56:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/06/16/utiliser-jquery-ui-datepicker-aspnetmvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/06/16/utiliser-jquery-ui-datepicker-aspnetmvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/06/16/utiliser-jquery-ui-datepicker-aspnetmvc/">Utiliser jQuery UI Datepicker avec ASP.NET MVC</a>
+    </h1>
+    <p>
+      <span>2011-06-16</span>
+      <span>#jquery</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Normalement, je n'aime pas trop proposer un calendrier pour permettre la
+saisie de dates dans un formulaire. Mais comme le <a href="http://jqueryui.com/demos/datepicker/">widget Datepicker de
+jQuery UI</a> n'est pas trop envahissant ou irritant, j'ai malgré tout décidé
+de lui laisser une chance. Et surtout, je vois ça comme un bon moyen d'aborder
+les templates Editor et Display de ASP.NET MVC et d'étudier un peu plus
+correctement comment les utiliser.</p>
+<h2>Un projet MVC juste pour tester</h2>
+<p>Pour commencer, j'ai échafaudé vite fait une application de gestion de
+livres à partir de la classe suivante :</p>
+<pre><code>public class Livre
+{
+    public int ID { get; set; }
+    public string Titre { get; set; }
+    public DateTime Edition { get; set; }
+}
+</code></pre>
+<p>Pour faire vite, j'ai simplement aménagé l'exemple <a href="http://weblogs.asp.net/scottgu/archive/2011/05/05/ef-code-first-and-data-scaffolding-with-the-asp-net-mvc-3-tools-update.aspx">EF Code First and Data Scaffolding with the ASP.NET MVC 3 Tools
+Update</a> de Scott Guthrie. Après avoir bricolé un lien vers l'action &quot;Index&quot;
+de mon nouveau contrôleur &quot;Livres&quot; dans le fichier &quot;_Layout.cshtml&quot;, j'ai pu
+accéder à mon écran de création d'un nouveau livre :</p>
+<p><img src="/public/2011/jquery-datepicker-mvc-01.jpg" alt=""></p>
+<h2>Deux templates DateTime.cshtml</h2>
+<p>J'ai alors pu passer à l'exemple <a href="http://rachelappel.com/create-user-friendly-date-fields-with-asp.net-mvc-editortemplates-amp-jqueryui">Create user friendly date fields with ASP.NET MVC EditorTemplates
+&amp; jQueryUI</a> donné par Rachel Appel pour créer les deux templates
+&quot;DateTime.cshtml&quot; dans les sous-répertoires &quot;DisplayTemplates&quot; et
+&quot;EditorTemplates&quot;.</p>
+<p><strong>\Views\Shared\DisplayTemplates\DateTime.cshtml</strong></p>
+<pre><code>@model DateTime
+@String.Format(&quot;{0:d}&quot;, Model.Date)
+</code></pre>
+<p><strong>\Views\Shared\EditorTemplates\DateTime.cshtml</strong></p>
+<pre><code>@model DateTime
+@Html.TextBox(&quot;&quot;, String.Format(&quot;{0:d}&quot;, Model.Date.ToShortDateString()))
+</code></pre>
+<p>Ce qui m'a permi d'avoir des dates &quot;propres&quot; (sans avoir l'heure à 00:00:00)
+que ce soit en affichage ou en saisie :</p>
+<p><img src="/public/2011/jquery-datepicker-mvc-02.jpg" alt=""></p>
+<p>L'avantage, c'est que maintenant je n'ai rien d'autre à faire pour que
+toutes les zones de dates existantes ou à venir dans mon application Livres
+bénéficient de la même présentation.</p>
+<h2>Ajout de jQuery UI Datepicker</h2>
+<p>Je continue pas à pas le tutoriel de Rachel Appel en référençant la
+librairie jQuery UI (et sa CSS) dans mon fichier &quot;_Layout.cshtml&quot; :</p>
+<pre><code>&lt;link href=&quot;@Url.Content(&quot;~/Content/themes/base/jquery.ui.all.css&quot;)&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery-ui-1.8.11.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Puis je fais évoluer mon EditorTemplate pour ajouter une classe CSS afin que
+jQuery puisse identifier les zones de saisie de date :</p>
+<pre><code>@model DateTime
+@Html.TextBox(&quot;&quot;, String.Format(&quot;{0:d}&quot;, Model.Date.ToShortDateString()), new { @class = &quot;datefield&quot; })
+</code></pre>
+<p>Et je n'ai plus qu'à utiliser la fonction jQuery ready pour indiquer que
+tous les éléments qui ont la classe CSS &quot;datefield&quot; doivent être complété d'un
+calendrier :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+$(function () {
+    $(&quot;.datefield&quot;).datepicker();
+});
+&lt;/script&gt;
+</code></pre>
+<p>Personnellement, j'ai placé ce script dans mon fichier &quot;_Layout.cshtml&quot;
+plutôt que dans le template &quot;DateTime.cshtml&quot; pour éviter qu'il soit répété (et
+donc ré-exécuté) autant de fois qu'il y a de date dans mon formulaire de
+saisie.</p>
+<p>Et maintenant, quand je suis en saisie d'une date, j'ai le calendrier de
+jQuery UI qui apparait :</p>
+<p><img src="/public/2011/jquery-datepicker-mvc-03.jpg" alt=""></p>
+<h2>Un calendrier en français</h2>
+<p>C'est pas mal, mais c'est tout en anglais :) Heureusement, il y a moyen
+d'avoir une version traduite en français très facilement. Il suffit de
+récupérer le fichier &quot;jquery.ui.datepicker-fr.js&quot; dans le référentiel Git de
+jQuery UI : <a href="https://github.com/jquery/jquery-ui/blob/master/ui/i18n/">https://github.com/jquery/jquery-ui/blob/master/ui/i18n/</a> puis de
+l'enregistrer dans le répertoire &quot;Scripts&quot; de la solution (et de penser à
+l'inclure dans le projet).</p>
+<p>Il ne reste alors plus qu'à référencer ce script (après le script pour
+jQuery UI ?) dans le layout :</p>
+<pre><code>&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery.ui.datepicker-fr.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Et cerise sur le gâteau, le calendrier est maintenant en mesure de
+reconnaitre la date en cours et de s'y positionner correctement :</p>
+<p><img src="/public/2011/jquery-datepicker-mvc-04.jpg" alt=""></p>
+<h2>Le cas des dates nullables</h2>
+<p>En creusant un peu sur différents exemples d'utilisation du Datepicker de
+jQuery UI avec ASP.NET MVC, je suis tombé sur des démos qui allaient un peu
+plus loin et qui prenaient en compte le cas où la date était nulle.</p>
+<p>Dans ce cas là, il faut que les templates &quot;Datetime.cshtml&quot; héritent de
+l'objet <code>DateTime?</code> et plus de l'objet <code>DateTime</code>. Et
+donc modifier le code pour gérer le fait qu'on a à faire à un objet nullable,
+ce qui au final donne les templates suivants :</p>
+<p><strong>\Views\Shared\DisplayTemplates\DateTime.cshtml</strong></p>
+<pre><code>@model System.DateTime?
+@(Model.HasValue ? Model.Value.Date.ToShortDateString() : string.Empty)
+</code></pre>
+<p><strong>\Views\Shared\EditorTemplates\DateTime.cshtml</strong></p>
+<pre><code>@model System.DateTime?
+@Html.TextBox(&quot;&quot;, Model.HasValue ? Model.Value.Date.ToShortDateString() : string.Empty, new { @class = &quot;datefield&quot; })
+</code></pre>
+<p>Pour tester que ça marchait, j'ai dû ajouter un seul &quot;?&quot; à ma classe
+&quot;Livre&quot; :</p>
+<pre><code>public class Livre
+{
+    public int ID { get; set; }
+    public string Titre { get; set; }
+    public DateTime? Edition { get; set; }
+}
+</code></pre>
+<p>Et après ça j'ai dû supprimer ma base de données (le fichier
+App_Data\Livres.sdf dans mon cas) puis qu'elle avait changé. Chercher &quot;Changing
+our Model and Database Schema&quot; sur le billet <a href="http://weblogs.asp.net/scottgu/archive/2011/01/11/vs-2010-sp1-and-sql-ce.aspx">VS 2010 SP1 and SQL CE</a> de Scott Guthrie pour plus
+d'explications.</p>
+<p><em>Note : J'ai vu des exemples qui initialisent une valeur par
+défaut lorsque la date est nulle (genre <code>Model.HasValue ? Model.Value.Date.To...() : DateTime.Today.To...()</code>). Mais selon moi,
+ce n'est pas quelque chose qui doit être décidé et accompli au niveau d'un
+template. Il est préférable de prévoir ce genre d'initialisation dans une
+classe ViewModel.</em></p>
+<h2>Moderniser le code HTML</h2>
+<p>Le déclenchement du calendrier est basé sur la présence de la classe CSS
+&quot;datefield&quot; (ce que fait <code>$(&quot;.datefield&quot;).datepicker();</code>). Mais
+c'est quasiment la préhistoire du <a href="http://fr.wikipedia.org/wiki/Javascript_discret">Javascript non
+intrusif</a>. Je pense qu'actuellement, il vaut bien mieux se baser sur
+l'attribut <code>type</code> qui est justement prévu pour définir une <a href="http://diveintohtml5.org/forms.html#type-date">saisie de date en
+HTML5</a>.</p>
+<p>Et donc, plutôt que d'ajouter une classe CSS &quot;datefield&quot;, le template Editor
+va directement ajouter un attribut <code>type=&quot;date&quot;</code> :</p>
+<pre><code>@model System.DateTime?
+@Html.TextBox(&quot;&quot;, Model.HasValue ? Model.Value.Date.ToShortDateString() : string.Empty, new { @type = &quot;date&quot; })
+</code></pre>
+<p>Il faut alors revoir la fonction jQuery ready pour que désormais elle prenne
+en compte les éléments ayant ce type :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+$(function () {
+    $(&quot;input[type=date]&quot;).datepicker();
+});
+&lt;/script&gt;
+</code></pre>
+<p>Et on va même plus loin en utilisant la librairie Modernizr promue par
+ASP.NET MVC pour appliquer le calendrier de jQuery UI uniquement lorsque le
+navigateur ne prend pas en charge la saisie des dates :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+$(function () {
+    if (!Modernizr.inputtypes.date) {
+        $(&quot;input[type=date]&quot;).datepicker();
+    }
+});
+&lt;/script&gt;
+</code></pre>
+<h2>Conclusion</h2>
+<p>Finalement, c'est pas hyper compliqué de faire des templates. Et en y
+réfléchissant un peu mieux, je pense que c'est une solution qui devrait me
+plaire parce qu'elle est totalement &quot;discrète&quot; :</p>
+<ul>
+<li>côté client, le calendrier est appliqué de façon non intrusive : le
+code de la balise input n'a pas été affublé d'un <code>onclick</code> pour lui
+attacher un calendrier.</li>
+<li>côté serveur, le calendrier est généré de façon non intrusive : le
+formulaire a conservé <code>@Html.EditorFor(model =&gt; model.Edition)</code>
+sans qu'on ait à le défigurer avec un helper spécifique genre
+<code>@Html.DateTimeFor(model =&gt; model.Edition)</code>.</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/06/16/telecharger-fichiers-sinatra/" hreflang="fr-FR">Télécharger des fichiers avec Sinatra</a>
+  <a rel="next" href="/2011/09/23/comic-strip/" hreflang="fr-FR">Comic strip</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) A links box - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/11/15/wdevs-links-box/" />
+<meta property="og:title" content="(Wdevs) A links box" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/11/15/wdevs-links-box/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-11-15T15:30:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-11-15T15:30:00.000Z","datePublished":"2004-11-15T15:30:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/11/15/wdevs-links-box/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/11/15/wdevs-links-box/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/11/15/wdevs-links-box/">(Wdevs) A links box</a>
+    </h1>
+    <p>
+      <span>2004-11-15</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>This time, I test a box which will contain a list of items. In fact, as I
+currently don't work on the backoffice programming, there isn't so much
+differences with htmltext or image box which display a single item.</p>
+<p>So the only difference really occurs in the web control where I can't use a
+simple PlaceHolder to display the content. Of course I don't put a DataList
+like IBuySpy does, as I don't want to rely on html tables to ensure
+visualization.</p>
+<p>Rather I have to use a Repeater in the server side and again
+<code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code> tags to produce the list
+effect and information on the client side.</p>
+<pre><code>&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; Codebehind=&quot;listLinks.ascx.cs&quot; Inherits=&quot;qc.Classic.Links.listLinks&quot; TargetSchema=&quot;http://schemas.microsoft.com/intellisense/ie5&quot; %&gt;
+&lt;ul&gt;
+ &lt;asp:repeater ID=&quot;boxRepeater&quot; EnableViewState=&quot;False&quot; runat=&quot;server&quot;&gt;&lt;ItemTemplate&gt;&lt;li&gt;
+   &lt;% if (this.box.paneName != &quot;paneMain&quot;) { %&gt;
+   &lt;a href='&lt;%# DataBinder.Eval(Container.DataItem, &quot;url&quot;) %&gt;' title='&lt;%# DataBinder.Eval(Container.DataItem, &quot;description&quot;) %&gt;'&gt;&lt;%# DataBinder.Eval(Container.DataItem, &quot;title&quot;) %&gt;&lt;/a&gt;
+   &lt;% } else { %&gt;
+   &lt;a href='&lt;%# DataBinder.Eval(Container.DataItem, &quot;url&quot;) %&gt;'&gt;&lt;%# DataBinder.Eval(Container.DataItem, &quot;title&quot;) %&gt;&lt;/a&gt;
+   &lt;p&gt;&lt;%# DataBinder.Eval(Container.DataItem, &quot;description&quot;) %&gt;&lt;/p&gt;
+   &lt;% }%&gt;
+ &lt;/li&gt;&lt;/ItemTemplate&gt;&lt;/asp:repeater&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>Note: I'm using the <code>&lt;% if (this.box.paneName != &quot;paneMain&quot;) { %&gt;</code> to decide wether to display complete links with
+descriptions or short links where description appears as a tooltip.</p>
+<p>As there isn't so much work to produce this <a href="http://web.archive.org/web/20041215050806/http://michel.monoforge.com/default.aspx?idScreen=links">
+links box</a>, I make some efforts with regard to the presentation. It's more
+to show one can build an IBuySpy clone which uses CSS styles (including
+<a href="http://www.stylegala.com/features/bulletmadness/">bullets</a>) than to
+present my web design skills.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/11/15/wdevs-image-box/" hreflang="en-US">(Wdevs) An image box</a>
+  <a rel="next" href="/2004/11/16/wdevs-connecting-mysql-access/" hreflang="en-US">(Wdevs) Connecting to MySQL or Access</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

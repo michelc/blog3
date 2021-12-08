@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>dQuery - Délégation d&#39;évènements et IOS - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/06/04/dquery-delegation-evenement-ios/" />
+<meta property="og:title" content="dQuery - Délégation d&#39;évènements et IOS" />
+<meta name="description" content="Un dernier billet sur &quot;dQuery&quot; et la délégation d&#39;évènements pour régler un cas un peu tordu quand j&#39;ai voulu tester ce que ça donnait sur iPhone..." />
+<meta property="og:description" content="Un dernier billet sur &quot;dQuery&quot; et la délégation d&#39;évènements pour régler un cas un peu tordu quand j&#39;ai voulu tester ce que ça donnait sur iPhone..." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/06/04/dquery-delegation-evenement-ios/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-04T10:37:50.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-06-04T10:37:50.000Z","datePublished":"2019-06-04T10:37:50.000Z","description":"Un dernier billet sur \"dQuery\" et la délégation d'évènements pour régler un cas un peu tordu quand j'ai voulu tester ce que ça donnait sur iPhone...","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/06/04/dquery-delegation-evenement-ios/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/06/04/dquery-delegation-evenement-ios/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2019/06/04/dquery-delegation-evenement-ios/">dQuery - Délégation d&#39;évènements et IOS</a>
+    </h1>
+    <p>
+      <span>2019-06-04</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Cette série de billets retrace quelques-unes des étapes pour développer une
+mini-librairie JavaScript qui remplacera(it) un jour jQuery sur mon site de jeux
+de solitaires.</p>
+<ol>
+<li><a href="/2019/04/30/dquery-remplacer-jquery/">Comment j'ai (bientôt) remplacé jQuery</a></li>
+<li><a href="/2019/05/07/dquery-compatibilite-ie9-es5/">Une version compatible IE9 / ES5</a></li>
+<li><a href="/2019/05/14/dquery-librairie-js-manipulation-dom/">Ma librairie pour manipuler le DOM</a></li>
+<li><a href="/2019/05/21/dquery-delegation-evenement-javascript/">La délégation des évènements en JS</a></li>
+<li><a href="/2019/05/28/dquery-delegation-evenement-event-target/">Délégation d'évènements et « event.target »</a></li>
+<li><a href="/2019/06/04/dquery-delegation-evenement-ios/">Délégation d'évènements et iOS</a></li>
+</ol>
+</div>
+<h2>1° série de tests (à la main)</h2>
+<p>J'ai donc réussi à gérer assez correctement la délégation d'évènements dans ma
+librairie dQuery. Après pas mal de tests et un grand nombre de parties de
+solitaire jouées, sous Chrome, Firefox, Edge et même Internet Explorer, j'ai pu
+valider que tout était OK.</p>
+<p>Les essais menés dans le mode &quot;device&quot; de Chrome pour tester le fonctionnement
+&quot;responsive&quot; des smartphones étaient eux aussi réussis. Je teste ensuite pour de
+vrai sur un Samsung sous Android et même un vieux Wiko et là encore tout marche
+correctement.</p>
+<p>Jusqu'au moment où j'essaie de jouer sur un iPhone... Et là, rien ne se passe...
+C'est comme si le &quot;clic&quot; n'avait pas lieu :</p>
+<ul>
+<li>Ça marche quand je pioche (car pas de delegate) ;</li>
+<li>Ça ne réagit pas du tout quand j'appuie sur une carte du tableau.</li>
+</ul>
+<h2>2° série de tests (plus automatisés)</h2>
+<p>Dans <a href="https://github.com/vladocar/nanoJS/">NanoJS</a>, Vladimir Carrer a écrit des
+tests unitaires pour vérifier que le code de sa librairie fonctionne comme
+prévu.</p>
+<p>Mais je ne vais quand même pas apprendre à utiliser un framework de tests
+JavaScript à cause d'un bête iPhone. Et surtout, il faudrait que j'arrive à
+faire tourner ces tests directement sur un iPhone pour que cela soit réellement
+concluant.</p>
+<p>Je bidouille plutôt une page &quot;dQuery.html&quot; avec les principaux cas à tester pour
+vérifier mon code et essayer de comprendre où cela bloque dans le cas de
+l'iPhone. J'écris donc quelques tests sur :</p>
+<ul>
+<li>La sélection des éléments (c'est-à-dire les <code>$(...)</code>) pour être sûr qu'il n'y
+a pas de problème à cause de <code>.querySelectorAll()</code> ;</li>
+<li>Les clics basiques pour tester les cas <code>.on(évènement, fonction)</code> même si cela
+semble déjà être OK ;</li>
+<li>Les clics sur les cartes pour tester la délégation d'évènement et la méthode
+<code>.on(évènement, filtre, fonction)</code>.</li>
+</ul>
+<p>Comme je n'ai pas immédiatement accès à un iPhone, j'exécute ces tests un peu
+partout ailleurs pour être certain qu'ils n'aient pas de problème. Ça me permet
+au passage d'y apporter quelques améliorations :</p>
+<ul>
+<li>Corriger des bugs de base ;</li>
+<li>J'avais bêtement utilisé l'interpolation  de chaînes que IE9 n'aime pas ;</li>
+<li>J'ajoute finalement des tests sur à peu près toutes les méthodes pour ne pas
+risquer de rater quelque chose le moment venu.</li>
+</ul>
+<p>Enfin vient le jour où je peux à nouveau tester sur un iPhone... Et là, tous les
+tests passent ! Ah ben zut alors :</p>
+<ul>
+<li>Soit mes tests sont pourris ;</li>
+<li>Soit je ne sais plus quoi faire...</li>
+</ul>
+<h2>3° série de tests (sur émulateur)</h2>
+<p>Manifestement, il y a un vrai problème avec les iPhones. Si je veux trouver la
+solution, il faut impérativement que je puisse faire des essais dessus autrement
+que de façon épisodique.</p>
+<p>Je pensais naïvement commencer par tester sur Safari pour déminer un peu le
+terrain. Mais malheureusement, je me rends alors compte que Safari pour Windows
+n'existe plus depuis un sacré moment. Pas de chance.</p>
+<p>Heureusement, on trouve quelques outils en lignes qui permettent de faire des
+tests sur un &quot;vrai&quot; iPhone, entre autres :</p>
+<ul>
+<li><a href="https://www.browserstack.com/">BrowserStack</a></li>
+<li><a href="https://www.lambdatest.com/">LambdaTest</a></li>
+<li><a href="https://kobiton.com/">Kobiton</a></li>
+</ul>
+<p>Finalement, je me concentre sur LambdaTest, car sa version gratuite donne
+suffisamment de temps pour mener les essais jusqu'au bout sans avoir
+l'impression d'être dans Fort Boyard.</p>
+<p>Et là, il faut bien me rendre à l'évidence, ce n'était pas l'iPhone sur lequel
+j'avais testé qui était cassé, mais bien mon programme. Et en fait, c'est même
+un problème plus général avec Apple, puisque ça ne fonctionne pas non plus quand
+je teste via LambdaTest sur un iPad.</p>
+<p>Je ne vais jamais y arriver... Sauf si d'autres ont déjà eu le problème et
+qu'ils ont trouvé la solution (eux). Je cherche donc &quot;javascript event delegate
+iphone&quot; et effectivement, c'est un problème connu. J'aurais quand même pu penser
+un peu plus tôt à faire appel à mon ami Google.</p>
+<p>Non seulement c'est un problème connu, mais c'est en plus un gros problème,
+tellement que c'en est même une &quot;fonctionnalité&quot; :</p>
+<blockquote>
+<p>From the dawn of history browsers have supported event delegation. If you
+click on an element, the event will bubble all the way up to the document in
+search of event handlers to execute.</p>
+<p>It turns out that Safari on the iPhone does not support event delegation for
+click events, unless the click takes place on a link or input. That's an
+annoying bug, but fortunately there's a workaround available.</p>
+<p><a href="https://www.quirksmode.org/blog/archives/2010/09/click_event_del.html">Click event delegation on the iPhone</a>
+-- Peter-Paul Koch</p>
+</blockquote>
+<p>Honnêtement, le point de vue chez Apple ne me parait pas si stupide que ça. Mais
+comme tous les autres navigateurs font différemment, c'est un peu dommage de ne
+pas adopter ce qui fait consensus.</p>
+<p>Et donc, si je veux pouvoir faire de la délégation d'évènements en Vanilla
+JavaScript qui fonctionne sur iOS, PPK a la solution, ajouter délibérément un
+évènement <code>onclick</code> &quot;vide&quot; à tous les éléments non cliquables selon iOS :</p>
+<blockquote>
+<p>Fortunately it's pretty easy to solve: you have to make the element clickable
+by giving it an onclick event handler of its very own. That handler can be
+empty; as long as it's present it will make any element clickable.</p>
+<p><a href="https://www.quirksmode.org/blog/archives/2010/09/click_event_del.html#link4">Event delegation on the iPhone - Workaround</a>
+-- Peter-Paul Koch</p>
+</blockquote>
+<p>Quelle horreur ! Ça va faire moche dans mon code si je dois ajouter / créer tous
+ces &quot;faux&quot; onclick pour que mon jeu marche. Et puis il faut faire ça que pour
+les iPhones / iPads et aussi espérer que ça n'aura pas d'autres effets...</p>
+<p>Après avoir pas mal temporisé, je cherche un peu mieux des résultats plus
+récents (et surtout je lis les articles jusqu'au bout) et il semblerait qu'il
+existe une solution super-simple :</p>
+<blockquote>
+<p>Setting the cursor of the div to pointer in CSS also does the trick without
+any extra JS.</p>
+<p><a href="https://www.quirksmode.org/blog/archives/2010/09/click_event_del.html#c14825">Event delegation on the iPhone - Comments #10</a>
+-- Jimmy Byrum</p>
+</blockquote>
+<p>Miracle ! Il suffit donc que j'ajoute une propriété <code>cursor: pointer</code> à la
+classe <code>.card</code> de ma feuille de style pour qu'iOS devienne raisonnable :</p>
+<ul>
+<li>Je modifie mon CSS</li>
+<li>Je publie sur un site de test</li>
+<li>Je lance LambdaTest</li>
+<li>Ça marche !</li>
+</ul>
+<p>Merci PPK, merci Jimmy, merci LambdaTest, merci Google... C'était peut-être
+beaucoup plus facile avec jQuery, mais vachement moins amusant !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/05/28/dquery-delegation-evenement-event-target/" hreflang="fr-FR">dQuery - Délégation d&#39;évènements et « event.target »</a>
+  <a rel="next" href="/2019/07/04/solitaire-animation-css/" hreflang="fr-FR">Solitaire - Animation CSS en fin de partie</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

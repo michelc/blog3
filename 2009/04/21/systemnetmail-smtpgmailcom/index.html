@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>System.Net.Mail et smtp.gmail.com - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/04/21/systemnetmail-smtpgmailcom/" />
+<meta property="og:title" content="System.Net.Mail et smtp.gmail.com" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/04/21/systemnetmail-smtpgmailcom/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-04-21T15:17:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-04-21T15:17:00.000Z","datePublished":"2009-04-21T15:17:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/04/21/systemnetmail-smtpgmailcom/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/04/21/systemnetmail-smtpgmailcom/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/04/21/systemnetmail-smtpgmailcom/">System.Net.Mail et smtp.gmail.com</a>
+    </h1>
+    <p>
+      <span>2009-04-21</span>
+      <span>#ap</span><span>#code-snippets</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Poursuivant mes essais de <a href="/2008/10/02/migration-altrr-press-net-1-net-2/">migration d'Altrr-Press vers ASP.NET 2.0</a>, j'ai enfin étudié comment
+remplacer System.Web.Mail par System.Net.Mail. Jusqu'à présent, j'utilisais la
+méthode décrite dans mon plus célèbre billet <a href="/2005/01/14/wdevs-systemwebmail-smtpgmailcom/">System.Web.Mail and smtp.gmail.com</a>.</p>
+<p>Par rapport à cette méthode, les modifications à apporter n'ont finalement
+pas été si compliquées que ça :</p>
+<pre><code>public string sendMail (string from, string to, string cc, string bcc, string subject, string body) {
+
+  // Mail initialization
+  MailMessage mail = new MailMessage();
+  mail.From = new MailAddress(from);
+  mail.To.Add(to);
+  if (cc != &quot;&quot;) {
+    mail.Cc.Add(new MailAddress(cc));
+  }
+  if (bcc != &quot;&quot;) {
+    mail.Bcc.Add(new MailAddress(bcc));
+  }
+  mail.Subject = subject;
+  mail.IsBodyHtml = false;
+  mail.BodyEncoding = System.Text.Encoding.UTF8;
+  mail.Body = body;
+
+  // Smtp configuration
+  SmtpClient smtp = new SmtpClient();
+  smtp.Host = &quot;smtp.gmail.com&quot;;
+  // - smtp.gmail.com use smtp authentication
+  smtp.Credentials = new NetworkCredential(&quot;myemail@gmail.com&quot;, &quot;mypassword&quot;);
+  // - smtp.gmail.com with System.Net.Mail accepts port 25 or 587
+  smtp.Port = 25;
+  // - smtp.gmail.com use STARTTLS (some clients call this SSL)
+  smtp.EnableSsl = true;
+
+  // Mail sending
+  try {
+    smtp.Send(mail);
+    return &quot;&quot;;
+  } catch (Exception ex) {
+    return ex.Message;
+  }
+}
+</code></pre>
+<p>Une première petite difficulté est venu des propriétés From, To, Cc et Bcc
+de l'objet MailMessage qui ne sont plus de type chaine comme en .NET 1 mais du
+type MailAddress ou collection de MailAddress.</p>
+<p>Mais le plus gros problème, c'est qu'avec System.Net.Mail, je n'ai jamais
+réussi à utiliser le port 465 alors qu'il fonctionne très bien avec
+System.Web.Mail (et même sur un site en .NET 2 qui utilise encore
+System.Web.Mail !!!). Et comme en local le port 587 n'est pas ouvert, j'ai un
+peu trainé pour faire mes tests puisque je devais à chaque fois faire une mise
+en production afin de vérifier si cela fonctionnait.</p>
+<p>Mais au final, j'ai quand même découvert qu'avec System.Net.Mail :</p>
+<ul>
+<li>cela fonctionne aussi bien avec le port 587 qu'avec le port 25 (!)</li>
+<li>il n'est même pas nécessaire de définir la propriété smtp.Port pour que le
+mail parte (re !)</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/04/17/evolutions-qc-17-avril-2009/" hreflang="fr-FR">Evolutions QC au 17 avril 2009</a>
+  <a rel="next" href="/2009/04/28/pinguer-une-url/" hreflang="fr-FR">Pinguer une Url</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

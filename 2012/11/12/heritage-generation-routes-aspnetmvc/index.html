@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Héritage en génération des routes ASP.NET MVC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/11/12/heritage-generation-routes-aspnetmvc/" />
+<meta property="og:title" content="Héritage en génération des routes ASP.NET MVC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/11/12/heritage-generation-routes-aspnetmvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-11-12T17:04:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-11-12T17:04:00.000Z","datePublished":"2012-11-12T17:04:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/11/12/heritage-generation-routes-aspnetmvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/11/12/heritage-generation-routes-aspnetmvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/11/12/heritage-generation-routes-aspnetmvc/">Héritage en génération des routes ASP.NET MVC</a>
+    </h1>
+    <p>
+      <span>2012-11-12</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>Quand ça marche</h2>
+<p>J'ai développé une petite application ASP.NET MVC pour gérer des &quot;brochures&quot;
+de voyages. Chaque brochure est constitué d'un ensemble de voyages et chaque
+voyage se décompose en plusieurs sections (en quelque sorte des étapes).</p>
+<p>Habituellement, dans les exemples basiques pour ASP.NET MVC, les routes sont
+sous la forme {controller}/{action}/{id} où le paramètre &quot;id&quot; correspond à
+l'élément à traiter. On a donc :</p>
+<ul>
+<li>/brochures/edit/12 =&gt; action pour modifier la brochure n° 12</li>
+<li>/voyages/delete/34 =&gt; action pour suppression du voyage n° 34</li>
+<li>/sections/edit/56 =&gt; action pour modifier la section n° 56</li>
+</ul>
+<p>Dans mon cas, j'avais besoin d'avoir en permanence l'identifiant de la
+brochure dans l'URL pour pouvoir afficher facilement son titre dans l'en-tête
+des pages. Ça aurait pu donner quelque chose dans ce genre :</p>
+<ul>
+<li>/brochures/edit/12</li>
+<li>/voyages/delete/34?brochure_id=12</li>
+<li>/sections/edit/56?brochure_id=12</li>
+</ul>
+<p>Plutôt que de me trimbaler et de gérer cet identifiant en QueryString,
+j'avais eu la super idée d'en faire un élément de la route en re-définissant la
+route par défaut :</p>
+<pre><code>routes.MapRouteLowercase(
+  &quot;Default&quot;,
+  &quot;{root_id}/{controller}/{action}/{id}&quot;,
+  new {
+    root_id = &quot;0&quot;,
+    controller = &quot;Home&quot;,
+    action = &quot;Index&quot;,
+    id = UrlParameter.Optional
+  }
+);
+</code></pre>
+<p>De cette façon, une fois que j'avais sélectionné une brochure, mes routes
+étaient de la forme :</p>
+<ul>
+<li>/12/brochures/edit/12</li>
+<li>/12/voyages/delete/34</li>
+<li>/12/sections/edit/56</li>
+</ul>
+<p>Ce qui est vraiment pratique, c'est que ça n'a quasiment rien changé à mon
+code. J'ai pu continuer à générer mes liens à coups de
+<code>@Html.ActionLink()</code> sans avoir à y indiquer à chaque fois la valeur
+pour &quot;root_id&quot;. En effet, le système de génération des URLs de ASP.NET MVC est
+suffisamment bien foutu pour gérer le cas où un élément de la route n'est pas
+défini.</p>
+<p>Dans ce cas, il regarde si cet élément existe dans l'URL de la page en cours
+et si c'est le cas, <code>@Html.ActionLink()</code> ré-utilise cette valeur
+pour générer la nouvelle route.</p>
+<p>Et en fait, je viens de m'apercevoir tout récemment que c'est encore plus
+sophistiqué que ça !</p>
+<h2>Quand ça ne marche pas</h2>
+<p>Dans un autre projet, j'ai encore eu besoin de faire suivre une valeur tout
+au long des différentes actions liées à une série de traitements. Dans ce cas,
+il s'agissait de mémoriser d'où provenait l'utilisateur pour pouvoir l'y
+reconduire à la fin de la série de traitements. Comme c'était une valeur plus
+&quot;accessoire&quot; que le numéro de brochure, j'ai préféré la faire apparaître à la
+fin de la route :</p>
+<pre><code>routes.MapRoute(
+  &quot;Sirens&quot;,
+  &quot;Sirens/{action}/{source_id}/{id}&quot;,
+  new { controller = &quot;Sirens&quot;, action = &quot;Index&quot;, source_id = 0, id = &quot;&quot; }
+);
+</code></pre>
+<p>Et à ma grande déception, mon paramètre &quot;source_id&quot; n'était pas repris d'URL
+en URL mais initialisé à chaque fois à zéro ! Au début, j'ai opportunément
+accusé l'utilisation de helpers <code>@Html.ActionLink()</code> fortement typés
+au lieu de la version standard à base de &quot;chaînes magiques&quot;. Bien tenté, mais
+c'était pas ça...</p>
+<p>Puis j'ai constaté un truc vraiment paradoxal : ça marchait dans
+certains cas mais pas tous les cas (la définition du bug en quelque sorte).</p>
+<p>Depuis la vue Details, les URLs qui pointaient vers l'action Details pour un
+autre numéro de Siren fonctionnaient, mais pas celles qui pointaient vers
+l'action Edit pour le numéro Siren en cours...</p>
+<p>Par exemple, depuis la fiche du Siren 732829320 (URL
+/Sirens/Details/99/732829320), j'obtenais les URLs :</p>
+<ul>
+<li>/Sirens/Details/99/123456789 : ok</li>
+<li>/Sirens/Details/99/111111111 : ok</li>
+<li>/Sirens/Edit/0/732829320 : ko</li>
+</ul>
+<p>En creusant, j'ai compris d'où venait le problème. En fait, le système de
+génération d'URLs ne se contente pas de recopier bêtement un élément manquant
+depuis l'URL courante. Il faut que cet élément fasse en quelque sorte parti de
+la &quot;route&quot; en cours.</p>
+<p>Depuis la route &quot;/ Sirens / Details / 99 / 732829320&quot;, quand on veut
+afficher un autre Siren, on reste en quelque sorte dans le même chemin :
+&quot;<em>/ Sirens / Details / 99</em> <strong>/ 111111111</strong>&quot; =&gt; le
+paramètre &quot;source_id&quot; est hérité depuis l'URL courante.</p>
+<p>Par contre, pour modifier la fiche du Siren en cours, on bifurque dès la
+sortie du contrôleur : &quot;<em>/ Sirens</em> <strong>/ Edit ...</strong>&quot;.
+Comme on a changé d'itinéraire, le paramètre &quot;source_id&quot; est ré-initialisé à
+zéro.</p>
+<p>Mise à jour : j'ai trouvé l'explication de ce
+comportement dans le chapitre 9 de Professional ASP.NET MVC consacré au
+routing :</p>
+<blockquote>
+<p>The <em>ambient values</em> are the current values for those parameters
+within the <code>RouteData</code> for the current request.</p>
+</blockquote>
+<p>Par conséquent, la solution est toute simple. Il suffit de placer le
+paramètre suffisamment tôt dans la route pour qu'il n'y ait pas besoin de
+sortir de la route en cours tout au long des traitements :</p>
+<pre><code>routes.MapRoute(
+  &quot;Sirens&quot;,
+  &quot;Sirens/{source_id}/{action}/{id}&quot;,
+  new { controller = &quot;Sirens&quot;, action = &quot;Index&quot;, source_id = 0, id = &quot;&quot; }
+);
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/11/05/tests-unitaires-entity-framework/" hreflang="fr-FR">Tests unitaires pour Entity Framework</a>
+  <a rel="next" href="/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce/" hreflang="fr-FR">Mémo de plus de 4000 caractères sous SQL CE</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

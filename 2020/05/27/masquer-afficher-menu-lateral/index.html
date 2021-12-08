@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Masquer ou afficher le menu latéral - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/" />
+<meta property="og:title" content="Masquer ou afficher le menu latéral" />
+<meta name="description" content="L&#39;objectif du jour : pouvoir masquer le menu latéral qui sert pour la navigation." />
+<meta property="og:description" content="L&#39;objectif du jour : pouvoir masquer le menu latéral qui sert pour la navigation." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/switches.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-05-27T10:08:34.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-05-27T10:08:34.000Z","datePublished":"2020-05-27T10:08:34.000Z","description":"L'objectif du jour : pouvoir masquer le menu latéral qui sert pour la navigation.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/switches.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/switches.jpg" alt="Le petit musée de l'interrupteur" /><figcaption><a href="https://www.heure-industrielle.com/petit-musee-de-l-interrupteur/">Le petit musée de l'interrupteur</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/05/27/masquer-afficher-menu-lateral/">Masquer ou afficher le menu latéral</a>
+    </h1>
+    <p>
+      <span>2020-05-27</span>
+      <span>#css</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je continue à travailler sur un <a href="/2020/05/19/creer-template-sidebar-contenu/">template simplissime à 2 colonnes</a>. L'objectif du jour étant de pouvoir masquer le menu latéral qui sert pour la navigation.</p>
+<p>La solution simple, ce serait de mettre une classe &quot;d-none&quot; à la &quot;sidebar&quot; (puisque j'utilise Bootstrap), mais cela ne sera pas suffisant parce que le &quot;content&quot; ne prend pas automatiquement toute la largeur.</p>
+<p>Allons y pas à pas et voyons ce qu'il faut faire :</p>
+<ul>
+<li>Masquer la &quot;sidebar&quot; =&gt; lui ajouter une classe &quot;hidden&quot;,</li>
+<li>Faire en sorte que le &quot;content&quot; occupe tout l'écran =&gt; ajouter une classe &quot;full-width&quot;.</li>
+</ul>
+<p>Ce qui côté HTML donnerait :</p>
+<pre><code class="language-html">&lt;nav id=&quot;sidebar&quot; class=&quot;hidden&quot;&gt;
+    ...
+&lt;/nav&gt;
+&lt;div id=&quot;content&quot; class=&quot;full-width&quot;&gt;
+    ...
+&lt;/div&gt;
+</code></pre>
+<p>Et côté CSS :</p>
+<pre><code class="language-css">#sidebar.hidden {
+    display: none;
+}
+#content.full-width {
+    width: 100%;
+}
+</code></pre>
+<p>Et inversement, quand je veux ré-afficher la barre de navigation :</p>
+<pre><code class="language-html">&lt;nav id=&quot;sidebar&quot; class=&quot;visible&quot;&gt;
+    ...
+&lt;/nav&gt;
+&lt;div id=&quot;content&quot; class=&quot;less-width&quot;&gt;
+    ...
+&lt;/div&gt;
+</code></pre>
+<p>Plus :</p>
+<pre><code class="language-css">#sidebar.visible {
+    display: block;
+}
+#content.less-width {
+    width: calc(100% - 299px);
+}
+</code></pre>
+<p>Ça marche ! Voyons maintenant comment obtenir le même résultat un peu plus intelligement...</p>
+<p>Mon premier essai mobilise 4 classes différentes alors qu'en gros il n'y a que 2 possibilités :</p>
+<ul>
+<li>On a une &quot;sidebar&quot; et le &quot;content&quot; =&gt; sidebar = true (par défaut),</li>
+<li>On n'a que le &quot;content&quot; =&gt; sidebar = false (à la demande).</li>
+</ul>
+<p>Ce que je peux faire en utilisant une seule classe &quot;no-sidebar&quot; :</p>
+<ul>
+<li>Par défaut cette classe n'est pas utilisée =&gt; la &quot;sidebar&quot; est visible,</li>
+<li>Et pour masquer la &quot;sidebar&quot; il suffit d'ajouter cette classe.</li>
+</ul>
+<p>Pour être malin, je fais ça au niveau du &quot;wrapper&quot; qui englobe &quot;sidebar&quot; et &quot;content&quot; :</p>
+<pre><code class="language-html">&lt;div id=&quot;wrapper&quot; class=&quot;no-sidebar&quot;&gt;
+</code></pre>
+<p>Et ce coup-ci je n'ai besoin que de 2 règles CSS :</p>
+<pre><code class="language-css">.no-sidebar #sidebar {
+    display: none;
+}
+.no-sidebar #content {
+    width: 100%;
+}
+</code></pre>
+<p>Bien mieux !</p>
+<p>Maintenant, il suffit d'un bouton et d'un rien de Javascript pour afficher ou masquer la &quot;sidebar&quot;.</p>
+<pre><code class="language-html">&lt;button id=&quot;sidebar-toggle&quot;&gt;Masquer / Afficher&lt;/button&gt;
+</code></pre>
+<p>Le code Javascript vraiment tout simple (et qui utilise jQuery parce que j'en aurai aussi besoin pour mes formulaires) :</p>
+<pre><code class="language-javascript">&lt;script src=&quot;js/jquery-3.4.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    $(document).ready(function () {
+
+        $(&quot;#sidebar-toggle&quot;).on(&quot;click&quot;, function () {
+            $(&quot;#wrapper&quot;).toggleClass(&quot;no-sidebar&quot;);
+        });
+
+    });
+&lt;/script&gt;
+</code></pre>
+<p>Pour récapituler, il suffit de 4 éléments pour réaliser une présentation sur 2 colonnes, avec une barre latérale rétractable :</p>
+<ul>
+<li>Une div &quot;#wrapper&quot; pour englober tout le contenu,</li>
+<li>Un nav &quot;#sidebar&quot; pour contenir la barre latérale pour le menu de navigation,</li>
+<li>Une div &quot;#content&quot; pour contenir le contenu principal,</li>
+<li>Une classe .no-sidebar quand il faut masquer la barre latérale.</li>
+</ul>
+<p>Et finalement, de très peu de CSS (si on enlève tout ce qui sert à présenter le contenu) :</p>
+<pre><code class="language-css">#wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    min-height: 100vh;
+    position: fixed;
+    width: 299px;
+}
+
+#content {
+    min-height: 100vh;
+    position: absolute;
+    right: 0;
+    width: calc(100% - 299px);
+}
+
+.no-sidebar #sidebar {
+    display: none;
+}
+
+.no-sidebar #content {
+    width: 100%;
+}
+</code></pre>
+<p>Plus éventuellement pour ne pas imprimer la &quot;sidebar&quot; (comme elle destinée à contenir des éléments de navigation uniquement) :</p>
+<pre><code class="language-css">@media print {
+    #sidebar { display: none;}
+    #content { width: 100%; }
+}
+</code></pre>
+<p>On peut aussi se contenter d'ajouter la classe Bootstrap &quot;d-print-none&quot; à &quot;sidebar&quot;.</p>
+<p><img src="/public/2020/clic2.gif" alt=""></p>
+<p>Youpi ! Mon 1° GIF animé depuis des siècles, ou en tout cas depuis le siècle dernier (créé grâce à <a href="https://ezgif.com/">https://ezgif.com/</a>).</p>
+<p>C'était pas très compliqué... Aussi je ferais sans doute une 3° partie pour améliorer le côté &quot;artistique&quot; :</p>
+<ul>
+<li>Utiliser une icone pour afficher ou cacher la &quot;sidebar&quot;,</li>
+<li>Ajouter une animation pour passer d'un état à l'autre.</li>
+</ul>
+<div class="encart">
+<p>English version: <a href="/2020/05/28/hide-show-sidebar/" hreflang="en-US">Hide or show sidebar</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/05/20/create-template-sidebar-content/" hreflang="en-US">Create a basic template with sidebar + content</a>
+  <a rel="next" href="/2020/05/28/hide-show-sidebar/" hreflang="en-US">Hide or show sidebar</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

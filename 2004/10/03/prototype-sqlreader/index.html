@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prototype SqlReader - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/10/03/prototype-sqlreader/" />
+<meta property="og:title" content="Prototype SqlReader" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/10/03/prototype-sqlreader/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-10-03T18:01:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-10-03T18:01:00.000Z","datePublished":"2004-10-03T18:01:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2004/10/03/prototype-sqlreader/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/10/03/prototype-sqlreader/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/10/03/prototype-sqlreader/">Prototype SqlReader</a>
+    </h1>
+    <p>
+      <span>2004-10-03</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Travaillé à une brique Integration.SqlReader dont le but est de permettre
+d'afficher le résultat d'une requête SQL SELECT...</p>
+<p>Les trucs biens</p>
+<ul>
+<li>accepte les connexions odbc (notamment fichiers CSV et XLS), oledb et
+sqlserver,</li>
+<li>pas d'AutoBinding = true =&gt; plus souple en ce qui concerne le titre des
+colonnes et leur alignement automatisé en fonction du type de champs,</li>
+<li>présentation essentiellement basée sur les CSS.</li>
+</ul>
+<p>Les trucs moins biens</p>
+<ul>
+<li>il faut 2 DataBind (l'un au Page_Load et l'autre à l'Event_Fire) étant
+donné que les colonnes sont construites par programmation,</li>
+<li>le ViewState est conséquent (si EnableViewState = False =&gt; pagination et
+tri ne fonctionnent pas),</li>
+<li>basé sur DataGrid ET DataSet.</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/09/30/variable-session-utilisateur/" hreflang="fr-FR">Variable session utilisateur</a>
+  <a rel="next" href="/2004/10/04/macro-classscreen/" hreflang="fr-FR">Macro ClassScreen()</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

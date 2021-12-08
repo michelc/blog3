@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>dQuery - Délégation d&#39;évènements et « event.target » - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/05/28/dquery-delegation-evenement-event-target/" />
+<meta property="og:title" content="dQuery - Délégation d&#39;évènements et « event.target »" />
+<meta name="description" content="La suite du billet sur la délégation d&#39;évènements dans &quot;dQuery&quot; où je corrige ma fonction calllback pour retrouver correctement l&#39;élément concerné par l&#39;évènement." />
+<meta property="og:description" content="La suite du billet sur la délégation d&#39;évènements dans &quot;dQuery&quot; où je corrige ma fonction calllback pour retrouver correctement l&#39;élément concerné par l&#39;évènement." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/05/28/dquery-delegation-evenement-event-target/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-28T10:27:44.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-05-28T10:27:44.000Z","datePublished":"2019-05-28T10:27:44.000Z","description":"La suite du billet sur la délégation d'évènements dans \"dQuery\" où je corrige ma fonction calllback pour retrouver correctement l'élément concerné par l'évènement.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/05/28/dquery-delegation-evenement-event-target/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/05/28/dquery-delegation-evenement-event-target/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2019/05/28/dquery-delegation-evenement-event-target/">dQuery - Délégation d&#39;évènements et « event.target »</a>
+    </h1>
+    <p>
+      <span>2019-05-28</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Cette série de billets retrace quelques-unes des étapes pour développer une
+mini-librairie JavaScript qui remplacera(it) un jour jQuery sur mon site de jeux
+de solitaires.</p>
+<ol>
+<li><a href="/2019/04/30/dquery-remplacer-jquery/">Comment j'ai (bientôt) remplacé jQuery</a></li>
+<li><a href="/2019/05/07/dquery-compatibilite-ie9-es5/">Une version compatible IE9 / ES5</a></li>
+<li><a href="/2019/05/14/dquery-librairie-js-manipulation-dom/">Ma librairie pour manipuler le DOM</a></li>
+<li><a href="/2019/05/21/dquery-delegation-evenement-javascript/">La délégation des évènements en JS</a></li>
+<li><a href="/2019/05/28/dquery-delegation-evenement-event-target/">Délégation d'évènements et « event.target »</a></li>
+<li><a href="/2019/06/04/dquery-delegation-evenement-ios/">Délégation d'évènements et iOS</a></li>
+</ol>
+</div>
+<p>Je résume : après avoir implémenté la délégation d'évènement en pur JavaScript
+dans ma librairie dQuery, mon jeu ne se comportait toujours pas correctement. La
+fonction callback qui était appelée après avoir cliqué sur une carte ne
+fonctionnait plus comme avant, c'est-à-dire comme elle le faisait du temps de
+jQuery.</p>
+<p>Au &quot;départ&quot; du délégate, je sais bien quelle est la carte cliquée, mais une fois
+arrivée &quot;dans&quot; la fonction callback appelée, je ne le sais plus :</p>
+<pre><code>$(&quot;.pile&quot;).on(&quot;click&quot;, &quot;.card&quot;, PlayCard);
+
+...
+
+function PlayCard() {
+  var card_id = this.id; &lt;----------- c'est pas le bon id !!!
+  var card = $(card_id);
+
+  ...
+}
+</code></pre>
+<p>Déjà, pour commencer, je décide de revoir toutes mes fonctions évènements pour
+qu'il soit plus explicite qu'il s'agisse d'un évènement. J'aurais pu changer
+leur nom en <code>XxxxxxEvent()</code> mais ça ferait un peu trop C# / Javaesque. J'ai donc
+préféré déclarer explicitement le paramètre <code>event</code> qu'elles reçoivent. De cette
+façon, on peut immédiatement et visuellement comprendre qu'une fonction avec
+le paramètre &quot;event&quot; est une fonction évènement :</p>
+<pre><code>function PlayCard(event) {
+  var card_id = this.id; &lt;----------- toujours pas le bon id !!!
+  var card = $(card_id);
+
+  ...
+}
+</code></pre>
+<p>Le fait que <code>this</code> corresponde à l'élément cliqué et donc que <code>this.id</code> renvoie
+l'identifiant de cet élément cliqué, est une &quot;facilité&quot; de JavaScript (ou
+peut-être de jQuery ?). Heureusement, on peut aussi retrouver cette information
+grâce à la propriété <code>.target</code> de l'évènement. Personnellement, ça me semble
+même carrément plus clair :</p>
+<pre><code>function PlayCard(event) {
+  var card_id = event.target.id; &lt;--- là c'est le bon id !
+  var card = $(card_id);
+
+  ...
+}
+</code></pre>
+<p>J'ai malgré tout fait quelques essais supplémentaires pour creuser un peu plus
+le sujet. Il semblerait qu'on peut continuer à utiliser <code>this</code> et donc <code>this.id</code>
+en remplaçant simplement :</p>
+<pre><code>if (event.target.closest(_filter))
+  fn(event);
+</code></pre>
+<p>Pour utiliser la méthode <code>.call()</code>, ce qui qui permet de définir la valeur du
+<code>this</code> quand on appelle la fonction callback :</p>
+<pre><code>if (event.target.closest(_filter))
+  fn.call(event.target, event);
+</code></pre>
+<p>Mais comme je l'ai dit, je préfère utiliser explicitement la propriété <code>.target</code>
+(et accessoirement éviter les prises de tête à <a href="https://medium.com/quick-code/understanding-the-this-keyword-in-javascript-cb76d4c7c5e8">comprendre qui c'est ce
+<code>this</code></a>).</p>
+<p>Et voilà. C'est quasi-parfait ! Tout marche comme avant, et à part un cas un peu
+tordu, je ne devrais plus rien avoir à changer.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/05/21/dquery-delegation-evenement-javascript/" hreflang="fr-FR">dQuery - La délégation des évènements en JS</a>
+  <a rel="next" href="/2019/06/04/dquery-delegation-evenement-ios/" hreflang="fr-FR">dQuery - Délégation d&#39;évènements et IOS</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animer une sidebar avec CSS - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/" />
+<meta property="og:title" content="Animer une sidebar avec CSS" />
+<meta name="description" content="Comment faire apparaitre ou disparaitre la &quot;sidebar&quot; grâce à une animation CSS toute simple, une icone et un jsfiddle pour tester tout ça." />
+<meta property="og:description" content="Comment faire apparaitre ou disparaitre la &quot;sidebar&quot; grâce à une animation CSS toute simple, une icone et un jsfiddle pour tester tout ça." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/swing.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-06-01T15:35:16.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-06-01T15:35:16.000Z","datePublished":"2020-06-01T15:35:16.000Z","description":"Comment faire apparaitre ou disparaitre la \"sidebar\" grâce à une animation CSS toute simple, une icone et un jsfiddle pour tester tout ça.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/swing.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/swing.jpg" alt="Flying - ckturistando" /><figcaption><a href="https://unsplash.com/photos/HTCQCvwV9XY">Flying - ckturistando</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/06/01/animation-css-sidebar/">Animer une sidebar avec CSS</a>
+    </h1>
+    <p>
+      <span>2020-06-01</span>
+      <span>#css</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'ai déjà réussi à faire un <a href="/2020/05/19/creer-template-sidebar-contenu/">template avec contenu + sidebar</a>, puis à <a href="/2020/05/27/masquer-afficher-menu-lateral/">masquer la sidebar</a> assez simplement. Je vais maintenant voir comment améliorer le côté très basique de mes premiers essais grâce à quelques animations CSS et autres icônes.</p>
+<h2>Animer le changement d'état</h2>
+<p>C'est tout simple, il suffit de compléter les styles de &quot;sidebar&quot; et &quot;content&quot; avec :</p>
+<pre><code class="language-css">transition: all 1s;
+</code></pre>
+<p>Il s'agit d'une propriété CSS qui en 1 seconde (pour avoir le temps de voir ce qui se passe) va animer le passage des valeurs CSS suivantes :</p>
+<pre><code class="language-css">#sidebar {
+    display: block;
+}
+#content {
+    width: calc(100% - 299px);
+}
+</code></pre>
+<p>À ces nouvellles valeurs :</p>
+<pre><code class="language-css">.no-sidebar #sidebar {
+    display: none;
+}
+.no-sidebar #content {
+    width: 100%;
+}
+</code></pre>
+<p>Maintenant, quand je vais cliquer sur le bouton &quot;sidebar-toggle&quot;, le fait d'ajouter la classe &quot;no-sidebar&quot; à la div &quot;wrapper&quot; ne devrait pas immédiatement masquer la &quot;sidebar&quot; et élargir le &quot;content&quot;. Cela devrait durer 1 seconde et se faire progressivement.</p>
+<p>Ça marche du 1° coup ! À moitié...</p>
+<p>Pour le &quot;content&quot;, on le voit bien &quot;bouger&quot; quand on clique sur le bouton pour occuper toute la largeur de l'écran.</p>
+<p>Par contre, la &quot;sidebar&quot; disparait ou apparait instantanément. C'est parce que le changement de la propriété &quot;display&quot; de &quot;block&quot; en &quot;none&quot; n'est pas pris en compte par les animations CSS :(</p>
+<p>Il faut donc ruser et cacher &quot;sidebar&quot; en la sortant de l'écran. Pour cela, on lui met une marge négative égale à sa largeur :</p>
+<pre><code class="language-css">#sidebar {
+    margin-left: 0;
+}
+
+.no-sidebar #sidebar {
+    margin-left: -299px;
+}
+</code></pre>
+<p>On peut alors accélérer l'animation (parce que sinon le <em>lorem ipsum dolor sit amet...</em> tangue et va finir par me rendre malade) :</p>
+<pre><code class="language-css">transition: all 0.25s;
+</code></pre>
+<p>Et ben c'est parfait pour moi.</p>
+<p><em>Note : le <code>transition: all 0.25s</code> doit être défini 2 fois : une fois au niveau du CSS de &quot;#sidebar&quot; et une seconde fois pour le code CSS de &quot;#content&quot;.</em></p>
+<h2>Utiliser une icône pour basculer d'un état à l'autre</h2>
+<p>Finalement, je ne vais pas utiliser une icône mais un bête caractère avec un peu de CSS pour que cela ressemble à quelque chose.</p>
+<p>Et comme je ne suis pas assez doué, je copie / colle tout depuis StackOverflow : <a href="https://stackoverflow.com/questions/22975037/style-a-link-to-be-a-circle-with-an-arrow-inside">Style a link to be a circle with an arrow inside</a>.</p>
+<p>Je commence par remplacer le bouton par une balise <code>a</code> :</p>
+<pre><code class="language-html">&lt;a href=&quot;#&quot; id=&quot;sidebar-toggle&quot;&gt;&lt;/a&gt;
+</code></pre>
+<p>Puis j'ajoute le CSS :</p>
+<pre><code class="language-css">#sidebar-toggle {
+    background-color: orange;
+    border-radius: 50%;
+    display: block;
+    height: 2.2rem;
+    left: -1.1rem;
+    position: absolute;
+    text-decoration: none;
+    top: 7px;
+    width: 2.2rem;
+}
+#sidebar-toggle::after {
+    content: &quot;🡐&quot;;
+    color: white;
+    display: block;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: -.2rem 0 0 0;
+    text-align: center;
+}
+.no-sidebar #sidebar-toggle::after {
+    content: &quot;🡒&quot;;
+    margin-left: .2rem;
+}
+#sidebar-toggle:hover {
+    background-color: goldenrod;
+}
+</code></pre>
+<p><em>Note : Pour les 2 flèches, j'ai pioché dans <a href="http://xahlee.info/comp/unicode_arrows.html">Unicode Arrows</a>.</em></p>
+<p>Et voila, ça marche.</p>
+<p>Pour friser la perfection, je n'ai plus qu'à positionner cette &quot;icône&quot; pile sur la tranche entre la &quot;sidebar&quot; et le &quot;content&quot; :</p>
+<pre><code class="language-css">#sidebar-toggle {
+    position: absolute;
+    left: -1.25rem;
+    top: 7px;
+}
+</code></pre>
+<p>Et penser à la masquer lors des impressions :</p>
+<pre><code class="language-css">@media print {
+    #sidebar-toggle { display: none; }
+}
+</code></pre>
+<p>Ça fera très bien l'affaire :)</p>
+<h2>Démonstration</h2>
+<script async src="//jsfiddle.net/qo6dx3w4/1/embed/result/"></script>
+<p>Bon, maintenant que j'ai à peu près le template que je voulais et même plus grâce à ces derniers ajouts, je vais pouvoir travailler pour de vrai et commencer à coder mon application...</p>
+<div class="encart">
+<p>English version: <a href="/2020/06/02/sidebar-css-animation/" hreflang="en-US">Sidebar animation with CSS</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/05/28/hide-show-sidebar/" hreflang="en-US">Hide or show sidebar</a>
+  <a rel="next" href="/2020/06/02/sidebar-css-animation/" hreflang="en-US">Sidebar animation with CSS</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

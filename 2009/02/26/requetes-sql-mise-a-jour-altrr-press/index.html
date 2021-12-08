@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Requêtes SQL pour la mise à jour d&#39;Altrr-Press - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/02/26/requetes-sql-mise-a-jour-altrr-press/" />
+<meta property="og:title" content="Requêtes SQL pour la mise à jour d&#39;Altrr-Press" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/02/26/requetes-sql-mise-a-jour-altrr-press/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-02-26T17:50:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-02-26T17:50:00.000Z","datePublished":"2009-02-26T17:50:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/02/26/requetes-sql-mise-a-jour-altrr-press/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/02/26/requetes-sql-mise-a-jour-altrr-press/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/02/26/requetes-sql-mise-a-jour-altrr-press/">Requêtes SQL pour la mise à jour d&#39;Altrr-Press</a>
+    </h1>
+    <p>
+      <span>2009-02-26</span>
+      <span>#ap</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>En attendant d'adapter pour Altrr-Press ma documentation pour <a href="/2006/10/19/structure-solution-qc/">développer des
+boites</a> qui date de QC, je vais commencer par faire un petit récapitulatif
+afin de passer en revue les scripts SQL utiles pour mettre à jour le contenu
+d'une base de données Altrr-Press.</p>
+<p>Cela concerne généralement les données de configuration qu'il n'est pas
+possible de mettre à jour depuis l'interface. Mais cela peut aussi être utile
+d'avoir des scripts pour créer des écrans ou des boites de façon à faciliter la
+mise à jour de sites en production.</p>
+<p>Supposons que l'on vienne de finir de développer un nouveau type de boite
+TypeToto . Si on essaie de créer une nouvelle boite, le choix TypeToto
+n'apparait pas encore. C'est dû au fait que le type de boite TypeToto n'existe
+pas dans la table qc_BoxTypes.</p>
+<p>Il faut donc ajouter le nouveau type TypeToto dans la table qc_BoxTypes à
+l'aide de la requête suivante :</p>
+<pre><code>/* ---------- Ajoute le type de boite TypeToto
+*/
+
+INSERT INTO qc_BoxTypes (
+    idBoxType, 
+    title, 
+    description, 
+    ctrlSource, 
+    cnfgSource, 
+    editSource, 
+    defaultCache, 
+    toolbox)
+VALUES (
+    'typetoto', 
+    'TypeToto', 
+    'La boite TypeToto', 
+    '~/Classic/TypeToto/viewTypeToto.ascx', 
+    '', 
+    '~/Classic/TypeToto/editTypeToto.ascx', 
+    '600', 
+    'Classic');
+GO;
+</code></pre>
+<p>Description des colonnes de la table qc_BoxTypes :</p>
+<ul>
+<li>
+<p>idBoxType = typetoto : l'identifiant du type de boite</p>
+</li>
+<li>
+<p>title = TypeToto : le nom du type de boite</p>
+</li>
+<li>
+<p>description = La boite TypeToto : description du type de boite</p>
+</li>
+<li>
+<p>ctrlSource = ~/Classic/TypeToto/viewTypeToto.ascx : le contrôle pour
+afficher la boite</p>
+</li>
+<li>
+<p>cnfgSource = (vide) : le contrôle pour configurer la boite</p>
+</li>
+<li>
+<p>editSource = ~/Classic/TypeToto/editTypeToto.ascx : le contrôle pour
+modifier le contenu de la boite</p>
+</li>
+<li>
+<p>defaultCache = 600 : la durée du cache pour ce type de boite (mettre
+-1 pour interdire la mise en cache)</p>
+</li>
+<li>
+<p>toolbox = Classic : la boite à outils où regrouper ce type de
+boite</p>
+</li>
+</ul>
+<p>Attention, les identifiants comme idBoxType doivent toujours être :</p>
+<ul>
+<li>
+<p>en minuscules,</p>
+</li>
+<li>
+<p>sans accents,</p>
+</li>
+<li>
+<p>uniquement des lettres de &quot;a&quot; à &quot;z&quot;, des chiffres de &quot;0&quot; à &quot;9&quot;</p>
+</li>
+<li>
+<p>le tiret &quot;-&quot; est acceptable, mais pas en 1° ou dernière position</p>
+</li>
+</ul>
+<p>Après avoit créé un nouveau type de boite, il est fréquent d'insérer une
+boite de ce type dans un écran. Généralement, il est même nécessaire de
+commencer par créer un nouvel écran destiné à contenir la nouvelle boite.</p>
+<p>Pour créer un écran, il faut ajouter un enregistrement dans la table
+qc_Screens à l'aide de la requête suivante :</p>
+<pre><code>/* ---------- Ajoute un écran PageToto
+*/
+
+INSERT INTO qc_Screens (
+    idScreen, 
+    idSite, 
+    title, 
+    shortTitle, 
+    template, 
+    description, 
+    keywords, 
+    order1, 
+    order2, 
+    order3, 
+    isVisible, 
+    lastUpdate)
+VALUES (
+    'page-toto', 
+    'default', 
+    'Ecran PageToto', 
+    'PageToto', 
+    '', 
+    '', 
+    '', 
+    1, 
+    2, 
+    3, 
+    #TRUE, 
+    #DAYDATE);
+GO;
+</code></pre>
+<p>Description des colonnes de la table qc_Screens :</p>
+<ul>
+<li>
+<p>idScreen = page-toto : l'identifiant de la page</p>
+</li>
+<li>
+<p>idSite = default : le nom du site où apparait la page (toujours
+default)</p>
+</li>
+<li>
+<p>title = Ecran PageToto : le nom de la page</p>
+</li>
+<li>
+<p>shortTitle = PageToto : le nom abrégé de la page</p>
+</li>
+<li>
+<p>template = (vide) : le template pour la page (toujours vide)</p>
+</li>
+<li>
+<p>description = (vide) : le contenu pour la balise meta description</p>
+</li>
+<li>
+<p>keywords = (vide) : le contenu pour la balise meta keywords</p>
+</li>
+<li>
+<p>order1 = 1 : la position de la page dans le niveau 1</p>
+</li>
+<li>
+<p>order2 = 2 : la position de la page dans le niveau 2</p>
+</li>
+<li>
+<p>order3 = 3 : la position de la page dans le niveau 3</p>
+</li>
+<li>
+<p>isVisible = #TRUE : est-ce que l'écran est visible dans le menu (ou
+#FALSE)</p>
+</li>
+<li>
+<p>lastUpdate = #DAYDATE : la date de mise à jour de l'écran (toujours
+#DAYDATE)</p>
+</li>
+</ul>
+<p>La requête précédente permet d'ajouter l'écran à la table qc_Screens en
+indiquant à quel emplacement l'insérer dans l'arborescence des pages (à l'aide
+des colonnes order1, order2 et order3). Par contre, cela ne suffit pas pour que
+l'arrangement des pages reste correct.</p>
+<p>En effet, s'il existait déjà un écran en position 1.2.3, il y aurait
+maintenant 2 écrans au même emplacement, ce qui complique la création des menus
+ou du plan du site. Par conséquent, il est impératif de penser à faire de la
+place avant d'insérer un nouvel écran.</p>
+<p>Par exemple, pour insérer un écran en position 4.0.0, il faut pousser d'un
+cran tous les écrans en position 4.x.x avant d'insérer le nouvel
+écran :</p>
+<pre><code>UPDATE qc_Screens
+SET    order1 = order1 + 1
+WHERE  (order1 &gt;= 4);
+GO;
+</code></pre>
+<p>Autre exemple, pour insérer un écran en position 4.3.0, il faut pousser d'un
+cran tous les écrans en position 4.3.x avant d'insérer le nouvel
+écran :</p>
+<pre><code>UPDATE qc_Screens
+SET    order2 = order2 + 1
+WHERE  (order1  = 4)
+AND    (order2 &gt;= 3);
+GO;
+</code></pre>
+<p>Et pour insérer un écran en position 4.3.2, il faut pousser d'un cran tous
+les écrans à partir de la position 4.3.2 avant d'insérer le nouvel
+écran :</p>
+<pre><code>UPDATE qc_Screens
+SET    order3 = order3 + 1
+WHERE  (order1  = 4)
+AND    (order2  = 3)
+AND    (order3 &gt;= 2);
+GO;
+</code></pre>
+<p>Donc, pour résumer :</p>
+<ul>
+<li>
+<p>on fait de la place pour le nouvel écran dans la table qc_Screens</p>
+</li>
+<li>
+<p>on insère le nouvel écran dans la table qc_Screens</p>
+</li>
+</ul>
+<p>Là on est presque bon. Il est cependant préférable de définir les
+autorisations pour accéder à l'écran que l'on vient de créer :</p>
+<ul>
+<li>
+<p>le profil 'admins' peut visualiser (view) l'écran et l'administrer
+(admin)</p>
+</li>
+<li>
+<p>le profil 'all-users' peut seulement visualiser l'écran (view)</p>
+</li>
+</ul>
+<p>Ce que l'on réalise avec les requêtes suivantes :</p>
+<pre><code>/* ---------- Défini les droits d'accès à l'écran PageToto
+*/
+
+INSERT INTO qc_ScreenRoles (idScreen, aktion, idRole) VALUES ('page-toto', 'admin', 'admins');
+GO;
+
+INSERT INTO qc_ScreenRoles (idScreen, aktion, idRole) VALUES ('page-toto', 'view', 'admins');
+GO;
+
+INSERT INTO qc_ScreenRoles (idScreen, aktion, idRole) VALUES ('page-toto', 'view', 'all-users');
+GO;
+</code></pre>
+<p>On progresse ! Maintenant, il reste juste à créer dans l'écran PageToto
+une nouvelle boite du type TypeToto. Pour cela, on crée un nouvel
+enregistrement dans la table qc_Boxes :</p>
+<pre><code>/* ---------- Ajoute une boite TestToto de type TypeToto dans l'écran PageToto
+*/
+
+INSERT INTO qc_Boxes (
+    idBox, 
+    idScreen, 
+    idBoxType, 
+    title, 
+    paneName, 
+    paneOrder, 
+    cacheTime, 
+    visibility)
+VALUES (
+    'test-toto', 
+    'page-toto', 
+    'typetoto', 
+    'Boite TestToto', 
+    'paneMain', 
+    10, 
+    600, 
+    0);
+GO;
+</code></pre>
+<p>Description des colonnes de la table qc_Boxes :</p>
+<ul>
+<li>
+<p>idBox = test-toto : l'identifiant de la boite</p>
+</li>
+<li>
+<p>idScreen = page-toto : l'identifiant de la page où créer la boite</p>
+</li>
+<li>
+<p>idBoxType = typetoto : l'identifiant du type de boite à créer</p>
+</li>
+<li>
+<p>title = Boite TestToto : le nom de la nouvelle boite</p>
+</li>
+<li>
+<p>paneName = paneMain : la colonne où créer la boite (paneSide, paneMain
+ou paneMore)</p>
+</li>
+<li>
+<p>paneOrder = 10 : la position de la boite dans sa colonne (libre de 10
+en 10)</p>
+</li>
+<li>
+<p>cacheTime = 600 : la durée du cache pour cette boite</p>
+</li>
+<li>
+<p>visibility = 0 : niveau de visibilité de la boite (0 = dans l'écran, 1
+= dans l'écran et ses sous-écrans, 2 = dans tous les écrans)</p>
+</li>
+</ul>
+<p>Et pour finir, il faut définir les autorisations role par role pour la boite
+que l'on vient de créer :</p>
+<ul>
+<li>
+<p>le profil 'admins' peut visualiser (view) la boite, l'administrer (admin)
+et la modifier (edit)</p>
+</li>
+<li>
+<p>le profil 'all-users' peut seulement visualiser la boite (view)</p>
+</li>
+</ul>
+<p><em>Note: Étant donné que le type de boite TypeToto n'a pas de contrôle prévu
+pour la configuration (cnfgSource laissé vide), il ne sert à rien de paramétrer
+que profil peut configurer (cnfg) la boite.</em></p>
+<p>Ce qui nous donne les requêtes suivantes :</p>
+<pre><code>/* ---------- Défini les droits d'accès à la boite TestToto
+*/
+
+INSERT INTO qc_BoxRoles (idBox, aktion, idRole) VALUES ('test-toto', 'admin', 'admins');
+GO;
+
+INSERT INTO qc_BoxRoles (idBox, aktion, idRole) VALUES ('test-toto', 'view', 'admins');
+GO;
+
+INSERT INTO qc_BoxRoles (idBox, aktion, idRole) VALUES ('test-toto', 'edit', 'admins');
+GO;
+
+INSERT INTO qc_BoxRoles (idBox, aktion, idRole) VALUES ('test-toto', 'view', 'all-users');
+GO;
+</code></pre>
+<p>C'est vrai que c'est un peu plus compliqué qu'une simple mise à jour depuis
+l'interface, mais c'est devenu quasiment indispensable maintenant qu'il
+commence à exister plusieurs sites gérés avec Altrr-Press.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/02/26/iis-flv-page-cannot-be-found/" hreflang="fr-FR">IIS et FLV : The page cannot be found</a>
+  <a rel="next" href="/2009/03/04/limiter-nombre-lignes-fil-atom/" hreflang="fr-FR">Limiter le nombre de lignes dans un fil Atom</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

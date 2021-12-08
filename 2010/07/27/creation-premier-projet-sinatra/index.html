@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Création d&#39;un premier projet avec Sinatra - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/07/27/creation-premier-projet-sinatra/" />
+<meta property="og:title" content="Création d&#39;un premier projet avec Sinatra" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/07/27/creation-premier-projet-sinatra/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-07-27T17:45:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-07-27T17:45:00.000Z","datePublished":"2010-07-27T17:45:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/07/27/creation-premier-projet-sinatra/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/07/27/creation-premier-projet-sinatra/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/07/27/creation-premier-projet-sinatra/">Création d&#39;un premier projet avec Sinatra</a>
+    </h1>
+    <p>
+      <span>2010-07-27</span>
+      <span>#mvc</span><span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel Sinatra &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/1/10/project_1_reverse/">Project 1: Reverse</a>&quot; de Darren Jones.</p>
+</div>
+<p>Après avoir brillamment suivi pas à pas mon premier tutoriel pour installer
+<a href="http://www.ruby-lang.org/">Ruby</a> et <a href="http://www.sinatrarb.com/">Sinatra</a> sur mon PC Windows 7, je
+continue sur ma lancée avec la réalisation du deuxième tutoriel proposé par
+<a href="http://dazzl.co.uk/">Darren Jones</a>.</p>
+<p>Le but de ce tutoriel est de programmer une première application très très
+simple qui va se contenter d'afficher un texte à l'envers, d'où son nom :
+<a href="http://ididitmyway.herokuapp.com/past/2010/1/10/project_1_reverse/">Projet 1 : Reverse</a>. À travers cette mini-application, on
+peut déjà apprendre quelques trucs sur le fonctionnement de Sinatra, voire sur
+Ruby si on débute comme moi.</p>
+<h2>C'est parti</h2>
+<p>Pour commencer, j'ai créé un répertoire C:\Ruby\projets\reverse puis un
+fichier main.rb à l'intérieur :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  &quot;I did it my way!&quot;
+end
+</code></pre>
+<p>Toutes les applications Sinatra ont besoin des deux premières lignes. Il y a
+ensuite une ligne blanche pour faire plus joli puis 3 lignes de code où se
+situe toute l'action :</p>
+<ul>
+<li><code>get</code> indique quelle méthode HTTP on souhaite gérer : un
+GET dans le cas présent,</li>
+<li><code>'/'</code> correspond à la route à gérer, soit la racine de
+l'application dans ce cas,</li>
+<li><code>do ... end</code> est un bloc de code pour définir ce qui se passe
+quand quelqu'un demande la racine du site.</li>
+</ul>
+<p>La dernière ligne à l'intérieur du bloc <code>do ... end</code> contient
+toujours (je pense) ce qui sera affiché dans la page, soit &quot;I did it my way!&quot;
+dans ce premier exemple.</p>
+<p>Pour tester ce code, on peut directement double-cliquer sur le fichier
+main.rb dans le répertoire C:\Ruby\projets\reverse ou faire ça à la main dans
+une invite de commande :</p>
+<pre><code>C:\Ruby\projets\reverse&gt;ruby main.rb
+</code></pre>
+<p>Et Sinatra entre en scène :</p>
+<pre><code>== Sinatra/1.0 has taken the stage on 4567 for development with backup from WEBrick
+[2010-07-27 21:44:57] INFO  WEBrick 1.3.1
+[2010-07-27 21:44:57] INFO  ruby 1.9.1 (2010-07-02) [i386-mingw32]
+[2010-07-27 21:44:57] INFO  WEBrick::HTTPServer#start: pid=3604 port=4567
+</code></pre>
+<p>On peut alors lancer un navigateur pour appeler l'URL
+http://localhost:4567/ :</p>
+<p><img src="/public/2010/reverse-1.png" alt=""></p>
+<p>Tant qu'on est là, si on essaie d'aller sur une URL qui n'existe pas, comme
+http://localhost:4567/reverse, on obtient alors la page d'erreur 404 de Sinatra
+pour indiquer qu'il ne connait pas ce morceau :</p>
+<p><img src="/public/2010/reverse-2.png" alt=""></p>
+<p>Cette page d'erreur nous conseille même sur la route ajouter dans notre
+fichier pour que cela fonctionne, en l'occurrence :</p>
+<pre><code>get '/reverse' do
+  &quot;Hello World&quot;
+end
+</code></pre>
+<p>Avec Sinatra, c'est pas plus compliqué que ça pour créer des actions
+correspondant à différentes routes.</p>
+<h2>Ajouter une vue</h2>
+<p>Pour l'instant, on va rester sur notre route <code>'/'</code> et essayer
+de faire un peu mieux que de seulement renvoyer une ligne de texte. Pour cela,
+il faut créer une vue en modifiant le fichier main.rb de la façon
+suivante :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  erb :home
+end
+
+__END__
+
+@@ home
+
+&lt;h1&gt;Reverse&lt;/h1&gt;
+
+&lt;p&gt;Welcome to the home page of my very first Sinatra app.&lt;/p&gt;
+</code></pre>
+<p>Ce coup-ci, au lieu d'utiliser la dernière ligne du bloc pour dire à Sinatra
+ce qu'il doit afficher, nous lui avons demandé d'utiliser la vue &quot;home&quot; que
+nous avons codé en erb (embedded ruby). Cette vue est enregistrée à la fin du
+fichier, après la ligne <code>__END__</code> et elle est repéré par le code
+<code>@@ home</code>.</p>
+<p>Pour voir ce que donne cette vue, il faut revenir à l'invite de commande et
+arrêter le serveur s'il est toujours en cours d'exécution. Ctrl-C =&gt; Sinatra
+has ended his set (crowd applauds). Puis on relance le serveur avec <code>ruby main.rb</code> et on réaffiche la page http://localhost:4567 :</p>
+<p><img src="/public/2010/reverse-3.png" alt=""></p>
+<h2>Créer une vue externe</h2>
+<p>En fait, on n'est pas obligé de stocker les vues dans le même fichier. Il
+est bien plus pratique de les enregistrer dans un sous-répertoire &quot;views&quot; de
+notre projet (soit C:\Ruby\projets\reverse\views dans mon cas).</p>
+<p>Là, il suffit de créer le fichier &quot;home.erb&quot; avec le code
+ci-dessous :</p>
+<pre><code>&lt;h1&gt;Reverse&lt;/h1&gt;
+
+&lt;p&gt;Welcome to the home page of my very first Sinatra app.&lt;/p&gt;
+</code></pre>
+<p>Il est alors possible de simplifier le fichier &quot;main.rb&quot; de la façon
+suivante :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  erb :home
+end
+</code></pre>
+<p>Il ne reste plus qu'à contrôler que tout est ok : Ctrl-C, ruby main.rb,
+rafraichir la page et vérifier que rien n'a changé.</p>
+<h2>Créer un layout</h2>
+<p>D'un point de vue visuel, on peut faire encore mieux en définissant un
+&quot;layout&quot; qui servira de gabarit pour englober toutes les vues. Cela permet
+d'éviter de répéter le même code dans toutes les vues de l'application.</p>
+<p>Pour cela, on doit juste créer un fichier &quot;layout.erb&quot; dans le
+sous-répertoire &quot;views&quot; et y saisir le code html ci-dessous :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;Reverse!&lt;/title&gt;
+&lt;meta charset=utf-8 /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Reverse&lt;/h1&gt;
+
+&lt;%= yield %&gt;
+
+&lt;p&gt;The first Sinatra project for I Did It My Way&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Tout ce code html sera toujours affiché à chaque fois qu'une vue sera
+affichée, à part la ligne <code>&lt;%= yield %&gt;</code> qui sera remplacée
+par le contenu spécifique de la vue.</p>
+<p>Ainsi, si on modifie légèrement le code de la vue &quot;home.erb&quot; :</p>
+<pre><code>&lt;h2&gt;Home&lt;/h2&gt;
+&lt;p&gt;Welcome to the home page. This app is going to be amazing....&lt;/p&gt;
+</code></pre>
+<p>Le fait de relancer le serveur et de ré-afficher l'URL http://localhost:4567
+doit donner le résultat suivant :</p>
+<p><img src="/public/2010/reverse-4.png" alt=""></p>
+<p>Comme vous pouvez le constater, le sous-titre &quot;Home&quot; et le message
+&quot;Welcome...&quot; en provenance de la vue &quot;home.erb&quot; apparaissent entre le titre
+&quot;Reverse&quot; et le paragraphe &quot;The first app...&quot;, soit exactement là où se situait
+la ligne <code>&lt;%= yield %&gt;</code> dans le fichier &quot;layout.erb&quot;.</p>
+<h2>ERB</h2>
+<p>La balise <code>&lt;%= yield %&gt;</code> est un exemple d'<strong>embedded
+ruby</strong> (ou erb en abrégé). On peut ainsi ajouter du code ruby dans les
+fichiers html en l'insérant à l'intérieur de blocs <code>&lt;% ... %&gt;</code>. C'est très utile dans le cas de conditions
+<code>if</code> :</p>
+<pre><code>&lt;% if something_happens %&gt;
+&lt;h1&gt;Something happened&lt;/h1&gt;
+&lt;% else %&gt;
+&lt;h1&gt;Nothing happend&lt;/h1&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>Si le code ruby est placé dans un bloc <code>&lt;%= ... %&gt;</code>, alors
+ce code est évalué et son résultat est affiché. Comme par exemple dans le code
+suivant :</p>
+<pre><code>&lt;% title = &quot;Reverse&quot; %&gt;
+&lt;h1&gt;
+&lt;%= title %&gt;
+&lt;/h1&gt;
+</code></pre>
+<p>Le premier bloc de code <code>&lt;% ... %&gt;</code> défini une variable
+appelée &quot;title&quot; et le second bloc de code <code>&lt;%= ... %&gt;</code> évalue
+cette variable et affiche sa valeur. Même si cet exemple est ultra simple, dans
+la vrai vie on peut faire des tas de chose très utile grâce à l'embedded
+ruby.</p>
+<h2>Définir une variable</h2>
+<p>Plus concrètement, nous allons utiliser embeded ruby pour définir le titre
+de notre page. Dans un premier temps, on met à jour le code de
+&quot;main.rb&quot; :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  @title = &quot;Home&quot;
+  erb :home
+end
+</code></pre>
+<p>Celui-ci initialise une variable session nommée <code>@title</code> (c'est une variable
+session parce que son nom débute par un <code>@</code>). Les variables session sont
+disponibles dans les autres parties du code, y compris dans les vues. On peut
+donc maintenant faire référence à notre variable session <code>@title</code> dans notre vue
+ou même notre layout.</p>
+<p>Par conséquent, nous pouvons modifier &quot;layout.erb&quot; pour qu'il utilise notre
+variable session :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;Reverse!&lt;/title&gt;
+&lt;meta charset=utf-8 /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Reverse&lt;/h1&gt;
+&lt;h2&gt;&lt;%= @title %&gt;&lt;/h2&gt;
+
+&lt;%= yield %&gt;
+
+&lt;p&gt;The first Sinatra project for I Did It My Way&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Puis nous pouvons alors supprimer le titre qui était en dur dans la vue
+&quot;home.erb&quot; :</p>
+<pre><code>&lt;p&gt;Welcome to the home page. This app is going to be amazing....&lt;/p&gt;
+</code></pre>
+<p>Par acquit de conscience, on peut redémarrer le serveur et contrôler que
+rien n'a changé, ce qui signifie que notre variable session a bien été prise en
+compte et que nous pouvons maintenant définir le titre de la page au niveau de
+l'action.</p>
+<p>On va vérifier cela en créant une nouvelle route dans le source
+&quot;main.rb&quot; :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  @title = &quot;Home&quot;
+  erb :home
+end
+
+get '/frank' do
+  @title = &quot;My Way&quot;
+  erb :home
+end
+</code></pre>
+<p>Après avoir encore une fois redémarré le serveur, on peut aller à la page
+http://localhost:4567/frank pour constater que le sous-titre n'est plus &quot;Home&quot;
+mais &quot;My Way&quot; :</p>
+<p><img src="/public/2010/reverse-5.png" alt=""></p>
+<p>Mais on continue à voir presque la même chose, étant donné qu'on utilise la
+même vue dans les deux cas. On va donc créer une vue différente qui s'affichera
+pour la route &quot;/frank&quot;. Pour cela, on saisi le code suivant dans un fichier
+&quot;frank.erb&quot; à créer dans le sous-répertoire &quot;views&quot; :</p>
+<pre><code>&lt;p&gt;
+And now, the end is here
+And so I face the final curtain
+My friend, I'll say it clear
+I'll state my case, of which I'm certain
+I've lived a life that's full
+I traveled each and ev'ry highway
+And more, much more than this, I did it my way
+&lt;/p&gt;
+</code></pre>
+<p>Il faut aussi changer la ligne <code>erb:home</code> par
+<code>erb:frank</code> dans le cas de la route &quot;/frank&quot; avant de redémarrer le
+serveur et de ré-afficher la page http://localhost:4567/frank pour voir ce que
+cela donne.</p>
+<h2>Poster quelque chose</h2>
+<p>Jusqu'à présent on n'a pas fait grand chose d'autre que des pages statiques.
+Mais quand on crée une application web, c'est quand même pour avoir un peu
+d'interaction avec le visiteur. On va donc rendre les choses un peu plus
+intéressante en commençant par créer un formulaire dans notre page d'accueil.
+Pour cela, on remplace tout le code de &quot;home.erb&quot; par le code
+suivant :</p>
+<pre><code>&lt;form action=&quot;/reverse&quot; method =&quot;post&quot; accept-charset=&quot;utf-8&quot;&gt;
+&lt;input type=&quot;text&quot; id=&quot;phrase&quot; name=&quot;phrase&quot; value=&quot;Write something...&quot;&gt;
+&lt;input type=&quot;submit&quot; value=&quot;...and reverse it!&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Une fois que c'est fait, on a aussi besoin d'une nouvelle action pour
+prendre en compte le formulaire lorsqu'il est envoyé. Si vous observez le code
+html de &quot;home.erb&quot;, vous pouvez voir que le formulaire va être posté à l'URL
+&quot;/reverse&quot; avec une méthode POST.</p>
+<p>Normalement, c'est le moment où vous devriez vous rendre compte que la
+syntaxe de Sinatra est bien faite. Et vous devriez même avoir une idée ce que
+nous allons ajouter dans le fichier &quot;main.erb&quot; :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  @title = &quot;Home&quot;
+  erb :home
+end
+
+post '/reverse' do
+  params.inspect
+end
+</code></pre>
+<p>L'avant-avant dernière ligne (l'antépénultième pour les érudits) défini la
+nouvelle action qui va gérer la route &quot;/reverse&quot;. Cette action est définie pour
+une route de type POST, ce qui signifie qu'elle ne sera activé que pour une
+requête POST (ce qui correspond à l'envoi d'un formulaire). Ça c'est bon ?
+Mais par contre, c'est quoi cette ligne <code>params.inspect</code> ?
+&quot;params&quot; est une collection qui contient toutes les informations qui ont été
+envoyées en tant que paramètre (aussi bien à travers un formulaire que via
+l'URL) Par conséquent, <code>params.inspect</code> affiche les paires
+clé/valeur correspondantes à tous ces paramètres.</p>
+<p>Allez. On relance le serveur, on accède à la page http://localhost:4567/, on
+saisi une phrase au hasard et on clique sur le bouton [... and reverse
+it] :</p>
+<p><img src="/public/2010/reverse-6.png" alt=""></p>
+<p>Cela signifie que la clé &quot;phrase&quot; contient la valeur &quot;I Did It My Way&quot;. Et
+nous avons une clé &quot;phrase&quot; parce que le formulaire dans &quot;home.erb&quot; contient
+une balise input dont l'attribut name est &quot;phrase&quot;. Il est possible d'accéder à
+n'importe quel paramètre stocké dans la collection &quot;params&quot; en employant la
+syntaxe <code>params[:key]</code>. Par exemple, <code>params[:phrase]</code>
+renverra &quot;I Did It My Way&quot;.</p>
+<p>Supposons que l'on ait le formulaire suivant :</p>
+<pre><code>&lt;form action=&quot;/reverse&quot; method =&quot;post&quot; accept-charset=&quot;utf-8&quot;&gt;
+&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
+&lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;
+&lt;input type=&quot;text&quot; name=&quot;password&quot;&gt;
+&lt;input type=&quot;submit&quot; value=&quot;submit&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p>On va pouvoir accéder aux valeurs de ce formulaire en utilisant
+<code>params[:name]</code>, <code>params[:email]</code> et
+<code>params[:password]</code>.</p>
+<p>Maintenant que nous savons comment accéder aux données d'un formulaire, nous
+allons pouvoir faire quelque chose du texte saisi dans notre vue. Pour cela,
+nous ajoutons le code ci-dessous au fichier &quot;main.rb&quot; :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  @title = &quot;Enter Your text here&quot;
+  erb :home
+end
+
+post '/reverse' do
+  @title = &quot;Here's Your Reversed Text:&quot;
+  params[:phrase].reverse
+end
+</code></pre>
+<p>On re-démarre le serveur, on ré-accède à la page http://localhost:4567/, on
+re-saisi une phrase au hasard et on re-clique sur le bouton [... and reverse
+it]. Cette fois-ci, on doit voir la phrase saisie affichée à l'envers, de la
+droite vers la gauche :</p>
+<p><img src="/public/2010/reverse-7.png" alt=""></p>
+<p>On obtient ce résultat parce que la dernière ligne de la méthode est
+<code>params[:phrase].reverse</code>. Et si vous vous souvenez bien, la
+dernière ligne d'une méthode est ce qui est renvoyé pour l'URL demandée.
+<code>params[:phrase]</code> correspond au texte entré dans le formulaire et le
+<code>.reverse</code> à sa suite correspond à la méthode &quot;reverse&quot; pour les
+chaines de caractères. Et cette méthode fait exactement ce que son nom laisse
+supposer, soit inverser l'ordre des caractères d'une phrase. Coup de bol, c'est
+aussi ce à quoi notre application était destinée !</p>
+<h2>Faire un postback</h2>
+<p>On peut pousser le bouchon encore plus loin et utiliser la même URL pour nos
+deux pages (l'affichage du formulaire et l'affichage du résultat de notre
+application). C'est possible parce que pour afficher le formulaire on fait une
+requête GET et que pour inverser le texte on envoie le formulaire avec une
+requête POST. Par conséquent, on peut donc gérer ces deux actions avec la même
+route, mais deux actions différentes.</p>
+<p>On peut donc réécrire &quot;main.rb&quot; :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  @title = &quot;Enter Your text here&quot;
+  erb :home
+end
+
+post '/' do
+  @title = &quot;Here's Your Reversed Text:&quot;
+  params[:phrase].reverse
+end
+</code></pre>
+<p>Cette fois-ci, l'URL de la route est toujours la même, mais la méthode HTTP
+est différente (soit un GET, soit un POST). Le fait de poster vers soit-même
+s'appelle un &quot;postback&quot;. En plus du GET et du POST, Sinatra gère les deux
+autres méthodes HTTP, à savoir PUT et DELETE. Nous n'en avons pas besoin pour
+cette application, mais nous aurons l'occasion d'y revenir dans un autre
+projet.</p>
+<p>Pour que le postback fonctionne, il faut aussi penser à modifier l'attribut
+action du formulaire au niveau de la vue &quot;home.erb&quot; pour qu'il pointe vers la
+même URL :</p>
+<pre><code>&lt;form action=&quot;/&quot; method =&quot;post&quot; accept-charset=&quot;utf-8&quot;&gt;
+&lt;input type=&quot;text&quot; id=&quot;phrase&quot; name=&quot;phrase&quot; value=&quot;Write something...&quot;&gt;
+ &lt;input type=&quot;submit&quot; value=&quot;...and reverse it!&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Et comme pour l'instant le résultat de notre application se présente
+seulement sous la forme d'une ligne de texte, on va enjoliver ça en créant une
+nouvelle vue &quot;reverse.erb&quot; qui va nous permettre d'afficher ce résultat de
+façon un peu plus élégante :</p>
+<pre><code>&lt;h3&gt;Here is your reversed text......&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;%= @reversed_text %&gt;&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<p>Il suffit alors de référencer cette vue dans le fichier &quot;main.rb&quot;, dans
+lequel nous initialisons la variable session <code>@reversed_text</code> que nous avons
+utilisée dans notre nouvelle vue :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  @title = &quot;Enter Your text here&quot;
+  erb :home
+end
+
+post '/' do
+  @title = &quot;Here's Your Reversed Text:&quot;
+  @reversed_text = params[:phrase].reverse
+  erb :reverse
+end
+</code></pre>
+<p>Si on relance tout et que l'on fait tout bien comme il faut, on arrive sur
+l'écran suivant :</p>
+<p><img src="/public/2010/reverse-8.png" alt=""></p>
+<h2>Les paramètres nommés</h2>
+<p>On pourrait en rester là puisque l'application fait ce qui était prévu. Mais
+on peut faire mieux, comme par exemple permettre à l'utilisateur d'indiquer la
+phrase qu'il veut inverser directement au niveau de l'URL. OK, mais comment
+faire pour retrouver le texte qui a été proposé ? Pas compliqué, il faut
+juste ajouter une route avec un paramètre nommé :</p>
+<pre><code>get '/:phrase' do
+</code></pre>
+<p>Cela va ajouter automatiquement un paramètre &quot;phrase&quot; à la collection
+&quot;params&quot;. On retrouvera donc tout ce que l'utilisateur aura indiqué dans l'URL
+en utilisant <code>params[:phrase]</code>. Par exemple, pour l'URL
+http://localhost:4567/frank on aura <code>params[:phrase]</code> égal à &quot;frank&quot; et pour
+l'URL http://localhost:4567/sinatra on aura <code>params[:phrase]</code> égal à &quot;sinatra&quot;
+.</p>
+<p>On va donc compléter notre fichier &quot;main.rb&quot; pour lui ajouter du code
+destiné à gérer cette route :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/' do
+  @title = &quot;Enter Your text here&quot;
+  erb :home
+end
+
+post '/' do
+  @title = &quot;Here's Your Reversed Text:&quot;
+  @reversed_text = params[:phrase].reverse
+  erb :reverse
+end
+
+get '/:phrase' do
+  @title = &quot;Here's Your Reversed Text:&quot;
+  @reversed_text = params[:phrase].reverse
+  erb :reverse
+end
+</code></pre>
+<p>Voyons voir si ça marche. Tout ce qu'il y a à faire (après avoir relancé le
+serveur pour la dernière fois), c'est d'appeler l'URL http://localhost:4567/
+suivi d'une phrase de votre choix et de vérifier que ce texte s'affiche bien à
+l'envers, comme dans la copie d'écran ci-dessous :</p>
+<p><img src="/public/2010/reverse-9.png" alt=""></p>
+<h2>Voilà c'est fini</h2>
+<p>Et ainsi se termine le tutoriel consacré à la première application Sinatra
+proposée par Darren Jones (<a href="http://twitter.com/daz4126">@daz4126</a>) dont ce billet constitue une traduction très très libre.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/07/26/contexte-recherche-exalead-sdk/" hreflang="fr-FR">Contexte d&#39;une recherche Exalead SDK</a>
+  <a rel="next" href="/2010/07/29/guide-demarrer-git/" hreflang="fr-FR">Guide pour démarrer avec Git</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

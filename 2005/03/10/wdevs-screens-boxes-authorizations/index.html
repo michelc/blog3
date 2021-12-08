@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Screens and boxes authorizations - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/03/10/wdevs-screens-boxes-authorizations/" />
+<meta property="og:title" content="(Wdevs) Screens and boxes authorizations" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/03/10/wdevs-screens-boxes-authorizations/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-03-10T18:09:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-03-10T18:09:00.000Z","datePublished":"2005-03-10T18:09:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2005/03/10/wdevs-screens-boxes-authorizations/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/03/10/wdevs-screens-boxes-authorizations/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/03/10/wdevs-screens-boxes-authorizations/">(Wdevs) Screens and boxes authorizations</a>
+    </h1>
+    <p>
+      <span>2005-03-10</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Finally, I decided to use specific <a href="/2005/01/13/wdevs-roles-dilemma/">tables rather
+than fields</a> to manage authorizations for screens and boxes. So I created
+two tables:</p>
+<pre><code>CREATE TABLE qc_ScreenRoles (
+    idScreen TEXT(20) NOT NULL,
+    aktion TEXT(10) NOT NULL,
+    idRole TEXT(20) NOT NULL
+);
+
+CREATE TABLE qc_BoxRoles (
+    idBox TEXT(20) NOT NULL,
+    aktion TEXT(10) NOT NULL,
+    idRole TEXT(20) NOT NULL
+);
+</code></pre>
+<p>Where aktion field is filled with constants like &quot;view&quot;, &quot;edit&quot; or &quot;admin&quot;.
+I had to write &quot;aktion&quot; because Access don't accept &quot;action&quot; as a field
+name.</p>
+<p>A generic AktionRoles class handles these two tables and the qc_UserRoles
+for user's roles.</p>
+<p>The main difficulty was to find how to propose the user to set rights. I
+looked for a layout that don't rely on a CheckBoxList like IBuySpy because it's
+not easy as soon as you got more than 10 roles. I really like the layout
+adopted in DotNetNuke 3 where actions are displayed on the first line as column
+headers and with a row by role even if it's heavily rest on table tags.
+Personally, I determine to write a specific UserControl that use a cleaner html
+code with three properties :</p>
+<pre><code>* actionsTitles for headers (&quot;View&quot;, &quot;Edit&quot; or &quot;Admin&quot;),
+* actionsId for field constants (&quot;view&quot;, &quot;edit&quot; and &quot;admin&quot;),
+* actionsRoles for authorization assignments.
+</code></pre>
+<p><em>(missing image)</em></p>
+<p>The last step will be to check all this authorizations when displaying
+screens and boxes. Currently, I can configure rights but they are not used.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/03/08/wdevs-next-time-on-blog/" hreflang="en-US">(Wdevs) Next time on this blog</a>
+  <a rel="next" href="/2005/03/17/wdevs-wysiwyg-popups/" hreflang="en-US">(Wdevs) Wysiwyg and popups</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

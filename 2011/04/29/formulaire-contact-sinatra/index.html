@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Un formulaire de contact avec Sinatra - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/04/29/formulaire-contact-sinatra/" />
+<meta property="og:title" content="Un formulaire de contact avec Sinatra" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/04/29/formulaire-contact-sinatra/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-04-29T11:22:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-04-29T11:22:00.000Z","datePublished":"2011-04-29T11:22:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/04/29/formulaire-contact-sinatra/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/04/29/formulaire-contact-sinatra/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/04/29/formulaire-contact-sinatra/">Un formulaire de contact avec Sinatra</a>
+    </h1>
+    <p>
+      <span>2011-04-29</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/12/4/an_email_contact_form_in_sinatra/">An Email Contact Form in Sinatra</a>&quot; de Darren Jones.</p>
+</div>
+<p>Dans cet épisode, je vais vous montrer les étapes nécessaires pour créer une
+page avec un formulaire de contact qui vous enverra un email. Cet exemple peut
+facilement être adapté pour envoyer tout autre type d'email à partir d'une
+interface web. Dans ce tutoriel, je vais utiliser mon compte GMail pour
+réaliser l'envoi du mail.</p>
+<p>Nous utiliserons également la librairie <a href="https://github.com/benprew/pony">Pony</a> pour envoyer les mails
+et il faut donc commencer par installer le gem Pony :</p>
+<pre><code>C:\Ruby&gt;gem install pony
+</code></pre>
+<p>Pour démarrer, nous allons nous occuper du formulaire de contact. Celui-ci
+sera disponible à l'URL &quot;/contact&quot; grâce au gestionnaire suivant :</p>
+<pre><code>get '/contact' do
+  erb :contact
+end
+</code></pre>
+<p>Puis nous enregistrons la vue &quot;contact.erb&quot; dans le répertoire
+&quot;views&quot; :</p>
+<pre><code>&lt;p&gt;Vous pouvez utiliser le formulaire ci-dessous pour nous contacter :&lt;/p&gt;
+&lt;form action=&quot;/contact&quot; method=&quot;post&quot;&gt;
+  &lt;label for=&quot;name&quot;&gt;Votre nom :&lt;/label&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
+  &lt;label for=&quot;email&quot;&gt;Votre adresse mél :&lt;/label&gt;
+  &lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;
+  &lt;label for=&quot;to&quot;&gt;Votre message :&lt;/label&gt;
+  &lt;textarea name=&quot;message&quot; rows=&quot;16&quot; cols=&quot;28&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Envoyer&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Nous devons maintenant gérer les données du formulaire lorsqu'il est validé.
+Pour cela, nous allons créer un gestionnaire de type POST pour la même URL
+&quot;/contact&quot; (celle que nous avons indiquée dans l'attribut action du formulaire
+web) :</p>
+<pre><code>post '/contact' do
+    require 'pony'
+    Pony.mail(
+      :from =&gt; params[:name] + &quot;&lt;&quot; + params[:email] + &quot;&gt;&quot;,
+      :to =&gt; 'adresseperso@gmail.com',
+      :subject =&gt; &quot;Vous avez un message de &quot; + params[:name],
+      :body =&gt; params[:message],
+      :port =&gt; '587',
+      :via =&gt; :smtp,
+      :via_options =&gt; {
+        :address              =&gt; 'smtp.gmail.com',
+        :port                 =&gt; '587',
+        :enable_starttls_auto =&gt; true,
+        :user_name            =&gt; 'adresseperso',
+        :password             =&gt; 'p@55w0rd',
+        :authentication       =&gt; :plain,
+        :domain               =&gt; 'localhost.localdomain'
+      })
+    redirect '/success'
+end
+</code></pre>
+<p><em>Note : En local sur mon PC j'ai dû utiliser le port 25 au lieu du port
+587 pour que l'<a href="/2009/04/21/systemnetmail-smtpgmailcom/">envoi de mail marche avec le SMTP de GMail</a>.</em></p>
+<p>Grosso modo, nous nous contentons de remplir les informations attendues par
+Pony et d'envoyer le mail en utilisant notre compte GMail personnel (par
+conséquent pensez à employer vos propres identifiants !). Si cela fonctionne
+correctement, on doit recevoir un email avec le sujet &quot;Vous avez un message de
+Daz&quot;. Al la fin du code, l'utilisateur est redirigé vers l'URL &quot;/success&quot; que
+nous prenons en charge de la façon suivante :</p>
+<pre><code>get('/success') {&quot;Merci pour votre message. Nous vous contacterons bientôt.&quot;}
+</code></pre>
+<p>C'est clair qu'il faudrait développez un peu plus pour une vrai application,
+mais vous voyez l'idée.</p>
+<h2>Heroku</h2>
+<p>Heroku vous permet d'utiliser l'option Sendgrid pour envoyer vos emails.
+Vous pouvez vous inscrire pour bénéficier d'un compte gratuit (limité à 200
+méls par jour) à l'aide de la commande suivante (à lancer via une console Git
+bash) :</p>
+<pre><code>$ heroku addons:add sendgrid:free
+</code></pre>
+<p>Pour utiliser Sendgrid, vous devez modifier le paramétrage de Pony de la
+façon suivante :</p>
+<pre><code>post '/contact' do
+    require 'pony'
+     Pony.mail(
+      :from =&gt; params[:name] + &quot;&lt;&quot; + params[:email] + &quot;&gt;&quot;,
+      :to =&gt; 'adresseperso@gmail.com',
+      :subject =&gt; &quot;Vous avez un message de &quot; + params[:name],
+      :body =&gt; params[:message],
+      :port =&gt; '587',
+      :via =&gt; :smtp,
+      :via_options =&gt; {
+        :address              =&gt; 'smtp.sendgrid.net',
+        :port                 =&gt; '587',
+        :enable_starttls_auto =&gt; true,
+        :user_name            =&gt; ENV['SENDGRID_USERNAME'],
+        :password             =&gt; ENV['SENDGRID_PASSWORD'],
+        :authentication       =&gt; :plain,
+        :domain               =&gt; ENV['SENDGRID_DOMAIN']
+      })
+    redirect '/success'
+end
+</code></pre>
+<pre><code>ENV['SENDGRID_USERNAME]
+</code></pre>
+<p>, <code>ENV['SENDGRID_PASSWORD']</code>
+et <code>ENV['SENDGRID_DOMAIN']</code> sont trois variables d'environnement de
+Heroku qui sont définies automatiquement lorsque vous installez l'option
+Sendgrid.</p>
+<p>En pratique, il serait plus judicieux de définir ces informations
+séparément, en utilisant la commande &quot;set&quot; de Sinatra :</p>
+<pre><code>set :email_username, ENV['SENDGRID_USERNAME] || 'adresseperso'
+set :email_password, ENV['SENDGRID_PASSWORD'] || 'p@55w0rd'
+set :email_address, 'daz@gmail.com'
+set :email_service, ENV['EMAIL_SERVICE'] || 'gmail.com'
+set :email_domain, ENV['SENDGRID_DOMAIN'] || 'localhost.localdomain'
+</code></pre>
+<p>La variable d'environnement <code>ENV['EMAIL_SERVICE']</code> n'étant pas
+définie automatiquement, vous devez penser à l'initialiser vous-même avec la
+commande suivante :</p>
+<pre><code>$ heroku config:add EMAIL_SERVICE=sendgrid.net
+</code></pre>
+<p>Et après cela, vous pouvez mettre à jour votre code pour envoyer un email en
+utilisant Pony :</p>
+<pre><code>post '/contact' do
+    require 'pony'
+     Pony.mail(
+      :from =&gt; params[:name] + &quot;&lt;&quot; + params[:email] + &quot;&gt;&quot;,
+      :to =&gt; settings.email_address,
+      :subject =&gt; &quot;Vous avez un message de &quot; + params[:name],
+      :body =&gt; params[:message],
+      :port =&gt; '587',
+      :via =&gt; :smtp,
+      :via_options =&gt; {
+        :address              =&gt; 'smtp.' + settings.email_service,
+        :port                 =&gt; '587',
+        :enable_starttls_auto =&gt; true,
+        :user_name            =&gt; settings.email_username,
+        :password             =&gt; settings.email_password,
+        :authentication       =&gt; :plain,
+        :domain               =&gt; settings.email_domain
+      })
+    redirect '/success'
+end
+</code></pre>
+<p>Cette méthode vous permet d'utiliser votre formulaire de contact en local
+(en utilisant votre adresse GMail perso) ou depuis Heroku (en passant par
+Sendgrid).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/04/28/changer-fenetre-vs-2010/" hreflang="fr-FR">Changer de fenêtre sous VS 2010</a>
+  <a rel="next" href="/2011/05/03/configuration-parametrage-sinatra/" hreflang="fr-FR">Configuration et paramétrage avec Sinatra</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

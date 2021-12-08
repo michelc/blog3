@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CRUD application with Express and PostgresSQL in 10 steps - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/10/15/crud-with-express-postgresql-10-steps/" />
+<meta property="og:title" content="CRUD application with Express and PostgresSQL in 10 steps" />
+<meta name="description" content="A &quot;copy/paste&quot; tutorial to learn how to develop a Node JS application with the Express web framework and a PostgreSQL database." />
+<meta property="og:description" content="A &quot;copy/paste&quot; tutorial to learn how to develop a Node JS application with the Express web framework and a PostgreSQL database." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/10/15/crud-with-express-postgresql-10-steps/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/elephant-bookshelf.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-10-15T08:59:46.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-10-15T08:59:46.000Z","datePublished":"2019-10-15T08:59:46.000Z","description":"A \"copy/paste\" tutorial to learn how to develop a Node JS application with the Express web framework and a PostgreSQL database.","inLanguage":"en-US","url":"https://blog3.pagesd.info/2019/10/15/crud-with-express-postgresql-10-steps/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/elephant-bookshelf.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/10/15/crud-with-express-postgresql-10-steps/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/elephant-bookshelf.jpg" alt="An elephant in the room with book shelves - Victor Zastolskiy" /><figcaption><a href="https://www.instagram.com/victorzastolskiy/">An elephant in the room with book shelves - Victor Zastolskiy</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/10/15/crud-with-express-postgresql-10-steps/">CRUD application with Express and PostgresSQL in 10 steps</a>
+    </h1>
+    <p>
+      <span>2019-10-15</span>
+      <span>#javascript</span><span>#node</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>The goal of this very simple project is to develop a Node JS application to learn how to:</p>
+<ul>
+<li>Create a very basic website with Express.</li>
+<li>Manage an SQL database (PostgresSQL in this case).</li>
+</ul>
+<p>This post is only a tutorial to understand how it works and to have a starting point to train myself gradually to Node and Express (and probably later to Sequelize). It is by no means a guide to good practice for developing &quot;real&quot; applications. Nor is it an article to learn how to program or to convince anyone to use Node, Express or SQL...</p>
+<p>The final JavaScript code is visible in the appendix at the end of the post. The complete code of the application (in french) is available on <a href="https://github.com/michelc/AppTestPG">GitHub</a>.</p>
+<p>At the moment, there is no demonstration site for the completed project. I have not (yet) found an easy solution to host it. Maybe I'll do another tutorial the day I deal with this problem.</p>
+<p><em>Note: This tutorial is pretty much a copy/paste of the tutorial <a href="/2019/10/08/crud-with-express-sqlite-10-steps/">CRUD application with Express and SQlite in 10 steps</a>. If, like me, you have already followed it, it will go quite quickly and it's a good review of what was presented there. Otherwise, it's not much more complicated and as everything is re-explained, it's not necessary to have followed the first tutorial with SQlite before starting this one with Express and PostgreSQL.</em></p>
+<p><strong>Table of Contents</strong></p>
+<ol>
+<li><a href="#crud1">Create a new Node project</a></li>
+<li><a href="#crud2">Add modules to the Node project</a></li>
+<li><a href="#crud3">Create the Express application</a></li>
+<li><a href="#crud4">Add EJS views</a></li>
+<li><a href="#crud5">Use views in Express</a></li>
+<li><a href="#crud6">First steps with the node-postgres module</a></li>
+<li><a href="#crud7">Modify an existing row</a></li>
+<li><a href="#crud8">Create a new row</a></li>
+<li><a href="#crud9">Delete a row</a></li>
+<li><a href="#crud10">Conclusion</a></li>
+</ol>
+<p><a name="crud1"></a></p>
+<h2>1. Create a new Node project</h2>
+<h3>Create a folder for the project</h3>
+<p>You can start at the command line (or &quot;Command prompt&quot; in Windows):</p>
+<pre><code>E:\&gt; cd Code
+E:\Code&gt; mkdir AppTestPG
+</code></pre>
+<p>This creates a sub-folder &quot;AppTestPG&quot; in my &quot;E:\Code&quot; directory that is used to test different things.</p>
+<h3>Open the folder with Visual Code</h3>
+<p>Always on the command line, launch Visual Code to open the &quot;AppTestPG&quot; folder:</p>
+<pre><code>E:\Code&gt; cd AppTestPG
+E:\Code\AppTestPG&gt; code .
+</code></pre>
+<p>From there, the Windows command prompt is no longer useful and can be closed. The rest will take place in Visual Code or in its terminal.</p>
+<h3>Initiate the Node project</h3>
+<p>To do this, open the Visual Code terminal and run the <code>npm init</code> command:</p>
+<p>Menu : View / Terminal
+Or shortcut: Ctrl + Backtick;</p>
+<p>=&gt;</p>
+<pre><code>PS E:\Code\AppTestPG&gt; npm init -y
+</code></pre>
+<p>=&gt;</p>
+<pre><code>Wrote to E:\Code\AppTestPG\package.json:
+
+{
+  &quot;name&quot;: &quot;AppTestPG&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+</code></pre>
+<p><em>Note: For this example, it is faster to do <code>npm init -y</code> (or <code>npm init -yes</code>) than to type <Enter> at each question to accept the default value.</em></p>
+<p>In Visual Code, the &quot;package.json&quot; file created by NPM now appears in the root folder of the project (&quot;E:\Code\AppTestPG&quot; in this case).</p>
+<p><a name="crud2"></a></p>
+<h2>2. Add modules to the Node project</h2>
+<h3>Technical choices</h3>
+<p>The objective of this tutorial is to test the development of a web-based Node application. To do this, you must install <a href="https://expressjs.com/">Express</a> because it is the most commonly used Node framework for this type of application.</p>
+<p>Express needs a template system to generate views. To avoid complicating things, I choose <a href="https://github.com/mde/ejs/">EJS</a>: there is real HTML in it and it looks a lot like the ASP syntax (before Razor).</p>
+<p>To manage the database, this time I'm starting with a rather classic choice, namely <a href="https://www.postgresql.org/">PostgreSQL</a>. With Node JS, it is the module &quot;<a href="https://node-postgres.com/">node-postgres</a>&quot; that serves as the interface for PostgreSQL.</p>
+<h3>Install dependencies</h3>
+<p>This is done in the command line, in the Visual Code terminal:</p>
+<pre><code>PS E:\Code\AppTestPG&gt; npm install express
+PS E:\Code\AppTestPG&gt; npm install ejs
+PS E:\Code\AppTestPG&gt; npm install pg
+</code></pre>
+<p><em>Note: Strangely enough, you have to use the name/identifier &quot;pg&quot; to install the &quot;node-postgres&quot; module.</em></p>
+<p>Or to go faster:</p>
+<pre><code>PS E:\Code\AppTestPG&gt; npm install express ejs pg
+</code></pre>
+<p>When the installation of these three dependencies (and their own dependencies) is complete, the &quot;package.json&quot; file contains a new &quot;dependencies&quot; section that saves the list of project dependencies:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;AppTestPG&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;ejs&quot;: &quot;^2.7.1&quot;,
+    &quot;express&quot;: &quot;^4.17.1&quot;,
+    &quot;pg&quot;: &quot;^7.12.1&quot;
+  }
+}
+</code></pre>
+<p><em>Note: In older tutorials, we still see the syntax <code>npm install --save xxxxx</code> to save the list of dependencies in the &quot;package.json&quot; file, but this is no longer necessary since NPM version 5.</em></p>
+<h3>The &quot;node_modules&quot; folder</h3>
+<p>The &quot;node_modules&quot; subdirectory is used by NPM to store all the dependency files of a Node project.</p>
+<p>When the project is versioned in GIT, this folder must be ignored so that it is not commited in the repository:</p>
+<ul>
+<li>It's usually a huge file.</li>
+<li>The <code>npm install</code> command without argument allows to (re)install dependencies</li>
+</ul>
+<p>To test this, you can delete the &quot;node_modules&quot; folder:</p>
+<pre><code>PS E:\Code\AppTestPG&gt; rd node_modules /s /q
+</code></pre>
+<p><em>Note: Under Windows, the <code>/s /q</code> options allow you to delete everything without question.</em></p>
+<p>Then we install all the dependencies listed in the &quot;package.json&quot; file:</p>
+<pre><code>PS E:\Code\AppTestPG&gt; npm install
+</code></pre>
+<p><a name="crud3"></a></p>
+<h2>3. Create the Express application</h2>
+<h3>Check that it can work...</h3>
+<p>To be sure that everything is installed correctly, the safest way is to start with a &quot;index.js&quot; file with a minimum content:</p>
+<pre><code class="language-javascript">const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.listen(3000, () =&gt; { {
+  console.log(&quot;Server started (http://localhost:3000/) !&quot;);
+});
+
+app.get(&quot;/&quot;, (req, res) =&gt; { {
+  res.send (&quot;Hello world...&quot;);
+});
+</code></pre>
+<p>Then, in the Visual Code terminal:</p>
+<pre><code>PS E:\Code\AppTestPG&gt; node index
+</code></pre>
+<p>=&gt;</p>
+<pre><code>Server started (http://localhost:3000/) !
+</code></pre>
+<p>All we have to do now is check that it really works:</p>
+<ul>
+<li>Launch a browser</li>
+<li>Go to the URL &quot;http://localhost:3000/&quot;</li>
+</ul>
+<p>The message &quot;Hello world...&quot; should appear as below:</p>
+<p><img src="/public/2019/crud-pg-01-test.png" alt="Home page to test..."></p>
+<p>It's OK =&gt; stop the server by typing Ctrl+C in the Visual Code terminal.</p>
+<h3>How does it work?</h3>
+<p>The first line references / imports the Express module.</p>
+<pre><code class="language-javascript">const express = require(&quot;express&quot;);
+</code></pre>
+<p>The following line is used to instantiate an Express server.</p>
+<pre><code class="language-javascript">const app = express();
+</code></pre>
+<p>This server is then started and waits for requests on port 3000. The callback function is used to display an informative message when the server is ready to receive requests.</p>
+<pre><code class="language-javascript">app.listen(3000, () =&gt; { {
+  console.log(&quot;Server started (http://localhost:3000/) !&quot;);
+});
+</code></pre>
+<p>Then comes a function to answer GET requests pointing to the root of the site.</p>
+<pre><code class="language-javascript">app.get(&quot;/&quot;, (req, res) =&gt; { {
+  res.send (&quot;Hello world...&quot;);
+});
+</code></pre>
+<p>Roughly speaking...</p>
+<h3>And more precisely?</h3>
+<p>It doesn't seem so, but the <code>app.get()</code> method does a lot of things in only 3 lines of code.</p>
+<p>It responds to HTTP GET requests that arrive on the URL that is passed to it with the 1st parameter. In our case, it is &quot;/&quot;, i.e. the root of the site.</p>
+<p>When such a request hit the server, it is passed to the callback function which is defined as a 2nd parameter. Here, it is the following arrow function:</p>
+<pre><code class="language-javascript">(req, res) =&gt; {
+  res.send (&quot;Hello world...&quot;);
+}
+</code></pre>
+<p>This callback function receives two objects in parameters that are quite common for any good web server these days:</p>
+<ul>
+<li>the variable <code>req</code> which contains a <code>Request</code> object</li>
+<li>the variable <code>res</code> that contains a <code>Response</code> object</li>
+</ul>
+<p>The <code>Request</code> object is the HTTP request that was sent by the browser (or any other client). You can therefore find information about this request, such as parameters, headers, cookies, body, etc....</p>
+<p>The <code>Response</code> object is the HTTP response that will ultimately be returned to the browser (or any other client).</p>
+<p>In our program, the answer will be the text &quot;Hello world...&quot; that is sent using the <code>Response.send()</code> method, which does &quot;just&quot; two things:</p>
+<ul>
+<li>It returns the text in the body part of the HTTP response</li>
+<li>It terminates the connection</li>
+</ul>
+<p><em>Note: It's quite technical for this tutorial.</em></p>
+<h3>Improve the launch of the Node application</h3>
+<p>Let's get back to simpler things. In the &quot;scripts&quot; section of the &quot;package.json&quot; file, it is recommended to add a line to &quot;automate&quot; the launch of the Node application:</p>
+<pre><code class="language-json">&quot;start&quot;: &quot;node index&quot;
+</code></pre>
+<p>This gives (without forgetting the comma at the end of the line):</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;AppTestPG&quot;,
+  &quot;version&quot;: &quot;1.0.0.0&quot;,
+  &quot;description&quot;:&quot;&quot;,
+  &quot;hand&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node index&quot;,
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;ejs&quot;: &quot;^2.7.1&quot;,
+    &quot;express&quot;: &quot;^4.17.1&quot;,
+    &quot;pg&quot;: &quot;^7.12.1&quot;
+  }
+}
+</code></pre>
+<p>The program can now be started by running:</p>
+<pre><code>PS E:\Code\AppTestPG&gt; npm start
+</code></pre>
+<p>=&gt;</p>
+<pre><code>&gt; AppTestPG@1.0.0 start E:\Code\AppTestPG
+&gt; node index.js
+
+Server started (http://localhost:3000/) !
+</code></pre>
+<p>And don't forget the Ctrl+C to stop the Express server at the end.</p>
+<p><em>Note: It is possible to use the &quot;nodemon&quot; module to avoid having to stop / restart the server each time the source code is modified. But I prefer not to talk about too many things at once in this tutorial.</em></p>
+<p><a name="crud4"></a></p>
+<h2>4. Add EJS views</h2>
+<p>Since the purpose of the application is to have several functionalities, you need to create several views. Unfortunately, EJS does not manage layouts. It is therefore necessary to hack by inserting a partial view at the beginning of the view for all HTML that must come before the view-specific content and a second partial view with the HTML code to &quot;finish&quot; the page.</p>
+<p>In the case of the view corresponding to the request to the site root (i.e. a &quot;GET /&quot;), it will therefore be necessary to create the &quot;index.ejs&quot; view and the two reusable partial views &quot;_header.ejs&quot; and &quot;_footer.ejs&quot;.</p>
+<p><em>Note: These three files must be saved in a &quot;views&quot; folder, which must therefore be created first.</em></p>
+<h3>Partial view &quot;views/_header.ejs&quot;</h3>
+<pre><code class="language-erb">&lt;!doctype html&gt;
+&lt;html lang=&quot;fr&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+  &lt;title&gt;AppTestPG&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/bootstrap.min.css&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;div class=&quot;container&quot;&gt;
+
+    &lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
+      &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;AppTestPG&lt;/a&gt;
+      &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;
+          &lt;a class=&quot;nav-link&quot; href=&quot;/about&quot;&gt;About&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;
+          &lt;a class=&quot;nav-link&quot; href=&quot;/data&quot;&gt;Data&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;
+          &lt;a class=&quot;nav-link&quot; href=&quot;/books&quot;&gt;Books&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+</code></pre>
+<h3>View &quot;views/index.ejs&quot;</h3>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Hello world...&lt;/h1&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<h3>Partial view &quot;views/_footer.ejs&quot;</h3>
+<pre><code class="language-erb">    &lt;footer&gt;
+      &lt;p&gt;&amp;copy; 2019 - AppTestPG&lt;/p&gt;
+    &lt;/footer&gt;
+
+  &lt;/div&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p><em>Note: Apart from the two <code>&lt;%- include(partial_view) -%&gt;</code>, it is only HTML. This is one of the advantages of EJS over other template engines to avoid having to get distracted when you start.</em></p>
+<h3>Add a style sheet</h3>
+<p>As you can see in the three views above, they refer to Bootstrap 4.</p>
+<p>To do this, you have to create a &quot;public&quot; folder in which you create a sub-folder &quot;css&quot; where you just have to copy the file &quot;bootstrap.min.css&quot; corresponding to version 4.3.1 of Bootstrap in my case.</p>
+<p><a name="crud5"></a></p>
+<h2>5. Use views in Express</h2>
+<p><em>Note: If this had not been done at the beginning of the project, it would have been necessary to install the &quot;EJS&quot; module by an <code>npm install ejs</code> to be able to use it.</em></p>
+<h3>Changes to &quot;index.js&quot;</h3>
+<p>To use the views created in the Express application, you need to modify the &quot;index.js&quot; file a little.</p>
+<ul>
+<li>Notify that the EJS template engine must be used.</li>
+</ul>
+<pre><code class="language-javascript">app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+</code></pre>
+<p><em>Note: It is not necessary to do a <code>const ejs = require(&quot;ejs&quot;)</code> before because Express does it for us.</em></p>
+<ul>
+<li>Specify that the views are saved in the &quot;views&quot; folder.</li>
+</ul>
+<pre><code class="language-javascript">app.set(&quot;views&quot;, __dirname + &quot;/views&quot;);
+</code></pre>
+<p>Or better, by using the &quot;path&quot; module included with Node:</p>
+<pre><code class="language-javascript">const path = require(&quot;path&quot;);
+...
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+</code></pre>
+<p><em>Note: There is no need to install the <code>path</code> module with NPM beforehand, because it's a standard module of Node JS.</em></p>
+<ul>
+<li>Indicate that static files are saved in the &quot;public&quot; folder and its subdirectories. It is a setting that is necessary for the file &quot;bootstrap.min.css&quot; previously copied into &quot;public/css&quot; to be accessible.</li>
+</ul>
+<pre><code class="language-javascript">app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+</code></pre>
+<p>And finally, return the &quot;index.ejs&quot; view rather than a simple &quot;Hello world...&quot; message as before.</p>
+<pre><code class="language-javascript">app.get(&quot;/&quot;, (req, res) =&gt; { {
+  // res.send(&quot;Hello world...&quot;);
+  res.render(&quot;index&quot;);
+});
+</code></pre>
+<h3>Check that it works</h3>
+<ul>
+<li>Make an <code>npm start</code> in the Visual Code terminal</li>
+<li>Navigate to &quot;http://localhost:3000/&quot; with Chrome</li>
+<li>The following page should appear:</li>
+</ul>
+<p><img src="/public/2019/crud-pg-02-vues.png" alt="Home page with the &quot;index.ejs&quot; view"></p>
+<h3>Add the &quot;/about&quot; path</h3>
+<p>The application's navigation bar contains an &quot;About&quot; choice that sends to the URL &quot;http://localhost:3000/about&quot;. This menu is defined in the &quot;nav&quot; part of the partial view &quot;_header.ejs&quot;, but for the moment, nothing exists to manage this route.</p>
+<ul>
+<li>In &quot;index.js&quot;, add a function to answer a request to &quot;/about&quot; and return the &quot;about.ejs&quot; view in this case.</li>
+</ul>
+<pre><code class="language-javascript">app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+</code></pre>
+<ul>
+<li>Create a new &quot;about.ejs&quot; view in the &quot;views&quot; folder (by re-using both partial views).</li>
+</ul>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;About AppTestPG&lt;/h1&gt;
+
+&lt;p&gt;Blah blah blah blah blah...&lt;/p&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<ul>
+<li>
+<p>Stop the server with Ctrl+C (if this had not been done before).</p>
+</li>
+<li>
+<p>Restart the server with <code>npm start</code> (this is mandatory to take into account the changes made to the project).</p>
+</li>
+<li>
+<p>Navigate to &quot;http://localhost:3000/&quot;.</p>
+</li>
+<li>
+<p>Click on the &quot;About&quot; menu, which gives you:</p>
+</li>
+</ul>
+<p><img src="/public/2019/crud-pg-03-about.png" alt="About page with the &quot;about.ejs&quot; view"></p>
+<h3>Send data from the server to the view</h3>
+<p>The application's navigation bar also contains the &quot;Data&quot; choice that sends to the URL &quot;http://localhost:3000/data&quot;. This URL will be used to see how to &quot;inject&quot; data into the view from the program.</p>
+<p>First of all, it is necessary to add a function to &quot;index.js&quot; to take into account the URL &quot;/data&quot; and render the corresponding view, but this time by adding the object to be transmitted to it.</p>
+<pre><code class="language-javascript">app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    title: &quot;Test&quot;,
+    items: [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+</code></pre>
+<p>Then you must add a &quot;data.ejs&quot; view in the &quot;views&quot; folder to display the data transmitted to it by the application.</p>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;&lt;%= model.title %&gt;&gt;&lt;/h1&gt;
+
+&lt;ul&gt;
+
+  &lt;% for (let i = 0; i &lt; model.items.length; i++) { %&gt;
+    &lt;li&gt;&lt;%= model.items[i] %&gt;&lt;/li&gt;
+  &lt;% } %&gt;
+
+&lt;/ul&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p><em>Note: The purpose of this tutorial is not too much to explain how EJS works. I chose this template engine because its syntax is based on <code>&lt;%... %&gt;</code> which is quite common, whether with ASP, PHP, Ruby... And for the rest, it is JavaScript (hence the name Embedded JavaScript).</em></p>
+<p>And now, when you navigate to &quot;http://localhost:3000/data&quot; after restarting the site, you get:</p>
+<p><img src="/public/2019/crud-pg-04-data.png" alt="Data sent to the view"></p>
+<h3>The updated &quot;index.js&quot; file</h3>
+<pre><code class="language-javascript">const express = require(&quot;express&quot;);
+const path = require(&quot;path&quot;);
+
+// Creating the Express server
+const app = express();
+
+// Server configuration
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+
+// Starting the server
+app.listen(3000, () =&gt; {
+  console.log(&quot;Server started (http://localhost:3000/) !&quot;);
+});
+
+// GET /
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  // res.send(&quot;Hello world...&quot;);
+  res.render(&quot;index&quot;);
+});
+
+// GET /about
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+
+// GET /data
+app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    titre: &quot;Test&quot;,
+    items: [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+</code></pre>
+<p><a name="crud6"></a></p>
+<h2>6. First steps with the node-postgres module</h2>
+<p><em>Note: If this had not been done at the beginning of the project, it would have been necessary to install the node-postgres module by an <code>npm install pg</code> to be able to access a PostgreSQL database under Node.</em></p>
+<h3>Access a PostgreSQL database</h3>
+<p>This is the part that's a little more complicated compared to SQlite. Let's say we have three solutions :</p>
+<ul>
+<li>Installing PostgreSQL =&gt; it's a no (this is not the purpose of this tutorial).</li>
+<li>Having a PostgreSQL server on hand already =&gt; it's perfect (so, you know enough about it).</li>
+<li>Using a server in the cloud =&gt; it looks great (but it's a little longer).</li>
+</ul>
+<p>If you need to go through a PostgreSQL database in the cloud, I propose to see briefly how to do it with ElephantSQL (it's very simple, you should get out without me):</p>
+<ul>
+<li>Go to the website <a href="https://www.elephantsql.com/">https://www.elephantsql.com/</a></li>
+<li>Click on the &quot;Get a managed database today&quot; button</li>
+<li>Choose the &quot;Tiny Turtle&quot; instance which is free</li>
+<li>Once on the login screen, click on the &quot;Sign Up&quot; link at the bottom</li>
+<li>Enter your email address and click on the new &quot;Sign Up&quot; button</li>
+<li>In the confirmation email received, click on the &quot;Confirm Email&quot; button</li>
+<li>When you arrive on the &quot;Create an account&quot; screen, you must:
+<ul>
+<li>Enter a password (and confirm it)</li>
+<li>Accept their conditions</li>
+<li>Accept or refuse emails from them</li>
+<li>Click on the &quot;Submit&quot; button</li>
+</ul>
+</li>
+<li>Once on the list of your instances (empty), click on the &quot;+ Create New Instance&quot; button and follow the 4 steps:
+<ul>
+<li>1 : &quot;Select a plan and name&quot; =&gt; stay on &quot;Tiny Turtle&quot; and give a name</li>
+<li>2 : &quot;Select a region and data center&quot; =&gt; choose the one closest to your home (but not all are available with the free offer)</li>
+<li>3 : &quot;Configure&quot; =&gt; grayed out because it's reserved for dedicated plans</li>
+<li>4 : &quot;Confirm new instance&quot; =&gt; here we go!</li>
+</ul>
+</li>
+</ul>
+<p>We then return to the list of instances that now contains the instance that we just created. You must then click on his name to get the connection information you will need in the next part:</p>
+<ul>
+<li>server : xxxxxxx.elephantsql.com</li>
+<li>user &amp; default database: mystery</li>
+<li>password: asecretthingthatnoonehastosee</li>
+</ul>
+<h3>Declare the node-postgres module</h3>
+<p>First, refer to &quot;pg&quot; at the top of the &quot;index.js&quot; program, with the other two declarations for &quot;express&quot; and &quot;path&quot;.</p>
+<pre><code class="language-javascript">const { Pool } = require(&quot;pg&quot;);
+</code></pre>
+<h3>Connection to the PostgreSQL database</h3>
+<p>Then add the code to connect to the database just before starting the Express server.</p>
+<pre><code class="language-javascript">const pool = new Pool({
+  user: &quot;mystery&quot;,
+  host: &quot;xxxxx.elephantsql.com&quot;,
+  database: &quot;mystery&quot;,
+  password: &quot;asecretthingthatnoonehastosee&quot;,
+  port: 5432
+});
+console.log(&quot;Successful connection to the database&quot;);
+</code></pre>
+<p><em>Note: Of course, you don't write all this connection information in plain text in the code. In a real application, they would be retrieved by default from environment variables or set in a &quot;.env&quot; file using the &quot;dotenv&quot; module.</em></p>
+<p>After this code has been executed, the variable &quot;pool&quot; is a <code>Pool</code> object from the node-postgres module which represents a connection to the database. This object will later be used to access the contents of the database and to make queries on this database.</p>
+<h3>Creating a &quot;Books&quot; table</h3>
+<p>For this tutorial, we will create a table of books with 4 columns:</p>
+<ul>
+<li>Book_ID: the automatic identifier</li>
+<li>Title: the title of the book</li>
+<li>Author: the author of the book</li>
+<li>Comments: a memo field with some notes about the book</li>
+</ul>
+<p>The SQL query to create such a table under PostgreSQL is as follows:</p>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS Books (
+  Book_ID SERIAL PRIMARY KEY,
+  Title VARCHAR(100) NOT NULL,
+  Author VARCHAR(100) NOT NULL,
+  Comments TEXT
+);
+</code></pre>
+<p>Which give:</p>
+<p><img src="/public/2019/crud-pg-00-desc.png" alt="Structure of the Books table"></p>
+<p>To learn how to do this in Node, we will create the table from the application. Simply add the code below just after connecting to the database.</p>
+<pre><code class="language-javascript">const sql_create = `CREATE TABLE IF NOT EXISTS Books (
+  Book_ID SERIAL PRIMARY KEY,
+  Title VARCHAR(100) NOT NULL,
+  Author VARCHAR(100) NOT NULL,
+  Comments TEXT
+);`;
+
+pool.query(sql_create, [], (err, result) =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Successful creation of the 'Books' table&quot;);
+});
+</code></pre>
+<p>This code uses the <code>.query()</code> method of the <code>Pool</code> object fom the node-postgres module. This method executes the SQL query that is passed to it in 1st parameter then calls the callback function corresponding to the 3rd parameter, by passing it an object <code>err</code> to be able to check if the execution of the request was proceeded correctly and a <code>result</code> object containing the result of the query.</p>
+<p><em>Note: The table will only be created if it does not exist yet, thanks to the SQL clause &quot;IF NOT EXISTS&quot;. It wouldn't be great for a real application, right now it's just a tutorial.</em></p>
+<h3>Seeding the &quot;Books&quot; table</h3>
+<p>To facilitate the next parts of this tutorial, it is more convenient to insert a few books in the database. Under PostgreSQL, we could make the following query:</p>
+<pre><code class="language-sql">INSERT INTO Books (Book_ID, Title, Author, Comments) VALUES
+  (1, 'Mrs. Bridge', 'Evan S. Connell', 'First in the serie'),
+  (2, 'Mr. Bridge', 'Evan S. Connell', 'Second in the serie'),
+  (3, 'L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne')
+ON CONFLICT DO NOTHING;
+</code></pre>
+<p>If we don't have a PostgreSQL client, it can be done in JavaScript, just after creating the &quot;Books&quot; table (because we don't want to insert the books before the table is created):</p>
+<pre><code class="language-javascript">  ...
+  console.log(&quot;Successful creation of the 'Books' table&quot;);
+  // Database seeding
+  const sql_insert = `INSERT INTO Books (Book_ID, Title, Author, Comments) VALUES
+    (1, 'Mrs. Bridge', 'Evan S. Connell', 'First in the serie'),
+    (2, 'Mr. Bridge', 'Evan S. Connell', 'Second in the serie'),
+    (3, 'L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne')
+  ON CONFLICT DO NOTHING;`;
+  pool.query(sql_insert, [], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    const sql_sequence = &quot;SELECT SETVAL('Books_Book_ID_Seq', MAX(Book_ID)) FROM Books;&quot;;
+    pool.query(sql_sequence, [], (err, result) =&gt; {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(&quot;Successful creation of 3 books&quot;);
+    });
+  });
+</code></pre>
+<p>Normally, it is not necessary to define identifiers during INSERTs, but in this case, it prevents the data from being re-inserted each time the server starts.</p>
+<p>But for PostgreSQL to be able to find its way around later on, it is necessary to re-initialize the sequence used to feed the &quot;Book_ID&quot; identifier. This is done by executing the &quot;SELECT SETVAL('Books_Book_ID_Seq', MAX(Book_ID)) FROM Books;&quot; query.</p>
+<p>Now, the &quot;Books&quot; table contains the following 3 lines:</p>
+<p><img src="/public/2019/crud-pg-00-livres.png" alt="Contents of the Books table"></p>
+<h3>Display the list of books</h3>
+<p>Now that our &quot;Books&quot; table contains some data, it is possible to create a method for the URL &quot;http://localhost:3000/books&quot; of the site in order to read the list of books stored in the database and display this list in the view.</p>
+<p>To read the list of books, it's quite simple. We make a query like &quot;SELECT * FROM ...&quot; that we also execute via the <code>pool.query()</code> method of the node-postgres module. Once the query is completed, this method <code>pool.query()</code> calls a callback function, possibly passing it an error and the result of the
+query, with among other things the list of books obtained by the SQL query. If all goes well, the callback function can then send these results to the view.</p>
+<pre><code class="language-javascript">app.get(&quot;/books&quot;, (req, res) =&gt; {
+  const sql = &quot;SELECT * FROM Books ORDER BY Title&quot;
+  pool.query(sql, [], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;books&quot;, { model: result.rows });
+  });
+});
+</code></pre>
+<p>Some explanations on the line of code <code>pool.query(sql, [], (err, result) =&gt; { ... }</code>:</p>
+<ul>
+<li>The 1st parameter is the SQL query to execute</li>
+<li>The 2nd parameter is an array with the variables necessary for the query. Here, the value &quot;[]&quot; is used because the query does not need a variable.</li>
+<li>The 3rd parameter is a callback function called after the execution of the SQL query.</li>
+<li>(err, result)&quot; corresponds to the parameters passed to the callback function. &quot;err&quot; may contain an error object and &quot;result&quot; is an object containing information about the result of the execution of the query, including a &quot;rows&quot; array corresponding to the list of lines returned by the SELECT.</li>
+</ul>
+<p>To display this list of books, we can firts create a view &quot;books.ejs&quot; in the folder &quot;views&quot; with the following code:</p>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;List of books&lt;/h1&gt;
+
+&lt;ul&gt;
+
+  &lt;% for (const book of model) { %&gt;
+    &lt;li&gt;
+      &lt;%= book.title %&gt;
+      &lt;em&gt;(&lt;%= book.author %&gt;)&lt;/em&gt;
+    &lt;/li&gt;
+  &lt;% } %&gt;
+
+&lt;/ul&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>After restarting the application with <code>npm start</code>, the following result is obtained by clicking on the &quot;Books&quot; menu:</p>
+<p><img src="/public/2019/crud-pg-05-list.png" alt="List of books"></p>
+<p><em>Note: You have to be careful and write &quot;book.title&quot; and not &quot;book.Title&quot; because even though the &quot;Books&quot; table was created using capital letters as initials for column names, PostgreSQL has transformed these names into lower case letters.</em></p>
+<h3>Display books in tabular form</h3>
+<p>Now that the method for displaying the list of books works, we will improve the presentation of these data. The view from the previous step used a simple &quot;ul / li&quot; list to display the books. The code in this view &quot;books.ejs&quot; will be completely modified to use an HTML table.</p>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;List of books (&lt;%= model.length %&gt;)&lt;/h1&gt;
+
+&lt;div class=&quot;table-responsive-sm&quot;&gt;
+  &lt;table class=&quot;table table-hover&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Title&lt;/th&gt;
+        &lt;th&gt;Author&lt;/th&gt;
+        &lt;th&gt;Comments&lt;/th&gt;
+        &lt;th class=&quot;d-print-none&quot;&gt;
+          &lt;a class=&quot;btn btn-sm btn-success&quot; href=&quot;/create&quot;&gt;Add&lt;/a&gt;
+        &lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;% for (const book of model) { %&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;%= book.title %&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;%= book.author %&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;%= book.comments %&gt;&lt;/td&gt;
+          &lt;td class=&quot;d-print-none&quot;&gt;
+            &lt;a class=&quot;btn btn-sm btn-warning&quot; href=&quot;/edit/&lt;%= book.book_id %&gt;&quot;&gt;Edit&lt;/a&gt;
+            &lt;a class=&quot;btn btn-sm btn-danger&quot; href=&quot;/delete/&lt;%= book.book_id %&gt;&quot;&gt;Delete&lt;/a&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;% } %&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>There you go! Ctrl+C if necessary, <code>npm start</code> and then navigate to the URL &quot;http://localhost:3000/books&quot; to have a real Bootstrap table.</p>
+<p><img src="/public/2019/crud-pg-06-table.png" alt="Books in table form"></p>
+<p>The advantage of this new view is to provide [Add], [Edit] and [Delete] buttons to update the Books table, which is essential for the rest of the tutorial.</p>
+<p><a name="crud7"></a></p>
+<h2>7. Modify an existing row</h2>
+<p>This part of the tutorial will show you how to modify an existing record. We will start by creating the necessary views to enter the information of the book to be updated. Then we will code a method to display the input form when the GET /edit/xxx route is called (by clicking on the [Edit] button in the book list). And finally, a method corresponding to the POST /edit/xxx route will be used to update the database when the user validates the changes(by clicking the [Update] button at the bottom of the input form).</p>
+<h3>The &quot;views/edit.ejs&quot; and &quot;views/_editor.ejs&quot; views</h3>
+<p>The main view for editing a book is a fairly classic Bootstrap form.</p>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Update a record&lt;/h1&gt;
+
+&lt;form action=&quot;/edit/&lt;%= model.book_id %&gt;&quot; method=&quot;post&quot;&gt;
+  &lt;div class=&quot;form-horizontal&quot;&gt;
+
+    &lt;%- include(&quot;_editor&quot;) -%&gt;
+
+    &lt;div class=&quot;form-group row&quot;&gt;
+      &lt;label class=&quot;col-form-label col-sm-2&quot;&gt;&lt;/label&gt;
+      &lt;div class=&quot;col-sm-10&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Update&quot; class=&quot;btn btn-default btn-warning&quot; /&gt;
+        &lt;a class=&quot;btn btn-outline-dark cancel&quot; href=&quot;/books&quot;&gt;Cancel&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>The previous view uses the partial view &quot;_editor.ejs&quot; which contains the HTML code dedicated to the different input fields. This partial view will also be used a little further on to add a new record.</p>
+<pre><code class="language-erb">&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Title&quot;&gt;Title&lt;/label&gt;
+  &lt;div class=&quot;col-sm-8&quot;&gt;
+    &lt;input autofocus class=&quot;form-control&quot; name=&quot;Title&quot; value=&quot;&lt;%= model.title %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Author&quot;&gt;Author&lt;/label&gt;
+  &lt;div class=&quot;col-sm-7&quot;&gt;
+    &lt;input class=&quot;form-control&quot; name=&quot;Author&quot; value=&quot;&lt;%= model.author %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Comments&quot;&gt;Comments&lt;/label&gt;
+  &lt;div class=&quot;col-sm-10&quot;&gt;
+    &lt;textarea class=&quot;form-control&quot; cols=&quot;20&quot; name=&quot;Comments&quot; maxlength=&quot;32000&quot; rows=&quot;7&quot;&gt;&lt;%= model.comments %&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>The GET /edit/xxx route</h3>
+<p>You must then code a first route to display the book to be modified when responding to the GET /edit/xxx request (when the user has clicked on an [Edit] button in the book list).</p>
+<p>To do this, we define the URL to be managed in the form &quot;/edit/:id&quot; where&quot;:id&quot; corresponds to the identifier of the record to be updated. This identifier is retrieved via the <code>Request</code> object of the Express framework, in the list of its parameters: <code>req.params.id</code>.</p>
+<p>You can then make a &quot;SELECT...&quot; request to obtain the book corresponding to this identifier. This request is once again executed via the <code>pool.query()</code> method of node-postgres. In this case, we pass it as a parameter the identifier of the book to be displayed because we used a parameterized query (via the &quot;... = $1&quot;) to avoid SQL injection. When the query is completed, the callback function can in turn transmit the result to the view.</p>
+<pre><code class="language-javascript">// GET /edit/5
+app.get(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Books WHERE Book_ID = $1&quot;;
+  pool.query(sql, [id], (err, result) =&gt; {
+    // if (err) ...
+    res.render(&quot;edit&quot;, { model: result.rows[0] });
+  });
+});
+</code></pre>
+<p>After restarting the server, here is the input form that now appears when the user clicks an [Edit] button in the book list:</p>
+<p><img src="/public/2019/crud-pg-07-edit.png" alt="Book updating form"></p>
+<h3>The POST /edit/xxx route</h3>
+<p>And finally, all that remains is to code the route to save the changes made to the record, during the POST /edit/xxx request. The &quot;post&quot; occurs when the user validates his entry by clicking on the [Update] button on the input form.</p>
+<p>Here again, the identifier is found via the &quot;id&quot; parameter of the <code>Request</code> object. And the data entered are available via the <code>body</code> property of this <code>Request</code> object to be stored in a temporary array with the identifier.</p>
+<p><em>Note: In order for <code>Request.body</code> to retrieve the posted values, it is necessary to add a middleware to the server configuration. This point will be explained in more detail in the next section...</em></p>
+<p>The modification in the database is done via an &quot;UPDATE...&quot; query, again executed with the <code>pool.query</code> method of node-postgres to which we also pass this time an array containing the modified data and the identifier of the book to be updated.</p>
+<p>After executing the &quot;UPDATE...&quot; query with the <code>pool.query()</code> method of node-postgres, the callback function redirects the user to the book list using the <code>Response.redirect()</code> method from Express.</p>
+<pre><code class="language-javascript">// POST /edit/5
+app.post(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const book = [req.body.title, req.body.author, req.body.comments, id];
+  const sql = &quot;UPDATE Books SET Title = $1, Author = $2, Comments = $3 WHERE (Book_ID = $4)&quot;;
+  pool.query(sql, book, (err, result) =&gt; {
+    // if (err) ...
+    res.redirect(&quot;/books&quot;);
+  });
+});
+</code></pre>
+<p><em>Note: With a real application, it is essential to have a client-side and server-side input control, but this is not the subject of this tutorial.</em></p>
+<h3>The middleware &quot;express.urlencoded()&quot;</h3>
+<p>As mentioned in the previous section, it is necessary to use the middleware &quot;express.urlencoded()&quot; so that <code>Request.body</code> retrieves the posted values. This is simply done by an <code>app.use()</code> when configuring the server.</p>
+<pre><code class="language-javascript">// Server configuration
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(&quot;public&quot;));
+app.use(express.urlencoded({ extended: false })); // &lt;--- middleware configuration
+</code></pre>
+<p>This middleware allows you to retrieve the data sent as &quot;Content-Type: application/x-www-form-urlencoded&quot;, which is the standard for values posted from a form. For information, it is very often used with &quot;express.json()&quot; middleware for data sent as &quot;Content-Type: application/json&quot;, but here it is not necessary.</p>
+<p><em>Note: There are examples that still use the &quot;body-parser&quot; module instead, but this is no longer useful since version 4.1.6 of Express.</em></p>
+<p><a name="crud8"></a></p>
+<h2>8. Create a new row</h2>
+<h3>The &quot;views/create.ejs&quot; view</h3>
+<p>The main view for creating a new book is very similar to the coded view for updating a record. Like it, it uses the partial view &quot;_editor.ejs&quot; for the different input fields.</p>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Create a record&lt;/h1&gt;
+
+&lt;form action=&quot;/create&quot; method=&quot;post&quot;&gt;
+  &lt;div class=&quot;form-horizontal&quot;&gt;
+
+    &lt;%- include(&quot;_editor&quot;) -%&gt;
+
+    &lt;div class=&quot;form-group row&quot;&gt;
+      &lt;label class=&quot;col-form-label col-sm-2&quot;&gt;&lt;/label&gt;
+      &lt;div class=&quot;col-sm-10&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Save&quot; class=&quot;btn btn-default btn-success&quot; /&gt;
+        &lt;a class=&quot;btn btn-outline-dark cancel&quot; href=&quot;/books&quot;&gt;Cancel&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<h3>The GET /create route</h3>
+<p>Compared to edit, this function is much simpler. It just returns the &quot;create.ejs&quot; view by sending it an empty &quot;book&quot; object (because the partial view &quot;_editor.ejs&quot; expects such an object).</p>
+<pre><code class="language-javascript">// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  res.render(&quot;create&quot;, { model: {} });
+});
+</code></pre>
+<p>In the case of a table with more columns than the &quot;Books&quot; table , it would be possible to define default values by coding this method as follows:</p>
+<pre><code class="language-javascript">// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  const book = {
+    Author: &quot;Victor Hugo&quot;
+  }
+  res.render(&quot;create&quot;, { model: book });
+});
+</code></pre>
+<p>As can be seen below, the entry form for adding a new book is quite similar to the one for updating a record. This is one of the advantages of the partial view &quot;_editor.ejs&quot;.</p>
+<p><img src="/public/2019/crud-pg-08-create.png" alt="Book creation form"></p>
+<h3>The POST /create route</h3>
+<p>When the user clicks on the [Save] button to validate their input, the browser sends a &quot;post&quot; request to this route. The method associated with it is very similar to the one used to modify a book:</p>
+<ul>
+<li>It retrieves the data entered via the <code>body</code> property of the <code>Request</code> object from the Express framework.</li>
+<li>The <code>pool.query()</code> method of node-postgres is used to execute an &quot;INSERT INTO ...&quot; query.</li>
+<li>The callback function redirects the user to the book list.</li>
+</ul>
+<pre><code class="language-javascript">// POST /create
+app.post(&quot;/create&quot;, (req, res) =&gt; {
+  const sql = &quot;INSERT INTO Books (Title, Author, Comments) VALUES ($1, $2, $3)&quot;;
+  const book = [req.body.title, req.body.author, req.body.comments];
+  pool.query(sql, book, (err, result) =&gt; {
+    // if (err) ...
+    res.redirect(&quot;/books&quot;);
+  });
+});
+</code></pre>
+<p><a name="crud9"></a></p>
+<h2>9. Delete a row</h2>
+<h3>The &quot;views/delete.ejs&quot; and &quot;views/_display.ejs&quot; views</h3>
+<p>The main view to be able to delete a record must first display the information of the selected book to allow the user to confirm its deletion in full knowledge. It therefore looks a lot like the &quot;edit.ejs&quot; and &quot;create.ejs&quot; views.</p>
+<pre><code class="language-erb">&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Delete a record?&lt;/h1&gt;
+
+&lt;form action=&quot;/delete/&lt;%= model.book_id %&gt;&quot; method=&quot;post&quot;&gt;
+  &lt;div class=&quot;form-horizontal&quot;&gt;
+
+    &lt;%- include(&quot;_display&quot;) -%&gt;
+
+    &lt;div class=&quot;form-group row&quot;&gt;
+      &lt;label class=&quot;col-form-label col-sm-2&quot;&gt;&lt;/label&gt;
+      &lt;div class=&quot;col-sm-10&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Delete&quot; class=&quot;btn btn-default btn-danger&quot; /&gt;
+        &lt;a class=&quot;btn btn-outline-dark cancel&quot; href=&quot;/books&quot;&gt;Cancel&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>This view uses the partial view &quot;_display.ejs&quot; which contains the HTML code to display the different information of a book. Technically, this code is almost identical to the one in the &quot;_editor.ejs&quot; view, except that the input fields are &quot;readonly&quot;.</p>
+<pre><code class="language-erb">&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Title&quot;&gt;Title&lt;/label&gt;
+  &lt;div class=&quot;col-sm-8&quot;&gt;
+    &lt;input readonly class=&quot;form-control&quot; id=&quot;Title&quot; value=&quot;&lt;%= model.title %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Author&quot;&gt;Author&lt;/label&gt;
+  &lt;div class=&quot;col-sm-7&quot;&gt;
+    &lt;input readonly class=&quot;form-control&quot; id=&quot;Author&quot; value=&quot;&lt;%= model.author %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Comments&quot;&gt;Comments&lt;/label&gt;
+  &lt;div class=&quot;col-sm-10&quot;&gt;
+    &lt;textarea readonly class=&quot;form-control&quot; cols=&quot;20&quot; id=&quot;Comments&quot; maxlength=&quot;32000&quot; rows=&quot;7&quot;&gt;&lt;%= model.comments %&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>If the &quot;Books&quot; table contained more columns than can be displayed in the book list, this &quot;_display.ejs&quot; view could also be used as part of a route and a &quot;details&quot; view that would be used to display the entire record.</p>
+<h3>The GET /delete/xxx route</h3>
+<p>It is the same code as the GET /edit/xxx method, except that it returns the &quot;delete.ejs&quot; view rather than the &quot;edit.ejs&quot; view.</p>
+<pre><code class="language-javascript">// GET /delete/5
+app.get(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Books WHERE Book_ID = $1&quot;;
+  pool.query(sql, [id], (err, result) =&gt; {
+    // if (err) ...
+    res.render(&quot;delete&quot;, { model: result.rows[0] });
+  });
+});
+</code></pre>
+<p>The user interface is quite similar to the usual input form. Ironically enough, the three input fields are in fact not selectable (and therefore grayed out according to Bootstrap conventions):</p>
+<p><img src="/public/2019/crud-pg-09-delete.png" alt="Book delete form"></p>
+<h3>The POST /delete/xxx route</h3>
+<p>This simple function responds to the &quot;post&quot; request sent by the browser after clicking on the [Delete] button to confirm the deletion of the book. Its code looks a lot like what has already been seen so far:</p>
+<ul>
+<li>It finds the identifier of the book to be deleted via <code>req.params.id</code>.</li>
+<li>The <code>pool.query()</code> method of node-postgres executes a &quot;DELETE ...&quot; query for this identifier.</li>
+<li>The callback function redirects the user to the book list.</li>
+</ul>
+<pre><code class="language-javascript">// POST /delete/5
+app.post(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;DELETE FROM Books WHERE Book_ID = $1&quot;;
+  pool.query(sql, [id], (err, result) =&gt; {
+    // if (err) ...
+    res.redirect(&quot;/books&quot;);
+  });
+});
+</code></pre>
+<p><a name="crud10"></a></p>
+<h2>10. Conclusion</h2>
+<p>Personally, this tutorial allowed me to progress pretty well. I wrote a second web application to update a SQL database with Node JS that looks like what I can do with Sinatra for little things. It gave me a good overview of everything that is necessary and to see that in the end it is not very far from what I'm used to do with ASP.NET MVC or Sinatra.</p>
+<p>More generally, for the Node JS side, this tutorial gave the opportunity to review a little the use of NPM and its impact on the &quot;package.json&quot; file.</p>
+<ul>
+<li>npm init and npm init -y to initialize a project</li>
+<li>npm install... (without --save) to install modules</li>
+<li>npm start to launch the project</li>
+</ul>
+<p>Even if this tutorial has only scratched the surface of what the Express framework offers, the developed application is a good start to learn some of the methods offered by Express. In the end, this is enough to successfully organize a basic application like I did with Sinatra.</p>
+<ul>
+<li>app.set(...) and app.use(...) to configure the server and middleware</li>
+<li>app.listen(port, callback) to start the server</li>
+<li>app.get(url, callback) to respond to GET requests</li>
+<li>app.post(url, callback) for POST from the input forms</li>
+<li>req.params.* to retrieve the named parameters from the URL (the route)</li>
+<li>req.body.* to access the data posted by the input form</li>
+</ul>
+<p>Regarding the views, some of the basic features have been reviewed.</p>
+<ul>
+<li>res.send(&quot;text&quot;) to return a text</li>
+<li>res.render(view_name, model) to return a view</li>
+<li>res.redirect(url) to redirect the user</li>
+<li>use of partial views to simplify work</li>
+<li>and EJS looks a lot like ASP or Sinatra's ERB views</li>
+</ul>
+<p>On the database side, the program showed how to manage a PostgreSQL database and that it's not more complicated than with SQlite (at least when you know SQL). Again, the code seems quite specific to the node-postgres module and I have to see how to do with other databases. Ideally, it should exist something like ADO.NET (or ODBC at least) before moving to a real ORM.</p>
+<ul>
+<li>new Pool() to connect to the database</li>
+<li>pool.query(sql, [params], callback) to execute all types of queries (data management, SELECT returning several lines, SELECT by ID...)</li>
+</ul>
+<p>As for JavaScript itself, this application has had the advantage of practicing some of the &quot;new features&quot; of the language.</p>
+<ul>
+<li>use arrows functions for callbacks</li>
+<li>declare constants whenever possible (i.e. always in the developed program)</li>
+<li>use loops for.... of simpler than classic loops for (let i = 0; i &lt; list.length; i++)</li>
+</ul>
+<p><a id="annexe"></a></p>
+<h2>Appendix - The complete code for &quot;index.js&quot;</h2>
+<p>This is not to extend the post, but for those like me who like to have an overview of a program. And as much to highlight a few numbers:</p>
+<ul>
+<li>156 lines of code</li>
+<li>3 NPM dependencies (ejs, express and pg)</li>
+<li>3 imported modules (express, path and pg)</li>
+</ul>
+<p><em>Note: The complete code of the application is also available on <a href="https://github.com/michelc/AppTestPG">GitHub</a> (french version).</em></p>
+<pre><code class="language-javascript">const express = require(&quot;express&quot;);
+const path = require(&quot;path&quot;);
+const { Pool } = require(&quot;pg&quot;);
+
+// Creating the Express server
+const app = express();
+
+// Server configuration
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+app.use(express.urlencoded({ extended: false }));
+
+// Connection to the PostgreSQL database
+const pool = new Pool({
+  user: &quot;mystery&quot;,
+  host: &quot;xxxxx.elephantsql.com&quot;,
+  database: &quot;mystery&quot;,
+  password: &quot;asecretthingthatnoonehastosee&quot;,
+  port: 5432
+});
+console.log(&quot;Successful connection to the database&quot;);
+
+// Creating the Books table (Book_ID, Title, Author, Comments)
+const sql_create = `CREATE TABLE IF NOT EXISTS Books (
+  Book_ID SERIAL PRIMARY KEY,
+  Title VARCHAR(100) NOT NULL,
+  Author VARCHAR(100) NOT NULL,
+  Comments TEXT
+);`;
+db.run(sql_create, err =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Successful creation of the 'Books' table&quot;);
+  // Database seeding
+  const sql_insert = `INSERT INTO Books (Book_ID, Title, Author, Comments) VALUES
+    (1, 'Mrs. Bridge', 'Evan S. Connell', 'First in the serie'),
+    (2, 'Mr. Bridge', 'Evan S. Connell', 'Second in the serie'),
+    (3, 'L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne');
+  ON CONFLICT DO NOTHING;`;
+  pool.query(sql_insert, [], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    const sql_sequence = &quot;SELECT SETVAL('Books_Book_ID_Seq', MAX(Book_ID)) FROM Books;&quot;;
+    pool.query(sql_sequence, [], (err, result) =&gt; {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(&quot;Successful creation of 3 books&quot;);
+    });
+  });
+});
+
+// Starting the server
+app.listen(3000, () =&gt; {
+  console.log(&quot;Server started (http://localhost:3000/) !&quot;);
+});
+
+// GET /
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  // res.send(&quot;Hello world...&quot;);
+  res.render(&quot;index&quot;);
+});
+
+// GET /about
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+
+// GET /data
+app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    titre: &quot;Test&quot;,
+    items: [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+
+// GET /books
+app.get(&quot;/books&quot;, (req, res) =&gt; {
+  const sql = &quot;SELECT * FROM Books ORDER BY Title&quot;;
+  pool.query(sql, [], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;books&quot;, { model: result.rows });
+  });
+});
+
+// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  res.render(&quot;create&quot;, { model: {} });
+});
+
+// POST /create
+app.post(&quot;/create&quot;, (req, res) =&gt; {
+  const sql = &quot;INSERT INTO Books (Title, Author, Comments) VALUES ($1, $2, $3)&quot;;
+  const book = [req.body.title, req.body.author, req.body.comments];
+  pool.query(sql, book, (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/books&quot;);
+  });
+});
+
+// GET /edit/5
+app.get(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Books WHERE Book_ID = $1&quot;;
+  pool.query(sql, [id], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;edit&quot;, { model: result.rows[0] });
+  });
+});
+
+// POST /edit/5
+app.post(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const book = [req.body.title, req.body.author, req.body.comments, id];
+  const sql = &quot;UPDATE Books SET Title = $1, Author = $2, Comments = $3 WHERE (Book_ID = $4)&quot;;
+  pool.query(sql, book, (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/books&quot;);
+  });
+});
+
+// GET /delete/5
+app.get(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Books WHERE Book_ID = $1&quot;;
+  pool.query(sql, [id], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;delete&quot;, { model: result.rows[0] });
+  });
+});
+
+// POST /delete/5
+app.post(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;DELETE FROM Books WHERE Book_ID = $1&quot;;
+  pool.query(sql, [id], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/books&quot;);
+  });
+});
+</code></pre>
+<div class="encart">
+<p>Version en français : <a href="/2019/09/21/crud-avec-express-postgresql-10-etapes/" hreflang="fr-FR">Application CRUD avec Express et PostgreSQL en 10 étapes</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/10/08/crud-with-express-sqlite-10-steps/" hreflang="en-US">CRUD application with Express and SQlite in 10 steps</a>
+  <a rel="next" href="/2019/10/21/utiliser-sqlite-node-async-await/" hreflang="fr-FR">Utiliser SQlite3 en mode async / await</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

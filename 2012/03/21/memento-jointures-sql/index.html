@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mémento des jointures en SQL - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/03/21/memento-jointures-sql/" />
+<meta property="og:title" content="Mémento des jointures en SQL" />
+<meta name="description" content="J&#39;essaie encore une fois de comprendre comment faire des jointures SQL sans passer par un bête «WHERE Table1.Foreign_ID = Table2.ID»..." />
+<meta property="og:description" content="J&#39;essaie encore une fois de comprendre comment faire des jointures SQL sans passer par un bête «WHERE Table1.Foreign_ID = Table2.ID»..." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/03/21/memento-jointures-sql/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/sql-join.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2012-03-21T17:57:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-03-21T17:57:00.000Z","datePublished":"2012-03-21T17:57:00.000Z","description":"J'essaie encore une fois de comprendre comment faire des jointures SQL sans passer par un bête «WHERE Table1.Foreign_ID = Table2.ID»...","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/03/21/memento-jointures-sql/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/sql-join.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/03/21/memento-jointures-sql/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/sql-join.jpg" alt="Say NO to Venn Diagrams When Explaining JOINs" /><figcaption><a href="https://blog.jooq.org/2016/07/05/say-no-to-venn-diagrams-when-explaining-joins/">Say NO to Venn Diagrams When Explaining JOINs</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2012/03/21/memento-jointures-sql/">Mémento des jointures en SQL</a>
+    </h1>
+    <p>
+      <span>2012-03-21</span>
+      <span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Dernièrement, j'ai eu besoin de faire une comparaison assez compliquée entre deux tables, pour faire ressortir toutes les <s>anomalies</s> différences entre les deux, y compris les données qui n'apparaissent que dans une des deux tables. Étant donné mon niveau en jointures, impossible de me souvenir comment faire de mémoire.</p>
+<p>Heureusement, un passage par la page <a href="https://en.wikipedia.org/wiki/Join_(SQL)">Join (SQL)</a> sur Wikipedia m'a fait (re?)découvrir les FULL OUTER JOIN, ce que j'ai complété par le billet <a href="http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html">A Visual Explanation of SQL Joins</a> de Jeff Atwood.</p>
+<p>J'ai donc profité de cette occasion pour réviser les différents types de jointures, faire le point sur les deux types de syntaxes possibles (explicite et implicite) et aussi découvrir quelques trucs que je ne connaissais absolument pas :</p>
+<ul>
+<li>le natural join : convention over configuration</li>
+<li>le cross join : je ne savais pas qu'il existait un mot clé dédié pour faire ça de son plein gré</li>
+</ul>
+<h2>Création de 2 tables pour les essais (sous Oracle)</h2>
+<h3>1° table</h3>
+<pre><code>CREATE TABLE Table1 AS
+SELECT 1 AS ID, 'Un' AS Libelle FROM DUAL
+UNION
+SELECT 2 AS ID, 'Deux' AS Libelle FROM DUAL
+UNION
+SELECT 3 AS ID, 'Trois' AS Libelle FROM DUAL
+
+SELECT * FROM Table1
+=&gt;
+ID  Libelle
+--  -------
+1   Un
+2   Deux
+3   Trois
+</code></pre>
+<h3>2° table</h3>
+<pre><code>CREATE TABLE Table2 AS
+SELECT 1 AS ID, 'One' AS Caption FROM DUAL
+UNION
+SELECT 2 AS ID, 'Two' AS Caption FROM DUAL
+UNION
+SELECT 4 AS ID, 'Four' AS Caption FROM DUAL
+
+SELECT * FROM Table2
+=&gt;
+id  caption
+--  -------
+1   One
+2   Two
+4   Four
+</code></pre>
+<h2>INNER JOIN</h2>
+<p>On ne prend que ce qui existe des 2 côtés.</p>
+<h3>Syntaxe explicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1
+INNER JOIN Table2 T2 ON T1.ID = T2.ID
+</code></pre>
+<h3>Syntaxe implicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1,
+       Table2 T2
+WHERE  T2.ID = T1.ID
+</code></pre>
+<h3>Syntaxe &quot;naturelle&quot;</h3>
+<pre><code>SELECT ID, T1.Libelle, T2.Caption
+FROM   Table1 T1
+NATURAL JOIN Table2 T2
+</code></pre>
+<h3>Résultat</h3>
+<pre><code>ID  Libelle  Caption
+--  -------  -------
+1   Un       One
+2   Deux     Two
+</code></pre>
+<h2>CROSS JOIN</h2>
+<p>On prend tout des 2 côtés sans faire de correspondance &lt;=&gt; produit cartésien.</p>
+<h3>Syntaxe explicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1
+CROSS JOIN Table2 T2
+</code></pre>
+<h3>Syntaxe implicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1,
+       Table2 T2
+</code></pre>
+<h3>Résultat</h3>
+<pre><code>ID  Libelle  Caption
+--  -------  -------
+1   Un       One
+1   Un       Two
+1   Un       Four
+2   Deux     One
+2   Deux     Two
+2   Deux     Four
+3   Trois    One
+3   Trois    Two
+3   Trois    Four
+</code></pre>
+<h2>LEFT OUTER JOIN</h2>
+<p>On prend tout ce qui est à gauche (ie la 1° table) et l'autre suit.</p>
+<h3>Syntaxe explicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1
+LEFT OUTER JOIN Table2 T2 ON T1.ID = T2.ID
+</code></pre>
+<h3>Syntaxe implicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1,
+       Table2 T2
+WHERE  T2.ID(+) = T1.ID
+</code></pre>
+<h3>Résultat</h3>
+<pre><code>ID  Libelle  Caption
+--  -------  -------
+1   Un       One
+2   Deux     Two
+3   Trois
+</code></pre>
+<h2>RIGHT OUTER JOIN</h2>
+<p>On prend tout ce qui est à droite (ie la 2° table) et l'autre suit.</p>
+<h3>Syntaxe explicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1
+RIGHT OUTER JOIN Table2 T2 ON T1.ID = T2.ID
+</code></pre>
+<h3>Syntaxe implicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1,
+       Table2 T2
+WHERE  T2.ID = T1.ID(+)
+</code></pre>
+<h3>Résultat</h3>
+<pre><code>ID  Libelle  Caption
+--  -------  -------
+1   Un       One
+2   Deux     Two
+             Four
+</code></pre>
+<h2>FULL OUTER JOIN</h2>
+<p>On prend ce qui existe des 2 côtés.</p>
+<h3>Syntaxe explicite</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1
+FULL OUTER JOIN Table2 T2 ON T1.ID = T2.ID
+</code></pre>
+<h3>Syntaxe implicite (ou comment faire sans)</h3>
+<pre><code>SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1,
+       Table2 T2
+WHERE  T2.ID(+) = T1.ID
+UNION
+SELECT T1.ID, T1.Libelle, T2.Caption
+FROM   Table1 T1,
+       Table2 T2
+WHERE  T2.ID = T1.ID(+)
+</code></pre>
+<h3>Résultat</h3>
+<pre><code>ID  Libelle  Caption
+--  -------  -------
+1   Un       One
+2   Deux     Two
+             Four
+3   Trois
+</code></pre>
+<h3>Version améliorée pour avoir l'ID</h3>
+<pre><code>SELECT NVL(T1.ID, T2.ID) AS ID, T1.Libelle, T2.Caption
+FROM   Table1 T1
+FULL OUTER JOIN Table2 T2 ON T1.ID = T2.ID
+
+=&gt;
+
+ID  Libelle  Caption
+--  -------  -------
+1   Un       One
+2   Deux     Two
+4            Four
+3   Trois
+</code></pre>
+<div class="encart">
+<p>English version: <a href="/2020/01/21/sql-join-memento/" hreflang="en-US">SQL Join Memento</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/03/08/optimiser-insert-multiples-oracle/" hreflang="fr-FR">Optimiser les INSERT multiples (dans Oracle)</a>
+  <a rel="next" href="/2012/03/22/gem-hell/" hreflang="fr-FR">GEM Hell</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

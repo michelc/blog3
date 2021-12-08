@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer un template simple avec sidebar + contenu - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/05/19/creer-template-sidebar-contenu/" />
+<meta property="og:title" content="Créer un template simple avec sidebar + contenu" />
+<meta name="description" content="Pour un nouveau site, je cherche comment créer un template basique avec seulement une &quot;sidebar&quot; latérale et tout le reste pour le contenu." />
+<meta property="og:description" content="Pour un nouveau site, je cherche comment créer un template basique avec seulement une &quot;sidebar&quot; latérale et tout le reste pour le contenu." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/05/19/creer-template-sidebar-contenu/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/first-plan.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-05-19T17:42:12.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-05-19T17:42:12.000Z","datePublished":"2020-05-19T17:42:12.000Z","description":"Pour un nouveau site, je cherche comment créer un template basique avec seulement une \"sidebar\" latérale et tout le reste pour le contenu.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2020/05/19/creer-template-sidebar-contenu/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/first-plan.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/05/19/creer-template-sidebar-contenu/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/first-plan.jpg" alt="Photo de Karol Dach" /><figcaption><a href="https://www.pexels.com/fr-fr/photo/a-l-interieur-architecte-architecture-art-323645/">Photo de Karol Dach</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/05/19/creer-template-sidebar-contenu/">Créer un template simple avec sidebar + contenu</a>
+    </h1>
+    <p>
+      <span>2020-05-19</span>
+      <span>#css</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je fais quelques essais sur une application de gestion et plutôt que d'avoir une barre de navigation &quot;compliquée&quot; en haut de l'écran, j'aimerai tester ce que donnerait un template basique avec seulement 2 colonnes :</p>
+<ul>
+<li>Une barre latérale pour la navigation,</li>
+<li>Une zone principale pour tout le contenu du site.</li>
+</ul>
+<p>J'ai trouvé pas mal d'exemples et même des modèles de pages tout faits pour arriver à ce résultat, mais ils font généralement beaucoup plus que ce dont j'ai besoin, et surtout, j'aimerai arriver à comprendre comme cela fonctionne.</p>
+<p>Pour me simplifier la vie, je vais faire ça avec Bootstrap 4, en m'inspirant grandement de ce que j'ai pu voir dans différents tutoriels et templates qui existent. Le premier truc à faire, c'est d'avoir deux blocs <code>div</code> :</p>
+<ul>
+<li>&quot;#sidebar&quot; pour la barre latérale de navigation,</li>
+<li>&quot;#content&quot; pour la zone de contenu général.</li>
+</ul>
+<p>Pour que ces 2 blocs se tiennent côte à côte, il faut les englober dans un autre bloc <code>div</code>, le &quot;#wrapper&quot; :</p>
+<pre><code>&lt;div id=&quot;wrapper&quot;&gt;
+    &lt;nav id=&quot;sidebar&quot;&gt;
+        ...
+    &lt;/nav&gt;
+    &lt;div id=&quot;content&quot;&gt;
+        ...
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Puis le plus simple pour arriver à nos fins, c'est d'utiliser le modèle de boite &quot;flexible&quot; :</p>
+<pre><code>#wrapper {
+    display: flex;
+    width: 100%;
+}
+</code></pre>
+<p>Il ne reste alors qu'à dimensionner nos 2 zones (avec un peu de rose pour mieux voir ce qui se passe) :</p>
+<pre><code>#sidebar {
+    background-color: pink; /* debug */
+    width: 299px;
+}
+
+#content {
+    width: calc(100% - 299px);
+}
+</code></pre>
+<p>Ce qui donne quelque chose de pas encore fini mais qui fait ce que je souhaite :</p>
+<p><img src="/public/2020/clic1-a.png" alt=""></p>
+<p>Une première amélioration pour que la &quot;sidebar&quot; utilise toute la hauteur :</p>
+<pre><code>#sidebar {
+    min-height: 100vh;
+}
+</code></pre>
+<p>C'est mieux. Je peux alors tester ce qui se passe en cas de défilement en ajoutant à la fin de &quot;content&quot; :</p>
+<pre><code>&lt;p class=&quot;scroll&quot;&gt;...&lt;/p&gt;
+&lt;p&gt;La fin.&lt;/p&gt;
+</code></pre>
+<p>Avec le CSS qui va bien :</p>
+<pre><code>.scroll {
+    margin-bottom: 50rem;
+}
+</code></pre>
+<p>Ça marche, mais la &quot;sidebar&quot; défile avec le reste de la page. Je ne suis pas sûr que ça me dérange tant que ça. Mais supposons que je veuille que le bloc de navigation reste fixe, alors il faut l'empêcher de se défiler avec le reste de la page :</p>
+<pre><code>#sidebar {
+    position: fixed;
+}
+</code></pre>
+<p>OK. La &quot;sidebar&quot; ne bouge plus. Par contre, y'a le &quot;content&quot; qui passe dessous et vient s'ancrer sur le côté gauche de l'écran...</p>
+<p><img src="/public/2020/clic1-b.png" alt=""></p>
+<p>Il faut que je trouve un truc pour le coincer à gauche de la &quot;sidebar&quot;, ou plutôt à droite de l'écran :</p>
+<pre><code>#content {
+    position: absolute;
+    right: 0;
+}
+</code></pre>
+<p>C'est beaucoup mieux :</p>
+<p><img src="/public/2020/clic1-c.png" alt=""></p>
+<p>Je peux maintenant m'attaquer au côté esthétique de la chose.</p>
+<p>Pour commencer, faire en sorte que le contenu soit moins tassé :</p>
+<pre><code>#content {
+    padding: 15px 30px 30px 30px;
+}
+h1 {
+    margin-bottom: 30px;
+}
+</code></pre>
+<p>Puis rendre les liens de navigation entièrement cliquables, avec un petit effet au survol :</p>
+<pre><code>#sidebar a {
+    display: block;
+    padding: 30px;
+    text-decoration: none;
+}
+#sidebar .sidebar-menu a {
+    padding: 10px 30px;
+}
+#sidebar a:hover {
+    background-color: hotpink;
+}
+
+</code></pre>
+<p>Et ben c'est pas mal du tout pour un début :</p>
+<p><img src="/public/2020/clic1-d.png" alt=""></p>
+<p>C'est exactement ce que je voudrais et en plus, c'est moi qui l'ai fait ! Bon, en vrai, je voulais aussi pouvoir masquer la &quot;sidebar&quot;...</p>
+<div class="encart">
+<p>English version: <a href="/2020/05/20/create-template-sidebar-content/" hreflang="en-US">Create a basic template with sidebar + content</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/03/10/coquette-450-icons/" hreflang="en-US">Coquette: 450 icons live from 2009</a>
+  <a rel="next" href="/2020/05/20/create-template-sidebar-content/" hreflang="en-US">Create a basic template with sidebar + content</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

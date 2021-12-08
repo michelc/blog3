@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Three more boxes - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/11/24/wdevs-three-more-boxes/" />
+<meta property="og:title" content="(Wdevs) Three more boxes" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/11/24/wdevs-three-more-boxes/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-11-24T06:47:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-11-24T06:47:00.000Z","datePublished":"2004-11-24T06:47:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/11/24/wdevs-three-more-boxes/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/11/24/wdevs-three-more-boxes/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/11/24/wdevs-three-more-boxes/">(Wdevs) Three more boxes</a>
+    </h1>
+    <p>
+      <span>2004-11-24</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>The Documents box has nothing special. It uses the same DataGrid method than
+the Contacts box (including the override method). This box will be more
+interesting when I'll work on back-office part and have to store files in a
+MySQL database. Amazingly, <code>DataFormatString=&quot;{0:d}&quot;</code> don't work with the MySQL
+table but is ok with the Access one. I'll see this later...</p>
+<p>For my Announcements box, I choose to group two modules from IBuySpy:
+announcements and events.</p>
+<pre><code>CREATE TABLE qc_Announcements (
+    idAnnouncement INT AUTO_INCREMENT NOT NULL,
+    idBox VARCHAR(20) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    summary VARCHAR(255) NOT NULL,
+    content VARCHAR(2000) NOT NULL,
+    link VARCHAR(255) NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    published DATETIME,
+    expired DATETIME,
+    CONSTRAINT PK_qc_Announcements PRIMARY KEY (idAnnouncement)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre>
+<p>The &quot;summary&quot; field can be use as a subtitle or for location, like the
+&quot;WhereWhen&quot; field in the Events table for IBuySpy.</p>
+<p>Concerning the presentation layer, I don't use a DataGrid as announcements
+or events are more successive information block than tabular data. So I render
+each record in a div structure:</p>
+<pre><code>&lt;div class=&quot;entry&quot;&gt;
+  &lt;h4&gt; ... title ... &lt;/h4&gt;
+  &lt;p class=&quot;summary&quot;&gt; ... summary ... &lt;/p&gt;
+  &lt;div class=&quot;content&quot;&gt; ... content ... &lt;/p&gt;
+  &lt;p class=&quot;link&quot;&gt; ... link ... &lt;/p&gt;
+  &lt;p class=&quot;foot&quot;&gt;
+    &lt;span class=&quot;published&quot;&gt; ... published ... &lt;/span&gt;
+    &lt;span class=&quot;author&quot;&gt; ... author ... &lt;/span&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>With the CSS part, I can position each field as I want: the &quot;read more&quot; link
+can appear after the publishing date and the author name.</p>
+<p>My third box is the classic Xml/Xsl module from IBuySpy. For that, I have to
+create a qc_BoxSettings table to handle general settings of the boxes, like the
+ModuleSettings table does in IBuySpy.</p>
+<pre><code>CREATE TABLE qc_BoxSettings (
+    idBox VARCHAR(20) NOT NULL,
+    itemKey VARCHAR(50) NOT NULL,
+    itemValue VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre>
+<p>Then I use this table to store paths to the xml and xsl files. And a
+BoxSettings class to handle this new table and retrieve the two properties.</p>
+<pre><code>private void Page_Load(object sender, System.EventArgs e) {
+  string srcXml = this.box.boxSettings[&quot;srcXml&quot;];
+  if (srcXml != &quot;&quot;) {
+    if (File.Exists(Server.MapPath(srcXml)) == true) {
+      boxXml.DocumentSource = srcXml;
+      string srcXslt = this.box.boxSettings[&quot;srcXslt&quot;];
+      if (srcXslt != &quot;&quot;) {
+        boxXml.TransformSource = srcXslt;
+      }
+    } else {
+      srcXml = &quot;&quot;;
+    }
+  }
+}
+</code></pre>
+<p>In the future, may be I will update the Image box to use the qc_BoxSettings
+table like in IBuySpy, rather than a specific qc_Images table.</p>
+<p>Unfortunately, I don't know exactly what I did, but my dll doesntt function
+any more on <a href="http://web.archive.org/web/20041215050806/http://www.monoforge.com/">monoForge</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/11/22/wdevs-datagrid-contacts-box/" hreflang="en-US">(Wdevs) A DataGrid for my Contacts box</a>
+  <a rel="next" href="/2004/11/29/wdevs-ouf/" hreflang="en-US">(Wdevs) Ouf!</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

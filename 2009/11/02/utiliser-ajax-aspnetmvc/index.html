@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser Ajax avec ASP.NET MVC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/11/02/utiliser-ajax-aspnetmvc/" />
+<meta property="og:title" content="Utiliser Ajax avec ASP.NET MVC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/11/02/utiliser-ajax-aspnetmvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-11-02T16:31:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-11-02T16:31:00.000Z","datePublished":"2009-11-02T16:31:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/11/02/utiliser-ajax-aspnetmvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/11/02/utiliser-ajax-aspnetmvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/11/02/utiliser-ajax-aspnetmvc/">Utiliser Ajax avec ASP.NET MVC</a>
+    </h1>
+    <p>
+      <span>2009-11-02</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>C'est la dernière ligne droite : plus que 14 pages de tutoriel à avaler
+et je pourrai cocher la case &quot;Finir le tutoriel de Gestion de Contacts&quot; de ma
+totolist. Pour cette 7° partie, il va s'agir d'<a href="http://msdn.microsoft.com/fr-fr/asp.net/dd823279.aspx">ajouter
+le support d'Ajax à notre gestion de contacts en ASP.NET MVC</a>, dans le but
+d'améliorer ses performances et son ergonomie (en quelque sorte donner
+l'impression à l'utilisateur qu'il est en train d'utiliser une application
+Windows).</p>
+<p>Les deux premières pages passent comme une lettre à la poste : pourquoi
+utiliser Ajax, ce qu'on va faire avec, Ajax c'est gentil... Il faut juste faire
+attention à la version du jQuery disponible dans le dossier Scripts.</p>
+<h2>Utilisation d'une vue partielle avec Ajax</h2>
+<p>Puis on s'attaque au vif du sujet pour modifier la vue Index des contacts,
+afin déviter de recharger toute la page juste quand on change de groupe de
+contacts.</p>
+<p>Pour commencer, on utilise une vue partielle qui sera chargé d'afficher la
+table html contenant les contacts rattachés au groupe sélectionné.
+Concrètement, on fait un contrôle utilisateur .ASCX dans lequel on déporte tout
+le code générant la <code>&lt;table&gt;</code> qui existe actuellement dans la
+vue Index.aspx</p>
+<p>Ce qui nous donne le fichier Views\Contact\ContactList.ascx
+suivant :</p>
+<pre><code>&lt;%@ Control Language=&quot;C#&quot; Inherits=&quot;System.Web.Mvc.ViewUserControl&lt;ContactManager.Models.Group&gt;&quot; %&gt;
+&lt;%@ Import Namespace=&quot;Helpers&quot; %&gt;
+&lt;table class=&quot;data-table&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th class=&quot;actions edit&quot;&gt;
+                Edit
+            &lt;/th&gt;
+            &lt;th class=&quot;actions delete&quot;&gt;
+                Delete
+            &lt;/th&gt;
+            &lt;th&gt;
+                Name
+            &lt;/th&gt;
+            &lt;th&gt;
+                Phone
+            &lt;/th&gt;
+            &lt;th&gt;
+                Email
+            &lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;% foreach (var item in Model.Contacts)
+           { %&gt;
+        &lt;tr&gt;
+            &lt;td class=&quot;actions edit&quot;&gt;
+                &lt;a href='&lt;%= Url.Action(&quot;Edit&quot;, new {id=item.Id}) %&gt;'&gt;&lt;img src=&quot;../../Content/Edit.png&quot; alt=&quot;Edit&quot; /&gt;&lt;/a&gt;
+            &lt;/td&gt;
+            &lt;td class=&quot;actions delete&quot;&gt;
+                &lt;a href='&lt;%= Url.Action(&quot;Delete&quot;, new {id=item.Id}) %&gt;'&gt;&lt;img src=&quot;../../Content/Delete.png&quot; alt=&quot;Delete&quot; /&gt;&lt;/a&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.FirstName) %&gt; &lt;%= Html.Encode(item.LastName) %&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.Phone) %&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.Email) %&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;% } %&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<p>Et on remplace ce code par une simple ligne :</p>
+<pre><code>&lt;% Html.RenderPartial(&quot;ContactList&quot;, Model.SelectedGroup); %&gt;
+</code></pre>
+<p>Ce qui fait que notre fichier Contact\Index.aspx ne contient plus que le
+code ci-dessous :</p>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;ContactManager.Models.ViewData.IndexModel&gt;&quot; %&gt;
+&lt;%@ Import Namespace=&quot;Helpers&quot; %&gt;
+
+&lt;asp:Content ID=&quot;Content1&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+        Index
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Content2&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+
+    &lt;ul id=&quot;leftColumn&quot;&gt;
+    &lt;% foreach (var item in Model.Groups) { %&gt;
+        &lt;li&lt;%= Html.Selected(item.Id, Model.SelectedGroup.Id) %&gt;&gt;
+            &lt;%= Html.ActionLink(item.Name, &quot;Index&quot;, new { id = item.Id }) %&gt;
+        &lt;/li&gt;
+    &lt;% } %&gt;
+    &lt;/ul&gt;
+
+    &lt;div id=&quot;divContactList&quot;&gt;
+        &lt;% Html.RenderPartial(&quot;ContactList&quot;, Model.SelectedGroup); %&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Perso, je ne vais même pas plus loin et je lance le tout pour vérifier que
+tout fonctionne correctement. Il me faut quand même supprimer
+ContactList.ascx.cs mais au final ça marche sans problème.</p>
+<p>Donc, même sans faire d'Ajax, cette vue partielle permet de simplifier le
+code dans le cas de vues un peu compliquées, en évitant de tout faire au même
+endroit...</p>
+<p>Ensuite, si on veut vraiment faire de l'Ajax, il faut faire en sorte que
+quand on clique sur un des groupes dans la 1° colonne, au lieu de redemander
+l'action Index avec un autre <code>groupId</code>, on fasse seulement un appel
+à une fonction Ajax pour ne récupérer que le résultat de cette vue partielle
+avec les contacts correspondant au groupId sélectionné.</p>
+<p>Pour cela, on remplace la méthode Html.ActionLink() par une méthode
+Ajax.ActionLink()</p>
+<pre><code>&lt;%= Ajax.ActionLink(item.Name, &quot;Index&quot;, new { id = item.Id }, new AjaxOptions { UpdateTargetId = &quot;divContactList&quot;})%&gt;
+</code></pre>
+<p>Ce coup-ci, je ne me fais pas avoir et je vérifie directement pour voir s'il
+s'agit d'un Html Helper standard de ASP.NET MVC ou s'il a été fait à la main
+pour le tutoriel. Rien de nouveau dans le dossier Helpers =&gt; c'est du
+standard.</p>
+<p>Donc, du côté de la vue on fait en sorte de faire un appel Ajax pour
+demander la mise à jour du contenu. Par conséquent, il faut qu'il y ait du
+répondant côté contrôleur. Pour cela, nous devons modifier l'action Index pour
+qu'elle gère le cas où elle est invoquée dans le cadre d'une demande Ajax.</p>
+<p>Et dans ce cas, elle ne renvoie que la vue partielle destinée à afficher la
+liste des contacts et pas toute la vue Contact\Index.</p>
+<pre><code>public ActionResult Index(int? id)
+{
+    // Get selected group
+    var selectedGroup = _service.GetGroup(id);
+    if (selectedGroup == null)
+        return RedirectToAction(&quot;Index&quot;, &quot;Group&quot;);
+
+    // Ajax Request
+    if (Request.IsAjaxRequest())
+        return PartialView(&quot;ContactList&quot;, selectedGroup);
+
+    // Normal Request
+    var model = new IndexModel
+    {
+        Groups = _service.ListGroups(),
+        SelectedGroup = selectedGroup
+    };
+    return View(&quot;Index&quot;, model);
+}
+</code></pre>
+<p>Je compile, j'exécute et tout marche comme prévu dans le tutoriel. Y compris
+le fait que le groupe sélectionné n'est pas mis en évidence (puisqu'il n'y a
+pas de classe &quot;selected&quot;).</p>
+<h2>Ajout d'une animation jQuery</h2>
+<p>Pour résoudre le petit problème de CSS et aussi pour que l'utilisateur se
+rende compte qu'il se passe quelque chose, on va utiliser la librairie jQuery
+(<em>qui est incluse dans le framework ASP.NET MVC</em>) pour :</p>
+<ul>
+<li>changer la classe CSS du groupe sélectionné</li>
+<li>ajouter une animation pour que l'utilisateur comprenne qu'il se passe
+quelque chose</li>
+</ul>
+<p>C'est assez simple à faire puisque dans les options Ajax on dispose des
+évènements OnBegin, OnSuccess et OnFailure :</p>
+<pre><code>&lt;%= Ajax.ActionLink(item.Name, &quot;Index&quot;, new { id = item.Id }, new AjaxOptions { UpdateTargetId = &quot;divContactList&quot;, OnBegin = &quot;beginContactList&quot;, OnSuccess = &quot;successContactList&quot;, OnFailure = &quot;failureContactList&quot; })%&gt;
+</code></pre>
+<p>Ce qui nous permet de définir les fonctions Javascript à appeller
+quand :</p>
+<ul>
+<li>la requête Ajax va commencer</li>
+<li>la requête Ajax s'est terminée correctement</li>
+<li>la requête Ajax a échoué</li>
+</ul>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+
+    function beginContactList(args) {
+        // Highlight selected group
+        $('#leftColumn li').removeClass('selected');
+        $(this).parent().addClass('selected');
+        // Animate
+        $('#divContactList').fadeOut('normal');
+    }
+
+    function successContactList() {
+        // Animate
+        $('#divContactList').fadeIn('normal');
+    }
+
+    function failureContactList() {
+        alert(&quot;Could not retrieve contacts.&quot;);
+    }
+
+&lt;/script&gt;
+</code></pre>
+<h2>Ajout du support de l'historique du navigateur</h2>
+<p>J'ai lu cette partie, mais c'est tout. Utiliser Ajax pour faire croire à un
+utilisateur qu'il est dans une application Windows puis faire des bidouilles
+interminables pour qu'il retrouve des automatismes du monde web, très peu pour
+moi.</p>
+<h2>Faire des suppressions en Ajax</h2>
+<p>Ça c'est quelque chose de beaucoup plus intéressant. Pas vraiment d'un point
+de vue interface utilisateur (je préfère afficher un écran de détail où on voit
+clairement la fiche qui va être supprimée si on confirme), mais plus pour le
+côté &quot;si je veux faire une suppression, j'utilise une méthode HTTP DELETE&quot;.</p>
+<p>Pour commencer, il faut remplacer l'image du lien &quot;Supprimer&quot; par un nouveau
+Helper ImageActionLinkHelper.cs créé spécialement. Son but est simplement de
+nous permettre d'avoir une méthode Ajax.ActionLink() associé à l'image utilisée
+pour matérialiser l'action de suppression.</p>
+<p>Le nouveau helper Ajax.ImageActionLink() gère l'appel Ajax côté client et
+côté serveur on ajoute une nouvelle action AjaxDelete au contrôleur
+Contact.</p>
+<pre><code>[AcceptVerbs(HttpVerbs.Delete)]
+[ActionName(&quot;Delete&quot;)]
+public ActionResult AjaxDelete(int id)
+{
+    // Get contact to delete
+    Contact contactToDelete = _service.GetContact(id);
+
+    // Get group from the contact
+    var selectedGroup = _service.GetGroup(contactToDelete.Group.Id);
+
+    // Delete from database
+    _service.DeleteContact(contactToDelete);
+
+    // Return Contact List
+    return PartialView(&quot;ContactList&quot;, selectedGroup);
+}
+</code></pre>
+<p>Cette action a deux particularités :</p>
+<ul>
+<li>L'attribut [AcceptVerbs(HttpVerbs.Delete)] la rend utilisable seulement
+dans le cas d'une opération HTTP DELETE (et donc pas via un simple GET ou
+POST)</li>
+<li>L'attribut [ActionName(&quot;Delete&quot;)] sert à avoir un nom d'action (&quot;Delete&quot;)
+qui est différent du nom de la méthode (&quot;AjaxDelete&quot;)</li>
+</ul>
+<p>Il est à noter que dans le cas où Javascript est désactivé, la suppression
+d'un contact continue de fonctionner :</p>
+<ul>
+<li>un clic sur l'image &quot;Supprimer&quot; fait suivre le lien
+/Contact/Delete/123</li>
+<li>le lien /Contact/Delete/123 correspond à l'action Delete(int id) d'origine
+en mode GET qui renvoie la vue Delete.aspx pour faire confirmer</li>
+<li>un clic sur le bouton &quot;Delete&quot; pour confirmer effectue un POST vers
+/Contact/Delete/123</li>
+<li>un post sur /Contact/Delete/123 correspond à l'action Delete(Contact
+contactToDelete) en mode POST qui supprime le contact et renvoie la vue
+Index.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Ouf ! Ça a été long (<a href="/2009/09/23/troisieme-etape-aspnetmvc/">plus d'un mois</a>) et <a href="/2009/10/20/test-driven-development-aspnetmvc-suite/">pas</a> <a href="/2009/10/29/test-driven-development-aspnetmvc-suite/">toujours</a> <a href="/2009/10/30/test-driven-development-aspnetmvc-fin/">facile</a>, mais j'ai finalement réussi à suivre ce tutoriel d'un
+bout à l'autre. Avec du recul, je me rend compte qu'il aurait été préférable de
+suivre les <a href="http://www.asp.net/learn/mvc/">tutoriels ASP.NET MVC</a>
+dans l'ordre, plutôt que d'attaquer directement avec l'exercice de fin de
+cours ! Mais il n'est jamais trop tard pour bien faire, surtout maintenant
+que la <a href="http://dotnet.developpez.com/mvc/">traduction
+française</a> est disponible. Je vais donc pouvoir continuer mon apprentissage
+avant de retrouver le <a href="/2009/07/17/premier-essai-aspnet-mvc/">tutoriel NerdDinner</a>.</p>
+<p>Plus tard, j'aimerais utiliser cette application de Gestion de Contacts
+comme une base. Je pense qu'il serait intéressant de la refaire en remplaçant
+Entity Framework par LINQ to SQL et voir ce que cela change et en particulier
+si les différences sont bien cantonnées au niveau du repository. Et puis
+continuer en testant ça avec <a href="http://www.subsonicproject.com/">SubSonic</a> ou <a href="http://www.nhforge.org/">NHibernate</a>, en particulier avec <a href="http://www.bengtbe.com/blog/post/2009/08/10/NerdDinner-with-Fluent-NHibernate-Part-1-The-domain-model.aspx">Fluent NHibernate</a>...</p>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/11/03/gestion-contacts-aspnetmvc-jquery/">Gestion de contacts avec ASP.NET MVC et jQuery</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/30/test-driven-development-aspnetmvc-fin/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (fin)</a>
+  <a rel="next" href="/2009/11/03/gestion-contacts-aspnetmvc-jquery/" hreflang="fr-FR">Gestion de contacts avec ASP.NET MVC et jQuery</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

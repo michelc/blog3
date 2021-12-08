@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template au niveau écran - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/01/14/template-niveau-ecran/" />
+<meta property="og:title" content="Template au niveau écran" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/01/14/template-niveau-ecran/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-01-14T09:13:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-01-14T09:13:00.000Z","datePublished":"2006-01-14T09:13:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/01/14/template-niveau-ecran/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/01/14/template-niveau-ecran/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/01/14/template-niveau-ecran/">Template au niveau écran</a>
+    </h1>
+    <p>
+      <span>2006-01-14</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Prise en compte du champ &quot;template&quot; de la table qc_Screens pour avoir la
+possibilité de gérer un modèle de page spécifique à chaque écran (jusqu'à
+présent, le champ existait dans la table mais n'était pas utilisé).</p>
+<p>Global.asax.cs (pour l'url rewriting) et Common.cs (pour la propriété
+stylePath) testent dans l'ordre :</p>
+<ul>
+<li>qc_Screens.template : modèle de page spécifique à l'écran,</li>
+<li>qc_Sites.template : modèle de page général pour le site,</li>
+<li>“skidoo” : modèle de page par défaut de Quick-Content.</li>
+</ul>
+<p>Par ailleurs, lorsque le nom du modèle de page contient une barre de
+division, on considère qu'il ne pointe pas seulement vers le sous-répertoire
+correspondant au modèle de page, mais qu'il indique aussi le nom du fichier
+représentant ce modèle de page :</p>
+<ul>
+<li>template = &quot;azerty&quot; =&gt; utiliser /res/_azerty/default.aspx,</li>
+<li>template = &quot;azerty/autre&quot; =&gt; utiliser /res/_azerty/autre.aspx.</li>
+</ul>
+<p><em>Note : Pour l'instant, il n'est pas encore possible de
+définir la valeur du champ &quot;template&quot; des écrans autrement que par une mise à
+jour manuelle de la base de données.</em></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/01/12/vistadb-21-database-net-released/" hreflang="fr-FR">VistaDB 2.1 database for .NET has been released</a>
+  <a rel="next" href="/2006/01/14/google-sitemap/" hreflang="fr-FR">Google Sitemap</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

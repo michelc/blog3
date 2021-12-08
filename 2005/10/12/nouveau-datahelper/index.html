@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nouveau DataHelper - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/10/12/nouveau-datahelper/" />
+<meta property="og:title" content="Nouveau DataHelper" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/10/12/nouveau-datahelper/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-10-12T08:35:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-10-12T08:35:00.000Z","datePublished":"2005-10-12T08:35:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/10/12/nouveau-datahelper/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/10/12/nouveau-datahelper/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/10/12/nouveau-datahelper/">Nouveau DataHelper</a>
+    </h1>
+    <p>
+      <span>2005-10-12</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Le data helper intégré au projet (qc.Engine.Data) est remplacé par un projet
+indépendant : BAS.Data.BDHelper.</p>
+<p>Outre la nécessaire correction du bug lié à l'utilisation d'une variable
+statique, celui-ci apporte les modifications suivantes :</p>
+<ul>
+<li>suppression des fonctions inutilisés : ExecuteXxxxxx(sql, cnxString) et
+ExecuteXxxxxx(sql, cnxObject)</li>
+<li>disparition des providers &quot;obsolètes&quot; : db2oledb, oracleoledb et
+sqloledb.</li>
+</ul>
+<p>En ce qui concerne la <a href="/2005/07/18/configuration-base-donnees/">configuration
+de la base de données</a> dans le web.config, le mappage d'une url sur
+l'identifiant de base de donnés doit être préfixé par &quot;CnxString_&quot; de façon
+explicite :</p>
+<ul>
+<li>avant : &lt;add key=&quot;URL_http://localhost/qc&quot; value=&quot;QcLocal&quot; /&gt;</li>
+<li>après : &lt;add key=&quot;URL_http://localhost/qc&quot; value=&quot;CnxString_QcLocal&quot;
+/&gt;</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/10/12/mise-a-jour-xtable-cs/" hreflang="fr-FR">Mise à jour de XTable.cs</a>
+  <a rel="next" href="/2005/10/12/lien-consultation-maj-boite/" hreflang="fr-FR">Lien consultation / màj boite</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

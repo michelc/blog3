@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Configurer l&#39;application - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/19/mvc-music-store-raven-db-configurer-application/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Configurer l&#39;application" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/19/mvc-music-store-raven-db-configurer-application/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-19T11:12:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-19T11:12:00.000Z","datePublished":"2010-05-19T11:12:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/19/mvc-music-store-raven-db-configurer-application/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/19/mvc-music-store-raven-db-configurer-application/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/19/mvc-music-store-raven-db-configurer-application/">MVC Music Store / Raven DB : Configurer l&#39;application</a>
+    </h1>
+    <p>
+      <span>2010-05-19</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/19/porting-mvc-music-store-to-raven-setting-up-the-application.aspx">Porting MVC Music Store to Raven: Setting up the application</a>&quot;, le deuxième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Juste quelques mots sur la façon de configurer Raven pour l'utiliser avec
+l'application MVC Music Store avant de me lancer dans le développement du reste
+du code.</p>
+<ul>
+<li>
+<p>Le fonctionnement retenu est (délibérément) très proche de celui employé
+avec NHibernate. Nous initialisons un objet DocumentStore au démarrage de
+l'application.</p>
+</li>
+<li>
+<p>Puis nous gérons l'ouverture / fermeture des sessions dans le cadre de la
+requête HTTP, complété par une méthode CurrentSession() pour accéder à la
+session en cours.</p>
+</li>
+<li>
+<p>Si l'application avait employé un conteneur, j'aurais fait en sorte que les
+contrôleurs récupèrent une instance de la session par son intermédiaire. Mais
+comme il n'y en a pas, je m'en tiens à une méthode statique.</p>
+<ul>
+<li>Si cela ne vous plait vraiment pas, n'hésitez pas à proposer autre
+chose.</li>
+</ul>
+</li>
+</ul>
+<pre><code>public class MvcApplication : System.Web.HttpApplication
+{
+    private const string RavenSessionKey = &quot;Raven.Session&quot;;
+    private static DocumentStore _documentStore;
+
+    protected void Application_Start()
+    {
+        _documentStore = new DocumentStore { Url = &quot;http://localhost:8080/&quot; };
+        _documentStore.Initialise();
+
+        AreaRegistration.RegisterAllAreas();
+
+        RegisterRoutes(RouteTable.Routes);
+    }
+
+    public MvcApplication()
+    {
+        BeginRequest += (sender, args) =&gt; HttpContext.Current.Items[RavenSessionKey] = _documentStore.OpenSession();
+        EndRequest += (o, eventArgs) =&gt;
+        {
+            var disposable = HttpContext.Current.Items[RavenSessionKey] as IDisposable;
+            if (disposable != null)
+                disposable.Dispose();
+        };
+    }
+
+    public static IDocumentSession CurrentSession
+    {
+        get { return (IDocumentSession)HttpContext.Current.Items[RavenSessionKey]; }
+    }
+}
+</code></pre>
+<p>Et c'est à peu près tout, du moins en ce qui concerne l'initialisation de
+Raven.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/18/mvc-music-store-raven-db-modele-donnees/" hreflang="fr-FR">MVC Music Store / Raven DB : Modèle de données</a>
+  <a rel="next" href="/2010/05/20/mvc-music-store-raven-db-migrer-donnees/" hreflang="fr-FR">MVC Music Store / Raven DB : Migrer les données</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

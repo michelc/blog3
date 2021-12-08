@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lister les champs d&#39;un formulaire PDF - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/09/25/lister-champs-formulaire-pdf/" />
+<meta property="og:title" content="Lister les champs d&#39;un formulaire PDF" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/09/25/lister-champs-formulaire-pdf/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-09-25T17:34:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-09-25T17:34:00.000Z","datePublished":"2008-09-25T17:34:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/09/25/lister-champs-formulaire-pdf/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/09/25/lister-champs-formulaire-pdf/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/09/25/lister-champs-formulaire-pdf/">Lister les champs d&#39;un formulaire PDF</a>
+    </h1>
+    <p>
+      <span>2008-09-25</span>
+      <span>#boulot</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Aujourd'hui, j'ai eu besoin de re-faire un état Crystal Report. Il s'agit
+d'un document officiel dont le format a changé du jour au lendemain et qui doit
+être en production pour le 1° février. Vu les délais et surtout étant donné que
+maintenant plus personne ne maitrise Crystal Report chez nous, ça risquait
+d'être un peu juste.</p>
+<p>Mais heureusement, l'organisme qui demande ce nouvel état a eu la bonne idée
+de le fournir sous forme de formulaire PDF prêt à remplir. Comme ce n'est
+normalement pas un état trop demandé (ce qui fait qu'on n'a pas vraiment besoin
+de la puissance de feu de Crystal Report), j'en ai profité pour tester s'il
+était possible de remplir ce formulaire depuis ASP.NET.</p>
+<p>Apparemment, la meilleure solution bon marché pour cela semble être <a href="http://itextsharp.sourceforge.net/">iTextSharp</a>. C'est gratuit et ça semble
+vraiment très simple à utiliser. Sauf en ce qui concerne la mise à jour des
+formulaires PDF où il m'a fallu beaucoup creuser pour réussir à trouver des
+exemples concrets :</p>
+<ul>
+<li>Un article sur CodeProject : <a href="http://www.codeproject.com/KB/cs/FillFormFieldsOfPDFs.aspx">Fill in PDF Form
+Fields using the Open Source iTextSharp Dynamic Link Library</a></li>
+<li>Des exemples en Java tirés du livre iText en Action : <a href="http://www.1t3xt.info/examples/browse/?page=example&amp;id=250">Chapitre
+16 : Filling and signing AcroForms</a></li>
+</ul>
+<p>Une fois tout ça trouvé, ça a de suite été plus facile de faire un premier
+essai qui marche :</p>
+<pre><code>namespace Altrr.iText {
+
+    using System;
+    using System.Collections;
+    using iTextSharp.text.pdf;
+
+    /// &lt;summary&gt;
+    /// Tests du composant iTextSharp
+    /// &lt;/summary&gt;
+    public class Start {
+
+        /// &lt;summary&gt;
+        /// Point d'entrée principal de l'application.
+        /// &lt;/summary&gt;
+        [STAThread]
+        static void Main (string[] args) {
+
+            string pdfSource = @&quot;D:\Altrr\iText\register_form1.pdf&quot;;
+            if (args.Length == 1) {
+                pdfSource = args[0];
+            }
+            ListFieldNames(pdfSource);
+
+        }
+
+        /// &lt;summary&gt;
+        /// Affiche la liste des champs d'un formulaire PDF
+        /// &lt;/summary&gt;
+        static void ListFieldNames (string pdfSource) {
+
+            // Création d'un objet PDF Reader basé sur le formulaire PDF
+            Console.WriteLine(pdfSource + &quot; :&quot;);
+            PdfReader pdfReader = new PdfReader(pdfSource);
+            AcroFields fields = pdfReader.AcroFields;
+
+            // Boucle sur les différents champs du formulaire
+            foreach (DictionaryEntry field in fields.Fields) {
+                // nom du champ
+                string key = field.Key.ToString();
+                // type du champ (et selon le cas liste des valeurs possibles)
+                string type = &quot;&quot;;
+                string data = &quot;&quot;;
+                switch (fields.GetFieldType(key)) {
+                    case AcroFields.FIELD_TYPE_CHECKBOX:
+                        type = &quot;CheckBox&quot;;
+                        data = String.Join(&quot;, &quot;, fields.GetAppearanceStates(key));
+                        break;
+                    case AcroFields.FIELD_TYPE_COMBO:
+                        type = &quot;Combo&quot;;
+                        data = String.Join(&quot;, &quot;, fields.GetListOptionExport(key));
+                        break;
+                    case AcroFields.FIELD_TYPE_LIST:
+                        type = &quot;List&quot;;
+                        data = String.Join(&quot;, &quot;, fields.GetListOptionExport(key));
+                        break;
+                    case AcroFields.FIELD_TYPE_NONE:
+                        type = &quot;None&quot;;
+                        break;
+                    case AcroFields.FIELD_TYPE_PUSHBUTTON:
+                        type = &quot;PushButton&quot;;
+                        break;
+                    case AcroFields.FIELD_TYPE_RADIOBUTTON:
+                        type = &quot;RadioButton&quot;;
+                        data = String.Join(&quot;, &quot;, fields.GetAppearanceStates(key));
+                        break;
+                    case AcroFields.FIELD_TYPE_SIGNATURE:
+                        type = &quot;Signature&quot;;
+                        break;
+                    case AcroFields.FIELD_TYPE_TEXT:
+                        type = &quot;Text&quot;;
+                        break;
+                }
+                Console.Write(&quot;- &quot; + key + &quot; : &quot; + type);
+                if (data != &quot;&quot;) {
+                    Console.WriteLine(&quot; (valeurs possibles : &quot; + data + &quot;)&quot;);
+                } else {
+                    Console.WriteLine(&quot;&quot;);
+                }
+            }
+        }
+
+    }
+}
+</code></pre>
+<p>Ce qui avec le fichier d'exemple me donne :</p>
+<pre><code>D:\Altrr\iText\register_form1.pdf :
+- person.name : Text
+- person.postal_code : Text
+- person.knowledge.Dutch : CheckBox (valeurs possibles : Off, On)
+- person.language : Combo (valeurs possibles : EN, FR, NL)
+- person.knowledge.French : CheckBox (valeurs possibles : Off, On)
+- person.programming : List (valeurs possibles : JAVA, C, CS, VB)
+- person.email : Text
+- person.address : Text
+- person.preferred : RadioButton (valeurs possibles : Off, NL, EN, FR)
+- person.knowledge.English : CheckBox (valeurs possibles : Off, On)
+</code></pre>
+<p>Il y a quand même un problème, parce qu'avec mon formulaire PDF, j'obtiens
+une liste des champs totalement dans le désordre, c'est à dire ni dans l'ordre
+de saisie, ni même dans l'ordre alphabétique. Et comme les noms des champs sont
+moyennement clairs, c'est assez galère pour savoir à quoi correspond chaque
+champ.</p>
+<p>Ça vaudrait peut être le coup d'essayer la fonction
+pdfReader.AcroFields.GetFieldPositions(key) qui renvoie la position du champ
+pour essayer de trier cette liste de haut en bas et de gauche à droite. Ou
+alors, simplement remplir chaque champ avec une valeur numérique croissante et
+voir ce que ça donne.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/09/24/je-me-souviens/" hreflang="fr-FR">Je me souviens...</a>
+  <a rel="next" href="/2008/09/26/remplir-champs-formulaire-pdf/" hreflang="fr-FR">Remplir les champs d&#39;un formulaire PDF</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

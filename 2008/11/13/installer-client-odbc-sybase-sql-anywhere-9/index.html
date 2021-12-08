@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Installer le client ODBC pour Sybase SQL Anywhere 9 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/11/13/installer-client-odbc-sybase-sql-anywhere-9/" />
+<meta property="og:title" content="Installer le client ODBC pour Sybase SQL Anywhere 9" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/11/13/installer-client-odbc-sybase-sql-anywhere-9/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-11-13T16:40:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-11-13T16:40:00.000Z","datePublished":"2008-11-13T16:40:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/11/13/installer-client-odbc-sybase-sql-anywhere-9/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/11/13/installer-client-odbc-sybase-sql-anywhere-9/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/11/13/installer-client-odbc-sybase-sql-anywhere-9/">Installer le client ODBC pour Sybase SQL Anywhere 9</a>
+    </h1>
+    <p>
+      <span>2008-11-13</span>
+      <span>#boulot</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour mon super état des marges ultra prioritaire, je dois intégrer des
+données en provenance de la paye. Le problème c'est que le logiciel de paie
+utilise une base de données SQL Anywhere 9 et qu'il faut donc que je trouve
+comment m'y connecter. Et ben c'est pas si évident que ça pour trouver de
+l'information sur comment faire et encore moins pour arriver à récupérer un
+client pour Sql Anywhere 9 qui fasse l'affaire. Ou alors il faut être prêt à se
+tartiner des kilomètres de documentation et installer à tire larigot jusqu'à
+tomber sur le truc qui va bien.</p>
+<p>Mais quand on a autant de temps que moi et qu'on ne veut pas encombrer son
+PC de tout un tas de trucs inutiles, il faut savoir se débrouiller (et aussi se
+contenter d'ODBC).</p>
+<p>Pour commencer, il faut aller dans le dossier C:\Program Files\Sybase\SQL
+Anywhere 9\win32 d'une machine où SQL Anywhere 9 est déjà installé.</p>
+<p>Une fois là, récupérer les 3 fichiers suivants :</p>
+<ul>
+<li>dbodbc9.dll</li>
+<li>dblgen9.dll</li>
+<li>dbcon9.dll</li>
+</ul>
+<p>Eventuellement, on peut aussi prendre les 2 fichiers suivants :</p>
+<ul>
+<li>dblgfr9.dll : dblgen9.dll en français</li>
+<li>dbcoen9.chm : fichier d'aide</li>
+</ul>
+<p>Créer un dossier &quot;C:\SQL Anywhere 9&quot; et y copier les fichiers.</p>
+<p>On dispose maintenant d'un répertoire contenant tous les fichiers
+nécessaires pour le bon fonctionnement du pilote ODBC de Sybase SQL Anywhere 9.
+Il reste simplement à configurer la base de registre pour qu'il soit possible
+de se connecter à Sybase via le pilote ODBC.</p>
+<p>On continue et on lance regedit.exe pour ouvrir la base de registre</p>
+<p>Aller dans HKEY_LOCAL_MACHINE \ SOFTWARE \ ODBC \ ODBCINST.INI. Là il faut
+se placer sur la clé &quot;ODBC Drivers&quot; et demander à y créer une nouvelle valeur
+chaine que l'on appellera &quot;SQL Anywhere 9&quot;. Une fois cette valeur créée,
+double-cliquer dessus pour y enregistrer la valeur &quot;Installed&quot;.</p>
+<p>Rester dans HKEY_LOCAL_MACHINE \ SOFTWARE \ ODBC \ ODBCINST.INI et y créer
+une nouvelle clé &quot;SQL Anywhere 9&quot; (le même nom que la chaine créée auparavant).
+Se placer ensuite sur la clé que l'on vient de créer et ajouter les 2 valeurs
+chaines suivantes :</p>
+<ul>
+<li>Driver</li>
+<li>Setup</li>
+</ul>
+<p>Puis pour chacune de ces deux chaines, enregistrer la valeur &quot;C:\SQL
+Anywhere 9\dbodbc9.dll&quot;.</p>
+<p>Ça y est, c'est quasiment fini.</p>
+<p>On peut maintenant lancer l'administrateur de sources de données ODBC,
+cliquer sur le bouton &quot;Ajouter&quot; dans l'onglet &quot;Sources de données système&quot; et
+choisir le pilote &quot;SQL Anywhere 9&quot; pour obtenir la boite de dialogue permettant
+de configurer la connexion ODBC au serveur SQL Anywhere 9 :</p>
+<p><img src="/public/2008/odbc-sql-anywhere-9.png" alt=""></p>
+<p>À partir de là, il suffit de renseigner les différents informations qui vont
+bien, soit dans mon cas à peu près :</p>
+<ul>
+<li>Onglet ODBC - Nom de source de données : BasePayeProd</li>
+<li>Onglet ODBC - Description : Base de données Sybase de production pour
+la paie</li>
+<li>Onglet Connexion - ID utilisateur : XXXXXX</li>
+<li>Onglet Connexion - Mot de passe : XXXXXXXXX</li>
+<li>Onglet Base de données - Nom du serveur : BasePayeProd</li>
+<li>Onglet Réseau - TCP/IP : coché</li>
+</ul>
+<p>Puis revenir sur l'onglet ODBC pour vérifier que tout est OK en cliquant sur
+le bouton &quot;Tester la connexion&quot;.</p>
+<p>Et quand on a comme moi on a la chance d'avoir un ODBCTST.EXE from Oracle,
+on peut immédiatement se connecter à la base de données pour vérifier que ça
+marche pour de vrai.</p>
+<p>Ensuite, sous Visual Studio, on peut enfin se connecter à la base de donnée
+Sybase avec la commande suivante :</p>
+<pre><code>OdbcConnection db = new OdbcConnection(&quot;DSN=BasePayeProd&quot;);
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/11/12/ajout-fichiers-depot-subversion/" hreflang="fr-FR">Ajout de fichiers au dépôt Subversion</a>
+  <a rel="next" href="/2008/12/11/renommer-namespaces-qc-ap/" hreflang="fr-FR">Renommer les namespaces de QC en AP</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

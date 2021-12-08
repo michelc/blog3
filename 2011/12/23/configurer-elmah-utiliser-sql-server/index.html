@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configurer ELMAH pour utiliser SQL Server - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/12/23/configurer-elmah-utiliser-sql-server/" />
+<meta property="og:title" content="Configurer ELMAH pour utiliser SQL Server" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/12/23/configurer-elmah-utiliser-sql-server/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-12-23T11:27:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-12-23T11:27:00.000Z","datePublished":"2011-12-23T11:27:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/12/23/configurer-elmah-utiliser-sql-server/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/12/23/configurer-elmah-utiliser-sql-server/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/12/23/configurer-elmah-utiliser-sql-server/">Configurer ELMAH pour utiliser SQL Server</a>
+    </h1>
+    <p>
+      <span>2011-12-23</span>
+      <span>#.net</span><span>#sql-server</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour avancer un peu plus dans mon <a href="/2011/09/28/installer-elmah-nuget/">utilisation d'ELMAH</a>, j'ai cherché à enregistrer les informations qu'il
+collecte dans une base de données.</p>
+<p>Pour cela, j'ai réalisé quelques essais pour voir comment faire et pour
+comprendre comment cela fonctionnait :</p>
+<ul>
+<li>Configuration automatique de SQL Server Compact</li>
+<li>Configuration semi-automatique SQL Server</li>
+<li>Configuration manuelle de SQL Server Compact</li>
+</ul>
+<p>La suite de ce billet récapitule le fonctionnement propre à chacune de ces
+méthodes.</p>
+<h2>ELMAH + Sql Server Compact en automatique</h2>
+<p>Sous NuGet, je recherche &quot;elmah&quot; puis choisis le package &quot;ELMAH on MS SQL
+Server Compact&quot;. Sa description indique qu'il s'agit d'une configuration pour
+démarrer rapidement avec une base de données Microsoft SQL Server Compact.</p>
+<p>Ça semble être un meilleur choix que &quot;ELMAH on MS SQL Server (requires
+manual config)&quot; puisque à priori, l'absence de &quot;requires manual config&quot; devant
+logiquement signifier que je n'aurai rien à faire.</p>
+<p>Je clique sur le bouton [Install] et l'installation débute, mais impose
+l'installation de Sql Server Compact 4.0.8+. Je tique un peu parce qu'il me
+semblait que j'étais à jour ? Mais bon, [I accept] et le projet référence
+maintenant 2 packages supplémentaires :</p>
+<ul>
+<li>ELMAH on MS SQL Server Compact</li>
+<li>SqlServerCompact</li>
+</ul>
+<p>Il suffit alors de relancer l'application et de se rendre sur l'URL
+elmah.axd pour confirmer que tout a été configuré sans que effectivement j'ai
+eu quoi que ce soit à faire : <code>&quot;This log is provided by the SQL Server Compact Error Log&quot;</code>. Génial !</p>
+<p>Si je regarde dans le dossier &quot;App_Data&quot;, je constate qu'il contient
+désormais une base de données &quot;Elmah.sdf&quot;. Un double-clic pour l'ouvrir et je
+peux voir que celle-ci est constitué d'une seule table &quot;ELMAH_Error&quot;, avec les
+colonnes nécessaire pour enregistrer tout le détail des erreurs :</p>
+<ul>
+<li>ErrorId</li>
+<li>Application</li>
+<li>Host</li>
+<li>Type</li>
+<li>Source</li>
+<li>Message</li>
+<li>User</li>
+<li>StatusCode</li>
+<li>TimeUtc</li>
+<li>Sequence</li>
+<li>AllXml</li>
+</ul>
+<p>Et si maintenant j'étudie ce qui a changé dans l'application, je m'aperçois
+qu'en fait c'est trois fois rien dans le web.config :</p>
+<p>Un :</p>
+<pre><code>&lt;connectionStrings&gt;
+  ...
+  &lt;add name=&quot;elmah-sqlservercompact&quot;
+       connectionString=&quot;Data Source=|DataDirectory|\Elmah.sdf&quot; /&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+<p>Deux :</p>
+<pre><code>&lt;system.data&gt;
+  &lt;DbProviderFactories&gt;
+    &lt;remove invariant=&quot;System.Data.SqlServerCe.4.0&quot; /&gt;
+    &lt;add name=&quot;Microsoft SQL Server Compact Data Provider 4.0&quot;
+         invariant=&quot;System.Data.SqlServerCe.4.0&quot;
+         description=&quot;.NET Framework Data Provider for Microsoft SQL Server Compact&quot; type=&quot;System.Data.SqlServerCe.SqlCeProviderFactory, System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91&quot; /&gt;
+  &lt;/DbProviderFactories&gt;
+&lt;/system.data&gt;
+</code></pre>
+<p>Et trois :</p>
+<pre><code>&lt;elmah&gt;
+  &lt;errorLog type=&quot;Elmah.SqlServerCompactErrorLog, Elmah&quot;
+            connectionStringName=&quot;elmah-sqlservercompact&quot; /&gt;
+&lt;/elmah&gt;
+</code></pre>
+<h2>Rollback</h2>
+<p>Je désinstalle le package &quot;ELMAH on MS SQL Server Compact&quot; (mais pas les
+packages dont il dépend) puis le package &quot;SqlServerCompact&quot;.</p>
+<p>Puis je retourne sur elmah.axd où je peux constater que je suis bien revenu
+à mon point de départ : <code>&quot;This log is provided by the In-Memory Error Log.&quot;</code>. Parfait !</p>
+<h2>ELMAH + Sql Server en semi-automatique</h2>
+<p>Ce coup-ci je fais un essai avec l'installation du package NuGet &quot;ELMAH on
+MS SQL Server (requires manual config)&quot;.</p>
+<p>Une fois terminé, un nouveau dossier &quot;App_Readme&quot; est apparu dans le projet,
+avec deux fichiers : - Elmah.SqlServer.sql - Elmah.SqlServer.txt</p>
+<p>Et le fichier Elmah.SqlServer.txt contient le texte suivant :</p>
+<pre><code>Please note that in order to complete the installation of ELMAH.SqlServer you will have to do the following:
+
+1) Run the Elmah.SqlServer.sql script against your database
+2) Edit your web.config with the correct settings in the elmah &lt;connectionString&gt; to connect to your database
+</code></pre>
+<p>Malgré tout, le fichier web.config a déjà été pas mal préparé pour
+simplifier la configuration :</p>
+<p>Un :</p>
+<pre><code>&lt;connectionStrings&gt;
+  ...
+  &lt;add name=&quot;elmah-sqlserver&quot;
+       connectionString=&quot;Data Source=****;User ID=****;Password=****;Initial Catalog=****;&quot;
+       providerName=&quot;System.Data.SqlClient&quot; /&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+<p>Et deux :</p>
+<pre><code>&lt;elmah&gt;
+  &lt;errorLog type=&quot;Elmah.SqlErrorLog, Elmah&quot;
+            connectionStringName=&quot;elmah-sqlserver&quot; /&gt;
+&lt;/elmah&gt;
+</code></pre>
+<p>Je sais jamais faire, mais sinon, c'est pas compliqué :</p>
+<ul>
+<li>démarrer SQL Server Management Studio (l'occasion de voir que j'ai des
+tonnes de base Xxxxx.Models.XxxxxContext crées au cours de différents essais ou
+tutoriels)</li>
+<li>créer une nouvelle base &quot;Elmah&quot; (et la passer en Compatibility_Level</li>
+</ul>
+<ol start="80">
+<li></li>
+</ol>
+<ul>
+<li>lancer le script (qui génère pas mal de message d'avertissement)</li>
+</ul>
+<p>Ouf ! C'est fait.</p>
+<p>Puis enregistrer la chaine de connexion :</p>
+<pre><code>&lt;add name=&quot;elmah-sqlserver&quot;
+     connectionString=&quot;Data Source=.\SQLEXPRESS;Integrated Security=SSPI;Initial Catalog=Elmah;&quot;
+     providerName=&quot;System.Data.SqlClient&quot; /&gt;
+</code></pre>
+<p>Je peux alors relancer l'application, provoquer une erreur et aller que la
+page elmah.axd et vérifier que <code>&quot;This log is provided by the Microsoft SQL Server Error Log.&quot;</code>. Bravo !</p>
+<h2>ELMAH + Sql Server Compact en manuel</h2>
+<p>Après désinstallation du package &quot;ELMAH on MS SQL Server (requires manual
+config)&quot;, je me retrouve à nouveau avec un ELMAH tout simple qui stocke ses
+erreurs en mémoire. Et au passage, le dossier App_Readme a disparu.
+Magnifique !</p>
+<p>Je peux donc tenter une modification tout ce qu'il y a de plus manuelle du
+web.config pour utiliser une base de données Sql Server Compact (celui qui est
+déjà installé sur mon PC).</p>
+<p>Un :</p>
+<pre><code>&lt;connectionStrings&gt;
+  ...
+  &lt;add name=&quot;elmah-sqlservercompact&quot;
+       connectionString=&quot;Data Source=|DataDirectory|\Elmah.sdf&quot; /&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+<p>Et deux :</p>
+<pre><code>&lt;elmah&gt;
+  &lt;errorLog type=&quot;Elmah.SqlServerCompactErrorLog, Elmah&quot;
+            connectionStringName=&quot;elmah-sqlservercompact&quot; /&gt;
+&lt;/elmah&gt;
+</code></pre>
+<p>Je relance l'application, tente d'accéder à l'URL index.html qui n'existe
+pas puis direction elmah.axd et ça marche : <code>&quot;This log is provided by the SQL Server Compact Error Log&quot;</code>. Magnifique !</p>
+<h2>Conclusions</h2>
+<p>Déjà, le système des packages NuGet est bien foutu (au moins en ce qui
+concerne ELMAH) :</p>
+<ul>
+<li>ça installe ce qui est nécessaire et ça fait les modifications et
+configurations qui vont bien où ça va bien.</li>
+<li>quand on désinstalle, ça sait remettre tout comme il faut, y compris les
+modifications apportées au web.config :)</li>
+</ul>
+<p>Pour l'instant, je vais en rester à la configuration manuelle pour Sql
+Server Compact. C'est bien suffisant pour les essais que je fais.</p>
+<p>Mais finalement, je pense avoir compris pourquoi le package &quot;ELMAH on MS SQL
+Server Compact&quot; en automatique installe SqlServerCompact. Au moins, lorsque on
+déploie sur le serveur de production, ça permet que ELMAH soit prêt à
+fonctionner sur une base de données SQL Server Compact, même si celui-ci n'est
+pas installé en production. Pas bête !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/11/17/mvc-scaffolding-eager-loading-viewmodel/" hreflang="fr-FR">MVC Scaffolding, Eager loading et ViewModel</a>
+  <a rel="next" href="/2012/03/01/ruby-parentheses/" hreflang="fr-FR">Ruby, or et parenthèses</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

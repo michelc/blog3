@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Authentification super simple avec Sinatra - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/05/17/authentification-super-simple-sinatra/" />
+<meta property="og:title" content="Authentification super simple avec Sinatra" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/05/17/authentification-super-simple-sinatra/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-05-17T17:33:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-05-17T17:33:00.000Z","datePublished":"2011-05-17T17:33:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/05/17/authentification-super-simple-sinatra/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/05/17/authentification-super-simple-sinatra/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/05/17/authentification-super-simple-sinatra/">Authentification super simple avec Sinatra</a>
+    </h1>
+    <p>
+      <span>2011-05-17</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2011/2/22/really_simple_authentication_in_sinatra/">Really Simple Authentication in Sinatra</a>&quot; de Darren Jones.</p>
+</div>
+<p>Une demande répétée des lecteurs de <a href="http://ididitmyway.herokuapp.com/">I Dit It My Way</a> est un
+billet sur l'authentification. Il existe des tas de gems qui permettent de
+faire ça, mais je préfère programmer ça par moi-même. Voici donc une méthode
+vraiment simple pour construire le côté administration d'un site web avec
+Sinatra.</p>
+<p>Pour démarrer, il faut créer quelques paramètres :</p>
+<pre><code>set :username,'michel'
+set :password,'topsecret'
+set :token,'1truklong&amp;complike@$e$ouven!r'
+</code></pre>
+<p>Puis les handlers pour les différentes routes. En commençant par l'URL
+&quot;/admin&quot; pour pouvoir se connecter.</p>
+<pre><code>get('/admin') { haml :admin }
+</code></pre>
+<p>Ça ne prend qu'une ligne parce que tout ce qu'il y a à faire c'est
+d'afficher la vue &quot;admin.haml&quot; :</p>
+<pre><code>%form(action=&quot;/login&quot; method=&quot;post&quot;)
+  %label(for=&quot;username&quot;)Code utilisateur :
+  %input#username(type=&quot;text&quot; name=&quot;username&quot;)
+  %label(for=&quot;password&quot;)Mot de passe :
+  %input#password(type=&quot;password&quot; name=&quot;password&quot;)
+  %input(type=&quot;submit&quot; value=&quot;Connexion&quot;) or &lt;a href=&quot;/&quot;&gt;Annuler&lt;/a&gt;
+</code></pre>
+<p>C'est un formulaire tout simple qui contient deux zones de texte pour saisir
+le code utilisateur et le mot de passe plus un bouton pour valider. Ce
+formulaire est renvoyé à l'aide d'une requête POST vers l'URL &quot;/login&quot; et nous
+devons donc ajouter un handler pour la traiter. C'est à ce niveau que nous
+allons accomplir le plus gros du travail pour authentifier l'utilisateur.</p>
+<pre><code>post '/login' do
+  if params['username'] == settings.username &amp;&amp; params['password'] == settings.password
+      response.set_cookie(settings.username,settings.token) 
+      redirect '/'
+    else
+      &quot;Code utilisateur ou mot de passe incorrect&quot;
+    end
+end
+</code></pre>
+<p>Ce code vérifie tout d'abord si le code utilisateur et le mot de passe saisi
+via le formulaire (stockés dans le hash params&lt;&gt;) correspondent à
+ceux définis dans le paramétrage (les valeurs settings.xxxxx). Si c'est le cas,
+on crée un cookie en utilisant le code utilisateur comme clé et pour la valeur
+le &quot;token&quot; qu'on avait configuré au tout début. On pourrait se contenter
+d'utiliser &quot;true&quot; pour la valeur, mais le fait d'utiliser un token renforce le
+niveau de sécurité (si quelqu'un sait expliquer comment ?). Lorsque
+l'utilisateur n'a pas donné le bon code utilisateur ou le bon mot de passe, on
+renvoie simplement un message d'avertissement.</p>
+<p>Et maintenant, tout ce qu'il nous reste à faire c'est de donner la
+possibilité de se déconnecter. Ce que nous allons faire en gérant l'URL
+&quot;/logout&quot;.</p>
+<pre><code>get('/logout') { response.set_cookie(settings.username, false) ; redirect '/' }
+</code></pre>
+<p>Là on modifie le cookie correspondant à l'utilisateur en lui donnant la
+valeur &quot;false&quot; puis on le renvoie à la racine du site.</p>
+<p>On a donc géré tout ce qui concerne l'authentification d'un utilisateur. Il
+nous reste à traiter la partie autorisation pour réellement autoriser ou
+interdire l'accès à certaines pages. Pour cela, on va simplement ajouter deux
+fonctions helper à notre code Ruby :</p>
+<pre><code>helpers do
+  def admin? ; request.cookies[settings.username] == settings.token ; end
+  def protected! ; halt [ 401, 'Not Authorized' ] unless admin? ; end
+end
+</code></pre>
+<p>Le premier helper, nommé &quot;admin?&quot;, va nous servir pour vérifier si
+l'utilisateur est connecté ou non, en contrôlant que la valeur du cookie
+correspond à la valeur configurée pour le token. On pourra l'utiliser cet
+helper dans le code des handlers ou des vues pour par exemple afficher un
+message différent selon que l'utilisateur est connecté ou non.</p>
+<p>Le second helper, nommé &quot;protected!&quot;, utilise le premier helper pour
+vérifier si l'utilisateur est connecté et si ce n'est pas le cas il interrompt
+le code te renvoie une erreur HTTP 401 pour indiquer que l'action n'est pas
+autorisée. On l'utilisera au début du handler d'une route pour indiquer que
+l'utilisateur doit être connecté pour visualiser ce contenu.</p>
+<p>Et pour finir le code source complet d'une application qui regroupe tout le
+code présenté ci-dessus. Libre à vous de à l'utiliser et de faire vos propres
+essais avec.</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+set :username,'Bond'
+set :password,'007'
+set :token,'osh@kerp@$@l@cuill3re'
+
+helpers do
+  def admin? ; request.cookies[settings.username] == settings.token ; end
+  def protected! ; halt [ 401, 'Not Authorized' ] unless admin? ; end
+end
+
+get '/' do
+  haml :index
+end
+
+get('/admin') { haml :admin }
+
+post '/login' do
+  if params['username'] == settings.username &amp;&amp; params['password'] == settings.password
+    response.set_cookie(settings.username,settings.token) 
+    redirect '/'
+  else
+      &quot;Code utilisateur ou mot de passe incorrect&quot;
+  end
+end
+
+get('/logout') { response.set_cookie(settings.username, false) ; redirect '/' }
+
+get '/public' do
+  'Tout le monde peut voir ça'
+end
+
+get '/private' do
+  protected!
+  'Rien que pour vos yeux !'
+end
+
+__END__
+@@layout
+!!! 5
+%html
+  %head
+    %meta(charset=&quot;utf-8&quot;)
+    %title Authentication Super Simple
+  %body
+    %a(href='/admin')Connexion
+    %a(href='/logout')Déconnexion
+    %a(href='/public')Public
+    %a(href='/private')Privé
+    = yield
+@@admin
+%form(action=&quot;/login&quot; method=&quot;post&quot;)
+  %label(for=&quot;username&quot;)Code utilisateur :
+  %input#username(type=&quot;text&quot; name=&quot;username&quot;)
+  %label(for=&quot;password&quot;)Mot de passe :
+  %input#password(type=&quot;password&quot; name=&quot;password&quot;)
+  %input(type=&quot;submit&quot; value=&quot;Connexion&quot;) or &lt;a href=&quot;/&quot;&gt;Cancel&lt;/a&gt;
+@@index
+-if admin?
+  %h1 Bienvenue 007 !
+-else
+  %h1 Bienvenue !
+</code></pre>
+<p>C'est un exemple simple et sans prétention si vous souhaitez expérimenter un
+système d'authentification et d'autorisations sous Sinatra. Et si vous avez des
+idées pour le faire évoluer ou l'améliorer, n'hésitez pas à en faire part dans
+les commentaires ci-dessous.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/05/04/erreurs-404-autres-sinatra/" hreflang="fr-FR">Erreurs 404 et autres avec Sinatra</a>
+  <a rel="next" href="/2011/06/08/utiliser-rack-flash-sinatra/" hreflang="fr-FR">Utiliser Rack Flash avec Sinatra</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

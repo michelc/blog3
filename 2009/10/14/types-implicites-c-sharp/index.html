@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les types implicites en c# - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/10/14/types-implicites-c-sharp/" />
+<meta property="og:title" content="Les types implicites en c#" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/10/14/types-implicites-c-sharp/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-10-14T12:51:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-10-14T12:51:00.000Z","datePublished":"2009-10-14T12:51:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/10/14/types-implicites-c-sharp/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/10/14/types-implicites-c-sharp/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/10/14/types-implicites-c-sharp/">Les types implicites en c#</a>
+    </h1>
+    <p>
+      <span>2009-10-14</span>
+      <span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Le compilateur C# 3.0 permet de déclarer les variables de façon implicite
+grâce au nouveau mot clé &quot;var&quot;. Au lieu de nous forcer à taper le code
+suivant :</p>
+<pre><code>MonTypeSpecial toto = new MonTypeSpecial();
+</code></pre>
+<p>Il est possible d'économiser quelques touches en tapant seulement :</p>
+<pre><code>var toto = new MonTypeSpecial();
+</code></pre>
+<p>Dans les deux cas, le résultat est strictement identique et la variable toto
+est bien toujours une variable de type MonTypeSpecial, qu'elle soit déclarée
+explicitement ou implicitement. Dans la pratique, le code compilé est également
+rigoureusement le même.</p>
+<p>Lors de la compilation, le compilateur comprend que <code>new MonTypeSpecial()</code> est une expression pour initialiser une variable de
+type &quot;MonTypeSpecial&quot;. Et comme le type de la variable à laquelle on affecte
+cette expression n'est pas défini, il lui attribue implicitement le même
+type.</p>
+<p>Par conséquent, ce n'est en aucune manière une incursion du C# dans le monde
+des langages dynamiques ou faiblement typés et le mot clé &quot;var&quot; n'a rien à voir
+avec la déclaration de <a href="http://en.wikipedia.org/wiki/Variant_type">variables de type Variant</a> qui existait en Visual Basic.</p>
+<p>La mot clé &quot;var&quot; peut être utilisé dans tous les cas où la variable déclarée
+est initialisée, quelque soit le type de l'expression qui sert à
+l'initialisation.</p>
+<pre><code>var i = 0;                           // i est un int
+var j = i;                           // j est un int
+var k = i + 10;                      // k est un int
+var d = 12.34;                       // d est un double
+var q = d / 2;                       // q est un double
+var a = k / 3;                       // a est un int (int /int =&gt; int)
+var f = (float)i;                    // f est un float
+var t = &quot;toto&quot;;                      // t est un string
+var l = t.Length();                  // l est un int
+var x = new DateTime(1980, 1, 1);    // x est une DateTime
+</code></pre>
+<p>Par contre, le code suivant ne compilera même pas :</p>
+<pre><code>// Impossible d'assigner &lt;null&gt; à une variable locale implicitement typée
+var n = null;
+// Les variables locales implicitement typées doivent être initialisées
+var i;
+i = 0;
+</code></pre>
+<p>Par ailleurs, on ne peut employer &quot;var&quot; qu'avec des variables locales et en
+aucun cas :</p>
+<ul>
+<li>pour des variables publiques</li>
+<li>en tant que paramètre de fonction</li>
+<li>comme valeur de retour d'une méthode</li>
+<li>comme type d'une propriété</li>
+</ul>
+<p>=&gt; Le mot clé contextuel 'var' ne peut apparaître que dans une
+déclaration de variable locale</p>
+<p>Sinon, il (me) semble préférable de réserver l'utilisation des déclarations
+implicites au cas où l'expression d'initialisation indique en toute lettre le
+type de l'expression et de les éviter quand cela demande de démarrer le
+cerveau :</p>
+<pre><code>// Ok
+var toto = new MonTypeSpecial();
+var x = new DateTime(1980, 1, 1);
+// Bof
+var i = 0;
+var j = i;
+var t = &quot;toto&quot;;
+var l = t.Length();
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/09/test-driven-development-aspnetmvc-suite/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (suite)</a>
+  <a rel="next" href="/2009/10/15/faire-site-rien/" hreflang="fr-FR">Faire un site pour rien</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Départements limitrophes - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/09/01/departements-limitrophes/" />
+<meta property="og:title" content="Départements limitrophes" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/09/01/departements-limitrophes/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-09-01T12:21:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-09-01T12:21:00.000Z","datePublished":"2010-09-01T12:21:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/09/01/departements-limitrophes/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/09/01/departements-limitrophes/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/09/01/departements-limitrophes/">Départements limitrophes</a>
+    </h1>
+    <p>
+      <span>2010-09-01</span>
+      <span>#code-snippets</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Une fonction C# très vite faite qui renvoie la liste des départements
+limitrophes d'un département donné</p>
+<pre><code>public static string Limitrophes(string Departement) {
+    string limitrophes = string.Empty;
+    switch (Departement)
+    {
+        case &quot;01&quot;: limitrophes = &quot;38,39,69,71,73,74&quot;; break;
+        case &quot;02&quot;: limitrophes = &quot;08,51,59,60,77,80&quot;; break;
+        case &quot;03&quot;: limitrophes = &quot;18,23,42,58,63,71&quot;; break;
+        case &quot;04&quot;: limitrophes = &quot;05,06,26,83,84&quot;; break;
+        case &quot;05&quot;: limitrophes = &quot;04,26,38,73&quot;; break;
+        case &quot;06&quot;: limitrophes = &quot;04,83&quot;; break;
+        case &quot;07&quot;: limitrophes = &quot;26,30,38,42,43,48,84&quot;; break;
+        case &quot;08&quot;: limitrophes = &quot;02,51,55&quot;; break;
+        case &quot;09&quot;: limitrophes = &quot;11,31,66&quot;; break;
+        case &quot;10&quot;: limitrophes = &quot;21,51,52,77,89&quot;; break;
+        case &quot;11&quot;: limitrophes = &quot;09,31,34,66,81&quot;; break;
+        case &quot;12&quot;: limitrophes = &quot;15,30,34,46,48,81,82&quot;; break;
+        case &quot;13&quot;: limitrophes = &quot;30,83,84&quot;; break;
+        case &quot;14&quot;: limitrophes = &quot;27,50,61,76&quot;; break;
+        case &quot;15&quot;: limitrophes = &quot;12,19,43,46,48,63&quot;; break;
+        case &quot;16&quot;: limitrophes = &quot;17,24,79,86,87&quot;; break;
+        case &quot;17&quot;: limitrophes = &quot;16,24,33,79,85&quot;; break;
+        case &quot;18&quot;: limitrophes = &quot;03,36,41,45,58&quot;; break;
+        case &quot;19&quot;: limitrophes = &quot;15,23,24,46,63,87&quot;; break;
+        case &quot;20&quot;: limitrophes = &quot;&quot;; break;
+        case &quot;2A&quot;: limitrophes = &quot;2B&quot;; break;
+        case &quot;2B&quot;: limitrophes = &quot;2A&quot;; break;
+        case &quot;21&quot;: limitrophes = &quot;10,39,52,58,70,71,89&quot;; break;
+        case &quot;22&quot;: limitrophes = &quot;29,35,56&quot;; break;
+        case &quot;23&quot;: limitrophes = &quot;03,19,36,63,87&quot;; break;
+        case &quot;24&quot;: limitrophes = &quot;16,17,19,33,46,47,87&quot;; break;
+        case &quot;25&quot;: limitrophes = &quot;39,70,90&quot;; break;
+        case &quot;26&quot;: limitrophes = &quot;04,05,07,38,84&quot;; break;
+        case &quot;27&quot;: limitrophes = &quot;14,28,60,61,76,78,95&quot;; break;
+        case &quot;28&quot;: limitrophes = &quot;27,41,45,61,72,78,91&quot;; break;
+        case &quot;29&quot;: limitrophes = &quot;22,56&quot;; break;
+        case &quot;30&quot;: limitrophes = &quot;07,12,13,34,48,84&quot;; break;
+        case &quot;31&quot;: limitrophes = &quot;09,11,32,65,81,82&quot;; break;
+        case &quot;32&quot;: limitrophes = &quot;31,40,47,64,65,82&quot;; break;
+        case &quot;33&quot;: limitrophes = &quot;17,24,40,47&quot;; break;
+        case &quot;34&quot;: limitrophes = &quot;11,12,30,81&quot;; break;
+        case &quot;35&quot;: limitrophes = &quot;22,44,49,50,53,56&quot;; break;
+        case &quot;36&quot;: limitrophes = &quot;03,18,23,37,41,86,87&quot;; break;
+        case &quot;37&quot;: limitrophes = &quot;36,41,49,72,86&quot;; break;
+        case &quot;38&quot;: limitrophes = &quot;01,05,07,26,42,69,73&quot;; break;
+        case &quot;39&quot;: limitrophes = &quot;01,21,25,70,71&quot;; break;
+        case &quot;40&quot;: limitrophes = &quot;32,33,47,64&quot;; break;
+        case &quot;41&quot;: limitrophes = &quot;18,28,36,37,45,72&quot;; break;
+        case &quot;42&quot;: limitrophes = &quot;03,07,38,43,63,69,71&quot;; break;
+        case &quot;43&quot;: limitrophes = &quot;07,15,42,48,63&quot;; break;
+        case &quot;44&quot;: limitrophes = &quot;35,49,56,85&quot;; break;
+        case &quot;45&quot;: limitrophes = &quot;18,28,41,58,77,89,91&quot;; break;
+        case &quot;46&quot;: limitrophes = &quot;12,15,19,24,47,82&quot;; break;
+        case &quot;47&quot;: limitrophes = &quot;24,32,33,40,46,82&quot;; break;
+        case &quot;48&quot;: limitrophes = &quot;07,12,15,30,43&quot;; break;
+        case &quot;49&quot;: limitrophes = &quot;35,37,44,53,72,79,85,86&quot;; break;
+        case &quot;50&quot;: limitrophes = &quot;14,35,53,61&quot;; break;
+        case &quot;51&quot;: limitrophes = &quot;02,08,10,52,55,77&quot;; break;
+        case &quot;52&quot;: limitrophes = &quot;10,21,51,55,70,88&quot;; break;
+        case &quot;53&quot;: limitrophes = &quot;35,49,50,61,72&quot;; break;
+        case &quot;54&quot;: limitrophes = &quot;55,57,88&quot;; break;
+        case &quot;55&quot;: limitrophes = &quot;08,51,52,54,88&quot;; break;
+        case &quot;56&quot;: limitrophes = &quot;22,29,35,44&quot;; break;
+        case &quot;57&quot;: limitrophes = &quot;54,67&quot;; break;
+        case &quot;58&quot;: limitrophes = &quot;03,18,21,45,71,89&quot;; break;
+        case &quot;59&quot;: limitrophes = &quot;02,80,62&quot;; break;
+        case &quot;60&quot;: limitrophes = &quot;02,27,76,77,80,95&quot;; break;
+        case &quot;61&quot;: limitrophes = &quot;14,27,28,50,53,72&quot;; break;
+        case &quot;62&quot;: limitrophes = &quot;59,80&quot;; break;
+        case &quot;63&quot;: limitrophes = &quot;03,15,19,23,42,43&quot;; break;
+        case &quot;64&quot;: limitrophes = &quot;32,40,65&quot;; break;
+        case &quot;65&quot;: limitrophes = &quot;31,32,64&quot;; break;
+        case &quot;66&quot;: limitrophes = &quot;09,11&quot;; break;
+        case &quot;67&quot;: limitrophes = &quot;57,68,88&quot;; break;
+        case &quot;68&quot;: limitrophes = &quot;67,88,90&quot;; break;
+        case &quot;69&quot;: limitrophes = &quot;01,38,42,71&quot;; break;
+        case &quot;70&quot;: limitrophes = &quot;21,25,52,88,90&quot;; break;
+        case &quot;71&quot;: limitrophes = &quot;01,03,21,39,42,58,69&quot;; break;
+        case &quot;72&quot;: limitrophes = &quot;28,37,41,49,53,61&quot;; break;
+        case &quot;73&quot;: limitrophes = &quot;01,05,38,74&quot;; break;
+        case &quot;74&quot;: limitrophes = &quot;01,73&quot;; break;
+        case &quot;75&quot;: limitrophes = &quot;92,93,94&quot;; break;
+        case &quot;76&quot;: limitrophes = &quot;14,27,60,80&quot;; break;
+        case &quot;77&quot;: limitrophes = &quot;02,10,45,51,60,89,91,93,94,95&quot;; break;
+        case &quot;78&quot;: limitrophes = &quot;27,28,91,92,95&quot;; break;
+        case &quot;79&quot;: limitrophes = &quot;16,17,49,85,86&quot;; break;
+        case &quot;80&quot;: limitrophes = &quot;02,60,62,76&quot;; break;
+        case &quot;81&quot;: limitrophes = &quot;11,12,31,34,82&quot;; break;
+        case &quot;82&quot;: limitrophes = &quot;12,31,32,46,47,81&quot;; break;
+        case &quot;83&quot;: limitrophes = &quot;04,06,13,84&quot;; break;
+        case &quot;84&quot;: limitrophes = &quot;04,07,13,26,30,83&quot;; break;
+        case &quot;85&quot;: limitrophes = &quot;17,44,49,79&quot;; break;
+        case &quot;86&quot;: limitrophes = &quot;16,27,36,49,79,87&quot;; break;
+        case &quot;87&quot;: limitrophes = &quot;16,19,23,24,36,86&quot;; break;
+        case &quot;88&quot;: limitrophes = &quot;52,54,55,67,68,70&quot;; break;
+        case &quot;89&quot;: limitrophes = &quot;10,21,45,58,77&quot;; break;
+        case &quot;90&quot;: limitrophes = &quot;25,68,70&quot;; break;
+        case &quot;91&quot;: limitrophes = &quot;28,45,77,78,92,94&quot;; break;
+        case &quot;92&quot;: limitrophes = &quot;75,78,91,95,94&quot;; break;
+        case &quot;93&quot;: limitrophes = &quot;75,77,92,94,95&quot;; break;
+        case &quot;94&quot;: limitrophes = &quot;75,77,91,92,93&quot;; break;
+        case &quot;95&quot;: limitrophes = &quot;27,60,77,78,92,93&quot;; break;
+    }
+    return limitrophes;
+}
+</code></pre>
+<p>En vrai, tout le boulot ingrat pour retrouver les bons départements avait
+été fait par <a href="http://sunfox.org/blog/2007/03/21/liste-de-departements-limitrophes-francais/">Sunfox</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/08/06/aspnetmvc-2-model-validation/" hreflang="fr-FR">ASP.NET MVC 2 : Validation basée sur le modèle</a>
+  <a rel="next" href="/2010/09/02/superdo-todo-liste-sinatra-datamapper/" hreflang="fr-FR">SuperDo : Une todo liste avec Sinatra et DataMapper</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

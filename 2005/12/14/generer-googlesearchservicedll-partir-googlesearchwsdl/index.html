@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Générer GoogleSearchService.dll à partir de GoogleSearch.wsdl - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/12/14/generer-googlesearchservicedll-partir-googlesearchwsdl/" />
+<meta property="og:title" content="Générer GoogleSearchService.dll à partir de GoogleSearch.wsdl" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/12/14/generer-googlesearchservicedll-partir-googlesearchwsdl/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-12-14T06:29:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-12-14T06:29:00.000Z","datePublished":"2005-12-14T06:29:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/12/14/generer-googlesearchservicedll-partir-googlesearchwsdl/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/12/14/generer-googlesearchservicedll-partir-googlesearchwsdl/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/12/14/generer-googlesearchservicedll-partir-googlesearchwsdl/">Générer GoogleSearchService.dll à partir de GoogleSearch.wsdl</a>
+    </h1>
+    <p>
+      <span>2005-12-14</span>
+      <span>#.net</span><span>#code-snippets</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour générer la source C#, taper :</p>
+<pre><code>wsdl GoogleSearch.wsdl
+</code></pre>
+<p>Cele crée un fichier GoogleSearchService.cs, à compiler par :</p>
+<pre><code>csc /target:library GoogleSearchService.cs
+</code></pre>
+<p>Ou pour Mono par :</p>
+<pre><code>mcs /target:library GoogleSearchService.cs
+</code></pre>
+<p>Ce qui produit l'assembly : GoogleSearchService.dll</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/12/05/vito-bureau/" hreflang="fr-FR">Vit&#39;o Bureau</a>
+  <a rel="next" href="/2005/12/14/correction-probleme-double-click/" hreflang="fr-FR">Correction problème double click</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

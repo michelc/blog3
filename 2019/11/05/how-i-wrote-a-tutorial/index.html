@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How I wrote a Node JS tutorial - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/11/05/how-i-wrote-a-tutorial/" />
+<meta property="og:title" content="How I wrote a Node JS tutorial" />
+<meta name="description" content="I&#39;ve been trying to code  a &quot;real&quot; web application with Node JS for a while. And so, a few weeks ago, I wrote my own tutorial to create a Note JS application with Express and SQLite." />
+<meta property="og:description" content="I&#39;ve been trying to code  a &quot;real&quot; web application with Node JS for a while. And so, a few weeks ago, I wrote my own tutorial to create a Note JS application with Express and SQLite." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/11/05/how-i-wrote-a-tutorial/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/ididitmyself.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-11-05T10:11:04.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-11-05T10:11:04.000Z","datePublished":"2019-11-05T10:11:04.000Z","description":"I've been trying to code  a \"real\" web application with Node JS for a while. And so, a few weeks ago, I wrote my own tutorial to create a Note JS application with Express and SQLite.","inLanguage":"en-US","url":"https://blog3.pagesd.info/2019/11/05/how-i-wrote-a-tutorial/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/ididitmyself.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/11/05/how-i-wrote-a-tutorial/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/ididitmyself.jpg" alt="C'est moi qui l'ait fait !" /><figcaption><a href="https://commons.wikimedia.org/wiki/File:Dirty_dishes.jpg">C'est moi qui l'ait fait !</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/11/05/how-i-wrote-a-tutorial/">How I wrote a Node JS tutorial</a>
+    </h1>
+    <p>
+      <span>2019-11-05</span>
+      <span>#javascript</span><span>#tutoriel</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>A few weeks ago, I started writing a tutorial on developing a Node JS application with Express to manage an SQlite database. I published it on my blog under the title <a href="/2019/10/08/crud-with-express-sqlite-10-steps/">CRUD Application with Express and SQlite in 10 steps</a> and I did some publicity about it in the hope that it could be used by others.</p>
+<p>But anyway, I wrote this tutorial primarily for my own account. I am trying to improve myself gradually in JavaScript (and therefore Node) and my objective is to achieve some console programs or small web applications.</p>
+<p>There are a lot of very good things on the internet and it helps a lot to learn at your own pace. What is particularly interesting is the wide range of variety. If you block somewhere, you always find other items that are more suitable and help you get by. And when you get tired of a subject, you can also find other things to do to change your mind and get motivation back.</p>
+<p>But sometimes it's still difficult to &quot;really&quot; get started. For example, for the web part, even if you can easily find lots of tutorials, it's not always easy. They are almost always in English - it can be fine. They are not always very recent - the web goes so fast. But my biggest problem is that either they are too basic, or I get lost on the way because they also try to explain a lot of other things to me: MongoDB, WebPack, TypeScript, React, Vue, Docker....</p>
+<p>So I had been trying to develop a small web application with Node for a while. This meant using Express since it is the most popular framework on the market. I don't have too much time to devote to it, so don't bother getting lost with Koa, Hapi, Polka and others...</p>
+<p>The dream would have been to find something that tinkered with, like when I discovered Sinatra with &quot;<a href="/2010/07/22/installer-sinatra-windows-7/">I did it my way</a>&quot;. But well, <a href="https://twitter.com/daz4126">Darren Jones</a>  doesn't seem determined to do it again with Node :)</p>
+<p>One day (I had just finished a quick application with ASP.NET MVC 5 and Bootstrap 4 that I could have done in Node if I had known how), I told myself that apart from time, I didn't really need much to get around it:</p>
+<ul>
+<li>A simple example of an ExpressJS application, without falling directly into its generator part</li>
+<li>The basics of using a SQL database with JS Node</li>
+</ul>
+<p>Personally, I already know:</p>
+<ul>
+<li>JavaScript (I'm working on it)</li>
+<li>Node (I regularly go back to it)</li>
+<li>HTML (hence the EJS views without any problem)</li>
+<li>SQL (as long as there is no INNER JOIN)</li>
+<li>ASP.NET MVC and Sinatra (so the organization of a web application)</li>
+<li>Bootstrap (at least the copy/paste side)</li>
+</ul>
+<p>In theory, I had everything I needed to try to develop a first application on my own. That's what I did. And looking at it, pretty quickly actually. Then I rewrote it a second time to clean it up a little bit and remove all the bits of code that were going in all directions. Then more or less a third time by noting how I wrote a blog post so I wouldn't forget anything.</p>
+<p>And that's how I finally ended up with a &quot;big&quot; tutorial. A short weekend, a few checks, a dozen screenshots and the result was ready to be published!</p>
+<p>The advantage is that it's quite exactly the tutorial I would have liked to find. It would have saved me time, but it wouldn't have been as concrete and I probably wouldn't have assimilated as well what I was doing by following someone else's tutorial. It always seems obvious when you do a tutorial and you easily let yourself go to a few copy/paste, to &quot;I see&quot; without trying too hard to understand...</p>
+<p>The other advantage is that from this initial application, I was able to extend my experiments and see how:</p>
+<ul>
+<li>Access a PostgreSQL database</li>
+<li>Use more or less the same code for SQlite and PostgreSQL</li>
+<li>Replace callbacks with async / await</li>
+<li>Validate the data entry form</li>
+<li>And so on...</li>
+</ul>
+<div class="encart">
+<p>Version en français : <a href="/2019/11/04/comment-j-ai-ecrit-un-tutoriel/" hreflang="fr-FR">Comment j'ai écrit un tutoriel Node JS</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/11/04/comment-j-ai-ecrit-un-tutoriel/" hreflang="fr-FR">Comment j&#39;ai écrit un tutoriel Node JS</a>
+  <a rel="next" href="/2019/11/18/comment-definir-fonction-javascript/" hreflang="fr-FR">Comment définir une fonction JavaScript</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

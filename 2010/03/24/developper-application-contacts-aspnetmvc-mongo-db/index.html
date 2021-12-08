@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Développer une application de contacts avec ASP.NET MVC et MongoDB - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/" />
+<meta property="og:title" content="Développer une application de contacts avec ASP.NET MVC et MongoDB" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-03-24T20:10:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-03-24T20:10:00.000Z","datePublished":"2010-03-24T20:10:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/">Développer une application de contacts avec ASP.NET MVC et MongoDB</a>
+    </h1>
+    <p>
+      <span>2010-03-24</span>
+      <span>#net</span><span>#mongodb</span><span>#mvc</span><span>#nosql</span><span>#tutoriel</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Dans ce tutoriel je vais reconstruire à peu près à l'identique l'application
+de gestion de contacts qui est développée au cours de la <a href="http://msdn.microsoft.com/fr-fr/asp.net/dd627564.aspx">première
+étape du tutoriel ContactManager</a>. Le but n'est pas de créer une application
+de référence, mais seulement de reprogrammer cette application en utilisant une
+base de données MongoDB pour stocker les données.</p>
+<p>Par conséquent, ce tutoriel sera un simple plagiat du tutoriel d'origine, ce
+qui me donnera l'occasion de tester l'utilisation d'une base de données MongoDB
+pour stocker les données et d'essayer la librairie NoRM repérée sur le blog de
+Rob Conery (<a href="http://blog.wekeroad.com/2010/03/04/using-mongo-with-linq">http://blog.wekeroad.com/2010/03/04/using-mongo-with-linq</a>).</p>
+<h2>Créer le projet ASP.NET MVC</h2>
+<p>Lancez Visual Studio et choisissez &quot;Fichier, Nouveau, Projet...&quot;. Lorsque la
+fenêtre &quot;Nouveau projet&quot; apparait (Figure 1), choisissez le type de projet
+&quot;Web&quot; puis le modèle &quot;ASP.NET MVC Web Application&quot; et donnez le nom
+MongoContact à votre projet avant de cliquer sur OK.</p>
+<p><em>Note: Il faut bien avoir sélectionné .NET Framework 3.5
+dans la liste déroulante en haut à droite de la fenêtre &quot;Nouveau projet&quot; sans
+quoi le modèle de projet ASP.NET MVC n'apparaîtra pas.</em></p>
+<p><img src="/public/2010/image001.jpg" alt=""></p>
+<p>Figure 1: La fenêtre de création du projet</p>
+<p>La fenêtre &quot;Create Unit Test Project&quot; apparaît (Figure 2). Vous pouvez
+utiliser cette fenêtre pour indiquer que vous souhaitez créer et ajouter un
+projet de tests unitaires à votre solution pendant que vous êtes en train de
+créer une application ASP.NET MVC. Normalement, nous n'allons pas réaliser de
+tests unitaires au cours ce tutoriel, mais il est malgré tout conseillé de
+conserver l'option &quot;Yes, create a unit test project&quot; parce qu'il est beaucoup
+plus simple de définir un projet de tests dès la création d'une solution
+ASP.NET MVC.</p>
+<p><em>Note: Étant donné que Visual Web Developer ne gère pas les
+projets de type MS Test, cette fenêtre ne vous sera proposée que si vous avez
+installé un autre framework de tests unitaires tel que NUnit.</em></p>
+<p><img src="/public/2010/image002.jpg" alt=""></p>
+<p>Figure 2: La fenêtre d'ajout d'un projet de tests unitaires</p>
+<p>L'application ASP.NET MVC apparait dans l'explorateur de solution Visual
+Studio (Figure 3). Vous pouvez constater que la solution contient 2 projets: le
+projet ASP.NET MVC lui-même et le projet de tests unitaires. Le projet MVC
+s'appelle MongoContact et le projet de tests s'appelle MongoContact.Tests.</p>
+<p><img src="/public/2010/image003.jpg" alt=""></p>
+<p>Figure 3: L'explorateur de solution</p>
+<h2>Supprimer les fichiers d'exemple</h2>
+<p>Le modèle de projet ASP.NET MVC contient des exemples d'implémentation pour
+des contrôleurs et des vues. Avant de continuer à créer notre application, vous
+devez supprimer ces fichiers. Vous pouvez les supprimer en vous rendant dans
+l'explorateur de solution, en cliquant droit sur un fichier ou un répertoire et
+en retenant l'option &quot;Delete&quot;.</p>
+<p>Vous devrez alors supprimer les fichiers suivant depuis le projet ASP.NET
+MVC:</p>
+<ul>
+<li>\Controllers\HomeController.cs</li>
+<li>\Views\Home\About.aspx</li>
+<li>\Views\Home\Index.aspx</li>
+</ul>
+<p>Ainsi que le fichier suivant depuis le projet de tests:</p>
+<ul>
+<li>\Controllers\HomeControllerTest.cs</li>
+</ul>
+<p>Une fois ces modifications terminées, vous pouvez compiler l'application en
+lançant les commandes &quot;Générer, Régénérer la solution&quot; avant d'enregistrer la
+solution MongoContact à l'aide de la commande &quot;Fichier, Enregistrer tout&quot;.</p>
+<h2>Installer MongoDB</h2>
+<p>Notre application MongoContact est une application web orientée base de
+données. Nous utiliserons donc une base de données pour stocker les
+informations de nos contacts.</p>
+<p>Le framework ASP.NET MVC fonctionne avec l'ensemble des bases de données
+modernes du marché comme Microsoft SQL Server, Oracle, MySQL et IBM DB2. Dans
+ce tutorial, nous viserons l'avant-garde de la modernité en utilisant une base
+de données NoSQL, en l'occurrence MongoDB.</p>
+<p>Par conséquent, vous allez devoir installer MongoDB sur votre ordinateur
+avant de poursuivre la réalisation de l'application de gestion de contacts.
+Pour cela, il faut se rendre sur le site internet de MongoDB à l'URL <a href="http://www.mongodb.org/">http://www.mongodb.org/</a> pour:</p>
+<ul>
+<li>Télécharger la version de MongoDB adaptée à notre système
+d'exploitation</li>
+<li>Décompacter le fichier téléchargé dans le répertoire C:\Mongo</li>
+<li>Créer le répertoire C:\Data qui est utilisé par défaut pour enregistrer les
+bases de données</li>
+<li>Lancer le programme C:\Mongo\bin\mongod.exe</li>
+</ul>
+<p>Le programme mongod.exe est le daemon pour MongoDB et une fois que vous
+l'avez lancé, vous êtes fin prêt pour travailler. Si jamais cela ne
+fonctionnait pas, c'est très certainement que vous n'avez pas récupéré la bonne
+version de MongoDB (il existe une version 32 bits et une 64 bits) ou alors que
+vous n'avez pas créé le répertoire C:\Data.</p>
+<h2>Installer le provider LINQ pour MongoDB</h2>
+<p>Il est nécessaire d'installer un pilote pour pouvoir utiliser une base de
+données MongoDB avec C#. Jusqu'à présent, il existait le projet mongodb-csharp
+(<a href="http://github.com/samus/mongodb-csharp">http://github.com/samus/mongodb-csharp</a>) pour cela, mais le but de ce
+tutoriel est d'expérimenter NoRM, une librairie LINQ pour MongoDB.</p>
+<p>À l'heure où j'écris ce tutoriel, ce pilote en est à ses toutes premières
+versions et il est téléchargeable sur GitHub. Personnellement, je suis parti de
+la version de Rob disponible à l'URL: <a href="http://github.com/robconery/NoRM">http://github.com/robconery/NoRM</a>. Une fois celui-ci récupéré, il faut
+commencer par le compiler en mode Release pour pouvoir recopier le fichier
+NoRM.dll et l'enregistrer dans un sous-répertoire &quot;lib&quot; du répertoire contenant
+notre solution MongoContact (Figure 4).</p>
+<p><img src="/public/2010/image004.jpg" alt=""></p>
+<p>Figure 4: Les répertoires de la solution MongoContact</p>
+<p>Il faut ensuite référencer ce fichier NoRM.dll au niveau du projet
+MongoContact (Figure 5).</p>
+<p><img src="/public/2010/image005.jpg" alt=""></p>
+<p>Figure 5: Ajouter une référence à LINQ to MongoDB</p>
+<p>Et pour finir, nous allons ajouter un fichier MongoSession.cs (Listing 1)
+dans le répertoire Models du projet pour y adapter le pattern UnitOfWork
+proposé par Rob Conery.</p>
+<h3>Listing 1: Models\MongoSession.cs</h3>
+<pre><code>using System;
+using System.Linq;
+using NoRM;
+using NoRM.Linq;
+
+namespace MongoContact.Models
+{
+    public class MongoSession : IDisposable
+    {
+        MongoQueryProvider _provider;
+
+        public MongoSession()
+        {
+            _provider = new MongoQueryProvider(&quot;ContactManager&quot;);
+        }
+
+        public MongoQueryProvider Provider
+        {
+            get
+            {
+                return _provider;
+            }
+        }
+
+        public IQueryable&lt;Contact&gt; Contacts
+        {
+            get { return new MongoQuery&lt;Contact&gt;(_provider); }
+        }
+
+        public T MapReduce&lt;T&gt;(string map, string reduce)
+        {
+            T result = default(T);
+            using (var mr = _provider.Server.CreateMapReduce())
+            {
+                var response = mr.Execute(new MapReduceOptions(typeof(T).Name) { Map = map, Reduce = reduce });
+                var coll = response.GetCollection&lt;MapReduceResult&gt;();
+                var r = coll.Find().FirstOrDefault();
+                result = (T)r.Value;
+            }
+            return result;
+        }
+
+        public void Add&lt;T&gt;(T item) where T : class, new()
+        {
+            _provider.DB.GetCollection&lt;T&gt;().Insert(item);
+        }
+
+        public void Update&lt;T&gt;(T item) where T : class, new()
+        {
+            _provider.DB.GetCollection&lt;T&gt;().UpdateOne(item, item);
+        }
+
+        public bool Updatable&lt;T&gt;(T item) where T : class, new()
+        {
+            return _provider.DB.GetCollection&lt;T&gt;().Updateable;
+        }
+
+        public void Drop&lt;T&gt;()
+        {
+            _provider.DB.DropCollection(typeof(T).Name);
+        }
+
+        public void Dispose()
+        {
+            _provider.Server.Dispose();
+        }
+
+    }
+}
+</code></pre>
+<p>Par rapport au code d'origine de Rob, ce code présente deux différences
+mineures:</p>
+<p>· Il utilise la base de données &quot;ContactManager&quot; au lieu de la base de
+données &quot;test&quot;,</p>
+<p>· Il travaille avec des objets de type &quot;Contact&quot; au lieu du type
+&quot;Product&quot;.</p>
+<p>Si on tente de recompiler l'application en l'état, la compilation échoue
+parce que nous n'avons pas encore défini la classe Product.</p>
+<h2>Créer le modèle de données</h2>
+<p>Dans le tutoriel ContactManager d'origine, il faut d'abord créer la base de
+données SQL Server puis lui ajouter une table Contacts et enfin générer
+automatiquement la classe Contact à l'aide d'Entity Framework. Dans le cas de
+MongoDB, nous procèderons différemment. Nous allons créer la classe Contact et
+à partir de celle-ci, nous génèrerons la table dans la base de données MongoDB
+qui sera automatiquement créée lors de la première utilisation de
+l'application.</p>
+<p>Pour créer cette classe Contact, nous ajoutons simplement un fichier
+Contact.cs (Listing 2) dans le sous-répertoire Models de l'application.</p>
+<h3>Listing 2: Models\Contact.cs</h3>
+<pre><code>using NoRM;
+
+namespace MongoContact.Models
+{
+    public class Contact
+    {
+        public ObjectId Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+
+        public Contact()
+        {
+            Id = ObjectId.NewObjectId();
+        }
+
+    }
+}
+</code></pre>
+<p>La première propriété &quot;Id&quot; est du type ObjectId. Il s'agit d'un type de
+données défini par NoRM qui sert apparemment à gérer des identifiants
+automatiques. Sa valeur est initialisée au moment de la création d'un objet
+Contact grâce à la méthode statique NewObjectId().</p>
+<p>Arrivés à ce stade, nous avons créé notre modèle de données. Nous pouvons
+alors utiliser la classe Contact pour représenter un enregistrement particulier
+de notre base de données dans notre application.</p>
+<h2>Création du contrôleur par défaut</h2>
+<p>La prochaine étape consiste à créer le contrôleur Home qui sera appelé par
+défaut par notre application ASP.NET MVC.</p>
+<p>Pour créer la classe de ce contrôleur, vous devez faire un clic-droit sur le
+répertoire Controllers dans l'explorateur de solution et choisir la commande
+&quot;Ajouter, Controller...&quot;, ce qui a pour effet de faire apparaitre la boite de
+dialogue &quot;Add Controller&quot; (Figure 6). Notez la case à cocher &quot;Add action
+methods for Create, Update, and Details scenarios&quot;. Vous devez cocher cette
+case avant de cliquer sur le bouton &quot;Add&quot; pour créer le contrôleur
+HomeController.cs.</p>
+<p><img src="/public/2010/image006.jpg" alt=""></p>
+<p>Figure 6: Ajout du contrôleur par défaut</p>
+<p>Après avoir créé le contrôleur Home, vous obtenez le code source présenté
+dans Listing 3.</p>
+<h3>Listing 3: Controllers\HomeController.cs</h3>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Mvc.Ajax;
+
+namespace MongoContact.Controllers
+{
+    public class HomeController : Controller
+    {
+        //
+        // GET: /Home/
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Home/Details/5
+
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        //
+        // GET: /Home/Create
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Home/Create
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Create(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction(&quot;Index&quot;);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //
+        // GET: /Home/Edit/5
+
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        //
+        // POST: /Home/Edit/5
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Edit(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction(&quot;Index&quot;);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+    }
+}
+</code></pre>
+<h2>Lister les contacts</h2>
+<p>Afin de lister les enregistrements depuis la table Contacts de notre base de
+données, nous devons créer une action Index() et une vue Index. Le contrôleur
+Home contient déjà une action Index(). Nous devons donc modifier cette méthode
+pour qu'elle ressemble à celle du Listing 4.</p>
+<h3>Listing 4: Controllers\HomeController.cs (action Index)</h3>
+<pre><code>using MongoContact.Models;
+...
+namespace MongoContact.Controllers
+{
+    public class HomeController : Controller
+    {
+
+        private MongoSession _session = new MongoSession();
+
+        //
+        // GET: /Home/
+
+        public ActionResult Index()
+        {
+            return View(_session.Contacts.ToList());
+        }
+
+...
+</code></pre>
+<p>Notez que la classe du contrôleur du Listing 4 contient un champ privé nommé
+_session. Ce champ _session représente les entités de notre modèle de données.
+Nous utilisons le champ _session pour communiquer avec la base de données
+MongoDB via NoRM.</p>
+<p>La méthode Index() retourne une vue représentant tous les contacts de notre
+table Contacts. L'expression _session.Contacts.ToList() retourne la liste des
+contacts en tant que liste générique.</p>
+<p>Maintenant que nous avons créé le contrôleur gérant l'Index, il nous faut
+créer la vue associée. Avant de créer la vue Index, compilez votre application
+via l'option &quot;Générer, Régénérer la solution&quot;. Vous devez toujours compiler
+votre projet avant d'ajouter une nouvelle vue afin de voir apparaître la liste
+des modèles de classes dans la fenêtre &quot;Add View&quot;.</p>
+<p><img src="/public/2010/image007.jpg" alt=""></p>
+<p>Figure 7: Ajout de la vue Index</p>
+<p>Créez la vue Index en cliquant-droit sur la méthode Index() et en
+choisissant l'option &quot;Add View...&quot; (Figure 7). Dans la fenêtre &quot;Add View&quot; qui
+apparait alors (Figure 8), cochez la case intitulée &quot;Create a strongly-typed
+view&quot; (créer une vue fortement typée). Sélectionnez la classe de données
+MongoContact.Models.Contact et retenez l'option List pour View Content. En
+choisissant ces options, cela va générer une vue affichant la liste des
+enregistrements de la table Contact.</p>
+<p><img src="/public/2010/image008.jpg" alt=""></p>
+<p>Figure 8: la fenêtre d'ajout d'une vue</p>
+<p>Lorsque vous cliquez sur le bouton &quot;Add&quot;, la vue Index du Listing 5 est
+générée pour vous. Remarquez la directive &lt;%@ Page %&gt; qui apparaît en
+haut de page. La vue Index hérite de la classe
+ViewPage&lt;IEnumerable&lt;MongoContact.Models.Contact&gt;&gt;. C'est ici que
+s'effectue notre liaison fortement typée.</p>
+<p>Le corps de notre vue Index contient une boucle foreach qui parcourt chacun
+des contacts représenté par notre modèle de classes. La valeur de chacune des
+propriétés de la classe Contact est affichée au sein d'une table HTML.</p>
+<h3>Listing 5: Views\Home\Index.aspx (généré automatiquement)</h3>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;IEnumerable&lt;MongoContact.Models.Contact&gt;&gt;&quot; %&gt;
+
+&lt;asp:Content ID=&quot;Content1&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+   Index
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Content2&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+    &lt;h2&gt;Index&lt;/h2&gt;
+
+    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;th&gt;&lt;/th&gt;
+            &lt;th&gt;
+                FirstName
+            &lt;/th&gt;
+            &lt;th&gt;
+                LastName
+            &lt;/th&gt;
+            &lt;th&gt;
+                Phone
+            &lt;/th&gt;
+            &lt;th&gt;
+                Email
+            &lt;/th&gt;
+        &lt;/tr&gt;
+
+    &lt;% foreach (var item in Model) { %&gt;
+
+        &lt;tr&gt;
+            &lt;td&gt;
+                &lt;%= Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { /* id=item.PrimaryKey */ }) %&gt; |
+                &lt;%= Html.ActionLink(&quot;Details&quot;, &quot;Details&quot;, new { /* id=item.PrimaryKey */ })%&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.FirstName) %&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.LastName) %&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.Phone) %&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.Email) %&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+
+    &lt;% } %&gt;
+
+    &lt;/table&gt;
+
+    &lt;p&gt;
+        &lt;%= Html.ActionLink(&quot;Create New&quot;, &quot;Create&quot;) %&gt;
+    &lt;/p&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Nous devons effectuer une modification à la vue Index. Comme nous ne créons
+par de vue Détails, nous pouvons retirer le lien vers celle-ci. Et pour
+l'instant, nous ne nous occuperons pas de la suppression d'un contact. Par
+conséquent, vous pouvez retirer les deux lignes de code suivantes de la vue
+Index:</p>
+<pre><code>&lt;%= Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { /* id=item.PrimaryKey */ }) %&gt; |
+&lt;%= Html.ActionLink(&quot;Delete&quot;, &quot;Delete&quot;, new { /* id=item.PrimaryKey */ }) %&gt;
+</code></pre>
+<p>Après avoir modifié la vue Index, vous pouvez lancer l'application Contact
+Manager. Pour cela, rendez-vous dans &quot;Déboguer, Démarrer le débogage&quot; ou
+appuyer simplement sur F5. La première fois que vous lancerez l'application,
+vous verrez apparaître la fenêtre de la Figure 9. Sélectionnez l'option
+&quot;Modifier le fichier Web.config pour activer le débogage&quot; et cliquez sur le
+bouton OK.</p>
+<p><em>Note: Vérifiez que le daemon &quot;mongod.exe&quot; est toujours en
+cours d'exécution avant de démarrer l'application MongoContact.</em></p>
+<p><img src="/public/2010/image009.jpg" alt=""></p>
+<p>Figure 9: Activation du débogage</p>
+<p>La vue Index (/) est retournée par défaut. Cette vue est destinée à lister
+l'ensemble des données présentes dans la table Contacts (Figure 10).</p>
+<p><img src="/public/2010/image010.jpg" alt=""></p>
+<p>Figure 10: La vue Index sans données</p>
+<p>Mais comme vous pouvez le constater, cette vue Index n'affiche rien d'autre
+que le titre des colonnes de notre liste.</p>
+<h2>Créer un jeu d'exemple</h2>
+<p>Dans la version SQL Server de ce tutoriel, la vue Index affiche bien des
+données parce qu'on avait inséré quelques enregistrements dans la table
+Contacts immédiatement après l'avoir créée.</p>
+<p>Par contre, la table Contacts de notre base de données MongoDB est encore
+vide pour l'instant. Étant donné que nous n'avons pas de logiciel pour
+administrer les bases de données MongoDB, nous allons créer quelques contacts
+directement dans l'application.</p>
+<p>Pour cela, vous pouvez modifier l'action Index à l'aide du code du Listing
+6.</p>
+<h3>Listing 6: Controllers\HomeController.cs</h3>
+<pre><code>public ActionResult Index()
+{
+    // Ajout de quelques données d'exemple
+    var count = _session.Contacts.Count();
+    if (count == 0)
+    {
+        _session.Add(new Contact { FirstName = &quot;Scott&quot;,
+                                    LastName = &quot;Guthrie&quot;,
+                                    Phone = &quot;555-444-5556&quot;,
+                                    Email = &quot;scott@somewhere.com&quot; });
+        _session.Add(new Contact { FirstName = &quot;Phil&quot;,
+                                    LastName = &quot;Haack&quot;,
+                                    Phone = &quot;206-777-5555&quot;,
+                                    Email = &quot;phil@somewhere.com&quot; });
+        _session.Add(new Contact { FirstName = &quot;Stephen&quot;,
+                                    LastName = &quot;Walther&quot;,
+                                    Phone = &quot;206-555-8988&quot;,
+                                    Email = &quot;steve@somewhere.com&quot; });
+        _session.Add(new Contact { FirstName = &quot;Eilon&quot;,
+                                    LastName = &quot;Lipton&quot;,
+                                    Phone = &quot;415-777-5555&quot;,
+                                    Email = &quot;eilon@somewhere.com&quot; });
+        _session.Add(new Contact { FirstName = &quot;Scott&quot;,
+                                    LastName = &quot;Hanselman&quot;,
+                                    Phone = &quot;555-444-5555&quot;,
+                                    Email = &quot;scottha@somewhere.com&quot; });
+        _session.Add(new Contact { FirstName = &quot;Rob&quot;,
+                                    LastName = &quot;Conery&quot;,
+                                    Phone = &quot;333-899-9999&quot;,
+                                    Email = &quot;rob@somewhere.com&quot; });
+    }
+
+    // Renvoie la vue pour afficher la liste des contacts
+    return View(_session.Contacts.ToList());
+}
+</code></pre>
+<p>Ce code commence par compter le nombre de contacts présents dans la base de
+données. Dans le cas où la table des contacts est vide, il ajoute quelques
+contacts pour que la vue Index ait quelque chose à afficher.</p>
+<p>Nous pouvons maintenant relancer l'application MongoContact et cette fois
+nous obtenons le résultat reproduit à la Figure 11.</p>
+<p><img src="/public/2010/image011.jpg" alt=""></p>
+<p>Figure 11: La vue Index avec quelques données</p>
+<p>Remarquez que la vue Index inclus un lien intitulé &quot;Create New&quot; (Créer un
+nouveau contact) au bas de la vue. Dans la section suivante, vous allez
+apprendre comment créer de nouveaux contacts.</p>
+<p><em>Note: Si vous le souhaitez, vous pouvez supprimer le code
+qui a servi à créer quelques contacts d'exemple avant de continuer ce
+tutoriel.</em></p>
+<h2>Créer de nouveaux contacts</h2>
+<p>Pour permettre aux utilisateurs de créer de nouveaux contacts, nous devons
+ajouter deux actions Create() au contrôleur par défaut (Home). Nous devons en
+effet créer une première action Create() retournant un formulaire HTML pour
+nous laisser saisir les informations du nouveau contact à créer. Ensuite, il
+nous faut une deuxième action Create() qui s'occupera d'insérer ces
+informations saisies dans la base de données.</p>
+<p>La méthode Create() que nous devons ajouter au contrôleur Home se trouve
+dans le Listing 7.</p>
+<h3>Listing 7: Controllers\HomeController.cs (avec les méthodes Create)</h3>
+<pre><code>//
+// GET: /Home/Create
+public ActionResult Create()
+{
+    return View();
+}
+
+//
+// POST: /Home/Create
+[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Create([Bind(Exclude = &quot;Id&quot;)] Contact contactToCreate)
+{
+    if (!ModelState.IsValid)
+        return View();
+
+    try
+    {
+        _session.Add&lt;Contact&gt;(contactToCreate);
+        return RedirectToAction(&quot;Index&quot;);
+    }
+    catch
+    {
+        return View();
+    }
+}
+</code></pre>
+<p>La première méthode Create() peut être appelée avec une requête HTTP GET
+tant dis que la seconde méthode ne pourra être appelée que via un HTTP POST. En
+d'autres termes, la seconde méthode Create() ne peut être appelée uniquement
+lorsque nous allons soumettre le formulaire HTML. La première méthode s'occupe
+uniquement de retourner une vue contenant le HTML nécessaire à la saisie des
+informations d'un nouveau contact. C'est donc bien la seconde méthode la plus
+intéressante: elle s'occupe d'ajouter réellement le contact dans la base.</p>
+<p>Vous remarquerez aussi que la deuxième méthode a été modifiée pour accepter
+une instance de la classe Contact. Grâce à cela, les valeurs du formulaire HTML
+soumise par le POST sont automatiquement associées à celles de la classe
+Contact par le framework ASP.NET MVC. Chaque valeur du formulaire HTML sera
+donc assignée à une des propriétés du Contact passé en paramètre.</p>
+<p>Notez également que le paramètre de type Contact est décoré avec l'attribut
+[Bind]. Cet attribut est utilisé afin d'exclure la propriété Id de la classe
+Contact du binding automatique. En effet, cette propriété représente une
+propriété d'identité et nous ne souhaitons pas positionner cette propriété
+manuellement mais bien laisser la base de données s'en occuper.</p>
+<p>Dans le corps de la méthode Create(), la librairie NoRM est utilisé pour
+insérer l'instance du nouveau Contact dans la base de données. Le nouveau
+contact est simplement ajouté à la session, ce qui a pour effet de le
+sauvegarder dans la base de données MongoDB.</p>
+<p>Vous pouvez générer un formulaire HTML pour créer de nouveaux contacts en
+cliquant-droit sur l'une des deux méthodes Create() et en choisissant l'option
+Add View (Figure 12).</p>
+<p><img src="/public/2010/image012.jpg" alt=""></p>
+<p>Figure 12: Ajout de la vue de création de contacts</p>
+<p>Dans la fenêtre d'ajout d'une vue, choisissez la classe
+MongoContact.Models.Contact et l'option création (Create) comme dans la Figure
+13. Lorsque vous cliquez sur le bouton Add, une vue de création est
+automatiquement générée pour vous.</p>
+<p><img src="/public/2010/image013.jpg" alt=""></p>
+<p>Figure 13: configuration de la vue d'ajout d'un contact</p>
+<p>La vue de création contient des champs pour chacune des propriétés de la
+classe Contact. Vous pouvez constater que la propriété &quot;Id&quot; n'a pas été générée
+dans le code présenté au Listing 8 parce qu'elle est de type ObjectId.</p>
+<h3>Listing 8: Views\Home\Create.aspx</h3>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;MongoContact.Models.Contact&gt;&quot; %&gt;
+
+&lt;asp:Content ID=&quot;Content1&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+   Create
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Content2&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+    &lt;h2&gt;Create&lt;/h2&gt;
+
+    &lt;%= Html.ValidationSummary(&quot;Create was unsuccessful. Please correct the errors and try again.&quot;) %&gt;
+
+    &lt;% using (Html.BeginForm()) { %&gt;
+
+        &lt;fieldset&gt;
+            &lt;legend&gt;Fields&lt;/legend&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;FirstName&quot;&gt;FirstName:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;FirstName&quot;) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;FirstName&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;LastName&quot;&gt;LastName:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;LastName&quot;) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;LastName&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;Phone&quot;&gt;Phone:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;Phone&quot;) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;Phone&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;Email&quot;&gt;Email:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;Email&quot;) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;Email&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;Create&quot; /&gt;
+            &lt;/p&gt;
+        &lt;/fieldset&gt;
+
+    &lt;% } %&gt;
+
+    &lt;div&gt;
+        &lt;%=Html.ActionLink(&quot;Back to List&quot;, &quot;Index&quot;) %&gt;
+    &lt;/div&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Maintenant que vous avez modifié les méthodes Create() et ajouté la vue
+correspondante, vous pouvez lancer l'application MongoContact et créer de
+nouveaux contacts. Cliquez sur le lien &quot;Create New&quot; en bas de la page Index
+pour vous rendre sur la vue de création. Vous devriez avoir un résultat
+similaire à la Figure 14.</p>
+<p><img src="/public/2010/image014.jpg" alt=""></p>
+<p>Figure 14: la vue de création de contacts</p>
+<p>Une fois que vous cliquez sur le bouton &quot;Create&quot;, la vue Index est
+réaffichée et vous pouvez vérifier qu'elle contient désormais le nouveau
+contact que vous venez juste de créer (Figure 15).</p>
+<p><img src="/public/2010/image015.jpg" alt=""></p>
+<p>Figure 15: La vue Index avec le nouveau contact</p>
+<h2>Editer les contacts</h2>
+<p>Avant de pouvoir gérer la modification d'une fiche contact, il faut
+commencer par ajouter un lien sur la liste des contacts qui permette d'appeler
+cette fonctionnalité. Pour cela, il faut modifier la première colonne du
+tableau dans la vue Index (Listing 9) et y utiliser le helper Html.ActionLink()
+pour appeler l'action Edit.</p>
+<h3>Listing 9: Views\Home\Index.aspx (1° essai)</h3>
+<pre><code>&lt;td&gt;
+    &lt;%= Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { id = item.Id })%&gt;
+&lt;/td&gt;
+</code></pre>
+<p>Le problème, c'est qu'étant donné que la propriété &quot;Id&quot; est de type
+ObjectId, cela ne fonctionne pas comme on pourrait l'espérer. En effet, les
+liens obtenus ne contiennent pas l'identifiant du contact et ils sont de la
+forme: &quot;/Home/Edit/NoRM.ObjectId&quot;.</p>
+<p>Et ça ne fonctionne pas mieux en essayant avec Id.ToString() ou
+Id.Value...</p>
+<p>Pour éviter de passer trop de temps pour trouver la &quot;bonne&quot; façon de faire,
+nous allons simplement créer une nouvelle classe ContactExtensions dans le
+répertoire Models (Listing 10) et y ajouter une méthode d'extension IdString()
+qui permet de transformer la propriété &quot;Id&quot; en chaine de caractères:</p>
+<h3>Listing 10: Models\ContactExtension.cs</h3>
+<pre><code>using System;
+
+namespace MongoContact.Models
+{
+    public static class ContactExtension
+    {
+        public static string IdString(this Contact c)
+        {
+            var result = BitConverter.ToString(c.Id.Value);
+            result = result.Replace(&quot;-&quot;, string.Empty).ToLower();
+            return result;
+        }
+    }
+}
+</code></pre>
+<p>De cette façon, il est possible de remettre à jour la vue Index (Listing 11)
+et cette fois-ci utiliser item.IdString() comme paramètre du helper
+Html.ActionLink().</p>
+<h3>Listing 11: Views\Home\Index.aspx (corrigé)</h3>
+<pre><code>&lt;%@ Import namespace=&quot;MongoContact.Models&quot; %&gt;
+...
+    &lt;td&gt;
+        &lt;%= Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { id = item.IdString() })%&gt;
+    &lt;/td&gt;
+</code></pre>
+<p>Une fois ce bricolage terminé, la façon de gérer la modification d'un
+contact est très similaire à ce qui a été fait pour la création d'un nouveau
+contact. Tout d'abord, il faut ajouter une méthode Edit() comme dans le Listing
+12 pour afficher le formulaire de modification du contact sélectionné.</p>
+<h3>Listing 12: Controllers\HomeController.cs (avec la méthode GET Edit)</h3>
+<pre><code>using NoRM;
+...
+
+//
+// GET: /Home/Edit/5
+
+public ActionResult Edit(string id)
+{
+    ObjectId oid = new ObjectId(id);
+
+    // LINQ ne fonctionne pas avec un ObjectId :(
+    var contactToEdit = (from c in _session.Contacts
+                         where c.Id == oid
+                         select c).FirstOrDefault();
+
+    contactToEdit = _session.Provider.DB.GetCollection&lt;Contact&gt;().Find(new { Id = oid }).FirstOrDefault();
+
+    return View(contactToEdit);
+}
+</code></pre>
+<p>Cette méthode Edit() est invoquée via une opération de type HTTP GET. Un
+paramètre Id est passé à cette méthode représentant l'identifiant de
+l'enregistrement devant être édité. Ce paramètre est tout d'abord transformé en
+ObjectId puis utilisé par NoRM pour retrouver le contact correspondant à cette
+identifiant. Ensuite, une vue contenant un formulaire HTML permettant d'éditer
+cet enregistrement est retournée.</p>
+<p><em>Note: Pour l'instant, la version de NoRM employée ne permet
+pas d'utiliser des ObjectId dans les requêtes LINQ. Par conséquent, le contact
+est retrouvé en passant par les objets collections.</em></p>
+<p>De manière analogue à la création d'un contact, vous pouvez ensuite générer
+une vue contenant le formulaire d'édition en cliquant-droit sur la méthode
+Edit() et en choisissant l'option Add View. Dans la fenêtre d'ajout d'une vue,
+sélectionnez la classe MongoContact.Models.Contact et la valeur Edit pour View
+content (Figure 16).</p>
+<p><img src="/public/2010/image016.jpg" alt=""></p>
+<p>Figure 16: Ajout d'une vue d'édition</p>
+<p>Lorsque vous cliquez sur bouton Add, une nouvelle vue d'édition est générée
+automatiquement pour vous. Le formulaire HTML (Listing 13) qui est généré
+contient des champs correspondant à nouveau à chacune des propriétés de la
+classe Contact.</p>
+<h3>Listing 13: Views\Home\Edit.aspx</h3>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;MongoContact.Models.Contact&gt;&quot; %&gt;
+
+&lt;asp:Content ID=&quot;Content1&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+   Edit
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Content2&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+    &lt;h2&gt;Edit&lt;/h2&gt;
+
+    &lt;%= Html.ValidationSummary(&quot;Edit was unsuccessful. Please correct the errors and try again.&quot;) %&gt;
+
+    &lt;% using (Html.BeginForm()) { %&gt;
+
+        &lt;fieldset&gt;
+            &lt;legend&gt;Fields&lt;/legend&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;FirstName&quot;&gt;FirstName:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;FirstName&quot;, Model.FirstName) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;FirstName&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;LastName&quot;&gt;LastName:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;LastName&quot;, Model.LastName) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;LastName&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;Phone&quot;&gt;Phone:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;Phone&quot;, Model.Phone) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;Phone&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;label for=&quot;Email&quot;&gt;Email:&lt;/label&gt;
+                &lt;%= Html.TextBox(&quot;Email&quot;, Model.Email) %&gt;
+                &lt;%= Html.ValidationMessage(&quot;Email&quot;, &quot;*&quot;) %&gt;
+            &lt;/p&gt;
+            &lt;p&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;Save&quot; /&gt;
+            &lt;/p&gt;
+        &lt;/fieldset&gt;
+
+    &lt;% } %&gt;
+
+    &lt;div&gt;
+        &lt;%=Html.ActionLink(&quot;Back to List&quot;, &quot;Index&quot;) %&gt;
+    &lt;/div&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Après ces deux modifications, vous pouvez désormais lancer l'application et
+cliquer sur le lien &quot;Edit&quot; dans la liste des contacts. Cela a pour effet
+d'afficher un formulaire (Figure 17) qui vous permet de mettre à jour la fiche
+de ce contact.</p>
+<p><img src="/public/2010/image017.jpg" alt=""></p>
+<p>Figure 17: la vue de mise à jour des contacts</p>
+<p>Mais pour l'instant, nous ne pouvons que cliquer sur le lien &quot;Back to list&quot;
+puisque nous n'avons pas encore programmé l'action Edit en mode POST. Pour
+cela, vous devez recopier le code du Listing 14.</p>
+<h3>Listing 14: Controllers\HomeController.cs (avec la méthode POST Edit)</h3>
+<pre><code>//
+// POST: /Home/Edit/5
+
+[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Edit(string id, [Bind(Exclude = &quot;Id&quot;)] Contact contactToEdit)
+{
+    if (!ModelState.IsValid)
+        return View();
+
+    try
+    {
+        ObjectId oid = new ObjectId(id);
+        var originalContact = _session.Provider.Server.GetCollection&lt;Contact&gt;().Find(new { Id = oid }).FirstOrDefault();
+
+        contactToEdit.Id = new ObjectId(id);
+        _session.Update(originalContact, contactToEdit);
+
+        return RedirectToAction(&quot;Index&quot;);
+    }
+    catch
+    {
+        return View();
+    }
+}
+</code></pre>
+<p>Cette seconde méthode Edit() s'occupe de la mise à jour des données vers la
+base. Elle accepte une instance de la classe Contact comme paramètre. A
+nouveau, le framework ASP.NET MVC effectue une liaison automatique entre les
+valeurs des champs saisis dans le formulaire d'édition et les propriétés de la
+classe Contact.</p>
+<p>Comme lors de la création d'un contact, NoRM est utilisé pour sauver le
+contact modifié dans la base de données. Pour cela, le contact original doit
+d'abord être retrouvé depuis la base. Ensuite, la méthode Update() définie au
+niveau de la classe MongoSession est appelée pour enregistrer les changements
+du contact en mémoire et les faire persister au niveau de la base de
+données.</p>
+<p>Toutefois, pour que cela fonctionne réellement, il faut compléter la classe
+MongoSession empruntée à Rob et ajouter une surcharge à la méthode Update
+qu'elle contient d'origine (Listing 15).</p>
+<h3>Listing 15: Models\MongoSession.cs (extrait)</h3>
+<pre><code>public void Update&lt;T&gt;(T item) where T : class, new()
+{
+    _provider.DB.GetCollection&lt;T&gt;().UpdateOne(item, item);
+}
+
+public void Update&lt;T&gt;(T match, T value) where T : class, new()
+{
+    _provider.DB.GetCollection&lt;T&gt;().UpdateOne(match, value);
+}
+</code></pre>
+<p>En effet, un simple &quot;_session.Update(contactToEdit)&quot; ne suffit pas pour
+mettre à jour la fiche contact. Pour que la modification soit enregistrée, il
+est nécessaire de faire passer la fiche d'origine et la fiche modifiée à la
+méthode UpdateOne() sous-jacente.</p>
+<p>Et maintenant, il devient possible de modifier une fiche contact (Figure
+18).</p>
+<p><img src="/public/2010/image018.jpg" alt=""></p>
+<p>Figure 18: modification d'un contact</p>
+<p>Puis, après voir cliqué sur le bouton &quot;Save&quot;, la vue Index est réaffichée et
+l'adresse email du contact a bel et bien été modifiée (Figure 19).</p>
+<p><img src="/public/2010/image019.jpg" alt=""></p>
+<p>Figure 19: La vue Index avec le contact mis à jour</p>
+<h2>Suppression d'un contact</h2>
+<p>Si vous souhaitez supprimer des contacts alors vous devez ajouter deux
+méthodes d'actions Delete() au contrôleur Home (Listing 16). La première action
+Delete() affiche un formulaire de confirmation de suppression. La seconde
+action Delete() s'occupe de réellement supprimer l'enregistrement.</p>
+<h3>Listing 16: Controllers\HomeController.cs</h3>
+<pre><code>//
+// GET: /Home/Delete/5
+
+public ActionResult Delete(string id)
+{
+    ObjectId oid = new ObjectId(id);
+    var contactToDelete = _session.Provider.DB.GetCollection&lt;Contact&gt;().Find(new { Id = oid }).FirstOrDefault();
+
+    return View(contactToDelete);
+}
+
+//
+// POST: /Home/Delete/5
+
+[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Delete(string id, string confirmButton)
+{
+    try
+    {
+        ObjectId oid = new ObjectId(id);
+        var contactToDelete = _session.Provider.DB.GetCollection&lt;Contact&gt;().Find(new { Id = oid }).FirstOrDefault();
+
+        _session.Delete(contactToDelete);
+
+        return RedirectToAction(&quot;Index&quot;);
+    }
+    catch
+    {
+        return View();
+    }
+}
+</code></pre>
+<p>La première méthode Delete() sert à renvoyer un formulaire pour que
+l'utilisateur confirme qu'il souhaite supprimer le contact. La seconde méthode
+Delete() s'occupe quant à elle d'effectuer l'opération de suppression dans la
+base de données. Une fois le contact original retrouvé depuis la base de
+données, la méthode Delete () de NoRM est appelée pour effectuer la
+suppression.</p>
+<p>Cette fois encore, il est nécessaire de compléter la classe MongoSession.cs
+(Listing 17) pour faciliter l'appel de la méthode Delete.</p>
+<h3>Listing 17: Models\MongoSession.cs (méthode Delete)</h3>
+<pre><code>public void Delete&lt;T&gt;(T item) where T : class, new()
+{
+    _provider.DB.GetCollection&lt;T&gt;().Delete(item);
+}
+</code></pre>
+<p>Ensuite, pour permettre à l'utilisateur de supprimer un contact, il faut
+modifier la vue Index pour qu'elle contienne un lien permettant la suppression
+d'un enregistrement (Listing 18). Pour cela, il faut ajouter le code suivant
+dans la cellule qui contient déjà le lien pour la modification.</p>
+<h3>Listing 18: Views\Home\Index.aspx (lien Delete)</h3>
+<pre><code>&lt;td&gt;
+    &lt;%= Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { id = item.IdString() })%&gt;
+    | &lt;%= Html.ActionLink(&quot;Delete&quot;, &quot;Delete&quot;, new { id = item.IdString() })%&gt;
+&lt;/td&gt;
+</code></pre>
+<p>Si vous relancez l'application, vous pouvez constater que la liste des
+contacts (Figure 20) contient désormais un lien &quot;Delete&quot; sur chaque ligne.</p>
+<p><img src="/public/2010/image020.jpg" alt=""></p>
+<p>Figure 20: La vue Index avec le lien de suppression</p>
+<p>Maintenant, il nous faut créer la vue de confirmation pour la suppression.
+Cliquez-droit sur la méthode Delete() dans le contrôleur Home et choisissez d'y
+ajouter une vue. La fenêtre classique d'ajout de vue apparaît (Figure 21).</p>
+<p>Contrairement aux vues pour lister, créer et éditer les vues, nous n'aurons
+pas ici la possibilité de créer directement une vue de suppression. À la place,
+choisissez comme toujours la classe MongoContact.Models.Contact mais cette fois
+sélectionnez la valeur Empty (vide) pour View content. Le fait de choisir une
+vue vide nous obligera simplement à créer le contenue de la vue nous-mêmes.</p>
+<p><img src="/public/2010/image021.jpg" alt=""></p>
+<p>Figure 21: Ajout d'une vue de confirmation de suppression</p>
+<p>Le contenu de la vue Delete est présent dans le Listing 19. Cette vue
+contient un formulaire demandant si oui ou non ce contact doit être
+supprimé.</p>
+<h3>Listing 19: Views\Home\Delete.aspx</h3>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;MongoContact.Models.Contact&gt;&quot; %&gt;
+&lt;%@ Import namespace=&quot;MongoContact.Models&quot; %&gt;
+
+&lt;asp:Content ID=&quot;Content1&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+   Delete
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Content2&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+   &lt;h2&gt;Delete&lt;/h2&gt;
+
+    &lt;p&gt;
+        Are you sure that you want to delete the entry for
+        &lt;%= Model.FirstName %&gt; &lt;%= Model.LastName %&gt;?
+    &lt;/p&gt;
+
+    &lt;% using (Html.BeginForm(new { Id = Model.IdString() }))
+    { %&gt;
+        &lt;p&gt;
+            &lt;input type=&quot;submit&quot; value=&quot;Delete&quot; /&gt;
+        &lt;/p&gt;
+    &lt;% } %&gt;
+
+    &lt;div&gt;
+        &lt;%=Html.ActionLink(&quot;Back to List&quot;, &quot;Index&quot;) %&gt;
+    &lt;/div&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p><em>Note: Il est nécessaire de faire un import du namespace
+MongoContact.Models en début de cette vue pour pouvoir utiliser la méthode
+d'extension IdString() destinée à faire passer l'identifiant du contact à
+supprimer à la méthode HTTP POST Delete().</em></p>
+<p>Nous pouvons alors relancer l'application et demander la suppression d'un
+contact (Figure 22).</p>
+<p><img src="/public/2010/image022.jpg" alt=""></p>
+<p>Figure 22: La vue pour confirmer la suppression d'un contact</p>
+<p>Lorsque nous confirmons que nous voulons supprimer ce contact en cliquant
+sur le bouton &quot;Delete&quot;, l'enregistrement est alors supprimé de la base de
+données comme vous pouvez le constater lorsque la liste des contacts réapparait
+(Figure 23).</p>
+<p><img src="/public/2010/image023.jpg" alt=""></p>
+<p>Figure 23: La vue Index sans le contact supprimé</p>
+<h2>Conclusion</h2>
+<p>Dans ce tutoriel, nous avons créé une application basique de gestion de
+contacts de manière très rapide. Nous avons utilisé NoRM pour lister, créer,
+éditer et supprimer des enregistrements de type contact dans une base de
+données MongoDB.</p>
+<p>En d'autres termes, bien que NoRM en soit à ses tout débuts, nous avons pu
+effectuer toutes les opérations de base d'une application web connectée à une
+base de données, à peu près aussi simplement qu'en utilisant Entity Framework
+pour travailler avec une base de données SQL Server.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/03/24/contact-manager-mongo-db-norm/" hreflang="fr-FR">Contact Manager avec MongoDB et NoRM</a>
+  <a rel="next" href="/2010/04/02/faire-fonctionner-aspnetmvc-iis-6/" hreflang="fr-FR">Faire fonctionner ASP.NET MVC sur IIS 6</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

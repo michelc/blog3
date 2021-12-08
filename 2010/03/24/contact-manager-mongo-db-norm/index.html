@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact Manager avec MongoDB et NoRM - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/03/24/contact-manager-mongo-db-norm/" />
+<meta property="og:title" content="Contact Manager avec MongoDB et NoRM" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/03/24/contact-manager-mongo-db-norm/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-03-24T20:09:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-03-24T20:09:00.000Z","datePublished":"2010-03-24T20:09:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/03/24/contact-manager-mongo-db-norm/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/03/24/contact-manager-mongo-db-norm/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/03/24/contact-manager-mongo-db-norm/">Contact Manager avec MongoDB et NoRM</a>
+    </h1>
+    <p>
+      <span>2010-03-24</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Maintenant que j'ai enfin expédié mon billet consacré au portage hyper
+passionnant de l'application <a href="/2010/03/23/porter-contact-manager-nhibernate/">ContactManager sous NHibernate</a>, je peux enfin revenir à des
+trucs beaucoup plus amusants.</p>
+<p>Ça faisait un petit moment que j'avais envie de tester pour de bon une de
+ces nouvelles bases de données NoSQL dont on nous rabat les oreilles ces
+derniers temps.</p>
+<p>Mais bon, ça demande du temps et il faut choisir quelle NoBase de données
+employer et il faut qu'il y ait des pilotes pour C# et il y a <a href="http://www.asp.net/mvc/application-development/">plein</a>
+d'<a href="http://www.subsonicproject.com/">autres</a> <a href="http://hginit.com/">trucs</a> à <a href="http://msdn.microsoft.com/fr-fr/library/bb397926.aspx">faire</a>... Et un soir, Rob Conery sort un billet où non seulement il
+explique comment <a href="http://blog.wekeroad.com/2010/03/04/using-mongo-with-linq">utiliser une base de données MongoDB avec LINQ</a> mais en plus il
+présente le &quot;provider&quot; NoRM sur lequel il est en train de travailler avec
+quelques autres.</p>
+<p>C'est trop beau pour être vrai =&gt; je télécharge, je trifouille et
+j'arrive à peu près à faire marcher ses bouts d'exemples.</p>
+<p>C'est pas compliqué ! J'ai plus qu'à transformer Contact Manager pour
+qu'il fonctionne avec MongoDB et NoRM !!!</p>
+<p>Oulla! Ne nous emballons pas. NoRM est en cours de développement donc y'a
+pas forcément tout ce qu'il faut et surtout j'ai pas encore tout assimilé en
+matière de base de données documents.</p>
+<p>C'est pas compliqué ! J'ai qu'à refaire seulement la toute première
+étape !!!</p>
+<p>Le faire, c'est bien et ça va même assez vite. Le dire, c'est mieux mais
+c'est un peu plus long.</p>
+<p>Et donc, après quelques heures d'efforts, voici mon tutorial sur le <a href="/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/">développement d'une application de gestion de contacts avec
+ASP.NET MVC, MongoDB et NoRM</a> qui reprend quasiment mot à mot la première
+étape du tutoriel de Microsoft. Comme l'original, ce tutoriel présente donc
+comment créer une application de gestion de contact de la façon la plus simple
+qui soit. Tout au long de celui-ci, vous pourrez voir comment mettre en place
+le support d'opérations CRUD classiques vers une base de données MongoDB :
+création, lecture, mise à jour et suppression d'enregistrements.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/03/23/porter-contact-manager-nhibernate/" hreflang="fr-FR">Porter Contact Manager sous NHibernate</a>
+  <a rel="next" href="/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/" hreflang="fr-FR">Développer une application de contacts avec ASP.NET MVC et MongoDB</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

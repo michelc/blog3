@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bricks.configSource - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/09/22/bricks-configsource/" />
+<meta property="og:title" content="Bricks.configSource" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/09/22/bricks-configsource/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-09-22T14:33:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-09-22T14:33:00.000Z","datePublished":"2004-09-22T14:33:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2004/09/22/bricks-configsource/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/09/22/bricks-configsource/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/09/22/bricks-configsource/">Bricks.configSource</a>
+    </h1>
+    <p>
+      <span>2004-09-22</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ajouté le champ configSource à la table Bricks pour définir l'url du
+contrôle .ascx à utiliser pour paramétrer le module. Dans le cas du module
+Documents par exemple, cela permet d'avoir à la fois un contrôle pour la
+modification du contenu (ajout, modification et suppression d'un document) et
+un autre pour le paramétrage (définir la liste des catégories possible, le mode
+de publication par défaut...).</p>
+<ul>
+<li>/Core/Components/Bricks.cs : ajout de la propriété configSource à la
+classe Brick</li>
+<li>/Core/Components/Bricks.cs : prise en compte du champ configSource
+dans la classe BricksDB</li>
+<li>/Core/Pages/editBricks.ascx.  - : gestion du champ configSource</li>
+<li>/Core/Setup/maj_Portal.sql : modification script création table
+Bricks</li>
+<li>/Core/Setup/maj_Temp.sql : instructions pour màj de la table
+Bricks</li>
+<li>mise à jour manuelle du contenu de la table Bricks</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/09/22/bricks-cachetime/" hreflang="fr-FR">Bricks.cacheTime</a>
+  <a rel="next" href="/2004/09/22/modules-configroles/" hreflang="fr-FR">Modules.configRoles</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

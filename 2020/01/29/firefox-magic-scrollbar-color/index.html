@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hey! Firefox scrollbar-color is magical - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/01/29/firefox-magic-scrollbar-color/" />
+<meta property="og:title" content="Hey! Firefox scrollbar-color is magical" />
+<meta name="description" content="With Firefox, the scrollbar for my Solitaire-Play games is in the «green» tones, like the rest of the website, but I don&#39;t know why..." />
+<meta property="og:description" content="With Firefox, the scrollbar for my Solitaire-Play games is in the «green» tones, like the rest of the website, but I don&#39;t know why..." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/01/29/firefox-magic-scrollbar-color/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/firefox-scrollbar-color.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-01-29T10:38:22.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-01-29T10:38:22.000Z","datePublished":"2020-01-29T10:38:22.000Z","description":"With Firefox, the scrollbar for my Solitaire-Play games is in the «green» tones, like the rest of the website, but I don't know why...","inLanguage":"en-US","url":"https://blog3.pagesd.info/2020/01/29/firefox-magic-scrollbar-color/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/firefox-scrollbar-color.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/01/29/firefox-magic-scrollbar-color/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/firefox-scrollbar-color.jpg" alt="Look! Scrollbar is green" /><figcaption><a href="https://www.solitaire-play.com/klondike-turn-three/">Look! Scrollbar is green</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/01/29/firefox-magic-scrollbar-color/">Hey! Firefox scrollbar-color is magical</a>
+    </h1>
+    <p>
+      <span>2020-01-29</span>
+      <span>#livres</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I think so. I just came back from my site <a href="https://www.solitaire-play.com/">Solitaire-Play</a> and I realized that the vertical scrollbar is &quot;green&quot;, which is the dominant color of any solitaire game. Cool!</p>
+<p>I check with Chrome and there, the scrollbar is &quot;gray&quot; as usual. No matter where I look, I can't find anything to explain this behavior.</p>
+<p>According to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color">MDN web docs</a>, it's possible to define the color used for the scrollbar with the experimental property <code>scrollbar-color</code> :</p>
+<pre><code class="language-css">scrollbar-color: auto | dark | light | &lt;color&gt; &lt;color&gt;;
+</code></pre>
+<p>And to define which colour to use, the following values are available:</p>
+<ul>
+<li><code>auto</code> =&gt; default platform rendering for the track portion of the scrollbar, in the absence of any other related scrollbar color properties. (so &quot;gray&quot; in my case)</li>
+<li><code>dark</code> =&gt; show a dark scrollbar, which can be either a dark variant of scrollbar provided by the platform, or a custom scrollbar with dark colors</li>
+<li><code>light</code> =&gt; show a light scrollbar, which can be either a light variant of scrollbar provided by the platform, or a custom scrollbar with light colors</li>
+<li><code>&lt;color&gt; &lt;color&gt;</code> =&gt; the two colours to be applied (&quot;yellow&quot; and &quot;magenta&quot; for example ...)</li>
+</ul>
+<p>So no <code>magic</code> value to tell the browser to use colors that will match the general color theme of the site...</p>
+<p>And I swear that I have no <code>scrollbar</code> or <code>scrollbar-color</code> property in my CSS and nothing redefined in the &quot;normalize.css&quot; I use.</p>
+<p>Since I haven't yet set up a &quot;manifest.json&quot; file, I don't have any &quot;theme_color&quot; property that could have been a good idea to follow.</p>
+<p>For now, I'm going to put this in an added bonus of switching from Chrome to Firefox. We don't see any other explanation...</p>
+<div class="encart">
+<p>Version en français : <a href="/2020/01/28/firefox-couleur-scrollbar-magique/" hreflang="fr-FR">Waouh ! La scrollbar de Firefox est magique</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/01/27/firefox-couleur-scrollbar-magique/" hreflang="fr-FR">Waouh ! La scrollbar de Firefox est magique</a>
+  <a rel="next" href="/2020/02/04/optimize-multiple-insert-oracle/" hreflang="fr-FR">Optimize multiple INSERTs (for Oracle)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

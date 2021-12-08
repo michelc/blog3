@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ASP.NET MVC et les tests unitaires - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/09/28/aspnetmvc-tests-unitaires/" />
+<meta property="og:title" content="ASP.NET MVC et les tests unitaires" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/09/28/aspnetmvc-tests-unitaires/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-09-28T17:33:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-09-28T17:33:00.000Z","datePublished":"2009-09-28T17:33:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/09/28/aspnetmvc-tests-unitaires/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/09/28/aspnetmvc-tests-unitaires/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/09/28/aspnetmvc-tests-unitaires/">ASP.NET MVC et les tests unitaires</a>
+    </h1>
+    <p>
+      <span>2009-09-28</span>
+      <span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La <a href="http://msdn.microsoft.com/fr-fr/asp.net/dd876824.aspx" title="Créer des tests unitaires">cinquième étape</a> du tutoriel pour
+développer une application de gestion de contacts avec ASP.NET MVC concerne les
+tests unitaires : à quoi cela sert, comment les utiliser et les créer...
+puis aborde la réalisation d'un premier jeu de tests unitaires pour contrôler
+le bon fonctionnement de la couche de service et un autre pour vérifier le
+fonctionnement du contrôleur.</p>
+<h2>Rendre NUnit compatible avec Visual Studio Unit Test</h2>
+<p>Pour commencer, comme je fais mes essais avec Visual Web Developer et pas
+Visual Studio 2008, je ne peux pas utiliser Visual Studio Unit Test, le
+framework de test par défaut. A sa place, j'utilise NUnit et pour l'instant je
+n'ai pas rencontré trop de problème (mais il est vrai que je n'ai pas encore
+fait grand chose...).</p>
+<p>Ce coup-ci, cela devient un peu plus sérieux et il s'agit dans un premier
+temps de saisir une ou deux pages de tests unitaires pour tester le service
+ContactManagerService. J'ai carrément triché et fait du copié / collé pour
+d'avoir tout à saisir moi-même, mais le plus embêtant, c'est que le code
+proposé par le tutoriel ne fonctionne pas avec NUnit :(</p>
+<p>Premier truc pas si compliqué à trouver : il faut supprimer la
+référence au framework Visual Studio Unit Test</p>
+<pre><code>using Microsoft.VisualStudio.TestTools.UnitTesting;
+</code></pre>
+<p>et la remplacer par une référence à NUnit :</p>
+<pre><code>using NUnit.Framework;
+</code></pre>
+<p>C'était malin, mais pas suffisant... Le couple VWD + NUnit n'aime pas du
+tout les attributs [TestClass], [TestInitialize] et [TestMethod] et me le fait
+savoir :</p>
+<ul>
+<li>The type or namespace name 'TestClassAttribute' could not be found</li>
+<li>The type or namespace name 'TestClass' could not be found</li>
+<li>The type or namespace name 'TestInitializeAttribute' could not be
+found</li>
+<li>The type or namespace name 'TestInitialize' could not be found</li>
+<li>The type or namespace name 'TestMethodAttribute' could not be found</li>
+<li>The type or namespace name 'TestMethod' could not be found</li>
+</ul>
+<p>Après quelques recherches, j'ai finalement trouvé la solution chez static
+void (<a href="http://www.martinwilley.com/net/code/nunitmstest.html">NUnit/MSTest Dual Testing</a>). Il suffit d'ajouter quelques &quot;usings&quot; au
+début du source pour que NUnit accepte les mêmes attributs que VS Unit
+Test :</p>
+<pre><code>using TestClass = NUnit.Framework.TestFixtureAttribute;
+using TestMethod = NUnit.Framework.TestAttribute;
+using TestInitialize = NUnit.Framework.SetUpAttribute;
+using TestCleanup = NUnit.Framework.TearDownAttribute;
+using TestContext = System.Object;
+</code></pre>
+<p>Encore deux petites remarques :</p>
+<ul>
+<li>VWD ne proposant pas l'option &quot;Add / New Test / Unit Test&quot;, il faut choisir
+&quot;Add / New Item / Class&quot;</li>
+<li>La méthode .Expect() de Moq a été remplacée par .Setup()</li>
+</ul>
+<h2>Sur quoi faire porter les tests unitaires</h2>
+<p>Sinon, l'étude de cette cinquième partie m'en a un peu plus appris sur
+l'intérêt des tests unitaires, notamment sur quoi les faire porter (la couche
+métier) ou plus exactement sur quoi &quot;éviter&quot; de les faire poster (la
+présentation et l'accès aux données). L'idée, c'est que les tests unitaires
+doivent s'exécuter très très très rapidement, sinon on risque de les laisser
+tomber, sauf si on est très joueur...</p>
+<p><a href="http://xkcd.com/303/" title="Image bidouillée de XKCD"><img src="/public/2009/unit-testing.png" alt=""></a></p>
+<p>Il ne faut donc pas faire de tests unitaires sur l'interface utilisateur,
+parce que puisque on est en ASP.NET, cela exige le lancement d'un serveur Web
+ce qui ralentira la réalisation des tests. C'est une des raisons qui fait que
+MVC est &quot;mieux&quot; que les WebForms. Dans MVC, la View qui est la partie interface
+utilisateur n'est pas faite pour contenir du code (ce qui fait qu'on a pas à le
+tester !). Dans le cas des WebForms, où tout est plus ou moins mélangé, il est
+plus difficile d'isoler le code de la présentation.</p>
+<p>Il ne faut pas non plus faire de tests sur l'accès aux bases de données. Si
+on doit en passer par une vraie base de données, le temps d'exécution des tests
+unitaires va devenir beaucoup trop long. Et c'est là que l'empilement des
+couches évoqué dans la <a href="/2009/09/23/troisieme-etape-aspnetmvc/" title="Vers du code ASP.NET MVC plus facile à maintenir et à modifier">partie
+précédente</a> dévoile tout son intérêt. On va &quot;émuler&quot; l'accès à la base de
+données grâce à des classes Mock qui simulent l'implémentation de l'interface
+IRepository vue précédemment, sans réellement interagir avec la base de
+données. Par conséquent, la réalisation de cette interface IRepository ne doit
+pas être ressentie comme un niveau de complexité supplémentaire et inutile mais
+comme une étape clé pour faciliter la mise en place de tests unitaires.</p>
+<h2>Sous le coude</h2>
+<p>La sixième étape du tutoriel va consister à ajouter une fonctionnalité à la
+gestion des contacts. Cela promet d'être très intéressant car on va pour cela
+bouleverser l'application en introduisant la notion de groupe de contacts. Et
+ce coup-ci on va d'abord créer les tests unitaires à priori, dans le but
+d'encadrer la programmation des modifications.</p>
+<p>Et à lire pour plus tard, un article d'une quinzaine de pages en français
+sur <a href="http://www.dotnetguru.org/articles/dossiers/testunitaires/UnitTest.htm">les tests unitaires en pratique</a> par Patrick Smacchia. Dans un
+premier temps, il présente comment réaliser des tests unitaires et les
+bénéfices que l'on peut en retirer. La seconde partie est consacrés aux
+problèmes de mise en oeuvre que l'on peut rencontrer (il aborde un peu plus en
+détail les problématiques liées à l'accès à la base de données) et comment les
+résoudre.</p>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/10/06/test-driven-development-aspnetmvc/">Test-Driven Development avec ASP.NET MVC</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/09/23/troisieme-etape-aspnetmvc/" hreflang="fr-FR">Troisième étape avec ASP.NET MVC</a>
+  <a rel="next" href="/2009/09/29/unit-test-definition-2-0/" hreflang="fr-FR">Unit Test Definition 2.0</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

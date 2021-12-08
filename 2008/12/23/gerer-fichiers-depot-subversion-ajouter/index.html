@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gérer les fichiers d&#39;un dépôt Subversion : ajouter - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/12/23/gerer-fichiers-depot-subversion-ajouter/" />
+<meta property="og:title" content="Gérer les fichiers d&#39;un dépôt Subversion : ajouter" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/12/23/gerer-fichiers-depot-subversion-ajouter/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-12-23T09:11:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-12-23T09:11:00.000Z","datePublished":"2008-12-23T09:11:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/12/23/gerer-fichiers-depot-subversion-ajouter/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/12/23/gerer-fichiers-depot-subversion-ajouter/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/12/23/gerer-fichiers-depot-subversion-ajouter/">Gérer les fichiers d&#39;un dépôt Subversion : ajouter</a>
+    </h1>
+    <p>
+      <span>2008-12-23</span>
+      <span>#svn</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Dans ce billet, je reviens sur l'ajout d'un fichier dans un dépôt Subversion
+pour bien mettre en évidence les 3 étapes qui sont nécessaires pour y
+parvenir.</p>
+<h2>1° étape : ajouter le fichier dans le projet</h2>
+<p>Dans l'explorateur de solution de Visual Studio, faire un clic-droit sur le
+projet puis Ajouter / Ajouter une classe et créer la classe NouvelleClasse.cs
+puis sauvegarder la solution.</p>
+<p>Pour l'instant, seul Visual Studio est &quot;au courant&quot; de l'ajout de ce
+fichier.</p>
+<h2>2° étape : ajouter le fichier dans le répertoire de travail</h2>
+<p>Il faut donc ajouter spécifiquement le nouveau fichier sous TortoiseSVN pour
+qu'il fasse partie des fichiers versionnés.</p>
+<p>Comme cela a déjà été vu, cet ajout peut se faire en faisant :</p>
+<ul>
+<li>clic-droit sur le répertoire D:\Portals\Tests et choisir l'option &quot;SVN
+Check for modification&quot;</li>
+<li>clic-droit sur le fichier NouvelleClasse.cs et sélectionner &quot;Add&quot; pour
+faire passer son statut de &quot;non-versioned&quot; à &quot;added&quot;</li>
+</ul>
+<p>Ou alors, on peut faire directement ça depuis l'explorateur de fichiers de
+Windows avec un clic-droit sur le nouveau fichier NouvelleClasse.cs et choisir
+la commande &quot;Add...&quot;</p>
+<p><img src="/public/2008/01-fichier-ajouter.png" alt=""></p>
+<p>Puis sélectionner le ou les fichiers à ajouter :</p>
+<p><img src="/public/2008/02-fichier-ajouter.png" alt=""></p>
+<p>Et valider en cliquant sur le bouton [OK] :</p>
+<p><img src="/public/2008/03-fichier-ajouter.png" alt=""></p>
+<p>Désormais, le fichier NouvelleClasse.cs a été ajouté au répertoire de
+travail et il est donc pris en compte par TortoiseSVN côté client, mais pas
+encore intégré au dépôt Subversion côté serveur.</p>
+<h2>3° étape : ajouter le fichier au dépôt Subversion</h2>
+<p>Si on veut que le fichier NouvelleClasse.cs apparaisse dans le dépôt
+Subversion et que les autres utilisateurs du dépôt puisse enfin voir ce nouveau
+fichier, il reste à réaliser un commit.</p>
+<p>Faire un clic-droit sur le répertoire D:\Portals\Tests et choisir l'option
+&quot;SVN Commit...&quot;</p>
+<p><img src="/public/2008/04-fichier-ajouter.png" alt=""></p>
+<p>Là, il faut bien faire attention et vérifier que notre nouveau fichier
+apparait (encore heureux), mais aussi que le fichier projet est présent dans la
+liste puisqu'il a été modifié pour intégrer un nouveau fichier. Quand ce n'est
+pas le cas, c'est généralement parce qu'on a oublié de sauvegarder la
+solution !</p>
+<p>Saisir un message descriptif de la modification apportée et
+valider :</p>
+<p><img src="/public/2008/05-fichier-ajouter.png" alt=""></p>
+<p>Ça y est, le dépôt Subversion contient un fichier de plus.</p>
+<p><em>Note : Dans la vrai vie, il aurait fallu recompiler le projet et
+vérifier que tout fonctionnait avant de faire le commit !</em></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/12/19/creer-tag-subversion/" hreflang="fr-FR">Créer un tag dans Subversion</a>
+  <a rel="next" href="/2008/12/23/gerer-fichiers-depot-subversion-modifier/" hreflang="fr-FR">Gérer les fichiers d&#39;un dépôt Subversion : modifier</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

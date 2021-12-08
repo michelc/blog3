@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Faire évoluer le modèle de données - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-faire-evoluer-modele-donnees/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Faire évoluer le modèle de données" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-faire-evoluer-modele-donnees/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-25T17:55:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-25T17:55:00.000Z","datePublished":"2010-05-25T17:55:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-faire-evoluer-modele-donnees/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-faire-evoluer-modele-donnees/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/25/mvc-music-store-raven-db-faire-evoluer-modele-donnees/">MVC Music Store / Raven DB : Faire évoluer le modèle de données</a>
+    </h1>
+    <p>
+      <span>2010-05-25</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/23/porting-mvc-music-store-to-raven-migrations.aspx">Porting MVC Music Store to Raven: Migrations</a>&quot;, le sixième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Dans mon dernier billet, j'ai indiqué que nous devions ajouter une propriété
+CountSold à tous les albums, généralement quelque chose d'assez pénible à faire
+dans l'univers des bases de données SQL. La commande pour ajouter une colonne
+est toute simple, mais c'est une vrai galère d'en venir à bout, de la déployer
+et de la versionner. Avec Raven, quand vous ajoutez une propriété, elle sera
+automatiquement ajoutée à votre document la prochaine fois que vous le
+sauvegarderez. Vous n'avez rien d'autre à faire. Et même, c'est pareil si vous
+décidez de supprimer une propriété. Raven s'occupera de fera le ménage après
+vous.</p>
+<p>Mais comment faire quand on veut initialiser cette propriété avec une valeur
+définie, et pas se contenter de la valeur par défaut ? Dans ce cas là, il
+faut un peu mettre la main à la pâte, mais ça reste très simple :</p>
+<pre><code>using (var documentStore = new DocumentStore { Url = &quot;http://localhost:8080&quot; })
+{
+    documentStore.Initialise();
+    using (var session = documentStore.OpenSession())
+    {
+        IDictionary&lt;string,int&gt; albumToSoldCount = new Dictionary&lt;string, int&gt;();
+        int count = 0;
+
+        do
+        {
+            var results = session.Query&lt;SoldAlbum&gt;(&quot;SoldAlbums&quot;)
+                .Take(128)
+                .Skip(count)
+                .ToArray();
+
+            if (results.Length == 0)
+                break;
+            count += results.Length;
+            foreach (var soldAlbum in results)
+            {
+                albumToSoldCount[soldAlbum.Album] = soldAlbum.Quantity;
+            }
+        } while (true);
+
+        count = 0;
+        do
+        {
+            var albums = session.Query&lt;Album&gt;()
+                .Skip(count)
+                .Take(128)
+                .ToArray();
+            if (albums.Length == 0)
+                break;
+
+            foreach (var album in albums)
+            {
+                int value;
+                albumToSoldCount.TryGetValue(album.Id, out value);
+
+                album.CountSold = value;
+            }
+
+            count += albums.Length;
+
+            session.SaveChanges();
+            session.Clear();
+        } while (true);
+    }
+}
+</code></pre>
+<p>Pour ceux d'entre-vous qui n'ont pas pris la peine de lire le code, cette
+fonction parcours l'index SoldAlbums que nous avons créé auparavant et mémorise
+ses valeurs. Puis nous parcourons les albums par lot de 128 et nous mettons à
+jour leur compteur CountSold. L'un dans l'autre, c'est plutôt facile.</p>
+<p>Un des autres avantages de ce script, c'est que vous pouvez l'exécuter
+autant de fois que vous le voulez sans que cela fausse vos données.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode/" hreflang="fr-FR">MVC Music Store / Raven DB : Refaire HomeController, la bonne méthode</a>
+  <a rel="next" href="/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee/" hreflang="fr-FR">MVC Music Store / Raven DB : Faire une migration plus poussée</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

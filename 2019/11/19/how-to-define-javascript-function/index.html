@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to define a JavaScript function - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/11/19/how-to-define-javascript-function/" />
+<meta property="og:title" content="How to define a JavaScript function" />
+<meta name="description" content="A personal reminder post to list some of the JavaScript methods to define a function: declaration, expression and arrow syntax." />
+<meta property="og:description" content="A personal reminder post to list some of the JavaScript methods to define a function: declaration, expression and arrow syntax." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/11/19/how-to-define-javascript-function/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/butterfly-collection.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-11-19T10:22:52.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-11-19T10:22:52.000Z","datePublished":"2019-11-19T10:22:52.000Z","description":"A personal reminder post to list some of the JavaScript methods to define a function: declaration, expression and arrow syntax.","inLanguage":"en-US","url":"https://blog3.pagesd.info/2019/11/19/how-to-define-javascript-function/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/butterfly-collection.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/11/19/how-to-define-javascript-function/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/butterfly-collection.jpg" alt="Wall decorations with colorful butterflies - __ drz __" /><figcaption><a href="https://unsplash.com/photos/X8pnAEjqmqI">Wall decorations with colorful butterflies - __ drz __</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/11/19/how-to-define-javascript-function/">How to define a JavaScript function</a>
+    </h1>
+    <p>
+      <span>2019-11-19</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>As I always have a little trouble remembering everything and also because there is a little collection side that I like, here is a summary of the different ways that exist to define functions in JavaScript.</p>
+<h2>Through a declaration</h2>
+<p>The classic method dates back to the origins of JavaScript and simply consists of declaring the function with the keyword <code>function</code>.</p>
+<pre><code class="language-javascript">function hello (firstname) {
+  console.log(`Hello ${firstname}`);
+}
+</code></pre>
+<p>This function has the name &quot;hello&quot;, which makes it a named function.</p>
+<h2>Through an expression</h2>
+<p>A more modern method that highlights the fact that functions are objects like any other and can also be assigned to variables.</p>
+<pre><code class="language-javascript">const hello = function (firstname) {
+  console.log(`Hello ${firstname}`);
+};
+</code></pre>
+<p>Even if this is not obvious, this function is anonymous:</p>
+<ul>
+<li>It is created without giving it a name (just &quot;function (...) { ... }&quot;)</li>
+<li>Although it is assigned to a variable that has a name</li>
+</ul>
+<p><em>Note: Since this is an assignment to a variable (in this case it's a function that is assigned), the command ends with a semicolon, exactly as is the case for all other assignments: <code>const pi = 3.14;</code>.</em></p>
+<h2>Through the arrow syntax</h2>
+<p>With ES6 came the new syntax &quot;arrow&quot; to declare functions via an expression:</p>
+<ul>
+<li>Remove the keyword <code>function</code> before the list of arguments.</li>
+<li>Add the symbol <code>=&gt;</code> after this list.</li>
+</ul>
+<pre><code class="language-javascript">const hello = (firstname) =&gt; {
+  console.log(`Hello ${firstname}`);
+};
+</code></pre>
+<p>It's more compact and the goal is to get a cleaner code. This is why arrows functions can be further simplified:</p>
+<ul>
+<li>Only one parameter =&gt; no need to put it in parentheses.</li>
+<li>Only one line of code in the function =&gt; no need for a block &quot;{ ... }&quot;.</li>
+<li>If the function only makes a &quot;return...&quot; =&gt; the keyword <code>return</code> is useless.</li>
+</ul>
+<p>In the end, the following three declarations are identical:</p>
+<pre><code class="language-javascript">const hello1 = function (firstname) {
+  return `Hello ${firstname}`;
+};
+
+const hello2 = (firstname) =&gt; {
+  return `Hello ${firstname}`;
+};
+
+const hello3 = firstname =&gt; `Hello ${firstname}`; // (°~°)
+</code></pre>
+<p>This clean aspect is really useful for callbacks. For example, with the <code>.map()</code> method of tables that expects a callback function, you can get some interesting stuffs:</p>
+<pre><code class="language-javascript">const test = [1, 2, 3];
+
+function doubler (x) {
+  return x * 2;
+}
+test.map(doubler);                          // [2, 4, 6]
+
+test.map(function (x) { return x * 2; });   // [2, 4, 6]
+
+test.map((x) =&gt; { return x * 2; });         // [2, 4, 6]
+
+test.map(x =&gt; x * 2);                       // [2, 4, 6] Bingo!
+</code></pre>
+<div class="encart">
+<p>Version en français : <a href="/2019/11/18/comment-definir-fonction-javascript/" hreflang="fr-FR">Comment définir une fonction JavaScript</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/11/18/comment-definir-fonction-javascript/" hreflang="fr-FR">Comment définir une fonction JavaScript</a>
+  <a rel="next" href="/2019/11/25/inconvenient-derniere-version-node-js/" hreflang="fr-FR">De l&#39;inconvénient d&#39;utiliser aveuglément la dernière version de Node</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

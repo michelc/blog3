@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Gérer le règlement - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/30/mvc-music-store-raven-db-gerer-reglement/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Gérer le règlement" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/30/mvc-music-store-raven-db-gerer-reglement/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-30T15:41:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-30T15:41:00.000Z","datePublished":"2010-05-30T15:41:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/30/mvc-music-store-raven-db-gerer-reglement/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/30/mvc-music-store-raven-db-gerer-reglement/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/30/mvc-music-store-raven-db-gerer-reglement/">MVC Music Store / Raven DB : Gérer le règlement</a>
+    </h1>
+    <p>
+      <span>2010-05-30</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/28/porting-mvc-music-store-to-raven-porting-the-checkout-process.aspx">Porting MVC Music Store to Raven: Porting the checkout process</a>&quot;, le onzième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Dans MVC Music Store, la gestion du règlement est composée de deux
+parties : renseigner l'adresse et le mode de paiement puis terminer la
+commande.</p>
+<p>Le code pour gérer l'adresse et le mode de paiement dans la version
+d'origine :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheche_D900/image_thumb.png" alt=""></p>
+<p>Et ce même code correspondant à la version portée sous Raven :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheche_D900/image_thumb_1.png" alt=""></p>
+<p>Comme vous pouvez le constater, ils sont presque identiques. Mais le code
+pour Raven n'est pas tout à fait complet.</p>
+<p>Si vous vous souvenez, nous avions décidé de stocker une propriété CountSold
+dans le document Album, pour pouvoir plus facilement faire un classement en
+fonction de ce compteur. Il nous reste donc à réaliser l'incrémentation de ce
+compteur, ce que j'ai codé immédiatement après l'appel à CreateOrder :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheche_D900/image_thumb_2.png" alt=""></p>
+<p>Le truc essentiel dans ce code, c'est que nous avons chargé tous les
+documents albums en une seule requête. Et lorsque nous sauvegardons, Raven va
+effectuer un seul appel (batch) au serveur.</p>
+<p>Et maintenant, pour être tout à fait complet, voyons ce que donnait la
+méthode Complete() :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheche_D900/image_thumb_3.png" alt=""></p>
+<p>Et dans la nouvelle version sous Raven :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheche_D900/image_thumb_4.png" alt=""></p>
+<p>Je pense qu'arrivé à ce point, vous êtes en mesure de comprendre comment
+fonctionne les deux versions.</p>
+<p>Mon prochain billet concernera la partie administration de
+l'application.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/28/mvc-music-store-raven-db-shoppingcartcontroller/" hreflang="fr-FR">MVC Music Store / Raven DB : ShoppingCartController</a>
+  <a rel="next" href="/2010/05/31/mvc-music-store-raven-db-storemanagercontroller/" hreflang="fr-FR">MVC Music Store / Raven DB : StoreManagerController</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

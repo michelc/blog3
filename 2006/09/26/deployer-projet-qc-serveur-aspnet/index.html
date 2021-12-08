@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Déployer un projet QC sur un serveur ASP.NET - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/09/26/deployer-projet-qc-serveur-aspnet/" />
+<meta property="og:title" content="Déployer un projet QC sur un serveur ASP.NET" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/09/26/deployer-projet-qc-serveur-aspnet/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-09-26T16:00:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-09-26T16:00:00.000Z","datePublished":"2006-09-26T16:00:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/09/26/deployer-projet-qc-serveur-aspnet/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/09/26/deployer-projet-qc-serveur-aspnet/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/09/26/deployer-projet-qc-serveur-aspnet/">Déployer un projet QC sur un serveur ASP.NET</a>
+    </h1>
+    <p>
+      <span>2006-09-26</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Créer le fichier QC_Deploy.bat sur C:\ ou D:\ selon que l'on travaille avec
+C:\Portals ou D:\Portals et y insérer les lignes suivantes (en modifiant D:\ en
+C:\ si nécessaire) :</p>
+<pre><code>IF &quot;%1&quot; == &quot;&quot; GOTO Finito
+
+REM ---------- Recopie le répertoire principal
+
+XCOPY D:\Portals\%1\*.* D:\Portals\%1_ftp\ /S /Y /EXCLUDE:D:\QC_deploy.txt
+XCOPY D:\Portals\%1\*.css D:\Portals\%1_ftp\ /S /Y
+
+:Finito
+</code></pre>
+<p>Créer également le fichier QC_Deploy.txt sur C:\ ou D:\ pour indiquer les
+fichiers à exclure du déploiement :</p>
+<pre><code>\Engine\bin
+\Engine\refs
+\Classic\bin
+\Framework
+\BDHelper
+.pdb
+.cs
+.resx
+.csproj
+.sln
+.webinfo
+.bak
+.sql
+.zip
+.rar
+</code></pre>
+<p>Dans le cas où il s'agit de déployer une solution basée sur le framework QC, il
+est nécessaire d'ajouter le sous-répertoire bin des projets contenus dans la
+solution après la ligne &quot;\Classic\bin&quot;.</p>
+<pre><code>...
+\Classic\bin
+\Mon_Projet_Numero_1\bin
+\Mon_Projet_Numero_2\bin
+\Framework
+...
+</code></pre>
+<p>Passer ensuite sous l'invite de commandes, sur la racine C:\ ou D:, et
+taper la commande QC_Deploy qc puis appuyer sur Entrée. Cela crée un répertoire
+X:\Portals\qc_ftp qui ne contiend que les fichiers à déployer sans aucun
+fichier source ou autres fichiers inutiles. Il suffit alors de transférer
+(généralement par ftp) ces fichiers sur le serveur de production.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/09/20/trucs-a-faire/" hreflang="fr-FR">Trucs à faire</a>
+  <a rel="next" href="/2006/09/27/ecrire-code-sql-portable/" hreflang="fr-FR">Ecrire du code SQL portable</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

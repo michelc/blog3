@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Amélioration XxxxxSearch - Etape 1 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/11/29/amelioration-xxxxxsearch-etape-1/" />
+<meta property="og:title" content="Amélioration XxxxxSearch - Etape 1" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/11/29/amelioration-xxxxxsearch-etape-1/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-11-29T09:06:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-11-29T09:06:00.000Z","datePublished":"2005-11-29T09:06:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/11/29/amelioration-xxxxxsearch-etape-1/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/11/29/amelioration-xxxxxsearch-etape-1/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/11/29/amelioration-xxxxxsearch-etape-1/">Amélioration XxxxxSearch - Etape 1</a>
+    </h1>
+    <p>
+      <span>2005-11-29</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<ul>
+<li>Renommé les clés des paramètres pour les préfixer par &quot;search&quot; au lieu de
+&quot;google&quot;, &quot;msn&quot; et &quot;yahoo&quot;,</li>
+<li>Mise en commun de la quasi-totalité du source de viewXxxxxSearch.ascx.cs, à
+l'exception de celui de ExecuteSearch qui reste spécifique à GoogleSearch,
+MsnSearch ou YahooSearch,</li>
+<li>Suppression de la table pour la mise en forme des formulaires de recherche
+(inspiré par <a href="http://simplyaccessible.org/article/search-form-layout">Search Form
+Layout</a>)</li>
+</ul>
+<pre><code>&lt;fieldset class=&quot;search_form&quot;&gt;
+&lt;div class=&quot;search_cols&quot;&gt;
+ &lt;a href=&quot;http://www.google.com/&quot; target=&quot;_blank&quot;&gt;
+  &lt;asp:Image id=&quot;logoSearch&quot; runat=&quot;server&quot;
+       AlternateText=&quot;Google&quot; ImageUrl=&quot;google_logo.gif&quot; /&gt;
+ &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;search_cols&quot;&gt;
+ &lt;p&gt;
+  &lt;asp:textbox id=&quot;txtQuery&quot; runat=&quot;server&quot;
+       Columns=&quot;35&quot; maxlength=&quot;100&quot; /&gt;
+  &lt;asp:button id=&quot;btnSearch&quot; runat=&quot;server&quot; Text=&quot; Go! &quot; /&gt;
+ &lt;/p&gt;
+ &lt;p&gt;
+  &lt;asp:radiobuttonlist id=&quot;chxRange&quot; runat=&quot;server&quot;
+       RepeatDirection=&quot;Horizontal&quot; RepeatLayout=&quot;Flow&quot; /&gt;
+ &lt;/p&gt;
+&lt;/div&gt;
+&lt;/fieldset&gt;
+</code></pre>
+<p>Reste à faire :</p>
+<ul>
+<li>DONE: Améliorer le fonctionnement en mode GET (cf. <a href="/2005/12/01/amelioration-xxxxxxsearch-etape-2/">étape
+2</a>),</li>
+<li>Ne plus passer par le postback ?</li>
+<li>Remplacer GoogleSearchService.dll, Msn.API.dll et Yahoo.API.dll par une
+seule DLL.</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/11/28/fonction-boolparse/" hreflang="fr-FR">Fonction BoolParse()</a>
+  <a rel="next" href="/2005/11/30/authentification-smtp/" hreflang="fr-FR">Authentification SMTP</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

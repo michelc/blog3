@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire - Passer de jQuery à Vanilla JS - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/03/27/solitaire-passer-jquery-vanilla-js/" />
+<meta property="og:title" content="Solitaire - Passer de jQuery à Vanilla JS" />
+<meta name="description" content="Au départ, jQuery c&#39;était la meilleure solution possible. Mais aujourd&#39;hui, il est de plus en plus simple de s&#39;en passer..." />
+<meta property="og:description" content="Au départ, jQuery c&#39;était la meilleure solution possible. Mais aujourd&#39;hui, il est de plus en plus simple de s&#39;en passer..." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/03/27/solitaire-passer-jquery-vanilla-js/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/vanille.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-03-27T10:22:32.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-03-27T10:22:32.000Z","datePublished":"2019-03-27T10:22:32.000Z","description":"Au départ, jQuery c'était la meilleure solution possible. Mais aujourd'hui, il est de plus en plus simple de s'en passer...","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/03/27/solitaire-passer-jquery-vanilla-js/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/vanille.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/03/27/solitaire-passer-jquery-vanilla-js/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/vanille.jpg" alt="Vanille Bourbon - La Réunion" /><figcaption>Vanille Bourbon - La Réunion</figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/03/27/solitaire-passer-jquery-vanilla-js/">Solitaire - Passer de jQuery à Vanilla JS</a>
+    </h1>
+    <p>
+      <span>2019-03-27</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
+solitaires et aux évolutions que je souhaite y apporter :</p>
+<ol>
+<li><a href="/2019/03/23/solitaire-feuille-route-javascript/">Introduction</a></li>
+<li><a href="/2019/03/27/solitaire-passer-jquery-vanilla-js/">Passer de jQuery à Vanilla JS</a></li>
+<li><a href="/2019/04/01/solitaire-ameliorer-freecell/">Améliorer FreeCell</a></li>
+<li><a href="/2019/04/08/solitaire-ajouter-animations-css/">Ajouter des animations CSS</a></li>
+<li><a href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/">Drag and drop sans jQuery UI</a></li>
+<li><a href="/2019/04/25/solitaire-remplacer-ajaxmin/">Remplacer AjaxMin, etc...</a></li>
+</ol>
+</div>
+<p>Au départ, j'ai utilisé <a href="https://jquery.com/">jQuery</a> (et
+<a href="https://jqueryui.com/">jQuery UI</a>) parce que c'était encore ce qui se faisait
+plus ou moins à l'époque. Et pour moi, c'était la solution la plus simple pour
+réussir à faire rapidement ce que je voulais, et que cela fonctionne
+correctement sur un maximum de navigateurs.</p>
+<p>Maintenant, je connais un peu mieux JavaScript, et surtout les navigateurs sont
+beaucoup plus &quot;standards&quot;. Inspiré par le mouvement
+<a href="http://youmightnotneedjquery.com/">You Don't Need jQuery</a>, et par de nombreux
+exemples disponibles sur le web, j'ai déjà pas mal creusé le sujet. Pas parce
+que jQuery est un problème, mais parce que j'ai envie de faire autrement et de
+m'améliorer en JavaScript.</p>
+<p>J'ai commencé à travailler sur une librairie &quot;dQuery.js&quot;. Elle reprend
+uniquement les fonctions de jQuery que j'utilise dans
+<a href="https://www.solitaire-play.com/">Solitaire-Play</a>, de façon très basique. Le
+code est assez standard (même si je m'accorche à IE9) et devrait donc être OK
+pour tous les navigateurs suffisament modernes, y compris sur les smartphones.</p>
+<p>Quelques liens qui m'ont aidé / encouragé pour démarrer :</p>
+<ul>
+<li><a href="https://tutorialzine.com/2014/06/10-tips-for-writing-javascript-without-jquery">10 Tips for Writing JavaScript without jQuery</a></li>
+<li><a href="https://fvsch.com/js-sans-jquery/">La vie sans jQuery</a></li>
+<li><a href="https://www.sitepoint.com/dom-manipulation-vanilla-javascript-no-jquery/">The Basics of DOM Manipulation in Vanilla JavaScript (No jQuery) </a></li>
+<li><a href="https://css-tricks.com/now-ever-might-not-need-jquery/">(Now More Than Ever) You Might Not Need jQuery</a></li>
+<li><a href="https://medium.freecodecamp.org/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34">Is Vanilla JavaScript worth learning? Absolutely</a></li>
+<li><a href="https://github.com/nefe/You-Dont-Need-jQuery">You-Dont-Need-jQuery</a> -
+Examples of how to do query, style, dom, ajax, event etc like jQuery with
+plain javascript.</li>
+<li><a href="https://gomakethings.com/how-to-create-your-own-vanilla-js-dom-manipulation-library-like-jquery/">How to create your own vanilla JS DOM manipulation library like jQuery</a></li>
+<li><a href="http://jesmodrazik.fr/article/apprendre-a-se-servir-de-ce-quon-a-manipuler-dom/">Apprendre à se servir de ce qu'on a : manipuler le DOM</a></li>
+</ul>
+<p>Et quelques exemples de librairies qui visent à &quot;remplacer&quot; jQuery :</p>
+<ul>
+<li><a href="https://blissfuljs.com/">Bliss - Heavenly JavaScript</a> - Want to use Vanilla
+JS but find native APIs a bit unwieldy? Bliss is for you.</li>
+<li><a href="https://umbrellajs.com/">Umbrella JS</a> - Tiny library for DOM manipulation,
+events and AJAX</li>
+<li><a href="https://vladocar.github.io/nanoJS/">nanoJS</a> - Minimal standalone JS library
+for DOM manipulation</li>
+</ul>
+<p>J'ai utilisé &quot;nanoJS&quot; comme point de départ et j'ai bien progressé depuis. J'ai
+maintenant une version de test du jeu Golf Solitaire qui fonctionne telle quelle
+avec jQuery ou avec ma librairie dQuery.</p>
+<p>La suite maintenant, c'est de tester cette nouvelle solution dans un maximum de
+cas et de conditions. Une fois que je serai suffisament sûr du résultat, je
+pourrai migrer les quelques jeux sans drag and drop, puisqu'ils ne dépendent que
+de jQuery et pas de jQuery UI.</p>
+<p>Eventuellement, je pourrais aussi rédiger un billet à part pour présenter un
+peu plus en détails ce que j'ai fait avec ma librairie dQuery.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/03/23/solitaire-feuille-route-javascript/" hreflang="fr-FR">Solitaire - Feuille de route JavaScript</a>
+  <a rel="next" href="/2019/04/01/solitaire-ameliorer-freecell/" hreflang="fr-FR">Solitaire - Améliorer FreeCell</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Clé déjà existante dans EF.ObjectStateManager - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2013/09/03/cle-deja-existante-ef-objectstatemanager/" />
+<meta property="og:title" content="Clé déjà existante dans EF.ObjectStateManager" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2013/09/03/cle-deja-existante-ef-objectstatemanager/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-09-03T11:29:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2013-09-03T11:29:00.000Z","datePublished":"2013-09-03T11:29:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2013/09/03/cle-deja-existante-ef-objectstatemanager/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2013/09/03/cle-deja-existante-ef-objectstatemanager/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2013/09/03/cle-deja-existante-ef-objectstatemanager/">Clé déjà existante dans EF.ObjectStateManager</a>
+    </h1>
+    <p>
+      <span>2013-09-03</span>
+      <span>#ef</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>En ce moment, je testunite beaucoup et comme je persiste à utiliser une base
+de données SQL CE pour ce qui touche à Entity Framework, je cherche tous les
+moyens possibles pour améliorer la vitesse de mes tests.</p>
+<p>Suite à ma dernière optimisation, j'avait 2 tests unitaires qui ne passaient
+plus.</p>
+<blockquote>
+<p>Un objet ayant la même clé existe déjà dans ObjectStateManager.
+ObjectStateManager ne peut pas assurer le suivi de plusieurs objets ayant la
+même clé.</p>
+</blockquote>
+<p>Ou en anglais :</p>
+<blockquote>
+<p>An object with the same key already exists in the ObjectStateManager. The
+ObjectStateManager cannot track multiple objects with the same key.</p>
+</blockquote>
+<p>Dans les 2 tests, il s'agissait de vérifier que le POST sur l'action &quot;Edit&quot;
+d'un contrôleur redirigeait bien vers l'action &quot;Details&quot; en cas de succès.</p>
+<pre><code>//
+// POST: /Theaters/Edit/5
+
+[HttpPost, ValidateAntiForgeryToken]
+public ActionResult Edit(Theater theater)
+{
+    if (ModelState.IsValid)
+    {
+        // Enregistre les modifications
+        var place = db.Places.Find(theater.Place_ID);
+        theater.KeyTheater = StringHelper.Slugify(place.Caption + &quot; &quot; + theater.ShortName);
+        db.Entry(theater).State = EntityState.Modified;
+        db.SaveChanges();
+
+        return RedirectToAction(&quot;Details&quot;, new { id = theater.Theater_ID });
+    }
+
+    ViewBag.Place_ID = db.SelectListPlaces(this.Department_ID, theater.Place_ID);
+    return View(theater);
+}
+</code></pre>
+<p>L'erreur apparaissait pile sur la ligne <code>db.Entry(theater).State = EntityState.Modified;</code>.</p>
+<p>Dans tous les autres contrôleurs, le problème ne se présentait pas, mais
+uniquement dans ces 2 cas là. Après quelques recherches, il semblerait que le
+fait d'utiliser l'objet <code>theater</code> dans la ligne <code>var place = db.Places.Find(theater.Place_ID);</code> soit suffisant pour que l'entité soit
+référencée dans l'<code>ObjectStateManager</code> de Entity Framework.</p>
+<p>Et ensuite, la commande <code>db.Entry(theater).State = EntityState.Modified;</code> provoquait à nouveau son référencement alors qu'il
+l'avait déjà été deux lignes plus tôt (mais ça EF ne semblait pas capable de
+s'en rendre compte).</p>
+<p>J'ai trouvé <a href="http://stackoverflow.com/questions/5672255/an-object-with-the-same-key-already-exists-in-the-objectstatemanager-the-object">plusieurs</a> <a href="http://davidswindells.com/blog/2013/03/asp-net-mvc-enitity-framework-an-object-with-the-same-key-already-exists-in-the-objectstatemanager/">trucs</a> sur internet pour éviter le problème, mais quant à moi,
+j'ai préféré tout simplement marquer l'objet à l'état &quot;Modified&quot; avant de
+l'utiliser pour retrouver la commune correspondante :</p>
+<pre><code>        // Enregistre les modifications
+        db.Entry(theater).State = EntityState.Modified;
+        var place = db.Places.Find(theater.Place_ID);
+        theater.KeyTheater = StringHelper.Slugify(place.Caption + &quot; &quot; + theater.ShortName);
+        db.SaveChanges();
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2013/03/27/convertir-projet-asp-net-mvc3-mvc4/" hreflang="fr-FR">Convertir un projet ASP.NET MVC 3 en MVC 4</a>
+  <a rel="next" href="/2013/09/10/ecrire-nombres-francais/" hreflang="fr-FR">Ecrire des nombres en français</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

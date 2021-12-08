@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser SQlite3 en mode async / await - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/10/21/utiliser-sqlite-node-async-await/" />
+<meta property="og:title" content="Utiliser SQlite3 en mode async / await" />
+<meta name="description" content="Dans ce tutoriel, je modifie le code développé auparavant afin de ne plus avoir à utiliser des fonctions callback pour accéder à la base de données SQLite." />
+<meta property="og:description" content="Dans ce tutoriel, je modifie le code développé auparavant afin de ne plus avoir à utiliser des fonctions callback pour accéder à la base de données SQLite." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/10/21/utiliser-sqlite-node-async-await/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/grand-bain.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-10-21T10:12:36.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-10-21T10:12:36.000Z","datePublished":"2019-10-21T10:12:36.000Z","description":"Dans ce tutoriel, je modifie le code développé auparavant afin de ne plus avoir à utiliser des fonctions callback pour accéder à la base de données SQLite.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/10/21/utiliser-sqlite-node-async-await/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/grand-bain.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/10/21/utiliser-sqlite-node-async-await/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/grand-bain.jpg" alt="Le Grand Bain - Gilles Lellouche" /><figcaption><a href="https://fr.wikipedia.org/wiki/Le_Grand_Bain_(film)">Le Grand Bain - Gilles Lellouche</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/10/21/utiliser-sqlite-node-async-await/">Utiliser SQlite3 en mode async / await</a>
+    </h1>
+    <p>
+      <span>2019-10-21</span>
+      <span>#javascript</span><span>#node</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je continue ma série de tutoriels pour apprendre Node JS et plus
+particulièrement voir comment développer de petites applications web avec
+ExpressJS. J'ai déjà vu comment accéder à une base de données
+<a href="/2019/09/11/crud-avec-express-sqlite-10-etapes/">SQlite</a>, puis à
+<a href="/2019/09/21/crud-avec-express-postgresql-10-etapes/">PostgreSQL</a>.
+Dans le tutoriel précédent, j'ai comparé la façon d'accéder à <a href="/2019/10/07/comparaison-sqlite-postgresql-express/">SQlite et
+PostgreSQL avec Express</a>
+pour parvenir à écrire le même code pour accéder aux deux bases de données.</p>
+<p>Dans ce tutoriel, je vais modifier le code existant pour ne plus avoir à
+utiliser de fonction callback quand je fais une requête sur la base de données.</p>
+<h2>Fonctionnement asynchrone / callback</h2>
+<p>La dernière fois, j'ai trouvé comment avoir le même code JavaScript pour accéder
+aux deux bases de données :</p>
+<pre><code class="language-javascript">// GET /livres
+app.get(&quot;/livres&quot;, (req, res) =&gt; {
+  const sql = &quot;SELECT * FROM Livres ORDER BY Titre&quot;;
+  db.query(sql, [], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;livres&quot;, { model: result.rows });
+  });
+});
+</code></pre>
+<p>La requête SQL est exécutée via la méthode <code>.query()</code>, qui s'exécute en
+asynchrone puis qui appelle une fonction callback lorsque le requête est
+terminée. Dans l'exemple ci-dessus, la fonction callback est une fonction
+lambda anonyme qui correspond à la partie de code suivante :</p>
+<pre><code class="language-javascript">(err, result) =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  res.render(&quot;livres&quot;, { model: result.rows });
+}
+</code></pre>
+<p>C'est pas trop compliqué, mais c'est pas trop clair non plus. En fait, cette
+façon de coder découle du fonctionnement async / callback qui est aussi
+difficile à lire qu'à écrire.</p>
+<p>De façon schématique, il faut :</p>
+<ul>
+<li>passer une fonction callback à la méthode <code>.query()</code>,</li>
+<li>lorsque la requête est terminée, la méthode <code>.query()</code> appelle cette fonction
+callback en lui envoyant un paramètre <code>Error</code> et le résultat de l'exécution de
+la requête,</li>
+<li>et pour finir, la fonction callback doir gérer cette erreur (éventuelle) et ce
+résultat...</li>
+</ul>
+<p><em>Note : C'est difficile à lire, c'est difficile à écrire, et c'est aussi
+difficile à expliquer.</em></p>
+<h2>Fonctionnement async / await</h2>
+<p>C'est pour ça que JavaScript a régulièrement évolué jusqu'à permettre
+aujourd'hui d'utiliser un fonctionnement async / await qui, bien que faisant la
+&quot;même&quot; chose, paraisse beaucoup plus &quot;naturel&quot;.</p>
+<p>Ce qui donne :</p>
+<pre><code class="language-javascript">// GET /livres
+app.get(&quot;/livres&quot;, async (req, res) =&gt; {
+  try {
+    const sql = &quot;SELECT * FROM Livres ORDER BY Titre&quot;;
+    const result = await db.query(sql, []);
+    res.render(&quot;livres&quot;, { model: result.rows });
+  } catch (err) {
+    return console.error(err.message);
+  }
+});
+</code></pre>
+<p>À ce coup :), on exécute la requête par un <code>await db.query(...)</code> sans callback.</p>
+<p>Mais (!) pour pouvoir utiliser &quot;await&quot;, il faut que la fonction dans laquelle
+on fait l'await soit décorée d'un attribut &quot;async&quot;. Et dans notre cas, la
+fonction c'est la fonction callback passée à la méthode <code>app.get()</code>, à savoir
+la fonction lambda anonyme suivante :</p>
+<pre><code class="language-javascript">(req, res) =&gt; {
+  try {
+    const sql = &quot;SELECT * FROM Livres ORDER BY Titre&quot;;
+    const result = await db.query(sql, []);
+    res.render(&quot;livres&quot;, { model: result.rows });
+  } catch (err) {
+    return console.error(err.message);
+  }
+}
+</code></pre>
+<p>Et donc, au lieu d'écrire :</p>
+<pre><code class="language-javascript">app.get(&quot;/livres&quot;, (req, res) =&gt; {
+...
+</code></pre>
+<p>On écrit (mais sans les &quot;+++++&quot;) :</p>
+<pre><code class="language-javascript">app.get(&quot;/livres&quot;, async (req, res) =&gt; {
+                   +++++
+...
+</code></pre>
+<p><em>Note : On ne parle pas du fait qu'il y a toujours un callback pour <code>app.get()</code>
+et on se concentre sur la base de données...</em></p>
+<p>En cas de problème, l'erreur est récupérée via le <code>try / catch</code> et quand tout va
+bien, le résultat de la requête est renvoyée et le traitement en cours peut
+reprendre son cours normal...</p>
+<p><em>Note : Ça ressemble à un fonctionnement synchrone, ça se code comme du
+synchrone, mais c'est quand même de l'asynchrone puisqu'on a écrit &quot;async&quot; et
+&quot;await&quot;.</em></p>
+<p>C'est beaucoup plus beau et en plus ça marche ! Mais que quand j'utilise
+PostgreSQL et node-postgres... Parce qu'avec SQlite, tout est cassé :</p>
+<pre><code>Cannot read property 'rows' of undefined
+E:\Code\AppTestAA\node_modules\sqlite3\lib\trace.js:27
+                    throw err;
+                    ^
+
+TypeError: callback is not a function
+    at Statement.&lt;anonymous&gt; (E:\Code\AppTestAA\index.js:39:7)
+--&gt; in Database#all('SELECT * FROM Livres ORDER BY Titre', [], [Function])
+
+...
+</code></pre>
+<h2>Async / Await avec le module SQlite3</h2>
+<p>Je suppose que c'était sa façon à lui de dire que le module SQlite3 ne gère pas
+un fonctionnement async / await.</p>
+<p>Bon ben c'est pas compliqué. Il faut que je regarde comment faire pour que
+SQlite3 supporte l'async / await, ou au pire que je cherche un autre module pour
+SQlite qui sache faire...</p>
+<p>...</p>
+<p>Bon ben c'est compliqué :(</p>
+<p>Ça ne marche pas, y'a rien qui marche, y faut tout changer, j'en ai marre,
+je le savais que l'asynchrone ça serait que des emm...</p>
+<p>...</p>
+<p>Un autre jour.</p>
+<p>Il faut &quot;juste&quot; que ma bidouille de <code>.query()</code> (pour que SQlite3 ressemble à
+node-postgres) fonctionne en async / await.</p>
+<pre><code class="language-javascript">// Bidouille pour ressembler à node-postgres
+db.query = function (sql, params, callback) {
+  this.all(sql, params, function (err, rows) {
+    callback(err, { rows: rows });
+  });
+};
+</code></pre>
+<p>Je ne sais pas trop comment faire, mais au moins internet est de quelque utilité
+et en m'inspirant d'un certain nombre d'exemples, en essayant un peu dans tous
+les sens, j'arrive finalement à bidouiller un peu plus :</p>
+<pre><code class="language-javascript">// Bidouille pour ressembler à node-postgres
+// (et permettre un fonctionnement async / await)
+db.query = function (sql, params) {
+  var that = this;
+  return new Promise(function (resolve, reject) {
+    that.all(sql, params, function (error, rows) {
+      if (error)
+        reject(error);
+      else
+        resolve({ rows: rows });
+    });
+  });
+};
+</code></pre>
+<p>Je re...teste : http://localhost:3000/livres</p>
+<p>...</p>
+<p>Ça marche :)</p>
+<h2>Conclusion</h2>
+<p>Personnellement, la syntaxe async / await ça me plait beaucoup plus. C'est plus
+beau, ça parait plus naturel et ça évite les indentations de la mort :</p>
+<pre><code class="language-javascript">// Création de la table Livres (Livre_ID, Titre, Auteur, Commentaires)
+const sql_create = `CREATE TABLE IF NOT EXISTS livres ... `;
+db.query(sql_create, [], (err, result) =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Création réussie de la table 'Livres'&quot;);
+  // Alimentation de la table
+  db.query(&quot;SELECT COUNT(*) AS count FROM Livres&quot;, [], (err, result) =&gt; {
+    const count = result.rows[0].count;
+    if (count === 0) {
+      const sql_insert = `INSERT INTO Livres ... `;
+      db.query(sql_insert, [], (err, result) =&gt; {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(&quot;Alimentation réussie de la table 'Livres'&quot;);
+      });
+    }
+  });
+});
+</code></pre>
+<p>=&gt; Beurk !</p>
+<pre><code class="language-javascript">(async () =&gt; {
+  try {
+    // Création de la table Livres (Livre_ID, Titre, Auteur, Commentaires)
+    const sql_create = `CREATE TABLE IF NOT EXISTS livres ... `;
+    await db.query(sql_create, []);
+    console.log(&quot;Création réussie de la table 'Livres'&quot;);
+    // Alimentation de la table
+    const result = await db.query(&quot;SELECT COUNT(*) AS count FROM Livres&quot;, []);
+    const count = result.rows[0].count;
+    if (count === 0) {
+      const sql_insert = `INSERT INTO Livres ... `;
+      await db.query(sql_insert, []);
+      console.log(&quot;Alimentation réussie de la table 'Livres'&quot;);
+    }
+  }
+  catch (error) { throw error; }
+})();
+</code></pre>
+<p>=&gt; Miam ?</p>
+<h2>Le code complet de &quot;index.js&quot;</h2>
+<p>Et pour finir, l'intégralité du fichier &quot;index.js&quot; pour avoir une vue d'ensemble
+des modifications apportées.</p>
+<pre><code class="language-javascript">const express = require(&quot;express&quot;);
+const path = require(&quot;path&quot;);
+const { Pool } = require(&quot;pg&quot;);
+const sqlite3 = require(&quot;sqlite3&quot;).verbose();
+
+// Création du serveur Express
+const app = express();
+
+// Configuration du serveur
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+app.use(express.urlencoded({ extended: false }));
+
+// Connexion à la base de données
+let db = null;
+if (process.env.NODE_ENV === 'production') {
+  // PostgreSQL en production
+  db = new Pool({
+    user: &quot;mystere&quot;,
+    host: &quot;xxxxx.elephantsql.com&quot;,
+    database: &quot;mystere&quot;,
+    password: &quot;untrucsecretquinarienafaireici&quot;,
+    port: 5432
+  });
+} else {
+  // SQlite par défaut
+  const db_name = path.join(__dirname, &quot;data&quot;, &quot;apptest.db&quot;);
+  db = new sqlite3.Database(db_name, err =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+  });
+  // Bidouille pour ressembler à node-postgres
+  // (et permettre un fonctionnement async / await)
+  db.query = function (sql, params) {
+    if (!Array.isArray(params)) throw new Error(&quot;params n'est pas un tableau !&quot;);
+    sql = sql.replace(/SERIAL PRIMARY KEY/, &quot;INTEGER PRIMARY KEY AUTOINCREMENT&quot;);
+    var that = this;
+    return new Promise(function (resolve, reject) {
+      that.all(sql, params, function (error, rows) {
+        if (error)
+          reject(error);
+        else
+          resolve({ rows: rows });
+      });
+    });
+  };
+}
+console.log(&quot;Connexion réussie à la base de données&quot;);
+
+(async () =&gt; {
+  try {
+    // Création de la table Livres (Livre_ID, Titre, Auteur, Commentaires)
+    const sql_create = `CREATE TABLE IF NOT EXISTS livres (
+      livre_id SERIAL PRIMARY KEY,
+      titre VARCHAR(100) NOT NULL,
+      auteur VARCHAR(100) NOT NULL,
+      commentaires TEXT
+    );`;
+    await db.query(sql_create, []);
+    console.log(&quot;Création réussie de la table 'Livres'&quot;);
+    // Alimentation de la table (si nécessaire)
+    const result = await db.query(&quot;SELECT COUNT(*) AS count FROM Livres&quot;, []);
+    const count = result.rows[0].count;
+    if (count === 0) {
+      const sql_insert = `INSERT INTO Livres (Titre, Auteur, Commentaires) VALUES
+        ('Mrs. Bridge', 'Evan S. Connell', 'Premier de la série'),
+        ('Mr. Bridge', 'Evan S. Connell', 'Second de la série'),
+        ('L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne');`;
+      await db.query(sql_insert, []);
+      console.log(&quot;Alimentation réussie de la table 'Livres'&quot;);
+    }
+  } catch (e) { return console.error(e.message); }
+})();
+
+// Démarrage du serveur
+app.listen(3000, () =&gt; {
+  console.log(&quot;Serveur démarré (http://localhost:3000/) !&quot;);
+});
+
+// GET /
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  // res.send(&quot;Bonjour le monde...&quot;);
+  res.render(&quot;index&quot;);
+});
+
+// GET /about
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+
+// GET /data
+app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    titre: &quot;Test&quot;,
+    items: [&quot;un&quot;, &quot;deux&quot;, &quot;trois&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+
+// GET /livres
+app.get(&quot;/livres&quot;, async (req, res) =&gt; {
+  try {
+    const sql = &quot;SELECT * FROM Livres ORDER BY Titre&quot;;
+    const result = await db.query(sql, []);
+    res.render(&quot;livres&quot;, { model: result.rows });
+  } catch (e) { console.error(e.message); }
+});
+
+// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  res.render(&quot;create&quot;, { model: {} });
+});
+
+// POST /create
+app.post(&quot;/create&quot;, async (req, res) =&gt; {
+  try {
+    const sql = &quot;INSERT INTO Livres (Titre, Auteur, Commentaires) VALUES ($1, $2, $3)&quot;;
+    const book = [req.body.titre, req.body.auteur, req.body.commentaires];
+    const result = await db.query(sql, book);
+    res.redirect(&quot;/livres&quot;);
+  } catch (e) { console.error(e.message); }
+});
+
+// GET /edit/5
+app.get(&quot;/edit/:id&quot;, async (req, res) =&gt; {
+  try {
+    const id = req.params.id;
+    const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = $1&quot;;
+    const result = await db.query(sql, [id]);
+    res.render(&quot;edit&quot;, { model: result.rows[0] });
+  } catch (e) { console.error(e.message); }
+});
+
+// POST /edit/5
+app.post(&quot;/edit/:id&quot;, async (req, res) =&gt; {
+  try {
+    const id = req.params.id;
+    const book = [req.body.titre, req.body.auteur, req.body.commentaires, id];
+    const sql = &quot;UPDATE Livres SET Titre = $1, Auteur = $2, Commentaires = $3 WHERE (Livre_ID = $4)&quot;;
+    const result = await db.query(sql, book);
+    res.redirect(&quot;/livres&quot;);
+  } catch (e) { console.error(e.message); }
+});
+
+// GET /delete/5
+app.get(&quot;/delete/:id&quot;, async (req, res) =&gt; {
+  try {
+    const id = req.params.id;
+    const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = $1&quot;;
+    const result = await db.query(sql, [id]);
+    res.render(&quot;delete&quot;, { model: result.rows[0] });
+  } catch (e) { console.error(e.message); }
+});
+
+// POST /delete/5
+app.post(&quot;/delete/:id&quot;, async (req, res) =&gt; {
+  try {
+    const id = req.params.id;
+    const sql = &quot;DELETE FROM Livres WHERE Livre_ID = $1&quot;;
+    const result = await db.query(sql, [id]);
+    res.redirect(&quot;/livres&quot;);
+  } catch (e) { console.error(e.message); }
+});
+</code></pre>
+<div class="encart">
+<p>English version: <a href="/2019/10/29/use-sqlite-node-async-await/" hreflang="en-US">Use SQlite3 in async / await mode</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/10/15/crud-with-express-postgresql-10-steps/" hreflang="en-US">CRUD application with Express and PostgresSQL in 10 steps</a>
+  <a rel="next" href="/2019/10/22/comparing-sqlite-postgresql-express/" hreflang="en-US">Comparing SQlite or PostgreSQL with Express</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

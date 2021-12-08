@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Faire une migration plus poussée - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Faire une migration plus poussée" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-26T11:29:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-26T11:29:00.000Z","datePublished":"2010-05-26T11:29:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee/">MVC Music Store / Raven DB : Faire une migration plus poussée</a>
+    </h1>
+    <p>
+      <span>2010-05-26</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/24/porting-mvc-music-store-to-raven-advanced-migrations.aspx">Porting MVC Music Store to Raven: Advanced Migrations</a>&quot;, le septième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Je me suis rendu compte qu'à cause d'une faute de frappe lorsque j'avais
+fait la reprise des données, les informations sur l'artiste étaient
+enregistrées en tant que &quot;Arist&quot; au lieu de &quot;Artist&quot;. Cela va me donner
+l'occasion de montrer comment faire une migration du modèle de données un peu
+plus sophistiquée.</p>
+<pre><code>using (var documentStore = new DocumentStore { Url = &quot;http://localhost:8080&quot; })
+{
+    documentStore.Initialise();
+
+    var count = 0;
+
+    do
+    {
+        var queryResult = documentStore.DatabaseCommands.Query(&quot;Raven/DocumentsByEntityName&quot;, new IndexQuery
+        {
+            Query = &quot;Tag:`Albums`&quot;,
+            PageSize = 128,
+            Start = count
+        });
+
+        if (queryResult.Results.Length == 0)
+            break;
+
+        count += queryResult.Results.Length;
+        var cmds = new List&lt;ICommandData&gt;();
+        foreach (var result in queryResult.Results)
+        {
+            var arist = result.Value&lt;JObject&gt;(&quot;Arist&quot;);
+            if(arist == null)
+                continue;
+                        
+            result[&quot;Artist&quot;] = arist;
+            result.Remove(&quot;Arist&quot;);
+
+            cmds.Add(new PutCommandData
+            {
+                Document = result,
+                Metadata = result.Value&lt;JObject&gt;(&quot;@metadata&quot;),
+                Key = result.Value&lt;JObject&gt;(&quot;@metadata&quot;).Value&lt;string&gt;(&quot;@id&quot;),
+            });
+        }
+
+        documentStore.DatabaseCommands.Batch(cmds.ToArray());
+
+    } while (true);
+    
+}
+</code></pre>
+<p>Je ne pense pas que le code soit très compliqué à suivre. Vous pouvez voir
+comment on peut manipuler les documents en travaillant directement au niveau du
+document JSON plutôt que de passer par une couche objet.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/25/mvc-music-store-raven-db-faire-evoluer-modele-donnees/" hreflang="fr-FR">MVC Music Store / Raven DB : Faire évoluer le modèle de données</a>
+  <a rel="next" href="/2010/05/26/mvc-music-store-raven-db-storecontroller/" hreflang="fr-FR">MVC Music Store / Raven DB : StoreController</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

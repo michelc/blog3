@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multi-langue - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/06/06/multi-langue/" />
+<meta property="og:title" content="Multi-langue" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/06/06/multi-langue/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-06-06T08:04:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-06-06T08:04:00.000Z","datePublished":"2005-06-06T08:04:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/06/06/multi-langue/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/06/06/multi-langue/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/06/06/multi-langue/">Multi-langue</a>
+    </h1>
+    <p>
+      <span>2005-06-06</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>QC peut désormais gérer plusieurs langues par l'intermédaire d'un fichier de
+configuration LiteralXX.config. Celui-ci doit être déclaré dans le Web.config
+de la façon suivante : <code>&lt;appsettings file=&quot;LiteralFR.config&quot;&gt;</code>.</p>
+<p>Le fichier LiteralXX.config est constitué de paires key/value :</p>
+<ul>
+<li><code>&lt;add key=&quot;announcements_ReadMore&quot; value=&quot;Suite...&quot; /&gt;</code></li>
+<li><code>&lt;add key=&quot;announcements_Title&quot; value=&quot;Titre&quot; /&gt;</code></li>
+<li><code>&lt;add key=&quot;announcements_Summary&quot; value=&quot;Accroche&quot; /&gt;</code></li>
+<li><code>&lt;add key=&quot;announcements_Content&quot; value=&quot;Contenu&quot; /&gt;</code></li>
+</ul>
+<p>Pour l'instant, la traduction est prise en compte au niveau des webforms
+grace au nouveau contrôle utilisateur <code>&lt;qc:Literal&gt;</code> qui accepte deux
+atttributs :</p>
+<ul>
+<li>id : identidiant du texte (correspond à l'attribut key dans
+LiteralXX.config)</li>
+<li>text : valeur du texte par défaut (= attribut value dans
+LiteralXX.config)</li>
+</ul>
+<pre><code>&lt;p&gt;
+  &lt;label&gt;
+    &lt;qc:literal id=&quot;announcements_Summary&quot;
+                text=&quot;Summary&quot;
+                runat=&quot;server&quot; /&gt; 
+  &lt;/label&gt;
+  &lt;asp:textbox id=&quot;txtSummary&quot; 
+               cssclass=&quot;std&quot; 
+               maxlength=&quot;250&quot; 
+               textmode=&quot;MultiLine&quot; 
+               rows=&quot;2&quot; 
+               runat=&quot;server&quot; /&gt;
+</code></pre>
+<p>La traduction peut également être obtenue au moyen de la nouvelle fonction
+<code>Common.Literal(id, text)</code>.</p>
+<p>Il y a encore quelques trucs à finir :</p>
+<ul>
+<li>trouver comment gérer le cas des libellés pour les contrôles Validator
+(boucler dessus dans BoxControl.cs et appeler <code>Common.Literal()</code> ou tous les
+surclasser en <code>&lt;qc:Validator&gt;</code>)</li>
+<li>il reste 2 ou 3 traductions &quot;en dur&quot; dans default.aspx.cs</li>
+<li>voir comment faire pour gérer plusieurs traductions en fonction de
+l'utilisateur</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/06/03/liste-modifications-qcengine/" hreflang="fr-FR">Liste des modifications de qc.Engine</a>
+  <a rel="next" href="/2005/06/06/ameliorations-boites-dialogue/" hreflang="fr-FR">Améliorations des boites de dialogue</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

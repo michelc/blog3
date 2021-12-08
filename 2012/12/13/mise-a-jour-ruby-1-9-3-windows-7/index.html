@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mise à jour Ruby 1.9.3 sous Windows 7 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/12/13/mise-a-jour-ruby-1-9-3-windows-7/" />
+<meta property="og:title" content="Mise à jour Ruby 1.9.3 sous Windows 7" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/12/13/mise-a-jour-ruby-1-9-3-windows-7/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-12-13T22:17:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-12-13T22:17:00.000Z","datePublished":"2012-12-13T22:17:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/12/13/mise-a-jour-ruby-1-9-3-windows-7/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/12/13/mise-a-jour-ruby-1-9-3-windows-7/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/12/13/mise-a-jour-ruby-1-9-3-windows-7/">Mise à jour Ruby 1.9.3 sous Windows 7</a>
+    </h1>
+    <p>
+      <span>2012-12-13</span>
+      <span>#ruby</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je viens enfin de mettre à jour mon installation Ruby 1.9.2 alors je note
+pour le jour où Ruby 2.0 sortira.</p>
+<h2>Etape 1 : désinstaller Ruby 1.9.2</h2>
+<p>Je procède à quelques sauvegardes personnelles avant de lancer la
+désinstallation.</p>
+<ul>
+<li>C:\Ruby\root (pour archivage parce que j'y ai quelques fichiers de
+notes)</li>
+<li>C:\Ruby_projets (mes projets sous Sinatra)</li>
+<li>C:\Ruby\Rubyq (pour faire quelques essais)</li>
+</ul>
+<p>Puis désinstaller Ruby 1.9.2 et supprimer le répertoire C:\Ruby.</p>
+<h2>Etape 2 : Installer Ruby 1.9.3</h2>
+<p>Installer Ruby 1.9.3 (depuis <a href="http://rubyinstaller.org/">RubyInstaller pour Windows</a>)</p>
+<ul>
+<li>dans C:\Ruby</li>
+<li>cocher &quot;Add Ruby executables to your PATH&quot;</li>
+<li>cocher &quot;Associate .rb and .rbw files with this Ruby installation&quot;</li>
+</ul>
+<p>Installer DevKit 4.5.2 (re-depuis <a href="http://rubyinstaller.org/">RubyInstaller pour Windows</a>)</p>
+<ul>
+<li>le décompacter dans C:\Ruby\DevKit</li>
+<li>CD C:\Ruby\DevKit</li>
+<li>ruby dk.rb init</li>
+<li>ruby dk.rb install</li>
+</ul>
+<p>Ce coup-ci, je pense à créer un fichier <code>.gemrc</code> (avec
+SublimeText parce que l'explorateur de fichiers n'aime pas un nom qui commence
+par un point) dans mon répertoire utilisateur et j'y enregistre les deux lignes
+suivantes :</p>
+<pre><code>install: --no-rdoc --no-ri
+update:  --no-rdoc --no-ri
+</code></pre>
+<p>Source : <a href="http://stackoverflow.com/questions/1381725/how-to-make-no-ri-no-rdoc-the-default-for-gem-install">How to make --no-ri --no-rdoc the default for gem
+install?</a></p>
+<p>Mettre à jour les quelques gems installées par défaut</p>
+<ul>
+<li>gem update --system</li>
+<li>gem update</li>
+</ul>
+<h2>Etape 3 : Installer Sinatra</h2>
+<p>Sinatra lui-même</p>
+<ul>
+<li>gem install sinatra</li>
+<li>gem install sinatra-reloader (pour recharger automatiquement les sources
+modifiés)</li>
+</ul>
+<p>SQLite et DataMapper</p>
+<ul>
+<li>Récupérer la dernière version de sqlite.dll sur <a href="http://sqlite.org/">sqlite.org</a> et la copier dans
+C:\Ruby\bin</li>
+<li>gem install sqlite3 (c'est le nouveau nom de sqlite3-ruby)</li>
+<li>gem install data_mapper</li>
+<li>gem install dm-sqlite-adapter</li>
+</ul>
+<p>Les 2 gems dont je vais avoir besoin dans l'immédiat</p>
+<ul>
+<li>gem install haml</li>
+<li>gem install heroku (préconise toolbet qui est en fait heroku + foreman +
+git)</li>
+</ul>
+<p>Pour les autres gems (pony, rack-flash...), je les installerai au fur et à
+mesure des besoins.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/12/12/tester-entity-framework-sql-ce/" hreflang="fr-FR">Tester Entity Framework avec SQL CE</a>
+  <a rel="next" href="/2012/12/18/windows-powershell-ruby-accents/" hreflang="fr-FR">Windows, PowerShell, Ruby et les accents</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

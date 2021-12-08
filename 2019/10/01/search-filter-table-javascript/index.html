@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search and filter a table with JavaScript - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/10/01/search-filter-table-javascript/" />
+<meta property="og:title" content="Search and filter a table with JavaScript" />
+<meta name="description" content="How to search and filter the content of an HTML table in JavaScript. From the script found on codepen.io to a final version slightly reworked after some explanations." />
+<meta property="og:description" content="How to search and filter the content of an HTML table in JavaScript. From the script found on codepen.io to a final version slightly reworked after some explanations." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/10/01/search-filter-table-javascript/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/table-filter.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-10-01T10:23:34.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-10-01T10:23:34.000Z","datePublished":"2019-10-01T10:23:34.000Z","description":"How to search and filter the content of an HTML table in JavaScript. From the script found on codepen.io to a final version slightly reworked after some explanations.","inLanguage":"en-US","url":"https://blog3.pagesd.info/2019/10/01/search-filter-table-javascript/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/table-filter.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/10/01/search-filter-table-javascript/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/table-filter.jpg" alt="Funnel Set 4 Pc + JavaScript" /><figcaption><a href="https://www.harborfreight.com/4-piece-funnel-set-744.html">Funnel Set 4 Pc + JavaScript</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/10/01/search-filter-table-javascript/">Search and filter a table with JavaScript</a>
+    </h1>
+    <p>
+      <span>2019-10-01</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Some time ago, I needed to propose a simple search in a table. Normally, I
+prefer the good old <code>Ctrl+F</code> but not everyone likes it (and also the goal was
+more to filter the display to the data found, which is not possible with a
+Chrome search).</p>
+<p>As my site wasn't yet using jQuery, I looked for a ready-made Vanilla JS script
+and found a very simple and easily understandable example with a demonstration
+on <a href="https://codepen.io/priyankamalviya/pen/zzWZEa">codepen.io</a>.</p>
+<h2>The original script</h2>
+<p>First of all, the script as developed by
+<a href="https://twitter.com/priyankamalvi18">Priyanka Malviya</a> before explaining what
+it does and how.</p>
+<pre><code>(function() {
+  'use strict';
+
+  var TableFilter = (function() {
+    var Arr = Array.prototype;
+    var input;
+
+    function onInputEvent(e) {
+      input = e.target;
+      var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+      Arr.forEach.call(table1, function(table) {
+        Arr.forEach.call(table.tBodies, function(tbody) {
+          Arr.forEach.call(tbody.rows, filter);
+        });
+      });
+    }
+
+    function filter(row) {
+      var text = row.textContent.toLowerCase();
+      var val = input.value.toLowerCase();
+      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    }
+
+    return {
+      init: function() {
+        var inputs = document.getElementsByClassName('table-filter');
+        Arr.forEach.call(inputs, function(input) {
+          input.oninput = onInputEvent;
+        });
+      }
+    };
+
+  })();
+
+ TableFilter.init();
+})();
+</code></pre>
+<h2>How does it work?</h2>
+<p>To be able to use this code, you must add an input tag to the page and decorate
+it with the &quot;table-filter&quot; class:</p>
+<pre><code>&lt;p&gt;
+  Filter: &lt;input type=&quot;text&quot; class=&quot;table-filter&quot; data-table=&quot;books&quot;&gt;
+&lt;/p&gt;
+...
+&lt;table class=&quot;books&quot;&gt;
+  ...
+&lt;/table&gt;
+...
+&lt;script src=&quot;/scripts/js-table-filter.js&quot;&gt;&lt;/script&gt;
+
+</code></pre>
+<p>The &quot;table-filter&quot; class of the control <code>&lt;input ...&gt;</code> is used to indicate that
+this input box is intended to filter the content of a table.</p>
+<p>The &quot;data-table&quot; attribute allows you to define the name of the class
+corresponding to the table to be filtered, in this case the HTML table with the
+&quot;books&quot; class.</p>
+<p>The &quot;js-table-filter.js&quot; script directly launches the <code>TableFilter.init()</code>
+function which searches for all tags with the &quot;table-filter&quot; class and applies
+the <code>TableFilter.onInputEvent</code> function to each tag on its <code>oninput</code> event.
+If necessary, the system allows you to have several tables with each one its own
+input box to filter its content:</p>
+<pre><code>init: function() {
+  var inputs = document.getElementsByClassName('table-filter');
+  Arr.forEach.call(inputs, function(input) {
+    input.oninput = onInputEvent;
+  });
+}
+</code></pre>
+<p>This event is triggered as soon as the user enters text in the search box. It
+executes the <code>onInputEvent</code> function associated with the event during
+initialization.</p>
+<p>This <code>onInputEvent</code> function will perform the search by testing all existing
+rows in the table:</p>
+<ul>
+<li>stores the input tag that triggered the <code>oninput</code> event (i.e. &quot;event.target&quot;)
+in the &quot;input&quot; variable</li>
+<li>finds the class of the table to be filtered from the &quot;data-table&quot; attribute of
+this input field</li>
+<li>searches for all tables with this CSS class</li>
+<li>loop on each of these tables, then for each table, on each of its blocks of
+type <code>&lt;tbody&gt;</code>, then for each &quot;body&quot;, on each of its lines <code>&lt;tr&gt;</code>, and applies
+the <code>TableFilter.filter</code> function on them.</li>
+</ul>
+<pre><code>function onInputEvent(e) {
+  input = e.target;
+  var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+  Arr.forEach.call(table1, function(table) {
+    Arr.forEach.call(table.tBodies, function(tbody) {
+      Arr.forEach.call(tbody.rows, filter);
+    });
+  });
+}
+</code></pre>
+<p>The function <code>filter()</code> is used to filter the rows. It will show or hide one row
+depending on whether the search is positive or not:</p>
+<ul>
+<li>stores the lowercase content of the line in the local variable &quot;text&quot;.</li>
+<li>stores the text to be searched in lowercase in the local variable &quot;val&quot;</li>
+<li>displays the line <code>&lt;tr&gt;</code> when it contains the text you are looking for</li>
+<li>hides the line <code>&lt;tr&gt;</code> if it doesn't contain the searched text</li>
+</ul>
+<pre><code>function filter(row) {
+  var text = row.textContent.toLowerCase();
+  var val = input.value.toLowerCase();
+  row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+}
+</code></pre>
+<p>Hiding/displaying a row is done via the CSS <code>display</code> property which is defined
+as &quot;none&quot; or &quot;table-row&quot;.</p>
+<h2>Modification #1: a first contact</h2>
+<p>After studying how these few lines operate, I made a very small change that
+enabled me to understand how the code worked.</p>
+<pre><code>(function () {
+  &quot;use strict&quot;;
+
+  var TableFilter = (function () {
+    var Arr = Array.prototype;
+    var search;
+
+    function onInputEvent(e) {
+      search = e.target.value.toLowerCase();
+      var tables = document.getElementsByClassName(e.target.getAttribute(&quot;data-table&quot;));
+      Arr.forEach.call(tables, function (table) {
+        Arr.forEach.call(table.tBodies, function (tbody) {
+          Arr.forEach.call(tbody.rows, filter);
+        });
+      });
+    }
+
+    function filter(row) {
+      var text = row.textContent.toLowerCase();
+      row.style.display = text.indexOf(search) === -1 ? &quot;none&quot; : &quot;table-row&quot;;
+    }
+
+    return {
+      init: function () {
+        var inputs = document.getElementsByClassName(&quot;table-filter&quot;);
+        Arr.forEach.call(inputs, function (input) {
+          input.oninput = onInputEvent;
+        });
+      }
+    };
+
+  })();
+
+  TableFilter.init();
+})();
+</code></pre>
+<p>In addition to converting single quote into double quotes (I prefer it this
+way), I have replaced the variable &quot;input&quot; which stores the input tag by a
+variable &quot;search&quot; which only stores the text to be searched after turning it
+into lowercase.</p>
+<p>Advantages:</p>
+<ul>
+<li>Storage of a simple text variable rather than a &quot;DOM&quot; object.</li>
+<li>The text to be searched is no longer transformed into lowercase for each row
+tested.</li>
+</ul>
+<h2>Modification #2: a small improvement</h2>
+<p>My table displays a list of books. The filter system works perfectly: I can type
+a few things and the table only shows the books that match the search.</p>
+<p>Then you can click on one of the rows of the table and it sends you to a detail
+page that displays more information about the selected book.</p>
+<p>But strangely enough, when you go back via the browser, you find the search box
+with the pre-filled filter but not applied: all the lines of the table are
+visible...</p>
+<p>It is therefore necessary to find a way to reactivate the search as soon as the
+input field is pre-filled. It's really not that complicated and you just have to
+trigger the <code>oninput</code> event if the search input value is not empty:</p>
+<pre><code>init: function() {
+  var inputs = document.getElementsByClassName('table-filter');
+  Arr.forEach.call(inputs, function(input) {
+    input.oninput = onInputEvent;
+    if (input.value !== &quot;&quot;) input.oninput({ target: input });
+  });
+}
+</code></pre>
+<p>The line <code>if (input.value !== &quot;&quot;) input.oninput({ target: input });</code> checks if
+the input field is not empty, and if so, triggers the event by passing it the
+current input tag.</p>
+<h2>Modification #3: a little modernity</h2>
+<p>Once I procrastinated, I decided to replace the
+<code>document.getElementsByClassName()</code> with a much more trendy
+<code>document.querySelectorAll()</code>, and while at it, take the opportunity to simplify
+the different selections.</p>
+<p>I started by creating a <code>TableFilter.dquery()</code> function to standardize how to
+use <code>querySelectorAll()</code> and get an array from it:</p>
+<pre><code>function dquery(selector) {
+  return Array.prototype.slice.call(document.querySelectorAll(selector));
+}
+</code></pre>
+<p><em>Note: This is copy/paste from my JavaScript mini-library
+<a href="/2019/04/30/dquery-remplacer-jquery/">dQuery</a> (post in french).</em></p>
+<p>Then I was able to change the way the relevant input fields were selected:</p>
+<pre><code>// BEFORE
+var inputs = document.getElementsByClassName(&quot;table-filter&quot;);
+Arr.forEach.call(inputs, function (input) { ... });
+
+// AFTER
+var inputs = dquery(&quot;.table-filter&quot;);
+[].forEach.call(inputs, function (input) { ... });
+</code></pre>
+<p>Especially, I could change the loop over the lines of the table:</p>
+<pre><code>var tables = document.getElementsByClassName(e.target.getAttribute(&quot;data-table&quot;));
+Arr.forEach.call(tables, function (table) {
+  Arr.forEach.call(table.tBodies, function (tbody) {
+    Arr.forEach.call(tbody.rows, filter);
+  });
+});
+</code></pre>
+<p>who became:</p>
+<pre><code>var lignes = dquery(e.target.getAttribute(&quot;data-table&quot;) + &quot; tbody tr&quot;);
+[].forEach.call(lignes, filter);
+</code></pre>
+<p><em>Note: The &quot;data-table&quot; attribute that previously contained &quot;books&quot; (a class name
+that was expected by <code>.getElementsByClassName()</code>) must now be changed to
+&quot;.books&quot; (a CSS selector that is intended for <code>.querySelectorAll()</code>).</em></p>
+<h2>Modification #4: a slight optimization</h2>
+<p>Every time we start a search, all the rows of the table are converted to
+lowercase in order to make the comparison... Suppose I have a small table with
+200 books, if I want to filter on the elements that contain the word &quot;BIRD&quot;, I
+do :</p>
+<ul>
+<li>200 lowercase transformations when I type &quot;B&quot;</li>
+<li>+ 200 lowercase transformations when I add &quot;I&quot;</li>
+<li>+ 200 lowercase transformations when I add &quot;R&quot;</li>
+<li>+ 200 lowercase transformations when I add &quot;D&quot;</li>
+</ul>
+<p>That's silly. So I cached the &quot;textual&quot; content of the line after turning it
+into lowercase to &quot;save&quot; a little bit of time:</p>
+<pre><code>if (!row.lowerTextContent) {
+  row.lowerTextContent = row.textContent.toLowerCase();
+}
+row.style.display = row.lowerTextContent.indexOf(search) === -1 ? &quot;none&quot; : &quot;table-row&quot;;
+</code></pre>
+<p><em>Note: Given the size of the tables on which I use &quot;js-table-filter.js&quot;, it's
+more for the sake of detail than for real optimization.</em></p>
+<h2>Modification #5: a new feature</h2>
+<p>This time, I made a little more useful modification. The title of the table is
+&quot;List of books&quot;, followed by the number of books in parentheses.</p>
+<pre><code>&lt;h2&gt;List of books (&lt;%= model.length %&gt;)&lt;/h2&gt;
+&lt;p&gt;
+  Filter: &lt;input type=&quot;text&quot; class=&quot;table-filter&quot; data-table=&quot;.books&quot;&gt;
+&lt;/p&gt;
+...
+&lt;table class=&quot;books&quot;&gt;
+  ...
+&lt;/table&gt;
+</code></pre>
+<p>And when you filter the contents of the table, this counter doesn't evolve since
+it was initialized on the server side and corresponds to the total number of
+rows in the table, whether they are displayed or hidden...</p>
+<p>So I completed the existing code to update this counter as we filter the data:</p>
+<pre><code>...
+[].forEach.call(lignes, filter);
+var writer = input.getAttribute(&quot;data-count&quot;);
+if (writer) {
+  var count = rows.reduce(function (t, x) { return t + (x.style.display === &quot;none&quot; ? 0 : 1); }, 0);
+  dquery(writer)[0].textContent = count;
+}
+</code></pre>
+<p>For this to work, you must add a &quot;data-count&quot; attribute to the input field to
+identify where to display the number of lines. And of course, add a tag
+corresponding to this attribute, i.e. <code>&lt;span id=&quot;count&quot;&gt;...&lt;/span&gt;</code> in the
+example below :</p>
+<pre><code>&lt;h2&gt;List of books (&lt;span id=&quot;count&quot;&gt;&lt;%= model.length %&gt;&lt;/span&gt;)
+&lt;p&gt;
+  Filter: &lt;input type=&quot;text&quot; class=&quot;table-filter&quot; data-table=&quot;.books&quot; data-count=&quot;#count&quot;&gt;
+&lt;/p&gt;
+...
+</code></pre>
+<p><em>Note: If the attribute &quot;data-count&quot; does not exist, then the condition <code>if (writer) { ... }</code> avoids trying to count lines.</em></p>
+<h2>Modification #6: simplifications</h2>
+<p>On this occasion, we can also notice that the &quot;table-filter&quot; class is not really
+essential. The presence of the &quot;data-table&quot; attribute can also be used to
+determine which input tags are intended to perform a search.</p>
+<p>Which gives on the HTML side:</p>
+<pre><code>&lt;p&gt;
+  Filter: &lt;input type=&quot;text&quot; data-table=&quot;.books&quot; data-count=&quot;#count&quot;&gt;
+&lt;/p&gt;
+</code></pre>
+<p>And on the JavaScript side:</p>
+<pre><code>// BEFORE
+var inputs = dquery(&quot;.table-filter&quot;);
+[].forEach.call(inputs, function (input) { ... });
+
+// AFTER
+var inputs = dquery(&quot;input[data-table]&quot;);
+[].forEach.call(inputs, function (input) { ... });
+</code></pre>
+<h2>The &quot;js-table-filter.js&quot; file up to date</h2>
+<p>Here's where I am (until I want to handle accented characters). And with a few
+comments, the code is still as short and simple as ever:</p>
+<pre><code>// Vanilla JS table filter
+// Source: https://blog.pagesd.info/2019/10/01/search-filter-table-javascript/
+
+(function () {
+  &quot;use strict&quot;;
+
+  var TableFilter = (function () {
+    var search;
+
+    function dquery(selector) {
+      // Returns an array of elements corresponding to the selector
+      return Array.prototype.slice.call(document.querySelectorAll(selector));
+    }
+
+    function onInputEvent(e) {
+      // Retrieves the text to search
+      var input = e.target;
+      search = input.value.toLocaleLowerCase();
+      // Get the lines where to search
+      // (the data-table attribute of the input is used to identify the table to be filtered)
+      var selector = input.getAttribute(&quot;data-table&quot;) + &quot; tbody tr&quot;;
+      var rows = dquery(selector);
+      // Searches for the requested text on all rows of the table
+      [].forEach.call(rows, filter);
+      // Updating the line counter (if there is one defined)
+      // (the data-count attribute of the input is used to identify the element where to display the counter)
+      var writer = input.getAttribute(&quot;data-count&quot;);
+      if (writer) {
+        // If there is a data-count attribute, we count visible rows
+        var count = rows.reduce(function (t, x) { return t + (x.style.display === &quot;none&quot; ? 0 : 1); }, 0);
+        // Then we display the counter
+        dquery(writer)[0].textContent = count;
+      }
+    }
+
+    function filter(row) {
+      // Caching the tr line in lowercase
+      if (row.lowerTextContent === undefined)
+        row.lowerTextContent = row.textContent.toLocaleLowerCase();
+      // Hide the line if it does not contain the search text
+      row.style.display = row.lowerTextContent.indexOf(search) === -1 ? &quot;none&quot; : &quot;table-row&quot;;
+    }
+
+    return {
+      init: function () {
+        // get the list of input fields with a data-table attribute
+        var inputs = dquery(&quot;input[data-table]&quot;);
+        [].forEach.call(inputs, function (input) {
+          // Triggers the search as soon as you enter a search filter
+          input.oninput = onInputEvent;
+          // If we already have a value (following navigation back), we relaunch the search
+          if (input.value !== &quot;&quot;) input.oninput({ target: input });
+        });
+      }
+    };
+
+  })();
+
+  TableFilter.init();
+})();
+</code></pre>
+<p>As a bonus, the HTML part, ready for when I add this to a Bootstrap 4 template:</p>
+<pre><code>&lt;div class=&quot;input-group mb-3&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;span class=&quot;input-group-text&quot; id=&quot;filter&quot;&gt;Filter&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-table=&quot;table&quot; data-count=&quot;#count&quot; placeholder=&quot;Enter text to filter...&quot; aria-label=&quot;Filter&quot; aria-describedby=&quot;filter&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="encart">
+<p>Version en français : <a href="/2019/09/30/rechercher-filtrer-table-javascript/" hreflang="fr-FR">Rechercher et filtrer une table en JavaScript</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/09/30/rechercher-filtrer-table-javascript/" hreflang="fr-FR">Rechercher et filtrer une table en JavaScript</a>
+  <a rel="next" href="/2019/10/07/comparaison-sqlite-postgresql-express/" hreflang="fr-FR">Comparaison de l&#39;utilisation de SQlite ou PostgreSQL avec Express</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

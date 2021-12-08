@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Generate a random number with JavaScript - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/12/04/generate-random-number-javascript/" />
+<meta property="og:title" content="Generate a random number with JavaScript" />
+<meta name="description" content="How to generate random numbers with Math.random() + How to force chance and be sure to always generate the same set of random numbers (useful for testing)." />
+<meta property="og:description" content="How to generate random numbers with Math.random() + How to force chance and be sure to always generate the same set of random numbers (useful for testing)." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/12/04/generate-random-number-javascript/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/xkcd-221.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-12-04T10:23:15.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-12-04T10:23:15.000Z","datePublished":"2019-12-04T10:23:15.000Z","description":"How to generate random numbers with Math.random() + How to force chance and be sure to always generate the same set of random numbers (useful for testing).","inLanguage":"en-US","url":"https://blog3.pagesd.info/2019/12/04/generate-random-number-javascript/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/xkcd-221.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/12/04/generate-random-number-javascript/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/xkcd-221.jpg" alt="XKCD #221 - Random Number" /><figcaption><a href="https://xkcd.com/221/">XKCD #221 - Random Number</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/12/04/generate-random-number-javascript/">Generate a random number with JavaScript</a>
+    </h1>
+    <p>
+      <span>2019-12-04</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>The &quot;Math.random()&quot; method</h2>
+<p>To create a random number, we have to use the <code>Math.random()</code> function. This method returns a &quot;pseudo&quot; random number which is:</p>
+<ul>
+<li>greater than or equal to 0.0</li>
+<li>strictly less than 1.0</li>
+</ul>
+<p>So, if you want to get a card number to play (an integer number between 1 and 52), it is necessary:</p>
+<ul>
+<li>Multiply the result of <code>Math.random()</code> by 52, which gives us a number between 0.0 and 51.999...</li>
+<li>Round this number to the lower integer value with the function <code>Math.floor()</code> to have an integer between 0 and 51 (included)</li>
+<li>Add 1 to this value to have a number between 1 and 52</li>
+</ul>
+<pre><code class="language-javascript">// Get an integer between 1 and 52
+const cardNumber = 1 + Math.floor(52 * Math.random());
+</code></pre>
+<p><em>Note: We talk about &quot;pseudo&quot; random number, because for a computer, it's not easy to reproduce chance, so it's easier to simulate.</em></p>
+<h2>The &quot;Math.seedrandom()&quot; module</h2>
+<p>Aside from my real work (C# + Oracle), I have a side project and I run a solitaire games website: <a href="https://www.solitaire-play.com/">Solitaire-Play</a>, with solitaires like Klondike, Canfield, Freecell, Golf...</p>
+<p>Each game provides a hint system. In most cases, I just present the cards that are playable according to the rules of the game. But with Klondike Solitaire, I tried to do a little better and have an algorithm that &quot;thinks&quot; to optimize the chances of winning.</p>
+<p>During the development and to check that what I write has a positive impact, I have a program that tests the success rate of the games played by following only the advice of my program.</p>
+<p>To have enough significant values, I test the results for 1000 games. The problem is that I never get exactly the same percentage of success each time I run a test set. This is &quot;normal&quot;, since each time it's 1000 completely random games.</p>
+<p>So I searched whether it was possible to &quot;force&quot; random and that my tests always run the same 1000 games. This would allow me to better evaluate the improvements I add to my hint system.</p>
+<p>Luckily, I found David Bau's &quot;<a href="https://github.com/davidbau/seedrandom">seedrandom.js</a>&quot; package. This code makes the result of the <code>Math.random()</code> method &quot;predictable&quot;.</p>
+<p>As in my case I only use it for testing, I can use directly the function <code>Math.seedrandom(&quot;seed&quot;)</code> before my 1000 tests. In the end, my test program now looks like the following code:</p>
+<pre><code class="language-javascript">function Test_Run (seed) {
+  if (seed) Math.seedrandom(seed);
+  var play_count = 0;
+  var win_count = 0;
+  for (var i = 0; i &lt; 1000; i++) {
+    play_count++;
+    Test_Run_One();
+    if (game.state() &gt; 0) win_count++;
+  }
+  console.log(play_count + &quot; games =&gt; &quot;
+          + &quot;{ win: &quot; + win_count
+          + &quot;, lost: &quot; + (play_count - win_count)
+          + &quot;, percent: &quot; + (Math.round(win_count * 1000 / play_count) / 10)
+          + &quot; }&quot;);
+}
+</code></pre>
+<p>I tryed with several values for &quot;seed&quot; and got the following results:</p>
+<ul>
+<li>Test_Run(&quot;michel&quot;) =&gt; 41% of games won</li>
+<li>Test_Run(&quot;chance&quot;) =&gt; 41.2% of games won</li>
+<li>Test_Run(&quot;randomize&quot;) =&gt; 39.3 of games won</li>
+</ul>
+<p>By playing my system as best I can, I can therefore hope to win 4 out of 10 games. Which is already not bad for &quot;if ... else&quot; code. And so, by using the &quot;randomize&quot; string as initialization value, I will have a better view of the progress made by my hint system as I develop it. The goal being of course to achieve at least a 50% success rate...</p>
+<div class="encart">
+<p>Version en français : <a href="/2019/12/03/generer-nombre-aleatoire-javascript/" hreflang="fr-FR">Générer un nombre aléatoire en JavaScript</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/12/03/generer-nombre-aleatoire-javascript/" hreflang="fr-FR">Générer un nombre aléatoire en JavaScript</a>
+  <a rel="next" href="/2019/12/09/menu-hamburger-bootstrap-vanilla-js/" hreflang="fr-FR">Gérer le menu hamburger de Bootstrap 4 en Vanilla JS</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

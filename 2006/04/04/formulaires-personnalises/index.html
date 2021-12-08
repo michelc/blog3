@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulaires personnalisés - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/04/04/formulaires-personnalises/" />
+<meta property="og:title" content="Formulaires personnalisés" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/04/04/formulaires-personnalises/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-04-04T11:05:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-04-04T11:05:00.000Z","datePublished":"2006-04-04T11:05:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/04/04/formulaires-personnalises/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/04/04/formulaires-personnalises/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/04/04/formulaires-personnalises/">Formulaires personnalisés</a>
+    </h1>
+    <p>
+      <span>2006-04-04</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Il est possible d'utiliser une boite HtmlFile pour réaliser un formulaire
+personnalisé dont le résultat sera envoyé par mél à une adresse donnée.</p>
+<p>Il faut ensuite coder un formulaire en html en s'inspirant du modèle
+ci-dessous :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+function MailFormSubmit() {
+  // liste des id obligatoires
+  var checks = new Array(&quot;mf_Societe&quot;, &quot;mf_Email&quot;);
+  // teste la saisie des champs obligatoires
+  for (var i = 0; i &lt; checks.length; i++) {
+    var check = checks[i];
+    var ctrl = document.getElementById(check);
+    if (ctrl.value == &quot;&quot;) {
+      ctrl.focus();
+      return;
+    }
+  }
+  // saisie ok =&gt; poste vers le gestion de formulaires mails
+  var mainForm = document.getElementById(&quot;dotnetForm&quot;);
+  mainForm.action = '/qc/MailFormHandler.ashx';
+  mainForm.submit();
+}
+&lt;/script&gt;
+&lt;table id=&quot;WebForm&quot;&gt;
+  &lt;tbody&gt;
+    &lt;/tr&gt;
+      &lt;td colspan=&quot;2&quot;&gt;
+        L'astérisque (*) signale un champ obligatoire
+      &lt;/td&gt;
+    &lt;tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Nom&lt;/td&gt;
+      &lt;td&gt;&lt;input maxlength=&quot;100&quot; size=&quot;50&quot; name=&quot;Nom&quot; /&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Prénom&lt;/td&gt;
+      &lt;td&gt;&lt;input maxlength=&quot;100&quot; size=&quot;50&quot; name=&quot;Prenom&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Société *&lt;/td&gt;
+      &lt;td&gt;&lt;input maxlength=&quot;100&quot; size=&quot;50&quot; name=&quot;Societe&quot; id=&quot;mf_Societe&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;E-Mail *&lt;/td&gt;
+      &lt;td&gt;&lt;input maxlength=&quot;100&quot; size=&quot;50&quot; name=&quot;Email&quot; id=&quot;mf_Email&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tr&gt;
+      &lt;td colspan=&quot;2&quot;&gt;
+        Merci de répondre aux questions ci-dessous pour recevoir rapidement une réponse
+      &lt;/td&gt;
+    &lt;tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Souhaitez-vous recevoir notre catalogue ?&lt;/td&gt;
+      &lt;td&gt;&lt;input type=&quot;radio&quot; checked=&quot;checked&quot; name=&quot;Catalogue&quot; value=&quot;Oui&quot; /&gt;Oui
+          &lt;input type=&quot;radio&quot; name=&quot;Catalogue&quot; value=&quot;Non&quot; /&gt;Non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Quel sont vos projets ?&lt;/td&gt;
+      &lt;td&gt;&lt;input type=&quot;checkbox&quot; name=&quot;Location&quot; value=&quot;Oui&quot; /&gt;Location&lt;br /&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;Achat&quot; value=&quot;Oui&quot; /&gt;Achat&lt;br /&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;Investissement&quot; value=&quot;Oui&quot; /&gt;Investissement&lt;br /&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Autres informations ?&lt;br /&gt;
+        &lt;small&gt;Surface, jardin, garage, prix...&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;textarea rows=&quot;4&quot; cols=&quot;40&quot; name=&quot;Informations&quot;&gt;&lt;/textarea&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;input type=&quot;button&quot; name=&quot;_Envoyer&quot; value=&quot;Envoyer&quot; onclick=&quot;MailFormSubmit(); &quot; /&gt; 
+        &lt;input type=&quot;reset&quot; name=&quot;_Effacer&quot; value=&quot;Effacer&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;_mailto&quot; value=&quot;mailFormTo&quot; /&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;_subject&quot; value=&quot;Formulaire Web&quot; /&gt;
+</code></pre>
+<p>Pour définir l'adresse mél du destinataire, il faut paramétrer le nom de la
+clé dans le champ caché &quot;_mailto&quot; du formulaire :</p>
+<pre><code>&lt;input type=&quot;hidden&quot; name=&quot;_mailto&quot; value=&quot;mailFormTo&quot; /&gt;
+</code></pre>
+<p>Puis enregistrer l'adresse mél correspond à cette clé dans le web.config
+:</p>
+<pre><code>&lt;add key=&quot;mailFormTo&quot; value=&quot;contact@example.com&quot; /&gt;
+</code></pre>
+<p>Pour une configuration plus poussée des formulaires personnalisés, il est
+également possible de définir 2 autres champs cachés :</p>
+<ul>
+<li>le sujet du mél : <code>&lt;input type=&quot;hidden&quot; name=&quot;_subject&quot; value=&quot;Formulaire contact&quot; /&gt;</code></li>
+<li>la page où rediriger le visiteur suite à son message : <code>&lt;input type=&quot;hidden&quot; name=&quot;_redirect&quot; value=&quot;~/merci.aspx&quot; /&gt;</code></li>
+</ul>
+<p>Le corps du mél reçu se présente sous la forme suivante :</p>
+<pre><code>1 - Nom : Dupond
+2 - Prenom : Pierre
+3 - Societe : Immobil
+4 - Email : pierre.dupond@immobil.com
+5 - Catalogue : Oui
+6 - Location : Oui
+7 - Investissement : Oui
+8 - Informations : Demande urgente SVP
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/03/29/gestion-utilisateurs/" hreflang="fr-FR">Gestion des utilisateurs</a>
+  <a rel="next" href="/2006/04/10/wdevs-academic-case-qc/" hreflang="en-US">(Wdevs) An academic case for QC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

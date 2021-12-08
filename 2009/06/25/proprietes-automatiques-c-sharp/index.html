@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les propriétés automatiques du c# - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/06/25/proprietes-automatiques-c-sharp/" />
+<meta property="og:title" content="Les propriétés automatiques du c#" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/06/25/proprietes-automatiques-c-sharp/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-06-25T11:34:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-06-25T11:34:00.000Z","datePublished":"2009-06-25T11:34:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/06/25/proprietes-automatiques-c-sharp/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/06/25/proprietes-automatiques-c-sharp/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/06/25/proprietes-automatiques-c-sharp/">Les propriétés automatiques du c#</a>
+    </h1>
+    <p>
+      <span>2009-06-25</span>
+      <span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Avec le compilateur de C# 3.0, il est possible d'avoir des propriétés
+automatiques. En fait, c'est tout simplement une nouvelle façon de déclarer les
+propriétés qui permet d'avoir un code source beaucoup plus concis.</p>
+<p>Jusqu'à maintenant, quand j'ai besoin de gérer des propriétés dans une
+classe en C# 1.1, j'écris plus ou moins le code suivant :</p>
+<pre><code>private int _Id;
+private string _Nom;
+private string _Prenom;
+
+public property int Id {
+        get { return _Id; }
+        set { _Id =  value; }
+}
+
+public property string Nom {
+        get { return _Nom; }
+        set { _Nom = value; }
+}
+
+public property string Prenom {
+        get { return _Prenom; }
+        set { _Prenom = value; }
+}
+</code></pre>
+<p>Avec Visual Studio 2008 et C# 3.0, tout ça c'est du passé et grâce aux
+propriétés automatiques je pourrai à l'avenir ramener ça à 3 lignes de
+codes :</p>
+<pre><code>public property int Id { get; set; }
+public property string Nom { get; set; }
+public property string Prenom { get; set; }
+</code></pre>
+<p>Dans ce cas, c'est le compilateur qui va faire le boulot à ma place (y'a
+rien à faire !) et générer peu ou prou tout le code que je tapais auparavant
+moi-même.</p>
+<p>Par conséquent, si on regarde ça du point de vue du code compilé, ce n'est
+pas du tout la même chose que de se contenter de déclarer de simples variables
+publiques :</p>
+<pre><code>public int Id;
+public string Nom;
+public string Prenom;
+</code></pre>
+<p>Ma conversion à l'utilisation de propriétés plutôt que des variables
+publiques remonte à tellement longtemps que j'ai un peu oublié pourquoi j'avais
+trouvé les propriétés plus mieux que les variables. Ce qui fait qu'aujourd'hui
+j'ai un peu de mal à voir ce que ces nouvelles propriétés automatiques
+m'apportent réellement de plus que de bêtes variables publiques... (et
+apparemment <a href="http://stackoverflow.com/questions/174198/c3-0-automatic-properties-why-not-access-the-field-directly/174201">je ne suis pas le seul</a>)</p>
+<p>Ou alors, à la rigueur, ce qui est plus intéressant c'est qu'avec cette
+méthode il est possible définir des propriétés en lecture seule (voire en
+écriture seule ?), ce que je ne peux pas absolument pas faire avec des
+variables. Pour cela, il ne suffit pas d'omettre le &quot;set;&quot; (ça aurait été trop
+simple), mais il faut le rendre &quot;private&quot; afin qu'il ne soit pas visible et
+donc utilisable en dehors de la classe :</p>
+<pre><code>public property int Id { get; private set; }    // lecture seule
+public property string Nom { get; set; }
+public property string Prenom { get; set; }seule
+</code></pre>
+<p>Dans ce cas, je peux définir la propriété &quot;Id&quot; dans tout le code source à
+l'intérieur de ma classe, et par contre elle n'est pas modifiable par tout le
+code en dehors de cette classe.</p>
+<h2>Mise à jour après coup</h2>
+<p>Le fait d'avoir un &quot;set&quot; privé n'est pas limité aux propriétés automatiques.
+Cela existe depuis C# 2.0 pour toutes les propriétés. L'avantage c'est que ça
+permet d'avoir du code plus homogène dans la mesure où cela permet d'éviter que
+le code de la classe utilise dans certains cas les variables privés et dans
+d'autres cas les propriétés.</p>
+<p>Avec C# 1.1, même si on se forçait à utiliser partout les propriétés à
+l'intérieur de la classe, il fallait passer par les variables privées dès qu'on
+voulait avoir avoir des propriétés en lecture seules (c'est à dire sans set).
+Avec un private set, on peut donc avoir une propriété en lecture seule et
+malgré tout l'utiliser en écriture à l'intérieur de la classe.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/06/25/types-nullables-c-sharp/" hreflang="fr-FR">Les types nullables en c#</a>
+  <a rel="next" href="/2009/07/17/premier-essai-aspnet-mvc/" hreflang="fr-FR">Premier pas avec ASP.NET MVC et NerdDinner</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

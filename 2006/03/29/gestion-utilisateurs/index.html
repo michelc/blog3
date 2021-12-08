@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestion des utilisateurs - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/03/29/gestion-utilisateurs/" />
+<meta property="og:title" content="Gestion des utilisateurs" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/03/29/gestion-utilisateurs/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-03-29T06:38:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-03-29T06:38:00.000Z","datePublished":"2006-03-29T06:38:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/03/29/gestion-utilisateurs/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/03/29/gestion-utilisateurs/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/03/29/gestion-utilisateurs/">Gestion des utilisateurs</a>
+    </h1>
+    <p>
+      <span>2006-03-29</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modification de la fonction BindRoles() dans editUsers.ascx.cs pour ne plus
+proposer la sélection / déselection du rôle &quot;Admins&quot; lorsque l'utilisateur
+connecté n'a pas lui même le rôle &quot;Admins&quot; (sauf si l&quot;utilisateur à modifier a
+déjà le rôle &quot;Admins&quot;, auquel cas il est nécessaire de le faire apparaitre pour
+ne pas perdre l'information à la validation).</p>
+<p>D'autre part, les rôles &quot;All users&quot; et &quot;Anonymous&quot; n'apparaissent plus dans
+le cas où l'on est en mode intranet, c'est à dire si la variable
+&quot;logonRedirect&quot; est définie à True dans le Web.config. Cela permet d'alléger la
+présentation étant donné qu'en mode intranet il est fréquent de définir des
+rôles &quot;métiers&quot; et qu'il devrait être exceptionnel de donner des droits à des
+utilisateurs non identifiés.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/03/27/application-error/" hreflang="fr-FR">Application Error</a>
+  <a rel="next" href="/2006/04/04/formulaires-personnalises/" hreflang="fr-FR">Formulaires personnalisés</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

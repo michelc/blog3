@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : StoreManagerController - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/31/mvc-music-store-raven-db-storemanagercontroller/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : StoreManagerController" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/31/mvc-music-store-raven-db-storemanagercontroller/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-31T19:46:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-31T19:46:00.000Z","datePublished":"2010-05-31T19:46:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/31/mvc-music-store-raven-db-storemanagercontroller/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/31/mvc-music-store-raven-db-storemanagercontroller/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/31/mvc-music-store-raven-db-storemanagercontroller/">MVC Music Store / Raven DB : StoreManagerController</a>
+    </h1>
+    <p>
+      <span>2010-05-31</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/29/porting-mvc-music-store-to-raven-storemanagercontroller.aspx">Porting MVC Music Store to Raven: StoreManagerController</a>&quot;, le douzième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>La dernière partie du portage de MVC Music Store sous Raven concerne toute
+la partie administration, implémentée au niveau du contrôleur
+StoreManagerController. Je vais commencer par une rapide comparaison de toutes
+les méthodes où le passage sous Raven n'apporte rien de nouveau puis je mettrai
+l'accent sur une différence de conception plutôt intéressante entre les deux
+implémentations.</p>
+<h2>Code d'origine</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_DCF0/image_thumb.png" alt=""></p>
+<h2>Portage sous Raven</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_DCF0/image_thumb_1.png" alt=""></p>
+<p>Le code pour Raven est beaucoup plus court pour la bonne et simple raison
+que j'ai fait disparaitre tout la pseudo gestion d'erreur qu'il contenait.</p>
+<h2>Code d'origine</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_DCF0/image_thumb_5.png" alt=""></p>
+<h2>Portage sous Raven</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_DCF0/image_thumb_6.png" alt=""></p>
+<p>Là encore, le fait de faire disparaitre une gestion d'erreur qui n'est là
+que pour la gallerie a un impact plus que certain sur la taille du code.</p>
+<h2>Code d'origine</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_DCF0/image_thumb_7.png" alt=""></p>
+<h2>Portage sous Raven</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_DCF0/image_thumb_8.png" alt=""></p>
+<p>Ici nous avons une différence plus intéressante. Le code d'origine a pour
+effet d'effacer les commandes qui contiennent l'album supprimé. Ce que ne fait
+pas le code porté sous Raven.</p>
+<p>La notion d'intégrité référentielle n'existe pas sous Raven (ou de façon
+plus générale sous les bases de données document). Cela peut être un avantage
+ou un inconvénient. Mais dans ce cas précis, cela s'avère être un avantage
+puisque nous pouvons supprimer un album sans perdre de commandes. Je ne sais
+pas pour vous, mais en ce qui me concerne ça ne me déplait pas de conserver
+toutes mes commandes :)</p>
+<p>Avec Raven, les documents sont indépendants les uns des autres. Par
+conséquent, le fait de modifier un document n'a aucun impact sur les autres
+documents.</p>
+<p>Il reste encore deux méthodes à étudier en ce qui concerne le contrôleur
+StoreManagerController, mais je verrai ça dans mon prochain billet.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/30/mvc-music-store-raven-db-gerer-reglement/" hreflang="fr-FR">MVC Music Store / Raven DB : Gérer le règlement</a>
+  <a rel="next" href="/2010/06/01/mvc-music-store-raven-db-storemanagercontroller-2/" hreflang="fr-FR">MVC Music Store / Raven DB : StoreManagerController (2° partie)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

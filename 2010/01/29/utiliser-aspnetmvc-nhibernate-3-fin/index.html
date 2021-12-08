@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser ASP.NET MVC et NHibernate (3° partie) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-3-fin/" />
+<meta property="og:title" content="Utiliser ASP.NET MVC et NHibernate (3° partie)" />
+<meta name="description" content="La traduction de la dernière partie du tutoriel de César Intriago sur ASP.NET MVC et NHibernate qui entre dans le vif du sujet en développant la gestion des billets et des catégories." />
+<meta property="og:description" content="La traduction de la dernière partie du tutoriel de César Intriago sur ASP.NET MVC et NHibernate qui entre dans le vif du sujet en développant la gestion des billets et des catégories." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-3-fin/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-01-29T09:51:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-01-29T09:51:00.000Z","datePublished":"2010-01-29T09:51:00.000Z","description":"La traduction de la dernière partie du tutoriel de César Intriago sur ASP.NET MVC et NHibernate qui entre dans le vif du sujet en développant la gestion des billets et des catégories.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-3-fin/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-3-fin/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-3-fin/">Utiliser ASP.NET MVC et NHibernate (3° partie)</a>
+    </h1>
+    <p>
+      <span>2010-01-29</span>
+      <span>#mvc</span><span>#nhibernate</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://forerunnerg34.wordpress.com/2009/11/05/using-asp-net-mvc-and-nhibernate-part-3-final/">Using ASP.NET MVC and NHibernate (Part 3)</a>&quot; de César Intriago.</p>
+</div>
+<p>Voici le troisième et dernier billet d'une série d'articles consacré à
+l'utilisation de NHibernate pour développer des applications ASP.NET MVC. Les
+liens vers les deux premières parties de ce tutoriel sont disponibles
+ci-dessous :</p>
+<ul>
+<li><a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-1/">Utiliser ASP.NET MVC et NHibernate (1° partie)</a></li>
+<li><a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-2/">Utiliser ASP.NET MVC et NHibernate (2° partie)</a></li>
+</ul>
+<p>Dans cet article, nous allons créer notre application ASP.NET MVC pour gérer
+les Posts et les Categories. Notre projet aura la structure suivante :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/image.png" alt=""></p>
+<p>Le contrôleur CategoriesController va nous permettre de retrouver, créer,
+modifier et supprimer des catégories de notre repository.</p>
+<p>Le contrôleur PostController va nous permettre de faire la même chose pour
+les Posts. En ce qui concerne les vues pour les Posts, je vais utiliser une
+<strong>ViewModel</strong> afin de représenter la combinaison des Posts et des
+Categories.</p>
+<p>Dans notre projet ASP.NET MVC nous allons ajouter des références vers nos
+projets Core et Infrastructure afin de pouvoir utiliser les composants
+NHibernate pour la persistance que nous avons développé dans les deux premières
+parties.</p>
+<p>Nous utiliserons des vues fortement typées basées sur notre modèle et
+ViewModel afin que Visual Studio puisse <em>scaffolder</em> les vues en
+s'appuyant sur ces types d'objet.</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/newview.jpg" alt=""></p>
+<p>J'ai apporté quelques modification au code par rapport à la deuxième partie
+car j'ai détecté quelques bugs grâce aux test unitaires. Par conséquent, il est
+nécessaire de <a href="http://go2.wordpress.com/?id=725X1342&amp;site=forerunnerg34.wordpress.com&amp;url=http://cid-926d6677262767bd.skydrive.live.com/self.aspx/ForerunnerG34/NHibernate101%20Final.zip">télécharger la version complète du projet</a>.</p>
+<h2>ViewModel</h2>
+<p>Les vues pour les Posts ont besoin des objets Post et Category pour
+fonctionner correctement. Pour cela, un <em>pattern</em> très répandu est de
+passer par un modèle de vue qui sert de conteneur pour ces deux objets afin de
+faciliter leur utilisation au niveau de la vue.</p>
+<p>Par conséquent, dans le cas des vues destinées aux Posts, je n'ai pas
+utilisé directement les objets du modèle (c'est à dire les classes Post et
+Category).À la place, j'ai créé une classe PostViewModel qui contient ces deux
+objets du modèle. De cette façon, je peux simplifier la manipulation des Posts
+et des Categories auxquelles ils sont rattachés comme s'il s'agissait d'une
+seule entité.</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/image1.png" alt=""></p>
+<h2>Conclusion</h2>
+<p>Configurer NHibernate pour la première fois peut demander un petit effort
+(ou un effort certain), mais il vous fera gagner énormément de temps pour
+réaliser la couche données de votre application. Et combiné à un framework tel
+que ASP.NET MVC, vous parvenez à une franche séparation des préoccupations
+(<em>separation of concerns</em> en anglais) qui vous aidera à conserver un
+projet bien organisé, facile à comprendre et à tester. Je suis persuadé qu'en
+suivant cette méthode vous obtiendrez un projet avec un code et une structure
+tirés à quatre épingle, d'autant plus que les modèles de Visual Studio pour
+ASP.NET MVC rendent ce travail encore plus facile étant donné que vous pouvez
+automatiser la création des vues.</p>
+<p>C'est extraordinaire tellement c'est facile et rapide de créer une
+application avec ASP.NET MVC. J'attends avec impatience la sortie de la version
+2.0 (en fait je teste d'ores et déjà sa Preview). C'est vraiment le moment
+idéal pour <a href="/2010/01/12/vous-devriez-apprendre-mvc/">apprendre ASP.NET MVC</a> et NHibernate.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/01/29/utiliser-aspnetmvc-nhibernate-2/" hreflang="fr-FR">Utiliser ASP.NET MVC et NHibernate (2° partie)</a>
+  <a rel="next" href="/2010/02/15/nerddinner-francais-fin/" hreflang="fr-FR">NerdDinner (en français) : Fin !</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

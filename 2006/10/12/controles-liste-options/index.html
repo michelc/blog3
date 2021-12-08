@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contrôles de liste d&#39;options - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/10/12/controles-liste-options/" />
+<meta property="og:title" content="Contrôles de liste d&#39;options" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/10/12/controles-liste-options/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-10-12T09:29:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-10-12T09:29:00.000Z","datePublished":"2006-10-12T09:29:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/10/12/controles-liste-options/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/10/12/controles-liste-options/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/10/12/controles-liste-options/">Contrôles de liste d&#39;options</a>
+    </h1>
+    <p>
+      <span>2006-10-12</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Lorsque on utilise un contrôle CheckBoxList ou un contrôle RadioButtonList,
+il ne faut pas oublier d'utiliser RepeatLayout=&quot;Flow&quot; et
+RepeatDirection=&quot;Horizontal&quot; pour éviter que le contrôle soit rendu côté client
+par une table et des balises &lt;tr&gt; et &lt;td&gt;.</p>
+<p>Si on souhaite que les différents choix apparaissent verticalement, il faut
+utiliser RepeatDirection=&quot;Vertical&quot; au lieu de RepeatDirection=&quot;Horizontal&quot; de
+façon à générer une balise &lt;br /&gt; entre les différentes options. Dans ce
+cas, il faut également définir la classe par CssClass=&quot;std radiov&quot; et pas
+simplement CssClass=&quot;std&quot; pour que les options soient correctement alignées les
+unes sous les autres et pas cadrées complètement à gauche de l'écran.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/10/10/first/" hreflang="fr-FR">Premier billet</a>
+  <a rel="next" href="/2006/10/12/avancement-mise-a-jour-site-gandiblog/" hreflang="fr-FR">Avancement mise à jour du site (gandiblog)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

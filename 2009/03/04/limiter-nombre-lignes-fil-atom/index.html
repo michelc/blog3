@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Limiter le nombre de lignes dans un fil Atom - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/03/04/limiter-nombre-lignes-fil-atom/" />
+<meta property="og:title" content="Limiter le nombre de lignes dans un fil Atom" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/03/04/limiter-nombre-lignes-fil-atom/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-03-04T11:50:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-03-04T11:50:00.000Z","datePublished":"2009-03-04T11:50:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/03/04/limiter-nombre-lignes-fil-atom/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/03/04/limiter-nombre-lignes-fil-atom/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/03/04/limiter-nombre-lignes-fil-atom/">Limiter le nombre de lignes dans un fil Atom</a>
+    </h1>
+    <p>
+      <span>2009-03-04</span>
+      <span>#ap</span><span>#xml</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La boite XmlFile d'Altrr-Press permet depuis quelque temps d'afficher le
+contenu d'un flux RSS, RDF ou Atom en indiquant l'url du fil de syndication et
+la feuille de style XSLT à lui appliquer :</p>
+<ul>
+<li><a href="/2006/01/16/atom-html-conversion/">feed-atom.xslt</a></li>
+<li><a href="/2006/01/19/blogmarks-html-conversion/">feed-blogmarks.xslt</a></li>
+<li><a href="/2006/01/16/rdf-html-conversion/">feed-rdf.xslt</a></li>
+<li><a href="/2006/01/16/rss-html-conversion/">feed-rss.xslt</a></li>
+</ul>
+<p>Par défaut, ces feuilles de styles XSLT affichent le titre du billet suivi
+de son contenu. Mais dans Altrr-Press, il existe aussi une version qui affiche
+une simple liste &lt;ul&gt; / &lt;li&gt; en présentant uniquement le titre des
+billets.</p>
+<p>Lorsque le fil d'origine contient beaucoup de billets, le résultat n'est pas
+toujours heureux car cela génère un assez long pavé . C'est par exemple le cas
+avec un Gandiblog (et aussi Dotclear ?) pour lequel le flux de syndication
+contient 20 billets par défaut.</p>
+<p>Il fallait donc trouver une méthode pour ne faire apparaitre que les 5
+premiers billets du fil (ce qui correspond donc aux 5 derniers billets
+publiés) :</p>
+<ul>
+<li>contacter l'auteur du blogue et lui demander s'il vous plait s'il peut
+limiter son fil Atom à 5 billets, merci.</li>
+<li>se débrouiller et trouver comment gérer ça de mon côté</li>
+</ul>
+<p>Avant de faire le barbare avec un style &quot;<code>overflow: hidden;</code>&quot;
+pour cacher les billets que je ne saurais voir, j'ai fait chat et demandé à un
+spécialiste XSLT s'il existerait un truc pour faire ça. Et ben oui, et pour une
+fois c'est même carrément simple.</p>
+<p>Au lieu d'appliquer bêtement le <a href="/2006/01/16/atom-html-conversion/">template</a>
+aux différents items du fil Atom :</p>
+<pre><code>&lt;ul&gt;
+        &lt;xsl:apply-templates select=&quot;atom:entry&quot;/&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>Il faut indiquer que le template ne doit s'appliquer que pour les 5
+premières entrées :</p>
+<pre><code>&lt;ul&gt;
+        &lt;xsl:apply-templates select=&quot;atom:entry[position() &lt;= 5]&quot;/&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>L'astuce, c'est que comme le fichier XSLT est lui-même un document XML, il
+faut penser à échapper le signe inférieur et écrire <strong>&amp;lt;</strong>
+au lieu du caractère <strong>&lt;</strong>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/02/26/requetes-sql-mise-a-jour-altrr-press/" hreflang="fr-FR">Requêtes SQL pour la mise à jour d&#39;Altrr-Press</a>
+  <a rel="next" href="/2009/03/10/premier-essai-organiser-plan-site/" hreflang="fr-FR">Premier essai pour organiser le plan d&#39;un site</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

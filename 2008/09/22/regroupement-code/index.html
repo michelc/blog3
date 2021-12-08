@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Regroupement de code - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/09/22/regroupement-code/" />
+<meta property="og:title" content="Regroupement de code" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/09/22/regroupement-code/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-09-22T08:29:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-09-22T08:29:00.000Z","datePublished":"2008-09-22T08:29:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/09/22/regroupement-code/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/09/22/regroupement-code/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/09/22/regroupement-code/">Regroupement de code</a>
+    </h1>
+    <p>
+      <span>2008-09-22</span>
+      <span>#ap</span><span>#code-killer</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ces derniers temps (mais pas que finalement), j'avais ajouté vite fait des
+morceaux de code par ci et par là et petit morceau par petit morceau j'ai fini
+par me retrouver avec des fonctions qui font un peu peur à voir.</p>
+<p>C'est comme ça que la fonction SiteMenu() était devenu un véritable
+fourre-tout qui servait pour générer beaucoup de choses :</p>
+<ul>
+<li>les menus : ça ça parait normal</li>
+<li>le plan du site : une espèce de menu général</li>
+<li>le sitemap pour Google : un menu général mais généré pas pareil</li>
+</ul>
+<p>À l'origine, cette fonction parcourait la liste des écrans et représentait
+le menu d'une page sous forme de blocs ul / li en tenant compte des
+autorisations définies.</p>
+<p>À côté de ça, il y avait aussi 3 autres procédures qui parcouraient la liste
+des écrans pour proposer une liste de liens possibles, sauf qu'on y gérait un
+peu moins bien les autorisations :</p>
+<ul>
+<li>dans le contrôle SelectLink utilisé dans certaines boites</li>
+<li>lors de l'initialisation de l'éditeur wysiwyg</li>
+<li>pour l'interface Ajax de l'éditeur wysiwyg</li>
+</ul>
+<p>Au lieu de tout ça, il y a maintenant une nouvelle classe Browse qui est
+utilisée partout, ce qui permet :</p>
+<ul>
+<li>de parcourir les écrans de la même façon dans tous les cas,</li>
+<li>de diminuer la quantité de code (1 procédure au lieu de 4),</li>
+<li>de dissocier la génération de menu de celle du plan du site et de celle du
+sitemap XML,</li>
+<li>de corriger un bug dans l'imbrication des écrans.</li>
+</ul>
+<p>Dans le même genre, il y avait aussi plusieurs procédures destinées à
+parcourir les répertoires et à proposer une liste de fichiers
+existants :</p>
+<ul>
+<li>dans les contrôles SelectFile et SelectLink utilisés dans certaines
+boites</li>
+<li>pour la liste des images et des documents de l'éditeur wysiwyg</li>
+<li>pour l'interface Ajax de l'éditeur wysiwyg</li>
+</ul>
+<p>Et là aussi, c'était pas géré tout à fait pareil dans chacun des cas.</p>
+<p>Même problème =&gt; même solution : la classe Browse a été complétée
+pour permettre aussi de parcourir les fichiers et ainsi remplacer les
+différentes procédures par une seule façon de faire.</p>
+<p>Au final, au lieu de plusieurs morceaux de codes dispersés un peu partout,
+tout est rassemblé dans la classe Browse où on n'a plus que :</p>
+<ul>
+<li>ArrayList Browse.ScreenList () : liste des écrans filtrés en fonction
+des autorisations</li>
+<li>StringBuilder Browse.HtmlSitemap () : génère un plan du site à base de
+blocs ul /li</li>
+<li>StringBuilder Browse.XmlSitemap () : génère un sitemap XML pour les
+moteurs de recherche</li>
+<li>void Browse.ScreenToList () : initialise les listes d'écrans attendues
+par les contrôles de saisie</li>
+<li>void Browse.FileToList () : initialise les listes de fichiers
+attendues par les contrôles de saisie</li>
+</ul>
+<p>Et pour être tout à fait complet, il resterait à fignoler la mise au propre
+de la fonction SiteMenu() et pourquoi pas l'intégrer directement à la classe
+Browse.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/09/18/mefiez-vous-variables-statiques/" hreflang="fr-FR">Méfiez-vous des variables statiques</a>
+  <a rel="next" href="/2008/09/22/recapitulatif-peu-long/" hreflang="fr-FR">Récapitulatif un peu long</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

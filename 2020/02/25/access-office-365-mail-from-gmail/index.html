@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to access Office 365 email from GMail - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/02/25/access-office-365-mail-from-gmail/" />
+<meta property="og:title" content="How to access Office 365 email from GMail" />
+<meta name="description" content="So I don&#39;t forget how I did it and find it again the day I need it, I&#39;m writing down how to handle my Office 365 email address from the GMail client." />
+<meta property="og:description" content="So I don&#39;t forget how I did it and find it again the day I need it, I&#39;m writing down how to handle my Office 365 email address from the GMail client." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/02/25/access-office-365-mail-from-gmail/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/office365-gmail.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-02-25T10:23:34.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-02-25T10:23:34.000Z","datePublished":"2020-02-25T10:23:34.000Z","description":"So I don't forget how I did it and find it again the day I need it, I'm writing down how to handle my Office 365 email address from the GMail client.","inLanguage":"en-US","url":"https://blog3.pagesd.info/2020/02/25/access-office-365-mail-from-gmail/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/office365-gmail.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/02/25/access-office-365-mail-from-gmail/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/office365-gmail.jpg" alt="Antique Oil Painting - PHO.TO" /><figcaption><a href="https://funny.pho.to/fr/antique-oil-painting/">Antique Oil Painting - PHO.TO</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/02/25/access-office-365-mail-from-gmail/">How to access Office 365 email from GMail</a>
+    </h1>
+    <p>
+      <span>2020-02-25</span>
+      <span>#mail</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I'm writing this so I don't forget how I did and so that I can find this setting one day. Here's how I handle my Office365 email address from my GMail client. Because generally, the internet mostly explains how to migrate from GMail to Office 365 or vice versa...</p>
+<p>The purpose of this manipulation is to allow me to continue to use GMail web interface for:</p>
+<ul>
+<li>receive emails from my Office 365 address,</li>
+<li>send emails with this address.</li>
+</ul>
+<h2>Get Office 365 emails into GMail</h2>
+<p>This part of the configuration must be done from Outlook 365 (in French in my case):</p>
+<ul>
+<li>Click the &quot;Settings&quot; icon (a gear at the top right in the menu bar).</li>
+<li>Click on &quot;Show all Outlook settings&quot; at the bottom, which opens a new window.</li>
+<li>Click the &quot;Mail&quot; submenu and then &quot;Transfer&quot;.</li>
+<li>Fill in the GMail address where to send the emails (like &quot;prenom.nom@gmail.com&quot; for example):</li>
+</ul>
+<p><img src="/public/2020/office-gmail-1.png" alt=""></p>
+<p>Then validate by clicking &quot;Save&quot; at the bottom right.</p>
+<h2>Sending Office 365 emails from GMail</h2>
+<p>This part of the configuration is done from GMail:</p>
+<ul>
+<li>Click on the &quot;Settings&quot; icon (a gear in the top right corner).</li>
+<li>Choose the &quot;Settings&quot; submenu.</li>
+<li>Go to the &quot;Accounts and Import&quot; tab.</li>
+<li>There is a section &quot;Send mail as&quot; =&gt; click on &quot;Add another email address&quot;.</li>
+</ul>
+<p>First, you have to enter your address on the Office 365 server:</p>
+<p><img src="/public/2020/office-gmail-2.png" alt=""></p>
+<p>Then click on &quot;Next step »&quot; and set up the corresponding SMTP server:</p>
+<ul>
+<li>Address: smtp.office365.com</li>
+<li>Port: choose &quot;587&quot;</li>
+<li>Username: give the Office 365 email address, e.g. &quot;prenom.nom@societe.fr&quot;</li>
+<li>Password: enter the password corresponding to this email address</li>
+<li>Select &quot;Secured connection using TLS&quot;</li>
+</ul>
+<p><img src="/public/2020/office-gmail-3.png" alt=""></p>
+<p>After clicking on &quot;Add Account »&quot;, the &quot;Send mail as&quot; section now contains the following information:</p>
+<pre><code>Prenom Nom &lt;prenom.nom@societe.fr&gt;
+Mail is sent through: smtp.office365.com
+Secured connection on port 587 using TLS
+</code></pre>
+<p>Just below, it is better to define that by default you want to reply to messages using the address to which the message was sent. To do this, select the option &quot;Reply from the same address the message was sent to&quot;, rather than &quot;Always reply from default address (currently prenom.nom@gmail.com)&quot;.</p>
+<h2>Conclusion</h2>
+<p>It works. And most importantly, I now have access to my Office 365 address from both GMail and Outlook.</p>
+<p>But for the record, I tested different methods until I found something that works (and I didn't look any further). I'm interested if someone knows a better solution and ideally the &quot;official&quot; settings.</p>
+<div class="encart">
+<p>Version en français : <a href="/2020/02/24/acceder-office-365-mail-depuis-gmail/" hreflang="fr-FR">Accéder à Office 365 Mail depuis GMail</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/02/24/acceder-office-365-mail-depuis-gmail/" hreflang="fr-FR">Accéder à Office 365 Mail depuis GMail</a>
+  <a rel="next" href="/2020/03/02/traduction-ohshitgit-francais/" hreflang="fr-FR">Traduction de «Oh Shit Git» en français</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

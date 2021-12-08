@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deploy an application on Glitch in 5 steps - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/02/12/deploy-application-glitch-5-steps/" />
+<meta property="og:title" content="Deploy an application on Glitch in 5 steps" />
+<meta name="description" content="It&#39;s been a while since I wanted to test Glitch &quot;for real&quot; and deploy the project I made for my &quot;CRUD application with Express and SQlite&quot;." />
+<meta property="og:description" content="It&#39;s been a while since I wanted to test Glitch &quot;for real&quot; and deploy the project I made for my &quot;CRUD application with Express and SQlite&quot;." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/02/12/deploy-application-glitch-5-steps/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/ichthyology.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-02-12T10:21:34.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-02-12T10:21:34.000Z","datePublished":"2020-02-12T10:21:34.000Z","description":"It's been a while since I wanted to test Glitch \"for real\" and deploy the project I made for my \"CRUD application with Express and SQlite\".","inLanguage":"en-US","url":"https://blog3.pagesd.info/2020/02/12/deploy-application-glitch-5-steps/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/ichthyology.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/02/12/deploy-application-glitch-5-steps/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/ichthyology.jpg" alt="An introduction to the natural history of fishes - BHL" /><figcaption><a href="https://www.biodiversitylibrary.org/page/9665742">An introduction to the natural history of fishes - BHL</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/02/12/deploy-application-glitch-5-steps/">Deploy an application on Glitch in 5 steps</a>
+    </h1>
+    <p>
+      <span>2020-02-12</span>
+      <span>#javascript</span><span>#node</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>It's been a while since I wanted to test Glitch &quot;for real&quot; and deploy the project I made for my <a href="/2019/10/08/crud-with-express-sqlite-10-steps/">CRUD application with Express and SQlite in 10 steps</a> tutorial. I finally found the time to get started and it's working great.</p>
+<h2>1. Create an account on Glitch</h2>
+<p>Right now, I don't want to get attached. On the <a href="https://glitch.com/">https://glitch.com/</a> page, I click on the &quot;Sign in&quot; button (top right) and then I just :</p>
+<ul>
+<li>click on &quot;Create an account&quot; (bottom middle),</li>
+<li>then click on &quot;Email Magic Link&quot; to get an email that will contain a temporary link / code to connect me (after giving my email address),</li>
+<li>from my mailbox, I click on the link received and I'm connected to Glitch.</li>
+</ul>
+<h2>Import a GitHub project</h2>
+<p>Glitch allows to manage Node applications, with Express and icing on the cake, an SQlite database. So this is exactly what I need to try to host my AppTest application developed a few months ago. All I need to do is :</p>
+<ul>
+<li>click on &quot;New Project&quot; (top right),</li>
+<li>choose &quot;Clone from Git Repo&quot; (at the bottom of the mini list),</li>
+<li>Paste the URL of my Git repository: https://github.com/michelc/AppTest.</li>
+</ul>
+<p>Voilà! I end up with the source code of my Node project directly in the Glitch editor.</p>
+<h2>3. Adapt my project to Glitch</h2>
+<p>After reading a few docs, I know that with Glitch the SQlite database must be saved in a &quot;.data&quot; folder which is:</p>
+<ul>
+<li>hidden, at least in the file editor, but visible from the console,</li>
+<li>persistent, allowing the application data to be stored there.</li>
+</ul>
+<p>In the tutorial I created a &quot;data&quot; directory to save the database. So I only have 2 small changes to make to conform to Glitch:</p>
+<ul>
+<li>rename the &quot;data&quot; folder to &quot;.data&quot;,</li>
+<li>modify line 15 of the &quot;index.js&quot; file to replace the &quot;data&quot; path with &quot;.data&quot;.</li>
+</ul>
+<pre><code class="language-javascript">const db_name = path.join(__dirname, &quot;.data&quot;, &quot;apptest.db&quot;);
+</code></pre>
+<p>Glitch normally accepts a secret &quot;.env&quot; file where you can configure and secure this kind of stuff. But so far, I haven't done anything about this in my AppTest application.</p>
+<h2>Launch the application</h2>
+<p>These few changes should be enough to allow me to run my program from Glitch:</p>
+<ul>
+<li>click on the &quot;Show&quot; button (top left),</li>
+<li>choose &quot;In a New Window&quot; (while you are at it) to launch / display the application in a new window / tab,</li>
+<li>a new tab opens with the URL <a href="https://michelc-apptest.glitch.me/">https://michelc-apptest.glitch.me/</a> and displays the home screen of my application!</li>
+</ul>
+<p>Now, if I click on &quot;Livres&quot; (Books) in the menu bar, I get the list of books as I created it. To test, I can update this list and everything works fine!</p>
+<h2>5. Include the Glitch button</h2>
+<p>But... the fish are missing! I take a quick look at how it's done with Glitch's default Node + Express project and it's quite simple. I have to add a few lines to my pseudo EJS &quot;layout&quot;:</p>
+<ul>
+<li>open the file &quot;_footer.ejs&quot; in the &quot;views&quot; directory,</li>
+<li>add the following 4 lines just before closing the <code>&lt;/body&gt;</code> tag:</li>
+</ul>
+<pre><code class="language-erb">  &lt;!-- include the Glitch button to show what the webpage is about and
+        to make it easier for folks to view source and remix --&gt;
+  &lt;div class=&quot;glitchButton&quot; style=&quot;position:fixed;top:20px;right:20px;&quot;&gt;&lt;/div&gt;
+  &lt;script src=&quot;https://button.glitch.me/button.js&quot;&gt;&lt;/script&gt;
+
+&lt;/body&gt;
+</code></pre>
+<p>That's it. After a page refresh, I see the famous Glitch fish button in case someone wants to reuse my application :) Thanks to them, I can even embed my application here:</p>
+<div class="glitch-embed-wrap" style="height: 486px; width: 100%;">
+  <iframe
+    allow="geolocation; microphone; camera; midi; encrypted-media"
+    src="https://glitch.com/embed/#!/embed/michelc-apptest?previewSize=100&previewFirst=true&sidebarCollapsed=true"
+    alt="michelc-apptest on Glitch"
+    style="height: 100%; width: 100%; border: 0;">
+  </iframe>
+</div>
+<h2>Conclusion</h2>
+<p>For a first try, it was super easy. Now, it's worth investing some time on it to master and do more concrete things...</p>
+<div class="encart">
+<p>Version en français : <a href="/2020/02/11/deployer-application-glitch-5-etapes/" hreflang="fr-FR">Déployer une application sur Glitch en 5 étapes</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/02/11/deployer-application-glitch-5-etapes/" hreflang="fr-FR">Déployer une application sur Glitch en 5 étapes</a>
+  <a rel="next" href="/2020/02/17/mapper-colonnes-proprietes-dapper/" hreflang="fr-FR">Comment mapper colonnes et propriétés avec Dapper</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Renommer les namespaces de QC en AP - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/12/11/renommer-namespaces-qc-ap/" />
+<meta property="og:title" content="Renommer les namespaces de QC en AP" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/12/11/renommer-namespaces-qc-ap/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-12-11T16:47:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-12-11T16:47:00.000Z","datePublished":"2008-12-11T16:47:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/12/11/renommer-namespaces-qc-ap/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/12/11/renommer-namespaces-qc-ap/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/12/11/renommer-namespaces-qc-ap/">Renommer les namespaces de QC en AP</a>
+    </h1>
+    <p>
+      <span>2008-12-11</span>
+      <span>#ap</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Comme j'ai un peu tendance à stagner dans ma <a href="/2008/10/02/migration-altrr-press-net-1-net-2/">migration vers ASP.NET 2.0</a>, j'ai décidé de consacrer un peu de temps
+pour renommer les différents éléments du projet de qc.* en ap.*.</p>
+<p>Dans un premier temps (étapes 1 à 3), je vais remplacer qc.Xxxxxx par
+ap.Xxxxxx dans tous les fichiers du projet, ce qui aura pour effet de modifier
+tous les namespaces et les assemblys de qc.Xxxxxx en ap.Xxxxxx. Les noms des
+projets en eux-même seront renommés à l'étape 3 via TortoiseSVN.</p>
+<h2>1° étape</h2>
+<ul>
+<li>S'assurer que la solution est totalement versionnée</li>
+<li>Faire une sauvegarde complète du en lançant un Export All sous
+Subversion</li>
+</ul>
+<h2>2° étape</h2>
+<p>Sous Visual Studio, sans ouvrir la solution, faire Edition / Rechercher et
+remplacer / Remplacer dans les fichiers</p>
+<ul>
+<li>Rechercher : qc.Engine</li>
+<li>Remplacer par : ap.Engine</li>
+<li>Regarder dans : D:\Portals\pi</li>
+<li>Type de fichiers : *.*</li>
+</ul>
+<p><img src="/public/2008/renommer-en-ap.png" alt=""></p>
+<ul>
+<li>Cliquer sur le bouton [ Remplacer tout ]</li>
+<li>Confirmer que l'on veut effectuer le remplacement global</li>
+</ul>
+<p>Répéter la même chose pour qc.Classic, qc.Department, qc.Devel et
+qc.Framework puis une dernière fois pour renommer BAS.Data en Altrr.Data.</p>
+<h2>3° étape</h2>
+<ul>
+<li>Supprimer le contenu du répertoire bin</li>
+<li>Supprimer le fichier pi.suo</li>
+<li>Utiliser TortoiseSVN pour renommer les fichiers qc.Xxxxxxx.csproj en
+ap.Xxxxxxx.csproj =&gt; proposera de renommer également
+qc.Xxxxxxx.csproj.webinfo en ap.Xxxxxxx.csproj.webinfo</li>
+<li>Ouvrir la solution sous Visual Studio et la regenérer totalement =&gt;
+&quot;Régénération globale : 6 a réussi, 0 a échoué, 0 a été ignoré&quot;</li>
+<li>Vérifier que le répertoire bin ne contient plus de DLL qc.Xxxxxxx.dll</li>
+<li>Contrôler que le site fonctionne encore :)</li>
+<li>Commiter le projet en indiquant &quot;Renommé qc.Xxxxxx en ap.Xxxxxx&quot;</li>
+</ul>
+<h2>4° étape</h2>
+<p>Une fois le gros oeuvre fait, je fignole pour qu'il ne reste presque plus de
+trace de <a href="/tags/qc/">QC</a>.</p>
+<ul>
+<li>changements des namespaces folkloriques (&quot;qc&quot; et&quot;qc.res.ae&quot;) en
+&quot;ap.Engine&quot;</li>
+<li>remplacement des TagPrefix=&quot;qc&quot; par TagPrefix=&quot;ap&quot; =&gt; il faut aussi
+remplacer :
+<ul>
+<li><code>&lt;qc:Literal&gt;</code> par <code>&lt;ap:Literal&gt;</code></li>
+<li><code>&lt;qc:AutoComplete&gt;</code> par <code>&lt;ap:AutoComplete&gt;</code></li>
+<li><code>&lt;qc:SelectFile&gt;</code> par <code>&lt;ap:SelectFile&gt;</code></li>
+<li><code>&lt;qc:SelectLink&gt;</code> par <code>&lt;ap:SelectLink&gt;</code></li>
+<li><code>&lt;qc:RoleGrid&gt;</code> par <code>&lt;ap:RoleGrid&gt;</code></li>
+<li><code>&lt;qc:Wysiwyg&gt;</code> par <code>&lt;ap:Wysiwyg&gt;</code></li>
+</ul>
+</li>
+<li>Ouvrir la solution sous Visual Studio et la regenérer totalement =&gt;
+&quot;Régénération globale : 6 a réussi, 0 a échoué, 0 a été ignoré&quot;</li>
+<li>Contrôler que le site fonctionne encore :)</li>
+<li>Commiter le projet en indiquant &quot;Suite renommage 'qc' en 'ap' (namespace,
+tagprefix, user controls ...)&quot;</li>
+</ul>
+<p>Après ça, il ne reste plus que les tables de la base de données qui sont
+encore préfixées par &quot;qc_&quot; et pas &quot;ap_&quot;.</p>
+<h2>5° étape</h2>
+<p>Le souci, c'est qu'il faut tout re-déployer puisque les namespaces ont
+changés et que désormais les fichiers .ascx héritent de ap.Xxxxxx.Yyyyyy et
+plus de qc.Xxxxxx.Yyyyyy. Il faut donc impérativement remplacer les ascx
+actuels par les nouveaux sur tous les sites en production. Heureusement qu'il
+n'y en a pas tant que ça :)</p>
+<p>Et en plus, suite à la disparitions du namespace qc au profit de ap.Engine,
+il faut impérativement penser à mettre à jour les fichiers web.config pour
+corriger les 2 lignes suivantes :</p>
+<pre><code>&lt;add verb=&quot;POST,GET&quot; path=&quot;*MailFormHandler.ashx&quot; type=&quot;ap.Engine.MailFormHandler, ap.Engine&quot; /&gt;
+&lt;add verb=&quot;POST,GET&quot; path=&quot;*InfoStatHandler.ashx&quot; type=&quot;ap.Engine.InfoStatHandler, ap.Engine&quot; /&gt;
+</code></pre>
+<p>Si tout va bien, je vais encore tester en local quelques jours et
+j'attaquerai les mise à jour la semaine prochaine.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/11/13/installer-client-odbc-sybase-sql-anywhere-9/" hreflang="fr-FR">Installer le client ODBC pour Sybase SQL Anywhere 9</a>
+  <a rel="next" href="/2008/12/17/group-by-champ-memo-access/" hreflang="fr-FR">Group By d&#39;un champ Mémo sous Access</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

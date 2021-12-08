@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) A DataGrid for my Contacts box - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/11/22/wdevs-datagrid-contacts-box/" />
+<meta property="og:title" content="(Wdevs) A DataGrid for my Contacts box" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/11/22/wdevs-datagrid-contacts-box/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-11-22T09:59:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-11-22T09:59:00.000Z","datePublished":"2004-11-22T09:59:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/11/22/wdevs-datagrid-contacts-box/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/11/22/wdevs-datagrid-contacts-box/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/11/22/wdevs-datagrid-contacts-box/">(Wdevs) A DataGrid for my Contacts box</a>
+    </h1>
+    <p>
+      <span>2004-11-22</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Again, this new module is intended to be a very simple one. I will work
+later on a more sophisticated contact module, based on the vcard datas. As with
+the Links box, the Contacts box will contain a list of items. Consequently, the
+majority of its code can be write with copy and paste.</p>
+<p>The SQL database table has an AUTO_INCREMENT / IDENTITY id, like in the
+qc_Links table.</p>
+<pre><code>CREATE TABLE qc_Contacts (
+    idContact int AUTO_INCREMENT NOT NULL,
+    idBox VARCHAR(20) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    role VARCHAR(100),
+    email VARCHAR(100) NOT NULL,
+    phone1 VARCHAR(50),
+    phone2 VARCHAR(50),
+    CONSTRAINT PK_qc_Contacts PRIMARY KEY (idContact)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre>
+<p>In the Links box, I had been able to avoid DataGrid because I wanted to
+render a semantic list with ul and li tags. But in this case, I really need an
+html table tag to render the content as records. So my ascx uses a
+DataGrid.</p>
+<pre><code>&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; Codebehind=&quot;listContacts.ascx.cs&quot; Inherits=&quot;qc.Classic.Contacts.listContacts&quot; TargetSchema=&quot;http://schemas.microsoft.com/intellisense/ie5&quot;%&gt;
+&lt;asp:datagrid
+  id=&quot;boxDatagrid&quot;
+  AutoGenerateColumns=&quot;false&quot;
+  EnableViewState=&quot;false&quot;
+  CssClass=&quot;dg_table&quot;
+  ItemStyle-CssClass=&quot;dg_odd&quot;
+  AlternatingItemStyle-CssClass=&quot;dg_even&quot;
+  HeaderStyle-CssClass=&quot;dg_header&quot;
+  runat=&quot;server&quot;&gt;
+  &lt;Columns&gt;
+    &lt;asp:BoundColumn HeaderText=&quot;Name&quot; DataField=&quot;name&quot; /&gt;
+    &lt;asp:BoundColumn HeaderText=&quot;Role&quot; DataField=&quot;role&quot; DataFormatString=&quot;{0:d}&quot; /&gt;
+    &lt;asp:HyperLinkColumn HeaderText=&quot;Email&quot; DataTextField=&quot;email&quot; DataNavigateUrlField=&quot;email&quot; DataNavigateUrlFormatString=&quot;mailto:{0}&quot; /&gt;
+    &lt;asp:BoundColumn HeaderText=&quot;Phone 1&quot; DataField=&quot;phone1&quot; DataFormatString=&quot;{0:N0}&quot; /&gt;
+    &lt;asp:BoundColumn HeaderText=&quot;Phone 2&quot; DataField=&quot;phone2&quot; DataFormatString=&quot;{0:N0}&quot; /&gt;
+  &lt;/Columns&gt;
+&lt;/asp:datagrid&gt;
+</code></pre>
+<p>There is nothing extraordinary compared to the IBuySpy version, except that
+at least all presentations informations are based on css styles rather than
+in-asp.net attributes. Yet, ASP.NET adds specials html attributes.</p>
+<ul>
+<li>with FireFox : <code>&lt;table class=&quot;dg_table&quot; cellspacing=&quot;0&quot; rules=&quot;all&quot; border=&quot;1&quot; id=&quot;_ctl0_boxDatagrid&quot;&gt;</code></li>
+<li>with IE6 : <code>&lt;table class=&quot;dg_table&quot; cellspacing=&quot;0&quot; rules=&quot;all&quot; border=&quot;1&quot; id=&quot;_ctl0_boxDatagrid&quot; style=&quot;border-collapse:collapse;&quot;&gt;</code></li>
+</ul>
+<p>And of course, this stupid datagrid control don't accept <code>CellSpacing=&quot;&quot;</code> or
+don't remove html attributes when I add <code>rules=&quot;&quot;</code>, <code>border=&quot;&quot;</code>, <code>BorderStyle=&quot;None&quot;</code>
+or <code>style=&quot;&quot;</code>.</p>
+<p>However, I succeeded in defining a pretty css style for my table, but it
+depends on the fact that I add a CellSpacing=&quot;2&quot; attribute for the DataGrid
+control server. So I try another way to remove useless attributes by overriding
+the Render method.</p>
+<pre><code>protected override void Render(HtmlTextWriter writer) {
+  StringBuilder stringBuilder = new StringBuilder();
+  StringWriter stringWriter = new StringWriter(stringBuilder);
+  HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter);
+  base.Render(htmlWriter);
+  string html = stringBuilder.ToString();
+  html = html.Replace(&quot; cellspacing=\&quot;0\&quot;&quot;, &quot;&quot;);
+  html = html.Replace(&quot; rules=\&quot;all\&quot;&quot;, &quot;&quot;);
+  html = html.Replace(&quot; border=\&quot;1\&quot;&quot;, &quot;&quot;);
+  html = html.Replace(&quot; style=\&quot;border-collapse:collapse;\&quot;&quot;, &quot;&quot;);
+  writer.Write(html);
+}
+</code></pre>
+<p>In order to explore all the possible solutions, I made another attempt with
+a simple Repeater. This method avoids the override hack and allows a more
+semantical html table, which uses thead, tbody and th tags. It's less practical
+to implement, but it's a better method if I choose to build a <a href="http://www.imaputz.com/cssStuff/bigFourVersion.html">pure CSS scrollable table
+with fixed header</a>.</p>
+<p>And for the fun, I highlight the table row where mouse is over with the
+:hover property for Firefox or a <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dndude/html/dude07232001.asp">
+very old htc</a> for IE.</p>
+<p>I will try to put on line this evening with some other modules of the
+week-end.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/11/16/wdevs-connecting-mysql-access/" hreflang="en-US">(Wdevs) Connecting to MySQL or Access</a>
+  <a rel="next" href="/2004/11/24/wdevs-three-more-boxes/" hreflang="en-US">(Wdevs) Three more boxes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

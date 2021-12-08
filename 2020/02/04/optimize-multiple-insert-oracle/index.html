@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Optimize multiple INSERTs (for Oracle) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/02/04/optimize-multiple-insert-oracle/" />
+<meta property="og:title" content="Optimize multiple INSERTs (for Oracle)" />
+<meta name="description" content="In order to check the integrity of some data, I had to copy the contents of a large customer table from a DB2 database into an Oracle database." />
+<meta property="og:description" content="In order to check the integrity of some data, I had to copy the contents of a large customer table from a DB2 database into an Oracle database." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/02/04/optimize-multiple-insert-oracle/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/pumpkin-patch.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-02-04T10:21:18.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-02-04T10:21:18.000Z","datePublished":"2020-02-04T10:21:18.000Z","description":"In order to check the integrity of some data, I had to copy the contents of a large customer table from a DB2 database into an Oracle database.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2020/02/04/optimize-multiple-insert-oracle/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/pumpkin-patch.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/02/04/optimize-multiple-insert-oracle/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/pumpkin-patch.jpg" alt="Rusty old truck in a pumpkin patch - Priscilla Du Preez" /><figcaption><a href="https://unsplash.com/photos/svIdk6Ai94w">Rusty old truck in a pumpkin patch - Priscilla Du Preez</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/02/04/optimize-multiple-insert-oracle/">Optimize multiple INSERTs (for Oracle)</a>
+    </h1>
+    <p>
+      <span>2020-02-04</span>
+      <span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>In order to check the integrity of some data, I had to copy the contents of a large customer table from a DB2 database into an Oracle database. I know SQL*Loader exists, but this is not the time I'm gonna learn how to use it.</p>
+<h2>One INSERT command for each row to process</h2>
+<p>To begin with, I made tests with a subset of the data and tried to make it as simple as possible. So simple that I generated and executed one INSERT query per row to be inserted.</p>
+<pre><code class="language-sql">INSERT INTO MyTable (Column1, Column2, Column3) VALUES ('One_1', 'Two_1', 'Three_1');
+then
+INSERT INTO MyTable (Column1, Column2, Column3) VALUES ('One_2', 'Two_2', 'Three_2');
+then
+INSERT INTO MyTable (Column1, Column2, Column3) VALUES ('One_3', 'Two_3', 'Three_3');
+etc...
+</code></pre>
+<p>=&gt; 12.07 seconds to insert 4579 lines (i.e. 379 requests per second).</p>
+<h2>INSERT commands inside one BEGIN / END</h2>
+<p>Rather than making a <code>connection.Execute()</code> for each line, I grouped the INSERT commands into a BEGIN ... INSERT expression (a bit like a stored procedure) so as to hit the server for only one <code>connection.Execute()</code>.</p>
+<pre><code class="language-sql">BEGIN
+  INSERT INTO MyTable (Column1, Column2, Column3) VALUES ('One_1', 'Two_1', 'Three_1');
+  INSERT INTO MyTable (Column1, Column2, Column3) VALUES ('One_2', 'Two_2', 'Three_2');
+  INSERT INTO MyTable (Column1, Column2, Column3) VALUES ('One_3', 'Two_3', 'Three_3');
+  etc...
+END;
+</code></pre>
+<p>=&gt; 6.37 seconds to insert 4579 lines =&gt; already twice as fast.</p>
+<p><em>Note: with <a href="https://stackexchange.github.io/Dapper/">Dapper</a> (and ADO.NET in general I suppose), Oracle doesn't support line breaks in the SQL command: I get an error <code>@@PLS-00103: Encountered the symbol &quot;&quot; when expecting one of the following@</code>.</em></p>
+<p>To avoid this problem, just don't add a line break when generating the big query :</p>
+<pre><code class="language-sql">BEGIN INSERT INTO MyTable (...) VALUES (...); INTO MyTable (...) VALUES (...); ...; END;
+</code></pre>
+<h2>An INSERT command from several SELECTs</h2>
+<p>This time, instead of making 1 access to the server to still make several INSERTs, I optimized even more by sending a single INSERT request. To do this, I turned &quot;INSERT ... VALUES ...&quot; into &quot;INSERT ... SELECT FROM ...&quot; :)</p>
+<pre><code class="language-sql">INSERT INTO MyTable (Column1, Column2, Column3)
+SELECT ('One_1', 'Two_1', 'Three_1') FROM DUAL
+UNION SELECT ('One_2', 'Two_2', 'Three_2') FROM DUAL
+UNION SELECT ('One_3', 'Two_3', 'Three_3') FROM DUAL
+etc...
+</code></pre>
+<p>=&gt; 2.84 seconds to insert 4579 lines (i.e. 1612 requests per second) =&gt; 4 times faster.</p>
+<h2>Test results</h2>
+<p><img src="/public/2012/tests-vitesse-insert.png" alt=""></p>
+<p>It was useful to run a few tests, since it allows to go from 379 inserts in one second to more than 1600! And as I have nearly 300,000 lines to process, it will take 3 minutes and not 15 minutes.</p>
+<h2>Implementation</h2>
+<p>Actually, I copy the entire data with block of 500 customers to avoid overloading memory:</p>
+<pre><code class="language-c#">public int SaveCustomers(IEnumerable&lt;Customer&gt; customers)
+{
+    var sql = @&quot;UNION SELECT '{0}', '{1}', '{2}', '{3}', '{4}' FROM DUAL &quot;;
+
+    int count = 0;
+    try
+    {
+        connexion.Open();
+        var batch = new StringBuilder();
+        foreach (var c in customers)
+        {
+            batch.Append(string.Format(sql, c.Agency, c.Code, c.Siret, c.Type));
+            count++;
+            if ((count % 500) == 0)
+            {
+                connexion.Execute(Sql_FromSelect(batch));
+                batch = new StringBuilder();
+            }
+        }
+        connexion.Execute(Sql_FromSelect(batch));
+    }
+    catch (Exception ex)
+    {
+        throw ex;
+    }
+    finally
+    {
+        connexion.Close();
+    }
+
+    return count;
+}
+
+private string Sql_FromSelect(StringBuilder batch)
+{
+    // Au départ :
+    // &quot;UNION SELECT '...', '...', '...', '...', '...' FROM DUAL UNION SELECT ... &quot;
+
+    batch.Remove(0, 5);
+    // =&gt; &quot; SELECT '...', '...', '...', '...', '...' FROM DUAL UNION SELECT ... &quot;
+
+    var start = @&quot;BEGIN INSERT INTO Customers (Agency, Code, Siret, Type) &quot;;
+    batch.Insert(0, start);
+    // =&gt; &quot;BEGIN INSERT INTO Customers (...) SELECT '...', '...', ... &quot;
+
+    batch.Append(&quot;; END;&quot;);
+    // =&gt; &quot;BEGIN INSERT INTO Customers (...) SELECT ... FROM DUAL; END;&quot;
+
+    return batch.ToString();
+}
+</code></pre>
+<div class="encart">
+<p>Version en français : <a href="/2012/03/08/optimiser-insert-multiples-oracle/" hreflang="fr-FR">Optimiser les INSERT multiples (dans Oracle)</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/01/29/firefox-magic-scrollbar-color/" hreflang="en-US">Hey! Firefox scrollbar-color is magical</a>
+  <a rel="next" href="/2020/02/11/deployer-application-glitch-5-etapes/" hreflang="fr-FR">Déployer une application sur Glitch en 5 étapes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

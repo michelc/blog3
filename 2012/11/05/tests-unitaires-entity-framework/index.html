@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tests unitaires pour Entity Framework - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/11/05/tests-unitaires-entity-framework/" />
+<meta property="og:title" content="Tests unitaires pour Entity Framework" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/11/05/tests-unitaires-entity-framework/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-11-05T17:34:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-11-05T17:34:00.000Z","datePublished":"2012-11-05T17:34:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/11/05/tests-unitaires-entity-framework/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/11/05/tests-unitaires-entity-framework/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/11/05/tests-unitaires-entity-framework/">Tests unitaires pour Entity Framework</a>
+    </h1>
+    <p>
+      <span>2012-11-05</span>
+      <span>#ef</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'avais longtemps repoussé l'écriture de tests unitaires pour les
+contrôleurs de mon application <a href="http://repertoir.apphb.com/%5Bfr">Répertoir</a>, parce qu'ils accèdent à la base
+de données via Entity Framework et que je ne savais pas trop comment m'y
+prendre pour tester ça.</p>
+<p>J'ai pensé, réfléchi, exploré plus ou moins 3 pistes différentes :</p>
+<ul>
+<li>Ajouter une couche &quot;service&quot; entre les contrôleurs et Entity Framework</li>
+<li>Mocker le DbContext d'Entity Framework</li>
+<li>Utiliser une base de données SQLite en mémoire</li>
+</ul>
+<h2>Méthode 1 : Ajouter une couche</h2>
+<p>Comme j'essaie de faire au plus simple, j'ai conservé le mode &quot;standard&quot; des
+contrôleurs générés par VS 2010 et j'instancie un objet DbContext :</p>
+<pre><code>private RepertoirContext db = new RepertoirContext();
+</code></pre>
+<p>Les contrôleurs utilisent ensuite directement cet objet DbContext pour
+communiquer avec la base de données, que ce soit pour faire des requêtes ou
+pour la mettre à jour :</p>
+<pre><code>var contact = db.Contacts.Find(person.Contact_ID);
+contact.Update_With_ViewPerson(person);
+db.Entry(contact).State = EntityState.Modified;
+db.SaveChanges();
+</code></pre>
+<p>Les &quot;bonnes pratiques&quot; de codage auraient tendance à considérer que cette
+proximité entre le contrôleur et la base de données (la &quot;dépendance&quot; comme ils
+disent) n'est pas très convenable.</p>
+<p>Il serait plus de plus bon goût d'ajouter une couche &quot;service&quot; et de s'en
+servir au niveau des contrôleurs pour éviter d'accéder directement à Entity
+Framework :</p>
+<pre><code>private RepertoirContactService srv = new RepertoirContactService();
+...
+var contact = srv.Find(person.Contact_ID);
+srv.Update(person);
+</code></pre>
+<p>Hourra ! Le contrôleur est devenu tellement fin et tellement élégant
+(&quot;Look how thin I am. Thin and dainty.&quot;) et surtout il ne fait plus rien par
+lui même (&quot;Moisturize me! Moisturize me!&quot;).</p>
+<p>Maintenant, c'est une vraie partie de plaisir de faire des tests unitaires
+pour les contrôleurs :</p>
+<ul>
+<li>Il faut un peu &quot;mocker&quot; le service.</li>
+<li>Ajouter une pincé d'injection de dépendance au contrôleur.</li>
+<li>Et roule ma poule !</li>
+</ul>
+<pre><code>[TestMethod]
+public void PeopleDetails_doit_renvoyer_le_contact_demande_a_la_vue()
+{
+  // Arrange
+  IRepertoirContactService srv = new MockedRepertoirContactService();
+  var controller = new PeopleController(srv);
+  srv.FakeSource.Add(new Contact
+                      {
+                          Contact_ID = 1,
+                          DisplayName = &quot;test&quot;,
+                          Phone1 = &quot;0&quot;
+                      };)
+
+  // Act
+  var result = controller.Details(1);
+
+  // Assert
+  var model = result.ViewData.Model as ViewPerson;
+  Assert.AreEqual(&quot;test&quot;, model.DisplayName, &quot;Model aurait dû correspondre au contact demandé&quot;);
+  Assert.AreEqual(&quot;0&quot;, model.Phone1, &quot;Model aurait dû correspondre au contact demandé&quot;);
+}
+</code></pre>
+<p>En &quot;vrai&quot;, je vais devoir :</p>
+<ul>
+<li>Définir une interface.</li>
+<li>Implémenter la classe RepertoirContactService en faisant appel à DbContext
+ou encore mieux passer par une interface IRepertoirContactRepository qui fera
+appel au DbContext.</li>
+<li>Implémenter MockedRepertoirContactService.</li>
+<li>Ajouter de l'injection de dépendance au niveau du contrôleur.</li>
+<li>Etc...</li>
+</ul>
+<p>Conclusion : C'est beaucoup de boulot pas très
+zintéressant pour un projet censé m'amuzer...</p>
+<h2>Méthode 2 : Mocker le DbContext</h2>
+<p>Certains ont pris le parti de mocker directement le DbContext, ce qui évite
+d'avoir à ajouter une couche et ce qui me plait beaucoup plus.</p>
+<p>J'ai étudié et essayé de faire ça à partir des 2 ou 3 billets
+suivants :</p>
+<ul>
+<li><a href="http://blogs.clariusconsulting.net/kzu/how-to-design-a-unit-testable-domain-model-with-entity-framework-code-first/">How to design a unit testable domain model with Entity Framework
+Code First</a></li>
+<li><a href="http://odetocode.com/Blogs/scott/archive/2011/05/31/faking-dbcontext.aspx">Faking DbContext</a></li>
+<li><a href="http://www.nogginbox.co.uk/blog/mocking-entity-framework-data-context">Mocking your Entity Framework data context and testing it in .NET
+MVC</a></li>
+</ul>
+<p>Je trouve cette méthode bien &quot;mieux&quot;, même si elle impose de créer quelques
+interfaces. Et idéalement, ce serait encore mieux si les gens de Entity
+Framework avaient un peu plus préparé le terrain.</p>
+<p>Dans le même genre de truc, je suis tombé sur un article sur Code Project
+qui présente <a href="http://www.codeproject.com/Articles/460175/Two-strategies-for-testing-Entity-Framework-Effort">Two strategies for testing Entity Framework</a>, dont <a href="http://effort.codeplex.com/">Effort</a>, un provider ADO.NET
+pour Entity Framework qui travaille entièrement en mémoire. Ça commence à
+devenir intéressant, mais comme le dit l'article, on ne travaille pas
+réellement avec une &quot;vraie&quot; base de données et surtout tout n'est pas
+géré...</p>
+<p>Conclusion : c'est pas mal du tout et ça pourrait le
+faire mais ça demande un peu plus de temps que ce que je peux veux y
+consacrer.</p>
+<h2>Méthode 3 : SQLite en mémoire</h2>
+<p>Le problème (entre autres) des tests unitaires qui attaquent la base de
+données, c'est que c'est lent. Il faudrait donc avoir une base de données
+capable de travailler totalement en mémoire pour que ça aille suffisament vite
+et que cela ne soit pas pénalisant.</p>
+<p>Une base de données en mémoire, je connais... C'est SQLite avec une chaîne
+de connexion du style :</p>
+<pre><code>Data Source=:memory:;Version=3;New=True;
+</code></pre>
+<p>Malheureusement, la version actuelle du provider de SQLite (<a href="http://System.Data.SQLite.org/">System.Data.SQLite.dll</a>) ne
+gère pas la partie &quot;Code First&quot; de Entity Framework. (lien vers FAQ qui dit
+ça).</p>
+<p>Deux solutions possibles pour pallier à ces difficultés :</p>
+<ul>
+<li>Passer par le provider <a href="http://www.devart.com/dotconnect/sqlite/">dotConnect for SQLite</a> de Devart qui gère complètement ça.
+Mais c'est payant...</li>
+<li>Générer &quot;à la main&quot; les scripts de création et d'initialisation de la base
+de données. Mais c'est lourd...</li>
+</ul>
+<p>Alors bien entendu, j'aurai pu utiliser une version d'évaluation de
+dotConnect for SQLite ou bien me résoudre à scripter l'unique table de ma base
+de données... Mais je n'ai pas eu trop envie de &quot;bidouiller&quot; pour arriver à
+faire un truc qui devrait être naturel.</p>
+<p>Conclusion : c'est vraiment dommage, mais ça ne vas
+pas être possible.</p>
+<h2>La méthode retenue</h2>
+<p>J'avais donc le choix entre laisser tomber les tests unitaires de mes
+contrôleurs ou tester coûte que coûte.</p>
+<p>Et j'ai donc décidé qu'en attendant que Microsoft me facilite la vie en
+proposant un SQL Server Memory Edition ou sorte un Provider For SQLite Entity
+Framework Code First Ready, un tout bête SQL Server CE devrait pouvoir faire
+l'affaire...</p>
+<p>Je vais maintenant essayer de ne pas trop tarder pour faire un billet
+expliquant comment je m'y suis pris. C'est enfin fait : <a href="/2012/12/13/tester-entity-framework-sql-ce/">Tester Entity Framework avec SQL CE</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/10/17/tests-unitaires-people-controller/" hreflang="fr-FR">Tests unitaires de PeopleController</a>
+  <a rel="next" href="/2012/11/12/heritage-generation-routes-aspnetmvc/" hreflang="fr-FR">Héritage en génération des routes ASP.NET MVC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

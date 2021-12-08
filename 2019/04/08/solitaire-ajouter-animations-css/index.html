@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire - Ajouter des animations CSS - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/04/08/solitaire-ajouter-animations-css/" />
+<meta property="og:title" content="Solitaire - Ajouter des animations CSS" />
+<meta name="description" content="Comme je dois ajouter un &quot;AutoMove&quot; à mon jeu de FreeCell, il faut que je me replonge dans les animations CSS pour donner un peu plus de peps à mes jeux." />
+<meta property="og:description" content="Comme je dois ajouter un &quot;AutoMove&quot; à mon jeu de FreeCell, il faut que je me replonge dans les animations CSS pour donner un peu plus de peps à mes jeux." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/04/08/solitaire-ajouter-animations-css/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/animation.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-04-08T10:29:24.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-04-08T10:29:24.000Z","datePublished":"2019-04-08T10:29:24.000Z","description":"Comme je dois ajouter un \"AutoMove\" à mon jeu de FreeCell, il faut que je me replonge dans les animations CSS pour donner un peu plus de peps à mes jeux.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/04/08/solitaire-ajouter-animations-css/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/animation.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/04/08/solitaire-ajouter-animations-css/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/animation.jpg" alt="Skrekkogle - Solitaire Win Sculpture" /><figcaption><a href="https://www.skrekkogle.com/projects/solitaire/">Skrekkogle - Solitaire Win Sculpture</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/04/08/solitaire-ajouter-animations-css/">Solitaire - Ajouter des animations CSS</a>
+    </h1>
+    <p>
+      <span>2019-04-08</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
+solitaires et aux évolutions que je souhaite y apporter :</p>
+<ol>
+<li><a href="/2019/03/23/solitaire-feuille-route-javascript/">Introduction</a></li>
+<li><a href="/2019/03/27/solitaire-passer-jquery-vanilla-js/">Passer de jQuery à Vanilla JS</a></li>
+<li><a href="/2019/04/01/solitaire-ameliorer-freecell/">Améliorer FreeCell</a></li>
+<li><a href="/2019/04/08/solitaire-ajouter-animations-css/">Ajouter des animations CSS</a></li>
+<li><a href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/">Drag and drop sans jQuery UI</a></li>
+<li><a href="/2019/04/25/solitaire-remplacer-ajaxmin/">Remplacer AjaxMin, etc...</a></li>
+</ol>
+</div>
+<p>Il y a 2 ou 3 ans, j'avais déjà regardé comment gérer quelques animations pour
+représenter le déplacement des cartes quand on double-clique dessus pour les
+envoyer sur les fondations. Comme ce n'était pas très convaincant et pas
+vraiment indispensable, j'avais laissé tombé pour d'autres trucs plus
+intéressants à réaliser.</p>
+<p>Mais pour ajouter un &quot;AutoMove&quot; à FreeCell comme envisagé dans un précédent
+billet, il faut que je réfléchisse à nouveau sur le sujet pour (enfin) intégrer
+quelques animations à mes jeux :</p>
+<ul>
+<li>Ça les rendrait un peu plus &quot;vivants&quot; et attractifs</li>
+<li>Certains coups seraient plus &quot;clairs&quot; pour les joueurs</li>
+</ul>
+<p>J'ai déjà débuté avec un truc très simple en ajoutant une petite animation en
+fin de partie. Jusqu'à il y a peu de temps, le joueur voyait immédiatement
+apparaitre une popup en cas de victoire ou de &quot;Game Over&quot;. Maintenant, il y a
+une petit effet &quot;shake&quot; pendant 2 secondes lorsque cette boite de dialogue
+apparait. Ça réveille un peu le jeu et c'est plus festif, que l'on ait gagné ou
+perdu...</p>
+<p>Et donc, un autre effet judicieux serait de &quot;montrer&quot; le déplacement d'une carte
+d'une pile vers une autre. Comme vu dans le billet sur les
+<a href="/2019/04/01/solitaire-ameliorer-freecell/">améliorations de FreeCell</a>,
+cela serait très utile pour que le joueur voit ce qui se passe quand un
+&quot;AutoPlay&quot; a lieu.</p>
+<p>Cela servirait aussi à rendre le jeu un peu plus animé quand on double clique
+sur une carte pour l'envoyer vers sa fondation. Et pareil, ça ferait un bel
+effet en cas de &quot;Undo&quot; pour annuler le dernier coup joué et ramener une carte à
+sa position de départ.</p>
+<p>Ensuite, cela permettra de mieux rendre compte de tout ce qui se passe quand il
+y a un &quot;AutoMove&quot; (clic droit pour jouer toutes les cartes possibles). Bien que
+dans ce cas là, il y aura une difficulté supplémentaire pour trouver comment
+&quot;enchainer&quot; les différentes animations correspondant à la succession des cartes
+jouées.</p>
+<p>Un autre truc qui vaudrait le coup et qui serait sans doute plus simple à
+développer, ce serait de mettre un peu d'animation pour &quot;matérialiser&quot; la
+constitution d'une paire de cartes. Dans certains jeux comme Pyramid ou Monte
+Carlo, il faut faire une paire de cartes pour les éliminer du tableau et les
+envoyer sur la fondation.</p>
+<p>Pour l'instant, si les 2 cartes cliquées forment une paire correcte, elles sont
+immédiatement placées sur la fondation. Si la paire sélectionnée est incorrecte,
+les deux cartes sont bordées de rouge pendant quelques secondes.</p>
+<p>J'aimerait trouver une petite animation sympa pour visualiser que la paire est
+OK avant d'enchainer sur son déplacement vers la fondation. Et lorsque la paire
+est KO, il faudrait avoir une animation pour indiquer que ça ne vas pas :
+quelque chose de plus vivant qu'une simple bordure rouge...</p>
+<p>Donc, dans ma todolist des animations :</p>
+<ul>
+<li>Remettre la main sur ce que j'avais commencé il y a quelques années pour faire
+bouger les cartes</li>
+<li>Procrastiner un peu et entre-temps travailler à des animations toute simple
+pour la réalisation des paires de cartes</li>
+<li>Au final, attaquer le déplacement des cartes, de préférence en Vanilla JS et
+CSS</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/04/01/solitaire-ameliorer-freecell/" hreflang="fr-FR">Solitaire - Améliorer FreeCell</a>
+  <a rel="next" href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/" hreflang="fr-FR">Solitaire - Drag and drop sans jQuery UI</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

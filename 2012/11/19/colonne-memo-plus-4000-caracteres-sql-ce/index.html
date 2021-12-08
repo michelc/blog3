@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mémo de plus de 4000 caractères sous SQL CE - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce/" />
+<meta property="og:title" content="Mémo de plus de 4000 caractères sous SQL CE" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-11-19T20:01:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-11-19T20:01:00.000Z","datePublished":"2012-11-19T20:01:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce/">Mémo de plus de 4000 caractères sous SQL CE</a>
+    </h1>
+    <p>
+      <span>2012-11-19</span>
+      <span>#ef</span><span>#sql-server</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je fais une petite application pour migrer une &quot;vieille&quot; base de données
+Access vers SQL Server CE et je suis tombé sur une erreur d'un autre âge
+lorsque j'essaie de transférer le contenu d'une colonne &quot;mémo&quot; :</p>
+<blockquote>
+<p>&gt; The field Content must be a string or array type with a maximum length
+of '4000'.</p>
+</blockquote>
+<p>Pourtant, j'avais bien expliqué à Entity Framework que ma colonne devait
+être de type &quot;ntext&quot; :</p>
+<pre><code>[Column(TypeName = &quot;ntext&quot;)]
+[DataType(DataType.MultilineText)]
+public string Content { get; set; }
+</code></pre>
+<p>Ce qui devrait m'affranchir de cette barrière des 4000 octets :
+<a href="http://msdn.microsoft.com/en-us/library/ms172424(SQL.110).aspx">SQL Server Compact Data Types</a></p>
+<p>Une première recherche de &quot;The field * must be a string or array type with a
+maximum length of '4000'.&quot; m'envoie sur une solution à première vue un peu
+brutale : <a href="http://stackoverflow.com/questions/5737733/error-storing-image-in-sql-ce-4-0-with-asp-net-mvc-3-and-entity-framework-4-1-co">Error storing Image in SQL CE 4.0 with ASP.NET MVC 3 and Entity
+Framework 4.1 Code First</a>.</p>
+<p>Le truc, c'est donc de carrément désactiver la validation (?!?!) de l'entité
+au moment de la persister dans la base de données :
+<code>DbContext.Configuration.ValidateOnSaveEnabled = false</code>. Je ne suis
+pas très certain de trouver ça bien...</p>
+<p>Mais ça a le mérite de fonctionner.</p>
+<p>Heureusement, en y regardant de plus près, cette solution propose aussi un
+lien vers le billet <a href="http://erikej.blogspot.fr/2011/04/saving-images-to-sql-server-compact.html">Saving images and long strings to SQL Server Compact with Entity
+Framework 4.1 Code First</a> qui m'a permi de découvrir une bien meilleure
+solution.</p>
+<p>Dans le cas des colonnes &quot;mémo&quot;, il suffit d'ajouter un attribut
+<code>[MaxLength]</code> à la colonne pour forcer Entity Framework :</p>
+<ul>
+<li>à créer une colonne de type &quot;ntext&quot; (l'équivalent de l'attribut
+<code>[Column(TypeName = &quot;ntext&quot;)]</code>) que j'utilisais jusqu'ici)</li>
+<li>et surtout à bien comprendre qu'il ne s'agit pas d'une simple colonne texte
+limitée à 4000 caractères.</li>
+</ul>
+<p>Et donc, avec :</p>
+<pre><code>[MaxLength]
+[DataType(DataType.MultilineText)]
+public string Content { get; set; }
+</code></pre>
+<p>Ça marche !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/11/12/heritage-generation-routes-aspnetmvc/" hreflang="fr-FR">Héritage en génération des routes ASP.NET MVC</a>
+  <a rel="next" href="/2012/12/12/tester-entity-framework-sql-ce/" hreflang="fr-FR">Tester Entity Framework avec SQL CE</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

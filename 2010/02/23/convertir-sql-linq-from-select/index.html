@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Convertir SQL en LINQ : FROM et SELECT - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/02/23/convertir-sql-linq-from-select/" />
+<meta property="og:title" content="Convertir SQL en LINQ : FROM et SELECT" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/02/23/convertir-sql-linq-from-select/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-02-23T20:51:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-02-23T20:51:00.000Z","datePublished":"2010-02-23T20:51:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/02/23/convertir-sql-linq-from-select/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/02/23/convertir-sql-linq-from-select/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/02/23/convertir-sql-linq-from-select/">Convertir SQL en LINQ : FROM et SELECT</a>
+    </h1>
+    <p>
+      <span>2010-02-23</span>
+      <span>#csharp</span><span>#linq</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est une traduction assez libre de la série de billets rédigés par Bill Horst pour apprendre comment <a href="https://devblogs.microsoft.com/vbteam/category/series/converting-sql-to-linq/">passer du langage SQL au langage LINQ</a> et plus spécialement en VB LINQ. Pour ma part, j'ai adapté les explications et les exemples de codes pour cibler la syntaxe C# du langage LINQ.</p>
+</div>
+<p>Après un premier billet pour <a href="/2010/02/22/convertir-sql-linq-introduction/">comparer SQL et LINQ</a>, ce deuxième billet de la série va
+présenter comment gérer des clauses plus spécifiques du SQL, en commençant par
+deux des clauses les plus importantes : FROM et SELECT.</p>
+<h2>La clause FROM</h2>
+<p>Une commande SQL SELECT débute toujours par une clause SELECT suivie d'une
+clause FROM. Dans le cas de LINQ, une expression commence toujours par une
+clause <code>from</code> (ou <code>aggregate</code> comme nous le verrons par
+la suite). La clause SQL FROM de base indique la table sur laquelle va porter
+la requête, et de façon similaire, la clause LINQ from indique l'objet sur
+lequel va porter la requête (ClientListe dans notre exemple).</p>
+<p>Cet objet peut représenter des données en mémoire, des données d'une table
+SQL ou des données XML. Dans les exemples à venir, j'utilise des données
+&quot;en mémoire&quot; pour que le code soit suffisamment simple. En plus de
+cet objet sur lequel porte la requête, la clause LINQ from contient toujours un
+identifiant pour la &quot;ligne&quot; courante (Contact dans notre exemple)
+qui sert d'alias pour représenter cette ligne.</p>
+<p>Avec SQL, il suffit de faire <code>SELECT *</code> pour sélectionner toutes
+les colonnes de la table. En ce qui concerne LINQ, il suffit d'utiliser la
+clause <code>select alias</code> pour renvoyer tous les membres de l'objet
+requêté :</p>
+<h3>SQL</h3>
+<pre><code>SELECT *
+FROM   ClientTable
+</code></pre>
+<h3>LINQ</h3>
+<pre><code>from Contact in ClientListe
+select Contact
+</code></pre>
+<h2>Utiliser un alias dans le FROM</h2>
+<p>En SQL, il est possible de définir un alias sur une table au niveau de la
+partie FROM de la requête. Cela permet ensuite de faire référence aux colonnes
+de la table source par l'intermédiaire de cet alias. Comme nous l'avons vu dans
+le paragraphe précédent, l'identifiant qui est défini au niveau de la clause
+from en LINQ sert lui aussi essentiellement à cela :</p>
+<h3>SQL</h3>
+<pre><code>SELECT Contact.ClientID, Contact.Telephone
+FROM   ClientTable Contact
+</code></pre>
+<h3>LINQ</h3>
+<pre><code>from Contact in ClientListe
+select new { Contact.ClientID, Contact.Telephone }
+</code></pre>
+<h2>La clause SELECT</h2>
+<p>En SQL, les commandes SELECT contiennent une liste des valeurs à
+sélectionner parmi les informations disponibles (Nom, Telephone, Ville…). De la
+même façon, le langage LINQ vous permet lui aussi de sélectionner certains des
+membres pour renvoyer un objet anonyme constitué à partir de cette
+sélection.</p>
+<p>Il n'est absolument pas nécessaire que les membres que vous définissez
+correspondent à l'objet que vous avez spécifié au niveau de la clause from. Il
+peut en effet s'agir de n'importe quelle expression C# valide (comme par
+exemple <code>3 + 4</code>). S'il n'est pas possible de déduire le nom d'un membre
+que vous avez sélectionné, vous devrez utiliser un alias (voir le paragraphe
+suivant).</p>
+<h3>SQL</h3>
+<pre><code>SELECT Nom, ClientID
+FROM   ClientTable Contact
+</code></pre>
+<h3>LINQ</h3>
+<pre><code>from Contact in ClientListe
+select new { Contact.Nom, Contact.ClientID }
+</code></pre>
+<h2>Utiliser un alias dans le SELECT</h2>
+<p>Toujours en SQL, il est possible de définir des alias pour les différents
+éléments que vous sélectionnez au niveau de la clause SELECT, ce qui permet
+ensuite d'utiliser ces alias pour faire référence à ces éléments. De la même
+façon, LINQ vous permet de donner un nom aux éléments que vous sélectionnez, ce
+qui vous permettra par la suite d'utiliser ce nom faire référence à ces
+éléments lorsque vous exploiterez le résultat de la requête LINQ.</p>
+<h3>SQL</h3>
+<pre><code>SELECT Nom NomContact, ClientID ContactID
+FROM   ClientTable Contact
+</code></pre>
+<h3>LINQ</h3>
+<pre><code>from Contact in ClientListe
+select new { NomContact = Contact.Nom, ContactID = Contact.ClientID }
+</code></pre>
+<p>Dans le prochain billet, je présenterai les équivalents des clauses
+DISTINCT, WHERE et ORDER BY pour le langage LINQ.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/02/22/convertir-sql-linq-introduction/" hreflang="fr-FR">Convertir SQL en LINQ : Introduction</a>
+  <a rel="next" href="/2010/02/24/convertir-sql-linq-distinct-where-order-by/" hreflang="fr-FR">Convertir SQL en LINQ : DISTINCT, WHERE et ORDER BY</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

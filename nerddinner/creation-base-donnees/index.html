@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NerdDinner(fr) : Création de la base de données - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/nerddinner/creation-base-donnees/" />
+<meta property="og:title" content="NerdDinner(fr) : Création de la base de données" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/nerddinner/creation-base-donnees/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-11-23T08:26:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-11-23T08:26:00.000Z","datePublished":"2009-11-23T08:26:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/nerddinner/creation-base-donnees/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/nerddinner/creation-base-donnees/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+<article>
+
+  <header>
+    <h1>
+      <a href="">NerdDinner(fr) : Création de la base de données</a>
+    </h1>
+    <p>
+      <span>2009-11-23</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Nous utiliserons une base de données pour enregistrer toutes les
+informations concernant les dîners et les confirmations de notre application
+NerdDinner.</p>
+<p>Les étapes ci-dessous montrent comment créer la base de données en utilisant
+la version gratuite de SQL Server Express. Tout le code que nous allons écrire
+fonctionnera aussi bien avec un SQL Server complet ou un simple SQL Server
+Express.</p>
+<h2>Création d'une nouvelle base de données SQL Server Express</h2>
+<p>Nous allons commencer par faire un clic droit sur notre projet Web, pour
+sélectionner les commandes <strong>Add -&gt; New Item</strong> :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image024.png" alt=""></p>
+<p>Cela fait apparaître la boite de dialogue &quot;Add New Item&quot; dans laquelle nous
+sélectionnons la catégorie &quot;Data&quot; puis le modèle &quot;SQL Server Database&quot; :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image025.png" alt=""></p>
+<p>Nous appelons alors la base de données SQL Server Express que nous allons
+créer &quot;NerdDinner.mdf&quot; puis cliquons sur &quot;Add&quot;. Visual Studio nous demande si
+nous souhaitons ajouter ce fichier à notre répertoire \App_Data (il s'agit d'un
+répertoire déjà configuré avec des droits ACL en lecture et écriture).</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image026.png" alt=""></p>
+<p>Cliquons sur &quot;Yes&quot; et notre nouvelle base de données sera créée et ajoutée
+au bon endroit dans l'explorateur de solution :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image027.png" alt=""></p>
+<h2>Création des tables de la base de données</h2>
+<p>Nous disposons maintenant d'une nouvelle base de données vide à laquelle
+nous allons ajouter quelques tables.</p>
+<p>Pour cela, nous allons passer par la fenêtre &quot;Server Explorer&quot; de Visual
+Studio, qui nous permet de gérer des bases de données et les serveurs. Les
+bases de données SQL Server Express stockées dans le répertoire \App_Data de
+notre application apparaissent automatiquement dans l'explorateur de serveurs.
+Nous pouvons éventuellement utiliser l'icône &quot;Connect to Database&quot; en haut de
+la fenêtre de l'explorateur de serveurs pour ajouter d'autres bases de données
+SQL Server (aussi bien locales que distantes) à cette liste :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image028.png" alt=""></p>
+<p>Nous ajouterons deux tables à notre base de données NerdDinner : une pour
+stocker nos dîners et l'autre pour gérer les confirmations de présence (RSVP).
+Nous pouvons créer de nouvelles tables en faisant un clic droit sur la branche
+&quot;Tables&quot; dans le dossier de notre base de données puis en choisissant la
+commande &quot;Add New Table&quot; :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image029.png" alt=""></p>
+<p>Cela ouvre une fenêtre avec le concepteur de table qui nous permet de
+définir le schéma de notre nouvelle table. Pour la table des dîners, nous
+allons ajouter les 10 colonnes suivantes :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image030.png" alt=""></p>
+<p>Nous voulons que la colonne &quot;DinnerID&quot; soit une clé primaire unique pour la
+table. Cela se paramètre par un clic-droit sur le nom de la colonne puis en
+choisissant la commande &quot;Set Primary Key&quot;.</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image031.png" alt=""></p>
+<p>En plus de faire de DinnerID une clé primaire, nous souhaitons qu'il
+s'agisse d'une colonne &quot;Identity&quot;, c'est-à-dire une colonne dont la valeur est
+automatiquement incrémentée au fur et à mesure que de nouvelles lignes de
+données sont insérées dans la table (ce qui signifie que la première ligne
+dîner créée aura 1 comme DinnerID, la deuxième ligne insérée aura un DinnerID
+de 2, etc…).</p>
+<p>Cela se configure en sélectionnant la colonne &quot;DinnerID&quot; puis en utilisant
+le panneau &quot;Column Properties&quot; pour configurer la propriété &quot;(Is Identity)&quot; de
+la colonne à &quot;Yes&quot;. Nous utiliserons les valeurs standards pour une colonne
+&quot;Identity&quot;, à savoir commence à 1 et augmente de 1 à chaque nouvelle ligne
+insérée :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image032.png" alt=""></p>
+<p>Nous pouvons alors presser Ctrl-S ou utiliser le menu <strong>File -&gt; Save</strong>
+pour enregistrer notre table. Lorsque Visual Studio nous demande de donner un
+nom à notre table, répondre &quot;Dinners&quot; :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image033.png" alt=""></p>
+<p>Notre nouvelle table Dinners apparaît désormais dans la liste des tables de
+notre base de données dans l'explorateur de serveurs.</p>
+<p>Nous allons répéter les étapes précédentes et créer cette fois-ci une table
+&quot;RSVP&quot; contenant 3 colonnes. Nous paramètrerons la colonne RsvpID en tant que
+clé primaire et colonne &quot;Identity&quot; :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image034.png" alt=""></p>
+<p>Enregistrons la table en l'appelant &quot;RSVP&quot;.</p>
+<h2>Définir une relation de clé étrangère entre nos tables</h2>
+<p>Notre base de données contient désormais deux tables. La dernière étape dans
+la conception de notre base de données sera de définir une relation de &quot;un à
+plusieurs&quot; entre ces deux tables, de façon à pouvoir associer chaque ligne de
+la table Dinners avec zéro ou plusieurs lignes de la table RSVP qui lui
+correspondent. Pour cela, nous allons configurer la colonne &quot;DinnerID&quot; de la
+table RSVP pour lui associer une relation de clé étrangère avec la colonne
+&quot;DinnerID&quot; de la table Dinners.</p>
+<p>Dans l'explorateur de serveurs, double-cliquons sur la table RSVP pour
+l'ouvrir avec le concepteur de tables. On fait ensuite un clic-droit sur la
+colonne &quot;DinnerID&quot; et on sélectionne &quot;Relationships…&quot; dans le menu
+contextuel :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image035.png" alt=""></p>
+<p>Cela fait apparaître une boîte de dialogue qui va nous servir pour
+configurer les relations entre les deux tables :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image036.png" alt=""></p>
+<p>Cliquons sur le bouton &quot;Add&quot; pour ajouter une nouvelle relation. Une fois
+que la relation a été créée, il faut cliquer sur le bouton &quot;…&quot; en face du
+groupe de propriétés &quot;Tables And Columns Specifications&quot; pour paramétrer notre
+nouvelle relation :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image037.png" alt=""></p>
+<p>Après avoir cliqué sur le bouton &quot;...&quot;, il apparaît une autre boîte de
+dialogue qui nous permet de spécifier les tables et colonnes qui sont
+impliquées dans la relation, en plus de nous permettre de donner un nom à cette
+relation.</p>
+<p>Nous allons sélectionner la table &quot;Dinners&quot; dans la liste déroulante
+&quot;Primary key table&quot;, puis la colonne &quot;DinnerID&quot; de la table Dinners comme clé
+primaire. Puis nous choisissons notre table RSVP dans la liste &quot;Foreign key
+table&quot; et associons la colonne &quot;RSVP.DinnerID&quot; comme clé étrangère :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image038.png" alt=""></p>
+<p>À partir de maintenant, chaque ligne de la table RSVP sera associée à une
+ligne dans la table Dinners. SQL Server maintiendra l'intégrité référentielle
+pour nous - et nous évitera d'ajouter une nouvelle ligne dans la table RSVP si
+elle ne fait pas référence à une ligne existante de la table Dinners. Il se
+chargera également d'interdire la suppression d'une ligne de la table Dinners
+s'il existe des lignes de la table RSVP qui correspondent à celle-ci.</p>
+<h2>Ajout de données à nos tables</h2>
+<p>Pour finir, nous allons remplir notre table Dinners avec un jeu d'essai.
+Nous pouvons ajouter des données à une table en faisant un clic-droit sur
+celle-ci dans l'explorateur de serveurs puis en choisissant la commande &quot;Show
+Table Data&quot; :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image039.png" alt=""></p>
+<p>Insérons quelques lignes dans la table Dinners qui nous servirons par la
+suite lorsque nous commencerons à réaliser l'application :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image040.png" alt=""></p>
+<hr>
+<p>Index : <a href="http://tinyurl.com/NerdDinnerFR">NerdDinner en français</a> - Suite : <a href="/nerddinner/construire-modele/">Construire le modèle</a></p>
+
+
+  </div>
+
+</article>
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

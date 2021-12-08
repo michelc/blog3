@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestion d&#39;erreurs dans Engine.Data - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/08/08/gestion-erreurs-engine-data/" />
+<meta property="og:title" content="Gestion d&#39;erreurs dans Engine.Data" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/08/08/gestion-erreurs-engine-data/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-08-08T14:48:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-08-08T14:48:00.000Z","datePublished":"2005-08-08T14:48:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/08/08/gestion-erreurs-engine-data/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/08/08/gestion-erreurs-engine-data/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/08/08/gestion-erreurs-engine-data/">Gestion d&#39;erreurs dans Engine.Data</a>
+    </h1>
+    <p>
+      <span>2005-08-08</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modification de Engine.Data pour reconnaitre et gérer un message d'erreur
+spécial pour les 4 types d'erreurs suivantes :</p>
+<ul>
+<li>pkviolation : enregistrement déjà existant,</li>
+<li>nullvalue : champ obligatoire non renseigné,</li>
+<li>fkviolation : enregistrement parent inexistant (en
+insertion/màj),</li>
+<li>fkchildren : existence d'enregistrements enfants (en
+suppression).</li>
+</ul>
+<p>Prise en compte des différents codes / numéros / statuts d'erreurs pour las
+base de données Access, MySQL, PostgreSQL, Oracle et SqlServer / MSDE.</p>
+<p>Réalisation d'un script de test pour vérifier que tout est OK quelle que
+soit la base :</p>
+<pre><code>/*
+  -------------------- Drop tests tables
+*/
+DROP TABLE test_Childs;
+GO;
+DROP TABLE test_Parents;
+GO;
+
+/*
+  -------------------- test_Parents
+*/
+CREATE TABLE test_Parents (
+  idParent AUTOINCREMENT,
+  caption TEXT(255) NOT NULL,
+  etcetera TEXT(255) NOT NULL,
+  CONSTRAINT PK_Parents PRIMARY KEY (idParent)
+);
+GO;
+
+/*
+  -------------------- test_Childs
+*/
+CREATE TABLE test_Childs (
+  idChild AUTOINCREMENT,
+  idParent INT NOT NULL,
+  caption TEXT(255) NOT NULL,
+  CONSTRAINT PK_Childs PRIMARY KEY (idChild)
+);
+GO;
+ALTER TABLE test_Childs
+ADD CONSTRAINT FK_Parents
+FOREIGN KEY (idParent)
+REFERENCES test_Parents (idParent)
+ON UPDATE CASCADE; 
+GO;
+
+/*
+  -------------------- test_Parents
+*/
+/* No error */
+INSERT INTO test_Parents (caption, etcetera)
+VALUES ('Un', '...');
+GO;
+/* No error */
+INSERT INTO test_Parents (caption, etcetera)
+VALUES ('Deux', '...');
+GO;
+/* nullvalue */
+INSERT INTO test_Parents (caption)
+VALUES ('Trois');
+GO;
+/* nullvalue */
+INSERT INTO test_Parents (caption, etcetera)
+VALUES ('Trois', NULL);
+GO;
+/* pour sql-server */
+SET IDENTITY_INSERT test_Parents ON;
+GO;
+/* pkviolation */
+INSERT INTO test_Parents (idParent, caption, etcetera)
+VALUES (1, 'Premier', '...');
+GO;
+
+/*
+  -------------------- test_Childs
+*/
+/* No error */
+INSERT INTO test_Childs (idParent, caption)
+VALUES (1, '1-Un');
+GO;
+/* No error */
+INSERT INTO test_Childs (idParent, caption)
+VALUES (2, '2-Deux');
+GO;
+/* fkchildren */
+INSERT INTO test_Childs (idParent, caption)
+VALUES (99, '90-Neuf');
+GO;
+
+/*
+  -------------------- test_Parents
+*/
+/* No error */
+DELETE FROM test_Parents WHERE idParent = 1;
+GO;
+
+/*
+  -------------------- Drop tests tables
+*/
+DROP TABLE test_Childs;
+GO;
+DROP TABLE test_Parents;
+GO;
+</code></pre>
+<p>Ce test doit générer les 5 erreurs suivantes :</p>
+<pre><code>* INSERT INTO test_Parents (caption) VALUES ('Trois');
+=&gt; Erreur: Un champ obligatoire de la fiche n'est pas renseigné.
+* INSERT INTO test_Parents (caption, etcetera) VALUES ('Trois', NULL);
+=&gt; Erreur: Un champ obligatoire de la fiche n'est pas renseigné.
+* INSERT INTO test_Parents (idParent, caption, etcetera) VALUES (1,
+'Premier', '...');
+=&gt; Erreur: Cette fiche existe déjà dans la base de données.
+* INSERT INTO test_Childs (idParent, caption) VALUES (99, '90-Neuf');
+=&gt; Erreur: Certains éléments liés à cette fiche n'existent pas dans la base de données.
+* DELETE FROM test_Parents WHERE idParent = 1;
+=&gt; Erreur: Ces informations sont utilisées dans une autre fiche.
+</code></pre>
+<p>Bizarrerie : la requête <code>&lt;INSERT INTO test_Parents (caption) VALUES ('Trois');&gt;</code> ne provoque pas d'erreur avec MySQL (version 4.1 sous Windows tout
+du moins).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/08/08/notion-visibilite-boites/" hreflang="fr-FR">Notion de visibilité des boites</a>
+  <a rel="next" href="/2005/08/13/bug-configuration-droits/" hreflang="fr-FR">Bug en configuration des droits</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

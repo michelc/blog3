@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supprimer les espaces lors du Model Binding - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2013/01/14/supprimer-espaces-model-binding/" />
+<meta property="og:title" content="Supprimer les espaces lors du Model Binding" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2013/01/14/supprimer-espaces-model-binding/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-01-14T20:55:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2013-01-14T20:55:00.000Z","datePublished":"2013-01-14T20:55:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2013/01/14/supprimer-espaces-model-binding/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2013/01/14/supprimer-espaces-model-binding/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2013/01/14/supprimer-espaces-model-binding/">Supprimer les espaces lors du Model Binding</a>
+    </h1>
+    <p>
+      <span>2013-01-14</span>
+      <span>#csharp</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Il arrive quelquefois que les utilisateurs saisissent des données en
+&quot;insérant&quot; des espaces au début ou à la fin de leur saisie. Et c'est même très
+souvent le cas quand ils font du copier / coller. Par exemple, si pour saisir
+une adresse client, on fait un copier / coller depuis un site internet ou un
+fichier Excel, il y a un gros risque de se retrouver avec des espaces en début
+ou en fin de ligne.</p>
+<p>Du temps de mes applications en WebForm, j'avais résolu ça en appliquant
+systématiquement un <code>Trim()</code> à tous les contrôles TextBox :</p>
+<pre><code>protected void btnUpdate_Click(object sender, System.EventArgs e)
+{
+  if (Page.IsValid == true)
+  {
+    Book obj = new Book();
+    obj.title = txtTitle.Text.Trim();
+    ...
+    obj.Save();
+</code></pre>
+<p>De cette façon, je suis sûr que les colonnes textes de ma base de données ne
+sont pas polluées par des espaces oubliés en début ou en fin de texte. Sans
+cela, on se retrouve ensuite avec des trucs bizarres quand on fait des tris ou
+pire si on doit faire une recherche sur un libellé exact...</p>
+<p>Depuis que j'utilise MVC, j'avais un peu laissé ça de côté.</p>
+<pre><code>//
+// POST: /Books/Create
+[HttpPost, ValidateAntiForgeryToken]
+
+public ActionResult Create(Book book)
+{
+  if (ModelState.IsValid)
+  {
+    db.Entry(book).State = EntityState.Modified;
+    db.SaveChanges();
+</code></pre>
+<p>Je vais quand même pas rajouter des lignes <code>book.title = book.title.Trim() ...</code> dans le code de mes actions ? Je pourrais
+aussi faire ça au niveau du modèle ou avoir une méthode d'extension
+suffisamment générique pour faire un <code>Trim()</code> sur toutes les
+propriétés de type <code>string</code>.</p>
+<p>Mais, inspiré par un &quot;vieux&quot; billet de Phil Haack qui expliquait comment
+faire un model binder personnalisé (<a href="http://haacked.com/archive/2011/03/19/fixing-binding-to-decimals.aspx">Model Binding Decimal Values</a>), j'ai décidé de m'y
+essayer.</p>
+<p>La technique consiste à créer un Model Binder spécifique qui remplacera le
+ModelBinder par défaut pour les chaînes de caractères de façon à effectuer un
+<code>Trim()</code> de la valeur postée avant qu'elle ne soit transmise à
+l'action du contrôleur.</p>
+<pre><code>public class StringModelBinder : IModelBinder
+{
+  /// &lt;summary&gt;
+  /// Supprime les espaces en début et en fin des chaines de caractères saisies
+  /// &lt;/summary&gt;
+  /// &lt;param name=&quot;controllerContext&quot;&gt;&lt;/param&gt;
+  /// &lt;param name=&quot;bindingContext&quot;&gt;&lt;/param&gt;
+  /// &lt;returns&gt;&lt;/returns&gt;
+  public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+  {
+    var valueResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+    object actualValue = valueResult == null ? null : valueResult.AttemptedValue;
+
+    if (actualValue != null)
+    {
+      actualValue = ((string)actualValue).Trim();
+      if ((string)actualValue == string.Empty)
+      {
+        actualValue = null;
+      }
+    }
+
+    return actualValue;
+  }
+</code></pre>
+<p>Les 2 premières lignes commencent par récupérer la valeur. Si celle-ci n'est
+pas nulle, on lui applique un <code>Trim()</code>. Et dans le cas où la valeur
+alors obtenue est vide, on renvoie <code>null</code>, sinon on renvoie la
+valeur trimée.</p>
+<p>Il faut ensuite déclarer ce ModelBinder. Cela se passe dans la méthode
+<code>Application_Start()</code> du fichier Global.asax.cs :</p>
+<pre><code>protected void Application_Start()
+{
+  AreaRegistration.RegisterAllAreas();
+
+  ModelBinders.Binders.Add(typeof(string), new StringModelBinder());
+</code></pre>
+<p>Et maintenant, même si un utilisateur laisse passer quelques espaces en
+début ou en fin de saisie, ceux-ci seront automatiquement supprimés avant même
+que les données soient transmises à l'action.</p>
+<p>L'avantage par rapport à coder des <code>Trim()</code> explicites, c'est
+qu'on n'a pas à y penser. Il n'y a &quot;rien&quot; à faire puisque ça se fait tout
+seul...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/12/19/boucles-ruby/" hreflang="fr-FR">Les boucles en Ruby</a>
+  <a rel="next" href="/2013/01/21/creer-vue-access/" hreflang="fr-FR">Créer une vue sous Access</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

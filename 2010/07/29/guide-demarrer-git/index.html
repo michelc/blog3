@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guide pour démarrer avec Git - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/07/29/guide-demarrer-git/" />
+<meta property="og:title" content="Guide pour démarrer avec Git" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/07/29/guide-demarrer-git/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-07-29T08:25:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-07-29T08:25:00.000Z","datePublished":"2010-07-29T08:25:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/07/29/guide-demarrer-git/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/07/29/guide-demarrer-git/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/07/29/guide-demarrer-git/">Guide pour démarrer avec Git</a>
+    </h1>
+    <p>
+      <span>2010-07-29</span>
+      <span>#git</span><span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/1/14/git_beginners_guide/">Git Beginners Guide</a>&quot; de Darren Jones.</p>
+</div>
+<p>Dans ce nouveau tutoriel, Darren présente les bases de Git et aborde les
+éléments suivants :</p>
+<ul>
+<li>Qu'est-ce que Git ?</li>
+<li>Installer et configurer Git</li>
+<li>Ajouter et Commiter avec Git</li>
+<li>Les Branches</li>
+<li>Les Tags</li>
+<li>Les repositories distants</li>
+<li>Quelques ressources sur Git</li>
+</ul>
+<h2>Qu'est-ce que Git ?</h2>
+<p>Git est un système de contrôle de version qui vous de garder une trace de
+toutes les modifications que l'on fait quand on travaille sur un projet. Git
+permet de faire un &quot;roll back&quot; pour revenir sur une version précédente et aussi
+de créer des &quot;branches&quot; dans votre code pour tester de nouvelles fonctionalités
+sans toucher à la version en cours et stable de votre code. Un système de
+contrôle source est essentiel quand vous travaillez en équipe, mais dans le
+cadre de Sinatra, c'est aussi un outil pour déployer des applications sur le
+cloud chez <a href="http://heroku.com/">Heroku</a> (cela fera
+l'objet d'un <a href="http://ididitmyway.herokuapp.com/past/2010/1/16/deploying_sinatra_apps_on_heroku/">autre billet</a>).</p>
+<p>Git utilise la ligne de commande pour son interface utilisateur, mais pour
+ceux qui préfèrent, il existe aussi de nombreux outils visuels.</p>
+<h2>Installer et configurer Git</h2>
+<p>Pour commencer, vous avez besoin d'installer Git.</p>
+<p>La VO de ce tutoriel <a href="http://ididitmyway.herokuapp.com/past/2010/1/14/git_beginners_guide/">Git Beginners Guide</a> explique comment installer Git pour
+Linux, Mac et Windows. Par ailleurs, GitHub propose un tutoriel très complet
+pour <a href="http://help.github.com/win-git-installation/">installer Git sur Windows</a> et un autre qui explique comment <a href="http://help.github.com/key-setup-redirect">générer les clés SSH
+pour Git</a> et ajouter votre clé publique à votre compte GitHub.</p>
+<p>Une fois l'installation terminée, il faut lancer un &quot;Git Bash&quot; (en faisant
+un clic-droit sur un répertoire et en choisissant la commande &quot;Git Bash here&quot;).
+Cela a pour effet d'ouvrir un genre d'invite de commandes pour Git où vous
+pouvez définir quelques paramètres généraux en utilisant les deux commandes
+suivantes :</p>
+<pre><code>$ git config --global user.name &quot;Votre Nom&quot;
+$ git config --global user.email &quot;votremail@example.com&quot;
+</code></pre>
+<p><em>Note : Pour quitter Git Bash, on peut taper la commande <code>exit</code>.</em></p>
+<p><img src="/public/2010/git-1.png" alt=""></p>
+<p>Maintenant, il faut se placer dans le répertoire de notre projet. Pour nos
+tests, nous allons utiliser le projet Reverse réalisé lors du tutoriel
+précédent :</p>
+<pre><code>$ cd /c/Ruby/projets/reverse
+</code></pre>
+<p>Puis nous initialisons ce répertoire pour que Git assure le suivi des
+modifications que nous apporterons au contenu de ce répertoire.</p>
+<pre><code>$ git init
+</code></pre>
+<p>Nous obtenons en retour le message &quot;Initialized empty Git repository in
+c:/Ruby/_projets/reverse/.git/&quot;. Si on consulte le répertoire
+C:\Ruby\projets\reverse dans l'explorateur de Windows, on peut constater qu'il
+contient désormais un sous-répertoire &quot;.git&quot; qui sert va servir à Git pour
+stocker le repository.</p>
+<h2>Ajouter et Commiter avec Git</h2>
+<p>À présent, nous allons ajouter tous les fichiers et les sous-répertoire de
+notre projet Reverse dans le repository que nous venons de créer. On effectue
+cela en tapant la commande suivante :</p>
+<pre><code>$ git add .
+</code></pre>
+<p>Ceci va ajouter tous les fichiers à l'index, puisque le &quot;.&quot; représente tous
+les fichiers. L'index est un peu comme une zone de transit dans laquelle les
+fichiers attendent d'être commités dans le repository. Ce que nous allons faire
+avec cette commande :</p>
+<pre><code>$ git commit -m &quot;Version initiale du projet Reverse&quot;
+</code></pre>
+<p>Cela a pour effet de commiter tous les fichiers de l'index dans le
+repository. Le texte entre guillemets après le &quot;-m&quot; est un message que vous
+devez définir à chaque commit pour expliquer ce que vous avez fait.</p>
+<p>Et maintenant on va apporter quelques modifications à notre projet, comme
+par exemple de changer légèrement la fin du fichier &quot;layout.erb&quot; pour y ajouter
+un lien :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;Reverse!&lt;/title&gt;
+&lt;meta charset=utf-8 /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Reverse&lt;/h1&gt;
+&lt;h2&gt;&lt;%= @title %&gt;&lt;/h2&gt;
+
+&lt;%= yield %&gt;
+
+&lt;p&gt;The first Sinatra project for &lt;a href=&quot;http://ididitmyway.heroku.com/&quot;&gt;I Did It My Way&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Puis on saisi la commande suivante dans Git Bash pour mettre à jour
+l'index :</p>
+<pre><code>$ git add views/layout.erb
+</code></pre>
+<p>Comme vous pouvez le voir, on peut décider de spécifier quel fichier on veut
+ajouter à l'index plutôt que d'utiliser &quot;.&quot; pour sélectionner tous les
+fichiers. Et sinon, n'oubliez pas de commiter votre modification :</p>
+<pre><code>$ git commit -m &quot;Ajout d'un lien en pied de page&quot;
+</code></pre>
+<p>Le fait d'avoir à ajouter puis à commiter peut sembler un peu fastidieux.
+Mais cela présente l'avantage de permettre d'ajouter plusieurs modifications
+avant de réellement faire le commit. Toutefois, on peut ramener ça à une seule
+étape en utilisant l'option &quot;-a&quot; :</p>
+<pre><code>$ git commit -a -m &quot;un message d'explication&quot;
+</code></pre>
+<p>Cela aura pour effet d'ajouter et de commiter les modifications en une seule
+fois. En fait, tous les fichiers modifiés ou supprimés sont commités. Les
+nouveaux fichiers ne sont pas concernés.</p>
+<p>Si vous souhaitez supprimer des fichiers, vous ne pouvez pas vous contenter
+de les supprimer directement depuis Windows. Vous devez aussi les supprimer du
+repository Git en utilisant la commande &quot;rm&quot;. Par exemple, nous n'avons plus
+besoin du fichier &quot;frank.erb&quot; qui doit encore se trouver dans le
+sous-répertoire &quot;views&quot;. Nous pouvons donc le supprimer du repository avec la
+commande suivante :</p>
+<pre><code>$ git rm views/frank.erb
+</code></pre>
+<p>Le fichier &quot;frank.erb&quot; est alors supprimé physiquement du sous-répertoire
+&quot;views&quot;. Il reste encore à commiter pour qu'il soit supprimé définitivement du
+repository Git :</p>
+<pre><code>$ git commit -a -m &quot;Suppression fichier inutile&quot;
+</code></pre>
+<h2>Les Branches</h2>
+<p>En ce qui me concerne, c'est LE truc de Git. Quand vous créez une branche,
+c'est en gros comme si vous faisiez une copie de votre code en cours. Vous
+pouvez alors faire plein de modifications ou d'essais sans toucher au code
+d'origine. Si on veut conserver ces changements, on peut alors les fusionner
+avec le code d'origine ou si ces changements ne conviennent pas, on peut tout
+simplement revenir au code de départ et supprimer la branche. Il est possible
+de créer autant de branches que l'on souhaite et les fusionner entre elles ou
+les conserver en tant que branches séparées.</p>
+<p>Au départ, vous démarrez avec la branche par défaut qui s'appelle &quot;master&quot;.
+Pour savoir sur quelle branche vous vous trouvez actuellement, il suffit de
+taper :</p>
+<pre><code>$ git branch
+</code></pre>
+<p>Et vous devriez alors avoir le résultat suivant :</p>
+<pre><code>* master
+</code></pre>
+<p>L'astérisque devant &quot;master&quot; indique qu'il s'agit de la branche en
+cours.</p>
+<p>Pour créer une nouvelle branche qu'on appellera &quot;development&quot;, il faut
+taper :</p>
+<pre><code>$ git branch development
+</code></pre>
+<p>Puis pour basculer sur cette branche vous devez saisir :</p>
+<pre><code>$ git checkout development
+</code></pre>
+<p>Après un message <code>Switched to branch 'development'</code>, vous pouvez
+vérifier que cela a fonctionné en tapant :</p>
+<pre><code>$ git branch
+</code></pre>
+<p>Et cette fois, vous devez obtenir :</p>
+<pre><code>* development
+  master
+</code></pre>
+<p>L'astérisque devant &quot;development&quot; vous montre que vous travaillez maintenant
+sur la branche &quot;development&quot;. Si vous faites une modification quelconque, cela
+affectera uniquement la branche &quot;development&quot; et absolument pas la branche
+&quot;master&quot;.</p>
+<p>Essayez par exemple de changer quelques lignes (en supprimant par exemple le
+lien dans &quot;layout.erb&quot;) puis commitez ces modifications :</p>
+<pre><code>$ git commit -a -m &quot;Suppression du lien en pied de page&quot;
+</code></pre>
+<p>Revenez alors sur la branche principale :</p>
+<pre><code>$ git checkout master
+</code></pre>
+<p>Vous pouvez réouvrir le fichier &quot;layout.erb&quot; pour constater que votre
+modification n'est pas là ! Et que le lien que vous venez de supprimer est
+toujours là ! On retourne dare-dare sur la branche de
+développement :</p>
+<pre><code>$ git checkout development
+</code></pre>
+<p>On ré-ouvre derechef la fichier &quot;layout.erb&quot; et notre modification est bien
+là !</p>
+<p>Le plus gros intérêt des branches est de permettre de séparer la branche
+principale du code de la branche de développement. Mais étant donné que c'est
+si facile et si rapide, on peut aussi utiliser les branches pour tester de
+nouvelles fonctionnalités. Supposons que je veuille ajouter un super
+fonctionnalité Twitter dans ma branche de développement. Je commence par créer
+une nouvelle branche dédiée à cette fonctionnalité :</p>
+<pre><code>$ git branch feature-twitter
+</code></pre>
+<p>Puis je passe sur cette branche</p>
+<pre><code>$ git checkout feature-twitter
+</code></pre>
+<p>On va ensuite ajouter notre super fonctionnalité Twitter et tester qu'elle
+marche correctement. Pour gagner un peu de temps, pourquoi ne pas ajouter un
+lien vers Twitter dans le pied de page (soit le fichier &quot;layout.erb si vous
+avez bonne mémoire). Ces modifications vont seulement concerner notre nouvelle
+branche &quot;feature-twitter&quot;. Disons que ces modifications vous donnent
+satisfaction (et que le lien fonctionne) vous allez les commiter :</p>
+<pre><code>$ git commit -a -m &quot;Ajout fonctionnalité Twitter&quot;
+</code></pre>
+<p>Et ensuite vous allez vouloir avoir ces modifications dans votre branche de
+développement. Et pour cela, vous allez donc devoir les fusionner. Et pour
+commencer, il faut repasser sur la branche développement :</p>
+<pre><code>$ git checkout development
+</code></pre>
+<p>Puis y fusionner les modifications apportées dans la branche pour
+Twitter :</p>
+<pre><code>$ git merge feature-twitter
+</code></pre>
+<p>À partir de maintenant, les modifications que vous aviez faites dans la
+branche &quot;feature-twitter&quot; sont bel et bien incluses dans la branche
+développement. Par conséquent, vous n'avez plus besoin de la branche Twitter
+qui ne vous a servi que pour les tests. Vous pouvez donc la supprimer
+définitivement en utilisant l'option &quot;-d&quot; :</p>
+<pre><code>$ git branch -d feature-twitter
+</code></pre>
+<p>Lorsque votre branche de développement aura été recettée et sera fin prête
+pour le grand jour de la mise en production, il ne vous restera plus qu'à la
+fusionner à votre branche &quot;master&quot;. Souvenez-vous bien qu'il faut d'abord
+passer sur la branche &quot;master&quot; puis y fusionner la branche
+&quot;development&quot; :</p>
+<pre><code>$ git checkout master
+$ git merge development
+</code></pre>
+<h2>Les Tags</h2>
+<p>Vous pouvez créer un tag pour un projet à n'importe quel moment, en
+utilisant la commande suivante :</p>
+<pre><code>$ git tag v1.0 -m &quot;Version 1.0 du projet Reverse&quot;
+</code></pre>
+<p>Cela vous permet d'immortaliser certains moments du développement - assurez
+vous d'avoir ajouté et commité tous les changements apportés avant de créer un
+tag. Si vous voulez voir tous les tags que vous avez créé, vous pouvez
+taper :</p>
+<pre><code>$ git tag
+</code></pre>
+<p>Et si vous souhaitez revenir à une version précédente, alors vous créez une
+nouvelle branche pour celle-ci. Supposons qu'à l'avenir vous ayez à revenir sur
+cette version (pour corriger un bug dessus par exemple), vous aurez à saisir la
+commande ci-dessous :</p>
+<pre><code>$ git checkout v1.0 -b version1
+</code></pre>
+<p>Cela va automatiquement créer une nouvelle branche nommée &quot;version1&quot; qui
+sera la copie exacte de ce qu'était le projet lorsque vous aviez créé le tag
+&quot;v1.0&quot;, sans que cela vous fasse perdre quoique ce soit de votre code
+actuel.</p>
+<h2>Les repositories distants</h2>
+<p><a href="http://github.com/">Github</a> est un service
+extraordinaire qui vous permet de conserver votre code dans un repository
+distant qui est hébergé sur leurs serveurs. Pour pouvoir démarrer, vous n'avez
+qu'à vous inscrire pour disposer d'un compte gratuit, définir un nouveau projet
+puis suivre leurs instructions pour créer un nouveau repository distant.</p>
+<p>Une fois que votre repository distant est créé, tout ce qu'il vous reste à
+faire c'est d'entrer la commande ci-dessous :</p>
+<pre><code>$ git push origin master
+</code></pre>
+<p>Cela aura pour effet d'envoyer tout le code de votre branche &quot;master&quot; vers
+votre repository chez GitHub. C'est très pratique pour disposer d'une
+sauvegarde externe de votre repository dans le cloud mais aussi pour partager
+votre travail avec les autres (l'idéal pour tous les projets open source !).
+Par contre, si vous voulez que votre repository reste privé alors vous aurez
+besoin de prendre un compte payant sur GitHub.</p>
+<p>Vous pouvez aussi vous mettre à utiliser le code d'autres personnes sur
+GitHub en clonant leur repositories et en utilisant la commande
+<code>pull</code> pour récupérer toutes les modifications qu'ils ont
+effectuées. Quant à eux, ils ont aussi la possibilité d'utiliser la commande
+<code>pull</code> pour récupérer les changement que vous avez apporté. Tout
+cela fait de Git un outil particulièrement puissant dès qu'il s'agit de
+collaborer sur un même projet, dans la mesure où il permet aux gens de corriger
+des bugs dans votre code, d'améliorer votre code ou de développer un projet
+totalement nouveau.</p>
+<h2>Quelques ressources sur Git</h2>
+<p>Daren a collecté un certain nombre de ressources consacrées à Git que vous
+pouvez retrouver sur le <a href="http://ididitmyway.herokuapp.com/past/2010/1/14/git_beginners_guide/">tutoriel d'origine</a>.</p>
+<p>Git est une application super puissante qui va révolutionner la façon dont
+vous gérez vos projets. Et il est extrêmement précieux quand il s'agit de gérer
+et de déployer des applications Sinatra sur la plateforme <a href="http://heroku.com/">Heroku</a>, ce dont je parlerai dans un
+<a href="/2010/09/13/deployer-applications-sinatra-heroku/">prochain billet</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/07/27/creation-premier-projet-sinatra/" hreflang="fr-FR">Création d&#39;un premier projet avec Sinatra</a>
+  <a rel="next" href="/2010/08/03/end-of-tutorial/" hreflang="fr-FR">End of Tutorial</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

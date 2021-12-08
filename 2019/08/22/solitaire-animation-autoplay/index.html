@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire - Animation du déplacement des cartes - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/08/22/solitaire-animation-autoplay/" />
+<meta property="og:title" content="Solitaire - Animation du déplacement des cartes" />
+<meta name="description" content="Pour ajouter l&#39;AutoPlay à mes jeux de Solitaire, il faut commencer par animer le déplacement des cartes..." />
+<meta property="og:description" content="Pour ajouter l&#39;AutoPlay à mes jeux de Solitaire, il faut commencer par animer le déplacement des cartes..." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/08/22/solitaire-animation-autoplay/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/escalator.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-08-22T10:48:18.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-08-22T10:48:18.000Z","datePublished":"2019-08-22T10:48:18.000Z","description":"Pour ajouter l'AutoPlay à mes jeux de Solitaire, il faut commencer par animer le déplacement des cartes...","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/08/22/solitaire-animation-autoplay/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/escalator.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/08/22/solitaire-animation-autoplay/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/escalator.jpg" alt="Escalator" /><figcaption><a href="http://www.micro-sino.com/escalators/">Escalator</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/08/22/solitaire-animation-autoplay/">Solitaire - Animation du déplacement des cartes</a>
+    </h1>
+    <p>
+      <span>2019-08-22</span>
+      <span>#CSS</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Actuellement, l'AutoPlay de mes jeux de solitaire est instantané. Toutes les
+cartes qui peuvent être jouées sur les fondations sont immédiatement placées
+dessus. Le but de cette nouvelle animation est donc de &quot;montrer&quot; le déplacement
+d'une carte d'un point à un autre pour que le joueur comprenne ce qui se passe,
+spécialement dans le cas de l'AutoPlay pour FreeCell.</p>
+<p>Montrer le déplacement, ce n'est finalement pas si compliqué que ça. Il faut
+juste :</p>
+<ul>
+<li>savoir quelle est la carte à déplacer,</li>
+<li>récupérer sa position actuelle de départ,</li>
+<li>savoir vers où déplacer la carte,</li>
+<li>calculer cette position de destination,</li>
+<li>faire évoluer les coordonnées de la carte d'une position à l'autre.</li>
+</ul>
+<h2>1) Savoir quelle est la carte à déplacer</h2>
+<p>Facile : elle est passée en paramètre à la fonction via la propriété <code>.card_id</code>
+de l'objet <code>move</code>.</p>
+<pre><code>var $card = $('#&quot; + move.card_id);
+</code></pre>
+<h2>2) Récupérer sa position de départ</h2>
+<p>Facile : c'est exactement ce que donne la méthode <code>.offset()</code>de jQuery :</p>
+<pre><code>var $card = $('#&quot; + move.card_id);
+var from = $card.offset();
+</code></pre>
+<p>Le petit truc en plus : pour
+<a href="https://blog.pagesd.info/2019/05/14/dquery-librairie-js-manipulation-dom/">dQuery</a>,
+une simple recherche &quot;jQuery offset vanilla JS&quot; et ça peut se calculer ainsi :</p>
+<pre><code>offset: function () {
+  // Renvoie la position top/left absolue du premier élément sélectionné
+  var rect = this.items[0].getBoundingClientRect(),
+  scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+  scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  return {
+    top: rect.top + scrollTop,
+    left: rect.left + scrollLeft
+  };
+}
+</code></pre>
+<h2>3) Savoir vers où déplacer la carte</h2>
+<p>Facile : c'est également donné par la propriété <code>.stack</code> de l'objet <code>move</code> passé
+en paramètre à la fonction.</p>
+<pre><code>var $target = $(&quot;#&quot; + move.stack.id);
+</code></pre>
+<h2>4) Calculer cette position de destination</h2>
+<p>Facile : là encore, on utilise la méthode <code>.offset()</code> de jQuery / dQuery...</p>
+<pre><code>var $target = $(&quot;#&quot; + move.stack.id);
+var to = $target.offset();
+</code></pre>
+<p>Le gros truc en plus : la position cible correspond en fait à une pile de cartes
+sur laquelle les cartes sont étalées verticalement. Par conséquent, la position
+de cette pile ne correspond pas tout à fait à la position qu'occupera la carte
+une fois déplacée. Lors de mes premiers essais, il y avait un déplacement
+progressif de la carte vers sa pile de destination, suivit d'un soubresaut pour
+la positionner au bon endroit dans la pile :</p>
+<ul>
+<li>La pile étant plus large que les cartes, celles-ci sont centrée
+horizontalement au milieu de la pile =&gt; très léger soubresaut pour aligner la
+carte correctement.</li>
+<li>Si la pile de destination contient déjà plusieurs cartes étalées
+verticalement, l'animation amène la carte en haut de la pile =&gt; nouveau
+soubresaut plus ou moins important pour décaler la carte en bas de la pile.</li>
+</ul>
+<p>Il y avait moyen de calculer les &quot;bonnes&quot; coordonnées cibles avec quelques
+formules un peu compliquées.</p>
+<p>Mais plus simplement, il suffit d'ajouter une carte &quot;fantôme&quot; sur la pile de
+destination puis de prendre comme coordonnées cibles la position de cette carte
+fantôme :</p>
+<pre><code>$(&quot;#&quot; + move.stack.id.append(&quot;&lt;div id='target' class='card'&gt;&lt;/div&gt;&quot;);
+var $target = $(&quot;#target&quot;);
+var to = $target.offset();
+$target.remove();
+</code></pre>
+<h2>5) Faire évoluer les coordonnées de la carte d'une position à l'autre</h2>
+<p>Facile !</p>
+<p>On commence par calculer le déplacement à effectuer pour aller du point de
+départ jusqu'à la position de destination :</p>
+<pre><code>var x = to.left - from.left;
+var y = to.top - from.top;
+</code></pre>
+<p>Puis on utilise la fonctions CSS
+<a href="https://developer.mozilla.org/fr/docs/Web/CSS/transform-function/translate"><code>translate()</code></a>
+pour déplacer la carte :</p>
+<pre><code>$card.css(&quot;transform&quot;, &quot;translate(&quot; + x + &quot;px, &quot; + y + &quot;px)&quot;);
+</code></pre>
+<p>Et pour que ce déplacement se déroule de façon progressive et pas d'un coup, il
+faut définir une transition :</p>
+<pre><code>$card..css(&quot;transition&quot;, &quot;all 200ms ease-in-out&quot;);
+</code></pre>
+<p>Et ça marche ! Il ne manque plus que quelques <code>setTimeout()</code> pour réussir à
+enchainer correctement les différents déplacements et ne pas envoyer toutes les
+cartes vers les fondations en même temps.</p>
+<h2>6) Quelques finitions</h2>
+<p>J'ai quand même eu besoin de 2 petits bricolages après avoir testé un peu mieux.</p>
+<ul>
+<li>Ajouter un <code>$card.css(&quot;z-index&quot;, 100)</code> pour que la carte déplacée reste au
+dessus des autres pendant son voyage sous Internet Explorer.</li>
+<li>Bloquer tous les autres évènements pendant que l'AutoPlay est en cours, pour
+éviter que le joueur fasse un Undo, demande un conseil, démarre un drag &amp;
+drop... pendant les animations.</li>
+</ul>
+<p>Mais au final, le système est suffisamment bien foutu pour que je puisse
+l'utiliser ailleurs que dans l'AutoPlay :</p>
+<ul>
+<li>Quand le joueur double clique sur une carte, son déplacement vers la fondation
+est maintenant animé.</li>
+<li>Quand le joueur annule le dernier coup joué, c'est désormais une animation qui
+ramène la carte à sa position d'origine.</li>
+</ul>
+<p>Et dès que j'aurais un peu de temps, je mets ça en place dans les autres jeux de
+solitaire...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/07/04/solitaire-animation-css/" hreflang="fr-FR">Solitaire - Animation CSS en fin de partie</a>
+  <a rel="next" href="/2019/09/11/crud-avec-express-sqlite-10-etapes/" hreflang="fr-FR">Application CRUD avec Express et SQlite en 10 étapes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

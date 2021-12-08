@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>dQuery - Ma librairie JS pour manipuler le DOM - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/05/14/dquery-librairie-js-manipulation-dom/" />
+<meta property="og:title" content="dQuery - Ma librairie JS pour manipuler le DOM" />
+<meta name="description" content="Un troisième billet où je dévoile le nom de ma future librairie : une étape importante pour remplacer un jour jQuery dans mon site de jeux de solitaires." />
+<meta property="og:description" content="Un troisième billet où je dévoile le nom de ma future librairie : une étape importante pour remplacer un jour jQuery dans mon site de jeux de solitaires." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/05/14/dquery-librairie-js-manipulation-dom/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-14T10:24:08.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-05-14T10:24:08.000Z","datePublished":"2019-05-14T10:24:08.000Z","description":"Un troisième billet où je dévoile le nom de ma future librairie : une étape importante pour remplacer un jour jQuery dans mon site de jeux de solitaires.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/05/14/dquery-librairie-js-manipulation-dom/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/05/14/dquery-librairie-js-manipulation-dom/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2019/05/14/dquery-librairie-js-manipulation-dom/">dQuery - Ma librairie JS pour manipuler le DOM</a>
+    </h1>
+    <p>
+      <span>2019-05-14</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Cette série de billets retrace quelques-unes des étapes pour développer une
+mini-librairie JavaScript qui remplacera(it) un jour jQuery sur mon site de jeux
+de solitaires.</p>
+<ol>
+<li><a href="/2019/04/30/dquery-remplacer-jquery/">Comment j'ai (bientôt) remplacé jQuery</a></li>
+<li><a href="/2019/05/07/dquery-compatibilite-ie9-es5/">Une version compatible IE9 / ES5</a></li>
+<li><a href="/2019/05/14/dquery-librairie-js-manipulation-dom/">Ma librairie pour manipuler le DOM</a></li>
+<li><a href="/2019/05/21/dquery-delegation-evenement-javascript/">La délégation des évènements en JS</a></li>
+<li><a href="/2019/05/28/dquery-delegation-evenement-event-target/">Délégation d'évènements et « event.target »</a></li>
+<li><a href="/2019/06/04/dquery-delegation-evenement-ios/">Délégation d'évènements et iOS</a></li>
+</ol>
+</div>
+<p>Au cours de mes essais et des évolutions / améliorations apportées à la
+librairie <a href="https://github.com/vladocar/nanoJS/">NanoJS</a>, je me suis accordé un
+petit moment de pause...</p>
+<p>Cela m'a donné l'occasion de réfléchir à un nouveau nom pour la version
+personnalisée sur laquelle je travaille :</p>
+<blockquote>
+<p>dQuery !</p>
+</blockquote>
+<ol>
+<li>Ça ressemble à &quot;jQuery&quot;</li>
+<li>Ça commence par un &quot;d&quot;, comme &quot;dollar&quot;</li>
+<li>Ça commence aussi par un &quot;d&quot;, comme &quot;DOM&quot;</li>
+</ol>
+<p>Je suis trop content...</p>
+<p>Et donc, mon code source avec le &quot;nouveau&quot; nom plus quelques commentaires :</p>
+<pre><code>!(function () {
+
+  var dQuery = function (s) {
+    if (typeof s === &quot;string&quot;) {
+      // Liste des éléments correspondant au sélecteur en cours
+      this.items = Array.prototype.slice.call(document.querySelectorAll(s));
+    } else {
+      // Liste des éléments correspondant à l'objet DOM en cours
+      this.items = [s];
+    }
+  };
+
+  dQuery.prototype = {
+    each: function (fn) {
+      // Exécute une fonction sur chaque élément sélectionné
+      [].forEach.call(this.items, fn);
+      return this;
+    },
+    css: function (a, v) {
+      // Défini une propriété CSS sur chaque élément sélectionné
+      // (commence par transformer le &quot;snake-case&quot; en &quot;camelCase&quot;)
+      a = a.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
+      return this.each(function (i) {
+        i.style[a] = v;
+      });
+    },
+    hide: function () {
+      // Masque chaque élément sélectionné
+      return this.each(function (i) {
+        i.style.display = &quot;none&quot;;
+      });
+    },
+    show: function () {
+      // Affiche chaque élément sélectionné
+      return this.each(function (i) {
+        i.style.display = &quot;block&quot;;
+      });
+    },
+    on: function (type, fn) {
+      // Attache un gestionnaire d'évènement à chaque élément sélectionné
+      return this.each(function (i) {
+        i.addEventListener(type, fn, false);
+      });
+    },
+    addClass: function (v) {
+      // Ajoute un classe CSS à chaque élément sélectionné
+      return this.each(function (i) {
+        if (i.classList) {
+          i.classList.add(v)
+        } else {
+          i.className += &quot; &quot; + v;
+        }
+      });
+    },
+    removeClass: function (v) {
+      // Supprime une classe CSS de chaque élément sélectionné
+      return this.each(function (i) {
+        if (i.classList) {
+          i.classList.remove(v);
+        } else {
+          i.className = i.className.replace(new RegExp(v + &quot; *&quot;, &quot;g&quot;), &quot;&quot;);
+        }
+      });
+    },
+    html: function (v) {
+      // Défini le contenu HTML de chaque élément sélectionné
+      return this.each(function (i) {
+        i.innerHTML = v;
+      });
+    },
+    append: function (v) {
+      // Insère un contenu HTML ou un élément à la fin de chaque élément sélectionné
+      return this.each(function (i) {
+        i.insertAdjacentHTML(&quot;beforeend&quot;, v);
+      });
+    },
+    text: function (v) {
+      // Défini le contenu texte de chaque élément sélectionné
+      return this.each(function (i) {
+        i.textContent = v;
+      });
+    },
+    remove: function () {
+      // Supprime chaque élément sélectionné du DOM
+      return this.each(function (i) {
+        i.parentNode.removeChild(i);
+      });
+    },
+    parent: function () {
+      // Renvoie l'élément DOM parent du premier élément sélectionné
+      this.items = [this.items[0].parentNode];
+      return this;
+    },
+    attr: function (v) {
+      // Renvoie la valeur d'un attribut du premier élément sélectionné
+      return this.items[0].getAttribute(v);
+    },
+  };
+
+  window.$ = function (selector) {
+    return new dQuery(selector);
+  };
+
+})();
+</code></pre>
+<p>Et juste 105 lignes de code...</p>
+<p>PS: J'ai aussi remplacé la propriété <code>.value</code> par <code>.items</code> qui me parait plus
+&quot;parlante&quot;.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/05/07/dquery-compatibilite-ie9-es5/" hreflang="fr-FR">dQuery - Une version compatible IE9 / ES5</a>
+  <a rel="next" href="/2019/05/21/dquery-delegation-evenement-javascript/" hreflang="fr-FR">dQuery - La délégation des évènements en JS</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Localhost lent avec Firefox, Safari et Chrome - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/03/18/localhost-lent-firefox-safari-chrome/" />
+<meta property="og:title" content="Localhost lent avec Firefox, Safari et Chrome" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/03/18/localhost-lent-firefox-safari-chrome/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-03-18T08:03:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-03-18T08:03:00.000Z","datePublished":"2010-03-18T08:03:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/03/18/localhost-lent-firefox-safari-chrome/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/03/18/localhost-lent-firefox-safari-chrome/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/03/18/localhost-lent-firefox-safari-chrome/">Localhost lent avec Firefox, Safari et Chrome</a>
+    </h1>
+    <p>
+      <span>2010-03-18</span>
+      <span>#html</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ces derniers temps, je travaille sur une charte graphique pour ASP.NET MVC.
+Je teste au fur et à mesure sous Internet Explorer 8 (parce que c'est la cible
+de l'application) et sous Firefox 3.5 (pour être sûr de faire du code à peu
+près correct).</p>
+<p>J'avais l'impression que tout allait bien, mais ces derniers temps je me
+suis rendu compte que l'affichage était vraiment lent. Et pourtant, je fais mes
+essais avec le projet ASP.NET MVC quasi vide créé par défaut par Visual Studio
+2008. En particulier, l'image de fond mettait une bonne seconde avant de
+s'afficher. Alors que c'est un bête PNG de 350 octets ! Ça y est, mon
+disque dur SSD est devenu lent :(</p>
+<p>Au début, je me suis dit que je verrai ça plus tard jusqu'à ce que je
+remarque que ce phénomène de lenteur était beaucoup plus sensible avec Firefox
+et quasiment inexistant avec Internet Explorer. (Ah! Ah! Microsoft qui est
+meilleur que Mozilla :). Et là ça a fait tilt. Je me suis souvenu que j'avais
+déjà vu ce genre de problème signalé quelque part : une application
+ASP.NET MVC qui devient lente quand on utilise Firefox.</p>
+<p>Y'avait plus qu'à aller sur Google pour voir comment régler ça. Et en deux
+temps trois mouvements j'ai eu la réponse à mon problème : un bête
+problème d'IPv6 avec localhost (pas d'inquiétude, moi non plus je sais pas ce
+que ça veut dire).</p>
+<p>D'abord, une bidouille spéciale pour Firefox (<a href="http://weblogs.asp.net/dwahlin/archive/2007/06/17/fixing-firefox-slowness-with-localhost-on-vista.aspx">Fixing Firefox Slowness with localhost on Vista (or XP with
+IPv6)</a> qui consiste à modifier la configuration avancée de
+Firefox :</p>
+<ul>
+<li>taper <code>about:config</code> dans la barre d'adresse</li>
+<li>promettre de bien faire attention</li>
+<li>filtrer sur le paramètre <code>network.dns.disableIPv6</code></li>
+<li>double-cliquer sur la ligne obtenue pour passer de &quot;false&quot; (valeur par
+défaut) à &quot;true&quot; (valeur définie par l'utilisateur)</li>
+<li>quitter et redémarre Firefox pour faire bonne mesure (pas sûr que cela soit
+vraiment nécessaire)</li>
+</ul>
+<p>C'est déjà pas mal, mais en y regardant de plus près, j'ai vu que cette
+lenteur concernait aussi Chrome et Safari (<a href="http://codepolice.net/2009/02/19/slow-iis-on-vista-with-firefox-chrome-or-safari/">Slow IIS on Vista with Firefox, Chrome or Safari</a>). Si jamais
+il me reprend l'envie d'installer Safari ou Chrome (ou Opera ?) un jour ou
+l'autre, je suis bien obligé de faire les choses correctement.</p>
+<p>Et étant donné que le contenu de mon fichier hosts ne ressemblait pas tout à
+fait à ce qui était indiqué, j'ai continué à chercher et je suis finalement
+tombé sur un truc un peu plus explicite sur StackOverflow : <a href="http://stackoverflow.com/questions/1416128/my-local-host-goes-so-slow-now-that-i-am-on-windows-7-and-asp-net-mvc">My Local Host goes so slow now that I am on windows 7 and Asp.net
+MVC</a>.</p>
+<p>Avec ça, je peux faire ma modification, si ce n'est que mon fidèle Notepad
+ne veut pas me laisser enregistrer le fichier et attend de moi que je lui donne
+un autre nom ou que je le sauvegarde dans &quot;Mes Documents&quot;. Qu'à cela ne tienne,
+je quitte puis j'exécute Notepad en tant qu'administrateur et ce coup-ci plus
+de problème.</p>
+<p>Mon fichier C:\Windows\System32\drivers\etc\hosts d'origine :</p>
+<pre><code># Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+#       127.0.0.1       localhost
+#       ::1             localhost
+</code></pre>
+<p>Le même fichier hosts après avoir dé-commenté la ligne <code>127.0.0.1 localhost</code> :</p>
+<pre><code># Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+127.0.0.1       localhost
+#       ::1             localhost
+</code></pre>
+<p>Et même après avoir remis le paramètre <code>network.dns.disableIPv6</code>
+de Firefox à &quot;false&quot;, je peux débuguer ma charte graphique sous Firefox sans
+attendre <s>des heures</s> une seconde à chaque fois que je rafraichis la
+page.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/03/10/faire-liste-html-radio-button/" hreflang="fr-FR">Faire une liste Html.RadioButton</a>
+  <a rel="next" href="/2010/03/18/simplifier-balise-head-aspnetmvc/" hreflang="fr-FR">Simplifier la balise head pour ASP.NET MVC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

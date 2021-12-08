@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer un fichier Excel en .NET - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/07/15/creer-fichier-excel-net/" />
+<meta property="og:title" content="Créer un fichier Excel en .NET" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/07/15/creer-fichier-excel-net/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-07-15T09:38:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-07-15T09:38:00.000Z","datePublished":"2008-07-15T09:38:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/07/15/creer-fichier-excel-net/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/07/15/creer-fichier-excel-net/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/07/15/creer-fichier-excel-net/">Créer un fichier Excel en .NET</a>
+    </h1>
+    <p>
+      <span>2008-07-15</span>
+      <span>#boulot</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Mon voisin de bureau avait la désagréable mission de devoir réaliser une
+interface (lui aussi!) pour exporter des données au format Excel. Sinon
+y'aurait des têtes qui allaient tomber !</p>
+<p>Comme la vie dans un openspace bondé exige une bonne dose de civilité et
+pour éviter les éclaboussures j'ai fait comme les autres et j'ai donc essayé de
+le sortir de ce mauvais pas.</p>
+<h2>Générer de l'Excel</h2>
+<p>Habituellement, on répond à ce genre de besoin en générant un bête fichier
+CSV (en tout cas moi c'est ce que je fais à chaque fois) ou dans les cas les
+plus extrêmes certains d'entre nous utilisent la librairie <a href="http://www.carlosag.net/Tools/ExcelXmlWriter/Default.aspx">ExcelXmlWriter</a>
+pour produire un fichier Excel au format XML.</p>
+<p>Mais dans le cas présent, il était nécessaire de fournir un authentique
+fichier Excel parce que l'application en face s'attendait à lire un &quot;vrai&quot;
+format Excel bien binaire comme dans le temps, estampillé &quot;Made in Microsoft&quot;
+(pour un programme en PHP c'est d'ailleurs assez rigolo).</p>
+<p>Il ne restait donc que 3 solutions possibles :</p>
+<ul>
+<li>installer Excel sur le serveur IIS et y aller à coup d'objets COM :
+sur un serveur de prod! ça va pas la tête ?</li>
+<li>trouver une librairie qui sache créer de &quot;vrais&quot; fichiers Excel : et
+pourquoi pas avoir à l'acheter en plus ?</li>
+<li>vérifier une fois pour toute si le provider OleDb permet aussi d'écrire
+dans un fichier Excel : ah ouaih ça c'est marrant !</li>
+</ul>
+<h2>Lire depuis un fichier Excel</h2>
+<p>Pour commencer, créer vite fait un petit fichier Excel pour se rappeler
+comment on fait pour lire ce genre de truc :</p>
+<ul>
+<li>3 colonnes : Code, Libellé, Date</li>
+<li>1° ligne : 1, Un, 01/01/2008</li>
+<li>2° ligne : 2, Deux, 02/02/2008</li>
+<li>3° ligne : 3, Trois, 03/03/2008</li>
+</ul>
+<p>Enregistrer tout ça dans un fichier que l'on nommera Classeur1.xls</p>
+<p>Fouiller un peu dans sa mémoire et pas mal sur le disque dur pour retrouver
+comment coder un petit programme qui va lire le contenu de ce
+fichier :</p>
+<pre><code>using System;
+using System.Data.OleDb;
+
+namespace OleDbExcel {
+
+  class Class1 {
+
+    [STAThread]
+    static void Main(string[] args) {
+
+      // Défini la chaine de connexion au fichier Excel
+      string cnstr = @&quot;Provider=Microsoft.Jet.OLEDB.4.0;Extended Properties=&quot;&quot;Excel 8.0;HDR=YES;&quot;&quot;&quot;;
+      cnstr += @&quot;;Data Source=D:\Altrr\OleDbExcel\Classeur1.xls&quot;;
+
+      // Connexion au fichier Excel
+      OleDbConnection cn = new OleDbConnection(cnstr);
+      cn.Open();
+
+      // Affiche le contenu
+      OleDbCommand cm = cn.CreateCommand();
+      cm.CommandText = &quot;SELECT * FROM [Feuil1$]&quot;;
+      OleDbDataReader dr = cm.ExecuteReader();
+      while (dr.Read() == true) {
+        Console.WriteLine(&quot;{0} : {1}\t{2}&quot;, dr[0], dr[1], dr[2]);
+      }
+      dr.Close();
+
+      // Ferme la connexion
+      cn.Close();
+
+      // Fin du test
+      Console.WriteLine();
+      Console.Write(&quot;(Entrée) pour terminer...&quot;);
+      Console.ReadLine();
+
+    }
+  }
+}
+</code></pre>
+<p>F5 =&gt; ça marche =&gt; au suivant!</p>
+<p>(une parenthèse pour info : Feuil1 c'est le nom de la 1° feuille dans
+le classeur Excel et pour l'utiliser en tant que table il faut ajouter un $ au
+bout et mettre le tout entre crochets)</p>
+<h2>Ecrire dans un fichier Excel</h2>
+<p>Et maintenant, le saut dans l'inconnu, à savoir tenter d'écrire dans un
+fichier Excel via une connexion OleDb (de l'inédit pour moi) :</p>
+<pre><code>using System;
+using System.Data.OleDb;
+
+namespace OleDbExcel {
+
+  class Class1 {
+  [STAThread]
+
+    static void Main(string[] args) {
+
+      // Défini la chaine de connexion au fichier Excel
+      string cnstr = @&quot;Provider=Microsoft.Jet.OLEDB.4.0;Extended Properties=&quot;&quot;Excel 8.0;HDR=YES;&quot;&quot;&quot;;
+      cnstr += @&quot;;Data Source=D:\Altrr\OleDbExcel\Classeur1.xls&quot;;
+
+      // Connexion au fichier Excel
+      OleDbConnection cn = new OleDbConnection(cnstr);
+      cn.Open();
+
+      // Création d'un objet OleDbCommand
+      OleDbCommand cm = cn.CreateCommand();
+
+      // Insère une 4° ligne dans le fichier Excel
+      cm.CommandText = &quot;INSERT INTO [Feuil1$] ([Code], [Libellé], [Date]) VALUES (4, 'Quatre', '04/04/2008')&quot;;
+      cm.ExecuteNonQuery();
+
+      // Insère une 5° ligne dans le fichier Excel
+      cm.CommandText = &quot;INSERT INTO [Feuil1$] ([Code], [Libellé], [Date]) VALUES (5, 'Cinq', '05/05/2008')&quot;;
+      cm.ExecuteNonQuery();
+
+      // Affiche le contenu
+      cm.CommandText = &quot;SELECT * FROM [Feuil1$]&quot;;
+      OleDbDataReader dr = cm.ExecuteReader();
+      while (dr.Read() == true) {
+        Console.WriteLine(&quot;{0} : {1}\t{2}&quot;, dr[0], dr[1], dr[2]);
+      }
+      dr.Close();
+
+      // Ferme la connexion
+      cn.Close();
+
+      // Fin du test
+      Console.WriteLine();
+      Console.Write(&quot;(Entrée) pour terminer...&quot;);
+      Console.ReadLine();
+    }
+  }
+}
+</code></pre>
+<p>F5 =&gt; ça marche aussi !</p>
+<p>On tente la même chose sur le serveur (de prod ! quand y'a des têtes en
+jeux on a vraiment plus peur de rien) et ça marche encore !!!</p>
+<h2>Que demander de plus ?</h2>
+<p>On peut même utiliser des paramètres au lieu de commandes SQL en &quot;dur&quot;</p>
+<pre><code>using System;
+using System.Data.OleDb;
+
+namespace OleDbExcel {
+
+  class Class1 {
+
+    [STAThread]
+    static void Main(string[] args) {
+
+      // Défini la chaine de connexion au fichier Excel
+      string cnstr = @&quot;Provider=Microsoft.Jet.OLEDB.4.0;Extended Properties=&quot;&quot;Excel 8.0;HDR=YES;&quot;&quot;&quot;;
+      cnstr += @&quot;;Data Source=D:\Altrr\OleDbExcel\Classeur1.xls&quot;;
+
+      // Connexion au fichier Excel
+      OleDbConnection cn = new OleDbConnection(cnstr);
+      cn.Open();
+
+      // Création d'un objet OleDbCommand
+      OleDbCommand cm = cn.CreateCommand();
+
+      // Insère une 6° ligne dans le fichier Excel
+      cm.CommandText = &quot;INSERT INTO [Feuil1$] ([Code], [Libellé], [Date]) VALUES (@Code, @Libelle, @Date)&quot;;
+      cm.Parameters.Add(&quot;@Code&quot;, 6);
+      cm.Parameters.Add(&quot;@Libelle&quot;, &quot;Six&quot;);
+      cm.Parameters.Add(&quot;@Date&quot;, new DateTime(2008, 6, 6));
+      cm.ExecuteNonQuery();
+
+      // Affiche le contenu
+      cm.CommandText = &quot;SELECT * FROM [Feuil1$]&quot;;
+      OleDbDataReader dr = cm.ExecuteReader();
+      while (dr.Read() == true) {
+        Console.WriteLine(&quot;{0} : {1}\t{2}&quot;, dr[0], dr[1], dr[2]);
+      }
+      dr.Close();
+
+      // Ferme la connexion
+      cn.Close();
+
+      // Fin du test
+      Console.WriteLine();
+      Console.Write(&quot;(Entrée) pour terminer...&quot;);
+      Console.ReadLine();
+    }
+  }
+}
+</code></pre>
+<p>On ne peut pas faire un <code>DELETE FROM [Feuil1$]</code> pour vider le
+fichier avant d'y insérer de nouvelles données : pas très utile donc pas
+très grave.</p>
+<p>Ce qui est un peu plus embêtant, c'est qu'il ne semble pas possible de
+partir d'un fichier Excel vide et d'y &quot;créer&quot; dynamiquement les colonnes que
+l'on veut :</p>
+<ul>
+<li>Faire un 1° &quot;<code>INSERT INTO [Feuil1$] ([Code], [Caption], [Date]) VALUES ('Code', 'Libellé', 'Date')</code>&quot; plante</li>
+<li>Commencer par un &quot;<code>CREATE TABLE [Feuil1$] ...</code>&quot; plante
+aussi</li>
+</ul>
+<h2>Fin de la récréation</h2>
+<p>C'est ennuyeux, mais comme cela n'a strictement aucune importante dans le
+cas qui nous occupait au départ, on ne va pas y passer plus que la pause de
+midi.</p>
+<h2>Post-Scriptum</h2>
+<p>Super astuce : même si on ne peut pas créer un fichier Excel
+directement, on peut :</p>
+<ul>
+<li>Passer par une base de données Access (elle aussi accessible via le
+provider &quot;Microsoft.Jet.OLEDB.4.0&quot;)</li>
+<li>Y créer une table avec les colonnes souhaitées</li>
+<li>Exporter cette table vers Excel par un <code>SELECT   - INTO...</code></li>
+</ul>
+<pre><code>static void Main(string[] args) {
+
+  // Défini la chaine de connexion au fichier Access
+  string mdb = @&quot;D:\Altrr\OleDbExcel\Bd1.mdb&quot;;
+  string cnstr = @&quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=&quot; + mdb;
+
+  // Connexion au fichier Access
+  OleDbConnection cn = new OleDbConnection(cnstr);
+  cn.Open();
+
+  // Création d'un objet OleDbCommand
+  OleDbCommand cm = cn.CreateCommand();
+
+  // Insère une 1° ligne dans le fichier Excel
+  cm.CommandText = &quot;CREATE TABLE [Feuil1] ([Code] INT, [Libellé] TEXT(20), [Notes] TEXT(100), [Montant] DOUBLE, [Date] DATETIME)&quot;;
+  cm.ExecuteNonQuery();
+
+  // Insère une 1° ligne dans le fichier Excel
+  cm.CommandText = &quot;INSERT INTO [Feuil1] ([Code], [Libellé], [Notes], [Montant], [Date]) VALUES (1, 'Un', 'Premier', 1.1, '01/01/2008')&quot;;
+  cm.ExecuteNonQuery();
+
+  // Insère une 2° ligne dans le fichier Excel
+  cm.CommandText = &quot;INSERT INTO [Feuil1] ([Code], [Libellé], [Notes], [Montant], [Date]) VALUES (2, 'Deux', 'Deuxième', 2.2, '02/02/2008')&quot;;
+  cm.ExecuteNonQuery();
+
+  // Insère 5 nouvelles lines
+  cm.CommandText = &quot;INSERT INTO [Feuil1] ([Code], [Libellé], [Notes], [Montant], [Date]) VALUES (@Code, @Libelle, @Note, @Montant, @Date)&quot;;
+  for (int i = 3; i &lt; 8; i++) {
+    DateTime d = DateTime.Now.Date.AddDays(i);
+    cm.Parameters.Add(&quot;@Code&quot;, i);
+    cm.Parameters.Add(&quot;@Libelle&quot;, d.ToString(&quot;dddd&quot;));
+    cm.Parameters.Add(&quot;@Note&quot;, d.ToLongDateString());
+    cm.Parameters.Add(&quot;@Montant&quot;, (double) 1.1 * i);
+    cm.Parameters.Add(&quot;@Date&quot;, d);
+    cm.ExecuteNonQuery();
+    cm.Parameters.Clear();
+  }
+
+  // Affiche le contenu
+  cm.CommandText = &quot;SELECT * FROM [Feuil1]&quot;;
+  OleDbDataReader dr = cm.ExecuteReader();
+  while (dr.Read() == true) {
+    Console.WriteLine(&quot;{0} : {1}\t{2}\t{3}\t{4}&quot;, dr[0], dr[1], dr[2], dr[3], dr[4]);
+  }
+  dr.Close();
+
+  // Un peu de Magie
+  string xls = @&quot;D:\Altrr\OleDbExcel\Test1.xls&quot;;
+  cm.CommandText = &quot;SELECT * INTO [Excel 8.0;Database=&quot; + xls + &quot;].[Sheet1] FROM [Feuil1]&quot;;
+  cm.ExecuteNonQuery();
+
+  // Ferme la connexion
+  cn.Close();
+
+  // Fin du test
+  Console.Write(&quot; pour terminer...&quot;);
+  Console.ReadLine();
+}
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/06/05/verifier-identifiants-automatiques-jour/" hreflang="fr-FR">Vérifier que les identifiants automatiques sont à jour</a>
+  <a rel="next" href="/2008/07/17/verifier-version-net-installee/" hreflang="fr-FR">Vérifier la version du .NET installée</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

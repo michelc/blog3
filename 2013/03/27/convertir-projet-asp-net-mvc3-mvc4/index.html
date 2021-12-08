@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Convertir un projet ASP.NET MVC 3 en MVC 4 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2013/03/27/convertir-projet-asp-net-mvc3-mvc4/" />
+<meta property="og:title" content="Convertir un projet ASP.NET MVC 3 en MVC 4" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2013/03/27/convertir-projet-asp-net-mvc3-mvc4/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-03-27T20:06:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2013-03-27T20:06:00.000Z","datePublished":"2013-03-27T20:06:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2013/03/27/convertir-projet-asp-net-mvc3-mvc4/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2013/03/27/convertir-projet-asp-net-mvc3-mvc4/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2013/03/27/convertir-projet-asp-net-mvc3-mvc4/">Convertir un projet ASP.NET MVC 3 en MVC 4</a>
+    </h1>
+    <p>
+      <span>2013-03-27</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'ai migré mon application <a href="http://repertoir.apphb.com/">Répertoir</a> vers ASP.NET MC 4. Comme le dit la doc :</p>
+<blockquote>
+<p>The simplest way to upgrade is to create a new ASP.NET MVC 4 project and
+copy all the views, controllers, code, and content files from the existing MVC
+3 project to the new project. <a href="http://www.asp.net/whitepapers/mvc4-release-notes#_Toc303253806">Upgrading an ASP.NET MVC 3 Project to ASP.NET MVC 4</a></p>
+</blockquote>
+<h2>Créer un projet ASP.NET MVC 4 réellement vide</h2>
+<p><em>Note : Le projet vide est déjà pas mal vide, mais il
+intègre Web API par défaut et je n'en ai pas l'utilité.</em></p>
+<h3>Créer un projet &quot;Empty&quot;</h3>
+<ul>
+<li>Renommer le dossier C:\MVC\Repertoir en C:\MVC\Repertoir3</li>
+<li>Sous Visual Studio 2010, créer un nouveau projet &quot;Repertoir&quot; de type
+&quot;ASP.NET MVC 4 Web Application&quot; dans le dossier &quot;C:\MVC&quot;</li>
+<li>Sélectionner le template &quot;Empty&quot; avec bien évidemment :
+<ul>
+<li>Razor comme View Engine</li>
+<li>Ok pour créer le projet de test unitaire</li>
+</ul>
+</li>
+</ul>
+<h3>Supprimer Web API du projet</h3>
+<ul>
+<li>Pour le projet Repertoir : Références, clic-droit et &quot;Gérer les
+packages NuGet...&quot;</li>
+<li>Désinstaller &quot;Microsoft ASP.NET Web API&quot; =&gt; signale que va aussi
+désinstaller :
+<ul>
+<li>Microsoft.AspNet.WebApi.WebHost</li>
+<li>Microsoft.AspNet.WebApi.Core</li>
+<li>Microsoft.AspNet.WebApi.Client</li>
+<li>Newtonsoft.Json</li>
+<li>Microsoft.Net.Http</li>
+</ul>
+</li>
+<li>Confirmer que c'est OK =&gt; il ne reste plus que :
+<ul>
+<li>Microsoft.AspNet.Mvc</li>
+<li>Microsoft.AspNet.Razor</li>
+<li>Microsoft.AspNet.WebPages</li>
+<li>Microsoft.Web.Infrastructure</li>
+</ul>
+</li>
+</ul>
+<h3>Supprimer Web API du projet de test unitaire</h3>
+<ul>
+<li>Pour le projet Repertoir.Tests : Références, clic-droit et &quot;Gérer les
+packages NuGet...&quot;</li>
+<li>Désinstaller &quot;Microsoft.AspNet.WebApi.WebHost&quot; =&gt; signale que va aussi
+désinstaller :
+<ul>
+<li>Microsoft.AspNet.WebApi.Core</li>
+<li>Microsoft.AspNet.WebApi.Client</li>
+<li>Newtonsoft.Json</li>
+<li>Microsoft.Net.Http</li>
+</ul>
+</li>
+<li>Confirmer que c'est OK =&gt; il ne reste plus que :
+<ul>
+<li>Microsoft.AspNet.Mvc</li>
+<li>Microsoft.AspNet.Razor</li>
+<li>Microsoft.AspNet.WebPages</li>
+<li>Microsoft.Web.Infrastructure</li>
+</ul>
+</li>
+</ul>
+<h3>Finaliser le projet vide</h3>
+<ul>
+<li>Dans le projet Repertoir / App_Start, supprimer le fichier
+WebApiConfig.cs</li>
+<li>Dans Repertoir / Global.asax.cs, supprimer la ligne
+<code>WebApiConfig.Register(GlobalConfiguration.Configuration);</code> dans
+Application_Start().</li>
+<li>Vérifier que tout est OK :
+<ul>
+<li>Fichier / Enregistrer tout</li>
+<li>Générer / Regénérer la solution</li>
+<li>=&gt; La regénération globale a réussi</li>
+</ul>
+</li>
+</ul>
+<h2>Ajouter quelques packages</h2>
+<p>Avant de commencer, faire un clic-droit sur la solution &quot;Repertoir&quot; et
+sélectionner &quot;Activer la restauration du package NuGet&quot;.</p>
+<p>Ensuite, faire clic-droit sur Repertoir /Références et &quot;Gérer les packages
+NuGet...&quot; pour installer les packages dont j'ai besoin :</p>
+<ul>
+<li>AutoMapper</li>
+<li>EntityFramework</li>
+<li>jQuery</li>
+<li>jQuery.Validation</li>
+<li>LowercaseRoutesMVC (pas LowercaseRoutesMVC4 puisque Web API a été
+éjecté)</li>
+<li>Microsoft.jQuery.Unobtrusive.Validation</li>
+<li>MiniProfiler</li>
+<li>MiniProfiler.EF</li>
+<li>Modernizr</li>
+</ul>
+<p>Puis clic-droit sur Repertoir.Tests /Références et &quot;Gérer les packages
+NuGet...&quot; pour installer les packages suivants :</p>
+<ul>
+<li>EntityFramework</li>
+<li>Moq</li>
+<li>MvcRouteUnitTester</li>
+</ul>
+<p>Vérifier que tout est OK :</p>
+<ul>
+<li>Fichier / Enregistrer tout</li>
+<li>Générer / Regénérer la solution</li>
+<li>=&gt; La regénération globale a réussi</li>
+</ul>
+<h2>Copier les sources du projet MVC 3 vers MVC 4</h2>
+<p>Dans le cas du projet Repertoir, cela consiste à copier :</p>
+<ul>
+<li>le contenu de /App_Data</li>
+<li>le répertoire /Contents</li>
+<li>le contenu de /Controllers</li>
+<li>le répertoire /Helpers</li>
+<li>le contenu de /Models</li>
+<li>le fichier /Scripts/chosen.jquery.fr.js</li>
+<li>le fichier /Scripts/gmaps.js</li>
+<li>le contenu de /Views (à l'exception du Web.Config)</li>
+</ul>
+<p>Et ne pas oublier d'inclure ces différents fichiers dans le projet (à
+l'exception des fichiers contenus dans /App_Data)</p>
+<p>Pour le projet Repertoir.Tests, il faut copier :</p>
+<ul>
+<li>le répertoire /Controllers</li>
+<li>le répertoire /Helpers</li>
+<li>le fichier /RoutesTest.cs</li>
+</ul>
+<p>Là aussi, penser à inclure ces nouveaux fichiers dans le projet.</p>
+<h3>Mettre à jour les fichiers de configuration</h3>
+<ul>
+<li>Repertoir/Web.Config :
+<ul>
+<li>recopier la section &lt;connectionStrings&gt;</li>
+<li>&lt;customErrors mode=&quot;RemoteOnly&quot; defaultRedirect=&quot;~/Error&quot; /&gt;</li>
+<li>Les sections &lt;authentication&gt;, &lt;membership&gt;, &lt;profile&gt; et
+&lt;roleManager&gt; sont absentes (sans doute parce que je suis parti d'un
+template vide) mais je n'en ai pas besoin.</li>
+</ul>
+</li>
+<li>Repertoir/Web.Release.Config : recopier celui de Repertoir3 (pour la
+transformation lors de la mise en production sur Appharbor)</li>
+<li>Repertoir/Views/Web.Config : ajouter &lt;add
+namespace=&quot;Repertoir.Helpers&quot; /&gt; à &lt;system.web.webPages.razor&gt;</li>
+<li>Repertoir.Tests/App.Config : recopier la section
+&lt;connectionStrings&gt;</li>
+</ul>
+<h3>Adapter le Global.asax</h3>
+<pre><code>using System;
+using System.Web.Mvc;
+using System.Web.Routing;
+using Repertoir.Helpers;
+using Repertoir.Models;
+using StackExchange.Profiling;
+
+namespace Repertoir
+{
+    public class MvcApplication : System.Web.HttpApplication
+    {
+        protected void Application_Start()
+        {
+            AreaRegistration.RegisterAllAreas();
+
+            ModelBinders.Binders.Add(typeof(string), new StringModelBinder());
+
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
+
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            AutoMapperConfiguration.Configure();
+
+            MiniProfilerEF.Initialize(true);
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            if (Request.IsLocal) MiniProfiler.Start();
+        }
+
+        protected void Application_EndRequest(object sender, EventArgs e)
+        {
+            MiniProfiler.Stop();
+        }
+    }
+}
+</code></pre>
+<h3>Mise au point des routes</h3>
+<p>Il faut également adapter /App_Start/RouteConfig.cs pour tenir compte de la
+route &quot;Id_Slug&quot; et du fait que j'utilise LowercaseRoutesMVC.</p>
+<pre><code>using System.Web.Mvc;
+using System.Web.Routing;
+using LowercaseRoutesMVC;
+
+namespace Repertoir
+{
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute(&quot;{resource}.axd/{*pathInfo}&quot;);
+
+            routes.MapRouteLowercase(
+                name: &quot;Id_Slug&quot;,
+                url: &quot;{controller}/{action}/{id}/{slug}&quot;,
+                defaults: new { controller = &quot;Contacts&quot;, action = &quot;Index&quot; }
+            );
+
+            routes.MapRouteLowercase(
+                name: &quot;Default&quot;,
+                url: &quot;{controller}/{action}/{id}&quot;,
+                defaults: new { controller = &quot;Contacts&quot;, action = &quot;Index&quot;, id = UrlParameter.Optional }
+            );
+        }
+    }
+}
+</code></pre>
+<h3>Vérifier que tout est OK</h3>
+<ul>
+<li>Fichier / Enregistrer tout</li>
+<li>Générer / Regénérer la solution</li>
+</ul>
+<p>=&gt; 5 erreurs &quot;Repertoir.MvcApplication ne contient pas de définition pour
+RegisterRoutes&quot; dans le projet Repertoir.Tests</p>
+<p>Remplacer 5 fois la ligne :</p>
+<pre><code>MvcApplication.RegisterRoutes(routes);
+</code></pre>
+<p>par :</p>
+<pre><code>RouteConfig.RegisterRoutes(routes);
+</code></pre>
+<p>Revérifier que tout est OK</p>
+<ul>
+<li>Fichier / Enregistrer tout</li>
+<li>Générer / Regénérer la solution</li>
+</ul>
+<p>=&gt; La regénération globale a réussi</p>
+<h2>Lancer les tests unitaires</h2>
+<p>Test / Exécuter / Tous les tests de la solution</p>
+<p>=&gt; 2 erreurs sur 151 tests</p>
+<p>Les deux tests TestIncomingRoutes et TestOutgoingRoutes lèvent une exception
+System.InvalidOperationException parce que la classe Repertoir.MvcApplication
+n'a pas de méthode RegisterRoutes. Problème un peu plus compliqué, mais
+<a href="http://mvcrouteunittester.codeplex.com/discussions/387822">pas insoluble</a>. Là encore, il faut remplacer la ligne :</p>
+<pre><code>var tester = new RouteTester&lt;MvcApplication&gt;();
+</code></pre>
+<p>par :</p>
+<pre><code>var routes = new RouteCollection();
+RouteConfig.RegisterRoutes(routes);
+var tester = new RouteTester(routes);
+</code></pre>
+<p>Test / Exécuter / Tous les tests de la solution</p>
+<p>=&gt; 151/151 réussi(s)</p>
+<h2>Lancer l'application</h2>
+<p>Boum !</p>
+<blockquote>
+<p>L'exception SqlCeException n'a pas été gérée par le code utilisateur</p>
+<p>The column name is not valid. [ Node name (if any) = c,Column name =
+CreatedOn ]</p>
+</blockquote>
+<p>Zut ! J'avais complètement oublié ça : <a href="http://community.miniprofiler.com/permalinks/99/sqlexception-on-ef-5-w-net-4-5">SqlException on EF 5 w/ .NET 4.5</a> =&gt; <a href="http://stackoverflow.com/questions/11979026/entity-framework-5-expects-createdon-column-from-migrationhistory-table">Entity Framework 5 expects CreatedOn column from MigrationHistory
+table</a>.</p>
+<p>Mais moi j'utilise SQL Server CE, alors ça le fait pas avec le truc pour
+&quot;System.Data.SqlClient.SqlException&quot;. Sous Visual Studio, il faut donc aller
+dans Debug / Windows / Exception Settings. Dans l'entrée &quot;Common Language
+Runtime Exceptions&quot;, il faut ajouter l'exception
+&quot;System.Data.SqlServerCe.SqlCeException&quot; et ne pas cocher la case &quot;Break When
+Thrown&quot; puis clic-droit dessus pour vérifier que l'action &quot;Continue when
+unhandled in user code&quot; n'est pas activée.</p>
+<p>Et enfin tout marche !!!!</p>
+<p>Quoique. Pour que le déploiement fonctionne sur AppHarbor, il faut s'assurer que
+le Build Action des 2 fichiers &quot;Web.Debug.config&quot; et &quot;Web.Release.config&quot; est
+bien à &quot;Content&quot; (et pas à &quot;None&quot;).</p>
+<h2>Rebrancher Git</h2>
+<p>C'est là que la magie opère : copier le dossier &quot;.git&quot; et les fichiers
+&quot;.gitattributes&quot;, &quot;.gitignore&quot; et &quot;readme.md&quot; de l'ancien projet
+C:\MVC\Repertoir3 vers le nouveau projet dans C:\MVC\Repertoir. C'est pas avec
+SourceSafe qu'on pourrait jouer à des trucs pareils...</p>
+<p>Puis lancer Github for Windows et commiter &quot;Migration ASP.NET MVC 4&quot;.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2013/02/11/erreur-generation-controleur-sql-ce/" hreflang="fr-FR">Erreur génération template contrôleur avec SQL CE</a>
+  <a rel="next" href="/2013/09/03/cle-deja-existante-ef-objectstatemanager/" hreflang="fr-FR">Clé déjà existante dans EF.ObjectStateManager</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

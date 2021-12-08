@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xmlfeed et Blogmarks - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/01/15/xmlfeed-blogmarks/" />
+<meta property="og:title" content="Xmlfeed et Blogmarks" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/01/15/xmlfeed-blogmarks/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-01-15T18:03:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-01-15T18:03:00.000Z","datePublished":"2006-01-15T18:03:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/01/15/xmlfeed-blogmarks/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/01/15/xmlfeed-blogmarks/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/01/15/xmlfeed-blogmarks/">Xmlfeed et Blogmarks</a>
+    </h1>
+    <p>
+      <span>2006-01-15</span>
+      <span>#qc</span><span>#xml</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Amélioration en ce qui concerne la méthode utilisée pour gérer la
+transformation d'un document xml via xslt. Jusqu'à présent, c'était fait
+quasi-automatiquement à l'aide des propriétés DocumentSource et TransformSource
+du contrôle Xml. Après modification, la boite Xmlfeed fonctionne de la façon
+suivante :</p>
+<ul>
+<li>la source est chargée dans un objet XmlDocument puis affectée à la
+propriété Document du contrôle Xml,</li>
+<li>la fichier xsl est chargé dans un objet XslTransform qui est ensuite
+affecté à la propriété Transform du contrôle XML.</li>
+</ul>
+<p>Cette solution permet d'avoir une meilleure gestion des erreurs, et aussi
+:</p>
+<ul>
+<li>de reconnaitre le type de fil et donc de sélectionner automatiquement la
+feuille de style adéquate si besoin est,</li>
+<li>de “bidouiller” le fil atom de Blogmarks car la mention
+&quot;draft-ietf-atompub-format-05″ dans xlmns=”http://purl.org/atom/ns#…&quot; (mais
+sans message d'erreur pour trouver comment gérer ça plus proprement).</li>
+</ul>
+<p>En configuration, les types de fils xml sont passés de 6 (atom, sommaire
+atom, rss2, rss1, rdf et rss0.9) à 4 (<a href="/2006/01/16/atom-html-conversion/">atom</a>,
+<a href="/2006/01/16/rdf-html-conversion/">rdf</a>,
+<a href="/2006/01/16/rss-html-conversion/">rss</a> et
+automatique).</p>
+<p>Par ailleurs, une feuille de style spéciale a été créée pour convertir le
+fil atom de <a href="/2006/01/19/blogmarks-html-conversion/">Blogmarks
+en html</a>, afin de gérer la miniature écran et la liste des tags.</p>
+<p><em>Note : L'utilisation des propriétés Document et Transform
+en lieu et place de DocumentSource et TransformSource a été également mise en
+place au niveau de la boite Xmlfile.</em></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/01/14/google-sitemap/" hreflang="fr-FR">Google Sitemap</a>
+  <a rel="next" href="/2006/01/16/atom-html-conversion/" hreflang="fr-FR">Atom to Html conversion</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test-Driven Development avec ASP.NET MVC (suite) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/10/29/test-driven-development-aspnetmvc-suite/" />
+<meta property="og:title" content="Test-Driven Development avec ASP.NET MVC (suite)" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/10/29/test-driven-development-aspnetmvc-suite/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-10-29T17:44:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-10-29T17:44:00.000Z","datePublished":"2009-10-29T17:44:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/10/29/test-driven-development-aspnetmvc-suite/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/10/29/test-driven-development-aspnetmvc-suite/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/10/29/test-driven-development-aspnetmvc-suite/">Test-Driven Development avec ASP.NET MVC (suite)</a>
+    </h1>
+    <p>
+      <span>2009-10-29</span>
+      <span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je dois avouer que j'ai pas mal dévié de l'objectif de cette <a href="/2009/10/20/test-driven-development-aspnetmvc-suite/">6° partie du tutoriel de Gestion des Contacts</a>. Son but était
+d'illustrer l'intérêt du test-driven-development en prenant pour exemple
+l'ajout d'une notion de groupes de contacts. Comme je trouvais que la fin du
+tutoriel passait un peu vite sur la réalisation concrète des modifications
+réalisées et que je ne voulais pas me contenter de les récupérer toutes faites,
+j'ai pris ça comme un exercice pour compléter mon apprentissage d'ASP.NET
+MVC.</p>
+<h2>Première tentative</h2>
+<p>Dans ce billet, je vais donc continuer la modification de la base de
+données, c'est à dire ajouter une colonne groupId à la table des contacts et
+définir une relation entre les deux tables Contacts et Groups.</p>
+<p>Je commence par l'ajout de la colonne groupId de type int, en prenant soin
+de définir sa propriété &quot;Default Value or Binding&quot; à 1. Cette petite astuce
+m'évite d'avoir à vider la table des contacts lorsque j'ajoute la relation
+entre cette nouvelle colonne et la table Groups créée la fois précédente.</p>
+<p>Puis je m'occupe de la mise à jour du modèle. Mais ça ne se fait pas tout
+seul :( Je dois passer par la toolbox pour ajouter l'association entre les deux
+tables. Et même après ça, j'ai des erreurs de compilation ! je recommence,
+je bidouille, mais rien à faire, ça ne veut pas compiler...</p>
+<h2>Seconde tentative</h2>
+<p>Pour aller plus vite, je récupère la base de données
+(App_Data\ContactManagerDB*.*) et le modèle (Models\ContactManagerModel.*) qui
+datent d'avant l'ajout de la table &quot;Groups&quot; et je refais tout comme indiqué
+dans le tutorial (ou à peu près).</p>
+<ul>
+<li>ajout de la table &quot;Groups&quot;</li>
+<li>création d'un premier groupe &quot;Business&quot;</li>
+<li>ajout de la colonne &quot;groupId&quot; à la table &quot;Contacts&quot;, en mettant 1 comme
+&quot;Default Value or Binding&quot;</li>
+<li>définition de la relation entre les deux tables</li>
+<li>mise à jour du modèle</li>
+</ul>
+<p>Et cette fois-ci, tout marche comme sur des roulettes ! Je vérifie que
+ça compile (Ok), je quitte VWD et je sauvegarde. On ne sait jamais...</p>
+<h2>Prise en compte de groupId dans la table Contacts</h2>
+<p>Pour la suite, je vais déjà tenter de faire apparaitre la liste des groupes
+dans les formulaires de création et de mise à jour des contacts, mais juste
+pour l'affichage, sans chercher à en tenir compte pour enregistrer les
+contacts.</p>
+<p>Je commence par modifier la classe EntityContactManagerRepository.cs pour
+modifier les requêtes LINQ et leur ajouter les .Include() afin de gérer la
+relation entre les tables :</p>
+<pre><code>...
+public Contact GetContact(int id)
+{
+    return (from c in _entities.ContactSet.Include(&quot;Group&quot;)
+            where c.Id == id
+            select c).FirstOrDefault();
+}
+...
+public Group GetGroup(int id)
+{
+    return (from g in _entities.GroupSet.Include(&quot;Contacts&quot;)
+            where g.Id == id
+                    select g).FirstOrDefault();
+}
+...
+</code></pre>
+<p>J'exécute et je teste l'ajout d'un groupe &quot;Friends&quot; et ça passe. J'essaie
+alors de créer un nouveau contact mais là le clic sur le bouton &quot;Create&quot; n'a
+plus aucun effet. Un petit débugage m'apprend que
+<code>_entities.SaveChanges()</code> ne fonctionne plus.</p>
+<p>Qu'à cela ne tienne, je fais une autre modification au repository pour
+associer le contact à créer au groupe par défaut juste avant de procéder à son
+enregistrement et là ça marche.</p>
+<pre><code>public Contact CreateContact(Contact contactToCreate)
+{
+    // Associate group with contact
+    contactToCreate.Group = GetGroup(1);
+
+    // Save new contact
+    _entities.AddToContactSet(contactToCreate);
+    _entities.SaveChanges();
+    return contactToCreate;
+}
+</code></pre>
+<p>Et ça marche même pour la mise à jour sans qu'il n'y ait rien d'autre à
+faire. Tant mieux.</p>
+<p>Bon. Aux vues maintenant.</p>
+<h2>Mise à jour des vues contacts pour lister les groupes</h2>
+<p>Je démarre avec la vue Create.aspx en regardant comment c'est fait dans les
+sources finis de la 6° partie et en refaisant la même chose pas à pas.</p>
+<p>Ajouter une dropdown list des groupes dans le formulaire
+Views\Contact\Create/aspx :</p>
+<pre><code>&lt;p&gt;
+    &lt;label for=&quot;GroupId&quot;&gt;Group:&lt;/label&gt;
+    &lt;%= Html.DropDownList(&quot;GroupId&quot;) %&gt;
+&lt;/p&gt;
+</code></pre>
+<p>Tel quel, ça reste insuffisant et on obtient une erreur &quot;<em>There is no
+ViewData item with the key 'GroupId' of type
+'IEnumerable&lt;SelectListItem&gt;'.</em>&quot; quand on essaie d'afficher le
+formulaire de création d'un contact.</p>
+<p>Il faut donc que le contrôleur fasse passer la liste des groupes à la
+vue :</p>
+<pre><code>public ActionResult Create()
+{
+    if (!AddGroupsToViewData(-1))
+        return RedirectToAction(&quot;Index&quot;, &quot;Group&quot;);
+    return View(&quot;Create&quot;);
+}
+
+protected bool AddGroupsToViewData(int selectedId)
+{
+    var groups = _service.ListGroups();
+    ViewData[&quot;GroupId&quot;] = new SelectList(groups, &quot;Id&quot;, &quot;Name&quot;, selectedId);
+    return groups.Count() &gt; 0;
+}
+</code></pre>
+<p>La fonction AddGroupsToViewData() ajoute la liste des groupes à la
+collection ViewData et dans le cas où cette collection serait vide, le
+contrôleur redirige l'utilisateur vers la liste des groupes afin qu'il puisse y
+créer au moins un nouveau groupe.</p>
+<p>Pour que cela fonctionne, il faut encore ajouter <code>using System.Linq;</code>, sinon la syntaxe <code>groups.Count()</code> n'est pas
+acceptée.</p>
+<p>Après avoir vérifié que ça marche bien, j'en ai profité pour présenter les
+noms des groupes dans l'ordre alphabétique. Après pas mal de Google, j'ai
+trouvé comment faire :</p>
+<pre><code>public IEnumerable&lt;Group&gt; ListGroups()
+{
+    return _entities.GroupSet.OrderBy(o =&gt; o.Name).ToList();
+}
+</code></pre>
+<p>C'est quand même plus joli.</p>
+<p>Je continue donc avec la vue Edit.aspx où je refais <s>quasiment</s> la
+même chose.</p>
+<p>Ça avance ! Je peux maintenant associer un contact au groupe de
+contacts de mon choix. Y'a plus qu'à faire en sorte que ce choix soit
+enregistré dans la base de données.</p>
+<p>Mais avant, je ne résiste pas au plaisir de trier aussi la liste des
+contacts :</p>
+<pre><code>public IEnumerable&lt;Contact&gt; ListContacts()
+{
+    return _entities.ContactSet.OrderBy(o =&gt; o.FirstName).ThenBy(o =&gt; o.LastName).ToList();
+}
+</code></pre>
+<h2>Utilisation du groupe sélectionné pour créer un contact</h2>
+<p>Maintenant, je vais essayer de tenir compte du groupe sélectionné lors de la
+création d'un contact.</p>
+<p>Pour cela, il faut théoriquement :</p>
+<ul>
+<li>récupérer l'identifiant du groupe sélectionné dans le formulaire</li>
+<li>utiliser cet identifiant au moment de l'enregistrement du contact, en lieu
+et place du &quot;1&quot; que j'avais mis en dur</li>
+</ul>
+<p>Facile ! Si je regarde le code fini de la 6° partie, un paramètre
+<code>int groupId</code> a été ajouté à l'action Create de
+ContactController.cs.</p>
+<pre><code>[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Create(int groupId, [Bind(Exclude = &quot;Id&quot;)] Contact contactToCreate)
+{
+    if (_service.CreateContact(contactToCreate))
+        return RedirectToAction(&quot;Index&quot;);
+    AddGroupsToViewData(-1);
+    return View(&quot;Create&quot;);
+}
+</code></pre>
+<p>Et pour que ça marche, il faut aussi modifier ContactControllerTest.cs qui
+teste cette action en donnant la valeur 1 à ce nouveau paramètre.</p>
+<p>Donc pour l'instant le contrôleur récupère l'identifiant du groupe qui a été
+choisi. Il faut ensuite trouver comment faire suivre cet identifiant au
+repository pour qu'il en tienne compte. J'aurai eu tendance à écrire
+<code>contactToCreate.groupId = groupId</code>, mais malheureusement l'objet
+Contact n'a pas de propriété groupId.</p>
+<p>Il faut donc procéder pas à pas et commencer par faire passer le groupId du
+contrôleur au service :
+<code>_service.CreateContact(contactToCreate)</code> devient
+<code>_service.CreateContact(groupId, contactToCreate)</code>, ce qui implique
+de modifier IContactManagerService.cs, ContactManagerService.cs et
+ContactManagerServiceTest.cs</p>
+<p>Puis ensuite faire suivre le groupId du service au repository, ce qui
+nécessite la mise à jour de IContactManagerRepository.cs,
+EntityContactManagerRepository.cs et FakeContactManagerRepository.cs</p>
+<ol>
+<li>ContactController.cs récupère groupId de la vue et l'envoie au
+service</li>
+</ol>
+<pre><code>[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Create(int groupId, [Bind(Exclude = &quot;Id&quot;)] Contact contactToCreate)
+{
+    if (_service.CreateContact(groupId, contactToCreate))
+        return RedirectToAction(&quot;Index&quot;);
+    AddGroupsToViewData(-1);
+    return View(&quot;Create&quot;);
+}
+</code></pre>
+<ol start="2">
+<li>ContactManagerService.cs récupère groupId du contrôleur et l'envoie au
+repository</li>
+</ol>
+<pre><code>public bool CreateContact(int groupId, Contact contactToCreate)
+{
+    // Validation logic
+    if (!ValidateContact(contactToCreate))
+        return false;
+
+    // Database logic
+    try
+    {
+        _repository.CreateContact(groupId, contactToCreate);
+    }
+    catch
+    {
+        return false;
+    }
+    return true;
+}
+</code></pre>
+<ol start="3">
+<li>EntityContactManagerRepository.cs : récupère groupId du service et
+l'utilise pour créer le contact</li>
+</ol>
+<pre><code>public Contact CreateContact(int groupId, Contact contactToCreate)
+{
+    // Associate group with contact
+    contactToCreate.Group = GetGroup(groupId);
+
+    // Save new contact
+    _entities.AddToContactSet(contactToCreate);
+    _entities.SaveChanges();
+    return contactToCreate;
+}
+</code></pre>
+<p>Je lance l'application et crée un nouveau contact après avoir sélectionné
+&quot;Friends&quot; dans la dropdown list des groupes, je clique sur le bouton &quot;Create&quot;
+et ça marche ! Faut vérifier dans la table Contacts pour le croire mais
+c'est bien le cas.</p>
+<h2>Utilisation du groupe pour modifier un contact</h2>
+<p>Ça consiste très simplement à refaire à peu près pareil avec la vue
+Edit.aspx et les méthode Edit() qu'on trouve un peu partout dans le contrôleur,
+le service et le repository.</p>
+<p>Déjà il faut faire en sorte que la vue Edit.aspx fasse apparaitre
+correctement le groupe auquel le contact a été rattaché. Pour cela, il suffit
+que le contrôleur lui donne la bonne information :</p>
+<pre><code>public ActionResult Edit(int id)
+{
+    var contactToEdit = _service.GetContact(id);
+    AddGroupsToViewData(contactToEdit.Group.Id);
+    return View(contactToEdit);
+}
+</code></pre>
+<p>Au moins maintenant quand je vais en modification du contact que je viens de
+créer, c'est bien le &quot;Friends&quot; qui apparait sélectionné dans la dropdown list
+des groupes.</p>
+<p>Reste plus qu'à refaire les 3 étapes pour que le groupe sélectionné au
+niveau de la vue Edit.aspx soit transmis jusqu'au niveau du repository.</p>
+<ol>
+<li>ContactController.cs récupère groupId de la vue et l'envoie au
+service</li>
+</ol>
+<pre><code>[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Edit(int groupId, Contact contactToEdit)
+{
+    if (_service.EditContact(groupId, contactToEdit))
+        return RedirectToAction(&quot;Index&quot;);
+    AddGroupsToViewData(groupId);
+    return View(&quot;Edit&quot;);
+}
+</code></pre>
+<ol start="2">
+<li>ContactManagerService.cs récupère groupId du contrôleur et l'envoie au
+repository</li>
+</ol>
+<pre><code>public bool EditContact(int groupId, Contact contactToEdit)
+{
+    // Validation logic
+    if (!ValidateContact(contactToEdit))
+        return false;
+
+    // Database logic
+    try
+    {
+        _repository.EditContact(groupId, contactToEdit);
+    }
+    catch
+    {
+        return false;
+    }
+    return true;
+}
+</code></pre>
+<ol start="3">
+<li>EntityContactManagerRepository.cs : récupère groupId du service et
+l'utilise pour mettre à jour le contact</li>
+</ol>
+<pre><code>public Contact EditContact(int groupId, Contact contactToEdit)
+{
+    // Get original contact
+    var originalContact = GetContact(contactToEdit.Id);
+
+    // Update with new group
+    originalContact.Group = GetGroup(groupId);
+
+    // Save changes
+    _entities.ApplyPropertyChanges(originalContact.EntityKey.EntitySetName, contactToEdit);
+    _entities.SaveChanges();
+    return contactToEdit;
+}
+</code></pre>
+<p>Quel progrès ! Je peux enfin rattacher un contact à un groupe au moment
+de sa création et même en changer lors de sa modification, et tout ça pour de
+vrai. Et sans compter que les tests unitaires sont toujours au vert.</p>
+<h2>Je touche au but</h2>
+<p>Pour enfin arriver au bout de cette 6° étape, il me reste juste à faire
+apparaitre les groupes au niveau de la vue Contact\Index.aspx qui affiche la
+liste des groupes. Malheureusement pour moi, le tutoriel n'a pas choisi la
+facilité en se contentant d'ajouter une colonne &quot;Group&quot; à cette liste mais a
+préféré filtrer la liste par groupe.</p>
+<p>Juste pour le fun, je commence par essayer d'ajouter une colonne &quot;Group&quot; à
+la liste en modifiant Contact\Index.aspx :</p>
+<pre><code>&lt;td&gt;
+    &lt;%= Html.Encode(item.Group.Name) %&gt;
+&lt;/td&gt;
+</code></pre>
+<p>Mais à l'exécution, ça ne passe pas et j'ai une erreur &quot;<em>La référence
+d'objet n'est pas définie à une instance d'un objet.</em>&quot; à cause de
+<code>item.Group.Name</code>. Je fais des progrès parce que je comprend de
+suite que la liste des contacts que le contrôleur ContactController.cs fait
+passer à la vue n'a pas été modifiée pour y faire apparaitre le groupe.</p>
+<p>Une très légère modification à EntityContactManagerRepository.cs et c'est
+résolu :</p>
+<pre><code>public IEnumerable&lt;Contact&gt; ListContacts()
+{
+    return _entities.ContactSet.Include(&quot;Group&quot;).OrderBy(o =&gt; o.FirstName).ThenBy(o =&gt; o.LastName).ToList();
+}
+</code></pre>
+<p>J'en serais bien resté là, mais la septième (et dernière !) étape du
+tutoriel va modifier cette vue Index pour utiliser Ajax. Si je veux vraiment
+aller jusqu'au bout de ce tutoriel il va falloir que j'en passe par le filtrage
+des contacts en fonction du groupe...</p>
+<p>Je supprime donc mes modifications et c'est reparti.</p>
+<p>Pour ce qui concerne la vue, je fais du copier / coller depuis le résultat
+du tutoriel, parce que c'est un peu tard et que je n'ai plus le courage de tout
+faire moi même. De toute façon, le principe est assez simple. On commence par
+faire deux blocs dans le html, le premier avec la liste des groupes (c'est le
+<code>&lt;ul id=&quot;leftColumn&quot;&gt;</code>) et le second avec la table des
+contacts (le <code>&lt;div id=&quot;divContactList&quot;&gt;</code>).</p>
+<pre><code>&lt;ul id=&quot;leftColumn&quot;&gt;
+&lt;% foreach (var item in Model.Groups) { %&gt;
+    &lt;li &lt;%= Html.Selected(item.Id, Model.SelectedGroup.Id) %&gt;&gt;
+    &lt;%= Html.ActionLink(item.Name, &quot;Index&quot;, new { id = item.Id }) %&gt;
+    &lt;/li&gt;
+&lt;% } %&gt;
+&lt;/ul&gt;
+
+&lt;div id=&quot;divContactList&quot;&gt;
+    &lt;table class=&quot;data-table&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                ...
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;% foreach (var item in Model.SelectedGroup.Contacts)
+               { %&gt;
+            &lt;tr&gt;
+                ...
+            &lt;/tr&gt;
+            &lt;% } %&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Puis on ajoute un peu de CSS pour <s>faire flotter tout ça</s> que les
+deux blocs apparaissent côte à côte.</p>
+<p>F5 pour voir ce que ça donne... et c'est la grosse erreur :</p>
+<pre><code>c:\MVC\ContactManager\ContactManager\Views\Contact\Index.aspx(12): error CS1061: 'System.Collections.Generic.IEnumerable&lt;ContactManager.Models.Contact&gt;' ne contient pas une définition pour 'Groups' et aucune méthode d'extension 'Groups' acceptant un premier argument de type 'System.Collections.Generic.IEnumerable&lt;ContactManager.Models.Contact&gt;' n'a été trouvée (une directive using ou une référence d'assembly est-elle manquante ?)
+</code></pre>
+<p>Comme maintenant je commence à être doué, je vois très vite que la vue Index
+hérite toujours de
+<code>System.Web.Mvc.ViewPage&lt;IEnumerable&lt;ContactManager.Models.Contact&gt;&gt;</code>
+et que par conséquent il n'y a rien pour remplir la liste des groupes. Zut
+alors, il fallait aussi que je copie / colle la première ligne de l'Index.aspx
+du tutoriel.</p>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;ContactManager.Models.ViewData.IndexModel&gt;&quot; %&gt;
+</code></pre>
+<p>Attendez-voir. Y'a un IndexModel. Il sort d'où lui ?</p>
+<p>Je relance l'application pour la forme, mais je sais bien que ça va
+planter.</p>
+<pre><code>c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\Temporary ASP.NET Files\root\01b85515\43ff20e2\App_Web_index.aspx.ebd9867.w7_tnpa3.0.cs(148): error CS0234: Le type ou le nom d'espace de noms 'ViewData' n'existe pas dans l'espace de noms 'ContactManager.Models' (une référence d'assembly est-elle manquante ?)
+</code></pre>
+<p>Finalement, c'est pas ce soir que je vais finir...</p>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/10/30/test-driven-development-aspnetmvc-fin/">Test-Driven Development avec ASP.NET MVC (fin)</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/20/test-driven-development-aspnetmvc-suite/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (suite)</a>
+  <a rel="next" href="/2009/10/30/test-driven-development-aspnetmvc-fin/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (fin)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

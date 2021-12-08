@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portage du tutoriel Contact Manager sous LINQ to SQL - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/" />
+<meta property="og:title" content="Portage du tutoriel Contact Manager sous LINQ to SQL" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-11-13T09:15:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-11-13T09:15:00.000Z","datePublished":"2009-11-13T09:15:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/">Portage du tutoriel Contact Manager sous LINQ to SQL</a>
+    </h1>
+    <p>
+      <span>2009-11-13</span>
+      <span>#linq</span><span>#mvc</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Encouragé par un premier succès pour faire <a href="/2009/11/03/gestion-contacts-aspnetmvc-jquery/">passer le tutoriel ContactManager en tout jQuery</a>, j'ai décidé
+de continuer ma formation ASP.NET MVC en modifiant l'application ContactManager
+pour remplacer Entity Framework par LINQ to SQL.</p>
+<h2>Création du modèle LINQ to SQL</h2>
+<p>Après un ou deux essais, j'ai vu que le plus pratique était de commencer par
+exclure ou supprimer du projet tout ce qui touchait à Entity Framework, à
+savoir ContactManagerModel.edmx et EntityContactManagerRepository.cs. Il
+devient alors possible d'ajouter un modèle LINQ to SQL au projet pour
+représenter la base de données, sans que cela provoque des définitions en
+double avec les objets générés par Entity Framework.</p>
+<p>L'ajout d'un modèle LINQ to SQL est plutôt simple :</p>
+<ul>
+<li>se placer dans le dossier Models de l'explorateur de solution</li>
+<li>faire un clic droit pour sélectionner la commande &quot;New items...&quot;</li>
+<li>dans la catégorie &quot;Data&quot;, choisir le modèle &quot;LINQ to SQL Classes&quot;</li>
+<li>le nommer &quot;ContactManagerModel.dbml&quot; et cliquer sur le bouton &quot;Add&quot; pour le
+créer</li>
+</ul>
+<p>Le concepteur LINQ to SQL est alors automatiquement ouvert et il est
+possible d'y faire glisser les deux tables &quot;Contacts&quot; et &quot;Groups&quot; depuis
+l'explorateur de base de données, ce qui a pour effet de :</p>
+<ul>
+<li>créer les classes &quot;Contact&quot; et &quot;Group&quot; basées sur ces deux tables</li>
+<li>ajouter une propriété &quot;Group&quot; à la classe &quot;Contact&quot; pour refléter le côté
+&quot;1&quot; de la relation entre les deux tables</li>
+<li>ajouter une propriété &quot;Contacts&quot; à la classe &quot;Group&quot; pour refléter le côté
+&quot;N&quot; de la relation entre les deux tables</li>
+</ul>
+<p>Cela génère aussi une classe ContactManagerModelDataContext.cs qui fourni
+deux propriétés &quot;Contacts&quot; et &quot;Groups&quot; permettant de gérer des objets &quot;Contact&quot;
+et &quot;Group&quot; issus de la base de données.</p>
+<p>Concrètement, cette première étape a eu pour résultat de substituer
+ContactManagerModel.dbml à ContactManagerModel.edmx.</p>
+<h2>Création d'un Repository basé sur LINQ to SQL</h2>
+<p>Cette seconde étape va consister à remplacer
+EntityContactManagerRepository.cs par une classe L2SContactManagerRepository.cs
+qui implémente elle aussi l'interface IContactManagerRepository. Et au lieu
+d'utiliser un objet ContactManagerDBEntities, cette nouvelle classe va utiliser
+un objet ContactManagerModelDataContext.</p>
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+
+namespace ContactManager.Models
+{
+    public class L2SContactManagerRepository : IContactManagerRepository
+    {
+        private ContactManagerModelDataContext _context = new ContactManagerModelDataContext();
+
+        ...
+    }
+}
+</code></pre>
+<p>Il reste alors à implémenter les différentes méthodes déclarées dans
+l'interface IContactManagerRepository, mais à la sauce LINQ to SQL. Par rapport
+au repository basé sur Entity Framework, les différences sont finalement assez
+mineures.</p>
+<ul>
+<li>Les objets _entities.ContactSet et _entities.GroupSet deviennent des objets
+_context.Contacts et _context.Groups :</li>
+</ul>
+<pre><code>// ---------- Entity Framework
+public IEnumerable&lt;Group&gt; ListGroups()
+{
+    return _entities.GroupSet.OrderBy(o =&gt; o.Name).ToList();
+}
+
+// ---------- LINQ to SQL
+public IEnumerable&lt;Group&gt; ListGroups()
+{
+    return _context.Groups.OrderBy(o =&gt; o.Name).ToList();
+}
+</code></pre>
+<ul>
+<li>Les méthodes pour la mise à jour des données ont des noms différents :
+AddToXxxxxxSet() devient InsertOnSubmit(), DeleteObject() devient
+DeleteOnSubmit() et SaveChanges() devient SubmitChanges() :</li>
+</ul>
+<pre><code>// ---------- Entity Framework
+public Group CreateGroup(Group groupToCreate)
+{
+    _entities.AddToGroupSet(groupToCreate);
+    _entities.SaveChanges();
+    return groupToCreate;
+}
+
+// ---------- LINQ to SQL
+public Group CreateGroup(Group groupToCreate)
+{
+    _context.Groups.InsertOnSubmit(groupToCreate);
+    _context.SubmitChanges();
+    return groupToCreate;
+}
+</code></pre>
+<ul>
+<li>La méthode ApplyPropertyChanges() de Entity Framework n'ayant apparemment
+pas d'équivalent en LINQ to SQL, et le helper UpdateModel() étant lié à la
+classe Controller, je me suis pour l'instant contenté d'une mise à jour des
+propriétés à la main pour retrouver la même fonctionnalité :</li>
+</ul>
+<pre><code>// ---------- Entity Framework
+public Contact EditContact(int groupId, Contact contactToEdit)
+{
+    // Get original contact
+    var originalContact = GetContact(contactToEdit.Id);
+
+    // Update with new group
+    originalContact.Group = GetGroup(groupId);
+
+    // Save changes
+    _entities.ApplyPropertyChanges(originalContact.EntityKey.EntitySetName, contactToEdit);
+    _entities.SaveChanges();
+    return contactToEdit;
+}
+
+// ---------- LINQ to SQL
+public Contact EditContact(int groupId, Contact contactToEdit)
+{
+    // Get original contact
+    var originalContact = GetContact(contactToEdit.Id);
+
+    // Update with new group
+    originalContact.Group = GetGroup(groupId);
+
+    // Update properties
+    originalContact.FirstName = contactToEdit.FirstName;
+    originalContact.LastName = contactToEdit.LastName;
+    originalContact.Phone = contactToEdit.Phone;
+    originalContact.Email = contactToEdit.Email;
+
+    // Save changes
+    _context.SubmitChanges();
+    return contactToEdit;
+}
+</code></pre>
+<p>Malgré tout, il y a une autre &quot;grosse&quot; différence dans la mesure où avec
+Entity Framework on utilise la méthode Include(relation) dans la requête LINQ
+pour retrouver les objets associés à l'élément sur lequel on effectue la
+requête.</p>
+<p>Concrètement, cela a pour effet de générer une jointure lors de l'exécution
+de la requête LINQ.</p>
+<ul>
+<li>Sans le Include(relation) :</li>
+</ul>
+<pre><code>return (from c in _entities.ContactSet
+        where c.Id == id
+        select c).FirstOrDefault();
+
+=&gt;  SELECT 1 AS [C1],
+                [Extent1].[Id] AS [Id],
+                [Extent1].[FirstName] AS [FirstName],
+                [Extent1].[LastName] AS [LastName],
+                [Extent1].[Phone] AS [Phone],
+                [Extent1].[Email] AS [Email],
+                [Extent1].[groupId] AS [groupId]
+        FROM [dbo].[Contacts] AS [Extent1]
+        WHERE [Extent1].[Id] = @p__linq__1
+</code></pre>
+<ul>
+<li>Avec le Include(relation) :</li>
+</ul>
+<pre><code>return (from c in _entities.ContactSet.Include(&quot;Group&quot;)
+        where c.Id == id
+        select c).FirstOrDefault();
+
+=&gt; SELECT 1 AS [C1],
+                [Extent1].[Id] AS [Id],
+                [Extent1].[FirstName] AS [FirstName],
+                [Extent1].[LastName] AS [LastName],
+                [Extent1].[Phone] AS [Phone],
+                [Extent1].[Email] AS [Email],
+                [Extent2].[Id] AS [Id1],
+                [Extent2].[Name] AS [Name]
+        FROM  [dbo].[Contacts] AS [Extent1]
+        LEFT OUTER JOIN [dbo].[Groups] AS [Extent2] ON [Extent1].[groupId] = [Extent2].[Id]
+        WHERE [Extent1].[Id] = @p__linq__1
+</code></pre>
+<p>Là aussi, je n'ai pas réussi à trouver d'équivalent pour LINQ to SQL,
+d'autant que dans ce cas je n'ai pas cherché avec beaucoup d'acharnement
+puisque l'application fonctionne parfaitement même si on s'en passe...</p>
+<pre><code>// ---------- Entity Framework
+public Contact GetContact(int id)
+{
+    return (from c in _entities.ContactSet.Include(&quot;Group&quot;)
+            where c.Id == id
+            select c).FirstOrDefault();
+}
+
+// ---------- LINQ to SQL
+public Contact GetContact(int id)
+{
+    return (from c in _context.Contacts
+            where c.Id == id
+            select c).FirstOrDefault();
+}
+</code></pre>
+<h2>Isoler les tests unitaires de l'ORM</h2>
+<p>Une fois la classe Repository complètement ré-écrite pour s'appuyer sur LINQ
+to SQL et plus Entity Framework, le projet Contact manager compile sans
+problème. Encore faut-il penser à modifier la couche de service pour instancier
+un objet IContactManagerRepository à partir de
+L2SContactManagerRepository :</p>
+<pre><code>public ContactManagerService(IValidationDictionary validationDictionary)
+    : this(validationDictionary, new L2SContactManagerRepository())
+{
+}
+</code></pre>
+<p>Par contre, la compilation de la solution provoque une erreur parce que les
+tests unitaires font appel à la méthode CreateContact() de la classe Contact.
+Apparemment, Entity Framework génère automatiquement une méthode
+CreateContact() pour ses objets, alors que LINQ to SQL n'en fait
+rien !</p>
+<p>Cela met en évidence deux problèmes :</p>
+<ul>
+<li>chez Microsoft, ils sont si peu <a href="http://gettingreal.37signals.com/ch04_Make_Opinionated_Software.php" title="Make Opinionated Software">opiniated</a> qu'ils partent dans tous
+les sens</li>
+<li>les tests unitaires du Contact Manager sont fortement liés à l'ORM Entity
+Framework et ça, c'est <a href="http://jeffreypalermo.com/blog/making-it-easy-to-replace-nhibernate-in-five-years/" title="Making it easy to replace NHibernate in five years ">pas
+bon du tout</a></li>
+</ul>
+<p>Dans un premier temps, j'ai tout simplement piraté la méthode
+CreateContact() générée par Entity Framework et ajouté une classe partielle
+Contact :</p>
+<pre><code>namespace ContactManager.Models
+{
+    public partial class Contact
+    {
+        /// &lt;summary&gt;
+        /// Create a new Contact object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;Initial value of Id.&lt;/param&gt;
+        /// &lt;param name=&quot;firstName&quot;&gt;Initial value of FirstName.&lt;/param&gt;
+        /// &lt;param name=&quot;lastName&quot;&gt;Initial value of LastName.&lt;/param&gt;
+        /// &lt;param name=&quot;phone&quot;&gt;Initial value of Phone.&lt;/param&gt;
+        /// &lt;param name=&quot;email&quot;&gt;Initial value of Email.&lt;/param&gt;
+        public static Contact CreateContact(int id, string firstName, string lastName, string phone, string email)
+        {
+            Contact contact = new Contact();
+            contact.Id = id;
+            contact.FirstName = firstName;
+            contact.LastName = lastName;
+            contact.Phone = phone;
+            contact.Email = email;
+            return contact;
+        }
+    }
+}
+</code></pre>
+<p>Mais j'ai trouvé ça un peu trop spécifique pour LINQ to SQL (puisque c'est
+redondant avec le code généré par Entity Framework) et j'ai finalement préféré
+ajouter une méthode CreateContact() utilisant la syntaxe &quot;Object initializers&quot;
+à la classe ContactManagerServiceTest des tests unitaires :</p>
+<pre><code>private Contact CreateContact(int id, string firstName, string lastName, string phone, string email)
+{
+    Contact contact = new Contact() { Id = id, FirstName = firstName, LastName = lastName, Phone = phone, Email = email };
+    return contact;
+}
+</code></pre>
+<p>Puis remplacer les appels à Contact.CreateContact() dans
+ContactManagerServiceTest.cs par de simples appels à CreateContact().</p>
+<p>Une fois cette dernière modification réalisée, la solution compile sans
+erreur, les tests unitaires continuent à être OK et l'application fonctionne
+sans problème. Je peux :</p>
+<ul>
+<li>lister les contacts rattachés à un groupe,</li>
+<li>ajouter, modifier ou supprimer un contact,</li>
+<li>ajouter ou supprimer un groupe de contacts.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Suite à mes différents essais avec les tutoriels ContactManager et
+NerdDinner, j'avais eu le pressentiment que cette notion de repository et de
+service pouvait rendre une application indépendante de la façon d'implémenter
+l'accès à la base de données.</p>
+<p>La réalisation de ce petit exercice m'a permis de vérifier cette impression
+puisque hormis une ligne de la couche service, seule la classe Repository a été
+mise à jour. Par conséquent, si on fait les choses comme il faut, on ne se
+retrouve pas lié corps et âme à un ORM mais au contraire complètement libre
+d'en changer dans le cas où il ne serait pas satisfaisant.</p>
+<p><a href="/2009/10/08/tuer-code-reussir/" title="Tuer du code pour réussir">Dans la pratique</a>, cela veut
+dire qu'il ne faut pas se focaliser sur des détails techniques mais sur des
+problèmes réels. Et notamment décider si on conserve une base de données
+<s>pourrie</s> pléthorique et mal conçue ou si on fait table rase des
+errements du passé pour construire une vrai base de données et de vrais objets
+adaptés uniquement à nos <a href="http://en.wikipedia.org/wiki/You_ain't_gonna_need_it" title="You ain't gonna need it">besoins actuels</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/11/03/gestion-contacts-aspnetmvc-jquery/" hreflang="fr-FR">Gestion de contacts avec ASP.NET MVC et jQuery</a>
+  <a rel="next" href="/2009/11/20/traduction-tutoriel-nerddinner/" hreflang="fr-FR">Traduction du tutoriel NerdDinner</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>5 improvements for a better solitaire on smartphone - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/01/07/better-solitaire-smartphone/" />
+<meta property="og:title" content="5 improvements for a better solitaire on smartphone" />
+<meta name="description" content="Solitaire-Play is already a responsive site, but there is always room for improvement with smartphones: disable &#39;pull-to-refresh&#39;, switch from &#39;hover&#39; to &#39;ripple&#39;, enlarge the buttons, move stock to the right..." />
+<meta property="og:description" content="Solitaire-Play is already a responsive site, but there is always room for improvement with smartphones: disable &#39;pull-to-refresh&#39;, switch from &#39;hover&#39; to &#39;ripple&#39;, enlarge the buttons, move stock to the right..." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/01/07/better-solitaire-smartphone/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/responsive-solitaire.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-01-07T10:16:55.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-01-07T10:16:55.000Z","datePublished":"2020-01-07T10:16:55.000Z","description":"Solitaire-Play is already a responsive site, but there is always room for improvement with smartphones: disable 'pull-to-refresh', switch from 'hover' to 'ripple', enlarge the buttons, move stock to the right...","inLanguage":"en-US","url":"https://blog3.pagesd.info/2020/01/07/better-solitaire-smartphone/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/responsive-solitaire.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/01/07/better-solitaire-smartphone/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/responsive-solitaire.jpg" alt="Am I Responsive ? - Justin Avery" /><figcaption><a href="http://ami.responsivedesign.is/">Am I Responsive ? - Justin Avery</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/01/07/better-solitaire-smartphone/">5 improvements for a better solitaire on smartphone</a>
+    </h1>
+    <p>
+      <span>2020-01-07</span>
+      <span>#css</span><span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>The different solitaires on my <a href="https://www.solitaire-play.com/">Solitaire-Play</a> game website are all &quot;responsive&quot;. Which is very interesting since it means that they work properly on a desktop PC as well as a laptop, but also on a tablet or iPad and especially on Android or iPhone smartphones ...</p>
+<p>I write HTML code that's valid enough, fairly correct CSS code, and JavaScript that's pretty much all-purpose. This allows me to be quite quiet and to make a lot of changes without having to check everything on different systems every time.</p>
+<p>But from time to time, it's not useless to take a look to check that everything is still working as I want it to. And so, during my holidays, I took a little tour to make sure that everything was fine when my site was used from a mobile phone.</p>
+<p>Result: it's working well, but I still found some points to improve.</p>
+<h2>Disable &quot;pull-to-refresh&quot;</h2>
+<p>The &quot;pull-to-refresh&quot; is the gesture of grabbing the top of the screen and sliding it down. It is a gesture that has been popularized by the mobile applications of Facebook and Twitter where it's used  to &quot;free&quot; space at the top of the screen to display more recent information. And now Google is sawed off! What? There's a new UX so good, I have to do the same with Chrome on Android.</p>
+<p>But I didn't know about that. And when I was playing on a phone, the screen was refreshed from time to time and the game in progress disappeared. Until recently, I thought it was because I was old and didn't have 2 thumbs like young people to type correctly on a phone :(</p>
+<p>Then one day I got tired of it and looked for why Google was making me lose when I was finally going to win. And from thread to Stack Overflow, I came across a page explaining how to regain control of my scroll: <a href="https://developers.google.com/web/updates/2017/11/overscroll-behavior">Take control of your scroll: customizing pull-to-refresh and overflow effects</a>.</p>
+<p>So, to say no thanks I don't want to be bothered by the pull-to-refresh anymore, all I need is a single line of CSS:</p>
+<pre><code class="language-css">body {
+  overscroll-behavior-y: contain;
+}
+</code></pre>
+<h2>Disable &quot;hover&quot; / Enable &quot;ripple&quot;</h2>
+<p>That's a classic problem with smartphones: since there is no mouse, they cannot know when you're hovering over something with your finger, so they can't apply <code>:hover</code> styles. Instead, they apply these <code>:hover</code> styles in the case of a <code>:focus</code>. And once you press a button, it takes the &quot;focus&quot; with CSS styles that go with the &quot;hover&quot;.</p>
+<p>In my case, I paint the buttons in blue when the mouse hovers them to show that this is where you have to click. And on a phone, after pressing the &quot;HINT&quot; button, it remained blue to show that I needed help to play Klondike Solitaire.</p>
+<p>So, the solution is simple, just don't style <code>:hover</code> in the case of phones and probably tablets. To know if it's a phone, it's easy: if it's small, it's a phone. For &quot;probably tablets&quot;, it's a little more tricky. Personally, my CSS doesn't make too much difference between a tablet and a PC and there are tablets that have stylus. Who knows if a pen can handle <code>:hover</code>!</p>
+<p>That's where I got a bit confused. I'd just switched to <a href="https://duckduckgo.com/">DuckDuckGo</a> and I had a little trouble knowing what to ask to find the &quot;best&quot; results. So I came across the article <a href="https://www.prowebdesign.ro/how-to-deal-with-hover-on-touch-screen-devices/">How to deal with :hover on touch screen devices</a> and especially <a href="https://uxmovement.com/mobile/the-hover-effect-for-mobile-buttons/">The &quot;Hover Effect&quot; for Mobile Buttons</a>.</p>
+<p>The latter explains very well what the &quot;ripple&quot; effect is and how it works.But I read that a little bit across the board and I followed the &quot;<a href="https://codepen.io/finnhvman/post/pure-css-ripple-with-minimal-effort">ripple effect</a>&quot; link on CodePen a bit too quickly and found myself trying to do the same on my site. I had gone from &quot;how to remove the hover&quot; to &quot;how to make a CSS ripple&quot;.</p>
+<p>I'll make it short. On a phone, you don't need to do anything to make the buttons have a &quot;ripple&quot; effect: the browser does it. So I could just remove the &quot;hover&quot; styles (the blue one in my case) for browsers that don't support it:</p>
+<pre><code class="language-css">h1 a:hover, button:hover {
+  background-color: #05f;
+  color: white;
+  text-decoration: none;
+}
+
+@media (hover: none) {
+  h1 a:hover, button:hover {
+    background-color: #084;
+    outline: none;
+}
+</code></pre>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover">@media(hover)</a> documentation on MDN.</p>
+<p>Otherwise, I've also put an <code>outline: none</code> (but I know that I shouldn't do this: <a href="https://a11yproject.com/posts/never-remove-css-outlines/">Never remove CSS outlines</a>) so that after pressing a button there's no border around it to show it still has focus.</p>
+<h2>Enlarge buttons</h2>
+<p>The top of the screen of each solitaire game display a menu bar with the name of the current game and 4 buttons which allow:</p>
+<ul>
+<li>&quot;GAME&quot;: start a new game</li>
+<li>&quot;HINT&quot;: get a tip on how to play</li>
+<li>&quot;UNDO&quot;: undo the last move played</li>
+<li>&quot;≡&quot;: choose another solitaire game</li>
+</ul>
+<p>First, with &quot;old&quot; smartphones in vertical mode, I hide the &quot;GAME&quot; option and you have to click on the game title to start a new game:</p>
+<pre><code class="language-css">@media (max-width: 22rem) {
+  #game { display: none; }
+}
+</code></pre>
+<p>Until I can do better, I have slightly enlarge the buttons in this menu:</p>
+<p><img src="/public/2020/solitaire-menu.png" alt=""></p>
+<h2>Display the list of games correctly</h2>
+<p>On smartphones, in addition to the &quot;≡&quot; button in the menu bar to select another solitaire game, there is a &quot;≡ Select Solitaire Game...&quot; button underneath the Twitter, Facebook, Pinterest... buttons.</p>
+<p>The problem is that when you clicked on it, the list of available solitaires was displayed at the top of the page, and therefore possibly above the top of what was visible on the screen:</p>
+<p><img src="/public/2020/solitaire-scroll-1.png" alt=""></p>
+<p>I could have thought of that before, but I fixed it to make a <code>window.scrollTop()</code> before displaying the popup, which allows you to see all the existing games (as long as there aren't too many):</p>
+<p><img src="/public/2020/solitaire-scroll-2.png" alt=""></p>
+<h2>Move the stock to the right</h2>
+<p>By playing more regularly I noticed that I had a problem with the way I was playing:</p>
+<ul>
+<li>I move my right hand, pointing to the deck on the left side of the screen</li>
+<li>I <s>click</s> press on the stock to draw a card</li>
+<li>I take my hand away so I can see the tableau and check if the new card can go somewhere</li>
+<li>I move my right hand back to the left side of the screen to redeal...</li>
+</ul>
+<p>It would be easier if the stock pile was on the right side of the screen (or if I was left-handed). Or maybe, if I could use all my fingers, I wouldn't have that kind of problem. However, when searching for &quot;Klondike Solitaire Mobile&quot; images, you can see that the stock is often on the right side.</p>
+<p>Therefore, I also transferred the stock from the left side to the right side of the screen:</p>
+<p><img src="/public/2020/solitaire-pioche.png" alt=""></p>
+<p>At first, I did this the &quot;complicated&quot; way:</p>
+<pre><code class="language-css">@media (max-width: 575.98px) {
+  .reverse {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
+</code></pre>
+<p>Then given that my grid system is already based on <code>float: left</code>, it can be much simpler:</p>
+<pre><code class="language-css">.column {
+  float: left;
+  width: 14.2857%;
+  ...
+}
+
+@media (max-width: 575.98px) {
+  .reverse .column {
+    float: right;
+  }
+}
+</code></pre>
+<h2>Conclusion</h2>
+<p>It wasn't very complicated and I hope that players who use Solitaire-Play from their phones will enjoy it.</p>
+<p>For the future, I have to work again on the transformation of the site into <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps">PWA</a>. I have already started to do a few things, in particular switching to HTTPS, using <a href="https://markdotto.com/2018/02/07/github-system-fonts/">system fonts</a> rather than &quot;Century Gothic&quot; and setting up the HTML tags for the <a href="https://opengraphprotocol.org/">Open Graph protocol</a>. In theory, I &quot;only&quot; have to create a <a href="https://developers.google.com/web/fundamentals/web-app-manifest">manisfest.json</a> file and then code a <a href="https://developers.google.com/web/ilt/pwa/introduction-to-service-worker">Service Worker</a>.</p>
+<p>Or, I could also try to save the progress of a game with <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">window.localStorage</a> to come back to current game?</p>
+<div class="encart">
+<p>Version en français : <a href="/2020/01/06/meilleur-solitaire-smartphone/" hreflang="fr-FR">5 améliorations pour un meilleur solitaire sur smartphone</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/01/06/meilleur-solitaire-smartphone/" hreflang="fr-FR">5 améliorations pour un meilleur solitaire sur smartphone</a>
+  <a rel="next" href="/2020/01/13/supprimer-doublon-sql/" hreflang="fr-FR">Supprimer des doublons en SQL</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les boucles en Ruby - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/12/19/boucles-ruby/" />
+<meta property="og:title" content="Les boucles en Ruby" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/12/19/boucles-ruby/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-12-19T20:05:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-12-19T20:05:00.000Z","datePublished":"2012-12-19T20:05:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/12/19/boucles-ruby/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/12/19/boucles-ruby/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/12/19/boucles-ruby/">Les boucles en Ruby</a>
+    </h1>
+    <p>
+      <span>2012-12-19</span>
+      <span>#ruby</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>La boucle &quot;for&quot;</h2>
+<p>Avec mon passé de développeur Basic, je commence par la boucle &quot;for&quot;.</p>
+<pre><code>10 FOR I = 0 TO 5
+20   PRINT I
+30 NEXT
+</code></pre>
+<p>En Ruby, le <code>for</code> sert à parcourir les différentes valeurs des
+objets qui sont capables de répondre à la méthode <code>each</code> (comme les
+Array et les Range).</p>
+<p>C'est donc plus une instruction &quot;for ... in&quot; (un peu comme le
+<code>foreach</code> du C#). Utilisé avec un tableau, cela donne le code
+suivant :</p>
+<pre><code>for i in [0, 1, 2, 3, 4, 5] do
+  puts &quot;- nombre = #{i}&quot;
+end
+
+=&gt;
+
+- nombre = 0
+- nombre = 1
+- nombre = 2
+- nombre = 3
+- nombre = 4
+- nombre = 5
+</code></pre>
+<p>Apparemment, Ruby traite ça comme si c'était :</p>
+<pre><code>[0, 1, 2, 3, 4, 5].each do |i|
+  puts &quot;- nombre = #{i}&quot;
+end
+</code></pre>
+<p>Et pour les Range, cela donne :</p>
+<pre><code>for i in (0..5) do
+  puts &quot;- nombre = #{i}&quot;
+end
+
+=&gt;
+
+- nombre = 0
+- nombre = 1
+- nombre = 2
+- nombre = 3
+- nombre = 4
+- nombre = 5
+</code></pre>
+<p>Que Ruby traite comme :</p>
+<pre><code>(0..5).each do |i|
+  puts &quot;- nombre = #{i}&quot;
+end
+</code></pre>
+<p>Par conséquent, il est beaucoup plus naturel d'employer les
+<code>each</code> en Ruby que le <code>for</code>.</p>
+<h2>Les itérations</h2>
+<pre><code>each
+</code></pre>
+<p>est donc un &quot;itérateur&quot; : il permet de parcourir tous
+les éléments d'un ensemble (un tableau, un range...) un par un.</p>
+<pre><code>times
+</code></pre>
+<p>est un autre itérateur qui est utilisé assez couramment
+en Ruby. Par exemple, pour refaire la boucle des exemples précédents qui tourne
+un nombre précis de fois, on aura plus tendance à utiliser cette méthode
+<code>times</code> :</p>
+<pre><code>6.times do |i|
+  puts &quot;- nombre = #{i}&quot;    # =&gt; 0, 1, 2, 3, 4, 5
+end
+</code></pre>
+<p>Pour information, si le traitement à l'intérieur de la boucle n'a
+pas besoin de la valeur de l'indice, il n'est pas nécessaire de le faire
+apparaître :</p>
+<pre><code>3.times do
+  puts &quot;Penny&quot;      # =&gt; Penny, Penny, Penny
+end
+</code></pre>
+<p>Il existe 3 autres itérateurs pour boucler d'une valeur à l'autre et qui se
+rapprocherait peut être plus du fonctionnement du &quot;FOR ... NEXT&quot; de
+Basic :</p>
+<pre><code># FOR I = O TO 5 : ... : NEXT
+0.upto(5) do |i|
+  puts &quot;- nombre = #{i}&quot;      # =&gt; 0, 1, 2, 3, 4, 5
+end
+
+# FOR I = 5 TO 0 STEP -1 : ... : NEXT
+5.downto(0) do |i|
+  puts &quot;- nombre = #{i}&quot;      # =&gt; 5, 4, 3, 2, 1
+end
+
+# FOR I = 0 TO 5 STEP 2 : ... : NEXT
+0.step(5, 2) do |i|
+  puts &quot;- nombre = #{i}&quot;      # =&gt; 0, 2, 4
+end
+</code></pre>
+<h2>Les boucles &quot;while&quot; et &quot;until&quot;</h2>
+<p>Là il s'agit d'instructions qui font vraiment parti du langage Ruby (pas
+comme le <code>for</code> qui est plus une &quot;surcouche&quot; pour le
+<code>each</code>).</p>
+<p>La boucle &quot;while&quot; permet de répéter le traitement d'un bloc de code tant
+qu'une condition est vraie :</p>
+<pre><code>i = 0
+while i &lt;= 5 do
+  puts &quot;- nombre = #{i}&quot;    # =&gt; 0, 1, 2, 3, 4, 5
+  i += 1
+end
+</code></pre>
+<p>Et la boucle &quot;until&quot; sert pour répéter le traitement jusqu'à ce que la
+condition soit vraie :</p>
+<pre><code>i = 0
+until i &gt; 5 do
+  puts &quot;- nombre = #{i}&quot;    # =&gt; 0, 1, 2, 3, 4, 5
+  i += 1
+end
+</code></pre>
+<p>On peut même arriver à faire des trucs comme :</p>
+<pre><code>i = 0
+puts &quot;- nombre = #{i += 1}&quot; while i &lt;= 5    # =&gt; 1, 2, 3, 4, 5, 6
+</code></pre>
+<h2>La boucle &quot;loop&quot;</h2>
+<p>Et finalement, Ruby dispose aussi d'une autre instruction native pour
+effectuer des boucles.</p>
+<pre><code>loop do
+   ...
+end
+</code></pre>
+<p>Le seul truc, c'est qu'il faut prévoir quelque chose dans le corps de la
+boucle pour en sortir, sinon ça bouclera éternellement.</p>
+<p>C'est pour cela qu'il existe l'instruction <code>break</code> :</p>
+<pre><code>i = 0
+loop do
+  break if i &gt; 5
+  puts &quot;- nombre = #{i}&quot;    # =&gt; 0, 1, 2, 3, 4, 5
+  i += 1
+end
+</code></pre>
+<p>Et comme on fait le &quot;break&quot; sur une condition, on a droit à toutes les
+variantes de notre choix :</p>
+<ul>
+<li><code>break if i &gt; 5</code></li>
+<li><code>if i &gt; 5 break</code></li>
+<li><code>break unless i &lt;= 5</code></li>
+<li><code>unless i &lt;= 5 break</code></li>
+</ul>
+<p>On peut même placer l'instruction <code>break</code> où on veut dans la
+boucle :</p>
+<pre><code>i = 0
+loop do
+  puts &quot;- nombre = #{i}&quot;    # =&gt; 0, 1, 2, 3, 4, 5
+  i += 1
+  break if i &gt; 5
+end
+
+i = 0
+loop do
+  puts &quot;- nombre = #{i}&quot;    # =&gt; 0, 1, 2, 3, 4, 5, 6
+  break if i &gt; 5
+  i += 1
+end
+</code></pre>
+<p>Dans le même style que <code>break</code>, il existe <code>next</code> qui
+permet en quelque sorte de &quot;passer un tour&quot; :</p>
+<pre><code>i = 0
+loop do
+  i += 1
+  break if i &gt; 5
+  next if i &lt; 3
+  puts &quot;- nombre = #{i}&quot;    # =&gt; 3, 4, 5
+end
+</code></pre>
+<h2>Portée des variables</h2>
+<p>En C#, une variable déclarée dans la boucle est locale et ne peut pas être
+utilisé en dehors de la boucle :</p>
+<pre><code>for (int i = 0; i &lt; 6; i++)
+{
+  var fois2 = i + i;
+  Console.WriteLine(fois2);
+}
+Console.WriteLine(fois2);
+</code></pre>
+<p>=&gt; <code>Le nom 'fois2' n'existe pas dans le contexte actuel</code></p>
+<p>C'est pareil en Ruby où une variable qui apparaît dans la boucle est
+locale :</p>
+<pre><code>6.times do |i|
+  fois2 = i + i
+  puts fois2
+end
+puts fois2
+</code></pre>
+<p>=&gt; <code>c:/Ruby/Rubyq.rb:5:in </code><main>': undefined local variable
+or method <code>fois2' for main:Object (NameError)</code></p>
+<p>Attention toutefois, car la variable ne sera pas locale du moment qu'elle
+est apparue avant dans le source, y compris dans le cas où le code où elle
+apparaissait n'a pas été exécuté :</p>
+<pre><code>if (1 == 2)
+  fois2 = -3
+end
+6.times do |i|
+  fois2 = i + i
+  puts fois2
+end
+puts fois2
+</code></pre>
+<p>=&gt; Le dernier <code>puts fois2</code> renverra 10.</p>
+<p>D'autre part, la variable utilisée pour indicer la boucle est toujours
+locale à la boucle, même dans le cas où une variable de même nom existe en
+dehors de la boucle.</p>
+<pre><code>i = 99
+6.times do |i|
+  puts i
+end
+puts i
+</code></pre>
+<p>=&gt; Le dernier <code>puts i</code> affichera 99 (et pas 10).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/12/18/windows-powershell-ruby-accents/" hreflang="fr-FR">Windows, PowerShell, Ruby et les accents</a>
+  <a rel="next" href="/2013/01/14/supprimer-espaces-model-binding/" hreflang="fr-FR">Supprimer les espaces lors du Model Binding</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Champs lastUpdate - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/07/18/champs-lastupdate/" />
+<meta property="og:title" content="Champs lastUpdate" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/07/18/champs-lastupdate/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-07-18T11:43:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-07-18T11:43:00.000Z","datePublished":"2005-07-18T11:43:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/07/18/champs-lastupdate/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/07/18/champs-lastupdate/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/07/18/champs-lastupdate/">Champs lastUpdate</a>
+    </h1>
+    <p>
+      <span>2005-07-18</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ajout du champ lastUpdate à la table qc_Screens. Celui-ci est destiné à
+stocker la date de la dernière mise à jour de l'écran. Cette information peut
+être affichée sur l'écran grace à la macro &quot;screenUpdate&quot; de façon à informer
+le visiteur de la &quot;fraicheur&quot; de la page. Plus tard, cette date pourra
+également servir pour gérer un système de notification ou pour réaliser une box
+GoogleSitemap.</p>
+<ul>
+<li>Ajouté le script 20050715_update.sql pour mettre à jour la base de données
+<ul>
+<li>ALTER TABLE qc_Screens ADD lastUpdate DATETIME;</li>
+<li>UPDATE qc_Screens SET lastUpdate = #DAYDATE;</li>
+</ul>
+</li>
+<li>Prise en compte de lastUpdate dans Screens.cs</li>
+<li>Modification de Boxes.cs pour que màj automatique de lastUpdate à chaque
+administration (création, modification ou suppression) d'une box</li>
+<li>Ajout de siteMacro(&quot;screenUpdate&quot;) à la classe Macro.cs</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/07/18/urlrewriting-mode-admin-4/" hreflang="fr-FR">UrlRewriting en mode admin #4</a>
+  <a rel="next" href="/2005/07/18/trackupdatecontent/" hreflang="fr-FR">TrackUpdateContent()</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

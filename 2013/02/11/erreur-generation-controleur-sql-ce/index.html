@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Erreur génération template contrôleur avec SQL CE - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2013/02/11/erreur-generation-controleur-sql-ce/" />
+<meta property="og:title" content="Erreur génération template contrôleur avec SQL CE" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2013/02/11/erreur-generation-controleur-sql-ce/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-02-11T20:30:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2013-02-11T20:30:00.000Z","datePublished":"2013-02-11T20:30:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2013/02/11/erreur-generation-controleur-sql-ce/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2013/02/11/erreur-generation-controleur-sql-ce/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2013/02/11/erreur-generation-controleur-sql-ce/">Erreur génération template contrôleur avec SQL CE</a>
+    </h1>
+    <p>
+      <span>2013-02-11</span>
+      <span>#ef</span><span>#mvc</span><span>#sql-server</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'ai encore eu un problème avec <a href="/tags/sql-server/">SQL Server</a> :)</p>
+<p>Ce coup-ci, c'est SQL CE qui me donne du soucis. J'ai commencé à faire des
+tests pour utiliser <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> avec ASP.NET MVC. Après quelques essais de base,
+j'ai lancé la génération automatique d'un contrôleur et des vues afférentes
+pour avoir un peu plus de matière à travailler.</p>
+<p>Je procède normalement :</p>
+<ul>
+<li>Clic-droit sur le dossier Controllers dans l'explorateur de solution,</li>
+<li>Ajouter,</li>
+<li>Controller...</li>
+</ul>
+<p><img src="/public/2013/controller-sql-ce-add.jpg" alt=""></p>
+<p>Je clique sur le bouton [Add] et boum !</p>
+<p><img src="/public/2013/controller-sql-ce-error.jpg" alt=""></p>
+<blockquote>
+<p>Unable to retrieve metadata for 'Bootstrap3.Models.Events'. Access to the
+database file is not allowed. [ 1884,File name = c:\Program Files
+(x86)\Microsoft Visual Studio 10.0\Common7\IDE\Department.sdf,SeCreateFile
+]</p>
+</blockquote>
+<p>J'avais déjà eu ce problème sur un autre projet mais je pensais que c'était
+&quot;normal&quot; et que j'avais dû y casser quelque chose. Mais là, un projet tout
+neuf !</p>
+<p>En fait, le problème vient du fait que j'utilise une base de données SQL
+Server CE que j'ai donc configurée dans le fichier Web.config :</p>
+<pre><code>&lt;connectionStrings&gt;
+  &lt;add name=&quot;DepartmentContext&quot;
+       connectionString=&quot;Data Source=|DataDirectory|Department.sdf&quot;
+       providerName=&quot;System.Data.SqlServerCe.4.0&quot; /&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+<p>Et apparemment, le système de template de VS 2010 ou ASP.NET MVC 3 n'aime
+pas trop le <code>|DataDirectory|</code> pour figurer le sous-répertoire
+&quot;App_Data&quot;.</p>
+<p>Le problème disparaît en indiquant le vrai chemin pour ce dossier :</p>
+<pre><code>&lt;connectionStrings&gt;
+  &lt;add name=&quot;DepartmentContext&quot;
+       connectionString=&quot;Data Source=C:\MVC\Bootstrap3\Bootstrap3\App_Data\Department.sdf&quot;
+       providerName=&quot;System.Data.SqlServerCe.4.0&quot; /&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2013/02/11/conditions-ruby/" hreflang="fr-FR">Les conditions en Ruby</a>
+  <a rel="next" href="/2013/03/27/convertir-projet-asp-net-mvc3-mvc4/" hreflang="fr-FR">Convertir un projet ASP.NET MVC 3 en MVC 4</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

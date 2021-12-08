@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Répéter un formulaire PDF sur plusieurs pages - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/09/29/repeter-formulaire-pdf-plusieurs-pages/" />
+<meta property="og:title" content="Répéter un formulaire PDF sur plusieurs pages" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/09/29/repeter-formulaire-pdf-plusieurs-pages/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-09-29T17:07:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-09-29T17:07:00.000Z","datePublished":"2008-09-29T17:07:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/09/29/repeter-formulaire-pdf-plusieurs-pages/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/09/29/repeter-formulaire-pdf-plusieurs-pages/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/09/29/repeter-formulaire-pdf-plusieurs-pages/">Répéter un formulaire PDF sur plusieurs pages</a>
+    </h1>
+    <p>
+      <span>2008-09-29</span>
+      <span>#boulot</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour parvenir à faire un état sur plusieurs pages en remplissant plusieurs
+fois le même formulaire PDF avec des données différentes, je n'ai finalement
+pas eu trop à me creuser la tête. J'ai simplement interrogé le tout nouveau
+site <a href="http://stackoverflow.com/">Stack Overflow</a> qui m'a gentiment
+expliqué <a href="http://stackoverflow.com/questions/177/how-do-i-programmatically-create-a-pdf-in-my-net-application#4980">
+How do I programmatically create a PDF in my .NET application</a>?</p>
+<pre><code>namespace Altrr.iText {
+
+    using System;
+    using System.Collections;
+    using System.IO;
+    using iTextSharp.text;
+    using iTextSharp.text.pdf;
+
+    /// &lt;summary&gt;
+    /// Tests du composant iTextSharp
+    /// &lt;/summary&gt;
+    public class Start {
+
+        /// &lt;summary&gt;
+        /// Point d'entrée principal de l'application.
+        /// &lt;/summary&gt;
+        [STAThread]
+        static void Main (string[] args) {
+
+            string pdfSource = @&quot;D:\Altrr\iText\register_form1.pdf&quot;;
+            if (args.Length == 1) {
+                pdfSource = args[0];
+            }
+            FillFields(pdfSource);
+
+        }
+
+        /// &lt;summary&gt;
+        /// Remplis les différents champs d'un formulaire PDF
+        /// &lt;/summary&gt;
+        static void FillFields (string pdfSource) {
+
+            // Création d'un objet PDF Reader basé sur le formulaire PDF
+            Console.WriteLine(pdfSource + &quot; :&quot;);
+
+            string pdfRempli = pdfSource.Replace(&quot;.pdf&quot;, &quot;_test.pdf&quot;);
+            Document doc = new Document();
+            PdfCopy copy = new PdfCopy(doc, new FileStream(pdfRempli, FileMode.Create));
+            doc.Open();
+
+            for (int i = 0; i &lt; 10; i++) {
+
+                PdfReader pdfReader = new PdfReader(pdfSource);
+
+                MemoryStream temp = new MemoryStream();
+                PdfStamper pdfStamper = new PdfStamper(pdfReader, temp);
+
+                AcroFields fields = pdfStamper.AcroFields;
+                fields.SetField(&quot;person.name&quot;, i.ToString() + &quot;Laura Specimen&quot;);
+                fields.SetField(&quot;person.address&quot;, i.ToString() + &quot;Paulo Soares Way 1&quot;);
+                fields.SetField(&quot;person.postal_code&quot;, &quot;F00b4R&quot;, &quot;FOOBAR&quot;);
+                fields.SetField(&quot;person.email&quot;, i.ToString() + &quot;laura@lowagie.com&quot;);
+                fields.SetField(&quot;person.programming&quot;, &quot;JAVA&quot;);
+                fields.SetField(&quot;person.language&quot;, &quot;FR&quot;);
+                fields.SetField(&quot;person.preferred&quot;, &quot;EN&quot;);
+                fields.SetField(&quot;person.knowledge.English&quot;, &quot;On&quot;);
+                fields.SetField(&quot;person.knowledge.French&quot;, &quot;On&quot;);
+                fields.SetField(&quot;person.knowledge.Dutch&quot;, &quot;Off&quot;);
+
+                pdfStamper.FormFlattening = true;
+                pdfStamper.Close();
+
+                PdfReader tempReader = new PdfReader(temp.ToArray());
+
+                copy.AddPage(copy.GetImportedPage(tempReader, pdfReader.NumberOfPages));
+                copy.FreeReader(tempReader);
+            }
+            doc.Close();
+        }
+
+    }
+}
+</code></pre>
+<p>Pour que ça marche, j'ai dû ajouter un <code>using iTextSharp.text;</code>
+sans quoi le type 'Document' n'est pas référencé.</p>
+<p>Et j'utilise aussi <code>pdfStamper.FormFlattening = true;</code> pour que
+le formulaire PDF ne soit plus modifiable. En fait, cela fait que le fichier
+PDF final redevient un simple PDF sans plus aucun champ saisissable.</p>
+<p>Pour l'instant, je vais déjà utiliser ça comme ça parce que l'échéance pour
+la mise à jour de l'état approche à grands pas. Puis quand j'aurais fini
+j'essaierai de comprendre un peu mieux ce qui se passe et comment ça
+marche.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/09/26/remplir-champs-formulaire-pdf/" hreflang="fr-FR">Remplir les champs d&#39;un formulaire PDF</a>
+  <a rel="next" href="/2008/10/02/migration-altrr-press-net-1-net-2/" hreflang="fr-FR">Migration de Altrr-Press de .NET 1 vers .NET 2</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Filtrage de la boite Documents - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/01/11/filtrage-boite-documents/" />
+<meta property="og:title" content="Filtrage de la boite Documents" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/01/11/filtrage-boite-documents/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-01-11T11:13:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-01-11T11:13:00.000Z","datePublished":"2006-01-11T11:13:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/01/11/filtrage-boite-documents/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/01/11/filtrage-boite-documents/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/01/11/filtrage-boite-documents/">Filtrage de la boite Documents</a>
+    </h1>
+    <p>
+      <span>2006-01-11</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modifications du fonctionnement de la boite Documents pour permettre de
+&quot;contextualiser&quot; la liste des documents en fonction d'un argument présent dans
+l'url :</p>
+<ul>
+<li>définition du nom du paramètre dans l'écran de configuration,</li>
+<li>utilisation de la valeur attribuée au paramètre lors de l'ajout d'un
+nouveau document (la valeur est enregistrée dans le champ catégorie),</li>
+<li>prise en compte de la valeur attribuée à ce paramètre pour filtrer la liste
+des documents présentés dans la liste.</li>
+</ul>
+<p>Exemple : si le nom du paramètre a été configuré à &quot;folder&quot;, le fait
+d'appeler la page contenant la boite Documents avec une url de la forme
+&quot;http://www.monsite.com/downloads.asxp?folder=sources&quot; permettra de n'afficher
+que les documents pour lesquels le champ categorie contient la valeur
+&quot;sources&quot;. Et les fichiers ajoutés seront automatiquement enregistrés avec la
+catégorie &quot;sources&quot;.</p>
+<p>Lorsque le paramètre n'est pas présent dans l'url, les boutons de mise à
+jour des documents (ajout et modification) ne sont pas disponibles.</p>
+<p>Important : dans le cas où cette fonctionnalité est
+utilisée, il est obligatoire de définir la durée du cache à 0 !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/01/05/correction-sitetree/" hreflang="fr-FR">Correction SiteTree</a>
+  <a rel="next" href="/2006/01/11/repertoire-stockage-documents/" hreflang="fr-FR">Répertoire stockage des documents</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

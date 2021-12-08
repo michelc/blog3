@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mise à jour d&#39;une table à partir d&#39;une autre - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2007/05/30/mise-a-jour-table-partir-autre/" />
+<meta property="og:title" content="Mise à jour d&#39;une table à partir d&#39;une autre" />
+<meta name="description" content="Je note ici la commande SQL qui me permet de mettre à jour la colonne d&#39;une table à partir d&#39;une auytre colonne dans une autre table (versions Access, SqlServer et Oracle)." />
+<meta property="og:description" content="Je note ici la commande SQL qui me permet de mettre à jour la colonne d&#39;une table à partir d&#39;une auytre colonne dans une autre table (versions Access, SqlServer et Oracle)." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2007/05/30/mise-a-jour-table-partir-autre/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/sql-database.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2007-05-30T19:04:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2007-05-30T19:04:00.000Z","datePublished":"2007-05-30T19:04:00.000Z","description":"Je note ici la commande SQL qui me permet de mettre à jour la colonne d'une table à partir d'une auytre colonne dans une autre table (versions Access, SqlServer et Oracle).","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2007/05/30/mise-a-jour-table-partir-autre/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/sql-database.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2007/05/30/mise-a-jour-table-partir-autre/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/sql-database.jpg" alt="dbdiagram.io" /><figcaption><a href="https://dbdiagram.io/">dbdiagram.io</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2007/05/30/mise-a-jour-table-partir-autre/">Mise à jour d&#39;une table à partir d&#39;une autre</a>
+    </h1>
+    <p>
+      <span>2007-05-30</span>
+      <span>#code-snippets</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour mettre à jour un champ d'une table à partir du champ équivalent d'une
+autre table, Access accepte deux noms de tables pour la commande UPDATE, mais
+pas Sql Server.</p>
+<p>Exemple : les taux de TVA ayant été corrigés dans la table des
+articles, il faut répercuter ces modifications dans la table des lignes de
+factures</p>
+<p>Sous Access</p>
+<pre><code>UPDATE LignesFactures, Articles
+SET    LignesFactures.TauxTva = Articles.TauxTva
+WHERE  LignesFactures.ArticleID = Articles.ArticleID
+</code></pre>
+<p>Sous Sql Server</p>
+<pre><code>UPDATE LignesFactures
+SET    LignesFactures.TauxTva = Articles.TauxTva
+FROM   LignesFactures
+INNER JOIN Articles ON Articles.ArticleID = LignesFactures.ArticleID
+</code></pre>
+<p>Mise à jour : Sous Oracle</p>
+<pre><code>UPDATE LignesFactures
+SET    LignesFactures.TauxTva = (SELECT Articles.TauxTva
+                                 FROM   Articles
+                                 WHERE  Articles.ArticleID = LignesFactures.ArticleID)
+</code></pre>
+<div class="encart">
+<p>English version: <a href="/2019/12/23/update-table-from-another-table/" hreflang="en-US">Updating a table from another table</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2007/05/03/comment-cibler-contenu-reference/" hreflang="fr-FR">Comment cibler le contenu référencé</a>
+  <a rel="next" href="/2007/07/11/faire-join-arraylist/" hreflang="fr-FR">Faire un Join sur un ArrayList</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

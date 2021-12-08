@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Afficher un joli libellé avec Enum.ToString() - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/" />
+<meta property="og:title" content="Afficher un joli libellé avec Enum.ToString()" />
+<meta name="description" content="Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un Enum. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut Description pour définir de jolis libellés." />
+<meta property="og:description" content="Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un Enum. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut Description pour définir de jolis libellés." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2021-11-25T12:41:28.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2021-11-25T12:41:28.000Z","datePublished":"2021-11-25T12:41:28.000Z","description":"Un jour, j'ai eu besoin d'afficher un libellé en fonction de la valeur d'un Enum. J'ai donc fait comme à chaque fois et j'ai utilisé l'attribut Description pour définir de jolis libellés.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2021/cute-puppies.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2021/cute-puppies.jpg" alt="Australian Shepherd babies - Jametlene Reskp" /><figcaption><a href="https://unsplash.com/photos/fliwkBbS7oM">Australian Shepherd babies - Jametlene Reskp</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2021/11/25/afficher-joli-libelle-avec-enum-tostring/">Afficher un joli libellé avec Enum.ToString()</a>
+    </h1>
+    <p>
+      <span>2021-11-25</span>
+      <span>#csharp</span><span>#enum</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Un jour, j'ai eu besoin d'afficher un libellé en fonction de la valeur d'un <code>Enum</code>. J'ai donc fait comme à chaque fois et j'ai utilisé l'attribut <code>Description</code> pour définir de jolis libellés.</p>
+<pre><code class="language-csharp">using System.ComponentModel;
+
+public enum NatureType
+{
+    Ouverture,
+    Modification,
+    [Description(&quot;Déblocage&quot;)]
+    Deblocage,
+    [Description(&quot;Alerte 3 mois&quot;)]
+    Alerte3Mois,
+    [Description(&quot;Alerte 6 mois&quot;)]
+    Alerte6Mois
+}
+</code></pre>
+<p>Puis ensuite, j'ai repris le code assez compliqué dont on use et abuse depuis toujours pour récupérer cette description. C'est une simple méthode d'extension, qui est générique, et qui utilise une pointe de rélexion. Comme je le disais, un truc simple qui est malgré tout capable de me renvoyer la description associée à une valeur de l'enum ou au pire de faire un <code>.ToString()</code> pour les valeurs sans attribut <code>Description</code> :</p>
+<pre><code class="language-csharp">public static string GetCaption(this Enum value)
+{
+    var type = value.GetType();
+    var member = type.GetMember(value.ToString());
+    if ((member != null &amp;&amp; member.Length &gt; 0))
+    {
+        var attributes = member[0].GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
+        if ((attributes != null &amp;&amp; attributes.Count() &gt; 0))
+        {
+            return ((System.ComponentModel.DescriptionAttribute)attributes.ElementAt(0)).Description;
+        }
+    }
+    return value.ToString();
+}
+</code></pre>
+<p>Vraiment rien de compliqué. À part d'ajouter cette méthode au fichier StringHelpers.cs de mon projet.</p>
+<p>Mais quand même, ça ne me coûte rien d'essayer de voir si depuis le temps C# n'aurait rien inventé d'encore plus simple ou plus pratique. À part un Google Search &quot;c# enum friendly name&quot; + Tools + Past year.</p>
+<p>Bonne nouvelle, il y a des personnes qui s'y sont attelées, mais malheureusement, rien de bien nouveau :</p>
+<ul>
+<li><a href="https://dejanstojanovic.net/aspnet/2021/september/adding-display-name-to-enum-values/">Adding display name to Enum values</a></li>
+<li><a href="https://www.delftstack.com/howto/csharp/csharp-enum-to-string/">Convert Enum to String in C#</a></li>
+<li><a href="https://newbedev.com/methods-inside-enum-in-c">Methods inside enum in C#</a></li>
+</ul>
+<p>J'ai un peu de temps à perdre alors je tente des trucs :</p>
+<pre><code class="language-csharp">public enum NatureType
+{
+    Ouverture,
+    Modification,
+    Déblocage,
+    Alerte_3_mois,
+    Alerte_6_mois
+}
+</code></pre>
+<p>Idéalement je n'ai plus qu'à faire un <code>public override string ToString()</code> pour remplacer les soulignés par des espaces et le tour est joué !</p>
+<p>Sauf que où diable faire ça ?</p>
+<p>C'est pas grave, je dois pouvoir tenter le coup via une méthode d'extension :</p>
+<pre><code class="language-csharp">public static string ToString(this Enum value)
+{
+    return value.ToString().Replace(&quot;_&quot;, &quot; &quot;);
+}
+</code></pre>
+<p>Ben non :( Ça compile sans provoquer d'erreur, mais ensuite c'est comme si ça n'existait pas ! J'ai beau mettre un point d'arrêt, je n'y passe même pas et cela renvoie toujours le <code>.ToString()</code> de base avec les soulignés ???</p>
+<p>C'est pas ça qui va m'arrêter. Soit je prends mon parti des soulignés. Soit je le fais quand même :</p>
+<pre><code class="language-csharp">public static string ToCaption(this Enum value)
+{
+    return value.ToString().Replace(&quot;_&quot;, &quot; &quot;);
+}
+</code></pre>
+<p>J'ai hésité avec <code>.ToFriendlyName()</code> qui semble un peu plus tendance, mais  <code>.ToCaption()</code> a l'avantage d'être plus court :)</p>
+<p>Alors d'accord, ça m'oblige à accepter d'avoir quelquefois des accents dans les noms de variables (enfin seulement dans les noms de valeurs d'enum). Mais je pense que désormais ça va être ma nouvelle façon de faire, au moins dans mes projets personnels.</p>
+<div class="encart">
+<p>English version: <a href="/2021/11/26/display-friendly-name-with-enum-tostring/" hreflang="en-US">Display a friendly name with Enum.ToString()</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/06/02/sidebar-css-animation/" hreflang="en-US">Sidebar animation with CSS</a>
+  <a rel="next" href="/2021/11/26/display-friendly-name-with-enum-tostring/" hreflang="en-US">Display a friendly name with Enum.ToString()</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

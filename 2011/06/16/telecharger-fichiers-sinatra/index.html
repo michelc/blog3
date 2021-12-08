@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Télécharger des fichiers avec Sinatra - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/06/16/telecharger-fichiers-sinatra/" />
+<meta property="og:title" content="Télécharger des fichiers avec Sinatra" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/06/16/telecharger-fichiers-sinatra/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-06-16T17:35:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-06-16T17:35:00.000Z","datePublished":"2011-06-16T17:35:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/06/16/telecharger-fichiers-sinatra/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/06/16/telecharger-fichiers-sinatra/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/06/16/telecharger-fichiers-sinatra/">Télécharger des fichiers avec Sinatra</a>
+    </h1>
+    <p>
+      <span>2011-06-16</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2011/1/16/uploading_files_in_sinatra/">Uploading Files In Sinatra</a>&quot; de Darren Jones.</p>
+</div>
+<p>Il arrive fréquemment qu'on ait besoin de télécharger un fichier dans nos
+applications, que ce soit une image ou un fichier PDF. Dans ce tutoriel, je
+vais vous présenter le code nécessaire pour télécharger des fichiers avec votre
+application Sinatra. C'est une solution toute simple, mais ça fait ce qu'on lui
+demande.</p>
+<h2>L'application Sinatra</h2>
+<p>Pour commencer, nous avons besoin de créer une application Sinatra basique
+avec une page &quot;upload&quot; :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+
+get '/upload' do
+  haml :upload
+end
+
+__END__
+
+@@upload
+%h2 Upload
+%form{:action=&gt;&quot;/upload&quot;,:method=&gt;&quot;post&quot;,:enctype=&gt;&quot;multipart/form-data&quot;}
+  %input{:type=&gt;&quot;file&quot;,:name=&gt;&quot;file&quot;}
+  %input{:type=&gt;&quot;submit&quot;,:value=&gt;&quot;Télécharger&quot;}
+</code></pre>
+<p>(Remarque : je n'ai pas défini de layout pour cet exemple)</p>
+<p>Cette page va afficher un formulaire tout simple qui va nous permettre de
+sélectionner un fichier sur notre PC. Le truc le plus important, c'est
+l'attribut &quot;enctype&quot; qui doit impérativement être initialisé à
+&quot;multipart/form-data&quot;.</p>
+<p>Nous devons ensuite gérer ce qui se passe lorsque le formulaire est validé
+en créant un autre handler (à placer juste avant la déclaration
+<code>__END__</code>) :</p>
+<pre><code>post '/upload' do
+  unless params[:file] &amp;&amp; (tmpfile = params[:file][:tempfile]) &amp;&amp; (name = params[:file][:filename])
+    return haml(:upload)
+  end
+  while blk = tmpfile.read(65536)
+    File.open(File.join(Dir.pwd,&quot;public/uploads&quot;, name), &quot;wb&quot;) { |f| f.write(tmpfile.read) }
+  end
+ 'terminé'
+end
+</code></pre>
+<p>Etudions un peu ce code pour voir comment ça marche. Après avoir sélectionné
+un fichier et cliqué sur le bouton &quot;Télécharger&quot;, un objet <code>file</code>
+est envoyé au serveur via le hash &quot;params&quot;. Cet objet <code>file</code>
+contient une propriété &quot;tempfile&quot; qui correspond au fichier temporaire créé
+pendant le téléchargement du fichier. Il contient aussi une propriété
+&quot;filemane&quot; qui correspond au nom du fichier tel qu'il était défini sur votre
+système. La première ligne de code vérifie que l'on a bien sélectionné un
+fichier et utilise les 2 propriétés &quot;tempfile&quot; et &quot;filename&quot; pour initialiser
+deux variables du même nom. Dans le cas où aucun fichier n'a été sélectionné,
+le formulaire de téléchargement est simplement ré-affiché (ligne 2).</p>
+<p>La boucle <code>while</code> est alors utilisé pour gérer le contenu du
+fichier au fur et à mesure de son chargement. On fait cela par bloc de 65536
+octets qui selon moi devrait servir de tampon pour limiter l'utilisation de la
+RAM. Ces blocs sont enregistrés dans un fichier dans le répertoire public nommé
+&quot;uploads&quot;. Il est nécessaire d'avoir au préalable créé vous-même ce
+sous-répertoire &quot;uploads&quot; dans le répertoire &quot;public&quot; de votre application. Le
+paramètre &quot;wb&quot; indique à Ruby qu'il s'agit d'un fichier binaire (le &quot;b&quot;) et
+qu'il est en écriture seule (le &quot;w&quot;). Vous pouvez retrouver les différentes
+valeurs acceptées par de paramètre qui défini le mode du fichier au début de la
+<a href="http://ruby-doc.org/core/classes/IO.html">documentation
+de la classe IO de Ruby</a>. Et pour finir, une fois que le fichier a été
+entièrement chargé, on se contente pour l'instant d'afficher un simple message
+&quot;terminé&quot;, mais il est bien évident qu'on pourrait faire mieux.</p>
+<p>Pour avoir plus d'informations sur l'objet <code>file</code> en Ruby, je
+vous invite à consulter le chapitre qui est consacré à la classe
+<code>File</code> sur la version en ligne du <a href="http://ruby-doc.org/docs/ProgrammingRuby/html/ref_c_file.html">Ruby Pickaxe Book</a>.</p>
+<p>Note du traducteur : Plutôt que de copier &quot;manuellement&quot; le
+contenu du fichier, on aurait pu utiliser la méthode <code>cp</code> (ou
+<code>copy</code>) de la classe FileUtils :</p>
+<pre><code>  fullname = File.join(Dir.pwd, &quot;public/uploads&quot;, name)
+  FileUtils.cp(tmpfile.path, fullname)
+</code></pre>
+<h2>Heroku</h2>
+<p>Le code présenté ci-dessus est tout à fait correct et fonctionnel, mais
+Heroku ne vous permet pas de stocker beaucoup de fichiers sur leurs serveurs
+(seuls les fichiers relatifs au code de votre application devraient s'y
+trouver). Par conséquent, vous êtes censés héberger vos fichiers ailleurs. La
+solution qui vient à l'esprit, c'est d'utiliser <a href="http://aws.amazon.com/fr/s3/">Amazon's Simple Storage Service
+(S3)</a>. Cela vous permet de stocker vos fichiers sur les serveurs d'Amazon
+pour un coût extrêmement minime. Heroku étant également hébergé sur les
+serveurs Amazon, en y hébergeant vos propres fichiers vous devriez réduire au
+maximum les temps de latence pour récupérer vos fichiers.</p>
+<h2>Inscription à Amazon S3</h2>
+<p>La première chose à faire, c'est de vous enregistrer sur S3, ce que vous
+pouvez faire en vous rendant sur le site et en cliquant le bouton
+&quot;Inscrivez-vous à Amazon S3&quot;. Si vous êtes déjà un client d'Amazon, vous pouvez
+ré-utiliser les informations de votre compte. Une fois que vous avez terminé le
+processus d'inscription, vous pouvez commencer à ajouter des fichiers à votre
+compte S3. Pour cela, Amazon propose une <a href="http://aws.amazon.com/s3/us">console web</a> ou si vous préférez, vous pouvez
+employer <a href="http://www.s3fox.net/">l'extension S3Fox</a>
+pour Firefox. Amazon S3 utilise un concept de compartiment (bucket) pour gérer
+vos fichiers. Et vous pouvez créer des dossiers à l'intérieur de chaque
+compartiment. Personnellement, j'ai l'habitude de définir un compartiment pour
+chacun de mes sites web.</p>
+<h2>Le code source Sinatra</h2>
+<p>Maintenant que vous disposez d'un compte Amazon S3 en état de marche, vous
+allez pouvoir y enregistrer vos fichiers en utilisant son interface web et en
+apportant quelques modifications à votre code Sinatra. Pour commence, il faut
+installer la <a href="http://amazon.rubyforge.org/">librairie
+aws-s3</a>:</p>
+<pre><code>C:\Ruby&gt;gem install aws-s3
+</code></pre>
+<p>Lorsque vous vous êtes inscrit à Amazon S3, vous devez avoir reçu deux
+informations importante : un Access Key ID de 20 chiffres et une Secret
+Access Key. Vous poiuvez les obtenir en vous identifiant sur la page <a href="http://aws.amazon.com/fr/">Amazon Web Services</a> puis en
+cliquant sur l'onglet &quot;Compte&quot;. Puis vous devez cliquer sur le lien
+&quot;Identification de sécurité&quot;. Les informations dont vous avez besoin
+apparaissent dans une boite au milieu de la page (vous devrez cliquer pour
+faire apparaitre la clé secrète qui fait 40 caractères).</p>
+<p>Une fois que vous avez récupéré ces informations, vous allez pouvoir la
+commande <code>set</code> de Sinatra pour les enregistrer. Et nous allons en
+profiter pour ajouter une instruction <code>require</code> afin que la
+librairie aws-s3 soit inclue dans notre code source :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'aws/s3'
+
+set :bucket, 'mybucket'
+set :s3_key, THISISANEXAMPLEKEYID
+set :s3_secret, Thi$isJu5taNExamp/etO0itSh0u1dBel0NgeR
+</code></pre>
+<p>Bien entendu, pour un site en production il faut définir ces variables en
+passant par des paramètres d'environnement de Heroku pour que vos clés restent
+secrètes. Vous pouvez vous reporter au billet <a href="/2011/05/03/configuration-parametrage-sinatra/">Configuration et paramétrage avec Sinatra</a> pour avoir plus
+d'explications à ce sujet.</p>
+<p>Nous devons ensuite nous occuper de nos handlers. Le premier handler pour le
+GET reste tel quel alors que le second pour le POST doit être légèrement
+modifié de façon à utiliser la librairie aws-s3 pour établir la connexio avec
+Amazon S3 et enregistrer le fichier. Vous pouvez voir que nous utilisons pour
+cela les variables définies auparavant et qu'à part cela, le code Sinatra final
+reste tel qu'il était :</p>
+<pre><code>get '/upload' do
+  haml :upload
+end
+
+post '/upload' do
+  unless params[:file] &amp;&amp; (tmpfile = params[:file][:tempfile]) &amp;&amp; (name = params[:file][:filename])
+    return haml(:upload)
+  end
+  while blk = tmpfile.read(65536)
+    AWS::S3::Base.establish_connection!(
+      :access_key_id     =&gt; settings.s3_key,
+      :secret_access_key =&gt; settings.s3_secret)
+    AWS::S3::S3Object.store(name,open(tmpfile),settings.bucket,:access =&gt; :public_read)
+  end
+ 'terminé'
+end
+
+__END__
+
+@@upload
+%h2 Upload
+%form{:action=&gt;&quot;/upload&quot;,:method=&gt;&quot;post&quot;,:enctype=&gt;&quot;multipart/form-data&quot;}
+  %input{:type=&gt;&quot;file&quot;,:name=&gt;&quot;file&quot;}
+  %input{:type=&gt;&quot;submit&quot;,:value=&gt;&quot;Télécharger&quot;}
+</code></pre>
+<p>Et c'est tout ! Tout cela devrait amplement vous suffire pour gérer les
+bases du téléchargement de fichiers avec Sinatra. Il est bien évident que cela
+peut être amélioré, notamment dans les domaines suivants :</p>
+<ul>
+<li>Un formulaire un peu plus sexy</li>
+<li>Un meilleur retour à la fin du téléchargement (y compris dans le cas où
+aucun fichier n'a été sélectionné)</li>
+<li>Une barre de progression au fur et à mesure du téléchargement du
+fichier</li>
+<li>La possibilité de télécharger dans différents dossiers</li>
+<li>Un contrôle du type de fichier téléchargé</li>
+<li>Un traitement des images téléchargées (créer une vignette automatiquement
+par exemple), bien qu'il s'agisse là d'un sujet qui mérite un billet à lui tout
+seul,</li>
+<li>La possibilité de pouvoir télécharger plusieurs fichiers à la fois</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/06/08/utiliser-rack-flash-sinatra/" hreflang="fr-FR">Utiliser Rack Flash avec Sinatra</a>
+  <a rel="next" href="/2011/06/16/utiliser-jquery-ui-datepicker-aspnetmvc/" hreflang="fr-FR">Utiliser jQuery UI Datepicker avec ASP.NET MVC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

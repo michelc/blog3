@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test-Driven Development avec ASP.NET MVC (fin) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/10/30/test-driven-development-aspnetmvc-fin/" />
+<meta property="og:title" content="Test-Driven Development avec ASP.NET MVC (fin)" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/10/30/test-driven-development-aspnetmvc-fin/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-10-30T13:46:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-10-30T13:46:00.000Z","datePublished":"2009-10-30T13:46:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/10/30/test-driven-development-aspnetmvc-fin/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/10/30/test-driven-development-aspnetmvc-fin/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/10/30/test-driven-development-aspnetmvc-fin/">Test-Driven Development avec ASP.NET MVC (fin)</a>
+    </h1>
+    <p>
+      <span>2009-10-30</span>
+      <span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Cette fois je termine cette <a href="/2009/10/29/test-driven-development-aspnetmvc-suite/">6° partie du tutoriel de Gestion des Contacts</a>. En un, il me
+reste pas grand chose à faire. En deux, j'utilise les grands moyens et je lance
+deux Visual Web Developper, un avec ma solution en cours de finition et un avec
+la solution &quot;finie&quot; de l'étape 6 du tutoriel.</p>
+<p>Si je regarde au niveau du contrôleur des contacts, je constate que l'action
+Index a pas mal changé par rapport à ce qui existait avant. On est passé d'une
+seule ligne :</p>
+<pre><code>public ActionResult Index()
+{
+    return View(_service.ListContacts());
+}
+</code></pre>
+<p>À tout ça :</p>
+<pre><code>public ActionResult Index(int? id)
+{
+    var model = new IndexModel
+    {
+        Groups = _service.ListGroups(),
+        SelectedGroup = _service.GetGroup(id)
+    };
+
+    if (model.SelectedGroup == null)
+        return RedirectToAction(&quot;Index&quot;, &quot;Group&quot;);
+
+    return View(model);
+}
+</code></pre>
+<p>Si je tente de comprendre ce qui est fait :</p>
+<ul>
+<li>on crée un objet de type IndexModel (à voir d'où il sort) et on défini sa
+propriété &quot;Groups&quot; avec la liste des groupes et sa propriété SelectedGroup avec
+un objet Group correspondant à l'identifiant passé en paramètre.</li>
+<li>s'il n'y de groupe sélectionné, le contrôleur redirige l'utilisateur vers
+la gestion des groupes (soit vers l'action Index du contrôleur des
+groupes)</li>
+<li>sinon, l'objet IndexModel est transmis à la vue Index pour affichage</li>
+</ul>
+<p>Première étape, trouver à quoi correspond le type IndexModel. Il était bien
+planqué dans un sous-répertoire ViewData du dossier Models, mais j'ai fini par
+trouver à quoi ressemble IndexModel.cs :</p>
+<pre><code>using System.Collections.Generic;
+
+namespace ContactManager.Models.ViewData
+{
+    public class IndexModel
+    {
+        public Group SelectedGroup { get; set; }
+        public IEnumerable&lt;Group&gt; Groups { get; set; }
+    }
+}
+</code></pre>
+<p>C'est ni plus ni moins qu'une classe qui sert à contenir les 2 objets
+attendus par la nouvelle vue Contacts\Index.aspx :</p>
+<ul>
+<li>la liste des groupes qui apparaitra dans le &lt;ul id=&quot;leftColumn&quot;&gt;</li>
+<li>la liste des contacts qui sera rendue dans le &lt;div
+id=&quot;divContactList&quot;&gt;</li>
+</ul>
+<p>Je fais pareil mais ça ne compile pas car la méthode GetGroup() attend un
+paramètre de type &quot;int&quot; alors que l'action Index ne peut que lui envoyer un
+paramètre de type &quot;int?&quot;. Il me faut donc modifier la méthode GetGroup() du
+service et par conséquent celle du repository pour qu'elles gèrent un paramètre
+&quot;int?&quot; (sans oublier les interfaces et le FakeContactManagerRepository.cs).</p>
+<p>En fait non. Il faut seulement modifier le GetGroup() du service pour qu'il
+prenne en compte le fait que le paramètre &quot;id&quot; peut être null :</p>
+<pre><code>public Group GetGroup(int? id)
+{
+    if (id.HasValue)
+        return _repository.GetGroup(id.Value);
+    return _repository.GetFirstGroup();
+}
+</code></pre>
+<p>Ce coup-ci ça compile, mais ça ne s'exécute toujours pas :(</p>
+<pre><code>c:\MVC\ContactManager\ContactManager\Views\Contact\Index.aspx(13): error CS1061: 'System.Web.Mvc.HtmlHelper&lt;ContactManager.Models.ViewData.IndexModel&gt;' ne contient pas une définition pour 'Selected' et aucune méthode d'extension 'Selected' acceptant un premier argument de type 'System.Web.Mvc.HtmlHelper&lt;ContactManager.Models.ViewData.IndexModel&gt;' n'a été trouvée (une directive using ou une référence d'assembly est-elle manquante ?)
+</code></pre>
+<p>D'où qu'il sort ce &quot;Selected&quot; ? Normalement il ne devrait y avoir que
+des &quot;SelectedGroup&quot; dans Contacts\Index.aspx. Ou alors c'est pas ma faute parce
+que j'ai copié / collé du tutoriel. Je regarde quand même et que
+vois-je ?</p>
+<pre><code>&lt;li &lt;%= Html.Selected(item.Id, Model.SelectedGroup.Id) %&gt;&gt;
+</code></pre>
+<p>Oh! Un Html Helper. Voyons-voir s'il y a du nouveau dans le dossier
+Helpers ? Oh! un fichier SelectedHelper.cs</p>
+<pre><code>using System;
+using System.Web.Mvc;
+
+namespace Helpers
+{
+    public static class SelectedHelper
+    {
+
+        public static string Selected&lt;T&gt;(this HtmlHelper helper, T value1, T value2)
+        {
+            if (value1.Equals(value2))
+                return &quot;class=\&quot;selected\&quot;&quot;;
+            return String.Empty;
+        }
+    }
+}
+</code></pre>
+<p>J'ajoute ce fichier à mon projet, je recompile et j'exécute mais j'ai
+toujours une erreur.</p>
+<pre><code>c:\MVC\ContactManager\ContactManager\Views\Contact\Index.aspx(14): error CS1061: 'System.Web.Mvc.HtmlHelper&lt;ContactManager.Models.ViewData.IndexModel&gt;' ne contient pas une définition pour 'Selected' et aucune méthode d'extension 'Selected' acceptant un premier argument de type 'System.Web.Mvc.HtmlHelper&lt;ContactManager.Models.ViewData.IndexModel&gt;' n'a été trouvée (une directive using ou une référence d'assembly est-elle manquante ?)
+</code></pre>
+<p>Ok, j'ai oublié le <code>&lt;%@ Import Namespace=&quot;Helpers&quot; %&gt;</code> dans
+Index.aspx. Je recompile, j'exécute et ça marche !</p>
+<p>Je vais enfin pouvoir passer à la <a href="http://msdn.microsoft.com/fr-fr/asp.net/dd823279.aspx" title="Ajouter le support d'Ajax">7° partie du tutoriel</a> et faire de l'Ajax. Mais
+là tout de suite, c'est le week-end !</p>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/11/02/utiliser-ajax-aspnetmvc/">Utiliser Ajax avec ASP.NET MVC</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/29/test-driven-development-aspnetmvc-suite/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (suite)</a>
+  <a rel="next" href="/2009/11/02/utiliser-ajax-aspnetmvc/" hreflang="fr-FR">Utiliser Ajax avec ASP.NET MVC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

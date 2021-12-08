@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pluralisation des noms avec LINQ to SQL - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/11/27/pluralisation-noms-linq-to-sql/" />
+<meta property="og:title" content="Pluralisation des noms avec LINQ to SQL" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/11/27/pluralisation-noms-linq-to-sql/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-11-27T08:06:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-11-27T08:06:00.000Z","datePublished":"2009-11-27T08:06:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/11/27/pluralisation-noms-linq-to-sql/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/11/27/pluralisation-noms-linq-to-sql/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/11/27/pluralisation-noms-linq-to-sql/">Pluralisation des noms avec LINQ to SQL</a>
+    </h1>
+    <p>
+      <span>2009-11-27</span>
+      <span>#linq</span><span>#mvc</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'avais <a href="/2009/07/17/premier-essai-aspnet-mvc/">commencé le tutoriel NerdDinner</a> sur mon ancien PC, en utilisant Web
+Developer 2008 Express en anglais. Depuis mon changement de machine, je suis
+passé à Visual Studio 2008 Professional mais en français.</p>
+<p>Étant donné que j'avais dû utiliser NUnit et pas MSTest et qu'en plus ça
+faisait un bon moment que je n'avais rien fait dessus, j'ai préféré tout
+recommencer à zéro sous VS 2008 Professional. Avec comme avantage
+supplémentaire de m'encourager à travailler sur la traduction du tutoriel.</p>
+<p>Ça avançait plutôt bien jusqu'au moment d'arriver à la <a href="/nerddinner/construire-modele/">quatrième étape</a> et d'avoir à utiliser LINQ to SQL pour créer le modèle
+de données basé sur la base de données NerdDinner.mdf. Une fois que j'avais
+glissé-déposé les tables Dinners et RSVP dans le concepteur LINQ to SQL, je ne
+me retrouvais pas avec les classes Dinner et RSVP comme prévu.</p>
+<p>Du coté de la classe RSVP, pas de problème. Par contre, pour générer le nom
+de la classe correspondant à la table Dinners, LINQ to SQL avait conservé le
+nom exact de la table, soit &quot;Dinner<strong>s</strong>&quot; (avec un &quot;s&quot; à la fin)
+alors que le tutoriel insistait bien sur le fait qu'il était censé mettre ce
+nom au singulier, à savoir &quot;Dinner&quot; (sans &quot;s&quot; à la fin).</p>
+<p>J'ai fini par trouver d'où venait le problème. C'est tout simplement parce
+que les Visual Studio en anglais sont configurés par défaut pour gérer la
+&quot;pluralisation&quot; lors du mapping relationnel alors que les Visual Studio
+exotiques sont configurés pour ne pas l'employer.</p>
+<p>Il faut donc d'activer manuellement la pluralisation des noms nous même pour
+que tout fonctionne comme expliqué dans le tutoriel. Pour cela il suffit de
+sélectionner les options suivantes :</p>
+<ul>
+<li>Outils</li>
+<li>Options</li>
+<li>Outils de base de données</li>
+<li>O/R Designer</li>
+<li>El là mettre l'option &quot;Activé&quot; à true</li>
+</ul>
+<p>Ce qui donne en image :</p>
+<p><a href="/public/2009/pluralisation.png" title="pluralisation.png, nov. 2009"><img src="/public/2009/pluralisation.png" alt="pluralisation.png"></a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/11/26/creation-controleur-dinnerscontroller/" hreflang="fr-FR">Création du contrôleur DinnersController.cs</a>
+  <a rel="next" href="/2009/11/27/utilisation-controleur-nerddinner/" hreflang="fr-FR">Utilisation du contrôleur NerdDinner</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

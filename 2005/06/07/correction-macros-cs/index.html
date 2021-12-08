@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Correction Macros.cs - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/06/07/correction-macros-cs/" />
+<meta property="og:title" content="Correction Macros.cs" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/06/07/correction-macros-cs/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-06-07T18:13:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-06-07T18:13:00.000Z","datePublished":"2005-06-07T18:13:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/06/07/correction-macros-cs/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/06/07/correction-macros-cs/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/06/07/correction-macros-cs/">Correction Macros.cs</a>
+    </h1>
+    <p>
+      <span>2005-06-07</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modification de Macros.SiteMenu() qui n'imbriquait pas les sous-niveaux <code>&lt;ul&gt;</code>
+dans le <code>&lt;li&gt;</code> en cours. Il y avait :</p>
+<pre><code>&lt;ul&gt;
+  &lt;li class=&quot;level1&quot;&gt;Primo&lt;/li&gt;
+  &lt;li class=&quot;level1 inpath&quot;&gt;Deuxio&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li class=&quot;level2 inpath&quot;&gt;Alpha&lt;/li&gt;
+    &lt;li class=&quot;level2&quot;&gt;Beta&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;li class=&quot;level1&quot;&gt;Tertio&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li class=&quot;level2&quot;&gt;Utqueant&lt;/li&gt;
+    &lt;li class=&quot;level2&quot;&gt;Resonare&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>Au lieu de :</p>
+<pre><code>&lt;ul&gt;
+  &lt;li class=&quot;level1&quot;&gt;Primo&lt;/li&gt;
+  &lt;li class=&quot;level1 inpath&quot;&gt;Deuxio
+    &lt;ul&gt;
+      &lt;li class=&quot;level2 inpath&quot;&gt;Alpha&lt;/li&gt;
+      &lt;li class=&quot;level2&quot;&gt;Beta&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;level1&quot;&gt;Tertio
+    &lt;ul&gt;
+      &lt;li class=&quot;level2&quot;&gt;Utqueant&lt;/li&gt;
+      &lt;li class=&quot;level2&quot;&gt;Resonare&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>Ce qui avait pour conséquence de ne pas permettre de gérer les CSS telles que :</p>
+<pre><code>li.level1 ul {
+  display: none;
+}
+li.inpath ul {
+  display: block;
+}
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/06/07/controler-telechargements-fichiers/" hreflang="fr-FR">Contrôler le téléchargements des fichiers</a>
+  <a rel="next" href="/2005/06/09/correction-qcenginextable-cs/" hreflang="fr-FR">Correction qc.Engine.XTable.cs</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

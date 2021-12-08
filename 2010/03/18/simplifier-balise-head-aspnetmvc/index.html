@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simplifier la balise head pour ASP.NET MVC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/03/18/simplifier-balise-head-aspnetmvc/" />
+<meta property="og:title" content="Simplifier la balise head pour ASP.NET MVC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/03/18/simplifier-balise-head-aspnetmvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-03-18T19:09:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-03-18T19:09:00.000Z","datePublished":"2010-03-18T19:09:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/03/18/simplifier-balise-head-aspnetmvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/03/18/simplifier-balise-head-aspnetmvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/03/18/simplifier-balise-head-aspnetmvc/">Simplifier la balise head pour ASP.NET MVC</a>
+    </h1>
+    <p>
+      <span>2010-03-18</span>
+      <span>#html</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Dernièrement, j'ai souhaité remplacer le PlaceHolder qui sert à définir le
+titre de la page et qui est généré par l'application ASP.NET MVC créée par
+défaut par Visual Studio 2008 :</p>
+<pre><code>&lt;head runat=&quot;server&quot;&gt;
+    &lt;link href=&quot;../../Content/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+    &lt;title&gt;&lt;asp:ContentPlaceHolder ID=&quot;TitleContent&quot; runat=&quot;server&quot; /&gt;&lt;/title&gt;
+...
+&lt;/head&gt;
+</code></pre>
+<p>Pour moi, plutôt que d'avoir un PlaceHolder qui se contente de gérer le
+contenu de la balise &lt;title&gt;, je préfère avoir un PlaceHolder un peu plus
+&quot;générique&quot; pour pouvoir m'en servir pour insérer plus de contenu dans la
+partie &lt;head&gt; de la page :</p>
+<pre><code>&lt;head runat=&quot;server&quot;&gt;
+    &lt;link href=&quot;../../Content/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+    &lt;asp:ContentPlaceHolder ID=&quot;HeadContent&quot; runat=&quot;server&quot; /&gt;
+...
+&lt;/head&gt;
+</code></pre>
+<p>Puis, dans mes vues, j'ai remplacé la partie consacrée au PlaceHolder
+TitleContent :</p>
+<pre><code>&lt;asp:Content ID=&quot;indexTitle&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+    Home Page
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Par du code qui s'adresse au PlaceHolder HeadContent :</p>
+<pre><code>&lt;asp:Content ID=&quot;indexHead&quot; ContentPlaceHolderID=&quot;HeadContent&quot; runat=&quot;server&quot;&gt;
+    &lt;title&gt;Home Page&lt;/title&gt;
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Ça marchait bien, mais à l'occasion d'un affichage du source HTML, je me
+suis rendu compte qu'il y avait comme un défaut :</p>
+<pre><code>&lt;head&gt;&lt;link href=&quot;Content/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+    &lt;title&gt;Home Page&lt;/title&gt;
+&lt;title&gt;
+ 
+&lt;/title&gt;&lt;/head&gt;
+</code></pre>
+<p>Y'a DEUX balises &lt;title&gt; ! Mais c'est normal ! C'est parce
+que ASP.NET ne se rend pas compte que qu'il y a déjà une balise &lt;title&gt;
+alors il en insère une parce qu'il sait qu'un &lt;head&gt; sans &lt;title&gt;
+c'est pas des choses à faire. mais pourquoi donc est-ce que ASP.NET se mêle de
+ça ? C'est parce que la balise &lt;head&gt; contient une attribut
+<code>runat=&quot;server&quot;</code>. Ben qu'est-ce qu'il fait là celui-là ?</p>
+<p>Je sais pas mais y'a qu'à demander : <a href="http://haacked.com/archive/2009/04/03/tipjar-title-tags-and-master-pages.aspx">TipJar: Title Tags and Master Pages</a>.</p>
+<p>Et donc, le fait d'avoir <code>&lt;head runat=&quot;server&quot;&gt;</code> semble
+avoir deux avantages / effets.</p>
+<p>En un, cela permet à ASP.NET de vérifier la validité du code html composant
+la section &lt;head&gt; de la page HTML. En particulier, si ASP.NET s'aperçoit
+que la page ne contient pas de balise &lt;title&gt;, il en insère une
+automatiquement (avec un titre vide d'accord, mais au moins la validité est
+sauve).</p>
+<p>En deux, cela permet de gérer correctement les adresses des fichiers à
+incorporer. Par exemple, il est possible de référencer les feuilles de styles
+CSS ou les fichiers de scripts Javascripts en utilisant un tilde dans leur
+adresse :</p>
+<ul>
+<li>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;~/Content/style.css&quot;
+/&gt;</li>
+<li>&lt;script type=&quot;text/javascript&quot;
+src=&quot;~/Scripts/jquery.js&quot;&gt;&lt;/script&gt;</li>
+</ul>
+<p>C'est pas totalement idiot parce que c'est quand même beaucoup plus simple
+que de s'essayer avec des href=&quot;../../Content/style.css&quot; ou
+href=&quot;../Content/style.css&quot; jusqu'à ce qu'on tombe sur la bonne
+combinaison.</p>
+<p>Malgré tout, est-ce que ça serait <a href="http://xkcd.com/292/">si grave que ça</a> que j'enlève le <code>runat=&quot;server&quot;</code> de ma
+balise &lt;head&gt; ?</p>
+<ul>
+<li>Je perd le contrôle de la validation pour le &lt;title&gt; mais dans mon
+cas c'est plus un problème qu'un avantage.</li>
+<li>Et en ce qui concerne la simplification des adresses href ou src, ça serait
+bien le diable si c'était si indispensable que ça. Outre le fait que jusqu'ici
+je me dé...brouille tout le temps pour m'en passer, il devrait être possible de
+faire autrement.</li>
+</ul>
+<p>Et c'est même tout à fait possible puisqu'il y a déjà quelqu'un qui s'est
+occupé de faire ça : <a href="http://www.ilude.com/2009/01/28/refactoring-the-aspnet-mvc-project-template-part-4/">Refactoring the ASP.NET MVC project template</a>. Mais pour
+l'instant, je ne vais pas aller aussi loin que lui et me mettre à créer des
+helpers spécifiques pour insérer des fichiers CSS ou Javascript.</p>
+<p>Dans un premier temps, je vais me contenter d'utiliser tout simplement la
+méthode Url.Content() :</p>
+<pre><code>&lt;head&gt;
+    &lt;link href=&quot;&lt;%= Url.Content(&quot;~/Content/style.css&quot;) %&gt;&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+    &lt;script src=&quot;&lt;%= Url.Content(&quot;~/Scripts/jquery-1.3.2.js&quot;) %&gt;&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;asp:ContentPlaceHolder ID=&quot;Htmlhead&quot; runat=&quot;server&quot; /&gt;
+&lt;/head&gt;
+</code></pre>
+<p>C'est beau, on dirait du HTML.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/03/18/localhost-lent-firefox-safari-chrome/" hreflang="fr-FR">Localhost lent avec Firefox, Safari et Chrome</a>
+  <a rel="next" href="/2010/03/23/porter-contact-manager-nhibernate/" hreflang="fr-FR">Porter Contact Manager sous NHibernate</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

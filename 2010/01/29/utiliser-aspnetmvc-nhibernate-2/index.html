@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser ASP.NET MVC et NHibernate (2° partie) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-2/" />
+<meta property="og:title" content="Utiliser ASP.NET MVC et NHibernate (2° partie)" />
+<meta name="description" content="La suite de la traduction du tutoriel de César Intriago sur ASP.NET MVC et NHibernate, consacrée au modèle de données et à la création de l&#39;application." />
+<meta property="og:description" content="La suite de la traduction du tutoriel de César Intriago sur ASP.NET MVC et NHibernate, consacrée au modèle de données et à la création de l&#39;application." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-2/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-01-29T09:50:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-01-29T09:50:00.000Z","datePublished":"2010-01-29T09:50:00.000Z","description":"La suite de la traduction du tutoriel de César Intriago sur ASP.NET MVC et NHibernate, consacrée au modèle de données et à la création de l'application.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-2/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-2/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-2/">Utiliser ASP.NET MVC et NHibernate (2° partie)</a>
+    </h1>
+    <p>
+      <span>2010-01-29</span>
+      <span>#mvc</span><span>#nhibernate</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-2/">Using ASP.NET MVC and NHibernate (Part 2)</a>&quot; de César Intriago.</p>
+</div>
+<p>Et voici la deuxième partie d'une série d'article consacré à l'utilisation
+de NHibernate dans une application ASP.NET MVC. Vous pouvez lire la <a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-1/">première partie de ce tutoriel ici</a>.</p>
+<h2>Représenter une relation many-to-many</h2>
+<p>Nous allons continuer en créant un fichier de mapping pour la classe Post.
+Celui-ci est légèrement différent de celui pour la classe Category étant donné
+que nous devons représenter une relation plusieurs-à-plusieurs entre les tables
+Posts et Categories, ce que nous réaliserons en utilisant un élément BAG dans
+le fichier de mapping. Voici le code de notre fichier Post.hbm.xml :</p>
+<p>Important : Vous devez définir l'action de génération
+de tous les fichiers de mapping à &quot;<strong>Ressource incorporée</strong>&quot; afin
+que NHibernate puisse trouver le bon fichier dans l'assembly.</p>
+<h3>Post.hbm.xml</h3>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;hibernate-mapping xmlns=&quot;urn:nhibernate-mapping-2.2&quot;
+                                    namespace=&quot;Core.Domain.Model&quot;
+                                    assembly=&quot;Core&quot;&gt;
+
+  &lt;class name=&quot;Post&quot; table=&quot;Posts&quot; dynamic-update=&quot;true&quot;&gt;
+    &lt;cache usage=&quot;read-write&quot;/&gt;
+    &lt;id name=&quot;Id&quot; column=&quot;Id&quot; type=&quot;Guid&quot;&gt;
+      &lt;generator class=&quot;guid&quot;/&gt;
+    &lt;/id&gt;
+    &lt;property name=&quot;Title&quot; length=&quot;100&quot;/&gt;
+    &lt;property name=&quot;Body&quot;/&gt;
+    &lt;property name=&quot;CreationDate&quot; type=&quot;datetime&quot;/&gt;
+    &lt;property name=&quot;IsPublic&quot; type=&quot;bool&quot;/&gt;
+
+    &lt;bag name=&quot;Categories&quot; table=&quot;PostCategory&quot; lazy=&quot;false&quot; &gt;
+      &lt;key column=&quot;idPost&quot; &gt;&lt;/key&gt;
+      &lt;many-to-many class=&quot;Category&quot; column=&quot;idCategory&quot; &gt;&lt;/many-to-many&gt;
+    &lt;/bag&gt;
+
+  &lt;/class&gt;
+&lt;/hibernate-mapping&gt;
+</code></pre>
+<p>Voici quelques explications sur ce que nous avons fait au niveau de
+l'élément <code>&lt;bag&gt;</code> :</p>
+<ul>
+<li>L'attribut <code>name</code> défini le nom de la propriété de la classe
+Post où nous stockerons la collection des catégories.</li>
+<li>L'attribut <code>table</code> correspond au nom de la table dans la
+base de données qui relie les tables Posts et Categories.</li>
+<li>L'attribut <code>key.column</code> est le nom de l'identifiant de la
+table Posts.</li>
+<li>L'attribut <code>class</code> représente le nom de la classe Category
+dans le modèle d'objet.</li>
+<li>L'attribut <code>many-to-many.column</code> est le nom de l'identifiant
+de la table Categories.</li>
+</ul>
+<p>Pour vous aider à mieux comprendre ce fichier de mapping, voici tout d'abord
+à quoi ressemble le diagramme de classe :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/mapping.png" alt=""></p>
+<p>puis le schéma de la base de données correspondante :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/postscategoriesmodel2.png" alt=""></p>
+<p>Comme vous pouvez le constater dans le diagramme de classe, nous n'avons pas
+besoin de créer une classe pour la table PostCategory.</p>
+<h2>Test unitaire</h2>
+<p>Nous allons maintenant tester nos repositorys et vérifier que nous pouvons
+créer des billets à l'aide des tests unitaires suivants :</p>
+<pre><code>using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Core.Domain.Model;
+using Core.Domain.Repositories;
+using Core;
+
+namespace NHibernate101.Tests
+{
+    [TestClass]
+    public class RepositoriesTest
+    {
+        IRepository&lt;Category&gt; categoriesRepository;
+        IRepository&lt;Post&gt; postsRepository;
+        Post testPost;
+        Category testCategory1;
+        Category testCategory2;
+
+        public RepositoriesTest()
+        {
+        }
+
+        private TestContext testContextInstance;
+
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
+
+        [TestInitialize()]
+        public void CreateRepositories()
+        {
+            categoriesRepository = new CategoryRepository();
+            postsRepository = new PostRepository();
+        }
+
+        [TestMethod]
+        [DeploymentItem(&quot;hibernate.cfg.xml&quot;)]
+        public void CanCreateCategory()
+        {
+            testCategory1 = new Category() { Name = &quot;ASP.NET&quot; };
+            categoriesRepository.Save(testCategory1);
+        }
+
+        [TestMethod]
+        [DeploymentItem(&quot;hibernate.cfg.xml&quot;)]
+        public void CanCreatePost()
+        {
+            testPost = new Post();
+            testPost.Title = &quot;ASP.NET MVC and NHibernate&quot;;
+            testPost.Body = &quot;In this article I'm going to cover how to install and configure NHibernate and use it in a ASP.NET MVC application.&quot;;
+            testPost.CreationDate = DateTime.Now;
+            testPost.IsPublic = true;
+
+            testCategory2 = new Category() { Name= &quot;ASP.NET MVC&quot;};
+
+            categoriesRepository.Save(testCategory2);
+            testPost.Categories.Add(testCategory2);
+
+            postsRepository.Save(testPost);
+        }
+    }
+}
+</code></pre>
+<p>Lancer le test et s'il réussi, nous devrions retrouver le nouveau billet et
+la nouvelle catégorie dans la base de données :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/postandcategory.png" alt=""></p>
+<p>Il s'agit là des rudiments de NHibernate. Je vous encourage à vous
+documenter plus en détail sur le site de la <a href="http://nhforge.org/">communauté NHibernate</a>. Dans la <a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-3-fin/">prochaine partie</a> de ce tutoriel nous commencerons à
+développer notre application ASP.NET MVC pour gérer les billets et les
+catégories !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/01/29/utiliser-aspnetmvc-nhibernate-1/" hreflang="fr-FR">Utiliser ASP.NET MVC et NHibernate (1° partie)</a>
+  <a rel="next" href="/2010/01/29/utiliser-aspnetmvc-nhibernate-3-fin/" hreflang="fr-FR">Utiliser ASP.NET MVC et NHibernate (3° partie)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

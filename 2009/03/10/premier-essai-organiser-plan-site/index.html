@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Premier essai pour organiser le plan d&#39;un site - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/03/10/premier-essai-organiser-plan-site/" />
+<meta property="og:title" content="Premier essai pour organiser le plan d&#39;un site" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/03/10/premier-essai-organiser-plan-site/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-03-10T16:35:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-03-10T16:35:00.000Z","datePublished":"2009-03-10T16:35:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/03/10/premier-essai-organiser-plan-site/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/03/10/premier-essai-organiser-plan-site/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/03/10/premier-essai-organiser-plan-site/">Premier essai pour organiser le plan d&#39;un site</a>
+    </h1>
+    <p>
+      <span>2009-03-10</span>
+      <span>#ap</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Avant Altrr-Press il y avait QC et avant QC il y avait inPortal. Et à
+l'époque, il existait un module pour mettre à jour le plan du site.</p>
+<p>Ça permettait de déplacer un écran avant ou après un autre écran en cliquant
+sur les flèches haut et bas et aussi de le changer de niveau en cliquant sur
+les flèches gauche et droite. Et même si ça devenait un peu compliqué à
+manipuler dès que le site commençait à avoir un peu trop de pages mais ça
+rendait bien service.</p>
+<p>Pour l'occasion, j'ai ressorti les vieux zip et j'ai reconstitué une
+<a href="/public/2009/plan-00.html">page de démonstration</a>, mais sans
+garantie (ça marchotte sous Firefox parce que c'est tellement vieux qu'en ce
+temps là j'utilisais encore <a href="http://kmeleon.sourceforge.net/">K-Meleon</a>).</p>
+<p>Quand j'ai commencé à travailler sur QC, je me disais toujours qu'il fallait
+que je refasse une boite pour modifier le plan du site mais soit je n'avais pas
+envie de faire la même chose qu'avant, soit il y avait d'autres trucs à faire,
+soit c'était les vacances... Tant et si bien que jusqu'à présent il n'existe
+toujours rien qui permet de changer l'ordre des pages ou de les ré-organiser
+dans Altrr-Press.</p>
+<p>Actuellement, si l'écran a est avant l'écran b et que l'on veut faire passer
+l'écran b en première position, il faut :</p>
+<ul>
+<li>créer un écran c avant l'écran a</li>
+<li>déplacer dans l'écran c toutes les boites de l'écran b</li>
+<li>supprimer l'écran b</li>
+<li>renommer l'écran c en ecran b</li>
+</ul>
+<p>L'avantage avec cette méthode c'est que cela oblige à réfléchir 5 minutes au
+plan du site avant de se mettre à créer les pages.</p>
+<p>Mais là, avec tout les trucs qui existent sous jQuery, je me dit qu'il
+serait quand même temps d'essayer d'offrir une méthode un peu plus pratique
+pour réorganiser la structure des sites créés avec Altrr-Press.</p>
+<p>J'ai donc fait un premier essai avec le <a href="http://docs.jquery.com/UI/API/1.7/Sortable">composant Sortable de jQuery
+UI</a>. Pouvoir organiser le plan du site à coup de drag &amp; drop, ça devrait
+le faire. L'avantage, c'est qu'une fois qu'on a trouvé un exemple qui marche,
+c'est assez simple à utiliser.</p>
+<p>Il faut commencer par insérer tous les fichiers javascript
+nécessaires :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.3.2.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;ui.core.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;ui.sortable.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Puis on appelle la méthode sortable() pour le 1° niveau de la liste que l'on
+veut pouvoir trier :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+$(document).ready(function() {
+  var sortOpts = {
+    items: &quot;li&quot;, 
+    cursor: &quot;crosshair&quot;
+  }
+  $(&quot;ul.ap-sitemap&quot;).sortable(sortOpts);
+});
+&lt;/script&gt;
+</code></pre>
+<p><a href="/public/2009/plan-01-a.html">C'est déjà pas mal</a>,
+mais :</p>
+<ul>
+<li>ça tremblote un peu quand on est en mode drag</li>
+<li>on a du mal à prévoir où on va dropper</li>
+</ul>
+<p>Si je rajoute un peu de CSS et que je met en évidence la zone où le drop va
+avoir lieu :</p>
+<ul>
+<li>en la stylant avec une classe CSS définie via la <a href="/public/2009/plan-01-b.html">propriété placeholder</a></li>
+<li>en lui donnant une hauteur avec la <a href="/public/2009/plan-01-c.html">propriété forcePlaceholderSize</a> à true</li>
+</ul>
+<p>C'est déjà plus clair, mais je reste un peu sur ma faim :</p>
+<ul>
+<li>c'est mieux que rien mais sans plus... je m'attendais à un effet plus
+spectaculaire</li>
+<li>je n'arrive pas à créer un sous-niveau : pendant un moment j'ai pensé
+que la propriété dropOnEmpty me le permettrait mais apparemment ça n'est pas
+ça.</li>
+<li>et en plus, il faudra que je cherche comment <a href="/2004/10/25/wdevs-week-end-with-mysql/">limiter
+le nombre de sous-niveau à 3</a></li>
+</ul>
+<p>À creuser donc...</p>
+<p><em>Note : La liste que j'utilise en exemple est tirée de l'article
+<a href="http://www.alistapart.com/articles/complexdynamiclists">Complex Dynamic Lists: Your Order Please</a>
+de Christian Heilmann et publié sur A List Apart.</em></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/03/04/limiter-nombre-lignes-fil-atom/" hreflang="fr-FR">Limiter le nombre de lignes dans un fil Atom</a>
+  <a rel="next" href="/2009/03/17/web-application-project-web-site-project/" hreflang="fr-FR">Web Application Project et Web Site Project</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

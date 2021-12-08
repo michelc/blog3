@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer une nouvelle Brick en C# - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/09/23/creer-nouvelle-brick-c-sharp/" />
+<meta property="og:title" content="Créer une nouvelle Brick en C#" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/09/23/creer-nouvelle-brick-c-sharp/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-09-23T13:34:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-09-23T13:34:00.000Z","datePublished":"2004-09-23T13:34:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2004/09/23/creer-nouvelle-brick-c-sharp/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/09/23/creer-nouvelle-brick-c-sharp/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/09/23/creer-nouvelle-brick-c-sharp/">Créer une nouvelle Brick en C#</a>
+    </h1>
+    <p>
+      <span>2004-09-23</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce document explique comment créer une nouvelle Brick à l'intérieur d'une
+Toolbox. Une brique est le code ASP.NET qui servira à créer des modules dans
+portal. L'exemple qui suit montre de façon détaillée comment ajouter une brique
+Contacts à la toolbox Exemples.</p>
+<ul>
+<li>Lancer Visual Studio 2003 et ouvrir la solution portal.</li>
+<li>Créer un dossier pour la brique
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le projet
+&quot;inPortal.Exemples&quot; et choisir Ajouter - Nouveau dossier</li>
+<li>cliquer sur le dossier &quot;NewFolder1&quot; qui vient d'être créé et le renommer en
+&quot;Contacts&quot;</li>
+</ul>
+</li>
+<li>Créer le contrôle utilisateur pour l'affichage
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Contacts&quot; du projet &quot;inPortal.Exemples&quot;</li>
+<li>choisir Ajouter - Ajouter un contrôle utilisateur Web</li>
+<li>donner &quot;ViewContacts.ascx&quot; comme nom et valider</li>
+<li>sélectionner le contrôle utilisateur créé et choisir Afficher le code</li>
+<li>repérer la définition de la classe et remplacer &quot;System.Web.UI.UserControl&quot;
+par &quot;inPortal.Core.ModuleControl&quot; de façon à obtenir la ligne de code
+suivante : &quot;public class ViewContacts :
+inPortal.Core.ModuleControl&quot;</li>
+</ul>
+</li>
+<li>Créer le contrôle utilisateur pour le paramétrage
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Contacts&quot; du projet &quot;inPortal.Exemples&quot;</li>
+<li>choisir Ajouter - Ajouter un contrôle utilisateur Web</li>
+<li>donner &quot;EditContacts.ascx&quot; comme nom et valider</li>
+<li>sélectionner le contrôle utilisateur créé et choisir Afficher le code</li>
+<li>repérer la définition de la classe et remplacer &quot;System.Web.UI.UserControl&quot;
+par &quot;inPortal.Core.ModuleControl&quot; de façon à obtenir la ligne de code
+suivante : &quot;public class EditContacts :
+inPortal.Core.ModuleControl&quot;</li>
+</ul>
+</li>
+<li>Créer la classe pour gérer l'objet Contacts
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Contacts&quot; du projet &quot;inPortal.Exemples&quot;</li>
+<li>choisir Ajouter - Ajouter une classe</li>
+<li>donner &quot;Contacts.cs&quot; comme nom et valider</li>
+</ul>
+</li>
+<li>Générer la solution
+<ul>
+<li>dans la barre de menu, cliquer sur Générer - Générer la solution
+(Ctrl+Maj+B)</li>
+<li>le résultat doit être de la forme &quot;Génération : 9 a réussi, 0 a
+échoué, 0 a été ignoré&quot;</li>
+</ul>
+</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/09/23/creer-nouvelle-toolbox-c-sharp/" hreflang="fr-FR">Créer une nouvelle Toolbox en C#</a>
+  <a rel="next" href="/2004/09/23/creation-toolbox-integration/" hreflang="fr-FR">Création de la toolbox Integration</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

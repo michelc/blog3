@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer un tag dans Subversion - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/12/19/creer-tag-subversion/" />
+<meta property="og:title" content="Créer un tag dans Subversion" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/12/19/creer-tag-subversion/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-12-19T11:47:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-12-19T11:47:00.000Z","datePublished":"2008-12-19T11:47:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/12/19/creer-tag-subversion/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/12/19/creer-tag-subversion/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/12/19/creer-tag-subversion/">Créer un tag dans Subversion</a>
+    </h1>
+    <p>
+      <span>2008-12-19</span>
+      <span>#svn</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour archiver et graver dans le marbre une version sous Subversion, on doit
+créer un nouveau tag qui permettra plus tard de retrouver les sources du projet
+dans l'état où ils étaient lorsqu'on a créé le tag.</p>
+<p>Pour cela, on va créer une nouvelle étiquette dans la partie &quot;tags&quot; de notre
+dépôt et lui donner le nom de notre version :</p>
+<ul>
+<li>faire un clic-droit sur le répertoire de travail D:\Portals\Tests</li>
+<li>choisir le menu TortoiseSVN puis le sous-menu Branch/tag...</li>
+</ul>
+<p><img src="/public/2008/01-tag.png" alt=""></p>
+<p>Il apparait alors la boite de dialogue permettant de créer une branche
+(branch) ou une étiquette (tag). Dans le champ &quot;To URL :&quot;, remplacer le chemin
+&quot;file:///D:/SVN/Tests/trunk&quot; de la façon suivante :</p>
+<ul>
+<li>supprimer &quot;trunk&quot;</li>
+<li>saisir &quot;tags&quot;</li>
+<li>puis &quot;/version 1.0.1&quot;</li>
+</ul>
+<p>Ce qui donne : &quot;file:///D:/SVN/Tests/tags/<strong>version
+1.0.1</strong>&quot;</p>
+<p><img src="/public/2008/02-tag.png" alt=""></p>
+<p>Dans la zone &quot;Log Message&quot;, saisir le message &quot;Création d'un tag pour la
+<strong>version 1.0.1</strong> de Tests du <strong>19 décembre
+2008</strong>&quot;.</p>
+<p>Pour finir, cliquer sur le bouton [OK] pour valider le nouveau
+tag :</p>
+<p><img src="/public/2008/03-tag.png" alt=""></p>
+<p>C'était vraiment pas compliqué.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/12/18/sauvegarde-depot-subversion/" hreflang="fr-FR">Sauvegarder un dépôt Subversion</a>
+  <a rel="next" href="/2008/12/23/gerer-fichiers-depot-subversion-ajouter/" hreflang="fr-FR">Gérer les fichiers d&#39;un dépôt Subversion : ajouter</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

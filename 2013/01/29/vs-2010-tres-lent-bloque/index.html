@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VS 2010 très très lent voire bloqué - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2013/01/29/vs-2010-tres-lent-bloque/" />
+<meta property="og:title" content="VS 2010 très très lent voire bloqué" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2013/01/29/vs-2010-tres-lent-bloque/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-01-29T12:20:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2013-01-29T12:20:00.000Z","datePublished":"2013-01-29T12:20:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2013/01/29/vs-2010-tres-lent-bloque/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2013/01/29/vs-2010-tres-lent-bloque/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2013/01/29/vs-2010-tres-lent-bloque/">VS 2010 très très lent voire bloqué</a>
+    </h1>
+    <p>
+      <span>2013-01-29</span>
+      <span>#nhibernate</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Au boulot, certains de mes collègues voyaient leur Visual Studio 2010 se
+mettre à ramer comme pas possible et ils finissaient même par se retrouver
+bloqués à devoir attendre que VS 2010 finisse de &quot;freezer&quot; pour pouvoir espérer
+taper deux ou trois caractères ou esquisser quelques clics de souris.</p>
+<p>Après avoir passé des éternités à tout essayer :</p>
+<ul>
+<li>installer tous les derniers services packs disponibles,</li>
+<li>tester toutes les combinaisons de paramétrages possibles,</li>
+<li>supprimer les très rares extensions utilisées,</li>
+<li>changer de PC,</li>
+<li><s>ajouter des tonnes de mémoire</s></li>
+<li>etc...</li>
+</ul>
+<p>Ça ne donnait jamais rien et la seule vrai solution c'était de quitter tant
+bien que mal Visual Studio, éteindre le PC, redémarrer et partir en pause café
+avant de relancer VS 2010 et d'attendre le prochain ralentissement...</p>
+<p>Puis un jour, un plus obstiné qui refusait de se plier à cette situation a
+réussi à isoler le problème au milieu de la solution de 19 projets et 7161
+fichiers. D'abord le projet qui enclenchait la lenteur de VS 2010 dès qu'il
+était chargé, puis de fil en aiguille le fichier de ce projet directement
+responsable de ce ralentissement et enfin il a débusqué le bout de code
+&quot;fautif&quot; :</p>
+<pre><code>public IQueryOver&lt;Contrat, Contrat&gt; ContratPourImpression()
+{
+  var contrat = ContratSrv.QueryOver()
+                          .Fetch(x =&gt; x.Rubriques).Eager
+                          .Fetch(x =&gt; x.Destinataire).Eager
+                          .Fetch(x =&gt; x.Destinataire.Centre).Eager
+                          .Fetch(x =&gt; x.Destinataire.Specifiques).Eager
+                          .Fetch(x =&gt; x.Employe).Eager
+                          .Fetch(x =&gt; x.Employe.Paiement).Eager
+                          .Fetch(x =&gt; x.Employe.Specifique).Eager
+                          .Fetch(x =&gt; x.Employe.Papier).Eager
+                          .Fetch(x =&gt; x.Employe.Papier.Type).Eager
+                          .Fetch(x =&gt; x.Employe.Papier.Source).Eager
+                          .Fetch(x =&gt; x.Employe.Nationalite).Eager
+                          .Fetch(x =&gt; x.Agence).Eager
+                          .Fetch(x =&gt; x.Agence.Centre).Eager
+                          .Fetch(x =&gt; x.Agence.Societe).Eager
+                          .Fetch(x =&gt; x.Agence.Societe.Siege).Eager
+                          .Fetch(x =&gt; x.Bureau).Eager
+                          .Fetch(x =&gt; x.Bureau.Implantation).Eager
+                          .Fetch(x =&gt; x.Metier).Eager
+                          .Fetch(x =&gt; x.Type).Eager
+                          .Fetch(x =&gt; x.Categorie1).Eager
+                          .Fetch(x =&gt; x.Categorie2).Eager
+                          .Fetch(x =&gt; x.Cycle).Eager
+                          .Fetch(av =&gt; av.Mission).Eager
+                          .Fetch(av =&gt; av.Mission.Qualification).Eager
+                          .Fetch(av =&gt; av.Mission.Specifique).Eager
+                          .TransformUsing(Transformers.DistinctRootEntity);
+
+  return contrat;
+}
+</code></pre>
+<p>En supprimant ce code, Visual Studio redevenait rapide et le restait pendant
+toute la journée. Comme c'était malgré tout du code nécessaire, il a bien fallu
+trouver un plan B pour le conserver tout en évitant l'asphixie.</p>
+<p>En cherchant bien, il est apparu que l'accumulation des &quot;fetch&quot; et des
+expressions lambdas avait pour résultat de bloquer Visual Studio quand il
+essayait d'analyser ces quelques lignes de code. Oui, parce que VS n'est pas
+qu'un simple éditeur de texte, il cherche aussi à comprendre ce qu'on lui
+tape...</p>
+<p>La solution, ça a été de lui faire avaler cette expression par petites
+bouchées :</p>
+<pre><code>public IQueryOver&lt;Contrat, Contrat&gt; ContratPourImpression()
+{
+  var contrat = ContratSrv.QueryOver()
+                          .Fetch(x =&gt; x.Rubriques).Eager
+                          .Fetch(x =&gt; x.Destinataire).Eager
+                          .Fetch(x =&gt; x.Destinataire.Centre).Eager
+                          .Fetch(x =&gt; x.Destinataire.Specifiques).Eager;
+  contrat = contrat.Fetch(x =&gt; x.Employe).Eager
+                   .Fetch(x =&gt; x.Employe.Paiement).Eager
+                   .Fetch(x =&gt; x.Employe.Specifique).Eager
+                   .Fetch(x =&gt; x.Employe.Papier).Eager
+                   .Fetch(x =&gt; x.Employe.Papier.Type).Eager;
+  contrat = contrat.Fetch(x =&gt; x.Employe.Papier.Source).Eager
+                   .Fetch(x =&gt; x.Employe.Nationalite).Eager
+                   .Fetch(x =&gt; x.Agence).Eager
+                   .Fetch(x =&gt; x.Agence.Centre).Eager
+                   .Fetch(x =&gt; x.Agence.Societe).Eager;
+  contrat = contrat.Fetch(x =&gt; x.Agence.Societe.Siege).Eager
+                   .Fetch(x =&gt; x.Bureau).Eager
+                   .Fetch(x =&gt; x.Bureau.Implantation).Eager
+                   .Fetch(x =&gt; x.Metier).Eager
+                   .Fetch(x =&gt; x.Type).Eager;
+  contrat = contrat.Fetch(x =&gt; x.Categorie1).Eager
+                   .Fetch(x =&gt; x.Categorie2).Eager
+                   .Fetch(x =&gt; x.Cycle).Eager
+                   .Fetch(av =&gt; av.Mission).Eager
+                   .Fetch(av =&gt; av.Mission.Qualification).Eager
+                   .Fetch(av =&gt; av.Mission.Specifique).Eager
+                   .TransformUsing(Transformers.DistinctRootEntity);
+
+  return contrat;
+}
+</code></pre>
+<p>Slurp. Tout de suite ça devient bien plus appétissant !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2013/01/21/creer-vue-access/" hreflang="fr-FR">Créer une vue sous Access</a>
+  <a rel="next" href="/2013/02/06/ruby-boucle-times-c-sharp/" hreflang="fr-FR">La boucle &quot;times&quot; de Ruby en C#</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

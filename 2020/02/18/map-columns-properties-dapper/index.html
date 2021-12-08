@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to map column names to class properties with Dapper - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/02/18/map-columns-properties-dapper/" />
+<meta property="og:title" content="How to map column names to class properties with Dapper" />
+<meta name="description" content="Let&#39;s see if Dapper allows us to map the columns of a table with the properties of a class like EF or Nhibernate?" />
+<meta property="og:description" content="Let&#39;s see if Dapper allows us to map the columns of a table with the properties of a class like EF or Nhibernate?" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/02/18/map-columns-properties-dapper/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/operatrice.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-02-18T17:12:28.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-02-18T17:12:28.000Z","datePublished":"2020-02-18T17:12:28.000Z","description":"Let's see if Dapper allows us to map the columns of a table with the properties of a class like EF or Nhibernate?","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2020/02/18/map-columns-properties-dapper/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/operatrice.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/02/18/map-columns-properties-dapper/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/operatrice.jpg" alt="Demoiselle du téléphone" /><figcaption><a href="https://en.wikipedia.org/wiki/Switchboard_operator">Demoiselle du téléphone</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/02/18/map-columns-properties-dapper/">How to map column names to class properties with Dapper</a>
+    </h1>
+    <p>
+      <span>2020-02-18</span>
+      <span>#sql</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Last week, I used <a href="https://stackexchange.github.io/Dapper/">Dapper</a> instead of <a href="https://nhibernate.info/">NHibernate</a> to perform a simple processing on a table in our Oracle database. Since this is an ancient table, the column names are &quot;old-fashioned&quot; and I don't want to end up with overly convoluted property names, even if it's only for a one-shot process.</p>
+<p>Let's say my table has the following structure:</p>
+<pre><code class="language-sql">Contact_Clients
+---------------
+Contact_Cli_ID          Number
+Clt_ID                  Number
+Contact_Cli_Nom         Varchar2(40)
+Contact_Cli_Prenom      Varchar2(40)
+Contact_Tel_Fixe        Varchar2(24)
+Contact_Cli_Fax         Varchar2(24)
+Contact_Cli_Mail        Varchar2(127)
+Contact_Portable        Varchar2(24)
+...
+</code></pre>
+<p>I have to define the C# class below:</p>
+<pre><code class="language-csharp">public class Contact
+{
+  public int Contact_Cli_ID { get; set; }
+  public int Clt_ID { get; set; }
+  public string Contact_Cli_Nom { get; set; }
+  public string Contact_Cli_Prenom { get; set; }
+  public string Contact_Tel_Fixe { get; set; }
+  public string Contact_Cli_Fax { get; set; }
+  public string Contact_Cli_Mail { get; set; }
+  public string Contact_Portable { get; set; }
+}
+</code></pre>
+<p>But I'd prefer to use pretty names for its properties:</p>
+<pre><code class="language-csharp">public class Contact
+{
+  public int Contact_ID { get; set; }
+  public int Client_ID { get; set; }
+  public string Nom { get; set; }
+  public string Prenom { get; set; }
+  public string Telephone { get; set; }
+  public string Telecopie { get; set; }
+  public string Mail { get; set; }
+  public string Portable { get; set; }
+}
+</code></pre>
+<p>Usually I go with SQL aliases to work around this problem. So, instead of doing a regular <code>SELECT * FROM Contact_Clients ...</code>, I end up writing:</p>
+<pre><code class="language-csharp">var sql = &quot;SELECT Contact_Cli_ID AS Contact_ID,
+                  Clt_ID AS Client_ID,
+                  Contact_Cli_Nom AS Nom,
+                  Contact_Cli_Prenom AS Prenom,
+                  Contact_Tel_Fixe AS Telephone,
+                  Contact_Cli_Fax AS Telecopie,
+                  Contact_Cli_Mail AS Mail,
+                  Contact_Portable AS Portable
+           FROM   Contact_Clients
+           ...&quot;;
+</code></pre>
+<p>Pro: I can limit my code to only useful columns, although in this case almost all columns are necessary.</p>
+<p>Con: I've been using Dapper for a few years now, it's time to search for some improvments to redefine the names of the columns.</p>
+<p>It's a bit of a sensitive subject and probably not really a priority. However, there is a discussion about the right way to do this, by configuration or with attributes: <a href="https://github.com/StackExchange/Dapper/issues/722">[Column] and [Table] Attributes </a>.</p>
+<p>In the meantime, a Stack Overflow question (<a href="https://stackoverflow.com/a/34856158">Manually map column names with class properties</a>) allowed me to find a quite simple solution to implement. Taken from the <a href="https://github.com/StackExchange/Dapper/blob/master/Dapper.Tests/TypeHandlerTests.cs">Dapper Tests</a> code (and thus tested :), it uses the <code>[Description]</code> attribute from <code>System.ComponentModel</code>.</p>
+<p>Thanks to this article, I can write the following code:</p>
+<pre><code class="language-csharp">using System.ComponentModel;
+...
+
+class Program
+{
+
+  static void Main(string[] args)
+  {
+    var cnx_string = @&quot;Data Source=XXXX;User ID=YYYY;Password=ZZZZ&quot;;
+    var db = new OracleConnection(cnx_string);
+    db.Open();
+
+    var map = new CustomPropertyTypeMap(typeof(Contact), (type, columnName)
+      =&gt; type.GetProperties().FirstOrDefault(prop =&gt; GetDescriptionFromAttribute(prop) == columnName.ToLower()));
+    Dapper.SqlMapper.SetTypeMap(typeof(Contact), map);
+
+    var sql = &quot;SELECT * FROM Contact_Clients WHERE Contact_Cli_ID = 1234&quot;;
+    var c = db.QueryFirst&lt;Contact&gt;(sql);
+    Console.WriteLine(c.Nom + &quot; &quot; + c.Prenom);
+
+    db.Close();
+    Console.ReadLine();
+  }
+
+  static string GetDescriptionFromAttribute(MemberInfo member)
+  {
+    if (member == null) return null;
+
+    var attrib = (DescriptionAttribute)Attribute.GetCustomAttribute(member, typeof(DescriptionAttribute), false);
+    return (attrib?.Description ?? member.Name).ToLower();
+  }
+
+}
+
+public class Contact
+{
+  [Description(&quot;Contact_Cli_ID&quot;)]
+  public int Contact_ID { get; set; }
+  [Description(&quot;Clt_ID&quot;)]
+  public int Client_ID { get; set; }
+  [Description(&quot;Contact_Cli_Nom&quot;)]
+  public string Nom { get; set; }
+  [Description(&quot;Contact_Cli_Prenom&quot;)]
+  public string Prenom { get; set; }
+  [Description(&quot;Contact_Tel_Fixe&quot;)]
+  public string Telephone { get; set; }
+  [Description(&quot;Contact_Portable&quot;)]
+  public string Portable { get; set; }
+  [Description(&quot;Contact_Cli_Mail&quot;)]
+  public string Mail { get; set; }
+}
+</code></pre>
+<p>Thinking about it, I'm not sure it's more elegant than SQL aliases... But new!</p>
+<div class="encart">
+<p>Version en français : <a href="/2020/02/17/mapper-colonnes-proprietes-dapper/" hreflang="fr-FR">Comment mapper colonnes et propriétés avec Dapper</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/02/17/mapper-colonnes-proprietes-dapper/" hreflang="fr-FR">Comment mapper colonnes et propriétés avec Dapper</a>
+  <a rel="next" href="/2020/02/24/acceder-office-365-mail-depuis-gmail/" hreflang="fr-FR">Accéder à Office 365 Mail depuis GMail</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

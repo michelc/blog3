@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Améliorations affichage des outils d&#39;administration - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/07/12/ameliorations-affichage-outils-administration/" />
+<meta property="og:title" content="Améliorations affichage des outils d&#39;administration" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/07/12/ameliorations-affichage-outils-administration/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-07-12T13:10:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-07-12T13:10:00.000Z","datePublished":"2005-07-12T13:10:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/07/12/ameliorations-affichage-outils-administration/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/07/12/ameliorations-affichage-outils-administration/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/07/12/ameliorations-affichage-outils-administration/">Améliorations affichage des outils d&#39;administration</a>
+    </h1>
+    <p>
+      <span>2005-07-12</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modification de adminToolbar.ascx.cs pour remplacer le contrôle
+btnVisibility de type ImageButton par un contrôle btnToggle de type HyperLink.
+De cette façon, le basculement entre l'affichage ou non des outils
+d'administration ne se fait plus via un postback (méthode POST) mais par un
+simple lien (méthode GET), ce qui rendra possible les rafraichissements alors
+que ce n'était pas le cas avant.</p>
+<p>Changement de l'algorithme des propriétés Common.isConfigurable (et
+Common.isEditable) dans le cas où les outils d'administration doivent être
+cachés.</p>
+<ul>
+<li>Auparavant, ces 2 propriétés renvoyaient faux dès lors que la barre des
+outils d'administration ne devait pas s'afficher.</li>
+<li>Désormais, elles ne renvoient faux qu'à condition que le fait de configurer
+(ou d'éditer) soit considéré comme étant l'attribution exclusive des
+administrateurs (dans la pratique quand la liste des rôles pouvant configurer
+(ou éditer) est identique à la liste des rôles pouvant administrer).</li>
+</ul>
+<p>Et pour finir, réécriture de la propriété Common.adminVisible
+pour :</p>
+<ul>
+<li>récupérer l'état directement dans l'url lorsque elle contient
+adminVisible=# =&gt; changement de visible à caché est immédiatement pris en
+compte dans toutes les boites, mêmes celle chargées avant adminToolbar.</li>
+<li>faire persister l'état en cours dans un cookie plutôt que dans une variable
+session =&gt; conserve cet état même après recompilation du projet et donc
+perte de la session.</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/07/11/url-rewriting-2/" hreflang="fr-FR">Url rewriting #2</a>
+  <a rel="next" href="/2005/07/12/definition-lien-editer/" hreflang="fr-FR">Définition du lien Editer</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les conditions en Ruby - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2013/02/11/conditions-ruby/" />
+<meta property="og:title" content="Les conditions en Ruby" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2013/02/11/conditions-ruby/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-02-11T20:15:50.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2013-02-11T20:15:50.000Z","datePublished":"2013-02-11T20:15:50.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2013/02/11/conditions-ruby/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2013/02/11/conditions-ruby/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2013/02/11/conditions-ruby/">Les conditions en Ruby</a>
+    </h1>
+    <p>
+      <span>2013-02-11</span>
+      <span>#ruby</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>Le mot clé &quot;if&quot;</h2>
+<p>Comme dans la plupart des langages, le mot clé <code>if</code> sert à tester
+une condition et il s'emploie de la façon suivante :</p>
+<pre><code>if condition
+  ici_on_fait_quelque_chose...
+end
+</code></pre>
+<p>On peut aussi compléter le <code>if</code> par un <code>then</code> (un peu
+comme en Basic) :</p>
+<pre><code>if condition then
+  ici_on_fait_quelque_chose...
+end
+</code></pre>
+<h2>Le if &quot;mono-ligne&quot;</h2>
+<p>La version avec le <code>then</code> est obligatoire pour écrire des tests
+sur une seule ligne de code :</p>
+<pre><code>if condition then ici_on_fait_quelque_chose... end
+</code></pre>
+<p>Par exemple :</p>
+<pre><code>irb(main):001:0&gt; if 10 &gt; 1 then puts &quot;10 gagne&quot; end
+10 gagne
+=&gt; nil
+</code></pre>
+<p>Alors que :</p>
+<pre><code>irb(main):002:0&gt; if 10 &gt; 1 puts &quot;10 gagne&quot; end
+SyntaxError: (irb):2: syntax error, unexpected tIDENTIFIER, expecting keyword_then or ';' or '
+'
+if 10 &gt; 1 puts &quot;10 gagne&quot; end
+              ^
+(irb):2: syntax error, unexpected keyword_end, expecting $end
+        from C:/Ruby/bin/irb:12:in `&lt;main&gt;'
+</code></pre>
+<p>Dans ce cas, on obtient une erreur qui nous dit qu'il manque le mot clé
+<code>then</code>.</p>
+<p>De même, on ne peut pas écrire tout simplement :</p>
+<pre><code>irb(main):003:0&gt; if 10 &gt; 1 puts &quot;10 gagne&quot;
+irb(main):004:1&gt;
+</code></pre>
+<p>L'indice <code>1</code> dans <code>irb(main):004:1&gt;</code> nous indique
+que IRB attend la suite de l'instruction. Et si on ajoute un <code>end</code>
+pour &quot;fermer&quot; le <code>if</code>, on obtient une erreur qui nous dit qu'il
+manque le mot clé <code>then</code> :</p>
+<pre><code>irb(main):003:0&gt; if 10 &gt; 1 puts &quot;10 gagne&quot;
+irb(main):004:1&gt; end
+SyntaxError: (irb):3: syntax error, unexpected tIDENTIFIER, expecting keyword_then or ';' or '
+'
+if 10 &gt; 1 puts &quot;10 gagne&quot;
+              ^
+(irb):4: syntax error, unexpected keyword_end, expecting $end
+        from C:/Ruby/bin/irb:12:in `&lt;main&gt;'
+irb(main):005:0&gt;
+</code></pre>
+<h2>Le if en tant que &quot;modificateur&quot;</h2>
+<p>C'est pourquoi on utilise le <code>if</code> différement quand on veut
+écrire un test sur une seule ligne :</p>
+<pre><code>ici_on_fait_quelque_chose... if condition
+</code></pre>
+<p>Ce qui donne :</p>
+<pre><code>irb(main):006:0&gt; puts &quot;10 gagne&quot; if 10 &gt; 1
+10 gagne
+=&gt; nil
+</code></pre>
+<p>C'est déjà plus facile à écrire que <code>if 10 &gt; 1 then puts &quot;10 gagne&quot; end</code> et c'est aussi plus clair à lire :</p>
+<blockquote>
+<p>&gt; 10 gagne si 10 est supérieur à 1</p>
+</blockquote>
+<p>est plus lisible et naturel que :</p>
+<blockquote>
+<p>&gt; si 10 est supérieur à 1 alors 10 gagne</p>
+</blockquote>
+<h2>Le mot clé &quot;else&quot;</h2>
+<p>Comme dans les autres langages, on peut aussi définir le traitement à
+réaliser lorsque la condition n'est pas respectée à l'aide du mot clé
+<code>else</code> :</p>
+<pre><code>if condition
+  ici_on_fait_quelque_chose...
+else
+  et_la_on_fait_autre_chose...
+end
+</code></pre>
+<p>Ou :</p>
+<pre><code>if condition then
+  ici_on_fait_quelque_chose...
+else
+  et_la_on_fait_autre_chose...
+end
+</code></pre>
+<p>Cela peut aussi s'écrire sur 1 seule ligne, mais là encore on perd beaucoup
+en lisibilité :</p>
+<pre><code>irb(main):017:0&gt; if 10 &gt; 1 then puts &quot;10 gagne&quot; else puts &quot;10 perd&quot; end
+10 gagne
+=&gt; nil
+</code></pre>
+<h2>Le mot clé &quot;elsif&quot;</h2>
+<p>Quand on a besoin d'enchainer les tests, on peut utiliser le mot clé
+<code>elsif</code> qui correspond au <code>else if</code> des autres
+langages :</p>
+<pre><code>if condition_1
+  ici_on_fait_quelque_chose...
+elsif condition_2
+  la_on_fait_autre_chose...
+else
+  et_la_une_autre_chose...
+end
+</code></pre>
+<p>Par exemple :</p>
+<pre><code>if 10 &gt; 1
+  puts &quot;10 gagne&quot;
+elsif 10 &lt; 1
+  puts &quot;10 perd&quot;
+else
+  puts &quot;c'est serré&quot;
+end
+</code></pre>
+<p>Si nécessaire, on peut utiliser autant de <code>elsif</code> que l'on
+veut :</p>
+<pre><code>if condition_1
+  ici_on_fait_quelque_chose...
+elsif condition_2
+  la_on_fait_autre_chose...
+elsif condition_3
+  la_une_troisieme_chose...
+else
+  et_la_une_autre_chose...
+end
+</code></pre>
+<p>Et dans tous les cas, la partie <code>else</code> doit toujours être située
+après tous les autres tests.</p>
+<p>Comme toujours, les <code>elsif</code> peuvent également être condensés à
+condition d'utiliser le <code>then</code> :</p>
+<pre><code>if condition_1 then ici_on_fait_quelque_chose...
+elsif condition_2 then la_on_fait_autre_chose...
+elsif condition_3 then la_une_troisieme_chose...
+else et_la_une_autre_chose...
+end
+</code></pre>
+<p>Quand on a l'habitude de la syntaxe <code>else if</code> des autres
+langages, il faut bien faire attention à ne pas se mélanger les pinceaux, parce
+que l'utilisation de &quot;else if&quot; en Ruby provoque une imbrication des tests.</p>
+<p>Le code Ruby ci-dessous est incorrect :</p>
+<pre><code>if 10 &gt; 1
+  puts &quot;10 gagne&quot;
+else if 10 &lt; 1
+  puts &quot;10 perd&quot;
+else
+  puts &quot;c'est serré&quot;
+end
+
+=&gt; syntax error, unexpected $end, expecting keyword_end
+</code></pre>
+<p>On a une erreur car en fait ce code correspond au code suivant :</p>
+<pre><code>if 10 &gt; 1
+  puts &quot;10 gagne&quot;
+else
+  if 10 &lt; 1
+    puts &quot;10 perd&quot;
+  else
+    puts &quot;c'est serré&quot;
+  end
+ &lt;-- ici il manque un &quot;end&quot;
+</code></pre>
+<h2>Le mot clé &quot;unless&quot;</h2>
+<p>Quand on veut tester l'opposé d'une condition, on peut utiliser l'opérateur
+<code>not</code> :</p>
+<pre><code>if not (condition)
+  on_fait_quelque_chose...
+end
+</code></pre>
+<p>Dans ce cas, on ne fait quelque chose que si la condition n'est pas
+réalisée :</p>
+<pre><code>if not (10 &lt; 1)
+  puts &quot;10 gagne&quot;
+end
+</code></pre>
+<p>Outre le fait qu'on est presque obligé de mettre des parenthèses pour s'y
+retrouver, ça ne fait pas très lisible selon les critères rubyistes.</p>
+<p>C'est là que le mot clé <code>unless</code> entre en scène :</p>
+<pre><code>unless condition
+  on_fait_quelque_chose...
+end
+</code></pre>
+<p>Comme par exemple :</p>
+<pre><code>unless 10 &lt; 1
+  puts &quot;10 gagne&quot;
+end
+</code></pre>
+<p>En fait, le mot clé <code>unless</code> est l'exact opposé du mot clé
+<code>if</code> et on peut faire avec lui tout ce qui est possible avec le
+<code>if</code> :</p>
+<pre><code>unless condition then
+  ici_on_fait_quelque_chose...
+end
+
+unless condition
+  ici_on_fait_quelque_chose...
+else
+  et_la_on_fait_autre_chose...
+end
+
+unless condition then ici_on_fait_quelque_chose... end
+
+etc...
+</code></pre>
+<p>Ce qui va décider du choix d'un <code>if</code> ou d'un <code>unless</code> à est une
+question de fluidité du code : qu'est-ce qui est le plus clair à
+comprendre et qu'est-ce qui sonne le mieux à l'oreille ?</p>
+<p>Comme pour le <code>if</code>, le <code>unless</code> est très intéressant
+quand on s'en sert en tant que &quot;modificateur&quot; :</p>
+<pre><code>ici_on_fait_quelque_chose... unless condition
+</code></pre>
+<p>Ce qui donne :</p>
+<pre><code>irb(main):021:0&gt; puts &quot;10 gagne&quot; unless 10 &lt; 1
+10 gagne
+=&gt; nil
+</code></pre>
+<h2>L'opérateur ternaire &quot;? ... :&quot;</h2>
+<p>Il existe une autre façon d'écrire des tests &quot;condensés&quot;, c'est l'opérateur
+ternaire &quot; <code>?</code> &quot; qui existe également dans d'autres langages comme
+C# ou PHP :</p>
+<pre><code>irb(main):022:0&gt; puts 10 &gt; 1 ? &quot;10 gagne&quot; : &quot;10 perd&quot;
+10 gagne
+=&gt; nil
+</code></pre>
+<p>Après le &quot; <code>?</code> &quot; on met l'expression renvoyée lorsque la
+condition est vraie et après le &quot; <code>:</code> &quot; on met l'expression renvoyée
+lorsque la condition n'est pas vraie.</p>
+<pre><code>condition ? expression_si_vrai : expression_si_faux
+</code></pre>
+<p>Avec l'opérateur ternaire, on ne peut utiliser que des expressions à
+renvoyer et pas des instructions à exécuter :</p>
+<pre><code>irb(main):023:0&gt; puts 10 &gt; 1 ? &quot;10 gagne&quot; : &quot;10 perd&quot;
+10 gagne
+=&gt; nil
+
+irb(main):024:0&gt; 10 &gt; 1 ? &quot;10 gagne&quot; : &quot;10 perd&quot;
+=&gt; &quot;10 gagne&quot;
+</code></pre>
+<p>Alors que :</p>
+<pre><code>irb(main):025:0&gt; 10 &gt; 1 ? puts &quot;10 gagne&quot; : puts &quot;10 perd&quot;
+SyntaxError: (irb):25: syntax error, unexpected tSTRING_BEG, expecting keyword_do or '{' or '('
+10 &gt; 1 ? puts &quot;10 gagne&quot; : puts &quot;10 perd&quot;
+               ^
+(irb):25: syntax error, unexpected ':', expecting $end
+10 &gt; 1 ? puts &quot;10 gagne&quot; : puts &quot;10 perd&quot;
+                          ^
+        from C:/Ruby/bin/irb:12:in `&lt;main&gt;'
+</code></pre>
+<p>Donc, le résultat de l'opérateur ternaire est toujours une expression (celle
+définie pour le cas où la condition est vraie ou bien celle définie pour le cas
+contraire).</p>
+<h2>Le if en tant que &quot;expression&quot;</h2>
+<p>Tout comme l'opérateur ternaire, le mot clé <code>if</code> peut lui aussi
+servir à renvoyer une expression.</p>
+<p>Par exemple, en C# on aurait ce code :</p>
+<pre><code>var resultat = &quot;&quot;;
+
+if (condition_1)
+{
+  resultat = &quot;cas un&quot;;
+}
+else if (condition_2)
+{
+  resultat = &quot;cas deux&quot;;
+}
+else
+{
+  resultat = &quot;autre cas&quot;;
+}
+
+Console.WriteLine(resultat);
+</code></pre>
+<p>Dont l'équivalent en Ruby serait :</p>
+<pre><code>resultat = &quot;&quot;
+
+if condition_1
+  resultat = &quot;cas un&quot;
+elsif condition_2
+  resultat = &quot;cas deux&quot;
+else
+  resultat = &quot;autre cas&quot;
+end
+
+puts resultat
+</code></pre>
+<p>Mais en Ruby, il est quelquefois mieux de renvoyer une valeur depuis
+l'instruction <code>if</code> :</p>
+<pre><code>resultat = if condition_1
+             &quot;cas un&quot;
+           elsif condition_2
+             &quot;cas deux&quot;
+           else
+             &quot;autre cas&quot;
+           end
+puts resultat
+</code></pre>
+<p>Ou si la variable <code>resultat</code> ne sert jamais ailleurs :</p>
+<pre><code>puts if condition_1
+       &quot;cas un&quot;
+     elsif condition_2
+       &quot;cas deux&quot;
+     else
+       &quot;autre cas&quot;
+     end
+</code></pre>
+<p>C'est un peut comme l'opérateur ternaire <code>?</code> mais cela permet de
+gérer plus de cas (et pas seulement un vrai / faux) et cela permet aussi
+d'exécuter des instructions selon le cas :</p>
+<pre><code>puts if condition_1
+       ici_on_fait_quelque_chose...
+       &quot;cas un&quot;
+     elsif condition_2
+       la_on_fait_autre_chose...
+       &quot;cas deux&quot;
+     else
+       et_la_une_autre_chose...
+       &quot;autre cas&quot;
+     end
+</code></pre>
+<p>De façon plus générale, il est bon de savoir qu'en Ruby toutes les
+instructions sont en fait des expressions.</p>
+<h2>Le mot clé &quot;case&quot;</h2>
+<p>Dans certains cas, on a besoin de tester plusieurs fois une même variable en
+la comparant à différentes valeurs. On peut faire ça en enchainant toute une
+série de <code>if</code> et de <code>elsif</code> :</p>
+<pre><code>if quoi == valeur_1
+  ici_on_fait_quelque_chose...
+elsif quoi == valeur_2
+  la_on_fait_autre_chose...
+elsif quoi == valeur_3
+  la_une_troisieme_chose...
+else
+  et_la_une_autre_chose...
+end
+</code></pre>
+<p>Mais en général, il vaut mieux simplifier ce genre de code en ayant recours
+à la syntaxe <code>case ... when</code> :</p>
+<pre><code>case quoi
+  when valeur_1
+    ici_on_fait_quelque_chose...
+  when valeur_2
+    la_on_fait_autre_chose...
+  when valeur_3
+    la_une_troisieme_chose...
+  else
+    et_la_une_autre_chose...
+end
+</code></pre>
+<p>Comme pour le <code>if</code>, un bloc <code>case</code> est capable de
+renvoyer une valeur et on peut donc sans problème écrire le code
+suivant :</p>
+<pre><code>resultat = case quoi
+             when 1
+               &quot;cas un&quot;
+             when 2
+               &quot;cas deux&quot;
+             else
+               &quot;autre cas&quot;
+           end
+puts resultat
+</code></pre>
+<p>Un <code>when</code> n'est pas limité à une seule valeur de comparaison. On
+peut y faire figurer plusieurs valeurs, à condition de les séparer par des
+virgules. Une autre possibilité est d'employer un Range pour tester par rapport
+à un ensemble de valeurs.</p>
+<pre><code>case quoi
+  when 0
+    &quot;zéro&quot;
+  when 1, 2, 3
+    &quot;très peu&quot;
+  when 4..9
+    &quot;un peu plus&quot;
+  else
+    &quot;beaucoup&quot;
+end
+</code></pre>
+<p>Comme pour le <code>if</code>, il est possible d'utiliser une version
+&quot;condensée&quot; du <code>case ... when</code> en associant chaque condition au
+mot-clé <code>then</code> pour séparer la condition en elle-même de son
+traitement :</p>
+<pre><code>case quoi
+  when 1 then &quot;cas un&quot;
+  when 2 then &quot;cas deux&quot;
+  else &quot;autre cas&quot;
+end
+</code></pre>
+<p>Il existe également une autre forme de l'instruction <code>case</code> dans
+laquelle on n'indique pas la valeur à tester après le
+<code>case</code> :</p>
+<pre><code>case
+  when quoi == 1
+    &quot;cas un&quot;
+  when quoi == 2
+    &quot;cas deux&quot;
+  when quoi &lt; 5
+    &quot;cas trois ou quatre&quot;
+  else
+    &quot;autre cas&quot;
+end
+</code></pre>
+<p>Dans cette syntaxe, le <code>when</code> est suivi de la condition complète
+(<code>quoi == 1</code>) et pas seulement de la valeur à tester. L'avantage,
+c'est que cela permet beaucoup plus de variété dans les expressions à tester
+(on peut même tester par rapport à d'autres variables). Par contre, ce n'est
+pas forcément beaucoup plus lisible qu'une série de <code>if</code> /
+<code>elsif</code> ?</p>
+<p>Par rapport au langage C#, le <code>case ... when</code> du Ruby est assez
+proche du <code>switch ... case</code> :</p>
+<pre><code>switch (quoi)
+{
+  case valeur_1:
+    ici_on_fait_quelque_chose...
+    break;
+  case valeur_2:
+    la_on_fait_autre_chose...
+    break;
+  case valeur_3:
+    la_une_troisieme_chose...
+    break;
+  default:
+    et_la_une_autre_chose...
+    break;
+}
+</code></pre>
+<p>Ils répondent tous les deux au même genre de besoin pour éviter un
+enchainement de <code>if</code> et <code>elsif</code> / <code>else if</code>,
+mais ils présentent tout de même une différence assez importante :</p>
+<ul>
+<li>En Ruby, seul le premier <code>when</code> dont la condition est vraie est
+traité.</li>
+<li>Alors qu'en C#, tous les <code>case</code> pour lesquels la condition est
+vérifiée sont pris en compte, d'où la nécessité du <code>break</code> pour se
+limiter au premier cas trouvé.</li>
+</ul>
+<p>Et aussi, si on est un peu habitué à C# (et peut-être d'autres langages), il
+faut faire attention de ne pas se tromper en tapant des &quot;case une_valeur&quot; pour
+chaque condition au lieu des &quot;when une_valeur&quot; typiques de Ruby.</p>
+<h2>Les opérateurs || et ||=</h2>
+<p>Ce n'est pas une condition comme <code>if</code>, <code>unless</code> ou
+<code>case</code>, mais c'est quelque chose qu'on rencontre assez souvent dans
+en Ruby et qui permet de remplacer l'opérateur ternaire &quot; <code>? ... :</code>
+&quot; quand on veut affecter une valeur par défaut à une variable.</p>
+<pre><code>irb(main):026:0&gt; toto = &quot;une valeur&quot;
+=&gt; &quot;une valeur&quot;
+</code></pre>
+<p>L'opérateur ternaire &quot; <code>? ... :</code> &quot; peut permettre de tester
+explicitement si la variable toto est définie et si c'est le cas renvoie cette
+valeur toto et sinon renvoie &quot;une autre valeur&quot;. La valeur retournée étant
+ensuite affectée à la variable toto de départ.</p>
+<pre><code>irb(main):027:0&gt; toto = toto ? toto : &quot;une autre valeur&quot;
+=&gt; &quot;une valeur&quot;
+</code></pre>
+<p>Dans ce code, la partie &quot; <code>toto ?</code> &quot; sert à tester si la variable
+toto est définie, parce qu'en Ruby, quelque chose qui n'existe pas est
+considéré (évalué) comme faux et quelque chose qui existe est considéré comme
+vrai.</p>
+<p>Étant donné que le test porte uniquement sur le fait que la variable toto
+est définie ou non, l'opérateur &quot; <code>||</code> &quot; (le <code>or</code>) permet
+de réaliser le même genre de test mais de façon implicite :</p>
+<pre><code>irb(main):028:0&gt; toto = toto || &quot;une autre valeur&quot;
+=&gt; &quot;une valeur&quot;
+</code></pre>
+<p>L'opérateur &quot; <code>||=</code> &quot; permet d'aller encore plus loin dans la
+mesure où le test porte sur la même variable que celle à laquelle on va
+affecter le résultat :</p>
+<pre><code>irb(main):029:0&gt; toto ||= &quot;une autre valeur&quot;
+=&gt; &quot;une valeur&quot;
+</code></pre>
+<p>L'opérateur &quot; <code>||=</code> &quot; est comme l'opérateur &quot; <code>+=</code> &quot;
+qui permet quant à lui de concaténer les opérateurs &quot; <code>+</code> &quot; et &quot;
+<code>=</code> &quot; :</p>
+<pre><code>irb(main):030:0&gt; i = 10
+=&gt; 10
+irb(main):031:0&gt; i = 10 + 3
+=&gt; 13
+irb(main):032:0&gt; i += 3
+=&gt; 16
+</code></pre>
+<p>L'intérêt des opérateurs &quot; <code>||</code> &quot; et &quot; <code>||=</code> &quot; c'est
+que lorsqu'ils sont employés avec des variables qui n'ont pas encore été
+définies, cela permet de leur attribuer des valeurs par défaut :</p>
+<pre><code>irb(main):033:0&gt; tutu = tutu ? tutu : &quot;valeur par défaut 1&quot;
+=&gt; &quot;valeur par défaut 1&quot;
+
+irb(main):034:0&gt; titi = titi || &quot;valeur par défaut 2&quot;
+=&gt; &quot;valeur par défaut 2&quot;
+
+irb(main):035:0&gt; tata ||= &quot;valeur par défaut 3&quot;
+=&gt; &quot;valeur par défaut 3&quot;
+
+irb(main):036:0&gt; puts tutu, titi, tata
+valeur par défaut 1
+valeur par défaut 2
+valeur par défaut 3
+=&gt; nil
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2013/02/06/ruby-boucle-times-c-sharp/" hreflang="fr-FR">La boucle &quot;times&quot; de Ruby en C#</a>
+  <a rel="next" href="/2013/02/11/erreur-generation-controleur-sql-ce/" hreflang="fr-FR">Erreur génération template contrôleur avec SQL CE</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

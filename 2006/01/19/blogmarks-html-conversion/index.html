@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blogmarks to Html conversion - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/01/19/blogmarks-html-conversion/" />
+<meta property="og:title" content="Blogmarks to Html conversion" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/01/19/blogmarks-html-conversion/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-01-19T06:18:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-01-19T06:18:00.000Z","datePublished":"2006-01-19T06:18:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/01/19/blogmarks-html-conversion/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/01/19/blogmarks-html-conversion/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/01/19/blogmarks-html-conversion/">Blogmarks to Html conversion</a>
+    </h1>
+    <p>
+      <span>2006-01-19</span>
+      <span>#code-snippets</span><span>#html</span><span>#xml</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce fichier permet de transformer le fil atom de Blogmarks (par exemple
+http://api.blogmarks.net/user/ms_michel) en code html afin de pouvoir
+l'intégrer à une page web.</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot; 
+        xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot; 
+        xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; 
+        xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;
+  &lt;xsl:output method=&quot;html&quot; /&gt;
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;xsl:apply-templates select=&quot;/atom:feed/atom:head&quot; mode=&quot;before&quot; /&gt;
+    &lt;xsl:apply-templates select=&quot;/atom:feed/atom:entry&quot; /&gt;
+    &lt;xsl:apply-templates select=&quot;/atom:feed/atom:head&quot; mode=&quot;after&quot; /&gt;
+  &lt;/xsl:template&gt;
+  &lt;xsl:template match=&quot;atom:feed/atom:head&quot; mode=&quot;before&quot; &gt;
+    &lt;!-- &lt;h3&gt;&lt;xsl:value-of select=&quot;atom:title&quot; /&gt;&lt;/h3&gt; --&gt;
+  &lt;/xsl:template&gt;
+  &lt;xsl:template match=&quot;atom:feed/atom:head&quot; mode=&quot;after&quot;&gt;
+    &lt;p&gt;&lt;a href=&quot;{atom:link[@rel='alternate']/@href}&quot;&gt;&lt;img src=&quot;http://blogmarks.net/img/88x31_neg.png&quot; alt=&quot;blogmarks.net&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;/xsl:template&gt;
+  &lt;xsl:template match=&quot;atom:feed/atom:entry&quot;&gt;
+    &lt;div&gt;
+      &lt;xsl:choose&gt;
+        &lt;xsl:when test=&quot;position() mod 2 = 1&quot;&gt;
+          &lt;xsl:attribute name=&quot;class&quot;&gt;bm_blogmarks bm_odd&lt;/xsl:attribute&gt;
+        &lt;/xsl:when&gt;
+        &lt;xsl:otherwise&gt;
+          &lt;xsl:attribute name=&quot;class&quot;&gt;bm_blogmarks bm_even&lt;/xsl:attribute&gt;
+        &lt;/xsl:otherwise&gt;
+      &lt;/xsl:choose&gt;
+      &lt;a href=&quot;{atom:link[@rel='related']/@href}&quot;&gt;&lt;img src=&quot;{atom:link[@rel='image']/@href}&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;
+      &lt;h4&gt;&lt;a href=&quot;{atom:link[@rel='related']/@href}&quot;&gt;&lt;xsl:value-of select=&quot;atom:title&quot; /&gt;&lt;/a&gt;&lt;/h4&gt;
+      &lt;p&gt;&lt;xsl:value-of select=&quot;atom:summary&quot; disable-output-escaping=&quot;yes&quot; /&gt;&lt;/p&gt;
+      &lt;p class=&quot;blogmarks-tags&quot;&gt;
+        &lt;xsl:value-of select=&quot;substring(atom:published, 0, 11)&quot; /&gt;
+        &lt;xsl:if test=&quot;atom:category&quot;&gt;
+          &lt;xsl:for-each select=&quot;atom:category&quot;&gt;
+            &lt;xsl:text&gt; - &lt;/xsl:text&gt;&lt;a href=&quot;{@term}{@sheme}&quot;&gt;&lt;xsl:value-of select=&quot;@label&quot; /&gt;&lt;/a&gt;
+          &lt;/xsl:for-each&gt;
+        &lt;/xsl:if&gt;
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+<p>Le code html généré est inspiré par celui de Hot Links. Il peut ensuite être
+présenté grâce à la feuille de style CSS suivante :</p>
+<pre><code>.bm_blogmarks {
+  margin: 10px auto;
+  padding: 1%;
+  background-color: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  width: 97%;
+  overflow:auto;
+}
+.bm_even {
+  background-color: #fcfcfc;
+}
+.bm_blogmarks h4 {
+  margin-top: 0;
+}
+.bm_blogmarks p.bm_tags {
+  margin-bottom: 0;
+  display: block;
+  clear: left;
+}
+.bm_blogmarks img {
+  margin: 0 0px 5px 10px;
+  float: right;
+  border: 0;
+  clear: none;
+  width: 144px;
+  height: 107px;
+}
+.bm_even img {
+  margin: 0 10px 5px 0px;
+  float: left;
+}
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/01/16/rdf-html-conversion/" hreflang="fr-FR">RDF to Html conversion</a>
+  <a rel="next" href="/2006/01/20/comment-cibler-publicites-adsense/" hreflang="fr-FR">Comment cibler les publicités AdSense</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

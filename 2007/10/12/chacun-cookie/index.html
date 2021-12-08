@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>À chacun son cookie - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2007/10/12/chacun-cookie/" />
+<meta property="og:title" content="À chacun son cookie" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2007/10/12/chacun-cookie/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2007-10-12T08:58:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2007-10-12T08:58:00.000Z","datePublished":"2007-10-12T08:58:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2007/10/12/chacun-cookie/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2007/10/12/chacun-cookie/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2007/10/12/chacun-cookie/">À chacun son cookie</a>
+    </h1>
+    <p>
+      <span>2007-10-12</span>
+      <span>#ap</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Altrr-Press utilise pour l'instant 3 cookies :</p>
+<ul>
+<li>le cookie d'authentification,</li>
+<li>qc_siteroles : un cookie crypté pour stocker les rôles de l'utilisateur
+(ses autorisations),</li>
+<li>qc_adminvisible : un cookie pour stocker si la barre d'administration est
+affichée ou cachée.</li>
+</ul>
+<p>Le cookie d'authentification ne pose pas de problème. Il est entièrement
+pris en charge par ASP.NET et il est propre à chaque session utilisateur (c'est
+du moins ce qu'il me semble).</p>
+<p>Le cookie &quot;qc_siteroles&quot; est géré &quot;manuellement&quot; au niveau de l'évènement
+&quot;Application_AuthenticateRequest&quot; dans le Global.asax. Le problème c'est qu'il
+s'appelle &quot;qc_siteroles&quot; pour toutes les sessions utilisateurs ce qui provoque
+des erreurs :</p>
+<ul>
+<li>Si on se connecte à 2 répertoires virtuels localhost/xxx et localhost/yyy
+cela provoque une exception System.Security.Cryptography.CryptographicException
+à cause de données incorrectes (je suppose que c'est parce qu'il a été crypté
+dans un contexte et qu'on cherche à le décrypter dans un autre).</li>
+<li>Si on se connecte à 1 répertoire virtuel localhost/xxx sous 2 logins
+différents cela ne provoque pas d'erreur, mais le 2° connecté récupère les
+droits du 1° connecté puisqu'en fait on lit le cookie créé pour le 1°
+login.</li>
+</ul>
+<h2>Solution temporaire et qui n'a que trop durée</h2>
+<p>Au tout début du développement, le problème crucial c'était de tester que la
+gestion des droits fonctionnait sans bugs. Il fallait donc au minimum pouvoir
+se connecter au même répertoire virtuel sous plusieurs logins pour vérifier que
+les droits paramétrés s'appliquaient comme on pouvait s'y attendre.</p>
+<p>Par conséquent, ce qui avait été fait, c'était d'ajouter le login de
+l'utilisateur connecté dans le nom du cookie qui était ainsi devenu
+&quot;qc_monlogin_siteroles&quot;. Grace à cette astuce, il devenait possible de se
+connecter à un même répertoire virtuel localhost/xxx sous 2 logins différents
+et de ne pas s'emméler dans les autorisations.</p>
+<p>C'était plutôt pas mal puisque ça a permis de mettre en place un système de
+gestion des droits qui tenait la route. Par contre, ça a quand même laissé en
+plan un certain nombre de problèmes :</p>
+<ul>
+<li>il y avait toujours l'exception cryptographique quand on se connectait à 2
+répertoires virtuels différents avec le même login,</li>
+<li>pas sûr que ça ait jamais été testé dans le cas de sites avec des domaines
+ou des sous-domaines différents,</li>
+<li>c'est limite faille de sécurité que de faire apparaitre en clair le login
+dans le nom du cookie.</li>
+</ul>
+<h2>Première tentative d'amélioration</h2>
+<p>Après presque 3 ans à temporiser, le fait de ne pas pouvoir se connecter à
+plusieurs répertoires virtuels en même temps commençait à devenir pesant. Il
+fallait louvoyer en ouvrant un site local dans Internet Explorer et un autre
+dans Firefox (voire un troisième dans Safari ces derniers temps), mais ça
+tenait vraiment trop du cache-misère.</p>
+<p>Puisqu'il fallait pouvoir se connecter à des répertoires virtuels
+différents, la solution de facilité était d'insérer le nom de ces répertoires
+dans le nom du cookie. Et c'est comme ça qu'on est passé de
+&quot;qc_monlogin_siteroles&quot; à &quot;qc_xxx_monlogin_infos&quot;. (Au passage &quot;_siteroles&quot; est
+devenu &quot;_infos&quot; parce que le cookie a gagné le droit de stocker le nom et
+l'email de l'utilisateur en plus de ses rôles.)</p>
+<p>C'est déjà un tout petit peu mieux :</p>
+<ul>
+<li>la connexion à des répertoires virtuels différents avec le même login
+marche enfin,</li>
+<li>le cas de sites avec des domaines ou des sous-domaines différents n'est pas
+encore testé,</li>
+<li>et la faille de sécurité est toujours là.</li>
+</ul>
+<h2>Dernière tentative bonne pour la route</h2>
+<p>Le soucis de sécurité venant du fait que le login utilisateur apparait en
+clair dans le nom du cookie, il suffit de le crypter pour résoudre ce problème.
+Par conséquent, au lieu de garder en clair la chaine &quot;xxx_monlogin_infos&quot; dans
+le nom du cookie, celle-ci est maintenant codée et le nom du cookie devient
+quelque chose comme ap_97DA57F427F4AAA84DFF310904005EB5.</p>
+<p>string cookieName = Common.applicationPath + Context.User.Identity.Name +
+&quot;/roles&quot;; cookieName = &quot;ap_&quot; +
+FormsAuthentication.HashPasswordForStoringInConfigFile(cookieName, &quot;md5&quot;);</p>
+<p>Voilà! Il ne reste plus qu'à tester que tout ça fonctionne aussi pour des
+domaines ou des sous-domaines différents. Bien qu'à prori je ne vois pas trop
+pourquoi cela créerait des difficultés.</p>
+<p>Et pour conclure, je n'ai pas oublié le cas du cookie &quot;qc_adminVisible&quot;. Il
+est lui aussi commun à toutes les sessions locales, mais dans la pratique ce
+n'est ni bloquant ni foncièrement génant. J'ai seulement changé son nom en
+&quot;ap_adminVisible&quot;.</p>
+<h2>Quelques explications supplémentaires après coup.</h2>
+<p>Bonne nouvelle : ça marche dans le cas de domaines ou de sous-domaines
+différents. Ouf!</p>
+<p>Sinon, en regardant un peu mieux comment fonctionnaient les cookies sous IE,
+il existe une espèce de fichier conteneur par site dans lequel sont enregistrés
+tous les cookies du site. Il y a donc un conteneur pour stocker tous les
+cookies créés par les sites situés sur localhost. C'est ce qui explique qu'il
+faille donner un nom différent pour éviter que les cookies d'un répertoire
+virtuel soit en conflit avec ceux des autres répertoires virtuels de
+localhost.</p>
+<p>D'un autre côté, les cookies ont une propriété Path qui permet de définir
+l'url à laquelle ils s'appliquent. Jusque là, j'avais gardé la façon de faire
+de IBuySpy Portal qui initialisait cette valeur à &quot;/&quot;. En fait, il suffit de
+l'initialiser avec le nom du répertoire virtuel pour créer un conteneur par
+répertoire virtuel. Par conséquent, plutôt que de faire apparaitre le nom du
+répertoire virtuel dans le nom du cookie, il serait possible d'utiliser cette
+propriété pour distinguer les cookies de chaque répertoire virtuel. Mais bon,
+c'est pas vital.</p>
+<p>Et pour finir : au moment du logout, on supprime les cookies ap_*, mais ils
+ne disparaitront vraiment que lorsque le navigateur sera fermé !!! Ou plutôt
+lorsque le cookie aura expiré (soit 1 minute après sa création dans le cas du
+cookie pour les rôles) ? Heureusement, ça ne pose pas de problème dans le cas
+où on fait Page précédente : même si on a les icones de mise à jour on tombe
+toujours sur &quot;Access denied&quot; lorsqu'on essaie de les utiliser.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2007/10/10/sql-injection/" hreflang="fr-FR">Sql injection</a>
+  <a rel="next" href="/2007/10/17/creer-boite-peu-plus-facilement/" hreflang="fr-FR">Créer une boite un peu plus facilement</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

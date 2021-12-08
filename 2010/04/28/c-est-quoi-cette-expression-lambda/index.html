@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>C&#39;est Quoi cette Expression Lambda ? - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/04/28/c-est-quoi-cette-expression-lambda/" />
+<meta property="og:title" content="C&#39;est Quoi cette Expression Lambda ?" />
+<meta name="description" content="Ayant entrepris de me mettre à jour sur les nouveautés de C#, j&#39;avais trouvé cet article qui explique les expressions lambda (et les lamas) de façon amusante." />
+<meta property="og:description" content="Ayant entrepris de me mettre à jour sur les nouveautés de C#, j&#39;avais trouvé cet article qui explique les expressions lambda (et les lamas) de façon amusante." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/04/28/c-est-quoi-cette-expression-lambda/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-04-28T16:02:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-04-28T16:02:00.000Z","datePublished":"2010-04-28T16:02:00.000Z","description":"Ayant entrepris de me mettre à jour sur les nouveautés de C#, j'avais trouvé cet article qui explique les expressions lambda (et les lamas) de façon amusante.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/04/28/c-est-quoi-cette-expression-lambda/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/04/28/c-est-quoi-cette-expression-lambda/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/04/28/c-est-quoi-cette-expression-lambda/">C&#39;est Quoi cette Expression Lambda ?</a>
+    </h1>
+    <p>
+      <span>2010-04-28</span>
+      <span>#.net</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://blogs.msdn.com/simonince/archive/2010/04/16/what-on-earth-is-a-lambda-expression.aspx">What on Earth is a Lambda Expression?</a>&quot; de Simon Ince.</p>
+</div>
+<p>Ces derniers temps, j'ai eu à faire à quelques clients qui se demandaient ce
+qu'était une Expression Lambda, ce qui n'a pas manqué de me surprendre. Il
+semblerait donc qu'une seconde vague de développeurs se mette à utiliser les
+Lambdas (sans doute ceux qui n'étaient pas passé à C# 3.0 dès sa sortie) et
+qu'ils ont besoin de quelques pistes. C'est pourquoi ce billet est destiné à
+vous aider à comprendre ce que représentent les expressions lambdas.</p>
+<p>Je ne vais pas chercher à répondre au comment, au pourquoi, au quand ou à
+quoi que ce soit dans ce genre. Il existe déjà de bien meilleurs billets sur le
+sujet. Non, je vais juste vous dire &quot;bon sang, mais ça veut dire quoi une
+syntaxe pareille ?&quot;.</p>
+<h2>Prenons un exemple concret</h2>
+<p>Je vais utiliser une situation classique auquel tout développeur est
+confronté de nos jours : filtrer une liste de Lamas en tenant compte de
+leur taille de leur propension à ronchonner (Ouais, je sais que c'est plus
+typique du pays de Candy que de celui de l'informatique, mais le vendredi
+après-midi c'est permis).</p>
+<p>Supposons que nous ayons une liste de nos Lamas préférés :</p>
+<pre><code>private static List&lt;Lama&gt; Lamas = new List&lt;Lama&gt;()
+{
+    new Lama { Nom = &quot;Larry&quot;, Taille = 10, EstRonchon = true },
+    new Lama { Nom = &quot;Loulou&quot;, Taille = 12, EstRonchon = false },
+    new Lama { Nom = &quot;Lara&quot;, Taille = 8, EstRonchon = true },
+    new Lama { Nom = &quot;Lorry&quot;, Taille = 4, EstRonchon = true },
+    new Lama { Nom = &quot;Laurel&quot;, Taille = 20, EstRonchon = false },
+    new Lama { Nom = &quot;Louise&quot;, Taille = 17, EstRonchon = true }
+};
+</code></pre>
+<p>Maintenant, imaginez que je veuille obtenir une liste de tous les Lamas qui
+sont à la fois grands et du genre ronchonneur. On pourrait y arriver de la
+façon suivante :</p>
+<pre><code>var results = new List&lt;Lama&gt;();
+foreach (var lama in Lamas)
+{
+    bool include = lama.EstRonchon &amp;&amp; lama.Taille &gt; 9;
+    if (include)
+        results.Add(lama);
+}
+</code></pre>
+<h2>Refactoriser en Lambda</h2>
+<p>Le problème c'est que ça fait un paquet de code pour appliquer un filtre
+tout bête… Alors que nous savons bien qu'il existe de supers méthodes
+d'extensions en LINQ qui permettent d'exécuter une commande Where sur une
+collection d'objets.</p>
+<p>On va modifier un peu notre syntaxe de départ pour nous orienter dans la
+bonne direction. <strong>Notez bien que la plupart du code C# contenu dans le
+reste de ce billet est délibérément faux</strong>, étant donné que je cherche à
+vous conduire vers la solution. Je vous préviendrai la prochaine fois que vous
+aurez à faire à une syntaxe correcte !</p>
+<p>Imaginons que Where prenne comme paramètre le nom d'une méthode qui réalise
+le filtrage de la liste. Notre code pourrait alors se présenter comme
+ceci :</p>
+<pre><code>var results = Lamas.Where(Filter);
+</code></pre>
+<p>... avec une méthode helper qu'on appellerait Filter :</p>
+<pre><code>private bool Filter(Lama lama)
+{
+    return lama.EstRonchon &amp;&amp; lama.Taille &gt; 9;
+}
+</code></pre>
+<p>C'est pas complètement idiot ? La méthode Where appelle la méthode
+Filter en lui passant chaque Lama un par un pour vérifier s'il doit faire parti
+des résultats ou non.</p>
+<h2>Méthode anonyme en ligne</h2>
+<p>Ouais mais quand même : notre méthode Filter ne sert qu'à un seul
+endroit pour filtrer nos Lamas. On pourrait donc se simplifier la vie et éviter
+d'avoir à la déclarer en faisant une méthode en ligne à la place. Pourquoi pas
+quelque chose comme ci-dessous (encore une fois, c'est une syntaxe fictive
+comme la plupart du code dans ce billet) :</p>
+<pre><code>var results = Lamas.Where(
+    bool Filter(Lama lama)
+    {
+        return lama.EstRonchon &amp;&amp; lama.Taille &gt; 9;
+    });
+</code></pre>
+<p>Ça c'est fait. Et en plus on s'est débarrassé du mot clé private puisque la
+méthode n'est plus un membre de la classe. Mais alors, à quoi ça sert qu'elle
+ait encore un nom ? Y'a qu'à le virer :</p>
+<pre><code>var results = Lamas.Where(
+    bool (Lama lama)
+    {
+        return lama.EstRonchon &amp;&amp; lama.Taille &gt; 9;
+    });
+</code></pre>
+<p>Ça c'est déjà plus concis. Suivez-bien et je vous traduis ce que ça veut
+dire : &quot;cette méthode renvoie un Booléen, et attend un Lama en
+entrée&quot;, suivi du code pour le corps de la méthode.</p>
+<h2>Types implicites</h2>
+<p>Attendez-voir. Le compilateur C# est quand même vachement intelligent, pas
+vrai ? Alors pourquoi est-ce que je me décarcasse à lui dire que la
+méthode renvoie un Booléen puisqu'il sait bien que la méthode Where a besoin
+d'un Booléen et qu'il est assez grand peut se rendre compte que la commande
+<code>EstRonchon &amp;&amp; Taille &gt; 9</code> est une expression de type
+Booléen ? Tchao Tchao le Booléen :</p>
+<pre><code>var results = Lamas.Where(
+    (Lama lama)
+    {
+        return lama.EstRonchon &amp;&amp; lama.Taille &gt; 9;
+    });
+</code></pre>
+<p>Et on sait bien que la méthode Where s'applique à une <code>List&lt;Lama&gt;</code>, ce
+qui fait que le seul argument possible pour cette méthode est de type Lama…
+Alors arrêtons d'écrire des trucs inutiles dans notre code :</p>
+<pre><code>var results = Lamas.Where(
+    (lama)
+    {
+        return lama.EstRonchon &amp;&amp; lama.Taille &gt; 9;
+    });
+</code></pre>
+<h2>Constructeurs inutiles</h2>
+<p>Le truc c'est que notre méthode n'est rien de plus qu'une seule et
+ridiculement simple ligne d'expression Booléenne. Alors pourquoi avoir encore
+besoin du mot clé <code>return</code> ? Ou du point-virgule pour terminer
+la ligne ? On sait très bien ce qu'elle fait. Et on n'a quand même pas
+besoin des accolades pour une expression d'une seule ligne, pas vrai ?</p>
+<pre><code>var results = Lamas.Where(
+    (lama)
+        lama.EstRonchon &amp;&amp; lama.Taille &gt; 9
+    );
+</code></pre>
+<p>Mais ça se complique un peu si on se met à supprimer les espaces
+inutiles :</p>
+<pre><code>var results = Lamas.Where( (lama) lama.EstRonchon &amp;&amp; lama.Taille &gt; 9 );
+</code></pre>
+<p>Là ça devient un peu plus coton à lire. Il nous faudrait trouver une autre
+façon de séparer les paramètres en entrée du corps de notre expression. Et avec
+C#, c'est justement à ça que sert l'opérateur <code>=&gt;</code> :</p>
+<pre><code>var results = Lamas.Where( (lama) =&gt; lama.EstRonchon &amp;&amp; lama.Taille &gt; 9 );
+</code></pre>
+<p>Et on n'a pas non plus besoin des parenthèses autour du paramètre en entrée
+puisqu'on en a un seul :</p>
+<pre><code>var results = Lamas.Where( lama =&gt; lama.EstRonchon &amp;&amp; lama.Taille &gt; 9 );
+</code></pre>
+<p>Et pourquoi diable gaspiller toutes ces lettres pour écrire
+<code>lama</code> à chaque fois alors qu'on pourrait très bien se contenter
+d'un simple <code>l</code> ?</p>
+<pre><code>var results = Lamas.Where( l =&gt; l.EstRonchon &amp;&amp; l.Taille &gt; 9 );
+</code></pre>
+<h2>Résumé</h2>
+<p>Il s'avère que <strong>les trois dernières commandes ci-dessus sont des
+Expressions Lambdas valides</strong> qui filtrent une liste de Lamas pour nous.
+L'objectif de ce code n'a pas varié d'un iota et il continue à avoir la même
+signification :</p>
+<blockquote>
+<p>Tiens. C'est une méthode qui prend un paramètre nommé <code>l</code> et
+renvoie un résultat Booléen en appliquant l'expression suivante au paramètre en
+entrée. T&quot;as qu'à t'en servir pour filtrer les Lamas, steuplé !</p>
+</blockquote>
+<p>Et maintenant, à vous de découvrir ce que la syntaxe ci-dessous peut bien
+vouloir dire :</p>
+<pre><code>grandRonchonLamas.ForEach(l =&gt; Console.WriteLine(l.Nom));
+</code></pre>
+<p>Je souhaite de tout cœur que cette approche un peu décalée a réussi à vous
+expliquer comment utiliser les Expressions Lambdas. Maintenant, vous n'avez
+plus qu'à approfondir tout ça et à vous documenter un peu pour comprendre des
+trucs comme Expression&lt;&gt;, Func&lt;&gt;, Action&lt;&gt;, etc…</p>
+<p>Amusez-vous bien !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/04/26/nouvelle-css-ap/" hreflang="fr-FR">Nouvelle CSS pour AP</a>
+  <a rel="next" href="/2010/05/18/mvc-music-store-raven-db-modele-donnees/" hreflang="fr-FR">MVC Music Store / Raven DB : Modèle de données</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

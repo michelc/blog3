@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tuer du code pour réussir - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/10/08/tuer-code-reussir/" />
+<meta property="og:title" content="Tuer du code pour réussir" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/10/08/tuer-code-reussir/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-10-08T08:57:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-10-08T08:57:00.000Z","datePublished":"2009-10-08T08:57:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/10/08/tuer-code-reussir/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/10/08/tuer-code-reussir/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/10/08/tuer-code-reussir/">Tuer du code pour réussir</a>
+    </h1>
+    <p>
+      <span>2009-10-08</span>
+      <span>#boulot</span><span>#code-killer</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Dans les mois à venir, je vais avoir à participer à la re-écriture en
+ASP.NET MVC d'une application existante développée depuis des années en ASP.NET
+1.1.</p>
+<p>Après de longues tergiversations, il a bien fallu reconnaitre qu'une simple
+migration en ASP.NET 3.5 et de simples rustines n'étaient ni suffisantes ni
+envisageables (<em>même pas en rêve mon ami !</em>).</p>
+<p>Le problème avec cette application, c'est qu'elle est le résultat d'un
+empilement continuel de nouvelles fonctionnalités (<em>une fuite en avant
+perpétuelle ?</em>) et qu'à aucun moment il a été accepté de prendre des pauses
+pour réaliser les consolidations nécessaires si on voulait que l'ensemble
+puisse évoluer (voire fonctionner) sereinement.</p>
+<p>Ce qui fait qu'aujourd'hui, on a la chance d'avoir une grosse ... avec dans
+le tas des trucs certainement utiles mais aussi des trucs complètements
+stupides, des trucs réalisées pour faire plaisir à des gens qui n'ont jamais
+mis les pieds dans l'application, des trucs développés et toujours pas passés
+en production 1 an près, des trucs pour que &quot;ça se fait tout seul y a rien à
+faire&quot;, des trucs pour contourner d'autres trucs qui ne marchent pas comme on
+veut qui faudrait que ça marche, des trucs qu'on est pas sûr que ça serve mais
+yaka les laisser, des trucs qui prennent une éternité pour faire 3 fois rien,
+des trucs qui ont été demandés parce qu'on sait jamais ça pourrait toujours
+servir un jour ou l'autre...</p>
+<p>Pour résumer ma pensée, il est plus qu'indispensable de commencer par un
+énorme travail de réflexion sur le contenu de ce ramassis avant même de penser
+à démarrer un Visual Studio. Et par réfléchir j'entends supprimer ce qui ne
+sert pas, supprimer ce qui ne marche pas, supprimer ce qui n'est pas
+indispensable, supprimer ce qui n'est pas faisable, supprimer ce qui prendra
+trop de temps à faire, etc… En bref éviter de re-développer des fonctionnalités
+en pagaille et prendre le risque de re-venir à notre point de départ...</p>
+<p>Mon souci c'est que le spectre d'une migration iso-fonctionnelle flotte
+encore dans l'air : on part de tout ça et au final on veut toujours tout
+ça (et un peu plus) mais en mieux. Et comme on est très conciliants, on
+pourrait à la rigueur accepter de sacrifier quelques écrans à condition qu'on
+retrouve leurs fonctionnalités dans d'autres écrans...</p>
+<p>Voilà donc un de mes <a href="http://www.lexpress.fr/actualites/2/44-pourcent-des-francais-se-disent-stresses-au-travail_792842.html" title="44% des Français se disent stressés au travail">stress</a>
+du moment. Mais ce matin, qu'est-ce que je découvre dans mon Bloglines ?
+Un article des créateurs de Scout qui explique qu'en <a href="http://blog.scoutapp.com/articles/2009/10/06/we-just-undid-three-months-of-dev-work-heres-what-we-learned" title="We Just Undid Three Months of Dev work. Here's What We Learned.">supprimant
+des tonnes de code</a> (y compris des fonctionnalités), ils ont amélioré leur
+application tant d'un point de vue performance (jusqu'à x 10 sur les
+traitements les plus couteux) que satisfaction de leurs clients. Et en plus ils
+nous nous livrent les deux leçons que l'on peut en retirer :</p>
+<ol>
+<li>Arrêter de vouloir faire simple pour l'utilisateur final au prix d'une
+tarabiscotisation dans le code, mais chercher la simplicité dans la façon de
+faire (et perso, je pense que si c'est simple à faire, c'est évident à
+utiliser).</li>
+</ol>
+<blockquote>
+<p>It turns out that simplicity and elegance for the end user can mean some
+awfully complicated stuff behind the scenes to make it work.</p>
+</blockquote>
+<ol start="2">
+<li>Arrêter de perdre son temps sur l'ajout de nouvelles fonctionnalités
+soi-disant incontournables qui vont cannibaliser notre temps et notre énergie
+juste pour les mettre au point</li>
+</ol>
+<blockquote>
+<p>If you're running a web application and the majority of your work is spent
+delivering the service you advertised to your customers, you're probably in bad
+shape.</p>
+</blockquote>
+<p>Ca, ça me plait !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/06/test-driven-development-aspnetmvc/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC</a>
+  <a rel="next" href="/2009/10/09/test-driven-development-aspnetmvc-suite/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (suite)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

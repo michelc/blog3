@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fonction upperCase à la française - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/07/27/fonction-uppercase-francaise/" />
+<meta property="og:title" content="Fonction upperCase à la française" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/07/27/fonction-uppercase-francaise/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-07-27T14:40:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-07-27T14:40:00.000Z","datePublished":"2005-07-27T14:40:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/07/27/fonction-uppercase-francaise/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/07/27/fonction-uppercase-francaise/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/07/27/fonction-uppercase-francaise/">Fonction upperCase à la française</a>
+    </h1>
+    <p>
+      <span>2005-07-27</span>
+      <span>#code-snippets</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Fonction upperCase gérant les accents et caratères spéciaux du français
+:</p>
+<pre><code>/// &lt;summary&gt;
+/// Returns a copy of a string in uppercase, without accents
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;text&quot;&gt;Valid string expression&lt;/param&gt;
+/// &lt;returns&gt;String converted to uppercase&lt;/returns&gt;
+public static string upperCase (string text) {
+  const string accents = &quot;ÁÀÄÂÉÈËÊÍÌÏÎÓÒÖÔÚÙÜÛŸÇ&quot;;
+  const string normaux = &quot;AAAAEEEEIIIIOOOOUUUUYC&quot;;
+  string majuscules = text.ToUpper();
+  for (int i = 0; i &lt; accents.Length; i++) {
+    majuscules = majuscules.Replace(accents.Substring(i, 1), normaux.Substring(i, 1));
+  }
+  majuscules = majuscules.Replace(&quot;Æ&quot;, &quot;AE&quot;);
+  majuscules = majuscules.Replace(&quot;Œ&quot;, &quot;OE&quot;);
+  return majuscules;
+}
+</code></pre>
+<p>Et la fonction lowerCase correspondante :</p>
+<pre><code>/// &lt;summary&gt;
+/// Returns a copy of a string in lowercase, without accents
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;text&quot;&gt;Valid string expression&lt;/param&gt;
+/// &lt;returns&gt;String converted to lowercase&lt;/returns&gt;
+public static string lowerCase (string text) {
+  return upperCase(text).ToLower();
+}
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/07/27/objectinnertext-ie-ff/" hreflang="fr-FR">object.innerText for IE and FF</a>
+  <a rel="next" href="/2005/07/27/encoder-chaine-md5-hexa/" hreflang="fr-FR">Encoder une chaine en MD5 et hexa</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

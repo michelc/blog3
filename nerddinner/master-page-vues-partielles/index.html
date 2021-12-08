@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NerdDinner(fr) : Master page et Vues partielles - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/nerddinner/master-page-vues-partielles/" />
+<meta property="og:title" content="NerdDinner(fr) : Master page et Vues partielles" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/nerddinner/master-page-vues-partielles/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-01-07T15:29:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-01-07T15:29:00.000Z","datePublished":"2010-01-07T15:29:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/nerddinner/master-page-vues-partielles/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/nerddinner/master-page-vues-partielles/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+<article>
+
+  <header>
+    <h1>
+      <a href="">NerdDinner(fr) : Master page et Vues partielles</a>
+    </h1>
+    <p>
+      <span>2010-01-07</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>ASP.NET MVC favorise l'adhésion à la philosophie de conception DRY,
+abréviation de &quot;Don't Repeat Yourself&quot;. Le fait de suivre ce principe permet
+d'éviter toute répétition de code ou de traitement et au final de rendre les
+applications plus rapides à développer et plus facile à maintenir.</p>
+<p>Au cours de la réalisation de l'application NerdDinner, nous avons souvent
+appliqué l'approche DRY. Quelques exemples : la  validation des données est
+réalisée dans la couche modèle, ce qui permet à notre contrôleur de l'employer
+aussi bien lors d'une création que d'une modification; la vue &quot;NotFound&quot; sert
+au niveau des actions Edit, Details et Delete; le respect de conventions de
+nommages nous évite de définir le nom des vues dans la méthode View(); et la
+classe DinnerFormViewModel est utilisée pour les deux formulaires de création
+et de modification.</p>
+<p>Nous allons maintenant voir comment appliquer cette &quot;philosophie DRY&quot; au
+niveau des vues, pour là aussi faire disparaitre toute duplication de code.</p>
+<h2>Amélioration des vues Edit et Create</h2>
+<p>Nous employons actuellement deux vues différentes - &quot;Edit.aspx&quot; et
+&quot;Create.aspx&quot; - pour afficher un formulaire de mise à jour des dîners. Un
+simple coup d'œil suffit pour se rendre compte à quel point ils sont
+similaires. Voici tout d'abord ce que donne le formulaire de création d'un
+dîner :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image100.png" alt=""></p>
+<p>Et maintenant voici à quoi ressemble le formulaire de modification :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image101.png" alt=""></p>
+<p>On ne peut pas dire qu'il y ait beaucoup de différence. À part le titre, la
+présentation du formulaire et les contrôles utilisés semblent parfaitement
+identiques.</p>
+<p>Si on regarde les sources de &quot;Edit.aspx&quot; et de &quot;Create.aspx&quot;, on peut voir
+que c'est exactement la même chose en ce qui concerne le formulaire et ses
+contrôles de saisie. Avec une telle répétition, nous devrons donc refaire
+chaque modification en double toutes les fois où nous ferons évoluer l'objet
+Dinner, ce qui n'est vraiment pas une bonne chose.</p>
+<h2>Utiliser une vue partielle</h2>
+<p>ASP.NET MVC offre la possibilité de créer des &quot;vues partielles&quot; qui peuvent
+ensuite être utilisées pour incorporer les traitements de présentation des vues
+à l'intérieur d'une page. Les vues partielles fournissent une façon pratique de
+définir cette présentation une seule fois, puis de réutiliser celle-ci dans
+plusieurs parties de l'application.</p>
+<p>Pour aider nos vues Edit.aspx et Create.aspx à respecter l'approche DRY,
+nous allons créer une vue partielle &quot;DinnerForm.ascx&quot; qui contiendra le code
+source commun aux deux vues pour assurer la présentation du formulaire et de
+ses contrôles de saisie utilisateur. Pour cela, nous commençons par un clic
+droit dans le répertoire /Views/Dinners afin de sélectionner la commande &quot;Add
+-&gt; View&quot; :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image102.png" alt=""></p>
+<p>Cela affiche la boite de dialogue &quot;Add View&quot;. Nous allons appeler notre
+nouvelle vue &quot;DinnerForm&quot; puis cocher &quot;Create a partial view (.ascx)&quot; pour
+indiquer qu'il s'agira d'une vue partielle avant de définir que nous lui ferons
+passer un objet DinnerFormViewModel :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image103.png" alt=""></p>
+<p>Suite au clic sur le bouton &quot;Ajouter&quot;, Visual Studio insère un nouveau
+fichier &quot;DinnerForm.ascx&quot; dans le répertoire &quot;\Views\Dinners&quot;.</p>
+<p>Nous pouvons alors copier le code qui gère la présentation du formulaire et
+les contrôles de saisie utilisateur depuis une des vues Edit.aspx ou
+Create.aspx puis le coller dans notre nouvelle vue partielle
+&quot;DinnerForm.ascx&quot; :</p>
+<pre><code>&lt;%= Html.ValidationSummary(&quot;Please correct the errors and try again.&quot;) %&gt;
+
+&lt;% using (Html.BeginForm()) { %&gt;
+
+   &lt;fieldset&gt;
+
+     &lt;p&gt;
+        &lt;label for=&quot;Title&quot;&gt;Dinner Title:&lt;/label&gt;
+        &lt;%= Html.TextBox(&quot;Title&quot;, Model.Dinner.Title) %&gt;
+        &lt;%= Html.ValidationMessage(&quot;Title&quot;, &quot;*&quot;) %&gt;
+     &lt;/p&gt;
+     &lt;p&gt;
+        &lt;label for=&quot;EventDate&quot;&gt;Event Date:&lt;/label&gt;
+        &lt;%= Html.TextBox(&quot;EventDate&quot;, Model.Dinner.EventDate) %&gt;
+        &lt;%= Html.ValidationMessage(&quot;EventDate&quot;, &quot;*&quot;) %&gt;
+     &lt;/p&gt;
+     &lt;p&gt;
+        &lt;label for=&quot;Description&quot;&gt;Description:&lt;/label&gt;
+        &lt;%= Html.TextArea(&quot;Description&quot;, Model.Dinner.Description) %&gt;
+        &lt;%= Html.ValidationMessage(&quot;Description&quot;, &quot;*&quot;)%&gt;
+     &lt;/p&gt;
+     &lt;p&gt;
+        &lt;label for=&quot;Address&quot;&gt;Address:&lt;/label&gt;
+        &lt;%= Html.TextBox(&quot;Address&quot;, Model.Dinner.Address) %&gt;
+        &lt;%= Html.ValidationMessage(&quot;Address&quot;, &quot;*&quot;) %&gt;
+     &lt;/p&gt;
+     &lt;p&gt;
+        &lt;label for=&quot;Country&quot;&gt;Country:&lt;/label&gt;
+        &lt;%= Html.DropDownList(&quot;Country&quot;, Model.Countries) %&gt;
+        &lt;%= Html.ValidationMessage(&quot;Country&quot;, &quot;*&quot;) %&gt;
+     &lt;/p&gt;
+     &lt;p&gt;
+        &lt;label for=&quot;ContactPhone&quot;&gt;Contact Phone #:&lt;/label&gt;
+        &lt;%= Html.TextBox(&quot;ContactPhone&quot;, Model.Dinner.ContactPhone) %&gt;
+        &lt;%= Html.ValidationMessage(&quot;ContactPhone&quot;, &quot;*&quot;) %&gt;
+&lt;/p&gt;
+&lt;p&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Save&quot; /&gt;
+     &lt;/p&gt;
+   &lt;/fieldset&gt;
+&lt;% } %&gt;
+</code></pre>
+<p>Nous pouvons ensuite mettre à jour les vues &quot;Edit.aspx&quot; et &quot;Create.aspx&quot;
+pour y appeler la vue partielle &quot;DinnerForm.ascx&quot; et ainsi élimer le code en
+double. Pour cela, nous devons utiliser le helper
+Html.RenderPartial(&quot;DinnerForm&quot;) :</p>
+<h3>Create.aspx</h3>
+<pre><code>&lt;asp:Content ID=&quot;Title&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+   Host a Dinner
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Create&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+   &lt;h2&gt;Host a Dinner&lt;/h2&gt;
+
+   &lt;% Html.RenderPartial(&quot;DinnerForm&quot;); %&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<h3>Edit.aspx</h3>
+<pre><code>&lt;asp:Content ID=&quot;Title&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+   Edit: &lt;%=Html.Encode(Model.Dinner.Title) %&gt;
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Edit&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+   &lt;h2&gt;Edit Dinner&lt;/h2&gt;
+
+   &lt;% Html.RenderPartial(&quot;DinnerForm&quot;); %&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Il est possible de définir explicitement le chemin de la vue partielle que
+l'on veut utiliser quand on appelle la fonction Html.RenderPartial (par
+exemple, ~Views/Dinners/DinnerForm.ascx). Mais dans notre exemple, nous
+profitons des possibilités de convention de nommage d'ASP.NET MVC, ce qui nous
+permet d'indiquer seulement &quot;DinnerForm&quot;. ASP.NET MVC regarde d'abord dans le
+répertoire des vues correspondant aux conventions de nommage (pour le
+contrôleur DinnersController il s'agit de /Views/Dinners). S'il n'y trouve pas
+la vue partielle attendue, il la cherche alors dans le répertoire
+/Views/Shared.</p>
+<p>Lorsque la méthode Html.RenderPartial() est appelée avec comme seul
+paramètre le nom de la vue partielle, ASP.NET MVC lui fait suivre les mêmes
+objets Model et ViewData que ceux utilisés par la vue appelante. Il existe
+cependant des versions surchargées de Html.RenderPartial() qui vous permettent
+de faire passer d'autres objets Model ou un autre dictionnaire ViewData à la
+vue partielle. Cela peut servir dans le cas où vous souhaitez seulement
+transmettre un sous-ensemble de l'objet Model ou ViewModel à la vue.</p>
+<h2>Remarque : Pourquoi &lt;% %&gt; et pas &lt;%= %&gt; ?</h2>
+<p>Une des petites subtilités que vous avez peut-être remarqué dans le code
+ci-dessus est que nous avons utilisé un bloc &lt;% %&gt; au lieu d'un bloc
+&lt;%= %&gt; pour appeler Html.RenderPartial().</p>
+<p>En ASP.NET, les blocs &lt;%= %&gt; servent pour afficher une valeur
+particulière (comme par exemple &lt;%= &quot;Hello&quot; %&gt; qui va renvoyer le texte
+&quot;Hello&quot;). Les blocs &lt;% %&gt; servent plutôt pour exécuter un morceau de
+code, à l'intérieur duquel il faut explicitement effectuer le rendu du contenu
+(par exemple en écrivant &lt;% Response.Write(&quot;Hello&quot;) %&gt;).</p>
+<p>Nous avons donc dû employer un bloc &lt;% %&gt; parce que la fonction
+Html.RenderPartial() ne retourne pas une chaîne mais renvoie directement son
+contenu dans le flux de sortie de la vue appelante. Cette façon de faire offre
+de bien meilleures performances car il n'est alors pas nécessaire de créer un
+objet chaîne temporaire (surtout dans le cas où celle-ci serait très grande).
+Cela diminue l'utilisation de la mémoire et améliore la vitesse de
+l'application.</p>
+<p>Quand on utilise la fonction Html.RenderPartial() dans un bloc &lt;% %&gt;,
+on oublie fréquemment de mettre un point-virgule après celle-ci. Par exemple,
+le code ci-dessous va provoquer une erreur du compilateur :</p>
+<pre><code>&lt;% Html.RenderPartial(&quot;DinnerForm&quot;) %&gt;
+</code></pre>
+<p>Il faut bien faire attention à écrire le code suivant :</p>
+<pre><code>&lt;% Html.RenderPartial(&quot;DinnerForm&quot;); %&gt;
+</code></pre>
+<p>Ceci est dû au fait que les blocs &lt;% %&gt; sont des instructions et qu'en
+C# les instructions doivent se terminer par un point-virgule.</p>
+<h2>Rendre le code plus lisible avec une vue partielle</h2>
+<p>Nous avons créé la vue partielle &quot;DinnerForm&quot; pour éviter d'avoir à répéter
+le même code dans plusieurs vues. C'est la principale raison qui motive la
+création d'une vue partielle.</p>
+<p>Cependant, il est parfois justifié de créer une vue partielle même si elle
+ne doit être utilisée qu'une seule fois. Une vue très compliquée gagne
+généralement en lisibilité quand les traitements pour son rendu sont répartis
+dans une ou plusieurs vues partielles.</p>
+<p>Prenons par exemple le cas du code ci-dessous tiré du fichier Site.master de
+notre projet (auquel nous nous intéresserons très bientôt). Ce source est
+relativement facile à lire - en partie parce que tout le traitement pour
+afficher le lien login/logout en haut à droite de l'écran est délégué à la vue
+partielle &quot;LogOnUserControl&quot; :</p>
+<pre><code>&lt;div id=&quot;header&quot;&gt;
+   &lt;div id=&quot;title&quot;&gt;
+     &lt;h1&gt;My MVC Application&lt;/h1&gt;
+   &lt;/div&gt;
+
+   &lt;div id=&quot;logindisplay&quot;&gt;
+     &lt;% Html.RenderPartial(&quot;LogOnUserControl&quot;); %&gt;
+   &lt;/div&gt;
+
+   &lt;div id=&quot;menucontainer&quot;&gt;
+
+     &lt;ul id=&quot;menu&quot;&gt;
+        &lt;li&gt;&lt;%= Html.ActionLink(&quot;Home&quot;, &quot;Index&quot;, &quot;Home&quot;)%&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;%= Html.ActionLink(&quot;About&quot;, &quot;About&quot;, &quot;Home&quot;)%&gt;&lt;/li&gt;
+     &lt;/ul&gt;
+
+   &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Chaque fois que vous commencerez à avoir mal à la tête en tentant de
+comprendre comment fonctionne le code ou le html d'une vue, prenez le temps de
+vous demander si cela ne deviendrait pas plus clair en la découpant en
+plusieurs vues partielles avec des noms évocateurs.</p>
+<h2>Pages Maîtres</h2>
+<p>En complément des vues partielles, ASP.NET MVC offre aussi la possibilité de
+créer une &quot;page maître&quot; qui permet de définir la présentation globale et le
+squelette html d'un site. Il est alors possible d'ajouter des contrôles
+ContentPlaceHolder à cette page maître pour y définir des zones qui seront
+ensuite remplacées ou &quot;remplies&quot; par le contenu des vues. En plus de respecter
+parfaitement la philosophie DRY, c'est une méthode très pratique pour appliquer
+une présentation homogène dans toute l'application.</p>
+<p>Quand on crée un nouveau projet ASP.NET MVC, Visual Studio ajoute
+automatiquement une page maître par défaut. Ce fichier d'appelle &quot;Site.master&quot;
+et se trouve dans le répertoire \Views\Shared :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image104.png" alt=""></p>
+<p>Ce fichier Site.master ressemble au code source ci-dessous. Il contient le
+code html pour la présentation générale du site avec un menu de navigation en
+haut et il défini deux contrôles ContentPlaceHolder destinés à accueillir le
+contenu spécifique de chaque écran : le premier pour le titre de l'écran et le
+second pour le contenu principal de la page concernée :</p>
+<pre><code>&lt;%@ Master Language=&quot;C#&quot; Inherits=&quot;System.Web.Mvc.ViewMasterPage&quot; %&gt;
+
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
+&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+
+&lt;head runat=&quot;server&quot;&gt;
+   &lt;title&gt;&lt;asp:ContentPlaceHolder ID=&quot;TitleContent&quot; runat=&quot;server&quot; /&gt;&lt;/title&gt;
+   &lt;link href=&quot;../../Content/Site.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+   &lt;div class=&quot;page&quot;&gt;
+
+     &lt;div id=&quot;header&quot;&gt;
+        &lt;div id=&quot;title&quot;&gt;
+           &lt;h1&gt;My MVC Application&lt;/h1&gt;
+        &lt;/div&gt;
+
+        &lt;div id=&quot;logindisplay&quot;&gt;
+           &lt;% Html.RenderPartial(&quot;LogOnUserControl&quot;); %&gt;
+        &lt;/div&gt;
+
+        &lt;div id=&quot;menucontainer&quot;&gt;
+
+           &lt;ul id=&quot;menu&quot;&gt;
+                &lt;li&gt;&lt;%= Html.ActionLink(&quot;Home&quot;, &quot;Index&quot;, &quot;Home&quot;)%&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;%= Html.ActionLink(&quot;About&quot;, &quot;About&quot;, &quot;Home&quot;)%&gt;&lt;/li&gt;
+           &lt;/ul&gt;
+
+        &lt;/div&gt;
+     &lt;/div&gt;
+
+     &lt;div id=&quot;main&quot;&gt;
+        &lt;asp:ContentPlaceHolder ID=&quot;MainContent&quot; runat=&quot;server&quot; /&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Toutes les vues qui ont été créées dans le cadre de notre application
+NerdDinner (&quot;List&quot;, &quot;Details&quot;, &quot;Edit&quot;, &quot;Create&quot;, &quot;NotFound&quot;, etc…) sont basées
+sur ce fichier Site.master. C'est ce qu'indique l'attribut &quot;MasterPageFile&quot;
+inséré par défaut dans la directive &lt;%@ Page %&gt; pour chacun des fichiers
+générés via la boite de dialogue &quot;Add View&quot; :</p>
+<pre><code>&lt;%@ Page Language=&quot;C#&quot;
+Inherits=&quot;System.Web.Mvc.ViewPage&lt;NerdDinner.Controllers.DinnerViewModel&gt;&quot;
+MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; %&gt;
+</code></pre>
+<p>Par conséquent, si nous changeons le source de Site.master, les
+modifications apportées seront automatiquement prises en compte quand nous
+afficherons les vues qui sont basées dessus.</p>
+<p>Nous pouvons ainsi mettre à jour la partie &quot;header&quot; du fichier Site.master
+pour que le titre de l'application devienne &quot;NerdDinner&quot; au lieu de &quot;My MVC
+Application&quot;. Nous pouvons aussi modifier le menu de navigation pour que son
+premier onglet soit &quot;Find a Dinner&quot; (géré par l'action Index() du contrôleur
+HomeController) et pour lui ajouter un nouvel onglet &quot;Host a Dinner&quot; (géré par
+l'action Create() du contrôleur DinnersController) :</p>
+<pre><code>&lt;div id=&quot;header&quot;&gt;
+   &lt;div id=&quot;title&quot;&gt;
+     &lt;h1&gt;NerdDinner&lt;/h1&gt;
+   &lt;/div&gt;
+
+   &lt;div id=&quot;logindisplay&quot;&gt;
+     &lt;% Html.RenderPartial(&quot;LoginStatus&quot;); %&gt;
+   &lt;/div&gt;
+
+   &lt;div id=&quot;menucontainer&quot;&gt;
+     &lt;ul id=&quot;menu&quot;&gt;
+        &lt;li&gt;&lt;%= Html.ActionLink(&quot;Find Dinner&quot;, &quot;Index&quot;, &quot;Home&quot;)%&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;%= Html.ActionLink(&quot;Host Dinner&quot;, &quot;Create&quot;, &quot;Dinners&quot;)%&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;%= Html.ActionLink(&quot;About&quot;, &quot;About&quot;, &quot;Home&quot;)%&gt;&lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Après avoir sauvegardé le fichier Site.master puis actualisé l'affichage du
+navigateur, nous pouvons constater que les modifications apportées à l'en-tête
+de page sont bien prises en compte dans les différentes vues de l'application.
+Comme par exemple :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image105.png" alt=""></p>
+<p>Ou dans le cas de l'URL /Dinners/Edit/[id] :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image106.png" alt=""></p>
+<p>Les vues partielles et les pages maîtres procurent une très grande souplesse
+pour organiser les  vues le plus clairement possible. À l'usage, vous
+verrez qu'elles évitent d'avoir du code en double au sein des vues, ce qui les
+rend plus faciles à relire et donc à maintenir.</p>
+<hr>
+<p>Index : <a href="http://tinyurl.com/NerdDinnerFR">NerdDinner en français</a> - Suite : <a href="/nerddinner/gerer-pagination/">Gérer
+la pagination</a></p>
+
+
+  </div>
+
+</article>
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

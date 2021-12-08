@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nouveau thème Boxed - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/10/30/nouveau-theme-boxed/" />
+<meta property="og:title" content="Nouveau thème Boxed" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/10/30/nouveau-theme-boxed/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-10-30T16:45:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-10-30T16:45:00.000Z","datePublished":"2008-10-30T16:45:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/10/30/nouveau-theme-boxed/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/10/30/nouveau-theme-boxed/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/10/30/nouveau-theme-boxed/">Nouveau thème Boxed</a>
+    </h1>
+    <p>
+      <span>2008-10-30</span>
+      <span>#blog</span><span>#html</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ça faisait un bon moment que j'y pensais et je l'ai enfin fait : mon
+blog a maintenant une nouvelle charte graphique ! Quittez donc 5 secondes
+votre agrégateur et venez vous rendre compte par vous-même :)</p>
+<p>Au début, j'étais parti comme bien souvent de la charte graphique <a href="http://webhost.bridgew.edu/etribou/layouts/skidoo_redux/">Skidoo Redux</a> et
+petit à petit, j'étais arrivé à faire ce que je souhaitais obtenir, à
+savoir :</p>
+<ul>
+<li>une présentation sur 2 colonnes, avec les menus ou autres dans une barre
+latérale sur la gauche et le contenu principal sur la partie de droite</li>
+<li>un source html où le contenu principal apparait avant le contenu de la
+barre latérale</li>
+<li>une mise en évidence du contenu principal (encadré et fond blanc) par
+rapport à tout le reste (fond uni qui occupe tout l'écran) et qui soit
+suffisamment large pour permettre les copies d'écrans et les extraits de codes
+sources</li>
+</ul>
+<p>Malheureusement, l'adaptation sous Dotclear n'était pas si évidente que ça,
+parce que la structure de base pour Skidoo Redux est un peu différente de celle
+générée par défaut dans le cas d'un <a href="http://www.gandi.fr/domaine/blog/">Gandi Blog</a>.</p>
+<h2>Squelette html pour Skidoo Redux</h2>
+<pre><code>&lt;body&gt;
+    &lt;div id=&quot;page-container&quot;&gt;
+        &lt;div id=&quot;masthead&quot;&gt;
+            &lt;div class=&quot;inside&quot;&gt;
+                &lt;ul class=&quot;rMenu&quot;&gt; ... &lt;/ul&gt;
+                &lt;h1&gt; ... &lt;/h1&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;outer-column-container&quot;&gt;
+            &lt;div id=&quot;inner-column-container&quot;&gt;
+                &lt;div id=&quot;middle-column&quot;&gt;
+                    &lt;div class=&quot;inside&quot;&gt;
+                        ...
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;left-column&quot;&gt;
+                    &lt;div class=&quot;inside&quot;&gt;
+                        ...
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;clear-columns&quot;&gt;&lt;!-- do not delete --&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;footer&quot;&gt;
+            &lt;div class=&quot;inside&quot;&gt;
+                ...
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<h2>Squelette html pour Gandi Blog</h2>
+<pre><code>&lt;body&gt;
+    &lt;div id=&quot;page&quot;&gt;
+        &lt;div id=&quot;top&quot;&gt;
+            &lt;h1&gt;&lt;span&gt; ... &lt;/span&gt;&lt;/h1&gt;
+        &lt;/div&gt;
+        &lt;p id=&quot;prelude&quot;&gt; ... &lt;/p&gt;
+        &lt;div id=&quot;wrapper&quot;&gt;
+            &lt;div id=&quot;main&quot;&gt;
+                &lt;div id=&quot;content&quot;&gt;
+                    ...
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div id=&quot;sidebar&quot;&gt;
+                &lt;div id=&quot;blognav&quot;&gt;
+                    ...
+                &lt;/div&gt;
+                &lt;div id=&quot;blogextra&quot;&gt;
+                    ...
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;footer&quot;&gt;
+            ...
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>En fait, une bonne partie du principe de Skidoo Redux repose sur les deux
+div #outer-column-container et #inner-column-container qui permettent de
+définir la colonne de gauche en tant que <code>border-left</code>.</p>
+<p>Dans le cas d'un Gandi Blog, il existe bien une div #wrapper qui peut se
+substituer à la div #outer-column-container, mais rien qui puisse correspondre
+à la div #inner-column-container.</p>
+<p>Après un certain nombre d'essais d'adaptations, j'ai préféré laisser tomber
+et je suis allé voir sur &lt;dotaddict[http://dotaddict.org/&gt; ce qu'il
+existait comme thèmes avec la structure que je souhaitais. Et parmi les
+différents [thèmes à 2
+colonnes](http://themes.dotaddict.org/galerie-dc2/tag/2 colonnes) proposés pour Dotclear 2, j'ai récupéré le thème <a href="http://themes.dotaddict.org/galerie-dc2/details/Bastienne">Bastienne</a>.</p>
+<p><a href="http://themes.dotaddict.org/galerie-dc2/details/Bastienne"><img src="http://themes.dotaddict.org/files/public/galeries/dc2/bastienne/.bastienne_m.jpg" alt="Le thème Bastienne pour Dotclear 2"></a></p>
+<p>Et me voila reparti pour un nouveau tour d'adaptations afin de reproduire ce
+que j'avais déjà réussi à faire avec Skidoo Redux.</p>
+<p>J'ai essayé d'organiser la feuille de style en m'inspirant de cette
+d'origine et en gardant plus ou moins le découpage suivant :</p>
+<ul>
+<li>la structure des différents blocs</li>
+<li>la présentation des différents blocs</li>
+<li>la présentation de certains blocs particuliers (citations, codes sources,
+listes...)</li>
+<li>la présentation de blocs spécifiques à Dotclear (tags, commentaires,
+informations sur le billet...)</li>
+</ul>
+<p>Par conséquent, si j'enlève toutes les parties spécifiques à Dotclear (et
+pour l'instant marquées GandiBlog), je devrais obtenir une charte graphique
+tout à fait acceptable pour <a href="http://www.altrr.com/">Altrr-Press</a> (à
+tester plus tard).</p>
+<p>Je ne suis pas encore certain d'avoir bien pris en compte toutes les
+possibilités de Dotclear, masi c'est déjà largement suffisant pour
+l'utilisation que j'en fait sur ce blog. Et donc, après <a href="http://quotedprintable.com/pages/scribbish">quasiment 2 ans</a> de bons et
+loyaux services, je laisse tomber la charte graphique <a href="http://quotedprintable.com/pages/scribbish">Scribbish</a> pour ce blog.</p>
+<p>Pour la mise en prod, c'est assez simple. Dans le tableau de bord, je clique
+sur &quot;Apparence du blog&quot; et je conserve mon &quot;Custom theme&quot; actuel, mais je
+change sa configuration de :</p>
+<pre><code>@import url(/public/scribbish/application.css);
+</code></pre>
+<p>en :</p>
+<pre><code>@import url(/public/css/boxed/boxed.css);
+@media print {
+  body { margin: 0; padding: 0; }
+  #page { width: 100%; }
+  #prelude, #navlinks, #sidebar, #comment-form, #pings, #ping-url, #comments-feed { display: none; height: 0; width: 0; }
+  #main { float: none; margin: 0; padding: 0; width: 99% important; }
+  #content pre { color: #000; background: #eee; }
+  #content { border: none 0; margin: 0; padding: 0; width: 99% important; }
+  /* http://longren.org/2006/09/27/wrapping-text-inside-pre-tags */
+  pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap !important;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+  }
+}
+</code></pre>
+<p>La partie <code>@media print</code>, c'est pour la feuille de style à
+l'impression. Ça fait disparaitre tout ce qui est navigation ou accessoire de
+façon à n'imprimer que le contenu central, et surtout sans qu'il manque la fin
+des lignes (comme c'est quelquefois le cas sur certains blogs).</p>
+<p>Pour la suite, je vais tester sur place pendant quelque temps, peut-être
+fignoler quelques trucs par ci par là et faire en sorte que la CSS soit bien
+valide. J'aimerai aussi faire apparaitre un menu en haut à droite, mais je ne
+saisi pas encore si je pourrait faire ça avec un simple bloc de texte
+puisqu'avec les Gandi Blog il n'est pas possible de modifier le squelette html.
+Et puis il faut aussi que je m'occupe du bloc #prelude avec les liens de
+navigation pour l'accessibilité que j'ai laissé caché pour l'instant.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/10/29/controle-liens-casses/" hreflang="fr-FR">Contrôle des liens cassés</a>
+  <a rel="next" href="/2008/11/06/utiliser-subversion-local/" hreflang="fr-FR">Utiliser Subversion en local</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

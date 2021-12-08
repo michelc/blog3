@@ -1,0 +1,335 @@
+/*
+ * blog.pagesd.info
+ */
+
+
+/* Layout
+   (http://www.adamkaplan.me/grid/)
+   ========================================================================== */
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #fff;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: #fff;
+  margin: 0 auto;
+  max-width: 56rem;
+  padding: 1rem;
+  text-align: left;
+  width: 100%;
+}
+
+
+/* Links
+   ========================================================================== */
+
+a, a:visited {
+  color: #2962ff;
+  text-decoration: none;
+}
+
+a[href*='//'] {
+  font-weight: 600;
+}
+
+figcaption a, footer a[href*='//'] {
+  font-weight: normal !important;
+}
+
+p a {
+  text-decoration: underline;
+}
+
+li p a {
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
+
+/* Titles
+   ========================================================================== */
+
+header nav {
+  font-size: 1rem;
+  font-weight: 300;
+  margin: 0;
+}
+
+header nav .title {
+  font-weight: 600;
+}
+
+article header {
+  margin: 1rem 0 2.5rem;
+  text-align: center;
+}
+
+h1 {
+  color: #c39000;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -.5px;
+  line-height: 1;
+  margin: 1.75rem 0;
+}
+h1 a, h1 a:visited { color: #c39000; }
+
+h2 {
+  color: #43a047;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1;
+  margin: 2.1rem 0 1.6rem 0;
+}
+h2 a, h2 a:visited { color: #43a047; }
+
+h3 {
+  color: #aaa;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+  margin: 1.25rem 0;
+}
+h3 a, h3 a:visited { color: #aaa; }
+
+
+/* Blocks
+   ========================================================================== */
+
+blockquote, pre, .encart {
+  background-color: #fff;
+  border-bottom: 1px solid #fff;
+  border-top: 1px solid #fff;
+  clear: both;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  margin: 1rem -1rem;
+  padding: .5rem 1rem;
+  text-align: left;
+}
+
+
+/* Figure
+   ========================================================================== */
+
+figure {
+  margin: 1rem -1rem;
+  padding: 0;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+}
+
+figcaption {
+  font-size: small;
+  line-height: 1;
+}
+
+.cover-image figcaption {
+  font-size: x-small;
+  margin-top: -5px;
+  text-align: right;
+  visibility: hidden;
+}
+.cover-image:hover figcaption {
+  visibility: visible;
+}
+
+
+/* Lists
+   ========================================================================== */
+
+ul, ol {
+  margin: 0 0 0 1.3rem;
+  padding: 0;
+  text-align: left;
+}
+
+
+/* Texts
+   ========================================================================== */
+
+p img {
+  display: block;
+  margin: 0 auto;
+}
+
+li p {
+  margin: 0 auto; /* page archives génère des <li><p>...</p></li> */
+}
+
+blockquote {
+  background-color: #fbfaea;
+  border-color: #e3d0aa;
+}
+
+.encart {
+  background-color: #eaf7ff;
+  border-color: #6b90da;
+}
+
+.accroche {
+  font-size: 1.5rem;
+}
+
+
+/* Post meta informations
+   ========================================================================== */
+
+header p {
+  color: #777;
+  font-size: small;
+  margin-top: -1rem;
+}
+
+header p span {
+  background-color: #f0f0f0;
+  margin: 0 .25rem;
+  padding: 2px 5px;
+}
+
+
+/* Code
+   ========================================================================== */
+
+pre {
+  background-color: #f8f8f8;
+  border-color: #eee;
+  font-size: small;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+code {
+  background-color: #f0f0f0;
+  color: #444;
+  letter-spacing: -1px;
+  padding: 0 2px;
+}
+
+pre code {
+  background-color: #f8f8f8;
+  color: #000;
+  letter-spacing: -.25px;
+  padding: 0;
+}
+
+
+/* Navigation
+   ========================================================================== */
+
+nav.paginate {
+  font-size: small;
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+nav.paginate a, nav.paginate a:visited {
+  margin: 0 .5rem;
+  text-decoration: none;
+}
+
+nav.paginate a[rel="prev"]:before {
+  content: '← ';
+}
+
+nav.paginate a[rel="next"]:after {
+  content: ' →';
+}
+
+
+/* Footer
+   ========================================================================== */
+
+footer {
+  margin: 1rem 0 0 0;
+  text-align: center;
+}
+
+
+/* Tablet & desktop
+    ========================================================================== */
+
+@media screen and (min-width: 48rem) {
+  body {
+    background-color: #eee;
+  }
+  .container {
+    margin: 0 auto;
+    padding: 1rem 3rem;
+  }
+  header nav {
+    font-size: 1.5rem;
+  }
+  blockquote, pre, .encart {
+    margin-left: -3rem;
+    margin-right: -3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  figure {
+    margin-left: -3rem;
+    margin-right: -3rem;
+  }
+  /* https://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag */
+  pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap !important;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+  }
+}
+
+
+/* Print
+   ========================================================================== */
+
+.pub {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+@page {
+  margin: 1.5cm 1cm; /* en cm pour IE */
+}
+
+@media print {
+  div > header, nav.paginate, .cover, .pub { display: none; }
+  .container {
+    max-width: 100rem;
+    padding: 0 !important;
+  }
+  /* https://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag */
+  pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap !important;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+  }
+}

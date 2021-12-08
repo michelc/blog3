@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : ShoppingCart - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/27/mvc-music-store-raven-db-shoppingcart/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : ShoppingCart" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/27/mvc-music-store-raven-db-shoppingcart/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-27T20:14:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-27T20:14:00.000Z","datePublished":"2010-05-27T20:14:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/27/mvc-music-store-raven-db-shoppingcart/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/27/mvc-music-store-raven-db-shoppingcart/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/27/mvc-music-store-raven-db-shoppingcart/">MVC Music Store / Raven DB : ShoppingCart</a>
+    </h1>
+    <p>
+      <span>2010-05-27</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/26/porting-the-mvc-music-store-to-raven-shoppingcart.aspx">Porting MVC Music Store to Raven: ShoppingCart</a>&quot;, le neuvième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb.png" alt="ShoppingCart"></p>
+<p>La classe ShoppingCart de <a href="http://mvcmusicstore.codeplex.com/">MVC Music Store</a> est ma tête à claque du moment. C'est plus
+fort que moi.</p>
+<p>Vous pouvez admirer à quoi elle ressemble dans l'illustration de droite. Le
+souci avec elle, c'est que c'est le genre de code qui fait l'amalgame entre
+deux responsabilités différentes :</p>
+<ul>
+<li>Les opérations au sujet du panier
+<ul>
+<li>GetCart</li>
+<li>GetCartId</li>
+<li>GetCartItems</li>
+<li>GetCount</li>
+</ul>
+</li>
+<li>Les traitements du contenu du panier
+<ul>
+<li>AddToCart</li>
+<li>CreateOrder</li>
+<li>EmptyCart</li>
+<li>MigrateCart</li>
+<li>RemoveFromCart</li>
+</ul>
+</li>
+</ul>
+<p>Vous avez sans doute remarqué que toutes les opérations au sujet du panier
+correspondent à des fonctions get. Tous les traitements du contenu du panier
+sont relatifs aux articles du panier, ils représentent la logique métier du
+panier et sa raison d'être. Les opérations Get ne sont pas rattachées aux
+articles du panier, elles dépendent d'un autre genre d'objet qui gère les
+instances de paniers.</p>
+<p>Dans la plupart des applications, cet objet s'appellerait un Repository. Je
+ne suis pas certain que cela nous soit utile dans le cas présent. Si on étudie
+les méthodes Get de plus près, on se rend compte que la seule justification de
+leur existence vient du fait que l'on a choisi de stocker uniquement les
+articles du panier. Comme il n'existe pas d'entité panier, nous sommes obligé
+d'effectuer des requêtes explicites pour obtenir ces données.</p>
+<p>Avec Raven, nous procèderons différemment, ce qui fait que la seule chose
+dont nous devrions avoir besoin est GetCart() et peut-être GetCartId().</p>
+<p>Voici donc à quoi un document panier ressemblera :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_3.png" alt=""></p>
+<p>Ce qui donnera en tant qu'entité :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_6.png" alt=""></p>
+<p>La méthode GetTotal a été remplacée par une propriété Total. Contrairement à
+la méthode GetTotal qui va générer un accès à la base de données, cette
+propriété fonctionne uniquement à partir des données en mémoire. Cela constitue
+une autre différence majeure de Raven par rapport à une autre solution
+ORM : on ne va pas faire de lazy loading. C'est quelque chose d'inhérent
+aux bases de données documents : les données du modèle ont rarement besoin
+de parcourir d'autres données en dehors de leur propre document. Parcourir le
+document avec Raven ne risque pas de provoquer du lazy loading ou de nous
+entrainer dans de redoutables problèmes de type SELECT N+1.</p>
+<p>Et maintenant, occupons nous de gérer les opérations au sujet du panier. Les
+plus importantes sont GetCartId et GetCart. Je considère que ces méthodes n'ont
+rien à faire là. J'ai donc créé une nouvelle classe ShoppingCartFinder qui
+ressemble à ceci :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_5.png" alt=""></p>
+<p>Vous pouvez voir que nous n'exposons plus la méthode GetCartId. Il s'agit
+d'un élément interne qui n'a pas à être connu des clients de cette classe. La
+méthode SetShoppingCartId() est là parce que nous devons gérer l'initialisation
+de l'identifiant d'un panier étant donné que nous voulons gérer le transfert
+d'un panier (lorsqu'un utilisateur anonyme se connecte). Comme nous n'avons pas
+besoin des autres méthodes, je les ai supprimées.</p>
+<p>Continuons avec les traitements du contenu du panier. Pour mémoire, voici la
+méthode AddToCart() d'origine :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_7.png" alt=""></p>
+<p>Et voici cette méthode portée sous Raven :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_8.png" alt=""></p>
+<p>Le code pour Raven fonctionne entièrement en mémoire et sans se soucier de
+tout l'aspect persistance. Le code d'origine se charge explicitement de tout ce
+qui est persistance. Ce n'est pas un problème en soi, mais ce n'est pas le bon
+endroit pour s'occuper de persistance.</p>
+<p>Passons à RemoveFromCart() :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_9.png" alt=""></p>
+<p>Vous pouvez voir que sa taille diminue de façon très significative et qu'une
+fois encore, il ne s'agit plus que d'un traitement en mémoire. La méthode
+EmptyCart() n'est pas implémentée puisqu'avec Raven cela correspond juste à un
+Lines.Clear().</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_22.png" alt=""></p>
+<p>Un truc intéressant à voir, c'est que l'ancienne implémentation de
+EmptyCart() aurait généré N requêtes (N étant le nombre d'articles dans le
+panier) alors qu'avec Raven cela engendre une seule requête.</p>
+<p>La méthode CreateOrder() d'origine :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_11.png" alt=""></p>
+<p>Et celle pour Raven pour laquelle il n'y a pas grand chose à dire si ce
+n'est que l'ancien code exacuterait N * 2 requêtes là où le code pour Raven
+continuera de se contenter d'une seule requête :-)</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_12.png" alt=""></p>
+<p>MigrateCart() est plus intéressant parce que son implémentation est
+complètement différente. Dans le code d'origine, on met à jour tous les
+articles du panier un par un :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_13.png" alt=""></p>
+<p>Avec Raven, nous allons faire quelque chose de radicalement
+différent :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_15.png" alt=""></p>
+<p>L'identifiant du panier sert pour définir la clé du document et donc, en
+initialisant cet identifiant (soit avec le nom de l'utilisateur soit avec une
+valeur stockée en session), nous pouvons charger le panier à l'aide d'une
+méthode Load (sur la clé primaire pour faire une comparaison avec le monde des
+bases relationnelles). Le transfert du panier est alors une opération toute
+simple. Tout ce que vous avez à faire, c'est de changer sa clé. Étant donné que
+Raven ne permet pas de la renommer, nous allons faire une suppression puis une
+insertion qui s'exécuteront dans la même transaction.</p>
+<p>Le code pour appeler la méthode MigrateCart() est le suivant :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_BA52/image_thumb_16.png" alt=""></p>
+<p>Étant donné que SaveChanges est atomique et transactionnel, cela a le même
+effet que de faire un Rename.</p>
+<p>Et c'est tout pour le panier. Je consacrerai mon prochain billet au
+contrôleur ShoppingCartController qui utilise cette classe.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/26/mvc-music-store-raven-db-storecontroller/" hreflang="fr-FR">MVC Music Store / Raven DB : StoreController</a>
+  <a rel="next" href="/2010/05/28/mvc-music-store-raven-db-shoppingcartcontroller/" hreflang="fr-FR">MVC Music Store / Raven DB : ShoppingCartController</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

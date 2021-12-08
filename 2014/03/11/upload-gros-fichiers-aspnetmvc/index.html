@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload de gros fichiers avec ASP.NET MVC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2014/03/11/upload-gros-fichiers-aspnetmvc/" />
+<meta property="og:title" content="Upload de gros fichiers avec ASP.NET MVC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2014/03/11/upload-gros-fichiers-aspnetmvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-03-11T12:38:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2014-03-11T12:38:00.000Z","datePublished":"2014-03-11T12:38:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2014/03/11/upload-gros-fichiers-aspnetmvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2014/03/11/upload-gros-fichiers-aspnetmvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2014/03/11/upload-gros-fichiers-aspnetmvc/">Upload de gros fichiers avec ASP.NET MVC</a>
+    </h1>
+    <p>
+      <span>2014-03-11</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'avais complètement oublié ça, mais on tombe sur une erreur &quot;Internet Explorer
+ne peut pas afficher cette page Web&quot; ou &quot;Page Web inaccessible&quot; quand on essaie
+d'uploader un fichier trop gros avec ASP.NET.</p>
+<p>Le truc, c'est que les &quot;gros&quot; fichiers sont bloqués pour éviter que le serveur
+soit victime d'une <a href="http://fr.wikipedia.org/wiki/Attaque_par_d%C3%A9ni_de_service">attaque par déni de service</a>.</p>
+<p>Dans un premier temps, j'ai résolu ça par un <code>&lt;httpRuntime maxRequestLength=&quot;10240&quot; /&gt;</code> dans la partie <code>&lt;system.web&gt;</code> de mon Web.config.</p>
+<p>Puis j'ai cherché s'il était possible de limiter cette liberté à certaine
+parties du site.</p>
+<h2>Utiliser un tag &lt;location&gt;</h2>
+<blockquote>
+<p><a href="http://stackoverflow.com/questions/492346/asp-net-mvc-and-httpruntime-executiontimeout/636609#636609">ASP.NET MVC and httpRuntime executionTimeout</a></p>
+<p>You can include the whole MVC path (controller and action) in the
+&lt;location&gt; tag's path attribute. Something like this should work:</p>
+</blockquote>
+<pre><code>&lt;location path=&quot;Images/Upload&quot;&gt;
+    &lt;system.web&gt;
+        &lt;httpRuntime executionTimeout=&quot;600&quot; /&gt;
+    &lt;/system.web&gt;
+&lt;/location&gt;
+</code></pre>
+<h2>Il y a aussi un maxAllowedContentLength ?</h2>
+<blockquote>
+<p><a href="http://stackoverflow.com/questions/8605925/asp-net-mvc-are-maxrequestlength-and-maxallowedcontentlength-ignored-in-a-subfol#11886738">ASP.NET MVC are maxRequestLength and maxAllowedContentLength
+ignored in a subfolder web.config?</a></p>
+<p>In your webconfig file, you need to declare the &lt;location&gt; tag with the
+path that way:</p>
+</blockquote>
+<pre><code>&lt;location path=&quot;controller/action&quot;&gt;
+  &lt;system.web&gt;
+    &lt;!-- maxRequestLength is in kilobytes (KB)  --&gt;
+    &lt;httpRuntime maxRequestLength=&quot;5120&quot; /&gt; &lt;!-- 5MB --&gt;
+  &lt;/system.web&gt;
+  &lt;system.webServer&gt;
+    &lt;security&gt;
+      &lt;requestFiltering&gt;
+        &lt;!-- maxAllowedContentLength is in bytes (B)  --&gt;
+        &lt;requestLimits maxAllowedContentLength=&quot;5242880&quot;/&gt; &lt;!-- 5MB --&gt;
+      &lt;/requestFiltering&gt;
+    &lt;/security&gt;
+  &lt;/system.webServer&gt;
+&lt;/location&gt;
+</code></pre>
+<h2>Alors quoi ?</h2>
+<blockquote>
+<p><a href="http://stackoverflow.com/questions/6327452/which-gets-priority-maxrequestlength-or-maxallowedcontentlength#6472631">Which gets priority? maxRequestLength or
+maxAllowedContentLength?</a></p>
+<p>maxRequestLength indicates the maximum request size supported by ASP.NET,
+whereas maxAllowedContentLength specifies the maximum length of content in a
+request supported by IIS. So you need to set both in order to upload large
+files: the smaller one &quot;takes priority&quot;.</p>
+</blockquote>
+<h2>En fait, ça dépend su serveur</h2>
+<p>J'ai tout compris grâce au billet <a href="http://weblogs.asp.net/jeffwids/archive/2009/09/24/from-iis6-maxrequestlength-to-iis7-maxallowedcontentlengthfile-specifying-maximum-file-upload-size.aspx">From IIS6 maxRequestLength to IIS7 -
+specifying maximum file upload size</a> :</p>
+<p>Avec IIS6, si on veut des fichiers supérieurs à 4 MB :</p>
+<pre><code>&lt;system.web&gt;
+  &lt;!-- maxRequestLength is in kilobytes (KB)  --&gt;
+  &lt;httpRuntime maxRequestLength=&quot;5120&quot; /&gt; &lt;!-- 5MB --&gt;
+&lt;/system.web&gt;
+</code></pre>
+<p>Avec IIS7, si on veut des fichiers supérieurs à 30 MB :</p>
+<pre><code>&lt;system.web&gt;
+  &lt;!-- maxRequestLength is in kilobytes (KB)  --&gt;
+  &lt;httpRuntime maxRequestLength=&quot;51200&quot; /&gt; &lt;!-- 50MB --&gt;
+&lt;/system.web&gt;
+&lt;system.webServer&gt;
+  &lt;security&gt;
+    &lt;requestFiltering&gt;
+      &lt;!-- maxAllowedContentLength is in bytes (B)  --&gt;
+      &lt;requestLimits maxAllowedContentLength=&quot;52428800&quot;/&gt; &lt;!-- 50MB --&gt;
+    &lt;/requestFiltering&gt;
+  &lt;/security&gt;
+&lt;/system.webServer&gt;
+</code></pre>
+<p>Et comme dans mon cas j'ai besoin de 10 Mo au maximum, le <code>maxRequestLength</code> est
+suffisant.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2013/09/10/ecrire-nombres-francais/" hreflang="fr-FR">Ecrire des nombres en français</a>
+  <a rel="next" href="/2014/05/05/302-redirect-permanent-mvc-ie/" hreflang="fr-FR">302 Redirect Permanent, MVC et IE</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

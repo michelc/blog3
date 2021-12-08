@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Confirmer la sortie d’un formulaire - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/04/11/confirmer-sortie-formulaire/" />
+<meta property="og:title" content="Confirmer la sortie d’un formulaire" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/04/11/confirmer-sortie-formulaire/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-04-11T11:07:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-04-11T11:07:00.000Z","datePublished":"2005-04-11T11:07:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/04/11/confirmer-sortie-formulaire/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/04/11/confirmer-sortie-formulaire/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/04/11/confirmer-sortie-formulaire/">Confirmer la sortie d’un formulaire</a>
+    </h1>
+    <p>
+      <span>2005-04-11</span>
+      <span>#code-snippets</span><span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Cette méthode fonctionne avec Internet Explorer (testé avec IE6) et Firefox
+(testé avec FF 1.5)</p>
+<pre><code>window.onbeforeunload = function (evt) {
+var message = 'Are you sure you want to leave?';
+if (typeof evt == 'undefined') {
+  evt = window.event;
+}
+if (evt) {
+  evt.returnValue = message;
+}
+  return message;
+}
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/03/24/wdevs-gestion-erreurs-application-web/" hreflang="fr-FR">(Wdevs) Gestion des erreurs d&#39;une application Web</a>
+  <a rel="next" href="/2005/04/15/reconnaitre-numero-securite-sociale/" hreflang="fr-FR">Reconnaitre un numéro de sécurité sociale</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

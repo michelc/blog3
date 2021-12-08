@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestion du RedirectFromLoginPage - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/08/05/gestion-redirectfromloginpage/" />
+<meta property="og:title" content="Gestion du RedirectFromLoginPage" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/08/05/gestion-redirectfromloginpage/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-08-05T12:16:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-08-05T12:16:00.000Z","datePublished":"2005-08-05T12:16:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/08/05/gestion-redirectfromloginpage/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/08/05/gestion-redirectfromloginpage/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/08/05/gestion-redirectfromloginpage/">Gestion du RedirectFromLoginPage</a>
+    </h1>
+    <p>
+      <span>2005-08-05</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modification de Global.asax.cs pour intégrer le paramètre ReturnUrl lorsque
+l'utilisateur est redirigé automatiquement vers l'écran de connexion. Cela
+permet de gérer le cas où la session étant terminée, le clic sur un lien
+renvoyait vers l'écran de login.</p>
+<p>Avec cette solution, l'utilisateur sera dirigé vers l'écran demandé après un
+passage par l'écran de connexion (attention car toutes les variables session
+auront disparues).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/08/05/postgresql-npgsql-accents/" hreflang="fr-FR">PostgreSQL, Npgsql et les accents</a>
+  <a rel="next" href="/2005/08/08/correction-evolution-discussions-box/" hreflang="fr-FR">Correction/évolution Discussions box</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

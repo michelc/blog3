@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer un projet Node.js sous Visual Code - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2016/10/19/creer-projet-node-js-visual-code/" />
+<meta property="og:title" content="Créer un projet Node.js sous Visual Code" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2016/10/19/creer-projet-node-js-visual-code/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-10-19T21:51:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2016-10-19T21:51:00.000Z","datePublished":"2016-10-19T21:51:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2016/10/19/creer-projet-node-js-visual-code/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2016/10/19/creer-projet-node-js-visual-code/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2016/10/19/creer-projet-node-js-visual-code/">Créer un projet Node.js sous Visual Code</a>
+    </h1>
+    <p>
+      <span>2016-10-19</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Source : <a href="https://code.visualstudio.com/docs/runtimes/nodejs">https://code.visualstudio.com/docs/runtimes/nodejs</a></p>
+<h2>Créer un projet</h2>
+<pre><code>C:\Code&gt; md Test2
+C:\Code&gt; cd Test2
+C:\Code\Test2&gt; _
+</code></pre>
+<h2>Ouvrir ce projet</h2>
+<pre><code>C:\Code\Test2&gt; code .
+</code></pre>
+<h2>Créer un fichier test.js</h2>
+<pre><code>var msg = 'Hello World';
+console.log(msg);
+</code></pre>
+<h2>Exécuter le fichier test.js</h2>
+<p>À faire depuis le terminal intégré de Visual Studio Code (Ctrl+ù) ou depuis
+l'invite de commande de Windows :</p>
+<pre><code>c:\Code\Test2&gt; node test.js
+Hello World
+
+c:\Code\Test2&gt; _
+</code></pre>
+<p>Il est possible de débuguer ce code de la même façon que pour le projet Test1.</p>
+<h2>Créer le fichier jsconfig.json</h2>
+<p>Le fichier &quot;jsconfig.json&quot; sert à indiquer que le répertoire dans lequel il se
+situe est un projet JavaScript.</p>
+<p>Il permet aussi de paramétrer les options pour ce projet.</p>
+<p>Tant qu'il n'existe pas de fichier &quot;jsconfig.json&quot;, il y a une petite lampe
+verte en bas à droite de la barre d'état. En cliquant dessus, cela crée un
+fichier &quot;jsconfig.json&quot; par défaut :</p>
+<pre><code>{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es6&quot;,
+    &quot;module&quot;: &quot;commonjs&quot;,
+    &quot;allowSyntheticDefaultImports&quot;: true
+  },
+  &quot;exclude&quot;: [
+    &quot;node_modules&quot;,
+    &quot;bower_components&quot;,
+    &quot;jspm_packages&quot;,
+    &quot;tmp&quot;,
+    &quot;temp&quot;
+  ]
+}
+</code></pre>
+<h2>Installer le fichier de définition pour Node.js</h2>
+<p>Par défaut, l'intellisense de Visual Studio Code reconnait le code JavaScript
+mais pas le code spécifique à Node.js.</p>
+<p>Pour cela, il faut installer le fichier de définition spécifique à Node.js :</p>
+<pre><code>C:\Code\Test2&gt; typings install dt~node --global --save
+</code></pre>
+<p>Cela a pour effet de créer :</p>
+<ul>
+<li>
+<p>Un répertoire &quot;typings&quot; avec tout ce qui va bien pour gérer l'intellisense
+spécifique à Node.js</p>
+</li>
+<li>
+<p>Un fichier &quot;typings.json&quot; pour configurer tout ça</p>
+</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2016/10/13/creer-projet-typescript-visual-code/" hreflang="fr-FR">Créer un projet TypeScript sous Visual Code</a>
+  <a rel="next" href="/2016/10/27/creer-projet-node-js-typescript/" hreflang="fr-FR">Créer un projet Node.js en TypeScript</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Wysiwyg and popups - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/03/17/wdevs-wysiwyg-popups/" />
+<meta property="og:title" content="(Wdevs) Wysiwyg and popups" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/03/17/wdevs-wysiwyg-popups/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-03-17T17:26:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-03-17T17:26:00.000Z","datePublished":"2005-03-17T17:26:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2005/03/17/wdevs-wysiwyg-popups/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/03/17/wdevs-wysiwyg-popups/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/03/17/wdevs-wysiwyg-popups/">(Wdevs) Wysiwyg and popups</a>
+    </h1>
+    <p>
+      <span>2005-03-17</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I made some new tests for the wysiwyg editor of the Htmltext boxes. This
+time, I used <a href="http://www.themaninblue.com/experiment/widgEditor/">widgEditor</a>, which
+suits better to my needs. Like The Man in Blue explains it, I think that other
+editors are over complicated, but I didn't want to write a new one editor.</p>
+<p>I still have to add some dialog boxes to allow users to:</p>
+<ul>
+<li>define internal links,</li>
+<li>create a link to download a file from the webserver,</li>
+<li>insert an image.</li>
+</ul>
+<p>I started to program a dialog box for internal link where users can select
+one of the screens of the site. I used <a href="http://www.destroydrop.com/javascripts/tree/">DestroyDrop</a> to represent the
+tree structure of the site, since I already employed it for my SitreTree box.
+With this dialog box, administrator can quickly navigate to another the screen.
+And when I would use it with widgEditor, it will allow author to create links
+inside the site. I also plan to call it from Links and Redirect boxes to easily
+manage the internal links and redirections from these modules.</p>
+<p>Concerning the file dialog box, I already write a minimal one from my
+FileDir box, where I can browse the server file system. I have to add an upload
+functionality and later try to use thumbnails for image inserting. But it's ok
+for a first attempt and it will be sufficient for this time. I preferred to
+vaste my time to make modifications to call it from boxes where user can give
+an url to a local file, like Image, FlashFile, SvgFile, XmlFile…</p>
+<p>Popups are really not easy to code. I wanted modal dialog at least in
+Internet Explorer and normal popup with Firefox. Except that links in a window
+opened by a showModalDialog are a nightmare. Fortunately, I found an article
+for an <a href="http://www.dotpitchstudios.com/mainsite/default.aspx?pageid=7">ASP.NET Pop-up
+Date Picker Control</a> where Mark Lubischer explains how he solved this
+problem with IFrame. Et &quot;cerise sur le gateau&quot;, thanks to him I discovered the
+&quot;modal=yes&quot; attributes which tell to Firefox to open a modal window.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/03/10/wdevs-screens-boxes-authorizations/" hreflang="en-US">(Wdevs) Screens and boxes authorizations</a>
+  <a rel="next" href="/2005/03/18/wdevs-ibuyspy-roles-not-enough/" hreflang="en-US">(Wdevs) IBuySpy Roles are not enough</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

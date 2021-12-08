@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PostgreSQL, Npgsql et les accents - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/08/05/postgresql-npgsql-accents/" />
+<meta property="og:title" content="PostgreSQL, Npgsql et les accents" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/08/05/postgresql-npgsql-accents/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-08-05T08:08:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-08-05T08:08:00.000Z","datePublished":"2005-08-05T08:08:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/08/05/postgresql-npgsql-accents/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/08/05/postgresql-npgsql-accents/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/08/05/postgresql-npgsql-accents/">PostgreSQL, Npgsql et les accents</a>
+    </h1>
+    <p>
+      <span>2005-08-05</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour que les chaines qui comprennent des caractères accentués soient
+correctement enregistrés, il ne suffit pas que la base de données soit créée en
+Unicode. Il faut également que la chaine de connexion contienne
+&quot;Encoding=unicode&quot;. Cela permet de résoudre l'erreur &quot;ERROR: 22021: invalid
+byte sequence for encoding &quot;UNICODE&quot;: 0xe76120&quot;.</p>
+<p>Mais il reste un problème sous Mono/XSP. En fait le souci est lié à
+Server.HtmlDecode() qui ne sait pas restituer les accents =&gt; ouverture du
+bug n°<a href="http://bugzilla.ximian.com/show_bug.cgi?id=75578">75578</a> sur Monozilla. Pour l'instant, j'ai contourné le problème en
+créant la fonction Common.HtmlEncode() qui n'échappe que inférieur, supérieur
+et éperluette et laisse les accents tranquilles, à la différence de
+Server.HtmlEncode() qui donne &quot;èéêë&quot; pour &quot;éèêë&quot;.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/08/03/querystring-xxxxxxsearch-boxes/" hreflang="fr-FR">QueryString pour les XxxxxxSearch boxes</a>
+  <a rel="next" href="/2005/08/05/gestion-redirectfromloginpage/" hreflang="fr-FR">Gestion du RedirectFromLoginPage</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

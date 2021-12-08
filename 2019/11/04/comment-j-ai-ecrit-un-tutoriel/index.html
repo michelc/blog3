@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comment j&#39;ai écrit un tutoriel Node JS - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/11/04/comment-j-ai-ecrit-un-tutoriel/" />
+<meta property="og:title" content="Comment j&#39;ai écrit un tutoriel Node JS" />
+<meta name="description" content="Ça faisait un moment que j&#39;essayais de développer une &quot;vraie&quot; application web avec Node JS. Et donc, Il y a quelques semaines, j&#39;ai écrit mon propre tutorial pour développer une application Note JS avec Express et SQLite." />
+<meta property="og:description" content="Ça faisait un moment que j&#39;essayais de développer une &quot;vraie&quot; application web avec Node JS. Et donc, Il y a quelques semaines, j&#39;ai écrit mon propre tutorial pour développer une application Note JS avec Express et SQLite." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/11/04/comment-j-ai-ecrit-un-tutoriel/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/ididitmyself.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-11-04T10:26:04.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-11-04T10:26:04.000Z","datePublished":"2019-11-04T10:26:04.000Z","description":"Ça faisait un moment que j'essayais de développer une \"vraie\" application web avec Node JS. Et donc, Il y a quelques semaines, j'ai écrit mon propre tutorial pour développer une application Note JS avec Express et SQLite.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/11/04/comment-j-ai-ecrit-un-tutoriel/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/ididitmyself.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/11/04/comment-j-ai-ecrit-un-tutoriel/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/ididitmyself.jpg" alt="C'est moi qui l'ait fait !" /><figcaption><a href="https://commons.wikimedia.org/wiki/File:Dirty_dishes.jpg">C'est moi qui l'ait fait !</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/11/04/comment-j-ai-ecrit-un-tutoriel/">Comment j&#39;ai écrit un tutoriel Node JS</a>
+    </h1>
+    <p>
+      <span>2019-11-04</span>
+      <span>#javascript</span><span>#tutoriel</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Il y a quelques semaines, je me suis lancé dans la rédaction d'un tutoriel sur
+le développement d'une application Node JS avec Express pour gérer une base de
+données SQlite. Je l'ai publié sur mon blogue sous le titre <a href="/2019/09/11/crud-avec-express-sqlite-10-etapes/">Application CRUD
+avec Express et SQlite en 10 étapes</a>
+et j'ai fait un peu de publicité dessus en espérant que ça puisse servir à
+d'autres que moi.</p>
+<p>Mais de toute façon, j'ai écrit ce tutoriel avant tout pour mon propre compte.
+J'essaie de m'améliorer petit à petit en JavaScript (et donc Node) et mon
+objectif est de parvenir à réaliser quelques programmes console ou de petites
+applications web.</p>
+<p>Il existe pas mal de trucs très-très bien sur internet et ça aide beaucoup pour
+apprendre à son propre rythme. Ce qui est particulièrement intéressant, c'est
+que c'est très varié. Si on bloque quelque part, on découvre toujours d'autres
+articles qui conviennent mieux et permettent de s'en sortir. Et quand on en a
+marre d'un sujet, on peut là aussi trouver d'autres trucs à faire pour se
+changer les idées et retrouver la motivation.</p>
+<p>Mais quelquefois c'est quand même difficile d'arriver à démarrer &quot;vraiment&quot;. Par
+exemple, pour la partie web, même si on trouve facilement des tas de tutoriels,
+ce n'est pas toujours évident. Ils sont presque toujours en anglais -- ça peut
+aller. Ils ne sont pas toujours très récents -- le web va tellement vite. Mais
+mon plus gros problème, c'est que soit ils sont trop basiques, soit que je m'y
+perds en route parce qu'ils essaient aussi de m'expliquer tout un tas d'autres
+trucs : MongoDB, WebPack, TypeScript, React, Vue, Docker...</p>
+<p>Ça faisait donc un bout de temps que j'essayais de développer une petite
+application web avec Node. Ce qui impliquait d'utiliser Express puisque c'est
+le framework le plus populaire sur le marché. Je n'ai pas trop de temps à y
+consacrer, donc pas la peine de m'égarer avec Koa, Hapi, Polka et consorts...</p>
+<p>Le rêve, ça aurait été de trouver un truc qui fasse tilt, comme lorsque j'avais
+découvert Sinatra avec &quot;<a href="/2010/07/22/installer-sinatra-windows-7/">I did it my way</a>&quot;.
+Mais bon, <a href="https://twitter.com/daz4126">Darren Jones</a> ne semble pas décidé à
+refaire le coup avec Node :)</p>
+<p>Un beau jour (je venais de finir une application vite faite avec ASP.NET MVC 5
+et Bootstrap 4 que j'aurais pu faire en Node si j'avais su comment), je me suis
+dit qu'à part du temps, il ne me manquait pas grand-chose pour arriver à
+franchir le cap :</p>
+<ul>
+<li>Un exemple simple d'application ExpressJS, sans tomber directement dans sa
+partie générateur</li>
+<li>Le b.a.-ba de l'utilisation d'une base SQL avec Node JS</li>
+</ul>
+<p>Personnellement, je connais déjà :</p>
+<ul>
+<li>JavaScript (j'y travaille)</li>
+<li>Node (je m'y remets régulièrement)</li>
+<li>HTML (d'où les vues EJS sans problème)</li>
+<li>SQL (tant qu'il n'y a pas d'INNER JOIN)</li>
+<li>ASP.NET MVC et Sinatra (donc l'organisation d'une application web)</li>
+<li>Bootstrap (au moins le côté copier / coller)</li>
+</ul>
+<p>J'avais en théorie tout ce qui était nécessaire pour essayer de développer une
+première application par mes propres moyens. C'est ce que j'ai fait et à bien y
+regarder, plutôt assez rapidement en fait. Puis je l'ai réécrite une deuxième
+fois pour mettre un peu tout ça au propre et virer tous les bouts de code qui
+partaient dans tous les sens. Puis plus ou moins une troisième fois en notant
+comment je faisais pour rédiger un billet de blogue afin de ne rien oublier.</p>
+<p>Et c'est comme ça que finalement je me suis retrouvé avec un &quot;gros&quot; tutoriel. Un
+petit week-end, quelques vérifications, une dizaine de copies d'écrans et le
+résultat était prêt à être publié !</p>
+<p>L'avantage c'est que c'est assez exactement le tutoriel que j'aurais aimé
+trouvé. Cela m'aurait fait gagner du temps, mais par contre, cela n'aurait pas
+été aussi concret et je n'aurais sans doute pas aussi bien assimilé ce que je
+faisais en suivant le tutoriel d'un autre. Ça semble toujours évident quand on
+fait un tutoriel et on se laisse facilement aller à quelques copier / coller, à
+des &quot;je vois&quot; sans trop chercher à comprendre...</p>
+<p>L'autre avantage, c'est qu'à partir de cette application de départ, j'ai pu
+prolonger mes expérimentations et voir comment :</p>
+<ul>
+<li>Accéder à une base de données PostgreSQL</li>
+<li>Utiliser plus ou moins le même code pour SQlite et PostgreSQL</li>
+<li>Remplacer les callbacks par des async / await</li>
+<li>Valider le formulaire de saisie</li>
+<li>Etc...</li>
+</ul>
+<div class="encart">
+<p>English version: <a href="/2019/11/05/how-i-wrote-a-tutorial/" hreflang="en-US">How I wrote a Node JS tutorial</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/10/29/use-sqlite-node-async-await/" hreflang="en-US">Use SQlite3 in async / await mode</a>
+  <a rel="next" href="/2019/11/05/how-i-wrote-a-tutorial/" hreflang="en-US">How I wrote a Node JS tutorial</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

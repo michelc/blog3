@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) System.Web.Mail and smtp.gmail.com - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/01/14/wdevs-systemwebmail-smtpgmailcom/" />
+<meta property="og:title" content="(Wdevs) System.Web.Mail and smtp.gmail.com" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/01/14/wdevs-systemwebmail-smtpgmailcom/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-01-14T12:21:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-01-14T12:21:00.000Z","datePublished":"2005-01-14T12:21:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2005/01/14/wdevs-systemwebmail-smtpgmailcom/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/01/14/wdevs-systemwebmail-smtpgmailcom/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/01/14/wdevs-systemwebmail-smtpgmailcom/">(Wdevs) System.Web.Mail and smtp.gmail.com</a>
+    </h1>
+    <p>
+      <span>2005-01-14</span>
+      <span>#code-snippets</span><span>#csharp</span><span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Important update: there is another snippet to <a href="/2009/04/21/systemnetmail-smtpgmailcom/">use
+smtp.gmail.com with System.Net.Mail</a> for .NET 2.</p>
+<p>Since I had difficulties to find examples on Google, I publish my code that
+uses smtp.gmail.com as smtp server to send emails.</p>
+<pre><code>public string sendMail (string from, string to, string cc, string bcc, string subject, string body) {
+
+  // Mail initialization
+  MailMessage mail = new MailMessage();
+  mail.From = from;
+  mail.To = to;
+  mail.Cc = cc;
+  mail.Bcc = bcc;
+  mail.Subject = subject;
+  mail.BodyFormat = MailFormat.Text;
+  mail.Body = body;
+
+  // Smtp configuration
+  SmtpMail.SmtpServer = &quot;smtp.gmail.com&quot;;
+  // - smtp.gmail.com use smtp authentication
+  mail.Fields.Add(&quot;http://schemas.microsoft.com/cdo/configuration/smtpauthenticate&quot;, &quot;1&quot;);
+  mail.Fields.Add(&quot;http://schemas.microsoft.com/cdo/configuration/sendusername&quot;, &quot;myemail@gmail.com&quot;);
+  mail.Fields.Add(&quot;http://schemas.microsoft.com/cdo/configuration/sendpassword&quot;, &quot;mypassword&quot;);
+  // - smtp.gmail.com use port 465 or 587
+  mail.Fields.Add(&quot;http://schemas.microsoft.com/cdo/configuration/smtpserverport&quot;, &quot;465&quot;);
+  // - smtp.gmail.com use STARTTLS (some clients call this SSL)
+  mail.Fields.Add(&quot;http://schemas.microsoft.com/cdo/configuration/smtpusessl&quot;, &quot;true&quot;);
+
+  // Mail sending
+  try {
+    SmtpMail.Send(mail);
+    return &quot;&quot;;
+  } catch (Exception ex) {
+    return ex.Message;
+}
+</code></pre>
+<p>In addition, two useful links:</p>
+<ul>
+<li><a href="http://www.systemwebmail.com/">http://www.systemwebmail.com/</a> : the
+complete FAQ for the System.Web.Mail namespace</li>
+<li><a href="http://webman.developpez.com/articles/aspnet/email/csharp/">http://webman.developpez.com/articles/aspnet/email/csharp/</a> :
+an article on how-to send emails win ASP.Net (in french)</li>
+</ul>
+<p>Unfortunately this code doesn't function under mono:</p>
+<pre><code>Server reponse: '530 5.7.0 Must issue a STARTTLS command first';Status code: '530';Expected status code: '250';Last command: 'MAIL FROM: '
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/01/13/wdevs-roles-dilemma/" hreflang="en-US">(Wdevs) Roles dilemma</a>
+  <a rel="next" href="/2005/01/17/wdevs-toad-mysql/" hreflang="en-US">(Wdevs) TOAD for MySQL</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configuration de TortoiseSVN - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/10/07/configuration-tortoisesvn/" />
+<meta property="og:title" content="Configuration de TortoiseSVN" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/10/07/configuration-tortoisesvn/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-10-07T16:53:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-10-07T16:53:00.000Z","datePublished":"2008-10-07T16:53:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/10/07/configuration-tortoisesvn/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/10/07/configuration-tortoisesvn/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/10/07/configuration-tortoisesvn/">Configuration de TortoiseSVN</a>
+    </h1>
+    <p>
+      <span>2008-10-07</span>
+      <span>#svn</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Après avoir installé TortoiseSVN (pour l'instant une version 1.4.6, 1.4.7 ou
+1.4.8) sur le poste de travail, il reste à le configurer pour qu'il fonctionne
+de manière optimale avec les sources de Altrr-Press.</p>
+<p>Faire clic-droit dans l'explorateur de fichiers puis choisir les menus
+&quot;TortoiseSVN&quot; et &quot;Settings&quot; :</p>
+<p><img src="/public/2008/config-1.png" alt=""></p>
+<p>On obtient alors le premier écran de configuration suivant :</p>
+<p><img src="/public/2008/config-2.png" alt=""></p>
+<p>Les paramètres à y définir :</p>
+<ul>
+<li>conserver &quot;English&quot; comme langue (c'est plus facile pour trouver de la
+documentation quand on connait le terme anglais exact)</li>
+<li>pour la liste des fichiers à ignorer, définir : Web.config *.suo *.webinfo
+*.user *\bin *\obj *\data *.mdb *.bak *.zip *.rar</li>
+<li>bien penser à utiliser &quot;_svn&quot; plutôt que &quot;.svn&quot; pour que tout fonctionne
+correctement avec ASP.NET</li>
+</ul>
+<p>Cliquer sur le bouton [Appliquer] puis sur &quot;Look and Feel&quot; pour poursuivre
+le paramétrage :</p>
+<p><img src="/public/2008/config-3.png" alt=""></p>
+<p>Là, il faut normalement juste décocher &quot;Check for modifications&quot; pour que
+cette commande apparaisse dès le clic-droit dans le répertoire de travail (et
+pas comme un sous-menu de &quot;TortoiseSVN&quot;).</p>
+<p>Après validation avec le bouton [Appliquer], passer à l'écran &quot;Icon
+Overlays&quot; :</p>
+<p><img src="/public/2008/config-4.png" alt=""></p>
+<p>Dans cet écran, choisir d'appliquer le recouvrement d'icônes uniquement sur
+les disques fixes, pour éviter de perdre du temps quand on est sur des lecteurs
+réseaux.</p>
+<p>Pour être encore plus efficace, on peut aussi :</p>
+<ul>
+<li>exclure tout le disque C:</li>
+<li>ne gérer que le répertoire D:\Portals et ses sous-répertoires (puisque
+c'est là que sont &quot;théoriquement&quot; tous les sources importants)</li>
+</ul>
+<p>(d'après le billet <a href="http://paraesthesia.com/archive/2007/09/26/optimize-tortoise-svn-cache-tsvncache.exe-disk-io.aspx">
+Optimize Tortoise SVN Cache (TSVNCache.exe) Disk I/O</a>)</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/10/02/migration-altrr-press-net-1-net-2/" hreflang="fr-FR">Migration de Altrr-Press de .NET 1 vers .NET 2</a>
+  <a rel="next" href="/2008/10/17/utilisation-dates-fichiers-bat/" hreflang="fr-FR">Utilier des dates dans les fichiers BAT</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

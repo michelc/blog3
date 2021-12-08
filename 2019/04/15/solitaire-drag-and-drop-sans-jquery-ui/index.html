@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire - Drag and drop sans jQuery UI - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/" />
+<meta property="og:title" content="Solitaire - Drag and drop sans jQuery UI" />
+<meta name="description" content="À assez long terme par rapport à tout le reste, j&#39;aimerai revoir la gestion du glisser / déposer dans mes jeux. Mais comme il y a du choix, c&#39;est pas facile de se lancer..." />
+<meta property="og:description" content="À assez long terme par rapport à tout le reste, j&#39;aimerai revoir la gestion du glisser / déposer dans mes jeux. Mais comme il y a du choix, c&#39;est pas facile de se lancer..." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/drag-and-drop.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-04-15T10:32:26.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-04-15T10:32:26.000Z","datePublished":"2019-04-15T10:32:26.000Z","description":"À assez long terme par rapport à tout le reste, j'aimerai revoir la gestion du glisser / déposer dans mes jeux. Mais comme il y a du choix, c'est pas facile de se lancer...","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/drag-and-drop.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/drag-and-drop.jpg" alt="" /><figcaption>&nbsp;</figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/">Solitaire - Drag and drop sans jQuery UI</a>
+    </h1>
+    <p>
+      <span>2019-04-15</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
+solitaires et aux évolutions que je souhaite y apporter :</p>
+<ol>
+<li><a href="/2019/03/23/solitaire-feuille-route-javascript/">Introduction</a></li>
+<li><a href="/2019/03/27/solitaire-passer-jquery-vanilla-js/">Passer de jQuery à Vanilla JS</a></li>
+<li><a href="/2019/04/01/solitaire-ameliorer-freecell/">Améliorer FreeCell</a></li>
+<li><a href="/2019/04/08/solitaire-ajouter-animations-css/">Ajouter des animations CSS</a></li>
+<li><a href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/">Drag and drop sans jQuery UI</a></li>
+<li><a href="/2019/04/25/solitaire-remplacer-ajaxmin/">Remplacer AjaxMin, etc...</a></li>
+</ol>
+</div>
+<p>À assez long terme par rapport à tout le reste (remplacer jQuery, terminr
+FreeCell, ajouter quelques animations...), j'aimerai revoir la gestion du
+glisser / déposer dans mes jeux.</p>
+<p>Actuellement, toute cette partie est gérée via
+<a href="https://jqueryui.com/">jQuery UI</a> et
+<a href="http://touchpunch.furf.com/">jQuery UI Touch Punch</a> pour les tablettes et les
+smartphones. Ils font très bien l'affaire, mais j'aimerais redévelopper cette
+fonctionnalité pour utiliser quelque chose de plus &quot;moderne&quot;.</p>
+<p>C'est un objectif assez lointain et pas vraiment urgent. D'abord cela ne pourra
+se faire qu'une fois que j'aurai réussi à abandonner complètement jQuery pour
+l'ensemble des jeux qui n'utilisent pas le drag &amp; drop. Et c'est quelque chose
+que j'envisage pour après que FreeCell soit terminé et que j'ai ajouté quelques
+animations...</p>
+<p>Pour remplacer jQuery UI, il faut déjà que je trouve une librairie Vanilla JS
+qui soit super simple pour gérer le glisser / déposer. Pour l'instant, j'ai
+repéré les 5 librairies JavaScript suivantes qui gèrent les navigateurs récents
+mais aussi Internet Explorer et les écrans tactiles...</p>
+<h2><a href="https://bevacqua.github.io/dragula/">Dragula</a></h2>
+<p>Dragula est une librairie JavaScript simple et sans aucune dépendance. Elle
+permet d'ajouter du drag &amp; drop  aux éléments du DOM. Elle gère les
+périphériques tactiles et fonctionne aussi avec IE7+.</p>
+<ul>
+<li>Sources : <a href="https://github.com/bevacqua/dragula">https://github.com/bevacqua/dragula</a></li>
+<li>Dernière mise à jour : 18/12/2018</li>
+<li>Dernière release : 12/09/2016</li>
+</ul>
+<h2><a href="https://draggabilly.desandro.com/">Draggabilly</a></h2>
+<p>Draggabilly est une librairie JavaScript avec pour seul objectif de faire que
+le drag and drop marche. Elle fonctionne avec IE10+ et les appareils tactiles.</p>
+<ul>
+<li>Sources : <a href="https://github.com/desandro/draggabilly">https://github.com/desandro/draggabilly</a></li>
+<li>Dernière mise à jour : 27/09/2018</li>
+<li>Dernière release : 27/03/2018</li>
+</ul>
+<h2><a href="https://shopify.github.io/draggable/">Draggable JS</a></h2>
+<p>Draggable JS est une bibliothèque JavaScript complètement paramétrable pour
+gérer tout ce qui est drag &amp; drop, tri ou permutation. C'est une librairie
+orientée ES6 qui est compatible IE11+.</p>
+<ul>
+<li>Sources : <a href="https://github.com/Shopify/draggable">https://github.com/Shopify/draggable</a></li>
+<li>Dernière mise à jour : 03/04/2019</li>
+<li>Dernière release : 07/09/2018 (beta)</li>
+</ul>
+<p>À l'origine, c'était un projet issu de la plateforme de eCommerce Shopify, mais
+il est désormais géré par d'autres personnes.</p>
+<h2><a href="http://interactjs.io/">Interact.js</a></h2>
+<p>Interact.js est une librairie JavaScript légère et autonome pour gérer le
+glisser / déposer et le redimensionnement sur les navigateurs modernes. Elle
+fonctionne avec IE9+.</p>
+<ul>
+<li>Sources : <a href="https://github.com/taye/interact.js">https://github.com/taye/interact.js</a></li>
+<li>Dernière mise à jour : 07/04/2019</li>
+<li>Dernière release : 05/04/2019</li>
+</ul>
+<h2><a href="https://sortablejs.github.io/Sortable/">SortableJS</a></h2>
+<p>SortableJS est une librairie JavaScript simple et légère qui permet de trier une
+liste d'éléments du DOM. Elle fonctionne avec tous les navigateurs et appareils
+tactiles, dont IE9+.</p>
+<ul>
+<li>Sources : <a href="https://github.com/SortableJS/Sortable">https://github.com/SortableJS/Sortable</a></li>
+<li>Dernière mise à jour : 12/04/2019</li>
+<li>Dernière release : 11/03/2019</li>
+</ul>
+<p>C'est sans doute une librairie plus destinée au tri des &quot;listes&quot;. Mais il y a
+quand même 2 points intéressants :</p>
+<ul>
+<li>Il y a un &quot;<a href="https://sortablejs.github.io/Sortable/#grid">Grid Exemple</a>&quot; qui
+pourrait peut-être le faire pour un jeu de carte...</li>
+<li>Il y a aussi 2
+<a href="https://sortablejs.github.io/Sortable/#comparisons">comparatifs vidéos</a> par
+rapport à jQuery UI et Dragula.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Ça va me demander pas mal de travail pour étudier et tester tout ça avant de
+pouvoir sélectionner la &quot;bonne&quot; librairie dans un premier temps. Et après, il
+faudra encore parvenir à la maitriser suffisament pour réussir à l'intégrer dans
+mes jeux (et dans la mesure du possible avec dQuery.js).</p>
+<p>C'est donc pas demain la veille que je vais attaquer ce gros morceau. Mais
+l'avantage, c'est que d'ici là j'aurai sans doute laissé tomber IE9...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/04/08/solitaire-ajouter-animations-css/" hreflang="fr-FR">Solitaire - Ajouter des animations CSS</a>
+  <a rel="next" href="/2019/04/25/solitaire-remplacer-ajaxmin/" hreflang="fr-FR">Solitaire - Remplacer AjaxMin, etc...</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

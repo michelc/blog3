@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>302 Redirect Permanent, MVC et IE - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2014/05/05/302-redirect-permanent-mvc-ie/" />
+<meta property="og:title" content="302 Redirect Permanent, MVC et IE" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2014/05/05/302-redirect-permanent-mvc-ie/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-05-05T11:40:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2014-05-05T11:40:00.000Z","datePublished":"2014-05-05T11:40:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2014/05/05/302-redirect-permanent-mvc-ie/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2014/05/05/302-redirect-permanent-mvc-ie/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2014/05/05/302-redirect-permanent-mvc-ie/">302 Redirect Permanent, MVC et IE</a>
+    </h1>
+    <p>
+      <span>2014-05-05</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour faire une redirection sous ASP.NET MVC, on fait :</p>
+<pre><code>return RedirectToAction(&quot;Index&quot;, &quot;Liens&quot;, new { id = lien.Slug });
+</code></pre>
+<p>Cela a pour effet d'envoyer un code HTTP 302 - Moved Temporarily.</p>
+<p>Si on a besoin d'une redirection &quot;permanente&quot; (en fait un code HTTP 301 - Moved
+Permanently), c'est tout aussi simple :</p>
+<pre><code>return RedirectToActionPermanent(&quot;Index&quot;, &quot;Liens&quot;, new { id = lien.Slug });
+</code></pre>
+<p>Et il existe aussi les helpers <code>RedirectPermanent()</code> et
+<code>RedirectToRoutePermanent()</code>.</p>
+<p>Et si comme moi on teste bêtement ça avec le premier lien venu, il n'y a pas de
+&quot;undo&quot; des redirections permanentes sous IE ou de cache à vider pour que ça
+reparte comme avant...</p>
+<p>Heureusement, il y a un <s>bug</s> truc :</p>
+<blockquote>
+<p>I found solution for IE9's permanent cached in redirection issue:</p>
+<ul>
+<li>
+<p>Open IE9 and press Ctrl+Shift+P for private browsing</p>
+</li>
+<li>
+<p>Navigate to the problem URL</p>
+</li>
+<li>
+<p>Then go back to normal browsing and all should be fine again</p>
+</li>
+</ul>
+<p>Source : <a href="http://www.sadev.co.za/comment/2234#comment-2234">http://www.sadev.co.za/comment/2234#comment-2234</a></p>
+</blockquote>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2014/03/11/upload-gros-fichiers-aspnetmvc/" hreflang="fr-FR">Upload de gros fichiers avec ASP.NET MVC</a>
+  <a rel="next" href="/2014/05/12/attention-fermeture-balises/" hreflang="fr-FR">Attention à la fermeture des balises</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

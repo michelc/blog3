@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quatre étapes, c&#39;est deux de trop - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2007/10/04/quatre-etapes-c-deux-trop/" />
+<meta property="og:title" content="Quatre étapes, c&#39;est deux de trop" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2007/10/04/quatre-etapes-c-deux-trop/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2007-10-04T10:55:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2007-10-04T10:55:00.000Z","datePublished":"2007-10-04T10:55:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2007/10/04/quatre-etapes-c-deux-trop/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2007/10/04/quatre-etapes-c-deux-trop/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2007/10/04/quatre-etapes-c-deux-trop/">Quatre étapes, c&#39;est deux de trop</a>
+    </h1>
+    <p>
+      <span>2007-10-04</span>
+      <span>#ap</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>Y'a comme un problème</h2>
+<p>Jusqu'à présent, la barre d'outils d'Altrr-Press contient une
+icone <img src="/public/2007/mapsite.gif" alt=""> qui fait apparaitre
+une fenêtre pop-up dans laquelle est affichée la liste des écrans du site.</p>
+<p>Cette liste se présente sous forme d'<a href="http://www.destroydrop.com/javascripts/tree/">arborescence</a>
+pour avoir une représentation synthétique dans le cas où le site géré
+deviendrait un peu volumineux.</p>
+<p>Bien que la majorité des sites n'ait jamais dépassé les 50 pages, tout
+allait plutôt bien dans le meilleur des mondes :</p>
+<ul>
+<li>en tant qu'utilisateur ça répondait exactement à mes besoins et me
+permettait d'atteindre assez rapidement n'importe quel écran du site,</li>
+<li>ça me paraissait d'autant plus parfait que j'avais essayé de donner à cette
+fenêtre un petit air de Winform pour ne pas trop perturber les
+utilisateurs.</li>
+</ul>
+<p>Tout ça jusqu'à ce que je passe une heure à côté d'une utilisatrice pleine
+de bonne volonté. Et là c'est le drame :</p>
+<ul>
+<li>la popup se perd derrière les autres fenêtres dès qu'on fait autre chose
+sur le PC (sur le Mac en l'occurence),</li>
+<li>il faut cliquer exactement sur le petit [+] pour faire apparaitre les
+sous-écrans,</li>
+<li>il faut cliquer sur un nom d'écran puis sur le bouton [OK] pour que la
+fenêtre se ferme et qu'on atteigne l'écran voulu.</li>
+</ul>
+<p>Tout ça c'est vraiment trop confusionnant voire même carrément mal
+foutu!</p>
+<h2>À chaque problème sa solution</h2>
+<p>Récapitulons. Je suis sur un écran A et je veux aller sur un écran B. La
+meilleure solution serait d'y aller en ligne droite ou tout du moins avec le
+moins de détours possible.</p>
+<p>Actuellement, ce que je dois faire :</p>
+<ul>
+<li>commencer par afficher la liste des écrans,</li>
+<li>puis naviguer dans cette liste pour trouver l'écran de mon choix,</li>
+<li>puis sélectionner cet écran en cliquant dessus,</li>
+<li>puis cliquer sur le bouton <OK> pour arriver sur
+l'écran.</li>
+</ul>
+<p><img src="/public/2007/20071004-sitemap-popup.png" alt="Sélection écran via un popup"></p>
+<p>Ce que je devrais pouvoir faire :</p>
+<ul>
+<li>afficher la liste de mes écrans,</li>
+<li>cliquer dans cette liste pour aller sur l'écran de mon choix.</li>
+</ul>
+<p><img src="/public/2007/20071004-sitemap-direct.png" alt="Sélection écran en direct"></p>
+<p>Sitôt dit, sitôt fait. Et c'est pas de la blague :</p>
+<ul>
+<li>Moins 11 lignes et plus 5 lignes dans la boite construisant la barre
+d'outils,</li>
+<li>Plus 9 lignes de code dans la page gérant le chargement des boites.</li>
+</ul>
+<p>Et c'est tout! Le seul problème, c'est qu'il existe aussi des boites qui
+utilisent la popup de sélection des écrans pour permettre d'insérer des liens
+internes. Y'a encore du boulot.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2007/09/19/altrr-press-fait-anti-spam/" hreflang="fr-FR">Altrr-Press fait de l&#39;anti-spam</a>
+  <a rel="next" href="/2007/10/10/sql-injection/" hreflang="fr-FR">Sql injection</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

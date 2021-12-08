@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nouvelle CSS et 5 trucs bons à savoir - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/12/16/nouvelle-css-quelques-trucs/" />
+<meta property="og:title" content="Nouvelle CSS et 5 trucs bons à savoir" />
+<meta name="description" content="Pour la nouvelle année à venir, j&#39;ai un peu rafraichi la charte graphique de mon blogue. Outre le côté &#39;tout nouveau, tout beau&#39;, cela m&#39;a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas." />
+<meta property="og:description" content="Pour la nouvelle année à venir, j&#39;ai un peu rafraichi la charte graphique de mon blogue. Outre le côté &#39;tout nouveau, tout beau&#39;, cela m&#39;a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/12/16/nouvelle-css-quelques-trucs/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/sapin-de-noel.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-12-16T10:09:42.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-12-16T10:09:42.000Z","datePublished":"2019-12-16T10:09:42.000Z","description":"Pour la nouvelle année à venir, j'ai un peu rafraichi la charte graphique de mon blogue. Outre le côté 'tout nouveau, tout beau', cela m'a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/12/16/nouvelle-css-quelques-trucs/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/sapin-de-noel.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/12/16/nouvelle-css-quelques-trucs/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/sapin-de-noel.jpg" alt="Sapin de Noël - Rodion Kutsaev" /><figcaption><a href="https://unsplash.com/photos/ySNkCkdKyTY">Sapin de Noël - Rodion Kutsaev</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/12/16/nouvelle-css-quelques-trucs/">Nouvelle CSS et 5 trucs bons à savoir</a>
+    </h1>
+    <p>
+      <span>2019-12-16</span>
+      <span>#css</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour la nouvelle année à venir, j'ai un peu rafraichi la charte graphique de mon
+blogue. Outre le côté &quot;tout nouveau, tout beau&quot;, cela m'a permis de voir 2 ou 3
+trucs de CSS et de <a href="https://jekyllrb.com/">Jekyll</a> que je ne connaissais pas.</p>
+<p>J'ai commencé par changer la police de caractères. Jusqu'à il y a peu de temps,
+j'utilisais beaucoup la police &quot;Century Gothic&quot;, mais depuis quelque temps, je
+préfère m'en tenir aux police systèmes.</p>
+<ul>
+<li>Avant : <code>font-family: &quot;Century Gothic&quot;, &quot;Trebuchet MS&quot;, Verdana, Helvetica, Sans-Serif;</code></li>
+<li>Après : <code>font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif;</code></li>
+</ul>
+<p>J'ai aussi augmenté la taille des caractères par défaut et je suis revenu à du
+&quot;vrai&quot; noir pour améliorer la lisibilité.</p>
+<ul>
+<li>Avant : <code>color: #444; font-size: 14px;</code></li>
+<li>Après : <code>color: #000; font-size: 16px;</code></li>
+</ul>
+<p>Lors de la dernière modification de la charte graphique, j'avais décidé de ne
+plus afficher le contenu au centre de l'écran, mais plutôt sur la partie gauche.
+Finalement (ou du moins pour l'instant), je trouve que le fait de centrer le
+contenu est plus clair et que ça donne un petit côté &quot;page&quot; qui facilite la
+lecture.</p>
+<ul>
+<li>Après : <code>.container { margin: 0 auto; padding: 1rem; }</code></li>
+</ul>
+<p>Et pour améliorer la lisibilité et le côté épuré de la page, j'ai encore
+augmenté la &quot;marge&quot; horizontale sur les écrans de PC :</p>
+<pre><code class="language-css">@media screen and (min-width: 48rem) {
+    .container {
+        padding: 1rem 3rem;
+    }
+}
+</code></pre>
+<p>J'aime bien faire une distinction entre les liens internes et les liens
+externes. Au fil du temps, j'ai essayé différentes techniques : ajout d'une
+icône à côté des liens externes, soulignement des liens externes seulement (ou
+l'inverse), utilisation d'une couleur différente pour chaque type de liens...
+Pour cette fois-ci, j'ai choisi de présenter les liens externes avec un léger
+gras.</p>
+<ul>
+<li>Après : <code>a[href*='//'] { font-weight: 600; }</code></li>
+</ul>
+<p><strong>Truc n° 1</strong> : je parle de &quot;léger&quot; gras parce qu'avant (la dernière fois que
+j'avais essayé), le fait d'utiliser <code>font-weight: 600;</code> ou <code>font-weight: 900;</code>
+ne faisait pas de différence. Maintenant on voit très bien la différence, au
+moins sur mon PC...</p>
+<p>En ce qui concerne les titres, j'ai plus ou moins conservé ce que j'avais dans
+la version précédente, en particulier au niveau des couleurs.</p>
+<ul>
+<li>h1 : bleu =&gt; nom du blogue et navigation principale</li>
+<li>h2 : chocolat =&gt; titre du billet</li>
+<li>h3 : vert =&gt; sous-titres du billet</li>
+<li>h4 : gris =&gt; sous-titres de niveau 2</li>
+</ul>
+<p>Je me suis donc contenté des quelques modifications suivantes :</p>
+<ol>
+<li>Le titre du blogue (h1) est en <code>16px</code> par défaut et passe en <code>1.5rem</code> sur les
+écrans de PC</li>
+<li>J'ai augmenté la taille des autres titres et leurs marges verticales pour
+améliorer la lisibilité</li>
+<li>Le titre des billets (h2) est maintenant centré, ce qui le fait beaucoup plus
+ressortir sur les petits écrans</li>
+<li>Ajout de <code>line-height: 1; </code> pour éviter de trop gros interlignes lorsque les
+titres prennent plusieurs lignes sur les petits écrans</li>
+</ol>
+<p>Pour les blocs de code source, j'ai cherché à faire un peu comme sur <a href="https://dev.to/">dev.to</a>
+et à les mettre en évidence par rapport au reste du contenu. Pour cela, j'ai
+utilisé :</p>
+<ul>
+<li>une couleur de fond gris &quot;très clair&quot; : <code>background-color: #f8f8f8;</code></li>
+<li>des bordures verticales un peu plus foncé : <code>border-color: #eee;</code></li>
+</ul>
+<p>Mais surtout, j'ai &quot;collé&quot; ce bloc aux bords de la page, pour qu'il se découpe
+mieux par rapport au reste du contenu (en particulier sur les écrans de PC).</p>
+<pre><code class="language-css">.container { padding: 1rem; }
+pre { margin: 1rem -1rem; }
+
+@media screen and (min-width: 48rem) {
+    .container { padding: 1rem 3rem; }
+    pre { margin: 1rem -3rem; }
+}
+</code></pre>
+<p>Et finalement, j'ai mis en commun ce style avec celui destiné aux autres types
+de &quot;bloc&quot;, comme les citations et les <code>div.encart</code> :</p>
+<pre><code class="language-css">blockquote, pre, .encart {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+    clear: both;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    margin: 1rem -1rem;
+    padding: .5rem 1rem;
+    text-align: left;
+}
+
+blockquote {
+    background-color: #fbfaea; /* ocre */
+    border-color: #e3d0aa;
+}
+
+pre {
+    background-color: #f8f8f8; /* gris */
+    border-color: #eee;
+    font-size: small;
+}
+
+.encart {
+    background-color: #eaf7ff; /* bleu */
+    border-color: #6b90da;
+}
+</code></pre>
+<p><strong>Truc n° 2</strong> : <code>color-adjust: exact</code> permet que ces blocs aient aussi une
+couleur de fond à l'impression.</p>
+<p>Toujours pour le code source, j'ai repris mon bout de CSS qui me permet d'avoir
+automatiquement des retours à la ligne à l'intérieur du code source. Cela évite
+d'avoir à scroller horizontalement pour voir la totalité du code ou pire de
+perdre une partie du code à l'impression :</p>
+<pre><code class="language-css">/* https://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag */
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap !important;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+</code></pre>
+<p>Après quelques essais, j'ai quand même décidé de réserver ça aux écrans de PC et
+à l'impression.</p>
+<p>En parlant d'impression, j'ai aussi fait en sorte que toute la largeur de la
+page soit utilisée :</p>
+<pre><code class="language-css">@media print {
+    .container {
+        max-width: 100rem;
+        padding: 0 !important;
+    }
+}
+</code></pre>
+<p>Mais malgré tout, il faut bien laisser un peu de marge sinon tout est collé sur
+les bords de la page. Un simple <code>margin</code> ou <code>padding</code> ne suffit pas :</p>
+<ul>
+<li>cela a bien un effet sur les marges horizontales =&gt; ok</li>
+<li>la marge verticale haute ne fonctionne que sur la 1° page imprimée =&gt; ko</li>
+<li>la marge verticale basse ne fonctionne que sur la dernière page imprimée =&gt; ko</li>
+</ul>
+<p>C'est là qu'intervient mon <strong>truc n° 3</strong> :</p>
+<pre><code class="language-css">@page {
+    margin: 1.5cm 1cm; /* en cm pour IE */
+}
+</code></pre>
+<p>Et bien entendu, pour que les impressions soient parfaites, je masque les
+contenus inutiles :</p>
+<pre><code class="language-css">@media print {
+    div &gt; header, nav, .pub { display: none; }
+}
+</code></pre>
+<p>C'est déjà pas mal. J'ai malgré tout dû faire encore 2 modifications. Tout
+d'abord, j'ai un problème avec ma liste d'archives qui se génère sous la forme
+de <code>&lt;li&gt;&lt;p&gt;Titre billet&lt;/p&gt;&lt;/li&gt;</code>. Cela provoque un gros interligne entre les
+différents billets d'un même mois. Plutôt que de m'embêter à comprendre d'où
+provient ce problème, je me suis contenté d'une bidouille en CSS :</p>
+<pre><code class="language-css">li p {
+    margin: 0 auto; /* page archives génère des &lt;li&gt;&lt;p&gt;...&lt;/p&gt;&lt;/li&gt; */
+}
+</code></pre>
+<p>Et puis ces derniers temps, j'ai quelquefois utilisé les &quot;encarts&quot; pour
+présenter une table des matières. Par exemple :</p>
+<pre><code class="language-markdown">&lt;div class=&quot;encart&quot;&gt;
+
+1. [Comment j'ai (bientôt) remplacé jQuery](/2019/04/30/dquery-remplacer-jquery/)
+2. [Une version compatible IE9 / ES5](/2019/05/07/dquery-compatibilite-ie9-es5/)
+3. [Ma librairie pour manipuler le DOM](/2019/05/14/dquery-librairie-js-manipulation-dom/)
+4. [La délégation des évènements en JS](/2019/05/21/dquery-delegation-evenement-javascript/)
+5. [Délégation d'évènements et « event.target »](/2019/05/28/dquery-delegation-evenement-event-target/)
+6. [Délégation d'évènements et iOS](/2019/06/04/dquery-delegation-evenement-ios/)
+
+&lt;/div&gt;
+</code></pre>
+<p>Bon, ben ça, ça ne marche pas... Le code Markdown à l'intérieur de la balise
+<code>div</code> n'est pas transformé en html :( Pour les cas les plus simples avec un seul
+lien, j'avais pris l'habitude de bidouiller en remplaçant la balise <code>div.encart</code>
+par son équivalent en Markdown, grâce à la syntaxe <code>{:.encart}</code> :</p>
+<pre><code>&lt;div class=&quot;encart&quot;&gt;
+
+Version en français : &lt;a href=&quot;/2019/12/09/menu-hamburger-bootstrap-vanilla-js/&quot; hreflang=&quot;fr-FR&quot;&gt;Gérer le menu hamburger de Bootstrap 4 en Vanilla JS&lt;/a&gt;.
+
+&lt;/div&gt;
+</code></pre>
+<p>Pour les cas plus compliqués, j'avais laissé tomber et tout écrit en HTML. Mais
+à l'occasion de cette révision de ma charte graphique, j'ai poussé un peu plus
+loin mes recherches et fort heureusement il existe une solution : <a href="https://stackoverflow.com/a/23384161">Embedding
+Markdown in Jekyll HTML</a>.</p>
+<p><strong>Truc n° 4</strong> : Il suffit d'ajouter un attribut <code>markdown=&quot;1&quot;</code> pour que le code
+Markdown à l'intérieur d'une balise HTML soit lui aussi correctement transformé.</p>
+<pre><code class="language-markdown">&lt;div class=&quot;encart&quot; markdown=&quot;1&quot;&gt;
+
+...
+
+&lt;/div&gt;
+</code></pre>
+<p>Et pour insister légèrement, voici le <strong>truc n° 5</strong> : toujours avoir une feuille
+de style qui donne un bon résultat quand on imprime la page.</p>
+<div class="encart">
+<p>English version: <a href="/2019/12/17/new-css-tips-to-know/" hreflang="en-US">A new CSS and 5 tips to know</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/12/10/bootstrap-hamburger-menu-vanilla-js/" hreflang="en-US">Switch Bootstrap 4 hamburger menu with Vanilla JS</a>
+  <a rel="next" href="/2019/12/17/new-css-tips-to-know/" hreflang="en-US">A new CSS and 5 tips to know</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

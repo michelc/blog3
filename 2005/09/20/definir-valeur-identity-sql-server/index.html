@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Définir une valeur Identity sous Sql Server - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/09/20/definir-valeur-identity-sql-server/" />
+<meta property="og:title" content="Définir une valeur Identity sous Sql Server" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/09/20/definir-valeur-identity-sql-server/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-09-20T19:12:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-09-20T19:12:00.000Z","datePublished":"2005-09-20T19:12:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/09/20/definir-valeur-identity-sql-server/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/09/20/definir-valeur-identity-sql-server/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/09/20/definir-valeur-identity-sql-server/">Définir une valeur Identity sous Sql Server</a>
+    </h1>
+    <p>
+      <span>2005-09-20</span>
+      <span>#code-snippets</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<pre><code>SET IDENTITY_INSERT MyTable ON;
+INSERT INTO MyTable
+    (MyIdentityField, MyFirstField, MySecondField)
+VALUES
+    (12345, 'ABCDE', 'etc...');
+SET IDENTITY_INSERT MyTable OFF;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/09/20/literal-datetime-sql-server/" hreflang="fr-FR">Literal DateTime pour SQL Server</a>
+  <a rel="next" href="/2005/09/22/ameliorations-data-cs/" hreflang="fr-FR">Améliorations de Data.cs</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

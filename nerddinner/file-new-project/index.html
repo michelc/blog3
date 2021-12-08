@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NerdDinner(fr) : File -› New project - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/nerddinner/file-new-project/" />
+<meta property="og:title" content="NerdDinner(fr) : File -› New project" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/nerddinner/file-new-project/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-11-20T13:49:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-11-20T13:49:00.000Z","datePublished":"2009-11-20T13:49:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/nerddinner/file-new-project/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/nerddinner/file-new-project/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+<article>
+
+  <header>
+    <h1>
+      <a href="">NerdDinner(fr) : File -› New project</a>
+    </h1>
+    <p>
+      <span>2009-11-20</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Nous allons commencer notre application NerdDinner en sélectionnant la
+commande <strong>File -&gt; New Project</strong> dans Visual Studio 2008 ou
+Visual Web Developer 2008 Express.</p>
+<p>Cela fait apparaître la boite de dialogue &quot;New Project&quot;. Pour créer une
+nouvelle application ASP.NET MVC, nous sélectionnons la branche &quot;Web&quot; dans la
+partie gauche de la boîte de dialogue avant de choisir le modèle de projet
+&quot;ASP.NET MVC Web Application&quot; dans la partie droite :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image008.png" alt=""></p>
+<p>On donne le nom &quot;NerdDinner&quot; au nouveau projet puis on clique sur le bouton
+&quot;OK&quot; pour le créer.</p>
+<p>Quand on clique &quot;OK&quot; Visual Studio fait apparaître une nouvelle boite de
+dialogue qui nous propose de créer en même temps un projet de tests unitaires
+pour l'application. Ce projet de tests unitaires nous permet de réaliser des
+tests automatisés pour contrôler les fonctionnalités et le comportement de
+notre application (ce que nous aborderons plus tard dans la suite de ce
+tutoriel).</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image009.png" alt=""></p>
+<p>La liste déroulante &quot;test framework&quot; ci-dessus est automatiquement remplie
+avec la liste de tous les frameworks de tests unitaires installés sur notre
+machine. On peut télécharger des versions pour NUnit, MBUnit et XUnit. Le type
+de test intégré Visual Studio Unit Test Framework est également géré.</p>
+<p>''Note: le Visual Studio Unit Test-Framework est disponible uniquement avec
+Visual Studio 2008 Professional (ou versions supérieures). Si vous utilisez VS
+2008 Standard Edition ou Visual Web Developer 2008 Express, vous devez
+télécharger et installer les extensions NUnit, MBUnit ou XUnit pour ASP.NET MVC
+afin que cette boite de dialogue soit visible. La boîte de dialogue ne
+s'affiche pas s'il n'y a pas de framework de tests installé.''</p>
+<p>Nous allons conserver le nom &quot;NerdDinner.Tests&quot; proposé par défaut pour le
+projet de tests que nous créons, et utiliser le framework de tests &quot;Visual
+Studio Unit Test&quot;. Après avoir cliqué sur le bouton &quot;OK&quot;, Visual Studio crée
+une solution contenant deux projets, un pour notre application Web et un autre
+pour notre projet de tests :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image010.png" alt=""></p>
+<h2>Contenu du répertoire NerdDinner</h2>
+<p>Quand on crée une application ASP.NET MVC avec Visual Studio, un certain
+nombre de fichiers et de répertoires sont automatiquement ajoutés au
+projet :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image011.png" alt=""></p>
+<p>Par défaut, les projets ASP.NET MVC contiennent six répertoires de premier
+niveau :</p>
+<table>
+  <thead>
+    <tr>
+      <th>Répertoire</th>
+      <th>Fonction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/Controllers</td>
+      <td>Pour les classes Controllers qui gère les requêtes URL</td>
+    </tr>
+    <tr>
+      <td>/Models</td>
+      <td>Pour les classes qui représentent et gèrent les données</td>
+    </tr>
+    <tr>
+      <td>/Views</td>
+      <td>Pour la partie présentation des interfaces utilisateurs</td>
+    </tr>
+    <tr>
+      <td>/Scripts</td>
+      <td>Pour les librairies JavaScript et les fichiers scripts (.js)</td>
+    </tr>
+    <tr>
+      <td>/Content</td>
+      <td>Pour les CSS, les images et tout contenu ni dynamique ni script</td>
+    </tr>
+    <tr>
+      <td>/App_Data</td>
+      <td>Pour les fichiers de données qui doivent être lus et mis à jour</td>
+    </tr>
+  </tbody>
+</table>
+<p>Cette organisation n'est pas obligatoire. En fait les développeurs qui
+travaillent sur une grosse application vont généralement la découper en
+plusieurs projets pour la rendre plus facile à gérer (par exemple, la classe
+d'accès aux données va souvent être dans un projet de bibliothèque de classe
+séparé de l'application Web). Mais dans notre cas, l'organisation par défaut
+est suffisante pour ce que nous souhaitons faire.</p>
+<p>Lorsque nous déplions le répertoire /Controllers, nous pouvons voir que par
+défaut Visual Studio a ajouté deux classes contrôleurs au projet :
+HomeController et AccountController :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image012.png" alt=""></p>
+<p>Lorsque nous déplions le répertoire /Views, nous y trouvons 3
+sous-répertoires également ajouté par défaut (/Home, /Account et /Shared) avec
+plusieurs fichiers de modèles à l'intérieur de ceux-ci :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image013.png" alt=""></p>
+<p>Lorsque nous déplions les répertoires /Content et /Scripts, nous avons un
+fichier Site.css utilisé pour définir le style de tout le HTML du site, ainsi
+que des librairies JavaScript pour offrir le support de ASP.NET AJAX et jQuery
+dans toute l'application :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image014.png" alt=""></p>
+<p>Lorsque nous déplions le projet NerdDinner.Tests, il y a deux classes qui
+contiennent les tests unitaires pour nos deux classes contrôleurs :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image015.png" alt=""></p>
+<p>Ces fichiers ajoutés par défaut par Visual Studio nous fournissent une
+structure de base pour une application complète avec une page d'accueil, une
+page à propos, des pages de connexion, de déconnexion et d'inscription, et une
+page pour les erreurs non gérées, le tout prêt à être utilisé sans autre
+manipulation.</p>
+<h2>Lancer l'application NerdDinner</h2>
+<p>Nous pouvons lancer notre projet en choisissant <strong>Debug -&gt; Start
+Debugging <strong>ou</strong> Debug -&gt; Start Without Debugging</strong> dans les
+menus de Visual Studio :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image016.png" alt=""></p>
+<p>Cette commande va lancer le serveur web intégré de Visual Studio et exécuter
+notre application :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image017.png" alt=""></p>
+<p>Voici la page d'accueil de notre nouveau projet (URL: &quot;/&quot;) quand il
+s'exécute :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image018.png" alt=""></p>
+<p>En cliquant sur l'onglet &quot;About&quot;, il apparaît une page d'à propos (URL :
+&quot;/Home/About&quot;) :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image019.png" alt=""></p>
+<p>Un clic sur le lien &quot;Log On&quot; en haut à droite nous conduit vers une page de
+connexion (URL: &quot;/Account/LogOn&quot;) :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image020.png" alt=""></p>
+<p>Si nous n'avons pas encore de compte, nous pouvons nous inscrire en cliquant
+sur le lien &quot;Register&quot; pour créer un nouveau compte (URL :
+&quot;/Account/Register&quot;) :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image021.png" alt=""></p>
+<p>Tout le code pour réaliser les quatre écrans précédents a été généré par
+défaut lorsque nous avons créé notre nouveau projet. Nous allons l'utiliser
+comme point de départ de notre application.</p>
+<h2>Test de l'application NerdDinner</h2>
+<p>Si nous utilisons Visual Studio Professional Edition ou une version
+supérieure, nous pouvons utiliser l'environnement de test unitaire intégré au
+sein de Visual Studio pour tester notre projet :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image022.png" alt=""></p>
+<p>Après avoir choisi une des options ci-dessus, le panneau &quot;Test Results&quot;
+s'ouvre dans l'IDE et nous indique le résultat (réussi ou échoué) pour les 27
+tests unitaires inclus dans notre nouveau projet et qui couvrent ses
+fonctionnalités de base :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image023.png" alt=""></p>
+<hr>
+<p>Index : <a href="http://tinyurl.com/NerdDinnerFR">NerdDinner en français</a> - Suite : <a href="/nerddinner/creation-base-donnees/">Créer la base de données</a></p>
+
+
+  </div>
+
+</article>
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

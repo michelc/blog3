@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supprimer des doublons en SQL - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/01/13/supprimer-doublon-sql/" />
+<meta property="og:title" content="Supprimer des doublons en SQL" />
+<meta name="description" content="J&#39;ai eu un peu peur, mais finalement c&#39;est pas si compliqué que ça de supprimer des lignes en doubles dans une table SQL Server." />
+<meta property="og:description" content="J&#39;ai eu un peu peur, mais finalement c&#39;est pas si compliqué que ça de supprimer des lignes en doubles dans une table SQL Server." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/01/13/supprimer-doublon-sql/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/rita-hayworth.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-01-13T16:52:45.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-01-13T16:52:45.000Z","datePublished":"2020-01-13T16:52:45.000Z","description":"J'ai eu un peu peur, mais finalement c'est pas si compliqué que ça de supprimer des lignes en doubles dans une table SQL Server.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2020/01/13/supprimer-doublon-sql/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/rita-hayworth.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/01/13/supprimer-doublon-sql/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/rita-hayworth.jpg" alt="La Dame de Shanghai - Rita Hayworth" /><figcaption><a href="https://fr.wikipedia.org/wiki/La_Dame_de_Shanghai">La Dame de Shanghai - Rita Hayworth</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/01/13/supprimer-doublon-sql/">Supprimer des doublons en SQL</a>
+    </h1>
+    <p>
+      <span>2020-01-13</span>
+      <span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La semaine dernière j'ai fait une petite erreur de mise à jour sur une application et je me suis retrouvé avec des données enregistrées deux fois dans une table. Bien entendu, ça ne serait pas arrivé si j'avais créé une clé unique, mais comme je teste avant d'insérer, je pensais être à l'abri.</p>
+<p>Et malheureusement, comme je ne pouvais pas tout supprimer et simplement relancer la mise à jour des données, j'ai dû chercher comment dédoublonner.</p>
+<p>Pour commencer, une requête simple pour voir l'étendue des dégats :</p>
+<pre><code class="language-sql">SELECT Place_ID, Event_ID, StartDate, COUNT(*)
+FROM   Showings
+GROUP BY Place_ID, Event_ID, StartDate
+HAVING COUNT(*) &gt; 1
+</code></pre>
+<p>Bon déjà, bonne nouvelle, il n'y a pas de triplons :)</p>
+<p>Moins bonne nouvelle, il me reste plus d'un millier de lignes à supprimer. Donc pas moyen de faire ça une requête après l'autre...</p>
+<p>Heureusement, comme ma table dispose d'une clé primaire, j'ai moyen d'identifier les données en double :</p>
+<pre><code class="language-sql">SELECT Place_ID, Event_ID, StartDate, MAX(Showing_ID) AS ID
+FROM   Showings
+GROUP BY Place_ID, Event_ID, StartDate
+HAVING COUNT(*) &gt; 1
+</code></pre>
+<p>De cette façon, je retrouve les ID de toutes les lignes ajoutées alors qu'il existait déjà un enregistrement avec les mêmes caractéristiques (Place_ID, Event_ID et StartDate). Je n'ai plus qu'à supprimer ces lignes inutiles (puisque les autres étaient là avant) :</p>
+<pre><code class="language-sql">DELETE
+FROM   Showings
+WHERE  Showing_ID IN (
+                       SELECT MAX(Showing_ID)
+                       FROM   Showings
+                       GROUP BY Place_ID, Event_ID, StartDate
+                       HAVING COUNT(*) &gt; 1
+                      )
+</code></pre>
+<p>Des fois, l'informatique c'est pas plus compliqué que ça.</p>
+<div class="encart">
+<p>English version: <a href="/2020/01/14/remove-duplicate-rows-sql/" hreflang="en-US">Remove duplicates rows with SQL</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/01/07/better-solitaire-smartphone/" hreflang="en-US">5 improvements for a better solitaire on smartphone</a>
+  <a rel="next" href="/2020/01/14/remove-duplicate-rows-sql/" hreflang="en-US">Remove duplicates rows with SQL</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

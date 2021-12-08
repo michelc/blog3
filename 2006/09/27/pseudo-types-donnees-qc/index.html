@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les &quot;pseudo-types&quot; de données de QC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/09/27/pseudo-types-donnees-qc/" />
+<meta property="og:title" content="Les &quot;pseudo-types&quot; de données de QC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/09/27/pseudo-types-donnees-qc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-09-27T15:42:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-09-27T15:42:00.000Z","datePublished":"2006-09-27T15:42:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/09/27/pseudo-types-donnees-qc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/09/27/pseudo-types-donnees-qc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/09/27/pseudo-types-donnees-qc/">Les &quot;pseudo-types&quot; de données de QC</a>
+    </h1>
+    <p>
+      <span>2006-09-27</span>
+      <span>#qc</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>QC étant destiné à être multi base de données, il est nécessaire de prendre
+un certain nombre de précautions pour tout ce qui concerne SQL, qu'il s'agisse
+des requêtes ou des types de données.</p>
+<p>Pour les requêtes on verra plus tard, pour les types de données, c'est
+ici.</p>
+<p>Pour faciliter le développement multi base de données voire simplifier la
+migration d'une base de données à l'autre, QC ne gère qu'un sous-ensemble de
+types de données, qui fonctionnent de façon plus ou moins identique dans la
+plupart des bases de données.</p>
+<p>La liste des &quot;pseudo-types&quot; de données reconnues par QC est la suivante
+:</p>
+<ul>
+<li>AUTOINCREMENT</li>
+<li>BOOLEAN</li>
+<li>SMALLINT</li>
+<li>INT</li>
+<li>BIGINT</li>
+<li>SINGLE</li>
+<li>DOUBLE</li>
+<li>CURRENCY</li>
+<li>TEXT(2000)</li>
+<li>TEXT</li>
+<li>MEMO</li>
+<li>DATETIME</li>
+<li>DATE</li>
+<li>TIME</li>
+<li>BINDATA</li>
+</ul>
+<p>Remarques :</p>
+<ul>
+<li>Pour le type de données TEXT, il faut impérativement définir une longueur
+comprise entre 1 et 255 ou strictement égale à 2000.</li>
+<li>Il est conseillé d'éviter d'utiliser des données de types CURRENCY
+(n'existe réellement que sous Access et Sql Server) et BINDATA.</li>
+<li>Le type DATE et le type TIME ne doivent pas être utilisés. Ils sont
+uniquement destinés à gérer des tables déjà existantes pour lesquelles il
+serait impossible de modifier le type de données.</li>
+</ul>
+<h2>Transposition pour une base de données Access</h2>
+<ul>
+<li>AUTOINCREMENT : INT NOT NULL IDENTITY (1, 1)</li>
+<li>BOOLEAN : BIT</li>
+<li>SMALLINT : SMALLINT</li>
+<li>INT : INTEGER</li>
+<li>BIGINT : LONG</li>
+<li>SINGLE : REAL</li>
+<li>DOUBLE : DOUBLE PRECISION</li>
+<li>CURRENCY : MONEY</li>
+<li>TEXT(2000) : MEMO</li>
+<li>TEXT : TEXT</li>
+<li>MEMO : MEMO</li>
+<li>DATETIME : DATETIME</li>
+<li>DATE : DATE</li>
+<li>TIME : TIME</li>
+<li>BINDATA : IMAGE</li>
+</ul>
+<h2>Transposition pour une base de données Sql Server</h2>
+<ul>
+<li>AUTOINCREMENT : INT NOT NULL IDENTITY (1, 1)</li>
+<li>BOOLEAN : BIT</li>
+<li>SMALLINT : SMALLINT</li>
+<li>INT : INTEGER</li>
+<li>BIGINT : BIGINT</li>
+<li>SINGLE : REAL</li>
+<li>DOUBLE : DOUBLE PRECISION</li>
+<li>CURRENCY : MONEY</li>
+<li>TEXT(2000) : NVARCHAR(2000)</li>
+<li>TEXT : NVARCHAR</li>
+<li>MEMO : NTEXT</li>
+<li>DATETIME : DATETIME</li>
+<li>DATE : DATETIME</li>
+<li>TIME : DATETIME</li>
+<li>BINDATA : IMAGE</li>
+</ul>
+<h2>Transposition pour une base de données Oracle</h2>
+<ul>
+<li>AUTOINCREMENT : INT NOT NULL</li>
+<li>BOOLEAN : NUMBER(1,0)</li>
+<li>SMALLINT : NUMBER(5,0)</li>
+<li>INT : NUMBER(10,0)</li>
+<li>BIGINT : NUMBER(20,0)</li>
+<li>SINGLE : FLOAT(24)</li>
+<li>DOUBLE : FLOAT(48)</li>
+<li>CURRENCY : NUMBER(19,1)</li>
+<li>TEXT(2000) : VARCHAR2(2000)</li>
+<li>TEXT : VARCHAR2</li>
+<li>MEMO : CLOB</li>
+<li>DATETIME : DATE</li>
+<li>DATE : DATE</li>
+<li>TIME : DATE</li>
+<li>BINDATA : BLOB</li>
+</ul>
+<p>Dans le cas du pseudo-type AUTOINCREMENT, l'incrémentation automatique est
+simulée à l'aide :</p>
+<ul>
+<li>d'une séquence SEQ_NomTable,</li>
+<li>d'un trigger before insert TRG_BI_NomTable</li>
+</ul>
+<h2>Transposition pour une base de données PostgreSQL</h2>
+<ul>
+<li>AUTOINCREMENT : BIGSERIAL</li>
+<li>BOOLEAN : NUMERIC(1)</li>
+<li>SMALLINT : INT2</li>
+<li>INT : INT4</li>
+<li>BIGINT : INT8</li>
+<li>SINGLE : FLOAT4</li>
+<li>DOUBLE : FLOAT8</li>
+<li>CURRENCY : NUMERIC(16,4)</li>
+<li>TEXT(2000) : VARCHAR(2000)</li>
+<li>TEXT : VARCHAR</li>
+<li>MEMO : TEXT</li>
+<li>DATETIME : TIMESTAMP WITHOUT TIME ZONE</li>
+<li>DATE : DATE</li>
+<li>TIME : TIME</li>
+<li>BINDATA : BYTEA</li>
+</ul>
+<h2>Transposition pour une base de données MySQL</h2>
+<ul>
+<li>AUTOINCREMENT : INT AUTO_INCREMENT</li>
+<li>BOOLEAN : TINYINT(1)</li>
+<li>SMALLINT : SMALLINT</li>
+<li>INT : INTEGER</li>
+<li>BIGINT : BIGINT</li>
+<li>SINGLE : FLOAT</li>
+<li>DOUBLE : DOUBLE PRECISION</li>
+<li>CURRENCY : DECIMAL(16,4)</li>
+<li>TEXT(2000) : TEXT</li>
+<li>TEXT : VARCHAR</li>
+<li>MEMO : MEDIUMTEXT</li>
+<li>DATETIME : DATETIME</li>
+<li>DATE : DATE</li>
+<li>TIME : TIME</li>
+<li>BINDATA : MEDIUMBLOB</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/09/27/ecrire-code-sql-portable/" hreflang="fr-FR">Ecrire du code SQL portable</a>
+  <a rel="next" href="/2006/10/04/avancement-mise-a-jour-site-wordpresscom/" hreflang="fr-FR">Avancement mise à jour du site (wordpress.com)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

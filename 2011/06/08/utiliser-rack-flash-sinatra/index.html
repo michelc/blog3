@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser Rack Flash avec Sinatra - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/06/08/utiliser-rack-flash-sinatra/" />
+<meta property="og:title" content="Utiliser Rack Flash avec Sinatra" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/06/08/utiliser-rack-flash-sinatra/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-06-08T17:50:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-06-08T17:50:00.000Z","datePublished":"2011-06-08T17:50:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/06/08/utiliser-rack-flash-sinatra/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/06/08/utiliser-rack-flash-sinatra/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/06/08/utiliser-rack-flash-sinatra/">Utiliser Rack Flash avec Sinatra</a>
+    </h1>
+    <p>
+      <span>2011-06-08</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel Sinatra &quot;<a href="http://ididitmyway.herokuapp.com/past/2011/3/15/rack_flash_/">Rack Flash</a>&quot; de Darren Jones.</p>
+</div>
+<p><img src="/public/2011/the-flash.jpg" alt="The Flash"></p>
+<p>Flash est un tableau hash bien pratique que l'on trouve dans Rails. Il ne
+s'agit pas du super héros qui se déplace à la vitesse de l'éclair mais d'une
+astuce pour stocker temporairement des informations entre deux requêtes HTTP.
+Si par exemple votre application enregistre une nouvelle fiche puis redirige
+l'utilisateur vers une autre page, vous pouvez utiliser cette mémoire flash
+pour stocker un message indiquant que la fiche a bien été enregistrée. Ce
+message sera ensuite affiché sur la nouvelle page (après le redirect).</p>
+<p>On peut avoir la même fonctionnalité avec Sinatra en s'appuyant sur <a href="http://nakajima.github.com/rack-flash/">Rack Flash</a>.</p>
+<p>Tout ce qu'il y a à faire, c'est d'installer le gem :</p>
+<pre><code>C:\Ruby&gt;gem install rack-flash
+</code></pre>
+<p>Puis ajouter les quelques lignes suivantes dans notre application
+Sinatra :</p>
+<pre><code>require 'rack-flash'
+use Rack::Flash
+enable :sessions
+</code></pre>
+<p>(Rack Flash a besoin des sessions pour stocker le tableau hash et par défaut
+elles sont désactivées dans Sinatra)</p>
+<p>Pour utiliser le hash &quot;flash&quot;, il suffit par exemple de définir le message
+dans le handler de départ :</p>
+<pre><code>post '/notes/save' do
+  flash[:notice] = &quot;Votre fiche a été enregistrée&quot;
+  redirect '/'
+end
+</code></pre>
+<p>Puis il faut afficher ce message dans la vue correspondant au handler pour
+l'URL &quot;/&quot; :</p>
+<pre><code>&lt;div id='flash' class='notice'&gt;
+  &lt;%= flash[:notice] %&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Et maintenant, quand quelqu'un enregistre une note, il verra le message
+&quot;Votre fiche a été enregistrée&quot; après avoir été redirigé sur la page index
+&quot;/&quot;.</p>
+<p>Vous pouvez associer une clé au message flash pour faire la distinction
+entre différents types de message, comme par exemple :</p>
+<pre><code>flash[:notice]
+flash[:warning]
+flash[:error]
+</code></pre>
+<p>Si vous souhaitez afficher le flash dans la requête en cours, vous devez
+utiliser flash.now :</p>
+<pre><code>get '/' do flash.now:notice = &quot;Pas de message&quot; unless flash:notice end
+</code></pre>
+<p>Cela affichera un message indiquant qu'il n'y a pas de message stocké dans
+le hash flash par la requête précédente.</p>
+<p>Les messages restent dans le tableau hash tant qu'ils ne sont pas affichés,
+comme vous pouvez le voir dans le code ci-dessous :</p>
+<pre><code>get '/un' do
+  flash[:notice] = &quot;Coucou !&quot;
+  flash[:error] = &quot;erreur de type 1&quot;
+  flash[:warning] =  &quot;Attention au chien&quot;
+  redirect '/deux' 
+end
+
+get '/deux' do
+  flash[:error] = &quot;erreur de type 2&quot;
+  redirect '/trois' 
+end
+
+get '/trois' do
+  flash[:notice] = &quot;Salut !&quot;
+  redirect '/' 
+end
+
+get '/' do
+  erb :index
+end
+</code></pre>
+<p>Lorsque nous atteindrons enfin l'URL &quot;/&quot; et que la vue &quot;index&quot; sera
+affichée, on aura flash[:error] = &quot;erreur de type 2&quot;, flash[:notice] = &quot;Salut
+!&quot; et flash[:warning] sera toujours &quot;Attention au chien&quot;.</p>
+<p>Si vous ne voulez pas que les messages s'éternisent dans le hash flash
+jusqu'à ce qu'ils soient utilisé, vous pouvez vous en débarrasser en utilisant
+l'option &quot;sweep&quot; :</p>
+<pre><code>use Rack::Flash, :sweep =&gt; true
+</code></pre>
+<p>Grace à elle, le hash flash est nettoyé après chaque requête, que les
+messages aient été affichés ou non. Dans l'exemple précédent, le seul élément
+qui restera dans le hash sera flash[:notice] = &quot;Salut !&quot;.</p>
+<p>Et pour finir, un bout de code Erb prêt à insérer dans votre layout pour
+afficher un message flash lorsqu'il en existe, en définissant une classe CSS
+qui dépend du type de message :</p>
+<pre><code>&lt;% flash.each do |key,msg| %&gt;
+  &lt;div id='flash' class='&lt;%= key %&gt;'&gt;
+    &lt;%= msg %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>Ou si vous préférez le Haml :</p>
+<pre><code>- flash.each do |key,msg|
+  #message{:class =&gt; key}= msg
+</code></pre>
+<p>Cela a pour effet de créer une balise &lt;div&gt; pour chaque message stocké
+dans le hash flash, en utilisant sa clé comme nom de classe CSS.</p>
+<p>En espérant que ça puisse vous servir : la plupart des applications
+utilise cette technique, alors n'hésitez pas à l'essayer dans vos applications
+Sinatra.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/05/17/authentification-super-simple-sinatra/" hreflang="fr-FR">Authentification super simple avec Sinatra</a>
+  <a rel="next" href="/2011/06/16/telecharger-fichiers-sinatra/" hreflang="fr-FR">Télécharger des fichiers avec Sinatra</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

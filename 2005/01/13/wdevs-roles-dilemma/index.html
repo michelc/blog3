@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Roles dilemma - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/01/13/wdevs-roles-dilemma/" />
+<meta property="og:title" content="(Wdevs) Roles dilemma" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/01/13/wdevs-roles-dilemma/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-01-13T07:06:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-01-13T07:06:00.000Z","datePublished":"2005-01-13T07:06:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2005/01/13/wdevs-roles-dilemma/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/01/13/wdevs-roles-dilemma/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/01/13/wdevs-roles-dilemma/">(Wdevs) Roles dilemma</a>
+    </h1>
+    <p>
+      <span>2005-01-13</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>With IBuySpy, roles that are allowed to view or edit a module are stored in
+one string field AuthorizedEditRoles as a semicolon separated list. It's very
+straightforward to do but not especially relational. When I will delete a role,
+it won't be removed from the AuthorizedEditRoles by a cascading delete.</p>
+<p>At this time, DotNetNuke 3 makes use of a permissions table with one record
+for each couple module/role. Although it's a little harder to program, it also
+becomes easier to maintain data integrity. And in this case, I can retrieve all
+roles allowed to edit a given module or all modules updatable by a role.</p>
+<p>Therefore, I need to decide which method I will exploit:</p>
+<ul>
+<li>keep the easy way of IBuySpy with a semicolon separated list,</li>
+<li>build a more relational model by adding BoxRoles and ScreenRoles
+tables.</li>
+</ul>
+<p>In addition, if I choose to stay with a semicolon separated list, why not
+generalize this concept and replace the UserRoles table by a simple
+AffectedRoles in the Users table?</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/01/11/wdevs-login-toolbar/" hreflang="en-US">(Wdevs) Login and toolbar</a>
+  <a rel="next" href="/2005/01/14/wdevs-systemwebmail-smtpgmailcom/" hreflang="en-US">(Wdevs) System.Web.Mail and smtp.gmail.com</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

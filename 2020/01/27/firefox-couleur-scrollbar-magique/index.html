@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Waouh ! La scrollbar de Firefox est magique - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/01/27/firefox-couleur-scrollbar-magique/" />
+<meta property="og:title" content="Waouh ! La scrollbar de Firefox est magique" />
+<meta name="description" content="Avec Firefox, la barre de défilement de mes jeux Solitaire-Play est dans les tons «vert», comme le reste du site, et je ne sais pas pourquoi..." />
+<meta property="og:description" content="Avec Firefox, la barre de défilement de mes jeux Solitaire-Play est dans les tons «vert», comme le reste du site, et je ne sais pas pourquoi..." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/01/27/firefox-couleur-scrollbar-magique/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/firefox-scrollbar-color.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-01-27T17:04:18.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-01-27T17:04:18.000Z","datePublished":"2020-01-27T17:04:18.000Z","description":"Avec Firefox, la barre de défilement de mes jeux Solitaire-Play est dans les tons «vert», comme le reste du site, et je ne sais pas pourquoi...","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2020/01/27/firefox-couleur-scrollbar-magique/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/firefox-scrollbar-color.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/01/27/firefox-couleur-scrollbar-magique/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/firefox-scrollbar-color.jpg" alt="L'ascenseur est vert !" /><figcaption><a href="https://www.solitaire-play.com/klondike-turn-three/">L'ascenseur est vert !</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/01/27/firefox-couleur-scrollbar-magique/">Waouh ! La scrollbar de Firefox est magique</a>
+    </h1>
+    <p>
+      <span>2020-01-27</span>
+      <span>#livres</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Il me semble. Je reviens de mon site <a href="https://www.solitaire-play.com/">Solitaire-Play</a> et je viens de m'apercevoir que la barre de l'ascenseur vertical est &quot;verte&quot;, ce qui est la couleur dominante de tout jeux de solitaire qui se respecte :)</p>
+<p>Je vérifie dans Chrome et là, la barre est &quot;grise&quot; comme à l'habitude. J'ai beau chercher, et je ne trouve rien qui explique ce comportement.</p>
+<p>Selon <a href="https://developer.mozilla.org/fr/docs/Web/CSS/scrollbar-color">MDN web docs</a>, il est possible de définir la définir la couleur utilisée pour la barre de défilement avec la propriété expérimentale <code>scrollbar-color</code> :</p>
+<pre><code class="language-css">scrollbar-color: auto | dark | light | &lt;color&gt; &lt;color&gt;;
+</code></pre>
+<p>Et pour définir quelle couleur utiliser, on dispose des valeurs suivantes :</p>
+<ul>
+<li><code>auto</code> =&gt; utilise le rendu par défaut du système pour la piste de la barre de défilement si aucune autre couleur n'est indiquée pour la mise en forme CSS de la barre de défilement (le &quot;gris&quot; dans mon cas)</li>
+<li><code>dark</code> =&gt; affiche une barre de défilement sombre. Ce peut être la variante sombre fournie par le système sous-jacent ou une barre de défilement personnalisée avec des couleurs sombres</li>
+<li><code>light</code> =&gt; affiche une barre de défilement claire. Ce peut être la variante claire fournie par le système sous-jacent ou une barre de défilement personnalisée avec des couleurs claires</li>
+<li><code>&lt;color&gt; &lt;color&gt;</code> =&gt; les deux couleurs à appliquer (&quot;jaune&quot; et magenta&quot; par exemple...)</li>
+</ul>
+<p>Donc pas de valeur <code>magic</code> pour demander au navigateur d'utiliser des couleurs qui s'harmonisent avec la couleur générale du site...</p>
+<p>Surtout, je n'ai aucune propriété <code>scrollbar</code> ou <code>scrollbar-color</code> dans mon CSS et rien de redéfini dans le &quot;normalize.css&quot; que j'utilise.</p>
+<p>Comme je n'ai pas encore mis en place de fichier &quot;manifest.json&quot;, je n'ai pas nom plus de propriété &quot;theme_color&quot; qui aurait pu lui mettre la puce à l'oreille.</p>
+<p>Pour l'instant, je vais ranger ça dans la case des bénéfices qu'il y a à passer de Chrome à Firefox. Nous ne voyons pas d'autre explication...</p>
+<div class="encart">
+<p>English version: <a href="/2020/01/29/firefox-magic-scrollbar-color/" hreflang="en-US">Hey! Firefox scrollbar-color is magical</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/01/21/sql-join-memento/" hreflang="en-US">SQL Join Memento</a>
+  <a rel="next" href="/2020/01/29/firefox-magic-scrollbar-color/" hreflang="en-US">Hey! Firefox scrollbar-color is magical</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

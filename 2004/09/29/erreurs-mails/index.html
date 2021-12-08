@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Erreurs de mails - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/09/29/erreurs-mails/" />
+<meta property="og:title" content="Erreurs de mails" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/09/29/erreurs-mails/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-09-29T16:26:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-09-29T16:26:00.000Z","datePublished":"2004-09-29T16:26:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2004/09/29/erreurs-mails/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/09/29/erreurs-mails/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/09/29/erreurs-mails/">Erreurs de mails</a>
+    </h1>
+    <p>
+      <span>2004-09-29</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modifié Utils.sendMail pour gérer le cas où le serveur SMTP n'est pas
+configuré dans le Web.config et afficher un message plus approprié. Et idem si
+jamais l'expéditeur ou le destinataire n'est pas défini.</p>
+<p>Modifié editUsers.ascx.cs pour éviter un plantage en création d'utilisateur
+quand le fichier /uploads/newaccount.txt n'existe pas. Renvoie désormais un
+message d'erreur explicite.</p>
+<p>Modifié login.ascx.cs pour ne pas afficher le lien &quot;Mot de passe perdu&quot;
+quand le fichier /uploads/sendpassword.txt n'existe pas. Et ajouté gestion des
+erreurs quand quand les paramètres mailSmtp ou mailFrom ne sont pas
+définis.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/09/24/migration-integration-documents/" hreflang="fr-FR">Migration de Integration.Documents</a>
+  <a rel="next" href="/2004/09/29/probleme-mot-passe-oublie/" hreflang="fr-FR">Problème mot de passe oublié</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test de T4MVC avec le projet Contact Manager - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/12/01/test-t4mvc-contact-manager/" />
+<meta property="og:title" content="Test de T4MVC avec le projet Contact Manager" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/12/01/test-t4mvc-contact-manager/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-12-01T12:12:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-12-01T12:12:00.000Z","datePublished":"2009-12-01T12:12:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/12/01/test-t4mvc-contact-manager/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/12/01/test-t4mvc-contact-manager/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/12/01/test-t4mvc-contact-manager/">Test de T4MVC avec le projet Contact Manager</a>
+    </h1>
+    <p>
+      <span>2009-12-01</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Finalement, j'ai un peu délaissé l'application NerdDinner pour revenir au
+projet ContactManager et faire quelques tentatives avec <a href="http://aspnet.codeplex.com/wikipage?title=T4MVC" title="A T4 template for ASP.NET MVC">T4MVC</a> (j'ai quand même fini de publier la
+traduction de la <a href="/nerddinner/controleurs-vues/" title="Utiliser les contrôleurs et les vues pour réaliser une interface liste / détail">
+5° partie du tutoriel NerdDinner</a>).</p>
+<p>Première remarque : si on veut utiliser T4MVC il vaut mieux penser à le
+faire dès le départ, parce qu'après c'est pas la chose la plus passionnante à
+faire. Sans compter que Contact Manager est un tout petit projet... Ce qui est
+dommage, c'est que Visual Studio n'est vraiment pas très pratique pour faire ça
+à coup de rechercher / remplacer :</p>
+<ul>
+<li>dès qu'on modifie le code trouvé à la main, ça devient assez bizarre quand
+on lance la suite de la recherche. J'ai l'impression que ça repart du début du
+fichier modifié ou peut être que ça repart en marche arrière... J'ai pas trop
+compris comment ça marche et pour être bien certain d'êre passé partout</li>
+<li>la recherche s'applique aussi aux fichiers .designer.cs générés par les
+différents concepteurs (et y compris par T4MVC.tt !) alors qu'on en a rien à
+faire et qu'il ne faut surtout pas les modifier. Et le pire c'est qu'il n'y a
+rien à faire et que <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=476884" title="Find option to exclude designer generated code">c'est pas
+demain la veille que ça va changer</a> !</li>
+</ul>
+<p>J'ai malgré tout réussi à venir à bout des différentes mises à jour
+nécessaires pour que le source de Contact Manager soit beau comme un sou neuf
+en traitant successivement les éléments suivants :</p>
+<ul>
+<li>Html.RenderPartial()</li>
+<li>return View()</li>
+<li>Html.ActionLink()</li>
+<li>Url.Action()</li>
+<li>return RedirectToAction)</li>
+<li>Html.BeginForm()</li>
+</ul>
+<p>Je n'ai pas eu à m'occuper des <code>Ajax.ActionLink()</code> puisque pour
+ma part, j'ai totalement laissé tombé Ajax.NET au profit de <a href="/2009/11/03/gestion-contacts-aspnetmvc-jquery/" title="Gestion de contacts avec ASP.NET MVC et jQuery">jQuery</a>.</p>
+<p>Je ne me suis pas non plus occupé des <code>routes.MapRoute()</code> dans le
+Global.asax parce qu'il contient seulement la route par défaut et qu'en plus je
+ne savais pas trop quoi y faire :</p>
+<pre><code>routes.MapRoute(
+    &quot;Default&quot;,                                        // Route name
+    &quot;{controller}/{action}/{id}&quot;,                     // URL with parameters
+    new { controller = &quot;Contact&quot;, action = &quot;Index&quot;, id = &quot;&quot; } // Parameter defaults
+);
+</code></pre>
+<p>Mais rien qu'avec ces premiers essais, ça marche plutôt pas mal. Le seul
+petit bémol est du côté des vues. Quand on veut utiliser les objets T4MVC à
+l'intérieur des balises HTML, Visual Studio n'est pas capable de proposer
+l'intellisense et il faut tout taper de tête :</p>
+<pre><code>&lt;a href=&quot;&lt;%= Url.Action(MVC.Contact.Edit(item.Id)) %&gt;&quot;&gt;
+    &lt;img src=&quot;&lt;%= Links.Content.Edit_png %&gt;&quot; alt=&quot;Edit&quot; /&gt;
+&lt;/a&gt;
+</code></pre>
+<p>Pour contourner ça, il faut procéder en deux étapes et saisir le code à
+l'extérieur de la balise puis le couper / coller à l'intérieur de la
+balise :</p>
+<pre><code>&lt;%= Url.Action(MVC.Contact.Edit(item.Id)) %&gt;
+&lt;%= Links.Content.Edit_png %&gt;
+&lt;a href=&quot;&quot;&gt;
+    &lt;img src=&quot;&quot; alt=&quot;Edit&quot; /&gt;
+&lt;/a&gt;
+</code></pre>
+<p>C'est moyen, mais pas insupportable. Là où c'est plus ennuyeux, c'est que
+dans ce cas, s'il y a des erreurs, elles n'apparaissent pas immédiatement lors
+de la compilation mais seulement au moment de l'exécution.</p>
+<p>Un autre truc qui pourrait s'avérer gênant, c'est que <a href="http://blogs.msdn.com/davidebb/archive/2009/06/26/the-mvc-t4-template-is-now-up-on-codeplex-and-it-does-change-your-code-a-bit.aspx" title="The MVC T4 template is now up on CodePlex, and it does change your code a bit">
+T4MVC modifie (très légèrement) le code source</a> et qu'il
+transforme :</p>
+<ul>
+<li>les classes en <code>partial</code></li>
+<li>les méthodes actions en <code>virtual</code></li>
+</ul>
+<p>Je me demande si ça ne pourrait pas être un peu compliqué à gérer par
+rapport au contrôle de sources sous Subversion ? Mais là aussi, si on
+utilise T4MVC dès le départ, il me semble que cela ne devrait pas poser de
+problème (à vérifier).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/11/27/utilisation-controleur-nerddinner/" hreflang="fr-FR">Utilisation du contrôleur NerdDinner</a>
+  <a rel="next" href="/2009/12/07/formulaires-mise-a-jour-aspnetmvc/" hreflang="fr-FR">Les formulaires de mise à jour en ASP.NET MVC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

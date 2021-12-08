@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TreeView et guillemets - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/03/03/treeview-guillemets/" />
+<meta property="og:title" content="TreeView et guillemets" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/03/03/treeview-guillemets/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-03-03T06:45:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-03-03T06:45:00.000Z","datePublished":"2006-03-03T06:45:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/03/03/treeview-guillemets/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/03/03/treeview-guillemets/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/03/03/treeview-guillemets/">TreeView et guillemets</a>
+    </h1>
+    <p>
+      <span>2006-03-03</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Mise à jour de la classe TreeView.cs qui génère le code javascript attendu
+par le script <a href="http://www.destroydrop.com/javascripts/tree/">dTree</a>
+et employé pour présenter les listes arborescentes comme celle des écrans ou
+celle des boites.</p>
+<p>Il y avait un problème lorsque le nom de l'écran contenait un guillemet, ce
+qui faussait le code javascript généré.</p>
+<pre><code>tv.add(4, 2, &quot;Croisière &quot;Le Rhin Romantique&quot;&quot;, &quot;#&quot;, &quot;GoTo(this, '/sejours/le-rhin-romantique.aspx');&quot;, &quot;le-rhin-romantique&quot;);
+</code></pre>
+<p>Pour que tout rentre dans l'ordre, il suffit de préfixer les guillemets du
+javascript par un &quot;&quot;, mais étant donné que le javascript est généré depuis du
+C# il ne faut pas s'emmeler les pinceaux :</p>
+<pre><code>sbScript.Append(&quot;\&quot;&quot; + this.name.Replace(&quot;\&quot;&quot;, &quot;\\\&quot;&quot;) + &quot;\&quot;, &quot;);
+</code></pre>
+<p>Grace à quoi il est enfin possible d'avoir des titres d'écrans avec des
+guillemets :</p>
+<pre><code>tv.add(4, 2, &quot;Croisière \&quot;Le Rhin Romantique\&quot;&quot;, &quot;#&quot;, &quot;GoTo(this, '/sejours/le-rhin-romantique.aspx');&quot;, &quot;le-rhin-romantique&quot;);
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/03/02/throwing-from-xslt/" hreflang="en-US">Throwing from XSLT</a>
+  <a rel="next" href="/2006/03/09/fun-boxes/" hreflang="fr-FR">Fun Boxes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

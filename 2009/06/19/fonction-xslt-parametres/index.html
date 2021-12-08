@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Une fonction XSLT avec des paramètres - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/06/19/fonction-xslt-parametres/" />
+<meta property="og:title" content="Une fonction XSLT avec des paramètres" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/06/19/fonction-xslt-parametres/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-06-19T07:27:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-06-19T07:27:00.000Z","datePublished":"2009-06-19T07:27:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/06/19/fonction-xslt-parametres/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/06/19/fonction-xslt-parametres/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/06/19/fonction-xslt-parametres/">Une fonction XSLT avec des paramètres</a>
+    </h1>
+    <p>
+      <span>2009-06-19</span>
+      <span>#code-snippets</span><span>#xml</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Jusque là, je connaissais déjà les &quot;templates&quot; qui me permettaient
+grosso-modo de structurer mes traitements XSLT en séparant en quelque sorte le
+&quot;layout&quot; de la page des traitements pour afficher les différents
+contenus :</p>
+<pre><code>&lt;!-- Disposition générale du document --&gt;
+...
+&lt;fo:table-row height=&quot;27mm&quot; margin-top=&quot;15mm&quot;&gt;
+        &lt;fo:table-cell&gt;
+                &lt;!-- Logo client --&gt;
+                &lt;xsl:call-template name=&quot;client-logo&quot; /&gt;
+        &lt;/fo:table-cell&gt;
+        &lt;fo:table-cell&gt;
+                &lt;!-- Adresse client --&gt;
+                &lt;xsl:call-template name=&quot;client-adresse&quot; /&gt;
+        &lt;/fo:table-cell&gt;
+&lt;/fo:table-row&gt;
+...
+&lt;!-- Affichage du logo du client --&gt;
+&lt;xsl:template name=&quot;client-logo&quot;&gt;
+        &lt;fo:block&gt;
+                &lt;fo:external-graphic src=&quot;url('logo_client.jpg')&quot; /&gt;
+        &lt;/fo:block&gt;
+&lt;/xsl:template&gt;
+
+&lt;!-- Affichage de l'adresse du client --&gt;
+&lt;xsl:template name=&quot;client-adresse&quot;&gt;
+        &lt;fo:block&gt;
+                &lt;xsl:value-of select=&quot;a:OrganizationName&quot; /&gt;
+        &lt;/fo:block&gt;
+        &lt;xsl:for-each select=&quot;a:PostalAddress/a:DeliveryAddress/a:AddressLine&quot;&gt;
+                &lt;fo:block&gt;
+                        &lt;xsl:value-of select=&quot;.&quot; /&gt;
+                &lt;/fo:block&gt;
+        &lt;/xsl:for-each&gt;   
+        &lt;fo:block&gt;
+                &lt;xsl:value-of select=&quot;a:PostalAddress/a:PostalCode&quot; /&gt;
+                &amp;#32;&lt;xsl:value-of select=&quot;a:PostalAddress/a:Municipality&quot; /&gt;
+        &lt;/fo:block&gt;
+&lt;/xsl:template&gt;
+</code></pre>
+<p>Et hier soir, j'ai appris un nouveau truc. Comme j'avais besoin d'afficher
+plusieurs fois des dates, je me suis retrouvé à faire du copier / coller du
+morceau de code suivant :</p>
+<pre><code>&lt;fo:block&gt;
+        &lt;xsl:value-of select=&quot;concat(substring(a:DocumentInfo/a:DateRange/a:StartDate, 9, 2), 
+                                '/', substring(a:DocumentInfo/a:DateRange/a:StartDate, 6, 2),
+                                '/', substring(a:DocumentInfo/a:DateRange/a:StartDate, 1, 4))&quot; /&gt;
+&lt;/fo:block&gt;
+</code></pre>
+<p>Puis à chaque fois je devais remplacer
+&quot;a:DocumentInfo/a:DateRange/a:StartDate&quot; par
+&quot;a:DocumentInfo/a:DateRange/a:EndDate&quot; ou
+&quot;a:DocumentInfo/a:PartialRange/a:ActualDate&quot; ... Non seulement ce n'était pas
+très intéressant à faire, mais c'était surtout la porte ouverte à toutes les
+erreurs de frappe ou de copier / coller.</p>
+<p>Heureusement pour moi, comme XSLT est quand même bien conçu, il est aussi
+possible de définir des templates avec des variables paramètres :</p>
+<pre><code>&lt;xsl:template name=&quot;format-date&quot;&gt;
+        &lt;xsl:param name=&quot;d&quot; select=&quot;0&quot; /&gt;
+        &lt;xsl:value-of select=&quot;concat(substring($d, 9, 2), '/', substring($d, 6, 2), '/', substring($d, 1, 4))&quot; /&gt;
+&lt;/xsl:template&gt;
+</code></pre>
+<p>Ensuite, on peut appeler cette &quot;fonction&quot; XSLT en lui passant le paramètre
+de notre choix :</p>
+<pre><code>&lt;xsl:call-template name=&quot;format-date&quot;&gt;
+        &lt;xsl:with-param name=&quot;d&quot; select=&quot;a:DocumentInfo/a:DateRange/a:StartDate&quot; /&gt;
+&lt;/xsl:call-template&gt;
+</code></pre>
+<p>C'est vrai que ça ne fait pas économiser beaucoup de saisie, mais c'est
+quand même un peu plus clair et beaucoup moins risqué.</p>
+<p>D'autres exemples sur l'article <a href="http://www.haypocalc.com/wiki/Programmer_avec_XSLT">Programmer
+avec XSLT</a> de Victor Stinner.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/06/09/evolutions-qc-9-juin-2009/" hreflang="fr-FR">Evolutions QC au 9 juin 2009</a>
+  <a rel="next" href="/2009/06/24/nouvelle-boite-recherche/" hreflang="fr-FR">Une nouvelle boite de recherche</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

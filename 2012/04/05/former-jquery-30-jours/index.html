@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Se former à jQuery en 30 jours - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/04/05/former-jquery-30-jours/" />
+<meta property="og:title" content="Se former à jQuery en 30 jours" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/04/05/former-jquery-30-jours/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-04-05T19:07:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-04-05T19:07:00.000Z","datePublished":"2012-04-05T19:07:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/04/05/former-jquery-30-jours/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/04/05/former-jquery-30-jours/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/04/05/former-jquery-30-jours/">Se former à jQuery en 30 jours</a>
+    </h1>
+    <p>
+      <span>2012-04-05</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je me suis lancé dans la formation <a href="http://learnjquery.tutsplus.com/">30 Days to Learn jQuery</a>
+mardi dernier. C'est une formation gratuite prévue sur 30 jours, soit pile 1
+mois si on tient le rythme de 1 tutoriel par jour ou au pire 1 mois et demi à 2
+mois si on profite des week-ends et des jours fériés pour se reposer.</p>
+<p>Je viens de terminer la première partie consacrée aux bases de jQuery, soit
+1 bonne heure et demi de vidéos et un quiz.</p>
+<p>Grosso-modo, ça m'a permi de revoir un peu tout ce que j'avais acquis au fur
+et à mesure de mon utilisation de jQuery.</p>
+<ul>
+<li>Hello jQuery : récupérer jQuery, le référencer juste avant la balise
+<code>&lt;/body&gt;</code>, utiliser la fonction <code>jQuery()</code>, les 1°
+sélecteurs CSS, l'alias <code>$()</code></li>
+<li>Not So Fast, jQuery : utiliser la méthode <code>ready()</code> quand
+notre script apparaît en début de page avec au choix la syntaxe
+<code>$(document).ready(function() { ... });</code> ou <code>$(function() { ... });</code></li>
+<li>The Basics of Querying the DOM : les fonctions
+<code>children()</code>, <code>find()</code>, <code>parent()</code>,
+<code>parents()</code>, <code>closest()</code>... pour parcourir le DOM à
+partir d'un sélecteur</li>
+<li>Events 101 : un premier exemple pour réagir au clic sur un bouton avec
+la méthode <code>click()</code></li>
+<li>Events 201 : un autre exemple plus poussé de <code>click()</code>,
+<code>.hover()</code> et <code>on(&quot;click&quot;)</code> avec quelques exemples
+d'animations</li>
+<li>Quiz #1: The Basics : j'ai presque fait 20 / 20</li>
+<li>Bind…Live…Delegate…Huh? : rappel des &quot;anciennes&quot; méthodes
+<code>bind()</code>, <code>live()</code> et <code>delegate()</code> qui
+pointent désormais toutes sur la méthode <code>on()</code></li>
+<li>Creating and Appending Content : un tour des méthodes pour insérer du
+contenu au DOM : <code>append()</code>, <code>prepend()</code>,
+<code>after()</code>, <code>before()</code>, <code>appendTo()</code>,
+<code>prependTo()</code>, <code>insertAfter()</code>,
+<code>insertBefore()</code> et <code>$(&quot;&lt;p&gt;&lt;/p&gt;&quot;)</code> pour créer
+du contenu</li>
+</ul>
+<p>Je connaissais plus ou moins, mais ça m'a aussi servi à apprendre quelques
+trucs nouveaux :</p>
+<ul>
+<li><code>$(&quot;li:first-child&quot;)</code> = <code>$(&quot;li:first&quot;)</code> =
+<code>$(&quot;li&quot;).first()</code> = <code>$(&quot;li&quot;).eq(0)</code> :
+<code>:first-child</code> est un sélecteur CSS alors que
+<code>:first</code> est un sélecteur spécifique à jQuery qui fonctionnerait
+aussi avec IE6 (je savais mais j'avais oublié)</li>
+<li>l'existence de la fonction <code>on('click')</code> = <code>click()</code>
+(je connaissais pas)</li>
+<li><code>$(&quot;tr&quot;).on(&quot;event&quot;)</code> =&gt; attache 1 évènement pour chaque tr,
+donc potentiellement énormément d'évènements</li>
+<li><code>$(&quot;table&quot;).on(&quot;event&quot;, &quot;tr&quot;)</code> =&gt; attache 1 seul évènement à
+la table et l'applique uniquement aux lignes =&gt; beaucoup plus
+performant</li>
+</ul>
+<p>Pour l'instant, le bilan est plutôt positif puisque j'ai découvert quelques
+trucs et que ça m'a permi de vérifier que je maitrise plutôt bien les bases de
+jQuery.</p>
+<p>Les révisions (la partie facile) étant derrière moi, il faut maintenant
+basculer dans la vraie formation et attaquer la deuxième partie consacrées aux
+effets. Soit 10 jours de leçons avec presque 3 heures de vidées, 1 quiz et même
+un devoir du soir !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/03/27/ebook-c-sharp-francais/" hreflang="fr-FR">Ebook de 550 pages, sur C#, en français, par Microsoft</a>
+  <a rel="next" href="/2012/05/31/application-aspnetmvc-ef-code-first-appharbor/" hreflang="fr-FR">Application ASP.NET MVC avec EF Code First sur AppHarbor</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

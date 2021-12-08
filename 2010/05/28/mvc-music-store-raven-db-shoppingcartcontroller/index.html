@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : ShoppingCartController - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/28/mvc-music-store-raven-db-shoppingcartcontroller/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : ShoppingCartController" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/28/mvc-music-store-raven-db-shoppingcartcontroller/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-28T11:15:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-28T11:15:00.000Z","datePublished":"2010-05-28T11:15:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/28/mvc-music-store-raven-db-shoppingcartcontroller/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/28/mvc-music-store-raven-db-shoppingcartcontroller/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/28/mvc-music-store-raven-db-shoppingcartcontroller/">MVC Music Store / Raven DB : ShoppingCartController</a>
+    </h1>
+    <p>
+      <span>2010-05-28</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/27/porting-the-mvc-music-store-to-raven-shoppingcartcontroller.aspx">Porting MVC Music Store to Raven: ShoppingCart</a>&quot;, le dixième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Le contrôleur ShoppingCartController est considérablement impacté par tous
+les changements que nous avons apportés à la classe ShoppingCart. Penchons-nous
+sur ces modifications, en commençant par l'action Index() dans le code
+d'origine :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb.png" alt=""></p>
+<p>Celui-ci exécute deux requêtes différentes pour gérer la commande alors que
+la version pour Raven exécute seulement une requête au niveau de la méthode
+FindShoppingCart () :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_5.png" alt=""></p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_6.png" alt=""></p>
+<p>Ce code implémente seulement la logique pour charger le panier depuis Raven
+ou créer un nouveau panier (pour l'identifiant spécifié). Notez-bien que nous
+n'enregistrons pas le nouveau panier dans la base de données, mais associons
+seulement ce nouveau panier avec la session. Nous n'avons pas besoin de
+sauvegarder étant donné que pour l'instant il ne contient rien de significatif.
+Lorsque nous appellerons SaveChanges(), le nouveau panier sera envoyé vers
+Raven pour stockage.</p>
+<p>Maintenant, voyons-voir l'action AddToChart d'origine :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_3.png" alt=""></p>
+<p>Et la version portée sous Raven :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_7.png" alt=""></p>
+<p>Elles sont très similaires, si ce n'est que dans le cas de Raven, la méthode
+AddToCart() de la classe ShoppingCart est uniquement concerné par l'ajout d'un
+nouvel article au panier ou par la mise à jour de la quantité d'un article
+existant. Ainsi, il n'y a absolument aucun accès à la base de données dans la
+version pour Raven de la méthode ShoppingCart.AddToCart().</p>
+<p>La différence c'est donc que dans l'approche pour Raven, nous appelons la
+méthode session.SaveChanges() au niveau de l'action. Pour la bonne et simple
+raison que c'est le bon endroit où faire cela étant donné que le code appelant
+est en charge de l'environnent, y compris la sauvegarde lorsque cela est
+nécessaire.</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_9.png" alt=""></p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_8.png" alt=""></p>
+<p>Je pense que le code pour Raven est plutôt facile à suivre. Il y a juste un
+truc un peu étrange à faire remarquer au niveau de la dernière ligne :
+id.Split(). Pourquoi diable fait-on ça ?</p>
+<p>Et bien c'est parce que Raven utilise des identifiants de la forme
+&quot;albums/616&quot; et que la valeur DeleteId sera utilisé par le code Javascript
+appelant pour retrouver un élément à partir de son identifiant. Et comme
+l'identifiant d'un élément HTML ne peut pas contenir de &quot;/&quot;, nous ne renvoyons
+que la partie numérique de l'identifiant. Ce n'est pas un problème puisque dans
+ce cas précis nous ne gérons que des albums.</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_12.png" alt=""></p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingtheMVCMusicStoretoRavenShoppingCa_B3D7/image_thumb_10.png" alt=""></p>
+<p>Encore une fois, on ne peut pas faire plus simple. Par conséquent, je ferai
+seulement remarquer qu'avec l'approche suivie par Raven on peut profiter du
+cache de l'unit of work alors qu'avec le code d'origine non.</p>
+<p>Dans mon prochain billet, je m'occuperai de la gestion de la commande.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/27/mvc-music-store-raven-db-shoppingcart/" hreflang="fr-FR">MVC Music Store / Raven DB : ShoppingCart</a>
+  <a rel="next" href="/2010/05/30/mvc-music-store-raven-db-gerer-reglement/" hreflang="fr-FR">MVC Music Store / Raven DB : Gérer le règlement</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

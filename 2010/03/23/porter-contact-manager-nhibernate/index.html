@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Porter Contact Manager sous NHibernate - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/03/23/porter-contact-manager-nhibernate/" />
+<meta property="og:title" content="Porter Contact Manager sous NHibernate" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/03/23/porter-contact-manager-nhibernate/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-03-23T11:05:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-03-23T11:05:00.000Z","datePublished":"2010-03-23T11:05:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/03/23/porter-contact-manager-nhibernate/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/03/23/porter-contact-manager-nhibernate/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/03/23/porter-contact-manager-nhibernate/">Porter Contact Manager sous NHibernate</a>
+    </h1>
+    <p>
+      <span>2010-03-23</span>
+      <span>#mvc</span><span>#nhibernate</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Après avoir fait quelques essais très basiques avec NHibernate, j'ai voulu
+essayer d'être plus concret et d'aller un peu plus loin en tentant de porter
+l'application Contact Manager sous NHibernate. À priori, ça ne devait pas être
+trop compliqué dans la mesure où il y a quelques temps j'avais déjà <a href="/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/">remplacé Entity Framework par LINQ to SQL</a> et que ça ne
+s'était pas trop mal passé. Sans compter, que je souhaitais juste faire en
+sorte que ça marche à peu près tel quel, sans trop chercher à découvrir ou à
+mettre au point la &quot;bonne&quot; façon d'utiliser NHibernate avec ASP.NET MVC.</p>
+<p>Dans la pratique, ça m'a pris un peu plus de temps que ce que j'avais pensé
+y consacrer. En fait, j'aurais pu faire ce billet depuis un petit moment, mais
+avant il fallait que j'arrive à mettre au propre la solution que j'avais
+suivie. Parce que c'est là que le bât blesse, c'est qu'avec NHibernate il y a
+tout plein de façons de faire et que je n'ai pas réussi à trouver une
+documentation &quot;officielle&quot; (et récente) qui décrive clairement quel est l'état
+de l'art pour utiliser NHibernate dans le cadre d'une application ASP.NET.</p>
+<p>Voici donc parmi tous mes essais (avec des réussites, des ratés et des
+abandons) une des façons de faire à laquelle je suis arrivé et qui est assez
+&quot;simple&quot; à expliquer. Ça marche correctement, mais je ne peux absolument pas
+affirmer que c'est la méthode à suivre.</p>
+<h2>Etape 1 : Installer NHibernate</h2>
+<p>Pour faire simple, le plus pratique est d'aller sur le site de <a href="http://www.castleproject.org/ActiveRecord/">Castle
+ActiveRecord</a> et d'y télécharger la toute dernière version d'Active Record.
+Une fois l'archive décompressée, il suffit de créer un répertoire &quot;lib&quot; dans le
+répertoire racine de &quot;ContactManager&quot; et d'y copier les quelques fichiers
+suivants :</p>
+<ul>
+<li>Iesi.Collections.dll</li>
+<li>Iesi.Collections.xml</li>
+<li>LinFu.DynamicProxy.dll</li>
+<li>log4net.dll</li>
+<li>log4net.xml</li>
+<li>nhibernate-configuration.xsd</li>
+<li>nhibernate-mapping.xsd</li>
+<li>NHibernate.ByteCode.LinFu.dll</li>
+<li>NHibernate.ByteCode.LinFu.xml</li>
+<li>NHibernate.dll</li>
+<li>NHibernate.Linq.dll</li>
+<li>NHibernate.xml</li>
+</ul>
+<p>En réalité, je n'utilise pas du tout l'approche Active Record. Mais
+l'avantage de passer par leur site c'est qu'on est certain d'avoir DLLs
+récentes avec des versions compatibles entre elles. Au cours de mes différents
+essais, j'avais récupéré des DLLs au fur et à mesure de mes besoins et d'un
+petit peu tous les côtés et ça m'avait joué quelques mauvais tours.</p>
+<p>Une fois ces différentes librairies mises en place, il suffit de référencer
+les 4 éléments suivants dans l'application ContactManager existante :</p>
+<ul>
+<li>log4net.dll</li>
+<li>NHibernate.dll</li>
+<li>NHibernate.ByteCode.LinFu.dll</li>
+<li>NHibernate.Linq.dll</li>
+</ul>
+<p>Et pour bien faire les choses, il faut aussi prendre le temps de
+dé-référencer les éléments qui correspondent à Entity Framework et par
+conséquent de supprimer les fichiers liés à EF dans le sous-répertoire
+Models.</p>
+<h2>Etape 2 : Configurer NHibernate</h2>
+<p>NHibernate est installé et référencé au niveau du projet. Il faut maintenant
+le configurer pour lui expliquer qu'on aimerait bien qu'il utilise notre base
+de données SQL Server habituelle. Et là commence la galère puisqu'il existe
+apparement des tonnes de façon différentes pour faire ça. J'en ai essayé
+quelques unes et je n'ai pas vraiment très bien compris quels sont les
+avantages et les inconvénients de telle ou telle façon de faire (mais c'est
+vrai que j'ai pas trop passé de temps dessus).</p>
+<p>Par conséquent, je vais aller au plus simple et donner directement la
+méthode que j'ai repérée sur la <a href="http://tekpub.com/preview/nhibernate">vidéo de présentation de NHibernate proposée par TekPub</a>.
+C'est juste un extrait, mais ça m'a suffi pour emprunter le source à l'<a href="http://github.com/robconery/Kona">application Kona de Rob
+Conery</a>. Cela consiste à créer un fichier &quot;nhibernate.config&quot; à la racine de
+l'application ASP.NET MVC pour y définir tous les éléments nécessaires pour
+configurer NHibernate :</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;hibernate-configuration xmlns=&quot;urn:nhibernate-configuration-2.2&quot;&gt;
+
+  &lt;session-factory name=&quot;ContactManager&quot;&gt;
+    &lt;property name=&quot;dialect&quot;&gt;NHibernate.Dialect.MsSql2008Dialect&lt;/property&gt;
+    &lt;property name=&quot;connection.driver_class&quot;&gt;NHibernate.Driver.SqlClientDriver&lt;/property&gt;
+    &lt;property name=&quot;connection.connection_string&quot;&gt;server=.\SQLExpress;database=ContactManagerDB;Integrated Security=true;&lt;/property&gt;
+    &lt;property name=&quot;show_sql&quot;&gt;true&lt;/property&gt;
+    &lt;property name=&quot;cache.use_query_cache&quot;&gt;false&lt;/property&gt;
+    &lt;property name=&quot;adonet.batch_size&quot;&gt;16&lt;/property&gt;
+    &lt;property name=&quot;proxyfactory.factory_class&quot;&gt;NHibernate.ByteCode.LinFu.ProxyFactoryFactory, NHibernate.ByteCode.LinFu&lt;/property&gt;
+    &lt;mapping assembly=&quot;ContactManager&quot; /&gt;
+  &lt;/session-factory&gt;
+
+&lt;/hibernate-configuration&gt;
+</code></pre>
+<p>Par rapport à l'écriture de ces informations dans le Web.config, il me
+semble que c'est un peu plus clair d'isoler ça dans un fichier à part (sans
+compter que ça évite de complexitrifier le fichier Web.config inutilement).
+Sinon, il aurait aussi été possible d'utiliser directement le fichier
+&quot;hibernate.cfg.xml&quot; standard mais je trouve qu'un fichier &quot;.config&quot; c'est plus
+propre (et plus sûr ?) qu'un fichier &quot;.xml&quot;.</p>
+<h2>Etape 3 : Gérer une session NHibernate</h2>
+<p>Dans la version Entity Framework de l'application Contact Manager, on
+utilise un objet ContactManagerDBEntities généré automatiquement par ADO.NET EF
+pour communiquer avec la base de données SQL Server. Dans la version portée
+sous LINQ to SQL, c'est un objet ContactManagerModelDataContext qui joue ce
+rôle.</p>
+<p>En ce qui concerne NHibernate, les communications avec la base de données se
+font par l'intermédiaire d'un objet Session. Et là aussi, pour gérer /
+instancier cet objet Session, il existe tout plein de façons de faire.</p>
+<p>Pour l'instant, je reprend de façon ultra simplifiée la méthode proposée par
+Rob Conery parce qu'il est possible de la mettre en oeuvre en très très peu de
+lignes au niveau du fichier global.asax.cs :</p>
+<pre><code>using System;
+using System.IO;
+using System.Web.Mvc;
+using System.Web.Routing;
+using NHibernate;
+using NHibernate.Cfg;
+
+namespace ContactManager
+{
+
+    public class MvcApplication : System.Web.HttpApplication
+    {
+
+        public static ISessionFactory SessionFactory = CreateSessionFactory();
+
+        private static ISessionFactory CreateSessionFactory()
+        {
+            var cfg = new Configuration().Configure(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, &quot;nhibernate.config&quot;));
+            return cfg.BuildSessionFactory();
+        }
+</code></pre>
+<p>Grâce à ça, il devient tout simple de remplacer la ligne :</p>
+<pre><code>private ContactManagerDBEntities _entities = new ContactManagerDBEntities();
+</code></pre>
+<p>par l'instruction suivante :</p>
+<pre><code>private ISession _session = MvcApplication.SessionFactory.GetCurrentSession();
+</code></pre>
+<h2>Etape 4 : Faire le mapping entre les tables et les objets</h2>
+<p>Avec NHibernate, les classes Contact et Group ne sont pas générées
+automatiquement comme avec Entity Framework ou LINQ to SQL. Il faut donc créer
+à la main des classes POCO (c'est pas le plus compliqué) et il faut également
+créer un fichier de mapping XML pour associer chaque classe à la table
+correspondante dans la base de données (c'est déjà un peu plus mariole).</p>
+<p>Je ne vais pas expliquer comment faire ni entrer dans les détails de comment
+ça marche (en plus je n'ai pas encore suffisament bien compris moi-même), mais
+voici ce à quoi je suis arrivé après quelques essais.</p>
+<h3>Models\Contact.cs</h3>
+<pre><code>namespace ContactManager.Models
+{
+    public partial class Contact
+    {
+        public Contact()
+        {
+            Group = new Group();
+        }
+        public virtual int Id { get; set; }
+        public virtual string FirstName { get; set; }
+        public virtual string LastName { get; set; }
+        public virtual string Phone { get; set; }
+        public virtual string Email { get; set; }
+        public virtual Group Group { get; set; }
+
+        /// &lt;summary&gt;
+        /// Create a new Contact object.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;id&quot;&gt;Initial value of Id.&lt;/param&gt;
+        /// &lt;param name=&quot;firstName&quot;&gt;Initial value of FirstName.&lt;/param&gt;
+        /// &lt;param name=&quot;lastName&quot;&gt;Initial value of LastName.&lt;/param&gt;
+        /// &lt;param name=&quot;phone&quot;&gt;Initial value of Phone.&lt;/param&gt;
+        /// &lt;param name=&quot;email&quot;&gt;Initial value of Email.&lt;/param&gt;
+        public static Contact CreateContact(int id, string firstName, string lastName, string phone, string email)
+        {
+            Contact contact = new Contact();
+            contact.Id = id;
+            contact.FirstName = firstName;
+            contact.LastName = lastName;
+            contact.Phone = phone;
+            contact.Email = email;
+            return contact;
+        }
+    }
+
+}
+</code></pre>
+<h3>Mappings\Contact.hbm.xml</h3>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;hibernate-mapping xmlns=&quot;urn:nhibernate-mapping-2.2&quot; namespace=&quot;ContactManager.Models&quot; assembly=&quot;ContactManager&quot;&gt;
+
+  &lt;class name=&quot;Contact&quot; table=&quot;Contacts&quot; dynamic-update=&quot;true&quot;&gt;
+
+    &lt;cache usage=&quot;read-write&quot; /&gt;
+
+    &lt;id name=&quot;Id&quot; column=&quot;Id&quot; type=&quot;integer&quot;&gt;
+      &lt;generator class=&quot;identity&quot; /&gt;
+    &lt;/id&gt;
+    &lt;property name=&quot;FirstName&quot; type=&quot;string&quot; /&gt;
+    &lt;property name=&quot;LastName&quot; type=&quot;string&quot; /&gt;
+    &lt;property name=&quot;Phone&quot; type=&quot;string&quot; /&gt;
+    &lt;property name=&quot;Email&quot; type=&quot;string&quot; /&gt;
+    &lt;many-to-one name=&quot;Group&quot; column=&quot;groupId&quot; not-null=&quot;true&quot; /&gt;
+
+  &lt;/class&gt;
+
+&lt;/hibernate-mapping&gt;
+</code></pre>
+<h3>Models\Group.cs</h3>
+<pre><code>using System.Collections.Generic;
+
+namespace ContactManager.Models
+{
+    public class Group
+    {
+        public Group()
+        {
+            Contacts = new List&lt;Contact&gt;();
+        }
+        public virtual int Id { get; set; }
+        public virtual string Name { get; set; }
+        public virtual IList&lt;Contact&gt; Contacts { get; set; }
+    }
+}
+</code></pre>
+<h3>Mappings\Group.hbm.xml</h3>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;hibernate-mapping xmlns=&quot;urn:nhibernate-mapping-2.2&quot; namespace=&quot;ContactManager.Models&quot; assembly=&quot;ContactManager&quot;&gt;
+
+  &lt;class name=&quot;Group&quot; table=&quot;Groups&quot; dynamic-update=&quot;true&quot;&gt;
+
+    &lt;cache usage=&quot;read-write&quot; /&gt;
+
+    &lt;id name=&quot;Id&quot; column=&quot;Id&quot; type=&quot;integer&quot;&gt;
+      &lt;generator class=&quot;identity&quot; /&gt;
+    &lt;/id&gt;
+    &lt;property name=&quot;Name&quot; type=&quot;string&quot; /&gt;
+    &lt;bag
+        name=&quot;Contacts&quot;
+        inverse=&quot;true&quot;
+        lazy=&quot;true&quot;&gt;
+      &lt;key column=&quot;groupId&quot; /&gt;
+      &lt;one-to-many class=&quot;Contact&quot; /&gt;
+    &lt;/bag&gt;
+
+  &lt;/class&gt;
+
+&lt;/hibernate-mapping&gt;
+</code></pre>
+<p>En ce qui concerne les deux fichiers Contact.hbm.xml et Group.hbm.xml, il
+faut impérativement modifier leur propriété &quot;Action de génération&quot; au niveau de
+l'explorateur de projet pour la définir à &quot;Ressource incorporée&quot; sans quoi le
+mapping NHibernate ne fonctionne pas. C'est un problème très facile à
+identifier parce qu'on obtient une erreur &quot;Association references unmapped
+class: ContactManager.Models.Contact&quot; dès le lancement de l'application.</p>
+<h2>Redévelopper le repository avec NHibernate</h2>
+<p>Après ces 4 premières étapes, tout est enfin prêt pour pouvoir modifier la
+couche repository de l'application afin de remplacer Entity Framework par
+NHibernate :</p>
+<ul>
+<li>NHibernate est installé et référencé</li>
+<li>NHibernate est configuré pour accéder à la base de données SQL Server</li>
+<li>Un objet NHibernate Session a été défini pour communiquer avec la base de
+données</li>
+<li>Les objets données et les fichiers de mapping NHibernate sont en place</li>
+</ul>
+<p>Par conséquent, il ne reste plus qu'à implémenter l'interface
+IContactManagerRepository en utilisant NHibernate et LINQ to NHibernate pour
+remplacer le fichier EntityContactManagerRepository.cs qui l'implémentait pour
+Entity Framework.</p>
+<h3>Models\NHContactManagerRepository.cs</h3>
+<pre><code>using System.Collections.Generic;
+using System.Linq;
+using NHibernate;
+using NHibernate.Linq;
+
+namespace ContactManager.Models
+{
+    public class NHContactManagerRepository : IContactManagerRepository
+    {
+        private ISession _session = ContactManager.MvcApplication.SessionFactory.OpenSession();
+
+        public Contact GetContact(int id)
+        {
+            return (from c in _session.Linq&lt;Contact&gt;()
+                    where c.Id == id
+                    select c).FirstOrDefault();
+        }
+
+        public Contact CreateContact(int groupId, Contact contactToCreate)
+        {
+            // Associate group with contact
+            contactToCreate.Group = GetGroup(groupId);
+
+            // Save new contact
+            _session.SaveOrUpdate(contactToCreate);
+            return contactToCreate;
+        }
+
+        public Contact EditContact(int groupId, Contact contactToEdit)
+        {
+            // Associate with new group
+            contactToEdit.Group = GetGroup(groupId);
+
+            // Save changes
+            _session.SaveOrUpdate(contactToEdit);
+            _session.Flush();
+            return contactToEdit;
+        }
+
+        public void DeleteContact(Contact contactToDelete)
+        {
+            _session.Delete(contactToDelete);
+            _session.Flush();
+        }
+
+        public Group CreateGroup(Group groupToCreate)
+        {
+            _session.SaveOrUpdate(groupToCreate);
+            return groupToCreate;
+        }
+
+        public IEnumerable&lt;Group&gt; ListGroups()
+        {
+            return _session.Linq&lt;Group&gt;().OrderBy(o =&gt; o.Name).ToList();
+        }
+
+        public Group GetFirstGroup()
+        {
+            return _session.Linq&lt;Group&gt;().FirstOrDefault();
+        }
+
+        public Group GetGroup(int id)
+        {
+            return (from g in _session.Linq&lt;Group&gt;()
+                    where g.Id == id
+                    select g).FirstOrDefault();
+        }
+
+        public void DeleteGroup(Group groupToDelete)
+        {
+            _session.Delete(groupToDelete);
+            _session.Flush();
+        }
+
+    }
+}
+</code></pre>
+<p>Une fois encore, je n'ai pas cherché à faire &quot;bien&quot; mais simplement à ce que
+ça marche. Dans la pratique, il vaudrait mieux éviter tous ces
+&quot;_session.Flush()&quot; et passer par des transactions et des &quot;using&quot; mais pour
+l'instant, ce n'était absolument pas mon objectif.</p>
+<p>Pour pouvoir compiler et vérifier que tout fonctionne comme prévu, il reste
+encore à modifier le constructeur ContactManagerService pour qu'il utilise ce
+repository en lieu et place de celui d'Entity Framework.</p>
+<pre><code>public ContactManagerService(IValidationDictionary validationDictionary)
+    : this(validationDictionary, new NHContactManagerRepository())
+{
+}
+</code></pre>
+<p>Une fois cette ultime modification réalisée, la solution compile sans aucune
+erreur et elle m'offre bien les mêmes fonctionnalités que les versions avec
+Entity Framework ou LINQ to SQL :</p>
+<ul>
+<li>lister les contacts rattachés à un groupe,</li>
+<li>ajouter, modifier ou supprimer un contact,</li>
+<li>ajouter ou supprimer un groupe de contacts.</li>
+</ul>
+<p>Et juste pour le plaisir, je peux lancer les quelques tests unitaires de
+ContactManager.Test et tout va bien !</p>
+<h2>Conclusion</h2>
+<p>Par rapport au passage sous LINQ to SQL, ça a été beaucoup plus laborieux.
+Le problème, c'est qu'il y a à la fois beaucoup (trop) de façon de faire et
+beaucoup (trop) d'informations disponibles ce qui fait qu'il n'est vraiment pas
+évident de savoir dans quelle direction partir.</p>
+<p>Mais malgré tout, c'est quand même un succès. Il a suffi de changer le
+repository (et de recréer les classes Contact et Group générées
+automatiquement) pour que l'application ContactManager de base fonctionne
+correctement avec NHibernate. C'est donc un nouveau bon point pour le pattern
+Repository (zut! juste au moment où j'avais presque envie de me (ré)orienter
+vers Active Record). Et avec la prochaine version de Entity Framework qui
+devrait être POCO friendly, on peut même supposer que ce sera de plus en plus
+facile de passer d'un ORM à l'autre.</p>
+<p>Peut-être que plus tard (c'est à dire une fois que je saurai faire),
+j'écrirai un autre billet pour présenter une façon d'utiliser Nibernate avec
+ASPNET MVC qui soit un peu plus orthodoxe. Mais déjà, j'aimerai très vite
+essayer de voir ce que ça donne en changeant la base de données et en testant
+cette version de Contactmanager NHibernate avec MySQL ou Oracle.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/03/18/simplifier-balise-head-aspnetmvc/" hreflang="fr-FR">Simplifier la balise head pour ASP.NET MVC</a>
+  <a rel="next" href="/2010/03/24/contact-manager-mongo-db-norm/" hreflang="fr-FR">Contact Manager avec MongoDB et NoRM</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

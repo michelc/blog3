@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Capitalization - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/09/14/capitalization/" />
+<meta property="og:title" content="Capitalization" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/09/14/capitalization/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-09-14T14:58:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-09-14T14:58:00.000Z","datePublished":"2005-09-14T14:58:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/09/14/capitalization/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/09/14/capitalization/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/09/14/capitalization/">Capitalization</a>
+    </h1>
+    <p>
+      <span>2005-09-14</span>
+      <span>#code-snippets</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>D'après <a href="http://windows.oreilly.com/news/csharp_0101.html">C# Regular Expressions</a> :</p>
+<pre><code>using System.Text.RegularExpressions;
+
+public class MyClass {
+
+  public static void Main() {
+    string text = &quot;the quick red fox jumped over the lazy brown DOG.&quot;;
+    System.Console.WriteLine(&quot;text=[&quot; + text + &quot;]&quot;);
+    string result = Regex.Replace(text, @&quot;w+&quot;, new MatchEvaluator(MyClass.CapText));
+    System.Console.WriteLine(&quot;result=[&quot; + result + &quot;]&quot;);
+    System.Console.ReadLine();
+  }
+
+  static string CapText(Match m) {
+    string temp = m.ToString();
+    temp = char.ToUpper(temp[0]) + temp.Substring(1, temp.Length - 1).ToLower();
+    return temp;
+  }
+
+}
+</code></pre>
+<p>Edit : commentaire de utagger :</p>
+<blockquote>
+<p>Here's a shorter version:</p>
+<pre><code>protected void Button1_Click(object sender, EventArgs e) {
+  Label1.Text = Regex.Replace(TextBox1.Text, @”\b\w”, new MatchEvaluator(stam));
+}
+
+protected string stam(Match m) {
+  return m.Value.ToUpper();
+}
+</code></pre>
+<p>(the trick is using \b which is a 0-length match of word boundaries,
+including ^ and \s)</p>
+</blockquote>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/09/09/modifications-boxcontrolboxtitle/" hreflang="fr-FR">Modifications pour BoxControl.boxTitle</a>
+  <a rel="next" href="/2005/09/14/detection-langue-utilisateur/" hreflang="fr-FR">Détection langue utilisateur</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

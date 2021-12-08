@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les formulaires en ASP.NET MVC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/12/17/formulaires-aspnetmvc/" />
+<meta property="og:title" content="Les formulaires en ASP.NET MVC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/12/17/formulaires-aspnetmvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-12-17T09:11:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-12-17T09:11:00.000Z","datePublished":"2009-12-17T09:11:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/12/17/formulaires-aspnetmvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/12/17/formulaires-aspnetmvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/12/17/formulaires-aspnetmvc/">Les formulaires en ASP.NET MVC</a>
+    </h1>
+    <p>
+      <span>2009-12-17</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La mise en ligne de la traduction de la 6° partie du tutoriel NerdDinner est
+enfin terminée. Cette étape est consacrée à la <a href="/nerddinner/formulaires-crud/" title="Les formulaires en ASP.NET MVC">programmation des différents formulaires
+MVC</a> nécessaires pour pouvoir effectuer la mise à jour de la table Dinners
+dans la base de données : création, modification et suppression.</p>
+<p>Dans cette plutôt longue partie, le tutoriel présente entre autre :</p>
+<ul>
+<li>certains des helpers disponibles pour faciliter le développement de
+formulaires</li>
+<li>l'avantage de ces helpers pour prendre en compte les erreurs de validation
+du ModelState</li>
+<li>la façon d'organiser chaque action avec une première requête HTTP GET pour
+afficher le formulaire de saisie et une seconde requête HTTP POST pour
+effectuer la mise à jour correspondant à l'action</li>
+<li>les principales méthodes offertes par ASP.NET MVC pour récupérer les
+données du formulaire via le &quot;<a href="http://msdn.microsoft.com/en-us/library/dd410405.aspx" title="Models and Model Binders in MVC Applications">Model Binding</a>&quot;.</li>
+</ul>
+<p>Le binding consiste à utiliser les données en provenance du formulaire de
+saisie (mais aussi de l'URL) pour initialiser ou mettre à jour des objets issus
+du modèle de l'application.</p>
+<p>Étant donné que cette correspondance se fait plus ou moins magiquement (ou
+en tout cas de façon automatique), c'est maintenant de notre responsabilité de
+bien penser à sécuriser tout ça pour éviter les effets de bords. Pour cela, il
+est entre autre possible d'utiliser un attribut [Bind] pour définir la liste
+des propriétés à inclure ou à exclure du binding. Cet attribut peut s'employer
+au niveau d'une action donnée ou plus généralement de la classe de l'objet.</p>
+<p>La prochaine partie du tutoriel NerdDinner va aborder les solutions pour
+faire <a href="/nerddinner/viewdata-viewmodel/" title="ViewData et ViewModel">passer des données du contrôleur
+vers les vues</a> et présentera l'utilisation du dictionnaire ViewData ou des
+objets ViewModel. L'intérêt de ces derniers c'est qu'ils peuvent aussi servir
+pour filtrer plus précisément quelles propriétés des objets sont exposées via
+les formulaires.</p>
+<p>Et pour commencer à aller encore un plus loin sur tout ce qui concerne
+l'amélioration et la sécurisation du binding, il est possible de consulter les
+deux billets suivants :</p>
+<ul>
+<li><a href="http://odetocode.com/Blogs/scott/archive/2009/04/27/6-tips-for-asp-net-mvc-model-binding.aspx">6 Tips for ASP.NET MVC Model Binding</a></li>
+<li><a href="http://www.codethinked.com/post/2009/01/08/ASPNET-MVC-Think-Before-You-Bind.aspx">ASP.NET MVC - Think Before You Bind</a></li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/12/07/formulaires-mise-a-jour-aspnetmvc/" hreflang="fr-FR">Les formulaires de mise à jour en ASP.NET MVC</a>
+  <a rel="next" href="/2010/01/12/vous-devriez-apprendre-mvc/" hreflang="fr-FR">Je peux le dire : Vous devriez apprendre MVC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

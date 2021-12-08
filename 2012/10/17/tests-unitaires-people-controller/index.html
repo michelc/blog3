@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tests unitaires de PeopleController - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/10/17/tests-unitaires-people-controller/" />
+<meta property="og:title" content="Tests unitaires de PeopleController" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/10/17/tests-unitaires-people-controller/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-10-17T20:49:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-10-17T20:49:00.000Z","datePublished":"2012-10-17T20:49:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/10/17/tests-unitaires-people-controller/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/10/17/tests-unitaires-people-controller/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/10/17/tests-unitaires-people-controller/">Tests unitaires de PeopleController</a>
+    </h1>
+    <p>
+      <span>2012-10-17</span>
+      <span>#ef</span><span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce billet vient conclure ma série de billets sur les tests unitaires
+consacrés au contrôleur PeopleController.</p>
+<p>Il sert de récapitulatif sur les tests unitaires présentés dans les billets
+précédents et présente succintement les tests unitaires réalisés pour les
+actions Edit() et Delete().</p>
+<h2>Tests unitaires action Detail()</h2>
+<p>Le code testé :</p>
+<pre><code>// GET: /People/Details/5
+public ViewResult Details(int id)
+{
+  var contact = db.Contacts.Find(id);
+  var person = contact.To_ViewPerson();
+
+  return View(person);
+}
+</code></pre>
+<p>Les 3 tests unitaires :</p>
+<ul>
+<li>PeopleDetails doit renvoyer la vue par defaut</li>
+<li>PeopleDetails doit renvoyer un objet ViewPerson a la vue</li>
+<li>PeopleDetails doit renvoyer le contact demande a la vue</li>
+</ul>
+<p>Référence : <a href="/2012/10/04/tester-action-details/">Tester l'action Detail()</a></p>
+<h2>Tests unitaires action Create()</h2>
+<h3>Le code GET testé :</h3>
+<pre><code>// GET: /People/Create
+public ViewResult Create(int ParentID = 0)
+{
+  var contact = new Contact();
+  if (ParentID != 0)
+  {
+    contact.Company_ID = ParentID;
+    contact.Company = db.Contacts.Find(ParentID);
+  }
+  var person = contact.To_ViewPerson();
+
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+</code></pre>
+<p>Les 5 tests unitaires :</p>
+<ul>
+<li>PeopleCreate get doit renvoyer la vue par defaut</li>
+<li>PeopleCreate get doit renvoyer un objet ViewPerson a la vue</li>
+<li>PeopleCreate get doit initialiser la liste des societes</li>
+<li>PeopleCreate get doit initialiser la societe parente si elle est
+renseignee</li>
+<li>PeopleCreate get doit initialiser la societe parente si elle est
+renseignee</li>
+</ul>
+<p>Référence : <a href="/2012/10/03/tester-partie-get-action-create/">Tester la partie GET d'une action Create()</a></p>
+<h3>Le code POST testé :</h3>
+<pre><code>// POST: /People/Create
+[HttpPost, ValidateAntiForgeryToken]
+public ActionResult Create(ViewPerson person)
+{
+  if (ModelState.IsValid)
+  {
+    var contact = new Contact();
+    contact.Update_With_ViewPerson(person);
+    db.Contacts.Add(contact);
+    db.SaveChanges();
+
+    this.Flash(string.Format(&quot;La fiche de {0} a été insérée&quot;, contact.DisplayName));
+    return RedirectToAction(&quot;Details&quot;, new { id = contact.Contact_ID, slug = contact.Slug });
+  }
+
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+</code></pre>
+<p>Les 6 tests unitaires :</p>
+<ul>
+<li>PeopleCreate post doit renvoyer la vue par defaut quand saisie
+incorrecte</li>
+<li>PeopleCreate post doit initialiser la liste des societes quand saisie
+incorrecte</li>
+<li>PeopleCreate post doit renvoyer le meme objet ViewPerson quand saisie
+incorrecte</li>
+<li>PeopleCreate post doit enregistrer contact quand saisie correcte</li>
+<li>PeopleCreate post doit definir message de succes quand saisie correcte</li>
+<li>PeopleCreate post doit rediriger vers details quand saisie correcte</li>
+</ul>
+<p>Références :</p>
+<ul>
+<li><a href="/2012/10/01/tester-partie-post-action-create/">Tester la partie POST d'une action Create() - 1/2</a></li>
+<li><a href="/2012/10/02/tester-partie-post-action-create-2/">Tester la partie POST d'une action Create() - 2/2</a></li>
+</ul>
+<h2>Tests unitaires de l'action Edit()</h2>
+<p>Le code source à tester :</p>
+<pre><code>// GET: /People/Edit/5
+public ViewResult Edit(int id)
+{
+  var contact = db.Contacts.Find(id);
+  var person = contact.To_ViewPerson();
+
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+
+// POST: /People/Edit/5
+[HttpPost, ValidateAntiForgeryToken]
+public ActionResult Edit(ViewPerson person)
+{
+  if (ModelState.IsValid)
+  {
+    var contact = db.Contacts.Find(person.Contact_ID);
+    contact.Update_With_ViewPerson(person);
+    db.Entry(contact).State = EntityState.Modified;
+    db.SaveChanges();
+
+    this.Flash(string.Format(&quot;La fiche de {0} a été mise à jour&quot;, contact.DisplayName));
+    return RedirectToAction(&quot;Details&quot;, new { id = contact.Contact_ID, slug = contact.Slug });
+  }
+
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+</code></pre>
+<p>Les 10 tests unitaires :</p>
+<ul>
+<li>PeopleEdit get doit renvoyer la vue par defaut</li>
+<li>PeopleEdit get doit renvoyer un objet ViewPerson a la vue</li>
+<li>PeopleEdit get doit renvoyer le contact demande a la vue</li>
+<li>PeopleEdit get doit initialiser la liste des societes</li>
+<li>PeopleEdit post doit renvoyer la vue par defaut quand saisie
+incorrecte</li>
+<li>PeopleEdit post doit initialiser la liste des societes quand saisie
+incorrecte</li>
+<li>PeopleEdit post doit renvoyer le meme objet ViewPerson quand saisie
+incorrecte</li>
+<li>PeopleEdit post doit enregistrer modification quand saisie correcte</li>
+<li>PeopleEdit post doit definir message de succes quand saisie correcte</li>
+<li>PeopleEdit post doit rediriger vers details quand saisie correcte</li>
+</ul>
+<p>En général, ces tests unitaires sont presque du copié / collé de ceux écrits
+pour l'action Create(). Le test unitaire &quot;PeopleEdit get doit renvoyer le
+contact demande a la vue&quot; est quant à lui réalisé dans le même style que
+&quot;PeopleDetails doit renvoyer le contact demande a la vue&quot;.</p>
+<p>La seule &quot;particularité&quot; concerne le test unitaire qui sert à vérifier que
+l'action a bien enregistré la modification apportée au contact :</p>
+<pre><code>[TestMethod]
+public void PeopleEdit_post_doit_enregistrer_modification_quand_saisie_correcte()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var contact = InsertPerson(&quot;test&quot;, &quot;0&quot;);
+  contact.LastName = &quot;maj&quot;;
+
+  // Act
+  var result = controller.Edit(contact.To_ViewPerson());
+
+  // Assert
+  var updated_contact = db.Contacts.Where(x =&gt; x.LastName == contact.LastName).FirstOrDefault();
+  Assert.IsNotNull(updated_contact, &quot;People.Edit() aurait dû mettre à jour le contact&quot;);
+}
+</code></pre>
+<h2>Tests unitaires de l'action Delete()</h2>
+<p>Le code source à tester :</p>
+<pre><code>// GET: /People/Delete/5
+public ViewResult Delete(int id)
+{
+  var contact = db.Contacts.Find(id);
+  var person = contact.To_ViewPerson();
+
+  return View(person);
+}
+
+// POST: /People/Delete/5
+[HttpPost, ValidateAntiForgeryToken, ActionName(&quot;Delete&quot;)]
+public ActionResult DeleteConfirmed(int id)
+{
+  var contact = db.Contacts.Find(id);
+  db.Contacts.Remove(contact);
+  db.SaveChanges();
+
+  this.Flash(string.Format(&quot;La fiche de {0} a été supprimée&quot;, contact.DisplayName));
+  return RedirectToAction(&quot;Index&quot;, &quot;Contacts&quot;);
+}
+</code></pre>
+<p>Les 6 tests unitaires :</p>
+<ul>
+<li>PeopleDelete doit renvoyer la vue par defaut</li>
+<li>PeopleDelete doit renvoyer un objet ViewPerson a la vue</li>
+<li>PeopleDelete doit renvoyer le contact demande a la vue</li>
+<li>PeopleDeleteConfirmed doit supprimer le contact</li>
+<li>PeopleDeleteConfirmed doit definir message de succes</li>
+<li>PeopleDeleteConfirmed doit rediriger vers liste des contacts</li>
+</ul>
+<p>Les 3 premiers tests unitaires sont des &quot;standards&quot;.</p>
+<p>&quot;PeopleDeleteConfirmed doit supprimer le contact&quot; : dans le style de
+&quot;PeopleCreate post doit enregistrer contact quand saisie correcte&quot; et de
+&quot;PeopleEdit post doit enregistrer modification quand saisie correcte&quot;.</p>
+<p>&quot;PeopleDeleteConfirmed doit rediriger vers liste des contacts&quot; un peu dans
+le style de &quot;PeopleCreate post doit rediriger vers details quand saisie
+correcte&quot; et de &quot;PeopleEdit post doit rediriger vers details quand saisie
+correcte&quot;, sauf que dans le cas d'une suppression l'action ne ré-affiche pas
+l'élément (puisqu'on l'a supprimé) mais renvoie à la liste des contacts (qui se
+trouve par ailleurs dans un autre contrôleur). Ce qui donne le test unitaire
+suivant :</p>
+<pre><code>[TestMethod]
+public void PeopleDeleteConfirmed_doit_rediriger_vers_liste_des_contacts()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var person = InsertPerson(&quot;test&quot;, &quot;0&quot;);
+
+  // Act
+  var result = controller.DeleteConfirmed(person.Contact_ID) as RedirectToRouteResult;
+
+  // Assert
+  Assert.IsNotNull(result, &quot;People.DeleteConfirmed() aurait dû renvoyer un RedirectToRouteResult&quot;);
+  Assert.AreEqual(&quot;Contacts&quot;, result.RouteValues[&quot;controller&quot;], &quot;People.DeleteConfirmed() aurait dû rediriger vers le contrôleur Contacts&quot;);
+  Assert.AreEqual(&quot;Index&quot;, result.RouteValues[&quot;action&quot;], &quot;People.DeleteConfirmed() aurait dû rediriger vers l'action Index&quot;);
+}
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/10/08/base-donnees-auto-nommee-sql-server/" hreflang="fr-FR">Base de données auto-nommée sous SQL Server</a>
+  <a rel="next" href="/2012/11/05/tests-unitaires-entity-framework/" hreflang="fr-FR">Tests unitaires pour Entity Framework</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

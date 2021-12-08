@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tester l&#39;action Details() - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/10/04/tester-action-details/" />
+<meta property="og:title" content="Tester l&#39;action Details()" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/10/04/tester-action-details/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-10-04T19:27:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-10-04T19:27:00.000Z","datePublished":"2012-10-04T19:27:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/10/04/tester-action-details/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/10/04/tester-action-details/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/10/04/tester-action-details/">Tester l&#39;action Details()</a>
+    </h1>
+    <p>
+      <span>2012-10-04</span>
+      <span>#ef</span><span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Avant d'attaquer le codage des derniers tests pour le contrôleur
+PeopleController, je remet au propre les 3 tests unitaires que j'ai déjà codés
+pour valider le fonctionnement de l'action Details() et surtout j'en profite
+pour décrire ce que j'ai voulu faire.</p>
+<h2>L'action à tester</h2>
+<pre><code>//
+// GET: /People/Details/5
+
+public ViewResult Details(int id)
+{
+  var contact = db.Contacts.Find(id);
+  var person = contact.To_ViewPerson();
+
+  return View(person);
+}
+</code></pre>
+<p>Il s'agit de l'action standard en ASP.NET MVC pour afficher une fiche
+particulière. Ça correspondrait à l'action &quot;show&quot; dans un contrôleur Ruby on
+Rails.</p>
+<p>Cette action reçoit en paramètre (<code>int id</code>) l'identifiant de la
+fiche contact à afficher.</p>
+<p>Elle commence par faire appel à un objet DbContext d'Entity Framework pour
+retrouver le contact correspondant à cet identifiant dans la base de
+données.</p>
+<p>L'objet <code>contact</code> récupéré est ensuite transformé en objet
+ViewModel à l'aide de la méthode d'extension <code>To_ViewPerson()</code>.</p>
+<p>Puis l'action fait passer cet objet ViewModel à la vue et renvoie le
+résultat : <code>return View(person);</code>.</p>
+<p>Par conséquent, les trucs à tester sont assez simples :</p>
+<ul>
+<li>un premier test quasi obligatoire pour vérifier que l'action renvoie bien
+la vue par défaut.</li>
+<li>un deuxième test pour contrôler que l'action fait bien passer un objet
+ViewPerson à la vue, puisque c'est ce qu'elle attend.</li>
+<li>un dernier test pour s'assurer que l'action renvoie bien le contact que
+l'on souhaite afficher.</li>
+</ul>
+<h2>1° test : l'action renvoie la vue par défaut</h2>
+<p>C'est un test un peu répétitif comme test puisqu'on le retrouve à chaque
+action. Mais l'avantage, c'est que ça permet d'avoir un point de départ et de
+se lancer dans l'écriture des tests unitaires sans buter sur le syndrome de la
+page blanche.</p>
+<pre><code>[TestMethod]
+public void PeopleDetails_doit_renvoyer_la_vue_par_defaut()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var contact = new Contact
+  {
+    DisplayName = &quot;test&quot;,
+    Phone1 = &quot;0&quot;
+  };
+  db.Contacts.Add(contact);
+  db.SaveChanges();
+
+  // Act
+  var result = controller.Details(contact.Contact_ID);
+
+  // Assert
+  Assert.IsNotNull(result, &quot;People.Details() aurait dû renvoyer un ViewResult&quot;);
+  Assert.IsTrue(string.IsNullOrEmpty(result.ViewName), &quot;People.Details() aurait dû utiliser la vue par défaut&quot;);
+}
+</code></pre>
+<p>Je copie/colle plus ou moins les explications des billets précédents...</p>
+<pre><code>var controller = new PeopleController(db);
+</code></pre>
+<p>=&gt; instancie un objet contrôleur en lui passant un DbContext pour que
+l'action puisse utiliser Entity Framework pour rechercher la fiche contact.</p>
+<pre><code>var contact = new Contact(); ... db.SaveChanges();
+</code></pre>
+<p>=&gt; enregistre un contact pour en avoir un à rechercher.</p>
+<pre><code>var result = controller.Details(contact.Contact_ID);
+</code></pre>
+<p>=&gt; appelle l'action Details() en demandant le contact qui a été créé à
+l'étape précédente.</p>
+<pre><code>Assert.IsNotNull(result, &quot;...&quot;);
+</code></pre>
+<p>=&gt; 1° test pour vérifier que l'action répond bien par un <code>return View</code> et pas par un <code>return RedirectToAction</code>.</p>
+<pre><code>Assert.IsTrue(string.IsNullOrEmpty(result.ViewName),
+&quot;...&quot;);
+</code></pre>
+<p>=&gt; 2° test pour vérifier que l'action n'a pas défini le nom de la vue à
+utiliser et qu'elle laisse faire le moteur de vue pour qu'il utilise la vue par
+défaut.</p>
+<h2>2° test : l'action transmet à la vue l'objet qu'elle attend</h2>
+<p>Là aussi, on retrouve ce genre de test dans les autres actions. Au moins, on
+ne peut pas dire que ça soit compliqué d'écrire des tests unitaires.</p>
+<pre><code>[TestMethod]
+public void PeopleDetails_doit_renvoyer_un_objet_ViewPerson_a_la_vue()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var contact = new Contact
+  {
+    DisplayName = &quot;test&quot;,
+    Phone1 = &quot;0&quot;
+  };
+  db.Contacts.Add(contact);
+  db.SaveChanges();
+
+  // Act
+  var result = controller.Details(contact.Contact_ID);
+
+  // Assert
+  var model = result.ViewData.Model as ViewPerson;
+  Assert.IsNotNull(model, &quot;Model devrait être du type ViewPerson&quot;);
+}
+</code></pre>
+<pre><code>var model = result.ViewData.Model as ViewPerson;
+</code></pre>
+<p>=&gt; récupère l'objet transmis à la vue par le contrôleur.</p>
+<pre><code>Assert.IsNotNull(model, &quot;Model devrait être du type
+ViewPerson&quot;);
+</code></pre>
+<p>=&gt; vérifie que l'action a bien transmis un objet de type
+<code>ViewPerson</code>.</p>
+<h2>3° test : l'action renvoie le contact demandé à la vue</h2>
+<p>Ce test unitaire est un peu nouveau par rapport au 2 premiers tests, mais
+rien de bien compliqué quand même.</p>
+<pre><code>[TestMethod]
+public void PeopleDetails_doit_renvoyer_le_contact_demande_a_la_vue()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var contact1 = new Contact { DisplayName = &quot;test1&quot;, Phone1 = &quot;1&quot; };
+  db.Contacts.Add(contact1);
+  var contact2 = new Contact { DisplayName = &quot;test2&quot;, Phone1 = &quot;2&quot; };
+  db.Contacts.Add(contact2);
+  db.SaveChanges();
+
+  // Act
+  var result = controller.Details(contact1.Contact_ID);
+
+  // Assert
+  var model = result.ViewData.Model as ViewPerson;
+  Assert.AreEqual(contact1.DisplayName, model.DisplayName, &quot;Model aurait dû correspondre au contact demandé&quot;);
+  Assert.AreEqual(contact1.Phone1, model.Phone1, &quot;Model aurait dû correspondre au contact demandé&quot;);
+}
+</code></pre>
+<pre><code>var contact1 = new Contact ...
+</code></pre>
+<pre><code>var contact2 = new Contact ...
+</code></pre>
+<p>=&gt; enregistrement de 2 contacts pour corser un peu.</p>
+<pre><code>var result = controller.Details(contact1.Contact_ID);
+</code></pre>
+<p>=&gt; appelle l'action Details() en demandant un des 2 contacts créé à
+l'étape précédente.</p>
+<pre><code>Assert.AreEqual(contact1.DisplayName, model.DisplayName,
+&quot;...&quot;);
+</code></pre>
+<pre><code>Assert.AreEqual(contact1.Phone1, model.Phone1, &quot;...&quot;);
+</code></pre>
+<p>=&gt; teste que le contact transmis à la vue correspond bien à celui qui a
+été demandé et pas à un autre de la table des contacts.</p>
+<h2>Remarque en passant</h2>
+<p>Je ne teste pas ce que ferait l'action Details() dans le cas où le contact
+demandé n'existerait pas. C'est parce que j'ai décidé que (pour l'instant) je
+ne voulais pas gérer ce genre de truc.</p>
+<p>Et donc, comme cela ne fait pas partie de mes &quot;spécifications&quot;, cela n'a pas
+à être testé.</p>
+<p>Même si bien sûr c'est une fonctionnalité qu'il est tout à fait raisonnable
+de gérer.</p>
+<h2>Conclusion</h2>
+<p>Ca, c'est fait. Il faut maintenant que je teste les autres actions du
+contrôleur : Edit() en versions GET et POST, Delete() en mode GET,
+DeleteConfirmed() en mode POST() et si possible accompagner ça d'un nouveau
+billet (<a href="/2012/10/17/tests-unitaires-people-controller/">c'est fait !</a>).</p>
+<p>Puis il faudra reporter ces tests au niveau du contrôleur
+CompaniesController qui gère les contacts de type sociétés.</p>
+<p>Et pour finir, essayer de me motiver suffisamment pour faire un billet qui
+explique comment j'ai décidé de gérer les tests unitaires pour ce qui touche à
+Entity Framework (c'est <a href="/2012/11/05/tests-unitaires-entity-framework/">presque</a> fait).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/10/03/tester-partie-get-action-create/" hreflang="fr-FR">Tester la partie GET d&#39;une action Create()</a>
+  <a rel="next" href="/2012/10/08/base-donnees-auto-nommee-sql-server/" hreflang="fr-FR">Base de données auto-nommée sous SQL Server</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

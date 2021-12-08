@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mise en cache côté serveur - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/01/28/mise-cache-cote-serveur/" />
+<meta property="og:title" content="Mise en cache côté serveur" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/01/28/mise-cache-cote-serveur/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-01-28T16:59:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-01-28T16:59:00.000Z","datePublished":"2006-01-28T16:59:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/01/28/mise-cache-cote-serveur/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/01/28/mise-cache-cote-serveur/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/01/28/mise-cache-cote-serveur/">Mise en cache côté serveur</a>
+    </h1>
+    <p>
+      <span>2006-01-28</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Révision de la durée de mise en cache pour l'ensemble des boites des toolbox
+Admin et Classic. Jusqu'à présent, celle-ci était généralement définie à -1
+(pas de mise en cache) ou à 60 secondes. Ces valeurs ont été augmentées et
+établies selon les règles suivantes :</p>
+<ul>
+<li>Xmlfeed et Blogmarks sont paramétrées par défaut à 10800 secondes (3
+heures) pour éviter de trop solliciter les serveurs hébergeant les fils atom ou
+rss,</li>
+<li>les boites de la toolbox Admin sont initialisées à -1,</li>
+<li>les boites contenant un formulaire sont initialisées à -1 (sinon on se fait
+avoir et on a l'impression que ça ne marche pas :),</li>
+<li>les boites dont le contenu dépend de la page en cours (Breadcrumbs,
+FileDir, ScreenInfo, SiteMenu) sont initialisées à -1,</li>
+<li>toutes les autres boites passent à 600 secondes (10 minutes).</li>
+</ul>
+<p>Réalisation du script 20060128_update.sql pour mettre à jour les tables
+qc_BoxTypes (paramétrage par défaut) et qc_Boxes (re-paramétrage des boites
+déjà existantes).</p>
+<pre><code>/*
+  -------------------- qc_BoxTypes : defaultCache
+*/
+
+UPDATE qc_BoxTypes SET defaultCache = 600
+WHERE toolbox LIKE 'Classic%'
+GO;
+
+UPDATE qc_BoxTypes SET defaultCache = -1
+WHERE toolbox = 'Admin';
+GO;
+
+UPDATE qc_BoxTypes SET defaultCache = -1
+WHERE idBoxType IN ('breadcrumbs', 'filedir', 'screeninfo', 'sitemenu');
+GO;
+
+UPDATE qc_BoxTypes SET defaultCache = -1
+WHERE idBoxType IN ('breadcrumbs', 'filedir', 'screeninfo', 'sitemenu');
+GO;
+
+UPDATE qc_BoxTypes SET defaultCache = -1
+WHERE idBoxType IN ('autoreg', 'discussions', 'feedback', 'googlesearch', 'login', 'msnsearch', 'password', 'yahoosearch');
+GO;
+
+UPDATE qc_BoxTypes SET defaultCache = 10800 
+WHERE idBoxType IN ('blogmarks', 'xmlfeed');
+GO;
+
+/*
+  -------------------- qc_Boxes : cacheTime
+*/
+
+UPDATE qc_Boxes SET cacheTime = -1
+WHERE idBoxType IN (SELECT idBoxType FROM qc_BoxTypes WHERE defaultCache = -1);
+GO;
+
+UPDATE qc_Boxes SET cacheTime = 600
+WHERE idBoxType IN (SELECT idBoxType FROM qc_BoxTypes WHERE defaultCache = 600);
+GO;
+
+UPDATE qc_Boxes SET cacheTime = 10800
+WHERE idBoxType IN (SELECT idBoxType FROM qc_BoxTypes WHERE defaultCache = 10800);
+GO;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/01/28/google-sitemap-mise-a-jour-fichiers/" hreflang="fr-FR">Google Sitemap et mise à jour fichiers</a>
+  <a rel="next" href="/2006/01/29/boite-sqlrepeat/" hreflang="fr-FR">Boite SqlRepeat</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Personnalisation de la CSS pour ASP.NET MVC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/10/17/personnalisation-css-aspnetmvc/" />
+<meta property="og:title" content="Personnalisation de la CSS pour ASP.NET MVC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/10/17/personnalisation-css-aspnetmvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-10-17T18:25:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-10-17T18:25:00.000Z","datePublished":"2011-10-17T18:25:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/10/17/personnalisation-css-aspnetmvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/10/17/personnalisation-css-aspnetmvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/10/17/personnalisation-css-aspnetmvc/">Personnalisation de la CSS pour ASP.NET MVC</a>
+    </h1>
+    <p>
+      <span>2011-10-17</span>
+      <span>#html</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce billet est avant tout un pense-bête personnel pour noter les quelques
+modifications que j'apporte assez régulièrement à la feuille de style fournie
+par défaut quand on génère un nouveau projet ASP.NET MVC3 dans Visual
+Studio.</p>
+<p>En général, lorsque je débute un nouveau projet, j'ai tendance à conserver
+la feuille de style telle que Visual Studio l'a créée. Puis quand je bloque sur
+des fonctionnalités ou des problèmes techniques, je m'accorde un petit moment
+de détente en adaptant &quot;Site.css&quot; pour essayer d'embellir mon
+projet avant de repartir de plus belle.</p>
+<p><img src="/public/2011/mysite01.png" alt=""></p>
+<h2>Normalize</h2>
+<p>Avant toute chose, et pour partir du bon pied, je démarre par un petit
+<a href="http://meyerweb.com/eric/tools/css/reset/">reset.css</a>, ou ces derniers temps un <a href="http://necolas.github.com/normalize.css/">normalize.css</a> dans
+la vue _Layout.cshtml :</p>
+<pre><code>&lt;head&gt;
+  ...
+  &lt;link href=&quot;@Url.Content(&quot;~/Content/normalize.css&quot;)&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+  &lt;link href=&quot;@Url.Content(&quot;~/Content/Site.css&quot;)&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+  ...
+&lt;/head&gt;
+</code></pre>
+<h2>Undo</h2>
+<p>Comme j'aime très moyennement les coins arrondis, je commence par m'en
+débarrasser. Ça m'amuse toujours de commencer de façon radicale en lançant un
+rechercher / remplacer de <code>-radius</code> par <code>-no-radius</code>.
+Cela me permet de venir à bout de <code>border-radius</code>,
+<code>-moz-border-radius</code> et autre <code>-webkit-border-radius</code>.
+Mais au final, je fais ça de façon plus civilisée en redéfinissant tous les
+styles <code>xxxxx-border-radius</code> à 0.</p>
+<pre><code>/* Suppression des coinzarrondis */
+#main,
+footer,
+#footer,
+ul#menu li a
+{
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+}
+</code></pre>
+<p>Il y a aussi l'effet d'ombre 3D sur le titre &quot;My MVC
+Application&quot; que je trouve un peu lourd. Là encore, un rechercher /
+remplacer à l'arrache de <code>-shadow</code> par <code>-no-shadow</code> ne
+fait pas de mal. Ou plus proprement je redéfini le style
+<code>text-shadow</code> de <code>header h1</code>.</p>
+<pre><code>/* Suppression de l'effet 3D sur le titre */
+header h1,
+#header h1
+{
+  text-shadow: 0 0 0 transparent;
+}
+</code></pre>
+<h2>Font</h2>
+<p>Une fois défoulé, j'apporte encore quelques modifications encore plus
+personnelles pour obtenir un résultat un peu plus à mon goût.</p>
+<p>Comme je suis toujours dans ma période Century Gothic is Beautiful, c'est
+elle qui gagne par rapport à la police &quot;Trebuchet MS&quot; utilisée par
+défaut.</p>
+<pre><code>/* Utilisation de ma police de prédilection */
+body
+{
+  font-family: &quot;Century Gothic&quot;, &quot;Trebuchet MS&quot;, Verdana, Helvetica, Sans-Serif;
+}
+</code></pre>
+<h2>Color</h2>
+<p>Puis, même si j'aime beaucoup le bleu assez soutenu utilisé comme couleur de
+fond, je le change pour une couleur plus claire et neutre.</p>
+<p>Ensuite, je change les couleurs de titres au gré de l'humeur du jour ou des
+&quot;Oh, c'est quoi cette joli couleur&quot; trouvés sur d'autres sites. Ou
+plus simplement, c'est le titre général en chocolat, le titre de page en gris
+clair et les sous-titre en vert.</p>
+<p>Après, j'ai encore un problème avec le menu qui est bleuté par défaut parce
+que je n'ai rien trouvé qui me plaise vraiment. Pour l'instant, je me contente
+de le faire ressortir en le passant en blanc sur fond vert avec un effet
+chocolat quand on passe la souris dessus.</p>
+<pre><code>/* Changement du jeu de couleurs */
+body { background-color: #e0e0e0; } /* Un fond de page gris clair */
+header h1, #header h1, h1 { color: #d2691e; } /* chocolat */
+h2 { color: #888888; } /* gris */
+h3 { color: #39b449; } /* vert */
+ul#menu li a { color: #fff; background-color: #39b449; } /* Menu blanc/vert */
+ul#menu li a:hover { background-color: #d2691e; } /* Et survolé en chocolat */
+ul#menu { border-bottom: 0; } /* Tant qu'à faire */
+</code></pre>
+<h2>Table</h2>
+<p>Une fois zen, je pars à l'assaut des tables. Déjà c'est du n'importe quoi.
+Pour éviter de m'emporter, je commence par un <code>table { width : 100% }</code> pour qu'elles s'étalent par défaut sur toute la largeur de la
+page.</p>
+<pre><code>/* Par défaut les tables occupent toute la largeur de la page */
+table
+{
+  width: 100%;
+}
+</code></pre>
+<p>Puis j'aère les cellules parce que ça sert à rien de se payer des 21 pouces
+si c'est pour rester tout riquiqui et tassé.</p>
+<pre><code>/* Aération des cellules */
+thead th,
+tbody td,
+tfoot th
+{
+  border: 1px dotted #aaa;
+  padding: 0.5em;
+  text-align: left;
+  vertical-align: top;
+}
+</code></pre>
+<p>En parlant de <code>thead</code> et autres, je me plonge dans toutes les
+vues d'ores et déjà générées par défaut pour rajouter les balises
+<code>&lt;thead&gt;</code> et <code>&lt;tbody&gt;</code> que Visual Studio
+s'acharne à oublier. Y m'énerve ! C'est pourtant pas compliqué de
+comprendre que :</p>
+<ul>
+<li>C'est quand même beaucoup plus simple à styler</li>
+<li>C'est bien plus pratique pour utiliser la plupart des plugins jQuery</li>
+</ul>
+<p>Après ça, je peux facilement colorer les en-têtes et pieds de tables en
+reprenant la couleur du menu d'onglets :</p>
+<pre><code>/* Redéfini les couleurs de l'en-tête et du pied des tables */
+thead tr th,
+tfoot tr th
+{
+  background-color: #3399ff;
+  color: #fff;
+}
+</code></pre>
+<p>Puis là, comme j'en ai rien à faire des vieux navigateurs, j'alterne la
+couleur de fond des lignes avec du CSS3 et un fond moins blanc que blanc.</p>
+<pre><code>/* Alterne la couleur de fond des lignes d'une table */
+tbody tr:nth-child(odd)
+{
+  background-color: #f0f0f0;
+}
+</code></pre>
+<p>Pour continuer à animer et égayer un peu les tableaux, je fais mon petit
+effet au passage de la souris en changeant la couleur de fond de la ligne pour
+que ça pète un peu plus. Là aussi, la couleur dépend des jours et de
+l'inspiration. Et aujourd'hui c'est jaune clair parce qu'il a l'avantage
+d'avoir un petit effet orangé sur mon portable.</p>
+<pre><code>/* Ajoute un effet lors du survol d'une ligne */
+tbody tr:hover
+{
+  background-color: #ffff80;
+}
+</code></pre>
+<h2>Form</h2>
+<p>Là aussi, il y aurait pas mal à dire du choix du balisage. Le problème,
+c'est que c'est tout un ensemble entre les helpers et le système de validation
+alors c'est un peu compliqué et que je résiste encore pour conserver tel quel
+le html généré par Visual Studio. Ce qui fait que je n'arrive pas à me fixer
+sur quelque chose de &quot;définitif&quot;. Enfin bref, y'a rien qui me plait pour
+l'instant. À suivre donc…</p>
+<p><img src="/public/2011/mysite02.png" alt=""></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/10/06/generer-url-minuscule-aspnetmvc/" hreflang="fr-FR">Générer des URLs en minuscules avec ASP.NET MVC</a>
+  <a rel="next" href="/2011/10/18/utilisation-expressions-lambda-10-etapes/" hreflang="fr-FR">Utilisation d’expressions lambda en 10 étapes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

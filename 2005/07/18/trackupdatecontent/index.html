@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TrackUpdateContent() - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/07/18/trackupdatecontent/" />
+<meta property="og:title" content="TrackUpdateContent()" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/07/18/trackupdatecontent/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-07-18T11:47:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-07-18T11:47:00.000Z","datePublished":"2005-07-18T11:47:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/07/18/trackupdatecontent/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/07/18/trackupdatecontent/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/07/18/trackupdatecontent/">TrackUpdateContent()</a>
+    </h1>
+    <p>
+      <span>2005-07-18</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ajouté la procédure TrackUpdateContent() à Common.cs pour suivre tout ce qui
+concerne la mise à jour du contenu. Cette procédure est à appeler par les
+classes métiers lors de l'utilisation de leurs méthodes Save() ou Kill().</p>
+<p>Cette procédure est disponible avec 2 jeux d'arguments :</p>
+<ul>
+<li>TrackContentUpdate(idBox)</li>
+<li>TrackContentUpdate(idFeed, idBox, idItem, title, content, link,
+author)</li>
+</ul>
+<p>et elle effectue les traitements suivants :</p>
+<ul>
+<li>suppression du cache lié à la boite mise à jour,</li>
+<li>mise à jour du champ lastUpdate pour l'écran contenant la boite mise à
+jour,</li>
+<li>enregistrement du contenu mis à jour dans la table qc_Entries.</li>
+</ul>
+<p>Concernant la table qc_Entries.cs, sa mise à jour est gérée via la classe
+Engine.Entries.cs et le script permettant sa création a été ajouté au fichier
+20050715_update.sql</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/07/18/champs-lastupdate/" hreflang="fr-FR">Champs lastUpdate</a>
+  <a rel="next" href="/2005/07/18/gestion-utilisateurs/" hreflang="fr-FR">Gestion des utilisateurs</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

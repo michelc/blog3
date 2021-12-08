@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create a basic template with sidebar + content - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2020/05/20/create-template-sidebar-content/" />
+<meta property="og:title" content="Create a basic template with sidebar + content" />
+<meta name="description" content="For a new site, I&#39;m looking at how to create a basic template with only a vertical sidebar and everything else for content." />
+<meta property="og:description" content="For a new site, I&#39;m looking at how to create a basic template with only a vertical sidebar and everything else for content." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2020/05/20/create-template-sidebar-content/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2020/first-plan.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2020-05-20T11:38:40.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2020-05-20T11:38:40.000Z","datePublished":"2020-05-20T11:38:40.000Z","description":"For a new site, I'm looking at how to create a basic template with only a vertical sidebar and everything else for content.","inLanguage":"en-US","url":"https://blog3.pagesd.info/2020/05/20/create-template-sidebar-content/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2020/first-plan.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2020/05/20/create-template-sidebar-content/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2020/first-plan.jpg" alt="Photo de Karol Dach" /><figcaption><a href="https://www.pexels.com/fr-fr/photo/a-l-interieur-architecte-architecture-art-323645/">Photo de Karol Dach</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2020/05/20/create-template-sidebar-content/">Create a basic template with sidebar + content</a>
+    </h1>
+    <p>
+      <span>2020-05-20</span>
+      <span>#css</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I'm doing some tests on a management application and rather than having a &quot;complicated&quot; navigation bar at the top of the screen, I'd like to test what a basic template with only 2 columns would look like:</p>
+<ul>
+<li>a sidebar for navigation,</li>
+<li>a main area for all site content.</li>
+</ul>
+<p>I've found a lot of examples and even ready-made templates to achieve this result, but they usually do much more than I need, and above all, I'd like to understand how it works.</p>
+<p>To simplify, I'm going to do this with Bootstrap 4, drawing heavily on what I've seen in various tutorials and templates that exist. The first thing to do is to have two <code>div</code> blocks:</p>
+<ul>
+<li>&quot;#sidebar&quot; for the navigation sidebar,</li>
+<li>&quot;#content&quot; for the general content area.</li>
+</ul>
+<p>In order for these 2 blocks to stay side by side, they must be enclosed in another <code>div</code> block, the &quot;#wrapper&quot;:</p>
+<pre><code>&lt;div id=&quot;wrapper&quot;&gt;
+    &lt;nav id=&quot;sidebar&quot;&gt;
+        ...
+    &lt;/nav&gt;
+    &lt;div id=&quot;content&quot;&gt;
+        ...
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>The easiest way to achieve my goal is the &quot;flexible&quot; box model:</p>
+<pre><code>#wrapper {
+    display: flex;
+    width: 100%;
+}
+</code></pre>
+<p>Then I set the size of the 2 zones (with some pink to see what's going on):</p>
+<pre><code>#sidebar {
+    background-color: pink; /* debug */
+    width: 299px;
+}
+
+#content {
+    width: calc(100% - 299px);
+}
+</code></pre>
+<p>It's not quite finished, but it looks like what I want to do:</p>
+<p><img src="/public/2020/clic1-a.png" alt=""></p>
+<p>I'm making a first improvement so that the &quot;sidebar&quot; uses all the height:</p>
+<pre><code>#sidebar {
+    min-height: 100vh;
+}
+</code></pre>
+<p>Much better! I can check what happens when scrolling by adding some HTML at the end of &quot;content&quot;:</p>
+<pre><code>&lt;p class=&quot;scroll&quot;&gt;...&lt;/p&gt;
+&lt;p&gt;La fin.&lt;/p&gt;
+</code></pre>
+<p>Then some CSS:</p>
+<pre><code>.scroll {
+    margin-bottom: 50rem;
+}
+</code></pre>
+<p>It works. But the &quot;sidebar&quot; scrolls with the rest of the page. I'm not sure it bothers me that much. But  let's say I want to stick the navigation, so I have to prevent it from scrolling with the rest of the page:</p>
+<pre><code>#sidebar {
+    position: fixed;
+}
+</code></pre>
+<p>OK. The &quot;sidebar&quot; no longer moves. On the other hand, the &quot;content&quot; is displayed below the &quot;sidebar&quot;, aligned on the left side of the screen...</p>
+<p><img src="/public/2020/clic1-b.png" alt=""></p>
+<p>I have to find a way to fix it to the left of the &quot;sidebar&quot;, or rather to the right of the screen:</p>
+<pre><code>#content {
+    position: absolute;
+    right: 0;
+}
+</code></pre>
+<p>This is better:</p>
+<p><img src="/public/2020/clic1-c.png" alt=""></p>
+<p>I can now work on the aesthetic side of the thing.</p>
+<p>To start, make sure the content look less packed:</p>
+<pre><code>#content {
+    padding: 15px 30px 30px 30px;
+}
+h1 {
+    margin-bottom: 30px;
+}
+</code></pre>
+<p>Then make the navigation links fully clickable, with a small hover effect:</p>
+<pre><code>#sidebar a {
+    display: block;
+    padding: 30px;
+    text-decoration: none;
+}
+#sidebar .sidebar-menu a {
+    padding: 10px 30px;
+}
+#sidebar a:hover {
+    background-color: hotpink;
+}
+
+</code></pre>
+<p>Well, it's not a bad start:</p>
+<p><img src="/public/2020/clic1-d.png" alt=""></p>
+<p>That's exactly what I'd look for, plus I did it! Well, to tell the truth, I wish I could hide the &quot;sidebar&quot;...</p>
+<div class="encart">
+<p>Version en français : <a href="/2020/05/19/creer-template-sidebar-contenu/" hreflang="fr-FR">Créer un template simple avec sidebar + contenu</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2020/05/19/creer-template-sidebar-contenu/" hreflang="fr-FR">Créer un template simple avec sidebar + contenu</a>
+  <a rel="next" href="/2020/05/27/masquer-afficher-menu-lateral/" hreflang="fr-FR">Masquer ou afficher le menu latéral</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

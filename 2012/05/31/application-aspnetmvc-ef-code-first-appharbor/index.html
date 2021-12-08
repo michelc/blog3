@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Application ASP.NET MVC avec EF Code First sur AppHarbor - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/05/31/application-aspnetmvc-ef-code-first-appharbor/" />
+<meta property="og:title" content="Application ASP.NET MVC avec EF Code First sur AppHarbor" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/05/31/application-aspnetmvc-ef-code-first-appharbor/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-05-31T21:24:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-05-31T21:24:00.000Z","datePublished":"2012-05-31T21:24:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/05/31/application-aspnetmvc-ef-code-first-appharbor/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/05/31/application-aspnetmvc-ef-code-first-appharbor/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/05/31/application-aspnetmvc-ef-code-first-appharbor/">Application ASP.NET MVC avec EF Code First sur AppHarbor</a>
+    </h1>
+    <p>
+      <span>2012-05-31</span>
+      <span>#ef</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je viens de déployer ma première application ASP.NET MVC + Entity Framework
+Code First sur AppHarbor et je note vite tout ce que j'ai fait pour m'y
+retrouver plus tard.</p>
+<p>Inspiré par le tutoriel <a href="http://blog.appharbor.com/2012/04/24/automatic-migrations-with-entity-framework-4-3">Automatic migrations with Entity Framework 4.3</a> j'ai commencé
+par créer une application qui puisse fonctionner sur AppHarbor.</p>
+<p>Je suis parti de cet exemple pour trois raisons :</p>
+<ul>
+<li>je n'ai pas trouvé d'exemple prêt à l'emploi d'une application ASP.NET MVC</li>
+</ul>
+<ul>
+<li>Code First dans les GitHubs de <a href="https://github.com/appharbor">AppHarbor</a> ou de <a href="https://github.com/friism">Michael Friis</a>. Il y a des exemples pour <a href="https://github.com/appharbor/PostgreSQL-Sample-MVC-Application">PostgreSQL</a> ou <a href="https://github.com/appharbor/MySQL-MVC-Application">MySql</a>
+(mais c'est du NHibernate) ou pour <a href="https://github.com/friism/AppHarbor-Entity-Framework-Example">Entity Framework</a>, mais c'est du &quot;non Code First&quot;.</li>
+</ul>
+<ul>
+<li>
+<p>ca me donne l'occasion de faire d'une pierre deux coups et d'essayer la
+migration automatique de Entity Framework</p>
+</li>
+<li>
+<p>et pour finir, c'est un exemple qui utilise SQL Server Compact en local (ce
+que j'ai tendance à faire) et Sql Server en production en expliquant comment
+configurer la transformation dans le fichier Web.Release.config.</p>
+</li>
+</ul>
+<h2>Etape 1 : Créer un nouveau projet sous Visual Studio 2010</h2>
+<h3>Nouveau projet...</h3>
+<p><img src="/public/2012/ah1-01-nouveau-projet.jpg" alt=""></p>
+<p>&quot;HarborFirstTest&quot; pour AppHarbor Code First Test</p>
+<p><img src="/public/2012/ah1-02-nouveau-mvc3.jpg" alt=""></p>
+<p>Et voila :</p>
+<p><img src="/public/2012/ah1-03-explorateur-solution.jpg" alt=""></p>
+<h3>Mise à jour des références</h3>
+<p>Clic-droit sur le projet, Gérer les packages NuGet... pour faire une mise à
+jour</p>
+<p><img src="/public/2012/ah1-04-maj-nuget.jpg" alt=""></p>
+<h3>Nettoyage du projet</h3>
+<p>Supprimer :</p>
+<ul>
+<li>/Scripts/Microsoft*.*</li>
+<li>/README.jQuery.vsdoc.txt</li>
+<li>/Controllers/AccountController.cs</li>
+<li>/Models/AccountModels.cs</li>
+<li>/Views/Account</li>
+<li>/Views/Shared/_LogOnPartial.cshtml</li>
+</ul>
+<p>Mise à jour de /Views/Shared/_Layout.cshtml pour refléter tout ça :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;@ViewBag.Title&lt;/title&gt;
+    &lt;link href=&quot;@Url.Content(&quot;~/Content/Site.css&quot;)&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+    &lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery-1.7.2.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;@Url.Content(&quot;~/Scripts/modernizr-2.5.3.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;page&quot;&gt;
+        &lt;header&gt;
+            &lt;div id=&quot;title&quot;&gt;
+                &lt;h1&gt;My MVC Application&lt;/h1&gt;
+            &lt;/div&gt;
+            &lt;div id=&quot;logindisplay&quot;&gt;
+                &amp;nbsp;
+            &lt;/div&gt;
+            &lt;nav&gt;
+                &lt;ul id=&quot;menu&quot;&gt;
+                    &lt;li&gt;@Html.ActionLink(&quot;Home&quot;, &quot;Index&quot;, &quot;Home&quot;)&lt;/li&gt;
+                    &lt;li&gt;@Html.ActionLink(&quot;About&quot;, &quot;About&quot;, &quot;Home&quot;)&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+        &lt;section id=&quot;main&quot;&gt;
+            @RenderBody()
+        &lt;/section&gt;
+        &lt;footer&gt;
+        &lt;/footer&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3>Tests</h3>
+<p>Générer / Regénérer la solution, ça compile. Déboguer / Démarrer le
+débogage, ça marche.</p>
+<h2>Etape 2 : Ecriture du code</h2>
+<p>Par rapport au tutoriel je ne fais pas un projet &quot;Core&quot; et un projet &quot;Web&quot;,
+mais je met tout dans un seul projet (ce qui a l'avantage de passer avec Visual
+Studio Express).</p>
+<h3>/Models/Entity.cs</h3>
+<pre><code>namespace HarborFirstTest.Models
+{
+    public abstract class Entity
+    {
+        public int Id { get; set; }
+    }
+}
+</code></pre>
+<h3>/Models/User.cs</h3>
+<pre><code>namespace HarborFirstTest.Models
+{
+    public class User : Entity
+    {
+        public string Name { get; set; }
+    }
+}
+</code></pre>
+<h3>/Persistence/HftContext.cs</h3>
+<pre><code>using System.Data.Entity;
+using HarborFirstTest.Models;
+
+namespace HarborFirstTest.Persistence
+{
+    public class HftContext : DbContext
+    {
+        public DbSet&lt;User&gt; Users { get; set; }
+    }
+}
+</code></pre>
+<p>Le &quot;Hft&quot; de HftContext est pour Harbor First Test</p>
+<h3>/Controllers/HomeController.cs</h3>
+<pre><code>using System.Web.Mvc;
+using HarborFirstTest.Models;
+using HarborFirstTest.Persistence;
+
+namespace HarborFirstTest.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly HftContext _context = new HftContext();
+
+        public ActionResult Index()
+        {
+            return View(_context.Users);
+        }
+
+        public ActionResult Create(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return RedirectToAction(&quot;Index&quot;);
+        }
+
+        public ActionResult About()
+        {
+            return View();
+        }
+    }
+}
+</code></pre>
+<h3>/Views/Home/Index.cshtml</h3>
+<pre><code>@model IEnumerable&lt;HarborFirstTest.Models.User&gt;
+
+&lt;h2&gt;Index&lt;/h2&gt;
+
+&lt;ul&gt;
+    @foreach (var user in Model)
+    {
+        &lt;li&gt;@user.Name&lt;/li&gt;
+    }
+&lt;/ul&gt;
+
+@using (Html.BeginForm(&quot;Create&quot;, &quot;Home&quot;, FormMethod.Post))
+{
+    &lt;input type=&quot;text&quot; name=&quot;Name&quot; /&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;
+}
+</code></pre>
+<h3>/Web.config</h3>
+<p>Mise à jour de la section &lt;connectionStrings&gt; pour :</p>
+<ul>
+<li>supprimer la clé <code>ApplicationServices</code> qui définissait la
+connexion liée à la gestion des comptes utilisateurs (puisque tout Account  - a
+été supprimé)</li>
+<li>ajouter la clé <code>HftContext</code> pour définir la connexion à la base
+de données SQL Server CE de mon application</li>
+</ul>
+<pre><code>  &lt;connectionStrings&gt;
+    &lt;add name=&quot;HftContext&quot;
+         connectionString=&quot;Data Source=|DataDirectory|hft_data.sdf&quot;
+         providerName=&quot;System.Data.SqlServerCe.4.0&quot; /&gt;
+  &lt;/connectionStrings&gt;
+</code></pre>
+<h3>Tests</h3>
+<p>Générer / Regénérer la solution, ça compile. Déboguer / Démarrer le
+débogage, ça marche. Créer quelques utilisateurs, ça passe !</p>
+<p><img src="/public/2012/ah1-05-premier-essai.jpg" alt=""></p>
+<p>Et pour être sûr que les tests unitaires ne poseront pas problème lors du
+déploiement vers AppHarbor, mise à jour de HomeControllerTest.cs :</p>
+<pre><code>using System.Web.Mvc;
+using HarborFirstTest.Controllers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace HarborFirstTest.Tests.Controllers
+{
+    [TestClass]
+    public class HomeControllerTest
+    {
+        [TestMethod]
+        public void About()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ViewResult result = controller.About() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+    }
+}
+</code></pre>
+<h2>Etape 3 : Modifier le modèle de données</h2>
+<h3>/Models/User.cs</h3>
+<pre><code>namespace HarborFirstTest.Models
+{
+    public class User : Entity
+    {
+        public string Name { get; set; }
+        public string EmailAddress { get; set; }
+    }
+}
+</code></pre>
+<h3>/Views/Home/Index.cshtml</h3>
+<pre><code>@model IEnumerable&lt;HarborFirstTest.Models.User&gt;
+
+&lt;h2&gt;Index&lt;/h2&gt;
+
+&lt;ul&gt;
+    @foreach (var user in Model)
+    {
+        &lt;li&gt;@user.Name (@user.EmailAddress)&lt;/li&gt;
+    }
+&lt;/ul&gt;
+
+@using (Html.BeginForm(&quot;Create&quot;, &quot;Home&quot;, FormMethod.Post))
+{
+    &lt;input type=&quot;text&quot; name=&quot;Name&quot; /&gt;
+    &lt;input type=&quot;text&quot; name=&quot;EmailAddress&quot; /&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;
+}
+</code></pre>
+<h3>Tests</h3>
+<p>Générer / Regénérer la solution, ça compile. Déboguer / Démarrer le
+débogage, ça plante.</p>
+<p><img src="/public/2012/ah1-06-migrer-ou-ne-pas-migreri.jpg" alt=""></p>
+<blockquote>
+<p>The model backing the 'HftContext' context has changed since the database
+was created. Consider using Code First Migrations to update the database
+(<a href="http://go.microsoft.com/fwlink/?LinkId=238269">http://go.microsoft.com/fwlink/?LinkId=238269</a>).</p>
+</blockquote>
+<p>C'était prévu !</p>
+<h3>/Persistence/Configuration.cs</h3>
+<p>Puisqu'on a modifié le modèle de données, on va devoir configurer le système
+de migration de Entity Framework (de la façon la plus basique qui soit pour
+l'instant).</p>
+<pre><code>using System.Data.Entity.Migrations;
+
+namespace HarborFirstTest.Persistence
+{
+    public class Configuration : DbMigrationsConfiguration&lt;HftContext&gt;
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+        }
+    }
+}
+</code></pre>
+<h3>/Persistence/HftContext.cs</h3>
+<p>Et on présente cette configuration à notre <code>DbContext</code>.</p>
+<pre><code>using System.Data.Entity;
+using HarborFirstTest.Models;
+
+namespace HarborFirstTest.Persistence
+{
+    public class HftContext : DbContext
+    {
+        public DbSet&lt;User&gt; Users { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion&lt;HftContext, Configuration&gt;());
+        }
+    }
+}
+</code></pre>
+<h3>Tests</h3>
+<p>Générer / Regénérer la solution, ça compile. Déboguer / Démarrer le
+débogage, ça marche. Créer d'autres utilisateurs, ça repasse !</p>
+<p><img src="/public/2012/ah1-07-apres-migration.jpg" alt=""></p>
+<h2>Etape 4 : Déployer vers AppHarbor</h2>
+<p>Enfin ! Pour cette dernière étape, je me suis aussi inspiré des billets
+<a href="http://blog.appharbor.com/2012/05/25/deploy-to-appharbor-using-github-for-windows">Deploy to AppHarbor using GitHub for Windows</a>, <a href="http://blog.appharbor.com/2011/10/13/announcing-github-support">Announcing GitHub support</a> et <a href="http://blog.appharbor.com/2012/02/06/use-nuget-package-restore-to-avoid-pushing-packages-to-appharbor">Use NuGet Package Restore to avoid pushing packages to
+AppHarbor</a> qu'il est donc impératif de lire dans leur intégralité.</p>
+<h3>Créer l'application dans AppHarbor</h3>
+<p><img src="/public/2012/ah1-08-creer-apphabor.jpg" alt=""></p>
+<h3>Installer et configurer l'add-on SQL Server &quot;Yocto&quot;</h3>
+<p><img src="/public/2012/ah1-09-addon-yocto.jpg" alt=""></p>
+<p><img src="/public/2012/ah1-10-configurer-yocto.jpg" alt=""></p>
+<p><img src="/public/2012/ah1-11-goto-yocto.jpg" alt=""></p>
+<p><img src="/public/2012/ah1-12-alias-yocto.jpg" alt=""></p>
+<p><img src="/public/2012/ah1-13-edit-alias.jpg" alt=""></p>
+<p>Tout le monde a suivi ?</p>
+<h3>Passer l'application sous Git</h3>
+<p>Lancer GitHib for Windows, chercher &quot;+ add&quot; et cliquer dessus pour &quot;create a
+new repository&quot;.</p>
+<p><img src="/public/2012/ah1-14-creer-git.jpg" alt=""></p>
+<p>Perso, je modifie le fichier .gitignore généré en :</p>
+<pre><code>*resharper.user
+[Aa]pp_[Dd]ata/
+[Dd]ebug/
+[Rr]elease/
+build/
+[Bb]in/
+[Oo]bj/
+[Tt]est[Rr]esults/
+*.suo
+*.cache
+_ReSharper.*/
+*.user
+deploy
+deploy/*
+packages/
+</code></pre>
+<h3>Relier AppHarbor et GitHub</h3>
+<p>Aller sur AppHarbor, chercher &quot;Build Url&quot; et cliquer dessus</p>
+<p><img src="/public/2012/ah1-15-infos-github.jpg" alt=""></p>
+<p>Et coller le presse-papier dans Notepad</p>
+<p><img src="/public/2012/ah1-16-notepad.jpg" alt=""></p>
+<p>Aller sur GitHub, sur le repository créé à l'instant par GitHub for Windows,
+soit michelc/HarborFirstTest dans mon cas, puis</p>
+<ul>
+<li>chercher &quot;Admin&quot; et cliquer dessus</li>
+<li>chercher &quot;Service Hooks&quot; et cliquer dessus</li>
+<li>chercher &quot;AppHarbor&quot; et cliquer dessus</li>
+</ul>
+<p>Faire du copier / coller depuis Notepad pour renseigner du mieux
+possible</p>
+<p><img src="/public/2012/ah1-17-appharbor-hook.jpg" alt=""></p>
+<p>C'est presque fini !</p>
+<h3>NuGet Package Restore</h3>
+<p>Depuis NuGet 1.6, il n'est plus obligatoire d'inclure les packages dans le
+repository (cf <a href="http://docs.nuget.org/docs/workflows/using-nuget-without-committing-packages">Using NuGet without committing packages to source
+control</a>).</p>
+<p>C'est pas compliqué, yaka cliquer droit sur la solution et sélectionner
+&quot;Activer la restauration du package NuGet&quot; et répondre &quot;Oui&quot; à la question
+posée.</p>
+<p>Penser à vérifier que .gitignore exclue le répertoire &quot;packages&quot; du
+repository (ma version le fait).</p>
+<h3>J'ai failli oublier</h3>
+<p>Pour que l'application déployée sur AppHarbor utilise l'add-on SQL SErver
+Yocto qu'on avait sélectionné plus haut, il faut modifier notre chaîne de
+connexion dans le Web.config.</p>
+<p>En local, on a :</p>
+<pre><code>  &lt;connectionStrings&gt;
+    &lt;add name=&quot;HftContext&quot;
+         connectionString=&quot;Data Source=|DataDirectory|hft_data.sdf&quot;
+         providerName=&quot;System.Data.SqlServerCe.4.0&quot; /&gt;
+  &lt;/connectionStrings&gt;
+</code></pre>
+<p>En production sur AppHarbor, il faudra qu'on ait quelque chose du
+genre :</p>
+<pre><code>  &lt;connectionStrings&gt;
+    &lt;add name=&quot;HftContext&quot;
+         connectionString=&quot;Server=sssssssssssss.sqlserver.sequelizer.com;Database=ddddddddddddd;User ID=uuuuuuuuuuuuu;Password=ppppppppppppp;&quot;
+         providerName=&quot;System.Data.SqlClient&quot; /&gt;
+  &lt;/connectionStrings&gt;
+</code></pre>
+<p>Et c'est là que Web.Release.config fait sa transformation :</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;configuration xmlns:xdt=&quot;http://schemas.microsoft.com/XML-Document-Transform&quot;&gt;
+  &lt;connectionStrings&gt;
+    &lt;add xdt:Locator=&quot;Condition([@name='HftContext'])&quot; providerName=&quot;System.Data.SqlClient&quot;
+        xdt:Transform=&quot;SetAttributes&quot; /&gt;
+  &lt;/connectionStrings&gt;
+  &lt;system.web&gt;
+    &lt;compilation xdt:Transform=&quot;RemoveAttributes(debug)&quot; /&gt;
+  &lt;/system.web&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>En fait, il gueule un peu parce que &quot;L'attribut requis de 'connectionString'
+est manquant&quot; et que &quot;L'attribut requis de 'name' est manquant&quot;, mais faut pas
+l'écouter.</p>
+<p>Pour information, le Web.Release.config se charge de remplacer le
+<code>providerName</code> de &quot;System.Data.SqlServerCe.4.0&quot; en
+&quot;System.Data.SqlClient&quot;.</p>
+<p>Puis après c'est la magie de AppHarbor qui remplace la
+<code>connectionString</code> de &quot;Data Source=|DataDirectory|hft_data.sdf&quot; en
+ce qui va bien.</p>
+<h3>Initial Commit</h3>
+<p>Allez, on revient dans GitHub for Windows pour faire le premier commit du
+projet</p>
+<p><img src="/public/2012/ah1-18-premier-commit.jpg" alt=""></p>
+<h3>Publish, Build &amp; Deploy</h3>
+<p>On reste dans GitHub for Windows pour cliquer sur &quot;publish&quot; en haut de
+l'écran et envoyer notre application vers GitHub et de là vers AppHarbor :)</p>
+<ul>
+<li>Sur GitHub le repository est mis à jour</li>
+<li>Sur AppHarbor, l'application est reçue, buildée puis déployée</li>
+</ul>
+<p>Yapluska lancer et ça plante à cause d'une faute de frappe dans
+Web.Release.config !</p>
+<p>Je commite la correction, fait un &quot;sync&quot; (y'a plus le &quot;publish&quot;) et je peux
+enfin goto mon application : <a href="http://harborfirsttest.apphb.com/">http://harborfirsttest.apphb.com/</a>.</p>
+<p><img src="/public/2012/ah1-19-finito.jpg" alt=""></p>
+<p>J'ai bien fait de tout noter à chaud, parce que s'il faut que je
+ré-explique, ou pire que je re-fasse, je sais pas si j'y arriverais sans ça.
+Quoiqu'il en soit, le source complet de ce premier essai est disponible sur
+GitHub : <a href="https://github.com/michelc/HarborFirstTest">https://github.com/michelc/HarborFirstTest</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/04/05/former-jquery-30-jours/" hreflang="fr-FR">Se former à jQuery en 30 jours</a>
+  <a rel="next" href="/2012/06/14/abondance-bien-nuit-pas/" hreflang="fr-FR">Abondance de bien ne nuit pas</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gérer les virgules avec les Data Annotations - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/04/08/gerer-virgules-data-annotations/" />
+<meta property="og:title" content="Gérer les virgules avec les Data Annotations" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/04/08/gerer-virgules-data-annotations/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-04-08T11:43:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-04-08T11:43:00.000Z","datePublished":"2011-04-08T11:43:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/04/08/gerer-virgules-data-annotations/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/04/08/gerer-virgules-data-annotations/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/04/08/gerer-virgules-data-annotations/">Gérer les virgules avec les Data Annotations</a>
+    </h1>
+    <p>
+      <span>2011-04-08</span>
+      <span>#jquery</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Après avoir &quot;réparé&quot; mon <a href="/2011/03/30/vs-2010-sql-server-2008-express-windows-7-64-bits/">Visual Studio 2010</a>, j'ai pu me remettre à la version 2 du
+tutoriel <a href="http://mvcmusicstore.codeplex.com/">MVC Music
+Store</a> pour me confronter aux dernières (pour moi) technologies ASP.NET MVC
+3 et entre autre Razor et les Data Annotations.</p>
+<p>Et justement, j'ai été un peu embarrassé par le fonctionnement de la
+<a href="http://www.asp.net/mvc/tutorials/mvc-music-store-part-6">validation via les Data Annotations</a> dès lors qu'on n'est pas des
+yankees pure souche.</p>
+<p>Par exemple, si je veux passer le prix d'un album de 8,99 à 8,90 j'obtiens
+l'erreur &quot;The field Prix must be a number.&quot; de la part du <a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">plugin jQuery Validation</a>.</p>
+<p>Et si j'essaie de contourner en saisissant 8.90 (avec un point au lieu de la
+virgule), c'est l'erreur &quot;The value '8.90' is not valid for Prix.&quot; qui prend le
+relai. Mais dans ce cas, cette erreur n'est pas renvoyée par jQuery Validation
+mais par la méthode TryUpdateModel() dans le contrôleur : mon PC étant en
+français, le .NET exige une virgule comme séparateur décimal.</p>
+<p>Zut ! Déjà les messages en anglais c'est pas tip-top. Mais que ça
+m'affiche des valeurs numériques avec des virgules et que ça me gueule dessus
+quand j'essaie de saisir c'est un peu pénible quand même.</p>
+<p>Jusqu'à présent, plutôt que de chercher à gérer le problème virgule, je me
+contentais de bidouiller la section <code>globalization</code> dans le fichier web.config
+pour que ASP.NET prenne lui aussi le &quot;.&quot; comme séparateur décimal :</p>
+<pre><code>&lt;configuration&gt;
+   &lt;system.web&gt;
+      &lt;globalization culture=&quot;en-US&quot; /&gt;
+   &lt;/system.web&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>Mais cette fois-ci, je me suis dit que j'allai creuser un peu plus sinon ça
+enlève pas mal d'intérêt aux Data Annotations.</p>
+<h2>Localiser les messages du plugin jQuery Validation</h2>
+<p>Déjà, quand on fait des recherches sur la localisation de jQuery Validation,
+on se rend compte que c'est un problème général qui semble avoir été un peu
+laissé de côté...</p>
+<p>Par contre, si on regarde dans le repository du plugin, il existe un
+répertoire localization qui contient un fichier <a href="https://github.com/jzaefferer/jquery-validation/blob/master/localization/messages_fr.js">messages_fr.js</a> avec les messages d'erreur en français.</p>
+<p>Super ! Mais ça ne sert pas à grand chose parce que les messages
+d'erreurs sont déjà initialisés directement par ASP.NET MVC :(</p>
+<pre><code>&lt;input data-val=&quot;true&quot;
+       data-val-number=&quot;The field Prix must be a number.&quot;
+       data-val-range=&quot;Le champ Prix doit &amp;amp;#234;tre compris entre 0,01 et 100.&quot;
+       data-val-range-max=&quot;100&quot;
+       data-val-range-min=&quot;0.01&quot;
+       data-val-required=&quot;Le champ Prix est requis.&quot;
+       id=&quot;Price&quot; name=&quot;Price&quot; type=&quot;text&quot; value=&quot;8,99&quot; /&gt;
+</code></pre>
+<p>C'est malin ça de définir les messages d'erreur alors que le plugin jQuery
+Validation les initialise déjà de son côté. Et c'est encore plus rigolo d'en
+mettre certains en français et d'autres en anglais :)</p>
+<h2>Localiser &quot;The field Xxxxx must be a number.&quot;</h2>
+<p>Première méthode pour traduire ce message : supprimer l'attribut
+&quot;data-val-number&quot; de toutes les zones de saisie et inclure le fichier
+messages_fr.js (attention, l'ordre des scripts est important) :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    $(document).ready(function () {
+        $(&quot;:input[data-val-number]&quot;).attr(&quot;data-val-number&quot;, &quot;&quot;);
+    });
+&lt;/script&gt;
+
+&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery.validate.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery.validate.unobtrusive.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+    /* ----- messages_fr.js ----- */
+    /*
+    * Translated default messages for the jQuery validation plugin.
+    * Locale: FR
+    */
+    jQuery.extend(jQuery.validator.messages, {
+        required: &quot;Ce champ est requis.&quot;,
+        remote: &quot;Veuillez remplir ce champ pour continuer.&quot;,
+        email: &quot;Veuillez entrer une adresse email valide.&quot;,
+        url: &quot;Veuillez entrer une URL valide.&quot;,
+        date: &quot;Veuillez entrer une date valide.&quot;,
+        dateISO: &quot;Veuillez entrer une date valide (ISO).&quot;,
+        number: &quot;Veuillez entrer un nombre valide.&quot;,
+...
+</code></pre>
+<p>Après ça, la saisie d'une valeur incorrecte dans la zone prix n'affiche plus
+l'erreur &quot;The field Prix must be a number.&quot; mais &quot;Veuillez entrer un nombre
+valide.&quot;.</p>
+<p>Deuxième méthode : si on veut continuer à indiquer le nom du champ qui
+pose problème dans le message d'erreur, il faut sortir l'artillerie lourde et
+utiliser les expressions régulières (l'ordre des scripts est toujours
+important) :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    $(document).ready(function () {
+        var reg_us = /The field (.+) must be a number\./gi;
+        var msg_fr = &quot;Le champ $1 doit être un nombre.&quot;;
+        $(&quot;:input[data-val-number]&quot;).each(function () {
+            var message = $(this).attr(&quot;data-val-number&quot;);
+            message = message.replace(reg_us, msg_fr);
+            $(this).attr(&quot;data-val-number&quot;, message);
+        });
+    });
+&lt;/script&gt;
+
+&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery.validate.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery.validate.unobtrusive.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+    /* ----- messages_fr.js ----- */
+    /*
+    * Translated default messages for the jQuery validation plugin.
+    * Locale: FR
+    */
+    jQuery.extend(jQuery.validator.messages, {
+        required: &quot;Ce champ est requis.&quot;,
+...
+</code></pre>
+<p>Dans ce cas, la saisie d'une valeur incorrecte dans le prix affiche le
+message &quot;Le champ Prix doit être un nombre.&quot;.</p>
+<h2>Faire accepter les nombres à virgule à jQuery Validation</h2>
+<p>C'est bien beau de parler à l'utilisateur en français, mais c'est quand même
+plus important de lui permettre de pouvoir saisir le prix qu'il veut sans avoir
+à abandonner les valeurs décimales.</p>
+<p>Et là, le plugin jQuery Validation a tout prévu puisque le répertoire
+localisation contient également des fichiers methods_de.js, methods_nl.js et
+methods_pt.js. Mais malheureusement pour moi, pas de methods_fr.js en vue
+:(</p>
+<p>En y regardant de plus près, le fichier <a href="https://github.com/jzaefferer/jquery-validation/blob/master/localization/methods_de.js">methods_de.js</a> devrait faire l'affaire. Ce qui se confirme sur
+le forum <a href="http://www.developpez.net/forums/d1049394/dotnet/developpement-web/asp-net-mvc/asp-net-mvc-3-probleme-decimal-jquery/#post5832403">developpez.com</a>.</p>
+<p>Ni une, ni deux, il suffit de compléter les scripts de la façon suivante
+(l'ordre des scripts est important) :</p>
+<pre><code>&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery.validate.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;@Url.Content(&quot;~/Scripts/jquery.validate.unobtrusive.min.js&quot;)&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+jQuery.extend(jQuery.validator.methods, {
+    date: function(value, element) {
+        return this.optional(element) || /^\d\d?\.\d\d?\.\d\d\d?\d?$/.test(value);
+    },
+    number: function(value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
+    }
+});
+&lt;/script&gt;
+</code></pre>
+<p>Et maintenant si je change mon prix en 8,90, je n'ai plus le message &quot;Le
+champ Prix doit être un nombre.&quot;. Non. Maintenant ça me dit que &quot;Le champ Prix
+doit être compris entre 0,01 et 100.&quot;.</p>
+<p>C'est des coriaces !</p>
+<h2>Gérer les virgules dans jQuery Validation</h2>
+<p>Si c'est ça, je regarde dans le source de <a href="https://github.com/jzaefferer/jquery-validation/blob/master/jquery.validate.js">jquery.validate.js</a>. Ah ben bien sûr, y'a un problème avec le
+&quot;range&quot; :</p>
+<pre><code>range: function( value, element, param ) {
+    return this.optional(element) || ( value &gt;= param[0] &amp;&amp; value &lt;= param[1] );
+},
+</code></pre>
+<p>Il compare <code>value</code> (le 8,90 que j'ai saisi) avec
+<code>param[0]</code> (la valeur minimum de 0.01) et <code>param[1]</code> (la
+valeur maximum de 100). Personne lui a jamais dit qu'on ne peut pas comparer
+les points et les virgules ?</p>
+<p>Et le pire, c'est qu'il fait pareil avec les fonctions &quot;min&quot; et max&quot; le
+bougre ! Ça va pas se passer comme ça :</p>
+<pre><code>/* ----- methods_fr.js ----- */
+/*
+* Localized default methods for the jQuery validation plugin.
+* Locale: FR
+*/
+jQuery.extend(jQuery.validator.methods, {
+    min: function (value, element, param) {
+        return this.optional(element) || replaceComma(value) &gt;= replaceComma(param);
+    },
+    max: function (value, element, param) {
+        return this.optional(element) || replaceComma(value) &lt;= replaceComma(param);
+    },
+    range: function (value, element, param) {
+        value = replaceComma(value);
+        return this.optional(element) || (value &gt;= replaceComma(param[0]) &amp;&amp; value &lt;= replaceComma(param[1]));
+    },
+    date: function (value, element) {
+        return this.optional(element) || /^\d\d?\.\d\d?\.\d\d\d?\d?$/.test(value);
+    },
+    number: function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
+    }
+});
+
+function replaceComma(value) {
+    // Quick &amp; Dirty replace &quot;,&quot; by &quot;.&quot; as decimal separators
+    return value.replace(&quot;,&quot;, &quot;.&quot;);
+}
+</code></pre>
+<p>Et après ça, 8,90 passe enfin alors que 100,01 est bien refusé !</p>
+<p>Ouf ! Ça devrait faire l'affaire jusqu'à la sortie de <a href="https://github.com/jzaefferer/jquery-validation/issues#issue/55">jQuery Validation 2.0</a>.</p>
+<p>Mise à jour : si j'avais cherché mieux, j'aurais pu
+trouver le billet <a href="http://blogs.msdn.com/b/rickandy/archive/2011/02/17/using-mvc-3-with-non-english-locales.aspx">Using MVC 3 with non-English Locales</a> de Rick Anderson, le
+co-auteur du tutoriel <a href="http://www.asp.net/mvc/tutorials/getting-started-with-mvc3-part1-cs">Getting Started With MVC3</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/03/30/vs-2010-sql-server-2008-express-windows-7-64-bits/" hreflang="fr-FR">VS 2010, SQL Server 2008 Express et Windows 7 64 bits</a>
+  <a rel="next" href="/2011/04/27/jouer-feu/" hreflang="fr-FR">Jouer avec le feu</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

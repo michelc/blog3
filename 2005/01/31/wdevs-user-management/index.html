@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) User management - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/01/31/wdevs-user-management/" />
+<meta property="og:title" content="(Wdevs) User management" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/01/31/wdevs-user-management/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-01-31T11:43:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-01-31T11:43:00.000Z","datePublished":"2005-01-31T11:43:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2005/01/31/wdevs-user-management/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/01/31/wdevs-user-management/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/01/31/wdevs-user-management/">(Wdevs) User management</a>
+    </h1>
+    <p>
+      <span>2005-01-31</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>After inserting some new fields to my users table, I almost accomplish all
+my primary requirements concerning functionalities for user management.</p>
+<p>Firstly, my Admin toolbox has a Roles box where administrators can list
+roles and manage them. As my roles table is extremely basic, this box is rather
+straightforward to use.</p>
+<p>The Admin toolbox also includes a Users box. Administrators can place this
+box on a screen in order to display registered users. In addition, this box
+gives access to users' management where authorized users can create new user,
+change account information and assign them to roles.</p>
+<p>My Users box is an enhanced version of the IBuySpy one. First, it can
+generate random user id and password when administrator let one of them empty.
+Second, it allows filtering of users according to selected roles. This way, an
+administrator can easily visualize users and roles association. In addition,
+this box contains a DropDownList control filled by users that quickly assigns a
+user to selected roles. Third, another DropDownList operates as a filter for
+users according to their last login date. This discriminates users that did not
+access since more than 3 or 6 months and gives a method to remove them in one
+click.</p>
+<p>For final user, I have a Login box, where each registered user can give his
+user id and his password when he needs to access to protected screens. This
+Login box also provides a reminder password box. Here one can give his email
+address and whether he is a registered user, he will receive an email with a
+new random generated password. As passwords are stored as a MD5 non-reversible
+encrypted string, I cannot send original password.</p>
+<p>When authenticated users would like to change their password, I build a
+Password box with the standard three fields (old password, new password and
+confirm password) and a &quot;Save&quot; button to apply their new password.</p>
+<p>There is an auto-registration box where one can give his email address and
+his name. If his email domain belongs to an authorized domain, a new account
+will be created with default roles and the new user will receive an email with
+his account information. This kind of registration will be useful for
+intranets.</p>
+<p>Later, I will complete my LDAP integration tests. In a first time, my
+intention is to check authentication according to my users table and then
+control it against a LDAP server.</p>
+<ul>
+<li>Authentication is ok with database and ko with LDAP =&gt; it's a
+&quot;local/private/temp/multipurpose...&quot; user account,</li>
+<li>Authentication is ko with database and ok with LDAP =&gt; create a new
+account in users table according to LDAP data and with default roles,</li>
+<li>Authentication is ok with database and ok with LDAP =&gt; update account
+according to LDAP data.</li>
+</ul>
+<p>Of course, when a user will exist in LDAP, I will not store his password in
+database. Therefore, an empty password will denote a LDAP user. Presently, I
+will associate users to roles in database. Utilization of LDAP groups to
+generate roles will come in a far far away time.</p>
+<p>But now, I have to revise my SQL scripts and to update my monoforge
+demonstration. Next, I need to make some tests before updating the Access
+version.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/01/17/wdevs-toad-mysql/" hreflang="en-US">(Wdevs) TOAD for MySQL</a>
+  <a rel="next" href="/2005/03/08/wdevs-next-time-on-blog/" hreflang="en-US">(Wdevs) Next time on this blog</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

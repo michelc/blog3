@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire - Animation CSS en fin de partie - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/07/04/solitaire-animation-css/" />
+<meta property="og:title" content="Solitaire - Animation CSS en fin de partie" />
+<meta name="description" content="Comment utiliser @keyframes, transform, translate et rotate pour créer une première animation CSS en cas de victoire à Solitaire-Play." />
+<meta property="og:description" content="Comment utiliser @keyframes, transform, translate et rotate pour créer une première animation CSS en cas de victoire à Solitaire-Play." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/07/04/solitaire-animation-css/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/fireworks.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-07-04T10:28:18.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-07-04T10:28:18.000Z","datePublished":"2019-07-04T10:28:18.000Z","description":"Comment utiliser @keyframes, transform, translate et rotate pour créer une première animation CSS en cas de victoire à Solitaire-Play.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/07/04/solitaire-animation-css/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/fireworks.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/07/04/solitaire-animation-css/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/fireworks.jpg" alt="New year's eve fireworks in the sky - Roven Images" /><figcaption><a href="https://unsplash.com/photos/HxeBUWUiA1A">New year's eve fireworks in the sky - Roven Images</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/07/04/solitaire-animation-css/">Solitaire - Animation CSS en fin de partie</a>
+    </h1>
+    <p>
+      <span>2019-07-04</span>
+      <span>#CSS</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'ai finalement réussi à gérer l'animation pour le déplacement des cartes pour
+que l'AutoPlay de <a href="https://www.solitaire-play.com/freecell/">FreeCell</a> fonctionne
+<a href="/2019/04/08/solitaire-ajouter-animations-css/">comme je le souhaitais</a>.</p>
+<p>C'est un peu compliqué de documenter ça =&gt; je vais déjà faire un billet pour
+revenir sur la première animation de
+<a href="https://www.solitaire-play.com/">Solitaire-Play</a>.</p>
+<p>Normalement, je préfère que mes applications soient assez basiques et sobres,
+sans trop de fioritures. C'est pourquoi tout ce qui est animation me parait
+généralement superflu. Même si de temps en temps j'utilise des
+<code>$(...).fadeOut()</code> de jQuery pour masquer des éléments. Mais souvent ça me
+plait au début puis je m'en lasse assez vite. J'ai l'impression que c'est une
+perte de temps de devoir attendre avant que l'élément veuille bien disparaitre.</p>
+<p>Néanmoins, comme j'envisageait d'animer le déplacement des cartes pour que les
+joueurs visualisent mieux ce qui se passe en cas d'AutoPlay, il fallait bien me
+mettre aux animations et autres transitions à un moment donné.</p>
+<p>Pour commencer simplement, j'avais ajouté un petit effet &quot;shake / tilt&quot; au
+moment d'afficher la popup qui signale la fin d'une partie :</p>
+<ul>
+<li>ça réveille (ie ça met littéralement de l'animation)</li>
+<li>c'est plus festif</li>
+</ul>
+<p>Mais c'était surtout un bon premier pas pour voir ce qui est faisable en matière
+d'animation de pas web, avec uniquement du CSS. À l'époque, j'imaginais très bien
+dans ma tête ce que je voulais obtenir et je présumais que cela devait être
+réalisable en CSS pur.</p>
+<p>Je ne m'étais pas trompé et il était très facile de faire ça avec uniquement du
+CSS, sans un brin de JavaScript. Par contre, j'ai eu un peu de mal à trouver un
+exemple d'animation qui fasse un truc ressemblant à ce que je souhaitais.
+Finalement, j'ai fini par trouver quelque chose d'assez fidèle à ce que j'avais
+en tête sur le site de
+<a href="https://www.w3schools.com/howto/howto_css_shake_image.asp">W3Schools</a> :)</p>
+<pre><code>@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+</code></pre>
+<p>Si je décortique ce code (et que j'ai bien tout compris au système), voici ce à
+quoi ça sert :</p>
+<ul>
+<li>L'animation est définie grâce à une règle CSS
+<a href="https://developer.mozilla.org/fr/docs/Web/CSS/@keyframes">@keyframes</a>.</li>
+<li>Je lui ai donné un nom (&quot;shake&quot;), qui me permettra d'appliquer l'animation à
+un élément HTML.</li>
+<li>La règle <code>@keyframes</code> contient les différentes étapes de l'animation, du début
+(étape 0%) à la fin (étape 100%).</li>
+<li>Chaque étape correspond à un pourcentage d'avancement de l'animation, de façon
+assez libre : 0%, 33%, 66%, 100% ou 0%, 10%, 25%, 50%, 100% ...</li>
+<li>À chaque étape, on associe un bloc CSS qui contient les styles correspondants
+à cette étape.</li>
+</ul>
+<p>Dans mon cas, j'ai donc :</p>
+<ul>
+<li>Un point de départ qui correspond à l'avancement de 0%</li>
+<li>9 étapes intermédiaires correspondant à un avancement de 10%, 20%, 30% ...</li>
+<li>La fin de l'animation qui correspond à l'avancement de 100%</li>
+</ul>
+<p><em>Note : Le début / point de départ peut être noté <code>0% { ... }</code> ou  <code>from { ... }</code> et la fin de l'animation peut s'écrire <code>100% { ... }</code> ou <code>to { ... }</code>.</em></p>
+<p>À chaque étape, je ne modifie que la propriété CSS
+<a href="https://developer.mozilla.org/fr/docs/Web/CSS/transform">transform</a>, pour
+appliquer 2 fonctions de transformation :</p>
+<ul>
+<li><a href="https://developer.mozilla.org/fr/docs/Web/CSS/transform-function/translate">translate()</a>
+pour décaler / faire bouger légèrement la popup horizontalement (1° argument)
+et verticalement (2° argument).</li>
+<li><a href="https://developer.mozilla.org/fr/docs/Web/CSS/transform-function/rotate">rotate()</a>
+pour faire tourner la popup d'un petit degré dans un sens ou dans l'autre.</li>
+</ul>
+<p>Ça c'était pour la partie définition / description de l'animation. Il faut ensuite
+appliquer cette animation à un élément du DOM, en l'occurence la fenêtre popup que
+j'affiche à la fin d'une partie de solitaire.</p>
+<p>Pour faire ça, c'est super facile. Il suffit d'ajouter une propriété <code>animation</code> aux
+règles CSS de ma fenêtre :</p>
+<pre><code>#popup {
+  ...
+  animation: shake 0.5s;
+  ...
+}
+</code></pre>
+<p>Cette règle comprend 2 arguments :</p>
+<ul>
+<li><code>shake</code> : le nom de l'animation à appliquer</li>
+<li><code>0.5s</code> : la durée totale de l'animation</li>
+</ul>
+<p>Au final, je pense que j'ai à peu près compris le truc, et que ça doit être plus
+ou moins çà. Quoiqu'il en soit, le résultat une fois mis en production me va très
+bien et ça fait maintenant plusieurs mois que ça tourne sans que je m'en sois
+lassé.</p>
+<p>Il faudrait peut-être que j'utilise les versions préfixées <code>-o-transform</code>,
+<code>-moz-transform</code>, <code>-webkit-transform</code> ... pour que cela fonctionne avec les
+versions un peu plus anciennes des navigateurs. Mais en 2019, je considère que
+ces navigateurs n'ont plus trop de raisons de ne pas être à jour.</p>
+<p>Par contre, côté IE9, ça ne marche pas du tout. La propriété <code>transform</code> n'est
+reconnue qu'à partir de IE10 (avec le préfixe <code>-ms-</code> ?) et de IE11 (sans
+préfixe). Mais ça n'a pas d'importance, parce que ça n'empêche pas de jouer.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/06/04/dquery-delegation-evenement-ios/" hreflang="fr-FR">dQuery - Délégation d&#39;évènements et IOS</a>
+  <a rel="next" href="/2019/08/22/solitaire-animation-autoplay/" hreflang="fr-FR">Solitaire - Animation du déplacement des cartes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les types nullables en c# - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/06/25/types-nullables-c-sharp/" />
+<meta property="og:title" content="Les types nullables en c#" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/06/25/types-nullables-c-sharp/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-06-25T09:39:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-06-25T09:39:00.000Z","datePublished":"2009-06-25T09:39:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/06/25/types-nullables-c-sharp/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/06/25/types-nullables-c-sharp/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/06/25/types-nullables-c-sharp/">Les types nullables en c#</a>
+    </h1>
+    <p>
+      <span>2009-06-25</span>
+      <span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Avec le compilateur C# 1.1, une variable de type valeur (comme un bool, un
+int, un double... mais aussi une DateTime) ne pouvait pas prendre la valeur
+null.</p>
+<ul>
+<li>Quand on déclare une variable de type valeur, il faut obligatoirement lui
+affecter une valeur avant de l'utiliser, sans quoi on obtient une erreur de
+compilation : <em>Utilisation d'une variable non assignée</em>.</li>
+</ul>
+<pre><code>int compteur;
+if (compteur == 0) {
+        Console.WriteLine(&quot;zéro&quot;);
+}
+</code></pre>
+<ul>
+<li>Il est impossible de lui attribuer la valeur null, car dans ce cas on
+obtient l'erreur <em>Impossible de convertir une valeur Null en 'int', car il
+s'agit d'un type valeur</em>.</li>
+</ul>
+<pre><code>int compteur = null;
+if (compteur == 0) {
+        Console.WriteLine(&quot;zéro&quot;);
+}
+</code></pre>
+<ul>
+<li>Et bien sûr, on ne peut pas la comparer à la valeur null :
+<em>L'opérateur '==' ne peut pas être appliqué aux opérandes de type 'int' et
+'&lt;null&gt;'</em></li>
+</ul>
+<pre><code>int compteur = 0;
+if (compteur == null) {
+        Console.WriteLine(&quot;null&quot;);
+}
+</code></pre>
+<p>Avec le compilateur C# 2.0, il est désormais possible de faire en sorte que
+des variables de type valeur acceptent aussi une valeur nulle en plus des
+valeurs qu'elles peuvent prendre habituellement. Par exemple, une variable
+nullable de booléen pourra stocker true, false et null. Outre le fait que c'est
+une aubaine pour les indécis, c'est aussi censé être très pratique pour stocker
+les valeurs indéfinies en provenance d'une base de données.</p>
+<p>Pour qu'un type de valeur devienne nullable, il faut suffixer le type valeur
+habituel avec un &quot;?&quot; :</p>
+<pre><code>int? compteur = null;
+bool? ca_marche = null;
+DateTime? pour_quand = null;
+</code></pre>
+<p>En fait, les types nullables sont des instances du struct System.Nullable.
+Par conséquent, les trois déclarations précédentes sont rigoureusement
+équivalentes aux trois lignes ci-dessous :</p>
+<pre><code>Nullable&lt;int&gt; compteur = null;
+Nullable&lt;bool&gt; ca_marche = null;
+Nullable&lt;DateTime&gt; pour_quand = null;
+</code></pre>
+<p>Les variables nullables ont une propriété HasValue qui renvoie true lorsque
+la variable contient une valeur et false quand la variable est nulle.</p>
+<pre><code>bool? ca_marche = null;
+...
+if (ca_marche.HasValue == false) {
+        Console.Write(&quot;Pas de réponse&quot;);
+} else if (ca_marche == true) {
+        Console.Write(&quot;Oui&quot;);
+} else {
+        Console.Write(&quot;Non&quot;);
+}
+</code></pre>
+<p>Elles ont aussi une méthode GetValueOrDefault() qui renvoie :</p>
+<ul>
+<li>la valeur de la variable quand celle-ci n'est pas nulle (soit
+<strong>GetValue</strong>OrDefault**()**)</li>
+<li>la valeur par défaut pour le type de valeur correspondant lorsque la
+variable est nulle (soit
+<strong>Get</strong>ValueOr<strong>Default()</strong>)</li>
+</ul>
+<p>C'est ce qui permet par exemple d'affecter une variable de type nullable à
+une variable de type valeur correspondant :</p>
+<pre><code>int? toto = null;
+
+int tutu;
+tutu = toto.GetValueOrDefault();
+Console.Write(tutu); // affiche 0
+
+toto = 12;
+
+int titi;
+titi = toto.GetValueOrDefault();
+Console.Write(titi); // affiche 12
+</code></pre>
+<p>On peut aussi utiliser le nouvel opérateur <strong>??</strong> pour définir
+la valeur par défaut qui sera utilisée dans le cas où on assignerait une
+variable de type nullable ayant la valeur nulle à une variable de type valeur
+non nullable :</p>
+<pre><code>int? toto = null;
+
+int tutu;
+tutu = toto ?? 0;
+Console.Write(tutu); // affiche 0
+int titi = toto ?? 12;
+Console.Write(titi); // affiche 12
+</code></pre>
+<p>Par contre, il y aura une erreur de compilation si on essaie d'affecter
+directement une variable de type nullable à une variable de type
+valeur :</p>
+<pre><code>int? toto = null;
+int tutu = toto; // Erreur de compilation: Cannot implicitly convert type 'int?' to 'int.
+int? titi = 12;
+tutu = titi; // Erreur de compilation: Cannot implicitly convert type 'int?' to 'int.
+</code></pre>
+<p>À la rigueur, il est possible de caster la variable de type nullable à une
+variable de type valeur. Cela ne provoquera pas d'erreur de compilation mais
+attendra l'exécution pour planter :</p>
+<pre><code>int? toto = null;
+int tutu = (int)toto; // Compile mais provoque une exception de type InvalidCastException à l'exécution
+</code></pre>
+<p>Documentations sur les types nullables :</p>
+<ul>
+<li><a href="http://msdn.microsoft.com/fr-fr/library/1t3y8s4s(VS.80).aspx">les types nullables sur MSDN</a></li>
+<li><a href="http://www.dotnetguru.org/articles/dossiers/nullabletypes/CS2_NullableTypes_FR.htm">le monde magique des types nullables de C#</a> par Patrick
+Smacchia sur DotNetGuru</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/06/24/nouvelle-boite-recherche/" hreflang="fr-FR">Une nouvelle boite de recherche</a>
+  <a rel="next" href="/2009/06/25/proprietes-automatiques-c-sharp/" hreflang="fr-FR">Les propriétés automatiques du c#</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

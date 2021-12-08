@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : StoreController - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-storecontroller/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : StoreController" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-storecontroller/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-26T20:35:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-26T20:35:00.000Z","datePublished":"2010-05-26T20:35:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-storecontroller/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/26/mvc-music-store-raven-db-storecontroller/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/26/mvc-music-store-raven-db-storecontroller/">MVC Music Store / Raven DB : StoreController</a>
+    </h1>
+    <p>
+      <span>2010-05-26</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/25/porting-mvc-music-store-to-raven-storecontroller.aspx">Porting MVC Music Store to Raven: StoreController</a>&quot;, le huitième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Commençons par la méthode Index() :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreControll_3E26/image_thumb.png" alt=""></p>
+<p>Il y a un truc dans ce code qui me gène, c'est qu'il va exécuter deux
+requêtes sur la base de données. Mais je ne vais pas m'appesantir étant donné
+que nous allons modifier tout ça.</p>
+<p>Et voici ma version portée sous Raven :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreControll_3E26/image_thumb_3.png" alt=""></p>
+<p>Comme vous pouvez le constater, c'est à peut près pareil et donc pas très
+intéressant. Voyons voir ce que nous avons d'autre :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreControll_3E26/image_thumb_4.png" alt=""></p>
+<p>Ce qu'il faut bien voir, c'est que ce code cherche à faire une recherche sur
+le libellé d'un genre. Le problème c'est que le libellé du genre n'est pas la
+clé primaire, et que pour couronner le tout, il n'y a même pas d'index sur
+cette colonne libellé. Bon, c'est vrai que la table genre ne contient que 10
+lignes, mais c'est une question de principe (si vous êtes très sympa, vous
+n'aurez droit qu'à un sermon du DBA pour avoir osé faire une requête sans index
+sur la base de production).</p>
+<p>Avec Raven, il nous serait donc très simple d'implémenter ça en suivant la
+même approche, mais je ne vois pas d'excuse pour faire ça. Le genre que nous
+récupérons dans la méthode Browse() dépend des données que nous avons renvoyées
+avec la méthode Index(). Il n'y a donc pas de raison pour ne pas faire passer
+directement l'identifiant du genre. J'ai donc modifié l'action Index() pour
+renvoyer l'objet genre complet et pas seulement son libellé et par la suite
+renvoyer l'identifiant à l'action Browse() au lieu du libellé.</p>
+<p>J'avais donc commencé à implémenter ça mais je me suis retrouvé coincé par
+l'association entre les albums et les genres.</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreControll_3E26/image_thumb_8.png" alt=""></p>
+<p>Normalement, les bases de données documents n'ont pas d'associations et pas
+de jointures non plus. Alors, comment gérer ça ?</p>
+<p>Depuis le temps vous devez commencer à vous douter de la réponse : en
+créant un un index :)</p>
+<pre><code>// AlbumsByGenre
+from album in docs.Albums
+where album.Genre != null
+select new { Genre = album.Genre.Id }
+</code></pre>
+<p>Et cet index nous permet d'écrire le code suivant :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreControll_3E26/image_thumb_9.png" alt=""></p>
+<p>Et pour finir, il nous reste l'action GenreMenu :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreControll_3E26/image_thumb_5.png" alt=""></p>
+<p>Que nous pouvons facilement porter de la façon suivante :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreControll_3E26/image_thumb_6.png" alt=""></p>
+<p>Et nous en avons terminé avec StoreController.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/26/mvc-music-store-raven-db-migration-plus-poussee/" hreflang="fr-FR">MVC Music Store / Raven DB : Faire une migration plus poussée</a>
+  <a rel="next" href="/2010/05/27/mvc-music-store-raven-db-shoppingcart/" hreflang="fr-FR">MVC Music Store / Raven DB : ShoppingCart</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

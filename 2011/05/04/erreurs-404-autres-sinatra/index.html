@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Erreurs 404 et autres avec Sinatra - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/05/04/erreurs-404-autres-sinatra/" />
+<meta property="og:title" content="Erreurs 404 et autres avec Sinatra" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/05/04/erreurs-404-autres-sinatra/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-05-04T17:06:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-05-04T17:06:00.000Z","datePublished":"2011-05-04T17:06:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/05/04/erreurs-404-autres-sinatra/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/05/04/erreurs-404-autres-sinatra/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/05/04/erreurs-404-autres-sinatra/">Erreurs 404 et autres avec Sinatra</a>
+    </h1>
+    <p>
+      <span>2011-05-04</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/11/16/404_and_other_errors_in_sinatra/">404 and other Errors in Sinatra</a>&quot; de Darren Jones.</p>
+</div>
+<p>Un truc super bien quand on débute avec Sinatra c'est sa page
+d'erreur :</p>
+<p><img src="/public/2011/reverse-2.png" alt="Erreur 404"></p>
+<p>Les applications web ont toutes besoin d'afficher des pages d'erreurs et
+c'est quelque chose de très simple à faire avec Sinatra.</p>
+<h2>Les erreurs 404</h2>
+<p>Elles se produisent lorsque l'URL appelée ne peut pas être trouvée. On peut
+gérer cette erreur à l'aide du code Ruby suivant :</p>
+<pre><code>not_found do
+  &quot;Votre page n'a pas pu être trouvée&quot;
+end
+</code></pre>
+<p>Cela affichera tout simplement le message &quot;Votre page n'a pas pu être
+trouvée&quot;. On peut tout de même avoir quelque chose d'un peu plus sophistiqué et
+employer une vue &quot;not_found.erb&quot; qui aura l'avantage d'être rendue avec le
+&quot;layout.erb&quot; habituel.</p>
+<pre><code>not_found do
+  erb :not_found
+end
+</code></pre>
+<p>On peut même faire tenir ça sur une seule ligne :</p>
+<pre><code>not_found { erb :not_found }
+</code></pre>
+<p>Si vous préférez appeler votre fichier &quot;404.erb&quot; au lieu de &quot;not_found.erb&quot;,
+vous devrez simplement le mettre entre apostrophe étant donné que les symboles
+ne peuvent pas commencer par un chiffre :</p>
+<pre><code>not_found do
+  erb :'404'
+end
+</code></pre>
+<h2>Les erreurs 500</h2>
+<p>Ces erreurs surviennent en cas d'erreur interne du serveur, généralement
+lorsque quelque chose a planté dans l'application. Le code suivant sert pour
+gérer ce genre d'erreur :</p>
+<pre><code>error do
+  @error = request.env['sinatra_error']
+  haml :'500'
+end
+</code></pre>
+<p>Ce code initialise une variable d'instance nommée <code>@error</code> qu'il
+sera possible d'utiliser dans la vue pour détailler l'erreur à l'aide des
+méthodes <code>@error.name</code> et <code>@error.message</code>.</p>
+<p>Il est aussi possible de créer des erreurs personnalisées en utilisant le
+code suivant :</p>
+<pre><code>error BigError do
+   &quot;BOUM ! Il y a eu un gros souci ! &quot; + request.env['sinatra.error'].message
+end
+</code></pre>
+<p>On peut alors renvoyer cette erreur avec un message adéquat :</p>
+<pre><code>get '/' do
+  raise BigError, 'Est-ce que vous aviez convenablement fermé toutes vos accolades ?'
+end
+</code></pre>
+<p>L'accès à l'URL &quot;/&quot; provoquera alors l'affichage du message
+suivant :</p>
+<pre><code>BOUM ! Il y a eu un gros souci ! Est-ce que vous aviez convenablement fermé toutes vos accolades ?
+</code></pre>
+<p>Selon moi, il est important de gérer les erreurs dès le tout début du
+projet. Pour cela, je colle généralement les deux lignes suivantes au début de
+mon fichier :</p>
+<pre><code>not_found { haml :'404' }
+error { @error = request.env['sinatra_error'] ; haml :'500' }
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/05/03/configuration-parametrage-sinatra/" hreflang="fr-FR">Configuration et paramétrage avec Sinatra</a>
+  <a rel="next" href="/2011/05/17/authentification-super-simple-sinatra/" hreflang="fr-FR">Authentification super simple avec Sinatra</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

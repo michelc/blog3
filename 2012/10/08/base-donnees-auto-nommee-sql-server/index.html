@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Base de données auto-nommée sous SQL Server - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/10/08/base-donnees-auto-nommee-sql-server/" />
+<meta property="og:title" content="Base de données auto-nommée sous SQL Server" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/10/08/base-donnees-auto-nommee-sql-server/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-10-08T20:27:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-10-08T20:27:00.000Z","datePublished":"2012-10-08T20:27:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/10/08/base-donnees-auto-nommee-sql-server/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/10/08/base-donnees-auto-nommee-sql-server/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/10/08/base-donnees-auto-nommee-sql-server/">Base de données auto-nommée sous SQL Server</a>
+    </h1>
+    <p>
+      <span>2012-10-08</span>
+      <span>#.net</span><span>#ef</span><span>#sql-server</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>En général, je développe en local avec des bases de données SQL Server CE.
+Mais de temps en temps, je regarde ce que ça donne sous SQL Server Express
+2008. Pour cela, j'ai tendance à préférer les bases attachées, parce que je
+trouve ça plus pratique d'avoir un fichier &quot;.sdf&quot; directement dans le dossier
+App_Data de mon application.</p>
+<p>Et ce week-end j'ai eu une erreur vraiment troublante avec SQL Server
+Express 2008. Je faisais un essai complet avec Entity Framework et mon
+application aurait dû créer la base de données (le fichier &quot;.sdf&quot;) et les
+tables qui la compose.</p>
+<blockquote>
+<p>An attempt to attach an auto-named database for file
+C:\MVC\Bookmaker\Bookmaker\App_Data\Bookmaker_2013.mdf failed. A database with
+the same name exists, or specified file cannot be opened, or it is located on
+UNC share.</p>
+</blockquote>
+<p>Il existe apparemment pas mal de raisons possibles à ce message d'erreur,
+mais dans mon cas c'était &quot;A database with the same name exists&quot;.</p>
+<p>Pour une fois, j'ai trouvé la solution sur <a href="http://www.codeproject.com/Questions/192140/An-attempt-to-attach-an-auto-named-database-for-fi">Code Project</a>.</p>
+<p>Jusqu'à présent, ma chaine de connexion à la base de données
+était :</p>
+<pre><code>&lt;add name=&quot;BookmakerContext&quot;
+     connectionString=&quot;Data Source=.\SQLEXPRESS;
+                       Integrated Security=SSPI;
+                       AttachDBFilename=|DataDirectory|\Bookmaker_2013.mdf;
+                       User Instance=true&quot;
+     providerName=&quot;System.Data.SqlClient&quot; /&gt;
+</code></pre>
+<p>En fait, il faut la compléter avec le nom de la base de données pour éviter
+que SQL Server auto-nomme la base de données à créer, ce qui doit poser un
+problème si une base de données de ce nom existe déjà sous SQL Server (je
+suppose).</p>
+<p>Et donc, tout est rentré dans l'ordre en ajoutant
+<code>;Database=Bookmaker_2013</code> après <code>User Instance=true</code> :</p>
+<pre><code>&lt;add name=&quot;BookmakerContext&quot;
+     connectionString=&quot;Data Source=.\SQLEXPRESS;
+                       Integrated Security=SSPI;
+                       AttachDBFilename=|DataDirectory|\Bookmaker_2013.mdf;
+                       User Instance=true;
+                       Database=Bookmaker_2013&quot;
+     providerName=&quot;System.Data.SqlClient&quot; /&gt;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/10/04/tester-action-details/" hreflang="fr-FR">Tester l&#39;action Details()</a>
+  <a rel="next" href="/2012/10/17/tests-unitaires-people-controller/" hreflang="fr-FR">Tests unitaires de PeopleController</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

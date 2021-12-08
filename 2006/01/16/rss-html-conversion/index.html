@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RSS to Html conversion - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/01/16/rss-html-conversion/" />
+<meta property="og:title" content="RSS to Html conversion" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/01/16/rss-html-conversion/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-01-16T13:03:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-01-16T13:03:00.000Z","datePublished":"2006-01-16T13:03:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/01/16/rss-html-conversion/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/01/16/rss-html-conversion/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/01/16/rss-html-conversion/">RSS to Html conversion</a>
+    </h1>
+    <p>
+      <span>2006-01-16</span>
+      <span>#code-snippets</span><span>#html</span><span>#xml</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce fichier permet de transformer un fil RSS (version 0.9x ou 2.0) en code
+html afin de pouvoir l'intégrer à une page web.</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot;
+ xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+ xmlns:wfw=&quot;http://wellformedweb.org/CommentAPI/&quot;&gt;
+    &lt;xsl:output method=&quot;html&quot;/&gt;
+    &lt;xsl:template match=&quot;/&quot;&gt;
+        &lt;xsl:apply-templates select=&quot;/rss/channel&quot;/&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;/rss/channel&quot;&gt;
+        &lt;h3&gt;&lt;xsl:value-of select=&quot;title&quot;/&gt;&lt;/h3&gt;
+        &lt;p&gt;&lt;xsl:value-of select=&quot;description&quot;/&gt;&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;xsl:apply-templates select=&quot;item&quot;/&gt;
+        &lt;/ul&gt;
+    &lt;/xsl:template&gt;
+    &lt;xsl:template match=&quot;/rss/channel/item&quot;&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;{link}&quot; title=&quot;{substring(pubDate, 0, 11)}&quot;&gt;&lt;xsl:value-of select=&quot;title&quot;/&gt;&lt;/a&gt;
+            &lt;p&gt;&lt;xsl:value-of select=&quot;description&quot; disable-output-escaping=&quot;yes&quot; /&gt;&lt;/p&gt;
+        &lt;/li&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/01/16/atom-html-conversion/" hreflang="fr-FR">Atom to Html conversion</a>
+  <a rel="next" href="/2006/01/16/rdf-html-conversion/" hreflang="fr-FR">RDF to Html conversion</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

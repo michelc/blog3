@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Boite SqlRepeat - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/01/29/boite-sqlrepeat/" />
+<meta property="og:title" content="Boite SqlRepeat" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/01/29/boite-sqlrepeat/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-01-29T17:07:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-01-29T17:07:00.000Z","datePublished":"2006-01-29T17:07:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/01/29/boite-sqlrepeat/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/01/29/boite-sqlrepeat/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/01/29/boite-sqlrepeat/">Boite SqlRepeat</a>
+    </h1>
+    <p>
+      <span>2006-01-29</span>
+      <span>#qc</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La boite SqlQuery automatise l'affichage du résultat d'une requête SQL dans
+une table à l'aide de l'objet XTable. La nouvelle boite SqlRepeat permet
+également d'afficher le résultat d'une requête SQL, mais offre plus de
+souplesse en ce qui concerne la présentation. Il est ainsi possible de définir
+:</p>
+<ul>
+<li>le code html a afficher avant le résultat de la requête,</li>
+<li>le code html servant de modèle pour formatter chaque ligne du résultat de
+la requête,</li>
+<li>le code html à générer à la suite du résultat de la requête.</li>
+</ul>
+<p>Exemple de paramétrage pour un fichier CSV :</p>
+<ul>
+<li>Connection string : {odbc};Driver={Microsoft Text Driver (*.txt;
+*.csv)};Dbq=~/data/</li>
+<li>Sql query :</li>
+</ul>
+<pre><code>SELECT affix, givenName, legalName,
+       telephone, email,
+       addressLine1, postalCode, municipality
+FROM   [adresses.csv]
+ORDER BY postalCode DESC, legalName ASC, givenName ASC
+</code></pre>
+<ul>
+<li>Header section : &lt;ol&gt;</li>
+<li>Template for each item : &lt;h4&gt;{0} {1}
+{2}&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;téléphone : {3}&lt;/li&gt;&lt;li&gt;&lt;a
+href='mailto:{4}'&gt;{4}&lt;/a&gt;&lt;/li&gt;&lt;li&gt;{5} - {6}
+{7}&lt;/li&gt;&lt;/ul&gt;</li>
+<li>Footer section : &lt;/ol&gt;</li>
+</ul>
+<p>Dans le cas d'un fichier Excel, la paramétrage de la connexion et de la
+requête devraient être effectué de la façon suivante :</p>
+<ul>
+<li>Connection string : {odbc};Driver={Microsoft Excel Driver
+(*.xls)};Dbq=~/data/adresses.xls</li>
+<li>Sql query :</li>
+</ul>
+<pre><code>SELECT affix, givenName, legalName,
+       telephone, email,
+       addressLine1, postalCode, municipality
+FROM   [Sheet1$]
+ORDER BY postalCode DESC, legalName ASC, givenName ASC
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/01/28/mise-cache-cote-serveur/" hreflang="fr-FR">Mise en cache côté serveur</a>
+  <a rel="next" href="/2006/02/03/semantique-html-pagerank/" hreflang="fr-FR">Sémantique HTML et PageRank</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

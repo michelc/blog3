@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utilisation d&#39;un CDN pour jQuery UI - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/08/06/utilisation-cdn-jquery-ui/" />
+<meta property="og:title" content="Utilisation d&#39;un CDN pour jQuery UI" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/08/06/utilisation-cdn-jquery-ui/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-08-06T21:39:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-08-06T21:39:00.000Z","datePublished":"2012-08-06T21:39:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/08/06/utilisation-cdn-jquery-ui/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/08/06/utilisation-cdn-jquery-ui/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/08/06/utilisation-cdn-jquery-ui/">Utilisation d&#39;un CDN pour jQuery UI</a>
+    </h1>
+    <p>
+      <span>2012-08-06</span>
+      <span>#jquery</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour faire suite à mon billet d'il y a <a href="/2012/07/12/utilisation-cdn-jquery-jquery-validation/">
+quelques jours</a>, je me suis rendu compte que je n'avais pas mentionné la
+méthode pour intégrer jQuery UI depuis un CDN (essentiellement parce que je ne
+l'utilise pas encore dans mon projet).</p>
+<p>Pour le Javascript il n'y a rien de très compliqué :</p>
+<pre><code>&lt;script src=&quot;//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.20/jquery-ui.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    if (typeof jQuery.ui === &quot;undefined&quot;) {
+        document.write(unescape(&quot;%3Cscript src='@Url.Content(&quot;~/Scripts/jquery-ui-1.8.20.min.js&quot;)'%3E%3C/script%3E&quot;));
+    }
+&lt;/script&gt;
+</code></pre>
+<p>Par contre, là où ça devient intéressant, c'est pour la CSS. En effet, si on
+y réfléchit bien, il y a une très forte probabilité que si on ne peut pas
+compter sur le CDN pour obtenir la partie Javascript de jQuery UI, ça ne sera
+pas mieux pour récupérer sa partie CSS.</p>
+<p>Heureusement pour moi, <a href="http://timjames.me/jquery-and-jquery-ui-fallbacks">Tim James</a>
+a déjà trouvé comment faire et il explique que pour détecter si on a pu charger
+jQuery UI CSS depuis le CDN, on doit commencer par charger la CSS de jQuery UI
+depuis le CDN :</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.20/themes/ui-lightness/jquery-ui.css&quot;&gt;
+</code></pre>
+<p>Puis il faut insérer une balise <code>div</code> dans notre page web et la
+masquer grâce à la classe <code>ui-helper-hidden</code> que jQuery UI a
+justement prévu pour cacher des trucs :</p>
+<pre><code>&lt;div id=&quot;ui-fallback&quot; class=&quot;ui-helper-hidden&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>Ensuite, on met un petit morceau de script qui va tester si cette balise est
+visible ou pas. Et si elle est visible, cela signifie que l'on n'a pas réussi à
+charger la CSS de jQuery UI depuis le CDN et qu'il est nécessaire de la charger
+depuis une copie en local :</p>
+<pre><code>&lt;script&gt;
+  // jQuery UI CSS Fallback
+  $(function () {
+    if ($(&quot;#ui-fallback&quot;).is(&quot;:visible&quot;) === true) {
+      $('&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;/Content/themes/ui-lightness/jquery-ui-1.8.20.custom.css&quot; /&gt;').appendTo('head');
+    }
+  });
+&lt;/script&gt;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/07/12/utilisation-cdn-jquery-jquery-validation/" hreflang="fr-FR">Utilisation d&#39;un CDN pour jQuery et jQuery Validation</a>
+  <a rel="next" href="/2012/08/14/view-loading-vs-eager-loading/" hreflang="fr-FR">View Loading vs Eager loading</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

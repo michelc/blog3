@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Des lapins à la sauce REST - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/09/29/lapins-sauce-rest/" />
+<meta property="og:title" content="Des lapins à la sauce REST" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/09/29/lapins-sauce-rest/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-09-29T20:45:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-09-29T20:45:00.000Z","datePublished":"2010-09-29T20:45:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/09/29/lapins-sauce-rest/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/09/29/lapins-sauce-rest/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/09/29/lapins-sauce-rest/">Des lapins à la sauce REST</a>
+    </h1>
+    <p>
+      <span>2010-09-29</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel Sinatra &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/9/21/restful_rabbits/">Restful Rabbits</a>&quot; de Darren Jones.</p>
+</div>
+<p>Dans ce billet, je vais explorer la façon de créer une ressource en
+construisant une <a href="http://fr.wikipedia.org/wiki/Representational_State_Transfer">architecture REST</a> et en utilisant Sinatra et DataMapper.</p>
+<h2>Mais pour commencer, c'est quoi ce REST ?</h2>
+<p>REST signifie Representational State Transfer et a été présenté par <a href="http://fr.wikipedia.org/wiki/Roy_Fielding">Roy Fielding</a> pour
+sa thèse de doctorat en 2000. De façon sommaire, c'est un style d'architecture
+qui permet d'accéder à des ressources (en général des objets stockés dans une
+base de données) à partir d'URLs spécifiques. REST permet également d'utiliser
+des URLs pour interagir avec ces ressources (pour les mettre à jour en
+particulier). Par exemple, l'URL /people/michel/edit pourrait permettre de
+modifier ma fiche personnelle. Et l'URL /people/michel/delete aurait pour effet
+de supprimer ma fiche de la base de données.</p>
+<p>Au cours de ce tutoriel, les ressources que je vais chercher à gérer seront
+des lapins, mais vous pouvez l'adapter sans peine pour gérer n'importe quel
+autre objet que vous stockez dans votre base de données. Toutes les données
+seront enregistrées en base de données grâce à DataMapper et nous passerons par
+des URLs spécifiques pour effectuer les actions CRUD sur chaque objet :
+Création, Lecture, Modification et Suppression.</p>
+<p>Avec REST, on emploie habituellement 7 gestionnaires d'URLs. Dans notre cas,
+nous en définirons 8 pour avoir en plus un gestionnaire qui nous permettra de
+demander confirmation avant d'effectuer une suppression. Tout cela correspond
+grosso-modo aux actions CRUD d'une base de données.</p>
+<p>Voici les gestionnaires et leurs URLs associées :</p>
+<ul>
+<li>List (/lapins) - une page d'index qui affiche toutes les ressources</li>
+<li>Show (/lapins/1) - une page qui affiche une ressource données</li>
+<li>New (/lapins/new) - un formulaire pour saisir une nouvelle ressource</li>
+<li>Create (/lapins) - création d'une nouvelle ressource (il n'y a pas de page
+web pour cela)</li>
+<li>Edit (/lapins/edit/1) - un formulaire pour mettre à jour une ressource
+existante</li>
+<li>Update (/lapins/1) - modification d'une ressource (il n'y a pas de page web
+pour cela)</li>
+<li>Delete Confirmation (/lapins/delete/1) - une page demandant si on veut
+réellement supprimer une ressource</li>
+<li>Delete (/lapins/1) - supprime la ressource donnée (il n'y a pas de page web
+pour cela)</li>
+</ul>
+<p>Vous avez sans doute remarqué qu'un certain nombre d'URLs sont identiques
+(celles pour Show, Update et Delete). Ceci est possible parce qu'il existe 4
+verbes HTTP : GET, POST, UPDATE et DELETE. Sinatra est capable de savoir
+quel type de requête a été réalisée et d'employer l'action adéquate. Ainsi,
+l'URL /lapins/1 affichera le lapin dont l'identifiant est 1 quand une requête
+GET est effectuée, mais elle supprimera le lapin si c'est une requête DELETE
+qui a été faite.</p>
+<h2>Le code</h2>
+<p>Pour commencer, nous devons charger les librairies nécessaires. J'utilise en
+particulier Haml pour les vues, mais ce ne devrait pas être compliqué
+d'utiliser Erb ou un autre système de template :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'data_mapper'
+require 'haml'
+</code></pre>
+<p>Puis nous définissons la base de données. Cette ligne de code teste s'il
+existe une base de données paramétrée sur Heroku et si ce n'est pas le cas
+utilise une base de données SQLite locale nommée lapins.db :</p>
+<pre><code>DataMapper.setup(:default, ENV['DATABASE_URL'] || &quot;sqlite3://#{Dir.pwd}/lapins.db&quot;)
+</code></pre>
+<p>Nous devons ensuite créer la classe Lapin (ou tout autre classe
+correspondant aux objets que vous souhaitez gérer). Le premier champ &quot;id&quot; est
+très important : grâce à lui votre ressource a un identifiant numérique
+auto-incrémenté qui permet de la référencer. Cela signifie que la base de
+données va automatiquement se charger d'affecter un identifiant unique à chaque
+ressource. Les autres propriétés de la classe Lapin sont &quot;nom&quot;, &quot;description&quot;,
+&quot;age&quot; et &quot;couleur&quot;. Et il y a également deux autres champs &quot;created_at&quot; et
+&quot;updated_at&quot; que le plugin datamapper-timestamps va automatiquement mettre à
+jour lorsque la ressource sera créée ou modifiée. DataMapper a également un
+autre plugin très utile : datamapper-validations. Celui-ci contrôle
+automatiquement si le nom est renseigné (parce qu'il est marqué &quot;required&quot;) et
+si l'âge est bien une valeur de type integer. Si cette validation échoue, la
+ressource ne sera pas créée ou mise à jour et les erreurs seront signalées
+(plus de détails dans la suite du tutoriel).</p>
+<pre><code>class Lapin
+  include DataMapper::Resource
+  property :id,           Serial
+  property :nom,          String, :required =&gt; true
+  property :description,  Text
+  property :age,          Integer
+  property :couleur,      String
+  property :created_at,   DateTime
+  property :updated_at,   DateTime
+end
+</code></pre>
+<p>Nous allons maintenant créer les différents gestionnaires, en commençant par
+celui pour la liste :</p>
+<pre><code># List : affiche la liste des lapins
+get '/lapins' do
+  @lapins = Lapin.all
+  haml :index
+end
+</code></pre>
+<p>Le gestionnaire List correspond à l'URL &quot;/lapins&quot;. Il commence par retrouver
+toutes les ressources enregistrées dans la base de données pour les stocker
+dans un tableau d'instance nommé @lapins. Ce tableau pourra ensuite être
+utilisé dans la vue &quot;index&quot;.</p>
+<p>Nous créons ensuite le gestionnaire New :</p>
+<pre><code># New : affiche le formulaire de création d'un lapin
+get '/lapins/new' do
+  @lapin = Lapin.new
+  haml :new
+end
+</code></pre>
+<p>Celui-ci correspond à l'URL &quot;/lapins/new&quot;. Il crée un nouvel objet Lapin et
+le stocke dans une variable d'instance @lapin dont le formulaire de saisie a
+besoin. Puis il affiche le formulaire de saisie contenu dans la vue &quot;new&quot;.</p>
+<p>Le gestionnaire qui suit est Create. Outre le fait qu'il est un tout petit
+plus compliqué, il n'existe pas non plus de vue associée à celui-ci :</p>
+<pre><code># Create : création d'un nouveau lapin
+post '/lapins' do
+  @lapin = Lapin.new(params[:lapin])
+  if @lapin.save
+    status 201
+    redirect '/lapins/' + @lapin.id.to_s
+  else
+    status 400
+    haml :new
+  end
+end
+</code></pre>
+<p>La première chose à noter, c'est qu'il utilise la même URL que l'action
+List, à savoir &quot;/lapins&quot;. Ce qui fait la différence entre les deux, c'est que
+ce gestionnaire est seulement invoqué lorsque la requête HTTP est de type POST,
+ce qui est fort heureusement le cas lorsqu'un formulaire HTML est envoyé vers
+le serveur.</p>
+<p>La première chose que fait le gestionnaire Create, c'est de créer un nouvel
+objet Lapin en utilisant les informations envoyées par le formulaire, celles-ci
+étant conservées dans le hash params:lapin. Puis il vérifie si les valeurs
+saisies sont correctes en tentant d'enregistrer l'objet @lapin. Si cela réussi,
+il renvoie alors le statut HTTP 201 (qui signifie Created) et redirige le
+navigateur vers le gestionnaire Show pour qu'il affiche la ressource qui vient
+d'être créée. Quand il ne réussi pas à enregistrer l'objet @lapin, il renvoie
+le statut 400 (Bad Request) et réaffiche la vue &quot;new&quot; pour que l'utilisateur
+puisse corriger sa saisie et la re-soumettre.</p>
+<p>Le gestionnaire suivant est Edit. L'URL associée à celui-ci est
+&quot;/lapins/edit/:id&quot; où &quot;:id&quot; est une valeur entière qui fait référence à
+l'identifiant d'un objet Lapin particulier. Cet identifiant est disponible dans
+le hash params:id et on l'emploie dans la première ligne de code pour retrouver
+le lapin correspondant dans la base de données puis stocker l'objet obtenu dans
+la variable d'instance @lapin qui pourra ensuite être utilisée par la vue
+&quot;edit&quot;.</p>
+<pre><code># Edit : affiche le formulaire de modification d'un lapin
+get '/lapins/edit/:id' do
+  @lapin = Lapin.get(params[:id])
+  haml :edit
+end
+</code></pre>
+<p>Lorsque l'utilisateur va valider sa saisie, les informations du formulaire
+&quot;edit&quot; seront envoyées vers le gestionnaire Update présenté
+ci-dessous :</p>
+<pre><code># Update : modification d'un lapin existant
+put '/lapins/:id' do
+  @lapin = Lapin.get(params[:id])
+  if @lapin.update(params[:lapin])
+    status 201
+    redirect '/lapins/' + params[:id]
+  else
+    status 400
+    haml :edit
+  end
+end
+</code></pre>
+<p>Le code pour gérer la modification ressemble d'assez près à celui du
+gestionnaire Create et là aussi il n'y a pas besoin d'avoir une vue associée.
+La première chose qui est faite, c'est de retrouver le lapin dont l'identifiant
+est passé avec l'URL pour le stocker dans la variable d'instance @lapin. Puis
+on modifie (et on sauvegarde) cet objet en utilisant les informations du
+formulaire. Si cela réussi, le navigateur est redirigé vers l'URL du
+gestionnaire Show pour permettre à l'utilisateur de constater que la mise à
+jour s'est correctement déroulée. Lorsque la mise à jour a échouée, la vue
+&quot;edit&quot; est réaffichée pour lui permettre de corriger sa saisie.</p>
+<p>Le gestionnaire suivant est celui destiné à confirmer la suppression d'une
+ressource. Il va servir à afficher une page web dans laquelle on demande à
+l'utilisateur s'il veut réellement supprimer le lapin ou pas.</p>
+<pre><code># Confirm : confirmation de la suppression d'un lapin
+get '/lapins/delete/:id' do
+  @lapin = Lapin.get(params[:id])
+  haml :delete
+end
+</code></pre>
+<p>Dans le cas où l'utilisateur clique sur le bouton &quot;Delete&quot; depuis cette page
+de confirmation, cela appelle le gestionnaire Delete :</p>
+<pre><code># Delete : suppression d'un lapin
+delete '/lapins/:id' do
+  Lapin.get(params[:id]).destroy
+  redirect '/lapins'
+end
+</code></pre>
+<p>Vous pouvez voir que l'URL &quot;/lapins/:id&quot; associée au gestionnaire Delete est
+la même que pour le gestionnaire Update. Mais dans ce cas , le formulaire de
+confirmation de la suppression aura fait en sorte d'envoyer une requête de type
+DELETE.</p>
+<p>Le gestionnaire DELETE a besoin d'une seule ligne de code pour retrouver le
+lapin dans la base de données (la partie <code>Lapin.get(params[:id])</code>)
+et l'y supprimer (la partie <code>.destroy</code>). Puis il redirige le
+navigateur vers le gestionnaire List grâce auquel l'utilisateur pourra
+constater que le lapin a bien été supprimé.</p>
+<p>Le gestionnaire Show est le dernier qui nous reste à prendre en compte et il
+est lui aussi associé à l'URL &quot;/lapins/:id&quot;. Il est impératif de le faire
+apparaitre en dernier dans le code parce que Sinatra examine les routes dans
+l'ordre où elles apparaissent dans le code source. Par conséquent, si le
+gestionnaire Show avait été codé avant le gestionnaire Create dont l'URL est
+&quot;/lapin/new&quot;, Sinatra aurait considéré que &quot;new&quot; correspondait au paramètre
+&quot;:id&quot; et il aurait invoqué le gestionnaire Show qui aurait essayé de rechercher
+dans la base de données un lapin dont l'identifiant serait &quot;new&quot;, ce qui
+n'existe bien évidemment pas.</p>
+<pre><code># Show : affichage d'un lapin
+get '/lapins/:id' do
+  @lapin = Lapin.get(params[:id])
+  haml :show
+end
+</code></pre>
+<p>C'est un gestionnaire plutôt simple. Il retrouve le lapin avec le bon
+identifiant et le stocke dans une variable d'instance @lapin qui pourra alors
+âtre manipulée dans la vue &quot;show&quot; associée.</p>
+<p>Et pour finir, juste avant la fin du source Ruby, il y a une ligne de code
+destinée à DataMapper qui a pour effet de répercuter les modifications
+apportées à votre base de données (comme par exemple l'ajout d'une propriété)
+sans supprimer les données que celle-ci contient (on peut pas faire plus simple
+comme système de migration de données).</p>
+<pre><code>DataMapper.auto_upgrade!
+
+__END__
+</code></pre>
+<p>La ligne <code>__END__</code> indique qu'il s'agit de la fin du fichier, ou
+plus précisément de la fin du code Ruby. Elle sera suivie par les vues
+correspondant aux différents gestionnaires que nous avons codés auparavant.</p>
+<p>Le template &quot;layout&quot; servira de squelette général pour toutes les vues et il
+contient le code nécessaire pour afficher une page HTML 5. Toutes les autres
+vues seront intégrées à l'endroit où apparait la ligne <code>= yield</code> :</p>
+<pre><code>@@layout
+!!! 5
+%html
+  %head
+    %meta(charset=&quot;utf-8&quot;)
+    %title Lapins
+  %body
+    = yield
+</code></pre>
+<p>La première vue est la page d'index qui nous sert à afficher tous les lapins
+qui existent dans la base de données. Ceux-ci ont été stockés dans le tableau
+d'instance @lapins par le gestionnaire List. Nous parcourons donc ce tableau
+dans la vue pour générer une ligne pour chaque lapin, avec des liens pour
+afficher, modifier ou supprimer celui-ci. Et nous avons aussi prévu un lien en
+haut de la liste pour permettre d'ajouter un nouveau lapin :</p>
+<pre><code>@@index
+%h3 Lapins
+%a(href=&quot;/lapins/new&quot;)Créer un nouveau lapin
+- unless @lapins.empty?
+  %ul#lapins
+  - @lapins.each do |lapin|
+    %li{:id =&gt; &quot;lapin-#{lapin.id}&quot;}
+      %a(href=&quot;/lapins/#{lapin.id}&quot;)= lapin.nom
+      %a(href=&quot;/lapins/edit/#{lapin.id}&quot;) Modifier
+      %a(href=&quot;/lapins/delete/#{lapin.id}&quot;) Supprimer
+- else
+  %p Pas de lapins !
+</code></pre>
+<p>La vue suivante sert pour afficher le détail d'un lapin donné, à partir de
+la variable d'instance @lapin initialisée par le gestionnaire Show. Chaque
+ligne de cette vue présente une des propriété de l'objet Lapin. Et pour finir,
+nous avons un lien qui permet de modifier le lapin, un autre pour le supprimer
+et un pour revenir à la liste des lapins :</p>
+<pre><code>@@show
+%h3= @lapin.nom
+%p Couleur : #{@lapin.couleur}
+%p Age : #{@lapin.age}
+%p Description : #{@lapin.description}
+%p Crée le : #{@lapin.created_at}
+%p Mis à jour le : #{@lapin.updated_at}
+%a(href=&quot;/lapins/edit/#{@lapin.id}&quot;) Modifier
+%a(href=&quot;/lapins/delete/#{@lapin.id}&quot;) Supprimer
+%a(href='/lapins') Retour à l'index
+</code></pre>
+<p>Les deux vues suivantes sont très similaires. La première correspond à la
+page qui est renvoyée pour ajouter un nouveau lapin et la seconde celle qui
+sert pour modifier un lapin existant.</p>
+<p>Ces deux pages commencent par afficher une vue partielle &quot;errors&quot; qui sert
+dans le cas où des erreurs se seraient produites suite à un premier envoi du
+formulaire avec des données incorrectes.</p>
+<p>Le formulaire dans la vue &quot;new&quot; utilise une méthode HTTP POST et celui de la
+vue &quot;edit&quot; une méthode HTTP PUT afin d'utiliser le verbe HTTP adéquat pour
+viser le bon gestionnaire. Étant donné que les navigateurs ne savent pas
+envoyer une requête PUT, on triche en envoyant une requête POST (ce que savent
+faire les navigateurs) accompagnée d'un champ caché nommé &quot;_method&quot; ayant la
+valeur &quot;PUT&quot;. Sinatra est alors assez conciliant pour considérer cela comme une
+vraie requête PUT.</p>
+<p>Après le type de requête, ces deux vues affichent la vue partielle &quot;form&quot;
+qui va contenir le code complet du formulaire servant à saisir la fiche d'un
+lapin. Il est plus pratique de gérer ça dans une vue partielle à part plutôt
+que de répéter le même code dans les deux vues &quot;new&quot; et &quot;edit&quot;, notamment dans
+le cas où le formulaire devrait évoluer.</p>
+<pre><code>@@new
+= haml :errors, :layout =&gt; false
+%form(action=&quot;/lapins&quot; method=&quot;POST&quot;)
+  %fieldset
+    %legend Créer un nouveau lapin
+    = haml :form, :layout =&gt; false
+  %p
+    %input(type=&quot;submit&quot; value=&quot;Créer&quot;)
+    ou &lt;a href='/lapins'&gt;Annuler&lt;/a&gt;
+
+@@edit
+= haml :errors, :layout =&gt; false
+%form(action=&quot;/lapins/#{@lapin.id}&quot; method=&quot;POST&quot;)
+  %input(type=&quot;hidden&quot; name=&quot;_method&quot; value=&quot;PUT&quot;)
+  %fieldset
+    %legend Modifier ce lapin
+    = haml :form, :layout =&gt; false
+  %p
+    %input(type=&quot;submit&quot; value=&quot;Modifier&quot;)
+    ou &lt;a href='/lapins'&gt;Annuler&lt;/a&gt;
+</code></pre>
+<p>Voici maintenant le code pour le formulaire &quot;form&quot;. Il contient les champs
+de saisie nécessaire pour chaque propriété de l'objet Lapin. Et comme il est
+affiché depuis les vues &quot;new&quot; et &quot;edit&quot;, toute modification que l'on y ferait
+serait alors visibles dans ces deux vues :</p>
+<pre><code>@@form
+%label(for=&quot;nom&quot;)Nom :
+%input#nom(type=&quot;text&quot; name=&quot;lapin[nom]&quot;value=&quot;#{@lapin.nom}&quot;)
+
+%p
+%label(for=&quot;couleur&quot;)Couleur :
+%select#quantity(name=&quot;lapin[couleur]&quot;)
+  - %w[noir blanc gris marron].each do |couleur|
+    %option{:value =&gt; couleur, :selected =&gt; (true if couleur == @lapin.couleur)}= couleur
+
+%p
+%label(for=&quot;description&quot;) Description :
+%textarea#description(name=&quot;lapin[description]&quot;)
+  =@lapin.description
+
+%p
+%label(for=&quot;quantity&quot;) Age :
+%input#age(type=&quot;text&quot; name=&quot;lapin[age]&quot; value=&quot;#{@lapin.age}&quot;)
+</code></pre>
+<p>Après cela nous avons la vue &quot;errors&quot; qui sera affichée seulement dans le
+cas où DataMapper renvoie des erreurs de validation (par exemple si l'âge saisi
+n'est pas un entier). Son rôle est d'afficher la liste des erreurs rencontrées
+afin de guider l'utilisateur pour qu'il puisse corriger sa saisie :</p>
+<pre><code>@@errors
+-if @lapin.errors.any?
+  %ul#errors
+  -@lapin.errors.each do |error|
+    %li= error
+</code></pre>
+<p>La dernière vue affiche la page pour confirmer la suppression d'un lapin.
+Elle affiche seulement le nom du lapin et demande à l'utilisateur s'il est
+certain de vouloir réellement supprimer ce lapin. Si c'est le cas, on utilise
+un formulaire pour atteindre le gestionnaire Delete. Comme dans le cas du PUT
+destiné au gestionnaire Update, on utilise le champ caché &quot;_method&quot; avec une
+valeur &quot;DELETE&quot; pour simuler une requête HTTP DELETE qu'aucun navigateur ne
+sait gérer de façon native.</p>
+<pre><code>@@delete
+%h3 Souhaitez-vous réellement supprimer #{@lapin.nom} ?
+%form(action=&quot;/lapins/#{@lapin.id}&quot; method=&quot;post&quot;)
+  %input(type=&quot;hidden&quot; name=&quot;_method&quot; value=&quot;DELETE&quot;)
+  %input(type=&quot;submit&quot; value=&quot;Supprimer&quot;)
+  ou &lt;a href='/lapins'&gt;Annuler&lt;/a&gt;
+</code></pre>
+<h2>Conclusion</h2>
+<p>Ça y est, c'est fait. Vous avez maintenant un parfait exemple de la façon de
+gérer des ressources à la sauce REST et vous pouvez voir ce que donne la
+version originale développée par Darren (<a href="http://rabbits.herokuapp.com/rabbits">http://rabbits.herokuapp.com/rabbits</a>) ou ma version francisée
+(<a href="http://lapins.herokuapp.com/lapins">http://lapins.herokuapp.com/lapins</a>).</p>
+<p>Étant donné que ce coup-ci j'ai également complètement traduit l'application
+développée, j'ai aussi cherché si le plugin datamapper-validations pouvait
+renvoyer des messages d'erreurs en français. Mais comme je n'ai pas trouvé
+comment faire, je suis passé par des messages d'erreurs
+personnalisés :</p>
+<pre><code>class Lapin
+  include DataMapper::Resource
+  property :id,           Serial
+  property :nom,          String, :required =&gt; true, :messages =&gt; { :presence =&gt; &quot;Le nom est obligatoire&quot; }
+  property :description,  Text
+  property :age,          Integer, :message =&gt; &quot;L'age doit etre un nombre sans virgule&quot;
+  property :couleur,      String
+  property :created_at,   DateTime
+  property :updated_at,   DateTime
+end
+</code></pre>
+<p>Je ne suis pas certains que ce soit la bonne solution mais ça marche, même
+si je n'ai pas réussi à mettre les circonflexes dans le second message sans
+provoquer d'erreur.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/09/22/y-a-du-boulot/" hreflang="fr-FR">Y&#39;a du boulot !</a>
+  <a rel="next" href="/2011/01/11/c-est-un-metier/" hreflang="fr-FR">C&#39;est un métier</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

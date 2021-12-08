@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Migrer un repository de Mercurial vers Git - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/08/22/migrer-repository-mercurial-git/" />
+<meta property="og:title" content="Migrer un repository de Mercurial vers Git" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/08/22/migrer-repository-mercurial-git/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-08-22T22:50:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-08-22T22:50:00.000Z","datePublished":"2012-08-22T22:50:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/08/22/migrer-repository-mercurial-git/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/08/22/migrer-repository-mercurial-git/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/08/22/migrer-repository-mercurial-git/">Migrer un repository de Mercurial vers Git</a>
+    </h1>
+    <p>
+      <span>2012-08-22</span>
+      <span>#git</span><span>#mercurial</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ça m'a demandé quand même un peu de temps pour réussir à trouver un système
+qui marche et qui soit assez simple à refaire.</p>
+<p>Grosso-modo, il existe 3 méthodes :</p>
+<ul>
+<li>soit passer par le plugin <a href="http://hg-git.github.com/">Hg-Git</a> pour Mercurial,</li>
+<li>soit utiliser <a href="http://repo.or.cz/w/fast-export.git">Fast-Export</a> pour alimenter <a href="http://www.kernel.org/pub/software/scm/git/docs/git-fast-import.html">git-fast-import</a>,</li>
+<li>soit demander à Codeplex de [faire la conversion](http://codeplex.codeplex.com/wikipage?title=CodePlex FAQ#TFStoMercurial) à ma place.</li>
+</ul>
+<p>Comme j'ai pu trouver assez vite comment installer simplement Hg-Git, j'ai
+donc pris cette option.</p>
+<h2>Installation du plugin Hg-Git sous Windows 7 64 bits</h2>
+<p>Au début, ça fait un peu <a href="http://stackoverflow.com/questions/4585776/installing-hg-git-on-windows-7-64bit">peur</a>, mais en fait y'a quasiment <a href="http://tortoisehg.bitbucket.org/manual/1.0/nonhg.html#hg-git-git">rien à faire</a>.</p>
+<p>Étant donné que j'ai la chance d'avoir déjà installé <a href="http://tortoisehg.bitbucket.org/">TortoiseHg</a> sur mon PC, il
+s'avère que je n'ai pas à m'embarrasser avec Python, MSysGit et
+tutti-quanti.</p>
+<p>J'ai juste à cloner le repository de Hg-Git :</p>
+<pre><code>C:\Tools&gt; hg clone http://bitbucket.org/durin42/hg-git/ C:\Tools\hg-git
+</code></pre>
+<p>Puis à activer / configurer Hg-Git et bookmark dans mon fichier
+Mercurial.ini :</p>
+<pre><code>[extensions]
+bookmarks =
+hggit = C:\Tools\hg-git\hggit
+</code></pre>
+<h2>Faire un push de Mercurial vers Git</h2>
+<p>Là aussi, j'ai un peu galéré. Y'avait pas moyen de faire un push de
+Mercurial vers Git. J'ai cherché et essayé tout plein de trucs mais rien n'y
+faisait.</p>
+<p>Jusqu'au moment où je suis tombé sur le blogue d'un danois qui avait tout
+fait comme il faut : <a href="http://rasmuskl.dk/post/Converting-a-Mercurial-repository-to-Git-(Windows).aspx">Converting a Mercurial repository to Git (Windows)</a>.</p>
+<p>Le truc magique, c'est de ne pas pousser vers un repository Git, mais vers
+un repository Git &quot;bare&quot;. La différence entre les deux, c'est que le repository
+Git &quot;bare&quot; correspond uniquement au contenu du dossier &quot;.git&quot; d'un repository
+Git &quot;normal&quot; (cf <a href="http://stackoverflow.com/questions/7861184/what-is-the-difference-between-git-init-and-git-init-bare">What is the difference between &quot;git init&quot; and &quot;git init
+--bare&quot;?</a>).</p>
+<p>Et là, du coup, j'ai pu pousser :</p>
+<pre><code>C:\Gits&gt; md MongoContactsBare
+C:\Gits&gt; cd MongoContactsBare
+C:\Gits\MongoContactsBare&gt; git init --bare
+</code></pre>
+<p>=&gt; <code>Initialized empty Git repository in C:/MVC/MongoContactsBare/</code></p>
+<pre><code>C:\Gits\MongoContacts&gt; cd \Hgs\MongoContacts
+C:\Hgs\MongoContacts&gt; hg bookmark -r default master
+C:\Hgs\MongoContacts&gt; hg push C:/Gits/MongoContacts/Bare
+</code></pre>
+<p>=&gt; <code>pushing to C:/MVC/MongoContactsBare</code></p>
+<p>=&gt; <code>creating and sending data</code></p>
+<p>Ça y est, mon historique est dans mon repository Git &quot;bare&quot;. Reste plus qu'à
+<em>clone the bare repository to a working directory</em>.</p>
+<p>Ça aurait été mieux s'il avait expliqué comment faire, mais j'y suis
+arrivé :</p>
+<pre><code>C:\Hgs\MongoContacts&gt; cd \Gits
+C:\Gits&gt; md MongoContacts
+C:\Gits&gt; git clone -l .\MongoContactsBare .\MongoContacts
+</code></pre>
+<p>=&gt; <code>Cloning into .\MongoContacts...</code></p>
+<p>=&gt; <code>done.</code></p>
+<h2>Finitions</h2>
+<p>Quelques dernières dernières retouches pour avoir un &quot;vrai&quot; repository
+Git :</p>
+<pre><code>C:\Gits&gt; copy .\Repertoir\.gitignore .\MongoContacts
+C:\Gits&gt; del .\MongoContacts\.hgignore
+</code></pre>
+<p>Un fichier readme.md et un petit coup de <a href="http://windows.github.com/">GitHub for Windows</a> plus tard et
+mon projet est archivé chez GitHub !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/08/14/view-loading-vs-eager-loading/" hreflang="fr-FR">View Loading vs Eager loading</a>
+  <a rel="next" href="/2012/09/05/verifier-numero-siret-poste/" hreflang="fr-FR">Vérifier un numéro de siret de la Poste</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

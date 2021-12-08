@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer un projet TypeScript sous Visual Code - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2016/10/13/creer-projet-typescript-visual-code/" />
+<meta property="og:title" content="Créer un projet TypeScript sous Visual Code" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2016/10/13/creer-projet-typescript-visual-code/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-10-13T21:10:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2016-10-13T21:10:00.000Z","datePublished":"2016-10-13T21:10:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2016/10/13/creer-projet-typescript-visual-code/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2016/10/13/creer-projet-typescript-visual-code/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2016/10/13/creer-projet-typescript-visual-code/">Créer un projet TypeScript sous Visual Code</a>
+    </h1>
+    <p>
+      <span>2016-10-13</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Source : <a href="https://code.visualstudio.com/Docs/languages/typescript">https://code.visualstudio.com/Docs/languages/typescript</a></p>
+<h2>Créer un projet</h2>
+<pre><code>C:\Code&gt; md Test1
+C:\Code&gt; cd Test1
+C:\Code\Test1&gt; _
+</code></pre>
+<h2>Ouvrir ce projet</h2>
+<pre><code>C:\Code\Test1&gt; code .
+</code></pre>
+<h2>Créer le fichier tsconfig.json</h2>
+<p>Le fichier &quot;tsconfig.json&quot; sert à indiquer que le répertoire dans lequel il se
+situe est un projet TypeScript.</p>
+<p>Il permet aussi de paramétrer les options pour que le compilateur TypeScript
+sache comment générer les fichiers JS à partir des fichiers TS.</p>
+<pre><code>{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es5&quot;,
+    &quot;module&quot;: &quot;commonjs&quot;,
+    &quot;sourceMap&quot;: true
+  }
+}
+</code></pre>
+<h2>Créer un fichier test.ts</h2>
+<pre><code>class Startup {
+  public static main(): number {
+    console.log('Hello World');
+    return 0;
+  }
+}
+
+Startup.main();
+</code></pre>
+<p><em>Note : Shilt+Alt+P permet de reformater le code.</em></p>
+<h2>Créer le fichier tasks.json</h2>
+<p>Ce fichier sert à paramétrer les tâches dans Visual Code.</p>
+<ul>
+<li>Ctrl+Shift+P =&gt; Command Palette</li>
+<li>Taper &quot;Configure Task Runner&quot; et &lt;Entrée&gt;</li>
+<li>Sélectionner la ligne &quot;TypeScript - tsconfig.json : Compiles a TypeScript
+project&quot;</li>
+<li>Cela crée un fichier .vscode/tasks.json</li>
+</ul>
+<pre><code>{
+  // See http://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;command&quot;: &quot;tsc&quot;,
+  &quot;isShellCommand&quot;: true,
+  &quot;args&quot;: [&quot;-p&quot;, &quot;.&quot;],
+  &quot;showOutput&quot;: &quot;silent&quot;,
+  &quot;problemMatcher&quot;: &quot;$tsc&quot;
+}
+</code></pre>
+<p><em>Note : Cette tâche compile un projet TypeScript, il faut donc avoir un fichier
+&quot;tsconfig.json&quot; pour que le répertoire soit considéré comme un projet.</em></p>
+<h2>Générer le fichier test.js via Visual Code</h2>
+<ul>
+<li>Ctrl+Shift+B (Run Build Task) =&gt;
+<ul>
+<li>génère le fichier test.js</li>
+<li>et aussi test.js.map</li>
+</ul>
+</li>
+</ul>
+<pre><code>var Startup = (function () {
+  function Startup() {
+  }
+  Startup.main = function () {
+    console.log('Hello World');
+    return 0;
+  };
+  return Startup;
+}());
+Startup.main();
+//# sourceMappingURL=test.js.map
+</code></pre>
+<h2>Générer le fichier test.js via la ligne de commande</h2>
+<ul>
+<li>Ctrl+ù =&gt; ouvre le terminal intégré de Visual Code</li>
+</ul>
+<pre><code>c:\Code\Test1&gt; tsc
+
+c:\Code\Test1&gt; _
+</code></pre>
+<p>=&gt; génère le fichier test.js (et aussi test.js.map).</p>
+<p><em>Note : Ça marche aussi avec un terminal externe tel que l'invite de commande de
+Windows.</em></p>
+<h2>Générer le fichier à chaque enregistrement</h2>
+<p>Il faut modifier le fichier &quot;tasks.json&quot; de la façon suivante :</p>
+<pre><code>{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;command&quot;: &quot;tsc&quot;,
+  &quot;isShellCommand&quot;: true,
+  &quot;args&quot;: [&quot;-w&quot;, &quot;-p&quot;, &quot;.&quot;],
+  &quot;showOutput&quot;: &quot;silent&quot;,
+  &quot;isWatching&quot;: true,
+  &quot;problemMatcher&quot;: &quot;$tsc-watch&quot;
+}
+</code></pre>
+<p>Puis Ctrl+Shift+B pour lancer la tâche et se mettre à observer les
+modifications.</p>
+<p><em>Note : Pour créer directement une tâche qui compile à chaque enregistrement, il
+est possible de configurer l'exécuteur de tâche en sélectionnant &quot;TypeScript -
+Watch Mode : Compiles a TypeScript project in watch mode&quot;.</em></p>
+<h2>Exécuter le fichier test.js</h2>
+<p>À faire depuis le terminal :</p>
+<pre><code>c:\Code\Test1&gt; node test.js
+Hello World
+
+c:\Code\Test1&gt; _
+</code></pre>
+<h2>Débuguer le code</h2>
+<ul>
+<li>Ctrl+Shift+D =&gt; ouvre la vue débugueur</li>
+<li>Cliquer sur l'engrenage pour sélectionner un environnement :
+<ul>
+<li>Node.js</li>
+<li>VSCode Extension Development</li>
+<li>.NET Core</li>
+</ul>
+</li>
+<li>Choisir &quot;Node.js&quot; =&gt; génère un fichier &quot;.vscode/launch.json&quot;</li>
+<li>Y modifier <code>program</code> et <code>sourceMaps</code></li>
+</ul>
+<pre><code>{
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [
+    {
+      &quot;name&quot;: &quot;Launch&quot;,
+      &quot;type&quot;: &quot;node&quot;,
+      &quot;request&quot;: &quot;launch&quot;,
+ ---&gt; &quot;program&quot;: &quot;${workspaceRoot}/test.js&quot;,
+      &quot;stopOnEntry&quot;: false,
+      &quot;args&quot;: [],
+      &quot;cwd&quot;: &quot;${workspaceRoot}&quot;,
+      &quot;preLaunchTask&quot;: null,
+      &quot;runtimeExecutable&quot;: null,
+      &quot;runtimeArgs&quot;: [
+        &quot;--nolazy&quot;
+      ],
+      &quot;env&quot;: {
+        &quot;NODE_ENV&quot;: &quot;development&quot;
+      },
+      &quot;console&quot;: &quot;internalConsole&quot;,
+ ---&gt; &quot;sourceMaps&quot;: true,
+      &quot;outDir&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;Attach&quot;,
+      &quot;type&quot;: &quot;node&quot;,
+      &quot;request&quot;: &quot;attach&quot;,
+      &quot;port&quot;: 5858,
+      &quot;address&quot;: &quot;localhost&quot;,
+      &quot;restart&quot;: false,
+      &quot;sourceMaps&quot;: false,
+      &quot;outDir&quot;: null,
+      &quot;localRoot&quot;: &quot;${workspaceRoot}&quot;,
+      &quot;remoteRoot&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;Attach to Process&quot;,
+      &quot;type&quot;: &quot;node&quot;,
+      &quot;request&quot;: &quot;attach&quot;,
+      &quot;processId&quot;: &quot;${command.PickProcess}&quot;,
+      &quot;port&quot;: 5858,
+      &quot;sourceMaps&quot;: false,
+      &quot;outDir&quot;: null
+    }
+  ]
+}
+</code></pre>
+<ul>
+<li>Ctrl+Shift+Y =&gt; affiche éventuellement la console de débugage</li>
+<li>F5 =&gt; lance le débugage</li>
+</ul>
+<pre><code>node --debug-brk=30135 --nolazy test.js
+Debugger listening on [::]:30135
+Hello World
+</code></pre>
+<p>Il est également possible de définir un point d'arrêt dans le code typescript :</p>
+<ul>
+<li>F9 sur la ligne</li>
+<li>Clic dans la marge gauche de la ligne</li>
+</ul>
+<p>Puis F5 pour lancer le débugage puis F10 ou F11 pour tracer le code au fur et à
+mesure de son exécution...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2016/10/10/installer-visual-code-node-js-typescript/" hreflang="fr-FR">Installer Visual Code, Node.js et TypeScript</a>
+  <a rel="next" href="/2016/10/19/creer-projet-node-js-visual-code/" hreflang="fr-FR">Créer un projet Node.js sous Visual Code</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

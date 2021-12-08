@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Validation XTable.cs - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/10/23/validation-xtable-cs/" />
+<meta property="og:title" content="Validation XTable.cs" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/10/23/validation-xtable-cs/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-10-23T07:28:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-10-23T07:28:00.000Z","datePublished":"2005-10-23T07:28:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/10/23/validation-xtable-cs/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/10/23/validation-xtable-cs/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/10/23/validation-xtable-cs/">Validation XTable.cs</a>
+    </h1>
+    <p>
+      <span>2005-10-23</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Les urls générées par la classe XTable sont désormais relatives à la page en
+cours (ie à partir du point d'interrogation) ce qui réduit (un peu) la taille
+du code html.</p>
+<p>Par ailleurs, plusieurs autres modifications de façon à permettre la
+validation xhtml du code généré :</p>
+<ul>
+<li>en cas d'id généré automatiquement, celui-ci est préfixé par &quot;xt_&quot; de façon
+à ne jamais débuter par un chiffre,</li>
+<li>correction oubli des balises &lt;tr&gt;&lt;/tr&gt; lors de l'ajout d'une
+ligne &quot;blanche&quot; dans le cas où la XTable est vide,</li>
+<li>simplification du code généré pour le pied de table.</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/10/22/listbox-mode-consultation/" hreflang="fr-FR">ListBox en mode consultation</a>
+  <a rel="next" href="/2005/10/23/validation-xhtml-cs/" hreflang="fr-FR">Validation XHtml.cs</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

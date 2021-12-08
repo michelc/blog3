@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test-Driven Development avec ASP.NET MVC (suite) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/10/09/test-driven-development-aspnetmvc-suite/" />
+<meta property="og:title" content="Test-Driven Development avec ASP.NET MVC (suite)" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/10/09/test-driven-development-aspnetmvc-suite/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-10-09T09:55:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-10-09T09:55:00.000Z","datePublished":"2009-10-09T09:55:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/10/09/test-driven-development-aspnetmvc-suite/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/10/09/test-driven-development-aspnetmvc-suite/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/10/09/test-driven-development-aspnetmvc-suite/">Test-Driven Development avec ASP.NET MVC (suite)</a>
+    </h1>
+    <p>
+      <span>2009-10-09</span>
+      <span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Je continue ma formation ASP.NET MVC avec la suite de la <a href="/2009/10/06/test-driven-development-aspnetmvc/" title="Test-Driven Development avec ASP.NET MVC (le début)">6°
+partie du tutoriel pour gérer des contacts</a> qui est consacrée à la
+Programmation Pilotée par les Tests (ou Test-Driven Development en
+anglais).</p>
+<h2>Point de départ</h2>
+<p>Jusqu'ici, j'ai donc abordé les deux premières étapes sur les trois que
+compte la méthode TDD :</p>
+<ul>
+<li><s>Ecrire un test unitaire qui échoue (Rouge)</s></li>
+<li><s>Ecrire un code qui passe le test unitaire avec succès
+(Vert)</s></li>
+<li>Revoir l'architecture de votre code (Refactoring)</li>
+</ul>
+<p>Pour résumer l'épisode précédent, il fallait modifier l'application des
+gestion de contacts pour ajouter une notion de groupe de contacts. Comme point
+de départ, on avait 3 scénarios utilisateur (lister les groupes, créer un
+groupe et valider un groupe) et on a appliqué les 2 premières étape du
+TDD :</p>
+<ul>
+<li>Etape 1 : on écrit des tests unitaires pour vérifier les
+fonctionnalités attendues (et ces tests échouent car non compilables)</li>
+<li>Etape 2 : on écrit le minimum de code pour que les tests unitaires
+réussissent</li>
+</ul>
+<h2>Refactoring</h2>
+<p>J'en arrive donc à l'étape 3 : revoir l'architecture du code
+(refactoriser). Aux deux premières étapes du TDD, l'objectif est de se
+concentrer sur les tests unitaires destinés à vérifier que les fonctionnalités
+sont biens implémentées, sans se prendre la tête sur la &quot;bonne&quot; façon de faire.
+Ce n'est qu'à partir de cette troisième étape qu'il faut chercher à produire du
+&quot;bon&quot; code. Et on peut toucher à notre premier jet de code l'esprit libre,
+puisqu'on s'est blindé grâce à nos tests unitaires qui vont nous empêcher de
+casser quoi que ce soit d'important.</p>
+<p>Dans le cas présent, le refactoring va consister à réviser le code du
+contrôleur GroupController qui mélange un peu tout pour le rendre plus conforme
+au Single Responsibility Principle comme on l'avait déjà fait dans la <a href="/2009/09/23/troisieme-etape-aspnetmvc/" title="Refactoring avec ASP.NET MVC">4° partie du tutoriel</a>
+pour le contrôleur ContactController.</p>
+<p>Pour cela, on va modifier le contrôleur pour qu'il utilise la couche de
+service ContactManagerService que l'on avait mis en place pour le contrôleur
+ContactController. C'est assez simple et il suffit de taper le code source
+fourni dans le tutoriel. Il y manque quelques <code>using ContactManager.Models.Validation;</code> et il faut bien penser à modifier
+aussi les fichiers interfaces, mais c'est <strong>OK pour la 3° étape du
+TDD</strong>.</p>
+<p>Ça avance, mais je me pose quand même des questions.</p>
+<ul>
+<li>Est-ce que ça prendrait vraiment beaucoup plus de temps si on avait fait
+&quot;bien&quot; dès le premier coup ?</li>
+<li>Et même, est-ce qu'une fois qu'on a l'habitude d'utiliser les couches
+service et repository, est-ce que ce n'est pas plus long de se souvenir comment
+écrire du code qui ne s'en sert pas ?</li>
+<li>Et surtout, il n'y a pas de 4° étape dans le TDD et pourtant je n'ai encore
+rien qui gère des groupes de contacts pour de &quot;vrai&quot; !</li>
+</ul>
+<h2>Coup d'oeil en arrière</h2>
+<p>Sinon, cette partie du tutoriel m'a fait prendre conscience d'un truc auquel
+je n'avais pas fait attention lors de la partie sur le refactoring. En fait, la
+classe repository et la classe service servent pour toute l'application et pas
+seulement dans le cas de la table Contact. C'est d'ailleurs pour ça qu'elles
+s'appellent ContactManagerRepository et ContactManagerService et pas seulement
+ContactRepository et ContactService.</p>
+<p>Ça non plus, je sais pas trop si ça me plait bien. J'ai un peu peur qu'à la
+fin on risque de se retrouver avec un source énorme si notre application doit
+gérer un très grand nombre de tables. Sans compter que ça devient génant dans
+le cas des FakeRepository où on devra donc tout implémenter à coup de
+<code>throw new NotImplementedException()</code> (et revenir dessus en
+permanence dès qu'on ajoutera des signatures à l'interface).</p>
+<p>Mais je suppose qu'il n'est pas totalement incongru d'avoir des &quot;sous&quot;
+repository pour différents tables (ou peut-être des classes partielles ?). A
+voir...</p>
+<h2>Sous le coude</h2>
+<p>Je vais continuer avec la suite de cette 6° partie qui va enfin s'attaquer à
+la réalisation des fonctionnalités pour de &quot;vrai&quot;. Mais si j'ai un peu de
+temps, j'aimerai bien essayer d'approfondir tout ça pour voir comment
+implémenter les autres scénarios utilisateurs selon la méthode TDD :</p>
+<ul>
+<li>L'utilisateur peut supprimer un groupe de contacts existant</li>
+<li>L'utilisateur peut sélectionner un groupe lorsqu'il crée un nouveau
+contact</li>
+<li>L'utilisateur peut sélectionner un groupe lorsqu'il édite un contact
+existant</li>
+<li>La liste des groupes de contacts est affichée dans la vue Index</li>
+<li>Lorsqu'un utilisateur clique sur un groupe, la liste de contacts associée
+est affichée</li>
+</ul>
+<p>(Bien que pour l'instant je ne vois pas trop quel test unitaire faire pour
+vérifier la suppression d'un groupe de contacts.)</p>
+<p>Ou en attendant tout ça, deux liens assez intéressant sur les TDD :</p>
+<ul>
+<li>Une <a href="http://www.rubyfrance.org/documentations/tdd/">initiation au Développement piloté par les Tests</a> sur le site de Ruby
+France</li>
+<li>Un <a href="http://blog.olivier-duval.info/?post/2008/09/29/TDD-integration-continue">compte-rendu d'une formation au TDD</a> par Olivier Duval</li>
+</ul>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/10/20/test-driven-development-aspnetmvc-suite/">Test-Driven Development avec ASP.NET MVC (suite)</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/08/tuer-code-reussir/" hreflang="fr-FR">Tuer du code pour réussir</a>
+  <a rel="next" href="/2009/10/14/types-implicites-c-sharp/" hreflang="fr-FR">Les types implicites en c#</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

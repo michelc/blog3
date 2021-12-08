@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Scaffolding, Eager loading et ViewModel - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/11/17/mvc-scaffolding-eager-loading-viewmodel/" />
+<meta property="og:title" content="MVC Scaffolding, Eager loading et ViewModel" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/11/17/mvc-scaffolding-eager-loading-viewmodel/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-11-17T17:53:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-11-17T17:53:00.000Z","datePublished":"2011-11-17T17:53:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/11/17/mvc-scaffolding-eager-loading-viewmodel/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/11/17/mvc-scaffolding-eager-loading-viewmodel/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/11/17/mvc-scaffolding-eager-loading-viewmodel/">MVC Scaffolding, Eager loading et ViewModel</a>
+    </h1>
+    <p>
+      <span>2011-11-17</span>
+      <span>#ef</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour tenter de mettre au point une méthode simple(iste) pour construire une
+application avec ASP.NET MVC, j'essaie de développer une petite application
+destinées à générer une brochure de voyages . Pour cela, je dois gérer une base
+de données avec une table &quot;Voyages&quot;, une table &quot;Tarifs&quot; pour enregistrer les
+chaque tarif du voyage et une table &quot;Parties&quot; qui sert à décrire les
+différentes étapes du voyage.</p>
+<h2>Eager loading pour les actions Index</h2>
+<p>Pour l'instant, j'ai plus ou moins laissé <a href="http://mvcscaffolding.codeplex.com/">MVC Scaffolding</a> écrire
+mon code pour la classe Voyage associée à la table Voyages. Par défaut, il a
+généré le code C# suivant pour l'action Index du contrôleur VoyagesController
+afin retrouver tous les voyages à afficher :</p>
+<pre><code>var voyages = voyageRepository
+    .AllIncluding(voyage =&gt; voyage.Parties, voyage =&gt; voyage.Tarifs)
+    .OrderBy(voyage =&gt; voyage.Position)
+    .ThenBy(voyage =&gt; voyage.Title);
+</code></pre>
+<p>Ce qui correspond à quelque chose dans ce genre si on ne passe pas par un
+Repository :</p>
+<pre><code>var voyages = context
+    .Voyages
+    .Include(voyage =&gt; voyage.Parties)
+    .Include(voyage =&gt; voyage.Tarifs)
+    .OrderBy(voyage =&gt; voyage.Position)
+    .ThenBy(voyage =&gt; voyage.Title);
+</code></pre>
+<p>Ces deux codes C# ont tous les deux pour effet de générer une (grosse)
+requête SQL qui charge à la fois le contenu de la table Voyages et par des
+jointures celui des tables Parties et Tarifs :</p>
+<pre><code>SELECT
+[UnionAll1].[VoyageID] AS [C1],
+[UnionAll1].[VoyageID1] AS [C2],
+[UnionAll1].[Position1] AS [C3],
+[UnionAll1].[Title1] AS [C4],
+[UnionAll1].[VoyageType] AS [C5],
+[UnionAll1].[Notes] AS [C6],
+[UnionAll1].[C1] AS [C7],
+[UnionAll1].[PartieID] AS [C8],
+[UnionAll1].[VoyageID2] AS [C9],
+[UnionAll1].[Position2] AS [C10],
+[UnionAll1].[PartieType] AS [C11],
+[UnionAll1].[Content] AS [C12],
+[UnionAll1].[C2] AS [C13],
+[UnionAll1].[C3] AS [C14],
+[UnionAll1].[C4] AS [C15],
+[UnionAll1].[C5] AS [C16],
+[UnionAll1].[C6] AS [C17],
+[UnionAll1].[C7] AS [C18],
+[UnionAll1].[C8] AS [C19],
+[UnionAll1].[C9] AS [C20],
+[UnionAll1].[C10] AS [C21],
+[UnionAll1].[C11] AS [C22]
+FROM  (SELECT
+        CASE WHEN ([Extent2].[PartieID] IS NULL) THEN CAST(NULL AS int) ELSE 1 END AS [C1],
+        [Extent1].[Position] AS [Position],
+        [Extent1].[Title] AS [Title],
+        [Extent1].[VoyageID] AS [VoyageID],
+        [Extent1].[VoyageID] AS [VoyageID1],
+        [Extent1].[Position] AS [Position1],
+        [Extent1].[Title] AS [Title1],
+        [Extent1].[VoyageType] AS [VoyageType],
+        [Extent1].[Notes] AS [Notes],
+        [Extent2].[PartieID] AS [PartieID],
+        [Extent2].[VoyageID] AS [VoyageID2],
+        [Extent2].[Position] AS [Position2],
+        [Extent2].[PartieType] AS [PartieType],
+        [Extent2].[Content] AS [Content],
+        CAST(NULL AS int) AS [C2],
+        CAST(NULL AS int) AS [C3],
+        CAST(NULL AS nvarchar(1)) AS [C4],
+        CAST(NULL AS nvarchar(1)) AS [C5],
+        CAST(NULL AS real) AS [C6],
+        CAST(NULL AS real) AS [C7],
+        CAST(NULL AS real) AS [C8],
+        CAST(NULL AS real) AS [C9],
+        CAST(NULL AS real) AS [C10],
+        CAST(NULL AS nvarchar(1)) AS [C11]
+        FROM  [Voyages] AS [Extent1]
+        LEFT OUTER JOIN [Parties] AS [Extent2] ON [Extent1].[VoyageID] = [Extent2].[VoyageID]
+UNION ALL
+        SELECT
+        2 AS [C1],
+        [Extent3].[Position] AS [Position],
+        [Extent3].[Title] AS [Title],
+        [Extent3].[VoyageID] AS [VoyageID],
+        [Extent3].[VoyageID] AS [VoyageID1],
+        [Extent3].[Position] AS [Position1],
+        [Extent3].[Title] AS [Title1],
+        [Extent3].[VoyageType] AS [VoyageType],
+        [Extent3].[Notes] AS [Notes],
+        CAST(NULL AS int) AS [C2],
+        CAST(NULL AS int) AS [C3],
+        CAST(NULL AS int) AS [C4],
+        CAST(NULL AS int) AS [C5],
+        CAST(NULL AS nvarchar(1)) AS [C6],
+        [Extent4].[TarifID] AS [TarifID],
+        [Extent4].[VoyageID] AS [VoyageID2],
+        [Extent4].[Title] AS [Title2],
+        [Extent4].[Year] AS [Year],
+        [Extent4].[Prix1] AS [Prix1],
+        [Extent4].[Prix2] AS [Prix2],
+        [Extent4].[Prix3] AS [Prix3],
+        [Extent4].[Prix4] AS [Prix4],
+        [Extent4].[Prix5] AS [Prix5],
+        [Extent4].[Notes] AS [Notes1]
+        FROM  [Voyages] AS [Extent3]
+        INNER JOIN [Tarifs] AS [Extent4] ON [Extent3].[VoyageID] = [Extent4].[VoyageID]) AS [UnionAll1]
+ORDER BY [UnionAll1].[Position] ASC, [UnionAll1].[Title] ASC, [UnionAll1].[VoyageID1] ASC, [UnionAll1].[C1] ASC
+</code></pre>
+<p>Puis dans la vue Index.cshtml, on utilise le
+<code>IEnumerable&lt;Voyage&gt;</code> obtenu pour afficher une liste des
+voyages, avec pour chacun d'entre eux le nombre de parties qui composent sa
+description détaillée et le nombre de tarifs définis pour ce voyage.</p>
+<pre><code>@foreach (var item in Model) {
+  &lt;tr&gt;
+    &lt;td&gt;
+      @Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { id = item.VoyageID })
+    &lt;/td&gt;
+    &lt;td&gt;
+      @item.Position
+    &lt;/td&gt;
+    &lt;td&gt;
+      @Html.ActionLink(@item.Title, &quot;Details&quot;, new { id = item.VoyageID })
+    &lt;/td&gt;
+    &lt;td&gt;
+      @Html.DisplayTextFor(_ =&gt; item.TypeVoyage).ToString()
+    &lt;/td&gt;
+    &lt;td&gt;
+      @(item.Parties == null ? &quot;&quot; : item.Parties.Count.ToString())
+    &lt;/td&gt;
+    &lt;td&gt;
+      @(item.Tarifs == null ? &quot;&quot; : item.Tarifs.Count.ToString())
+    &lt;/td&gt;
+    &lt;td&gt;
+      @Html.ActionLink(&quot;Delete&quot;, &quot;Delete&quot;, new { id = item.VoyageID })
+    &lt;/td&gt;
+  &lt;/tr&gt;
+}
+</code></pre>
+<p>Ce qui est intéressant, c'est que MVC Scaffolding fait automatiquement du
+&quot;Eager Loading&quot; pour que les instructions
+<code>item.Parties.Count.ToString()</code> et
+<code>item.Tarifs.Count.ToString()</code> en boucle ne provoquent pas autant
+d'accès à la base de données qu'il y a de voyage à afficher.</p>
+<h2>Lazy loading et SELECT N+1</h2>
+<p>En effet, si par défaut, MVC Scaffolding n'avait pas fait le lien avec les
+parties et les tarifs et qu'il se soit contenté de générer le code C#
+suivant :</p>
+<pre><code>var voyages = voyageRepository
+    .All
+    .OrderBy(voyage =&gt; voyage.Position)
+    .ThenBy(voyage =&gt; voyage.Title);
+</code></pre>
+<p>Ou sans le Repository :</p>
+<pre><code>var voyages = context
+    .Voyages
+    .OrderBy(voyage =&gt; voyage.Position)
+    .ThenBy(voyage =&gt; voyage.Title);
+</code></pre>
+<p>Alors la consultation de la page Index n'aurait pas généré 1 seule requête,
+mais 71 !!!</p>
+<p>Soit 1 première requête toute simple pour charger la liste des 35
+voyages :</p>
+<pre><code>SELECT
+[Extent1].[VoyageID] AS [VoyageID],
+[Extent1].[Position] AS [Position],
+[Extent1].[Title] AS [Title],
+[Extent1].[VoyageType] AS [VoyageType],
+[Extent1].[Notes] AS [Notes]
+FROM [Voyages] AS [Extent1]
+ORDER BY [Extent1].[Position] ASC, [Extent1].[Title] ASC
+</code></pre>
+<p>Puis 35 requêtes pour charger successivement les parties de chacun des 35
+voyages :</p>
+<pre><code>SELECT
+[Extent1].[PartieID] AS [PartieID],
+[Extent1].[VoyageID] AS [VoyageID],
+[Extent1].[Position] AS [Position],
+[Extent1].[PartieType] AS [PartieType],
+[Extent1].[Content] AS [Content]
+FROM [Parties] AS [Extent1]
+WHERE [Extent1].[VoyageID] = @EntityKeyValue1
+</code></pre>
+<p>Et encore 35 requêtes pour charger successivement les tarifs de chacun des
+35 voyages :</p>
+<pre><code>SELECT
+[Extent1].[TarifID] AS [TarifID],
+[Extent1].[VoyageID] AS [VoyageID],
+[Extent1].[Title] AS [Title],
+[Extent1].[Year] AS [Year],
+[Extent1].[Prix1] AS [Prix1],
+[Extent1].[Prix2] AS [Prix2],
+[Extent1].[Prix3] AS [Prix3],
+[Extent1].[Prix4] AS [Prix4],
+[Extent1].[Prix5] AS [Prix5],
+[Extent1].[Notes] AS [Notes]
+FROM [Tarifs] AS [Extent1]
+WHERE [Extent1].[VoyageID] = @EntityKeyValue1
+</code></pre>
+<p>Par rapport à l'eager loading, ici on a fait du &quot;lazy loading&quot; : les
+entités enfants ne sont chargées que lorsque on y accède. Des fois c'est bien.
+Des fois c'est mal. Mais heureusement, MVC Scaffolding qui a pensé à tout est
+est assez malin pour nous éviter l'écueil du <a href="http://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem">SELECT N+1</a> quand on génère l'action Index (<a href="http://blog.stevensanderson.com/2011/01/28/mvcscaffolding-one-to-many-relationships/">merci Scott</a>).</p>
+<h2>Lazy loading et virtual</h2>
+<p>Pour être complet, c'est parce que les propriétés Parties et Tarifs de la
+classe Voyage sont déclarées en tant que propriétés virtuelles, que Entity
+Framework a fait du &quot;lazy loading&quot;.</p>
+<p>Ainsi, si au lieu d'utiliser <code>virtual</code> pour les
+déclarer :</p>
+<pre><code>public virtual ICollection&lt;Partie&gt; Parties { get; set; }
+public virtual ICollection&lt;Tarif&gt; Tarifs { get; set; }
+</code></pre>
+<p>On s'était contenté de :</p>
+<pre><code>public ICollection&lt;Partie&gt; Parties { get; set; }
+public ICollection&lt;Tarif&gt; Tarifs { get; set; }
+</code></pre>
+<p>Alors la consultation de la page Index n'aurait plus généré qu'une seule
+requête pour charger uniquement les données de la table des voyages (pas de
+eager loading puisque on n'a pas d'<code>Include</code>) :</p>
+<pre><code>SELECT
+[Extent1].[VoyageID] AS [VoyageID],
+[Extent1].[Position] AS [Position],
+[Extent1].[Title] AS [Title],
+[Extent1].[VoyageType] AS [VoyageType],
+[Extent1].[Notes] AS [Notes]
+FROM [Voyages] AS [Extent1]
+ORDER BY [Extent1].[Position] ASC, [Extent1].[Title] ASC
+</code></pre>
+<p>Et puis c'est tout ! Comme on n'a pas de <code>virtual</code>, Entity
+Framework ne fait pas non plus de lazy loading et ne cherche donc pas à charger
+les parties et les tarifs.</p>
+<p>C'est pour cela que les colonnes nombre de parties et nombre de tarifs
+restent vides puisque les instructions <code>item.Parties == null ? &quot;&quot; : item.Xxxxxx.Count.ToString()</code> sont là pour gérer le fait que
+les collections voyage.Parties et voyage.Tarifs sont nulles.</p>
+<p>Par contre, même sans le <code>virtual</code>, si on demande à faire de
+l'eager loading à grand coups de <code>Include</code>, on retombe bien sur la
+grosse requête qui accède par jointure aux tables Voyages, Parties et
+Tarifs.</p>
+<h2>Action Index et ViewModel</h2>
+<p>À titre personnel, je trouve malgré tout que la requête SQL générée par
+Entity Framework est un peu lourde pour ce qu'on en fait. Alors que le but est
+simplement d'afficher le nombre de parties et de tarifs d'un voyage, on se
+retrouve quand même à charger toutes les parties et tous les tarifs de tous les
+voyages, ce qui revient donc à charger l'intégralité des tables Parties et
+Tarifs.</p>
+<p><em>Note : Si on avait une pagination par paquet de 20
+voyages, ça serait un peu mieux puisque cela reviendrait &quot;seulement&quot; à charger
+toutes les parties et tous les tarifs correspondant à 20 voyages
+uniquement.</em></p>
+<p>Dans l'idéal, il faudrait donc récupérer les informations de base de chaque
+voyage sans ses propriétés voyage.Parties et voyage.Tarifs, plus le nombre de
+ses parties et le nombre de ses tarifs. Ce qui pourrait être représenté par la
+classe ViewModel suivante :</p>
+<pre><code>public class VoyageViewModel
+{
+    public int VoyageID { get; set; }
+    public int Position { get; set; }
+    public string Title { get; set; }
+    public int VoyageType { get; set; }
+    public int TarifsCount { get; set; }
+    public int PartiesCount { get; set; }
+}
+</code></pre>
+<p>Le fait d'utiliser un ViewModel est d'autant plus intéressant qu'une liste
+n'est pas là pour afficher la totalité des propriétés d'une entité, mais
+seulement quelques informations essentielles pour remplir son rôle, à savoir
+permettre de retrouver d'un coup d'oeil les informations qui comptent et
+éventuellement accéder au détail de la fiche pour consulter l'ensemble de ses
+données.</p>
+<p>Par exemple, si j'ai une table Contacts avec civilité, nom, prénom,
+téléphone, portable, fax, email, adresse, code postal, ville, pays, format pour
+les emails, date de naissance, etc... je ne veux pas d'une liste qui fassent 50
+colonnes pour afficher tout ça. Je préfère sacrifier quelques détails et me
+contenter d'une liste édulcorée mais lisible.</p>
+<p>Pour résumer, je pense que dans le cas d'une liste (au moins), il est
+préférable d'employer un objet ViewModel spécifique pour collecter les données
+importantes puis de transmettre cet objet à la vue pour qu'elle présente ces
+informations à l'utilisateur.</p>
+<p>Cela implique donc de créer une classe ViewModel &quot;VoyagesIndex&quot; (nommée
+d'après le nom du contrôleur (VoyagesController) et de l'action (Index) qui va
+l'utiliser) :</p>
+<pre><code>public class VoyagesIndex
+{
+    public int VoyageID { get; set; }
+    public int Position { get; set; }
+    public string Title { get; set; }
+    public int VoyageType { get; set; }
+    public int TarifsCount { get; set; }
+    public int PartiesCount { get; set; }
+
+    public VoyageType TypeVoyage
+    {
+        get { return (VoyageType)VoyageType; }
+        set { VoyageType = (int)value; }
+    }
+}
+</code></pre>
+<p><em>Note : <code>public VoyageType TypeVoyage</code> est
+une bidouille qui n'a rien à voir avec le sujet et que j'essairai d'expliquer
+plus tard si je persiste à passer par elle.</em></p>
+<p>Il faut ensuite modifier le code de l'action Index pour qu'elle récupère une
+collection de VoyagesIndex et plus une collection d'objets Voyage :</p>
+<pre><code>var voyages = voyageRepository
+    .All
+    .OrderBy(voyage =&gt; voyage.Position)
+    .ThenBy(voyage =&gt; voyage.Title)
+    .Select(voyage =&gt; new VoyagesIndex
+    {
+        VoyageID = voyage.VoyageID
+        Position = voyage.Position,
+        Title = voyage.Title,
+        VoyageType = voyage.VoyageType,
+        TarifsCount = voyage.Tarifs.Count(),
+        PartiesCount = voyage.Parties.Count()
+    }).ToList();
+</code></pre>
+<p>Et pour finir modifier la vue Index.cshtml pour qu'elle utilise désormais un
+<code>IEnumerable&lt;VoyagesIndex&gt;</code> pour afficher son
+contenu :</p>
+<pre><code>@foreach (var item in Model) {
+  &lt;tr&gt;
+    &lt;td&gt;
+      @Html.ActionLink(&quot;Edit&quot;, &quot;Edit&quot;, new { id = item.VoyageID })
+    &lt;/td&gt;
+    &lt;td&gt;
+      @item.Position
+    &lt;/td&gt;
+    &lt;td&gt;
+      @Html.ActionLink(@item.Title, &quot;Details&quot;, new { id = item.VoyageID })
+    &lt;/td&gt;
+    &lt;td&gt;
+      @item.TypeVoyage.ToString()
+    &lt;/td&gt;
+    &lt;td&gt;
+      @item.PartiesCount
+    &lt;/td&gt;
+    &lt;td&gt;
+      @item.TarifsCount
+    &lt;/td&gt;
+    &lt;td&gt;
+      @Html.ActionLink(&quot;Delete&quot;, &quot;Delete&quot;, new { id = item.VoyageID })
+    &lt;/td&gt;
+  &lt;/tr&gt;
+}
+</code></pre>
+<p>Grâce à quoi la requête SQL générée quand on consulte la page Index est un
+peu plus simple à lire, et normalement plus efficace puisqu'elle ne cherche pas
+à charger les tables Parties et Tarifs.</p>
+<pre><code>SELECT
+[Project2].[VoyageID] AS [VoyageID],
+[Project2].[Position] AS [Position],
+[Project2].[Title] AS [Title],
+[Project2].[VoyageType] AS [VoyageType],
+[Project2].[C1] AS [C1],
+[Project2].[C2] AS [C2]
+FROM ( SELECT
+        [Project1].[VoyageID] AS [VoyageID],
+        [Project1].[Position] AS [Position],
+        [Project1].[Title] AS [Title],
+        [Project1].[VoyageType] AS [VoyageType],
+        [Project1].[C1] AS [C1],
+        [SSQTAB1].[A1] AS [C2]
+        FROM ( SELECT
+                [Extent1].[VoyageID] AS [VoyageID],
+                [Extent1].[Position] AS [Position],
+                [Extent1].[Title] AS [Title],
+                [Extent1].[VoyageType] AS [VoyageType],
+                [SSQTAB1].[A1] AS [C1]
+                FROM [Voyages] AS [Extent1]
+                 OUTER APPLY
+                (SELECT
+                        COUNT(1) AS [A1]
+                        FROM [Tarifs] AS [Extent2]
+                        WHERE [Extent1].[VoyageID] = [Extent2].[VoyageID]) AS [SSQTAB1]
+        )  AS [Project1]
+         OUTER APPLY
+        (SELECT
+                COUNT(1) AS [A1]
+                FROM [Parties] AS [Extent3]
+                WHERE [Project1].[VoyageID] = [Extent3].[VoyageID]) AS [SSQTAB1]
+)  AS [Project2]
+ORDER BY [Project2].[Position] ASC, [Project2].[Title] ASC
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/10/18/utilisation-expressions-lambda-10-etapes/" hreflang="fr-FR">Utilisation d’expressions lambda en 10 étapes</a>
+  <a rel="next" href="/2011/12/23/configurer-elmah-utiliser-sql-server/" hreflang="fr-FR">Configurer ELMAH pour utiliser SQL Server</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

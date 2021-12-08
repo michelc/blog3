@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer un projet Node.js en TypeScript - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2016/10/27/creer-projet-node-js-typescript/" />
+<meta property="og:title" content="Créer un projet Node.js en TypeScript" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2016/10/27/creer-projet-node-js-typescript/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-10-27T20:04:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2016-10-27T20:04:00.000Z","datePublished":"2016-10-27T20:04:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2016/10/27/creer-projet-node-js-typescript/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2016/10/27/creer-projet-node-js-typescript/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2016/10/27/creer-projet-node-js-typescript/">Créer un projet Node.js en TypeScript</a>
+    </h1>
+    <p>
+      <span>2016-10-27</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>Créer (et ouvrir) un nouveau projet</h2>
+<pre><code>C:\Code&gt; md Test3 &amp;&amp; cd Test3 &amp;&amp; code .
+</code></pre>
+<p>Ça dépote !</p>
+<h2>Créer le fichier tsconfig.json</h2>
+<pre><code>{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es6&quot;,
+    &quot;module&quot;: &quot;commonjs&quot;,
+    &quot;sourceMap&quot;: true
+  },
+  &quot;exclude&quot;: [
+    &quot;node_modules&quot;,
+    &quot;bower_components&quot;,
+    &quot;jspm_packages&quot;,
+    &quot;tmp&quot;,
+    &quot;temp&quot;
+  ]
+}
+</code></pre>
+<h2>Créer le fichier tasks.json</h2>
+<ul>
+<li>Ctrl+Shift+P et &quot;Configure Task Runner&quot;</li>
+<li>Sélectionner &quot;TypeScript - Watch Mode : Compiles a TypeScript project in watch
+mode&quot;</li>
+<li>Ctrl+Shift+B pour démarrer la tâche</li>
+</ul>
+<h2>Installer le fichier de définition pour Node.js</h2>
+<ul>
+<li>Ctrl+ù pour ouvrir le terminal de Visual Code</li>
+</ul>
+<pre><code>c:\Code\Test3&gt; typings install dt~node --global --save
+</code></pre>
+<h2>Créer un fichier test.ts</h2>
+<pre><code>const path = require('path');
+
+var current_dir = path.resolve('./');
+console.log(current_dir);
+</code></pre>
+<h2>Exécuter le fichier test.js</h2>
+<ul>
+<li>Ctrl+ù pour ouvrir le terminal de Visual Code</li>
+</ul>
+<pre><code>c:\Code\Test3&gt; node test.js
+c:\Code\Test3
+
+c:\Code\Test3&gt; _
+</code></pre>
+<h2>Améliorer l'intellisense pour Node.js</h2>
+<p>Dans certains tutoriels, on trouve une syntaxe utilisant le mot clé <code>var</code> :</p>
+<pre><code>var path = require('path');
+</code></pre>
+<p>Mais dans la documentation de Node.js, c'est bien la syntaxe avec le mot clé
+<code>const</code> qui est utilisée :</p>
+<pre><code>const path = require('path');
+</code></pre>
+<p>Cependant, pour que Visual Code soit capable de reconnaitre l'objet <code>path</code>, il
+faut utiliser la syntaxe d'import des modules de ES6 :</p>
+<pre><code>import * as path from 'path';
+</code></pre>
+<p>Ça ne change absolument rien au JS qui est généré :</p>
+<pre><code>&quot;use strict&quot;;
+const path = require('path');
+var current_dir = path.resolve('./');
+console.log(current_dir);
+//# sourceMappingURL=test.js.map
+</code></pre>
+<p>Et par contre, on dispose maintenant d'une intellisense complète :</p>
+<p><img src="/public/2016/node-04-intellisense.png" alt=""></p>
+<h2>Débuguer le code TypeScript</h2>
+<ul>
+<li>Ctrl+Shift+D et sélectionner l'environnement &quot;Node.js&quot;</li>
+<li>Génère le fichier &quot;.vscode/launch.json&quot;</li>
+</ul>
+<pre><code>{
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [
+    {
+      &quot;name&quot;: &quot;Launch&quot;,
+      &quot;type&quot;: &quot;node&quot;,
+      &quot;request&quot;: &quot;launch&quot;,
+      &quot;program&quot;: &quot;${workspaceRoot}/app.js&quot;,
+      &quot;stopOnEntry&quot;: false,
+      &quot;args&quot;: [],
+      &quot;cwd&quot;: &quot;${workspaceRoot}&quot;,
+      &quot;preLaunchTask&quot;: null,
+      &quot;runtimeExecutable&quot;: null,
+      &quot;runtimeArgs&quot;: [
+        &quot;--nolazy&quot;
+      ],
+      &quot;env&quot;: {
+        &quot;NODE_ENV&quot;: &quot;development&quot;
+      },
+      &quot;console&quot;: &quot;internalConsole&quot;,
+      &quot;sourceMaps&quot;: false,
+      &quot;outDir&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;Attach&quot;,
+      &quot;type&quot;: &quot;node&quot;,
+      &quot;request&quot;: &quot;attach&quot;,
+      &quot;port&quot;: 5858,
+      &quot;address&quot;: &quot;localhost&quot;,
+      &quot;restart&quot;: false,
+      &quot;sourceMaps&quot;: false,
+      &quot;outDir&quot;: null,
+      &quot;localRoot&quot;: &quot;${workspaceRoot}&quot;,
+      &quot;remoteRoot&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;Attach to Process&quot;,
+      &quot;type&quot;: &quot;node&quot;,
+      &quot;request&quot;: &quot;attach&quot;,
+      &quot;processId&quot;: &quot;${command.PickProcess}&quot;,
+      &quot;port&quot;: 5858,
+      &quot;sourceMaps&quot;: false,
+      &quot;outDir&quot;: null
+    }
+  ]
+}
+</code></pre>
+<ul>
+<li>Modifier les 2 lignes suivantes :</li>
+</ul>
+<pre><code>      &quot;program&quot;: &quot;${workspaceRoot}/test.js&quot;,
+      &quot;sourceMaps&quot;: true,
+</code></pre>
+<ul>
+<li>
+<p>Venir sur la ligne <code>console.log(current_dir);</code> du fichier &quot;test.ts&quot; puis F9
+pour mettre un point d'arrêt dessus.</p>
+</li>
+<li>
+<p>F5 pour lancer le débugage</p>
+</li>
+</ul>
+<p><img src="/public/2016/node-04-debug.png" alt=""></p>
+<ul>
+<li>F5 pour continuer l'exécution</li>
+</ul>
+<p>Une fois le programme terminé, la barre d'outils pour le débugage est
+toujours présente et il faut faire Shift+F5 pour arrêter l'exécution. Pour
+éviter cela, on peut ajouter la ligne suivante à la fin du fichier &quot;test.ts&quot; :</p>
+<pre><code>process.exit();
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2016/10/19/creer-projet-node-js-visual-code/" hreflang="fr-FR">Créer un projet Node.js sous Visual Code</a>
+  <a rel="next" href="/2017/01/04/migration-sous-jekyll/" hreflang="fr-FR">Migration sous Jekyll</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

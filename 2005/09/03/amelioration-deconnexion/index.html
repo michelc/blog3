@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Amélioration déconnexion - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/09/03/amelioration-deconnexion/" />
+<meta property="og:title" content="Amélioration déconnexion" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/09/03/amelioration-deconnexion/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-09-03T12:32:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-09-03T12:32:00.000Z","datePublished":"2005-09-03T12:32:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/09/03/amelioration-deconnexion/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/09/03/amelioration-deconnexion/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/09/03/amelioration-deconnexion/">Amélioration déconnexion</a>
+    </h1>
+    <p>
+      <span>2005-09-03</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Les cookies de session liés à l'utilisateur n'étaient pas tous immédiatement
+supprimés lors de la déconnexion. Par conséquent, le menu affiché ne
+correspondait pas aux rôles de l'utilisateur en cours (pendant le laps de temps
+où les rôles de l'utilisateur n'étaient pas recontrôlés). Le problème venait de
+la façon de boucler sur les différents cookies pour mettre à jour leur date
+d'expiration.</p>
+<p>Pour plus de sécurité, le cookie mémorisant la liste des rôles d'un
+utilisateur est désormais lié au login de l'utilisateur. Cela permet de lancer
+des sessions pour différents utilisateurs. Attention, il faut qu'il s'agisse de
+nouvelles sessions et pas simplement de nouvelles fenêtres.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/09/02/affichage-admintoolbar/" hreflang="fr-FR">Affichage adminToolbar</a>
+  <a rel="next" href="/2005/09/03/gestion-urls-relatives/" hreflang="fr-FR">Gestion des urls relatives</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

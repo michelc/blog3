@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tester la partie POST d&#39;une action Create() - 2/2 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/10/02/tester-partie-post-action-create-2/" />
+<meta property="og:title" content="Tester la partie POST d&#39;une action Create() - 2/2" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/10/02/tester-partie-post-action-create-2/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-10-02T17:51:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-10-02T17:51:00.000Z","datePublished":"2012-10-02T17:51:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/10/02/tester-partie-post-action-create-2/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/10/02/tester-partie-post-action-create-2/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/10/02/tester-partie-post-action-create-2/">Tester la partie POST d&#39;une action Create() - 2/2</a>
+    </h1>
+    <p>
+      <span>2012-10-02</span>
+      <span>#ef</span><span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>L'action à tester</h2>
+<p>Après avoir codé la <a href="/2012/10/01/tester-partie-post-action-create/">première partie des tests unitaires du POST sur l'action
+Create()</a> dans le cas où la saisie est incorrecte, je vais maintenant
+traiter les POST vers Create() lorsque les données sont ok et qu'il est
+possible de créer le nouveau contact.</p>
+<p>Rappel du code source de l'action en mode POST :</p>
+<pre><code>//
+// POST: /People/Create
+
+[HttpPost, ValidateAntiForgeryToken]
+public ActionResult Create(ViewPerson person)
+{
+  if (ModelState.IsValid)
+  {
+    var contact = new Contact();
+    contact.Update_With_ViewPerson(person);
+    db.Contacts.Add(contact);
+    db.SaveChanges();
+
+    this.Flash(string.Format(&quot;La fiche de {0} a été insérée&quot;, contact.DisplayName));
+    return RedirectToAction(&quot;Details&quot;, new { id = contact.Contact_ID, slug = contact.Slug });
+  }
+
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+</code></pre>
+<p>Ce que je vais tester correspond donc aux quelques lignes de code situées à
+l'intérieur du bloc <code>if (ModelState.IsValid) { ... }</code> qui servent
+pour effectuer les traitements suivants :</p>
+<pre><code>var contact = new Contact(); ... db.SaveChanges();
+</code></pre>
+<p>=&gt; enregistre le nouveau contact.</p>
+<pre><code>this.Flash(...);
+</code></pre>
+<p>=&gt; défini un message pour informer que la création a réussi.</p>
+<pre><code>return RedirectToAction(...);
+</code></pre>
+<p>=&gt; redirige l'utilisateur vers l'affichage du contact créé (pattern
+PRG).</p>
+<h2>1° test : Si ok Alors on crée le nouveau contact</h2>
+<p>Ce premier test unitaire va consister à contrôler que lorsque la saisie est
+correcte, le nouveau contact est bien créé dans la base de données, ce qui
+correspond au code suivant dans la méthode Create() :</p>
+<pre><code>var contact = new Contact();
+contact.Update_With_ViewPerson(person);
+db.Contacts.Add(contact);
+db.SaveChanges();
+</code></pre>
+<p>Juste pour info, la ligne
+<code>contact.Update_With_ViewPerson(person);</code> initialise l'objet Model
+de type Contact à partir de l'objet ViewModel de type ViewPerson passé en
+paramètre à l'action Create().</p>
+<pre><code>[TestMethod]
+public void PeopleCreate_post_doit_enregistrer_contact_quand_saisie_correcte()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var person = new ViewPerson
+  {
+    LastName = &quot;test&quot; + System.DateTime.Now.Ticks.ToString(),
+    Phone1 = &quot;0&quot;
+  };
+
+  // Act
+  var result = controller.Create(person);
+
+  // Assert
+  var contact = db.Contacts.Where(x =&gt; x.LastName == person.LastName).FirstOrDefault();
+  Assert.IsNotNull(contact, &quot;People.Create() aurait dû enregistrer le contact&quot;);
+}
+</code></pre>
+<pre><code>var controller = new PeopleController(db);
+</code></pre>
+<p>=&gt; instancie un objet contrôleur en lui passant un DbContext pour que
+l'action puisse utiliser Entity Framework pour insérer dans la table des
+contacts.</p>
+<pre><code>var person = new ViewPerson { ... };
+</code></pre>
+<p>=&gt; initialise un objet ViewPerson valide.</p>
+<pre><code>var result = controller.Create(person)
+</code></pre>
+<p>=&gt; appelle l'action People.Create() en lui passant mon objet ViewPerson,
+ce qui me permet d'accéder à la version &quot;POST&quot; de l'action.</p>
+<pre><code>var contact = db.Contacts.Where(...).FirstOrDefault();
+</code></pre>
+<p>=&gt; recherche dans la table des contacts la personne qui a été passée en
+paramètre (via à son nom qui doit être unique grace à l'utilisation de la
+propriété <code>Ticks</code> pour l'initialiser).</p>
+<pre><code>Assert.IsNotNull(contact, &quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier qu'on a bien trouvé le contact dans la base de
+données, ce qui signifie donc que l'action l'a correctement inséré dans la
+table des contacts et par conséquent que le test est réussi.</p>
+<h2>2° test : Si ok Alors on initialise un message de réussite</h2>
+<p>Ce deuxième test unitaire va vérifier que l'action Create() défini un
+message &quot;flash&quot; lorsque la saisie est correcte.</p>
+<pre><code>this.Flash(string.Format(&quot;La fiche de {0} a été insérée&quot;, contact.DisplayName));
+</code></pre>
+<p>Ce message servira ensuite (et ailleurs) pour signaler à l'utilisateur que
+sa saisie est correcte et qu'elle a bien permis d'enregistrer un nouveau
+contact dans la base de données.</p>
+<pre><code>[TestMethod]
+public void PeopleCreate_post_doit_definir_message_de_succes_quand_saisie_correcte()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var person = new ViewPerson
+  {
+    LastName = &quot;test&quot;,
+    Phone1 = &quot;0&quot;
+  };
+  var context = new ViewContext
+  {
+      TempData = controller.TempData
+  };
+  var helper = new HtmlHelper(context, Repertoir.Tests.Helpers.Moq.GetViewDataContainer());
+
+  // Act
+  var result = controller.Create(person);
+
+  // Assert
+  var flash = helper.Flash();
+  Assert.IsNotNull(flash, &quot;People.Create() aurait dû définir un message flash&quot;);
+  Assert.IsTrue(flash.ToString().Contains(&quot;La fiche de test a été insérée&quot;), &quot;People.Create() aurait dû initialiser le bon message&quot;);
+}
+</code></pre>
+<pre><code>var context = new ViewContext ... var helper ...
+</code></pre>
+<p>=&gt; instancie un HtmlHelper pour pouvoir accéder à la méthode d'extension
+Flash.</p>
+<pre><code>var flash = helper.Flash();
+</code></pre>
+<p>=&gt; récupère le message &quot;flash&quot; en cours.</p>
+<pre><code>Assert.IsNotNull(flash, &quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier qu'un message &quot;flash&quot; a bien été défini.</p>
+<pre><code>Assert.IsTrue(flash.ToString().Contains(&quot;...&quot;), &quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier que le message contient le texte prévu.</p>
+<p><em>Note : J'essaierai de faire un autre billet pour
+présenter comment je gère les messages &quot;flash&quot; et éventuellement comment je
+créée des objets mock pour tester ce qui se rapporte au contexte HTTP.</em></p>
+<h2>3° test : Si ok Alors on redirige vers la fiche créée</h2>
+<p>Ce dernier test unitaire va servir à contrôler que lorsque la saisie est
+correcte, l'utilisateur est bien redirigé vers la fiche du contact qui vient
+d'être créé.</p>
+<pre><code>return RedirectToAction(&quot;Details&quot;, new { id = contact.Contact_ID, slug = contact.Slug });
+</code></pre>
+<p>L'action Create() ayant été atteinte en mode POST, le fait de rediriger
+ensuite l'utilisateur vers une autre action (Details() en l'occurence) qui est
+en mode GET correspond au <a href="http://fr.wikipedia.org/wiki/Post-Redirect-Get">pattern
+Post-Redirect-Get</a> qui résoud pas mal de problèmes liés à la soumission d'un
+formulaire web.</p>
+<pre><code>[TestMethod]
+public void PeopleCreate_post_doit_rediriger_vers_details_quand_saisie_correcte()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var person = new ViewPerson
+  {
+    LastName = &quot;test&quot;,
+    Phone1 = &quot;0&quot;
+  };
+
+  // Act
+  var result = controller.Create(person) as RedirectToRouteResult;
+
+  // Assert
+  Assert.IsNotNull(result, &quot;People.Create() aurait dû renvoyer un RedirectToRouteResult&quot;);
+  Assert.IsNull(result.RouteValues[&quot;controller&quot;], &quot;People.Create() aurait dû rediriger vers le contrôleur en cours&quot;);
+  Assert.AreEqual(&quot;Details&quot;, result.RouteValues[&quot;action&quot;], &quot;People.Create() aurait dû rediriger vers l'action Details&quot;);
+  Assert.IsNotNull(result.RouteValues[&quot;id&quot;], &quot;People.Create() aurait dû définir 'id'&quot;);
+  Assert.IsNotNull(result.RouteValues[&quot;slug&quot;], &quot;People.Create() aurait dû définir 'slug'&quot;);
+}
+</code></pre>
+<pre><code>Assert.IsNotNull(result, &quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier que l'action répond bien par un <code>return RedirectToAction</code> et pas par un <code>return View</code>.</p>
+<pre><code>Assert.IsNull(result.RouteValues[&quot;controller&quot;], &quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier que la redirection se fait vers le contrôleur en
+cours.</p>
+<pre><code>Assert.AreEqual(&quot;Details&quot;, result.RouteValues[&quot;action&quot;],
+&quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier que la redirection se fait vers l'action
+Details().</p>
+<pre><code>Assert.IsNotNull(result.RouteValues[&quot;id&quot;], &quot;...&quot;);
+</code></pre>
+<p><code>Assert.IsNotNull(result.RouteValues[&quot;slug&quot;], &quot;...&quot;);</code></p>
+<p>=&gt; tests pour vérifier que la redirection défini les paramètres attendus
+par l'action Details().</p>
+<h2>Conclusion</h2>
+<p>Je dispose désormais de 6 tests unitaires pour contrôler que le code de la
+partie POST de mon action Create() fonctionne correctement. Si j'y fait des
+modifications, ces tests me permettrons de voir si j'ai cassé quelque chose ou
+tout au moins fait évoluer mes &quot;spécifications&quot;.</p>
+<p>L'autre truc intéressant, c'est effectivement que ces tests unitaires
+décrivent ce que doit faire l'action Create() du contrôleur People dans sa
+version POST :</p>
+<ul>
+<li></li>
+</ul>
+<p>PeopleCreate_post_doit_renvoyer_la_vue_par_defaut_quand_saisie_incorrecte
+*
+PeopleCreate_post_doit_initialiser_la_liste_des_societes_quand_saisie_incorrecte
+*
+PeopleCreate_post_doit_renvoyer_le_meme_objet_ViewPerson_a_la_vue_quand_saisie_incorrecte</p>
+<ul>
+<li>PeopleCreate_post_doit_enregistrer_contact_quand_saisie_correcte</li>
+<li>PeopleCreate_post_doit_definir_message_de_succes_quand_saisie_correcte</li>
+<li>PeopleCreate_post_doit_rediriger_vers_details_quand_saisie_correcte</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/10/01/tester-partie-post-action-create/" hreflang="fr-FR">Tester la partie POST d&#39;une action Create() - 1/2</a>
+  <a rel="next" href="/2012/10/03/tester-partie-get-action-create/" hreflang="fr-FR">Tester la partie GET d&#39;une action Create()</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

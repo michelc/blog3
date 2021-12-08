@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Updating a table from another table - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/12/23/update-table-from-another-table/" />
+<meta property="og:title" content="Updating a table from another table" />
+<meta name="description" content="I save here the SQL command that allows me to update a column in a table from another column in another table (Access, SqlServer and Oracle versions)." />
+<meta property="og:description" content="I save here the SQL command that allows me to update a column in a table from another column in another table (Access, SqlServer and Oracle versions)." />
+<meta property="og:locale" content="en" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/12/23/update-table-from-another-table/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/sql-database.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-12-23T12:36:42.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-12-23T12:36:42.000Z","datePublished":"2019-12-23T12:36:42.000Z","description":"I save here the SQL command that allows me to update a column in a table from another column in another table (Access, SqlServer and Oracle versions).","inLanguage":"en","url":"https://blog3.pagesd.info/2019/12/23/update-table-from-another-table/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/sql-database.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/12/23/update-table-from-another-table/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/sql-database.jpg" alt="dbdiagram.io" /><figcaption><a href="https://dbdiagram.io/">dbdiagram.io</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/12/23/update-table-from-another-table/">Updating a table from another table</a>
+    </h1>
+    <p>
+      <span>2019-12-23</span>
+      <span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>It's the end of the year, so I'm just going to translate an old post from 2007 that I still refer to once in a while: <a href="/2007/05/30/mise-a-jour-table-partir-autre/" hreflang="fr-FR">Mise à jour d'une table à partir d'une autre</a>.</p>
+</div>
+<p>To update a column in a table from the equivalent column of another table, MS
+Access easily accepts two table names for the UPDATE command, but not SQL
+Server.</p>
+<p>Example: after updating the VAT rates in the products table, you have to copy
+these revisions in the invoice details table.</p>
+<p>With Access:</p>
+<pre><code class="language-sql">UPDATE InvoiceDetails, Products
+SET    InvoiceDetails.VatRate = Products.VatRate
+WHERE  InvoiceDetails.Product_ID = Products.Product_ID
+</code></pre>
+<p>With SQL Server:</p>
+<pre><code class="language-sql">UPDATE InvoiceDetails
+SET    InvoiceDetails.VatRate = Products.VatRate
+FROM   InvoiceDetails
+INNER JOIN Products ON Products.Product_ID = InvoiceDetails.Product_ID
+</code></pre>
+<p>With Oracle:</p>
+<pre><code class="language-sql">UPDATE InvoiceDetails
+SET    InvoiceDetails.VatRate = (SELECT Products.VatRate
+                                 FROM   Products
+                                 WHERE  Products.Product_ID = InvoiceDetails.Product_ID)
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/12/17/new-css-tips-to-know/" hreflang="en-US">A new CSS and 5 tips to know</a>
+  <a rel="next" href="/2019/12/30/maj-configuration-jekyll/" hreflang="fr-FR">Mise à jour de la configuration de Jekyll</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

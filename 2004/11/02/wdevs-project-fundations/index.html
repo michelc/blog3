@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Project fundations - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/11/02/wdevs-project-fundations/" />
+<meta property="og:title" content="(Wdevs) Project fundations" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/11/02/wdevs-project-fundations/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-11-02T09:34:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-11-02T09:34:00.000Z","datePublished":"2004-11-02T09:34:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/11/02/wdevs-project-fundations/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/11/02/wdevs-project-fundations/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/11/02/wdevs-project-fundations/">(Wdevs) Project fundations</a>
+    </h1>
+    <p>
+      <span>2004-11-02</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I directly start with a Private Assembly architecture. For that, I followed
+Bo Nørgaard's <a href="http://www.dotnetnuke.dk/Default.aspx?tabid=59">guide to
+setup an environment for DotNetNuke 2.x Module</a> (private assembly)
+development. And if I make no mistake, I create a solution with currently 2
+projects :</p>
+<ul>
+<li>qc.dll : a pseudo project to reference all other PA (Bo call it
+DnnFramework)</li>
+<li>qc.Core.dll : this project manages the portal components (portal,
+screens, modules...)</li>
+</ul>
+<p>I need a third project to handle users, roles, identification,
+autorisations... and I will have a &quot;full&quot; engine ready to accept content.</p>
+<p>Then I could start to add PA that will provide real content for my
+system : Contacts, Documents, Events, Htmltext, Image, Links...</p>
+<p>For the core project, I begin with the DbHelper that I'm using for some
+times. I update it to handle MySQL too and I take time to clean and comment its
+source. Then I write 2 classes to handles my 2 tables and I finished with 5
+class and a default.aspx webform:</p>
+<ul>
+<li>Portals.cs : handles the qc_Portals table</li>
+<li>Screens.cs : for qc_Screens table</li>
+<li>Config.cs : encapsulates current portal and its screens</li>
+<li>Data.cs : my own DbHelper</li>
+<li>Common.cs : a general class for global functions.</li>
+</ul>
+<p>Some quick notes about the code:</p>
+<ul>
+<li>the main menu is render as a list (<code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code> tags) and can be <a href="http://css.maxdesign.com.au/listamatic/">styled with css</a>,</li>
+<li>my sql code is very basic and not specialised (I don't test but it should
+work with Access or MSDE),</li>
+<li>nothing is fixed and I can make any change.</li>
+</ul>
+<p><a href="http://michel.monoforge.com/default1.aspx">Et voila!</a></p>
+<p>Actually, I don't use temporarily the Private Assembly construction. I will
+start again when I would be more advanced and that I would better know the
+behavior with mono and MySQL.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/10/29/protection-access/" hreflang="fr-FR">Protection Access</a>
+  <a rel="next" href="/2004/11/02/wdevs-mysql-case-sensitivity/" hreflang="en-US">(Wdevs) MySQL case sensitivity</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

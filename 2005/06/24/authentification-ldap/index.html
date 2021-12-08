@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Authentification LDAP - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/06/24/authentification-ldap/" />
+<meta property="og:title" content="Authentification LDAP" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/06/24/authentification-ldap/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-06-24T13:00:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-06-24T13:00:00.000Z","datePublished":"2005-06-24T13:00:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/06/24/authentification-ldap/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/06/24/authentification-ldap/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/06/24/authentification-ldap/">Authentification LDAP</a>
+    </h1>
+    <p>
+      <span>2005-06-24</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ajouté la possibilité de gérer l'authentification de l'utilisateur par
+rapport à l'Active Directory. L'existence de l'utilisateur et la validité de
+son mot de passe sont tout d'abord contrôlés via le serveur LDAP. S'ils sont
+ok, le nom de l'utilisateur et son adresse mél sont récupérés dans l'AD et
+servent à mettre à jour l'enregistrement correspondant à l'utilisateur dans la
+table qc_Users.</p>
+<p>Liste des paramètres du Web.config :</p>
+<ul>
+<li>ldapServer (obligatoire) : configure le serveur LDAP à employer par le site
+pour effectuer l'authentification (peut être de la forme
+&quot;LDAP://ldap.exemple.com&quot; ou
+&quot;LDAP://ldap.exemple.com/dc=azerty,dc=exemple.com&quot;)</li>
+<li>ldapUsername et ldapPassword : spécifient éventuellement le compte et le
+mot de passe nécessaires à l'utilisation du serveur LDAP. Lorsque l'un de ces
+paramètres est vide, la connexion se fait avec le login et le mot de passe de
+l'utilisateur et le fait de réussir à créer l'objet signifie que
+l'authentification est ok</li>
+<li>ldapFilter : indique sur quel critère filtrer la lecture des informations
+de l'utilisateur (&quot;uid&quot; par exemple et &quot;SAMAccountName&quot; par défaut)</li>
+<li>ldapPropertyName : nom de la propriété à utiliser pour retrouver le nom de
+l'utilisateur (&quot;cn&quot; par défaut)</li>
+<li>ldapPropertyMail : nom de la propriété à utiliser pour retrouver l'email de
+l'utilisateur (&quot;mail&quot; par défaut)</li>
+<li>ldapRoles : défini les rôles attribués par défaut à un nouvel utilisateur
+(pas encore implémenté)</li>
+</ul>
+<p>Lorsque l'authentification échoue via l'AD, une seconde tentative est
+effectuée via la table qc_Users =&gt; il est ainsi possible d'avoir des comptes
+LDAP et des comptes spécifiques à QC.</p>
+<p>Il y a toujours création d'un enregistrement dans qc_Users pour chaque
+compte LDAP car les autorisations sont uniquement gérées au niveau de la base
+de données (pour l'instant ?).</p>
+<p>Référence : [LDAP,
+What is Lightweight Directory Access Protocol?](http://www.youcanlearnseries.com/Programming Tips/CSharp/WhatisLDAP.aspx)</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/06/24/modification-boites-login/" hreflang="fr-FR">Modification boites login</a>
+  <a rel="next" href="/2005/06/28/modification-classicviewlogin/" hreflang="fr-FR">Modification de Classic.viewLogin</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

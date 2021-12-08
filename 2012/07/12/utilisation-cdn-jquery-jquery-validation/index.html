@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utilisation d&#39;un CDN pour jQuery et jQuery Validation - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/07/12/utilisation-cdn-jquery-jquery-validation/" />
+<meta property="og:title" content="Utilisation d&#39;un CDN pour jQuery et jQuery Validation" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/07/12/utilisation-cdn-jquery-jquery-validation/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-07-12T21:02:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-07-12T21:02:00.000Z","datePublished":"2012-07-12T21:02:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/07/12/utilisation-cdn-jquery-jquery-validation/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/07/12/utilisation-cdn-jquery-jquery-validation/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/07/12/utilisation-cdn-jquery-jquery-validation/">Utilisation d&#39;un CDN pour jQuery et jQuery Validation</a>
+    </h1>
+    <p>
+      <span>2012-07-12</span>
+      <span>#jquery</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'ai un petit projet de <a href="http://repertoir.apphb.com/">gestion de contacts</a> pour tester différents trucs avec ASP.NET MVC 3 et
+bien qu'étant convaincu depuis longtemps de l'<a href="http://encosia.com/3-reasons-why-you-should-let-google-host-jquery-for-you/">intérêt des CDN</a>, je n'avais pas encore pris le temps de
+chercher une solution &quot;élegante&quot; pour en utiliser un avec mes scripts
+jQuery.</p>
+<p>Après quelques recherches sur le grand internet, j'ai abouti au résultat
+suivant pour à la fois utiliser le CDN de Microsoft et avoir une solution de
+repli (fallback) au cas improbable où il serait en panne :</p>
+<pre><code>&lt;script src=&quot;@Url.Content(&quot;~/Scripts/modernizr-2.5.3.js&quot;)&quot;&gt;&lt;/script&gt;
+
+&lt;script src=&quot;//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    if (typeof jQuery === &quot;undefined&quot;) {
+        document.write(unescape(&quot;%3Cscript src='@Url.Content(&quot;~/Scripts/jquery-1.7.2.min.js&quot;)'%3E%3C/script%3E&quot;));
+    }
+&lt;/script&gt;
+
+&lt;script src=&quot;//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    if (typeof jQuery.fn.validate === &quot;undefined&quot;) {
+        document.write(unescape(&quot;%3Cscript src='@Url.Content(&quot;~/Scripts/jquery.validate.min.js&quot;)'%3E%3C/script%3E&quot;));
+    }
+&lt;/script&gt;
+
+&lt;script src=&quot;//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    if (typeof jQuery.validator.unobtrusive === &quot;undefined&quot;) {
+        document.write(unescape(&quot;%3Cscript src='@Url.Content(&quot;~/Scripts/jquery.validate.unobtrusive.min.js&quot;)'%3E%3C/script%3E&quot;));
+    }
+&lt;/script&gt;
+</code></pre>
+<p>Quelques explications :</p>
+<ul>
+<li>J'utilise le CDN de Microsoft car il propose aussi jQuery Validation et
+qu'il n'y a <a href="http://stackoverflow.com/questions/11451350/is-it-better-to-use-one-or-two-cdn">pas d'avantages à utiliser plusieurs CDN</a></li>
+<li>Pour modernizr-2.5.3.js, il est déconseillé d'utiliser un CDN :
+<a href="http://modernizr.com/news/modernizr-and-cdns">Modernizr
+and CDNs</a></li>
+<li>J'ai supprimé le <code>type=&quot;text/javascript&quot;</code> tel qu'on le voit dans
+beaucoup d'exemples parce que c'est inutile avec HTML5</li>
+<li>Le <code>src=&quot;//url...&quot;</code> est une <a href="http://encosia.com/3-reasons-why-you-should-let-google-host-jquery-for-you/#protocolless">astuce</a> pour s'adapter si le site est en HTTP ou en HTTPS</li>
+</ul>
+<p>Et je n'ai pas vu l'intérêt de faire un helper parce que c'est un truc que
+je n'utilise qu'une fois dans toute mon application :</p>
+<ul>
+<li>dans /Views/Shared/_Layout.cshtml pour jQuery lui-même</li>
+<li>dans /Views/Shared/_FormScripts.cshtml pour jQuery Validation</li>
+</ul>
+<p>Pour compléter, au cours de mes recherche j'étais aussi tombé sur <a href="http://cdnjs.com/">cdnjs</a> qui héberge pas mal de librairies
+et de plugins jQuery qu'on ne trouve pas chez Google ou Microsoft.</p>
+<p>Et voir aussi : <a href="/2012/08/06/utilisation-cdn-jquery-ui/">Utilisation d'un CDN pour jQuery UI</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/06/14/abondance-bien-nuit-pas/" hreflang="fr-FR">Abondance de bien ne nuit pas</a>
+  <a rel="next" href="/2012/08/06/utilisation-cdn-jquery-ui/" hreflang="fr-FR">Utilisation d&#39;un CDN pour jQuery UI</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

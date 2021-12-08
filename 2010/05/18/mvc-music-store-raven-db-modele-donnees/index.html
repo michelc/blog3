@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Modèle de données - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/18/mvc-music-store-raven-db-modele-donnees/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Modèle de données" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/18/mvc-music-store-raven-db-modele-donnees/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-18T16:04:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-18T16:04:00.000Z","datePublished":"2010-05-18T16:04:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/18/mvc-music-store-raven-db-modele-donnees/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/18/mvc-music-store-raven-db-modele-donnees/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/18/mvc-music-store-raven-db-modele-donnees/">MVC Music Store / Raven DB : Modèle de données</a>
+    </h1>
+    <p>
+      <span>2010-05-18</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/18/porting-mvc-music-store-to-raven-the-data-model.aspx">Porting MVC Music Store to Raven: The data model</a>&quot;, le premier d'une série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Le tutoriel &quot;<a href="http://www.asp.net/mvc/samples/mvc-music-store/">MVC Music Store</a>&quot; est venu à point nommé pour moi. Je
+souhaitais faire une application de démonstration pour <a href="http://ravendb.net/">Raven DB</a> et le fait que quelqu'un
+d'autre ait déjà fait tout le travail ingrat (l'interface utilisateur :) à ma
+place et que je n'ai plus qu'à refaire l'accès aux données est une situation
+rêvée. Mon objectif est de ne rien toucher du tout au Javascript ou au code
+HTML et de me contenter de remplacer les contrôleurs. Ça devrait être
+intéressant de voir si je peux y arriver.</p>
+<p>Le modèle de base de données dans le tutoriel d'origine est le
+suivant :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenThedatamodel_14/image_2.png" alt=""></p>
+<p>On peut déjà remarquer deux ou trois choses intéressantes dans ce
+schéma :</p>
+<ul>
+<li>Il serait plus correct que la table Cart soit nommée CartLineItem
+puisqu'elle stocke une ligne par article dans le panier
+<ul>
+<li>CartId n'est pas une clé étrangère, mais référence le nom de l'utilisateur
+ou l'identifiant de la session</li>
+</ul>
+</li>
+<li>La table Artist gère uniquement le nom de l'artiste et rien d'autre.</li>
+</ul>
+<p>À partir de ces informations, je considère que le modèle de données suivant
+devrait convenir.</p>
+<h2>Albums</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenThedatamodel_14/image_thumb_1.png" alt=""></p>
+<ul>
+<li>Le document Album contient à la fois une référence pour le Genre et pour le
+libellé du genre. Cela nous permet d'afficher l'album sans avoir à référencer
+le document Genre.</li>
+<li>Et pour les mêmes raisons, le document Album contient aussi le nom et
+l'identifiant de l'artiste.</li>
+<li>Il n'y a pas un ensemble de documents Artists dans la base de données. Nous
+ne gérons aucune information sur les artistes, si ce n'est leur nom, et je ne
+vois donc pas de raison pour définir un document Artist pour l'instant.</li>
+</ul>
+<h2>Genre</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenThedatamodel_14/image_thumb_3.png" alt=""></p>
+<p>Le document Genre est la réplique exacte de la table Genre, rien
+d'extraordinaire à ce niveau.</p>
+<h2>Cart</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenThedatamodel_14/image_thumb_7.png" alt=""></p>
+<p>Le document Cart suit un format de document plutôt classique. Nous avons un
+simple document qui contient un tableau d'éléments là où le modèle de données
+relationnel contient un ensemble de lignes. Vous pouvez voir que le
+UserIdentifier nous sert pour stocker l'identifiant de l'utilisateur ou celui
+de la session pour le panier.</p>
+<h2>Orders</h2>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenThedatamodel_14/image_thumb_8.png" alt=""></p>
+<p>Order constitue une autre document plutôt standard. Nous regroupons toutes
+les information de la commande dans un simple document et nous stockons les
+informations liées à celle-ci (Address) dans un noeud spécifique.</p>
+<h2>Artist</h2>
+<p>Il n'y a pas de document Artist.</p>
+<h2>Pourquoi un document pour Genre et pas pour Artist ?</h2>
+<p>Pour la bonne raison que l'application va faire quelque chose avec les
+Genres (en plus d'afficher leur description) alors que la seule chose que l'on
+fait avec les Artistes est d'afficher leur nom dans la cadre d'un album. Pour
+l'instant, je considère que Artist fait partie intégrante de Album et qu'il n'y
+a donc pas à définir un document spécifique pour lui. La seule raison au fait
+qu'il existe un identifiant artiste en plus du nom est que je suppose (d'après
+les données) que la source pour les artistes est un système externe qui fait
+quelque chose d'un peu plus utile que simplement stocker le nom de
+l'artiste.</p>
+<p>Nous n'avons fait que la moitié du travail à faire. Nous avons défini le
+modèle de données, maintenant nous devons étudier comment il sera utilisé dans
+un contexte plus large et lui ajouter le modèle de requête en utilisant des
+index. Nous verrons cela dans un prochain billet.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/04/28/c-est-quoi-cette-expression-lambda/" hreflang="fr-FR">C&#39;est Quoi cette Expression Lambda ?</a>
+  <a rel="next" href="/2010/05/19/mvc-music-store-raven-db-configurer-application/" hreflang="fr-FR">MVC Music Store / Raven DB : Configurer l&#39;application</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

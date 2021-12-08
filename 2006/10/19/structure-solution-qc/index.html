@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Structure d&#39;une solution sous QC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/10/19/structure-solution-qc/" />
+<meta property="og:title" content="Structure d&#39;une solution sous QC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/10/19/structure-solution-qc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-10-19T08:55:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-10-19T08:55:00.000Z","datePublished":"2006-10-19T08:55:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/10/19/structure-solution-qc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/10/19/structure-solution-qc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/10/19/structure-solution-qc/">Structure d&#39;une solution sous QC</a>
+    </h1>
+    <p>
+      <span>2006-10-19</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>Private Assemblies</h2>
+<p>Une solution basée sur QC est constituée d'au minimum 4 projets, chacun
+correspondant à une DLL :</p>
+<ul>
+<li>qc.Engine : qc.Engine.dll</li>
+<li>qc.Framework : qc.Framework.dll</li>
+<li>qc.Classic : qc.Classic.dll</li>
+<li>BAS.Data.BDHelper : BAS.Data.BDHelper.dll</li>
+</ul>
+<p>QC utilise le principe des Private Assemblies (PA) selon la méthode &quot;
+Development Framework&quot; pour DotNetNuke 2 qui a été décrite par Bo Norgaard sur
+son site (<a href="http://www.dotnetnuke.dk/Default.aspx?tabid=59">http://www.dotnetnuke.dk/Default.aspx?tabid=59</a>).</p>
+<h2>Répertoire principal</h2>
+<ul>
+<li>default.aspx : charte graphique vide (nécessaire mais inutilisé),</li>
+<li>default.aspx.cs : code pour la classe inPortal.Default,</li>
+<li>global.asax.  - : ràs,</li>
+<li>LiteralFR.config : textes français pour les PA qc.Engine et qc.Classic</li>
+<li>qc.Engine.csproj : le fichier projet pour la PA</li>
+<li>qc.sln : le fichier de la solution QC</li>
+<li>web.config : ràs,</li>
+<li>BDHelper : sous-répertoires avec le code de la PA gérant l'accès aux bases
+de données</li>
+<li>bin/ : répertoire avec le code compilé,</li>
+<li>Classic/ : sous-répertoires avec le code des boites standards de QC</li>
+<li>data/ : sous-répertoires où stocker les fichiers de données</li>
+<li>Engine/ : sous-répertoires avec le code de base de QC</li>
+<li>Framework/ : code de la PA servant à lier le tout,</li>
+<li>res/ : sous-répertoires (scripts, images, chartes graphiques...)</li>
+</ul>
+<h2>Créer une nouvelle solution</h2>
+<p>Ce paragraphe explique point par point comment créer une nouvelle solution
+nommée &quot;demo&quot; à partir de la solution QC.</p>
+<ul>
+<li>Copier le répertoire X:\Portals\qc dans X:\Portals\demo</li>
+<li>Créer un répertoire virtuel &quot;demo&quot; qui pointe sur le sous-répertoire
+X:\Portals\demo</li>
+<li>Donner à l'utilisateur ASPNET TOUS les droits sur le sous-répertoire
+X:\Portals\demo\data</li>
+<li>Tester que http://localhost/demo fonctionne correctement</li>
+<li>Renommer X:\Portals\demo\qc.sln en X:\Portals\demo\demo.sln</li>
+<li>Supprimer X:\Portals\demo\qc.suo</li>
+<li>Remplacer manuellement http://localhost/qc par http://localhost/demo dans
+les fichiers suivants :
+<ul>
+<li>X:\Portals\demo\demo.sln</li>
+<li>X:\Portals\demo\qc.Engine.csproj.webinfo</li>
+<li>X:\Portals\demo\Classic\qc.Classic.csproj.webinfo</li>
+</ul>
+</li>
+<li>Supprimer X:\Portals\qc\BDHelper\BAS.Data.BDHelper.csproj.user</li>
+<li>Charger la solution X:\Portals\demo\demo.sln dans Visual Studio</li>
+<li>Générer la solution
+<ul>
+<li>dans la barre de menu, cliquer sur Générer - Générer la solution
+(Ctrl+Maj+B)</li>
+<li>le résultat doit être de la forme &quot;Génération : 4 a réussi, 0 a échoué, 0 a
+été ignoré&quot;</li>
+</ul>
+</li>
+<li>Tout sauvegarder, quitter et tester que http://localhost/demo fonctionne
+toujours</li>
+</ul>
+<h2>Ajouter un nouveau projet</h2>
+<p>Ce paragraphe explique comment ajouter un nouveau projet sous forme de
+Private Assembly à la solution &quot;demo&quot;. Concrètement, ce projet regroupe
+logiquement plusieurs &quot;boites&quot; dans une même Private Assembly et physiquement
+les sous-répertoires relatifs à chacune de ces boites dans un même
+répertoire.</p>
+<ul>
+<li>Lancer Visual Studio 2003 et ouvrir la solution &quot;demo&quot;</li>
+<li>Créér le projet correspondant à la Private Assembly
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur la
+solution &quot;demo&quot; et choisir Ajouter - Nouveau Projet</li>
+<li>dans la boite de dialogue sélectionner le type de projet &quot;Projet Visual C#&quot;
+et le modèle &quot;Projet Web Vide&quot;</li>
+<li>définir l'emplacement à http://localhost/demo/Exemple et valider en
+cliquant sur OK</li>
+</ul>
+</li>
+<li>Renommer le projet
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le projet
+qui vient d'être créé (Exemple dans le cas présent) et choisir Renommer puis
+indiquer &quot;demo.Exemple&quot;</li>
+<li>cliquer à nouveau avec le bouton droit sur le projet et choisir
+Propriétés</li>
+<li>dans la boite de dialogue, sélectionner Propriété communes - Général</li>
+<li>définir Nom de l'assembly à &quot;demo.Exemple&quot;</li>
+<li>définir Espace de noms par défaut à &quot;demo.Exemple&quot;</li>
+</ul>
+</li>
+<li>Ajouter des références
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Références&quot; du projet &quot;demo.Exemple&quot; et choisir Ajouter une
+référence</li>
+<li>cliquer sur l'onglet &quot;Projets&quot;</li>
+<li>sélectionner &quot;qc.Engine&quot; et valider</li>
+</ul>
+</li>
+<li>Référencer le projet
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Références&quot; du projet &quot;qc.Framework&quot; et choisir Ajouter une
+référence</li>
+<li>cliquer sur l'onglet &quot;Projets&quot;</li>
+<li>sélectionner &quot;demo.Exemple&quot; et valider</li>
+</ul>
+</li>
+<li>Générer la solution
+<ul>
+<li>dans la barre de menu, cliquer sur Générer - Générer la solution
+(Ctrl+Maj+B)</li>
+<li>le résultat doit être de la forme &quot;Génération : 5 a réussi, 0 a échoué, 0 a
+été ignoré&quot;</li>
+</ul>
+</li>
+</ul>
+<h2>Ajouter une nouvelle boite</h2>
+<p>Dans ce paragraphe, on va voir comment ajouter une nouvelle &quot;boite&quot; dans le
+projet demo.Exemple créé auparavant. Dans la terminologie QC, une boite
+correspond à un module de code et regroupe généralement une classe métier et un
+ou des contrôles utilisateurs web destinés à gérer un élément de base dans
+l'application (les clients, les fournisseurs, les catégories de
+clients...).</p>
+<ul>
+<li>Lancer Visual Studio 2003 et ouvrir la solution &quot;demo&quot;</li>
+<li>Créer un dossier pour la boite
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le projet
+&quot;demo.Exemple&quot; et choisir Ajouter - Nouveau dossier</li>
+<li>cliquer sur le dossier &quot;NewFolder1&quot; qui vient d'être créé et le renommer en
+&quot;Adresse&quot;</li>
+</ul>
+</li>
+<li>Créer le contrôle utilisateur pour l'affichage
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Adresse&quot; du projet &quot;demo.Exemple&quot;</li>
+<li>choisir Ajouter - Ajouter un contrôle utilisateur Web</li>
+<li>donner &quot;viewAdresse.ascx&quot; comme nom et valider</li>
+<li>sélectionner le contrôle utilisateur créé et choisir Afficher le code</li>
+<li>repérer la définition de la classe et remplacer &quot;System.Web.UI.UserControl&quot;
+par &quot;qc.Engine.BoxControl&quot; de façon à obtenir la ligne de code suivante :
+&quot;public class viewAdresse : qc.Engine.BoxControl&quot;</li>
+</ul>
+</li>
+<li>Créer le contrôle utilisateur pour le paramétrage
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Adresse&quot; du projet &quot;demo.Exemple&quot;</li>
+<li>choisir Ajouter - Ajouter un contrôle utilisateur Web</li>
+<li>donner &quot;editAdresse.ascx&quot; comme nom et valider</li>
+<li>sélectionner le contrôle utilisateur créé et choisir Afficher le code</li>
+<li>repérer la définition de la classe et remplacer &quot;System.Web.UI.UserControl&quot;
+par &quot;qc.Engine.BoxControl&quot; de façon à obtenir la ligne de code suivante :
+&quot;public class editAdresse : qc.Engine.BoxControl&quot;</li>
+</ul>
+</li>
+<li>Créer la classe pour gérer l'objet Adresse
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Adresse&quot; du projet &quot;demo.Exemple&quot;</li>
+<li>choisir Ajouter - Ajouter une classe</li>
+<li>donner &quot;Adresse.cs&quot; comme nom et valider</li>
+</ul>
+</li>
+<li>Générer la solution
+<ul>
+<li>dans la barre de menu, cliquer sur Générer - Générer la solution
+(Ctrl+Maj+B)</li>
+<li>le résultat doit être de la forme &quot;Génération : 5 a réussi, 0 a échoué, 0 a
+été ignoré&quot;</li>
+</ul>
+</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/10/18/installer-compiler-sources-qc/" hreflang="fr-FR">Installer et compiler les sources de QC</a>
+  <a rel="next" href="/2006/10/20/access-2000-microsoft-jet-sql/" hreflang="fr-FR">Access 2000 et le Microsoft Jet SQL</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

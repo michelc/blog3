@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Dura Linux, sed Linux - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/10/26/wdevs-dura-linux-sed-linux/" />
+<meta property="og:title" content="(Wdevs) Dura Linux, sed Linux" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/10/26/wdevs-dura-linux-sed-linux/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-10-26T12:52:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-10-26T12:52:00.000Z","datePublished":"2004-10-26T12:52:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/10/26/wdevs-dura-linux-sed-linux/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/10/26/wdevs-dura-linux-sed-linux/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/10/26/wdevs-dura-linux-sed-linux/">(Wdevs) Dura Linux, sed Linux</a>
+    </h1>
+    <p>
+      <span>2004-10-26</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>My first attempt on linux wasn't a success. I get an HTTP 500 error message
+because MySql.Data.dll is not found, although I uploaded it on /htdocs/bin.</p>
+<p>So I connect to my local MySQL 4.1 Server and do a &quot;SET PASSWORD FOR
+root_at_localhost = OLD_PASSWORD('newpwd');&quot; to solve the &quot;Client does not
+support authentication protocol...&quot; problem. Then I update my source to use
+ByteFX Data Provider instead of the new MySQL Connector/Net. Now
+MySqlConnection.open() is ok but I get a new error (something like &quot;Unespected
+byte flux...&quot; but I don't note it). It's like if ByteFX don't handle MySQL
+version 4.1.6. So no sample yesterday.</p>
+<p>I put a message in <a href="http://www.monoforge.com/forum/">monoforge
+forum</a> and Gianluca will install MySQL Connector/Net. During this time, I
+rewrite my code to remove all db acces and build <a href="http://michel.monoforge.com/default.aspx">a very simple test</a>. It seems to
+work one time, and now I always get a parser error.</p>
+<p>To be continued...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/10/25/wdevs-week-end-with-mysql/" hreflang="en-US">(Wdevs) My week-end with MySQL</a>
+  <a rel="next" href="/2004/10/29/protection-access/" hreflang="fr-FR">Protection Access</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

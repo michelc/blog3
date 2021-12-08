@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire - Remplacer AjaxMin, etc... - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/04/25/solitaire-remplacer-ajaxmin/" />
+<meta property="og:title" content="Solitaire - Remplacer AjaxMin, etc..." />
+<meta name="description" content="J&#39;utilise encore &quot;Microsoft Ajax Minifier&quot; pour  compresser les fichiers JavaScript et CSS de mon site de jeux de solitaires. Peut-être qu&#39;il est temps de passer à autre chose ?" />
+<meta property="og:description" content="J&#39;utilise encore &quot;Microsoft Ajax Minifier&quot; pour  compresser les fichiers JavaScript et CSS de mon site de jeux de solitaires. Peut-être qu&#39;il est temps de passer à autre chose ?" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/04/25/solitaire-remplacer-ajaxmin/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/printemps.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-04-25T10:19:02.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-04-25T10:19:02.000Z","datePublished":"2019-04-25T10:19:02.000Z","description":"J'utilise encore \"Microsoft Ajax Minifier\" pour  compresser les fichiers JavaScript et CSS de mon site de jeux de solitaires. Peut-être qu'il est temps de passer à autre chose ?","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/04/25/solitaire-remplacer-ajaxmin/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/printemps.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/04/25/solitaire-remplacer-ajaxmin/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/printemps.jpg" alt="" /><figcaption>&nbsp;</figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/04/25/solitaire-remplacer-ajaxmin/">Solitaire - Remplacer AjaxMin, etc...</a>
+    </h1>
+    <p>
+      <span>2019-04-25</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
+solitaires et aux évolutions que je souhaite y apporter :</p>
+<ol>
+<li><a href="/2019/03/23/solitaire-feuille-route-javascript/">Introduction</a></li>
+<li><a href="/2019/03/27/solitaire-passer-jquery-vanilla-js/">Passer de jQuery à Vanilla JS</a></li>
+<li><a href="/2019/04/01/solitaire-ameliorer-freecell/">Améliorer FreeCell</a></li>
+<li><a href="/2019/04/08/solitaire-ajouter-animations-css/">Ajouter des animations CSS</a></li>
+<li><a href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/">Drag and drop sans jQuery UI</a></li>
+<li><a href="/2019/04/25/solitaire-remplacer-ajaxmin/">Remplacer AjaxMin, etc...</a></li>
+</ol>
+</div>
+<p>Lorsque j'aurai réussi à réaliser tout ce que j'ai en vue dans les billets
+précédents, cela sera déjà pas mal. Mais j'aimerais aussi parvenir à moderniser
+un peu le fonctionnement du projet.</p>
+<p>Par exemple, j'utilise actuellement AjaxMin pour compresser les fichiers
+JavaScript et CSS. C'est une vieille application console sous Windows qui fait
+pile ce dont j'ai besoin (et que j'ai dû utiliser pour la première fois il y a
+fort longtemps sur je ne sais plus quoi...).</p>
+<p>Rien que le nom complet, <a href="https://github.com/Microsoft/ajaxmin">Microsoft Ajax Minifier</a>,
+donne une idée de quand ça date. Ce n'est plus tout jeune et plus maintenu non
+plus. Même si c'est quand même un assez bon outil d'après Charles O'Dale qui
+avait effectué un comparatif par rapport à YUICompressor et UglifyJS il y a
+quelque temps dans son billet <a href="https://www.charlesodale.com/selecting-a-javascript-minifier-spoiler-microsoft-ajax-minifier-wins/">Selecting a JavaScript Minifier</a>.</p>
+<p>Et en effet, AjaxMin présente malgré tout quelques avantages (au moins dans mon
+cas) :</p>
+<ul>
+<li>C'est un petit exécutable que je trimbale d'un PC à l'autre</li>
+<li>Il est facile à utiliser sans avoir rien à installer</li>
+<li>Ce me sert aussi à &quot;obfuscater&quot; le code JavaScript et à rendre sa
+réutilisation un peu plus compliqué en cas de décompression</li>
+</ul>
+<p>L'idéal serait évidemment de passer à quelque chose de plus utilisé, dans le
+genre de <a href="http://lisperator.net/uglifyjs/">UglifyJS</a>. Mais pour y arriver, il
+faudrait aussi :</p>
+<ul>
+<li>Moderniser et formaliser un peu mieux les sources du projet (style npm et
+package.json)</li>
+<li>Voir si je peux plus ou moins réussir à protéger les sources comme avec AjaxMin</li>
+</ul>
+<p>C'est pour cela que dans l'immédiat, je vais éviter de passer trop de temps sur
+ce genre de truc, puisque ça marche très bien en l'état avec un simple batche.
+Donc standby pour l'instant. Ou à la rigueur un petit ménage de printemps en
+commençant par passer à npm et package.json afin d'avoir un projet plus
+&quot;standard&quot; et être prêt à d'autres évolutions pour l'avenir...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/" hreflang="fr-FR">Solitaire - Drag and drop sans jQuery UI</a>
+  <a rel="next" href="/2019/04/30/dquery-remplacer-jquery/" hreflang="fr-FR">dQuery - Comment j&#39;ai (bientôt) remplacé jQuery</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

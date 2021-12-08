@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Définition de données avec QC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/10/05/definition-donnees-qc/" />
+<meta property="og:title" content="Définition de données avec QC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/10/05/definition-donnees-qc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-10-05T08:06:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-10-05T08:06:00.000Z","datePublished":"2006-10-05T08:06:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/10/05/definition-donnees-qc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/10/05/definition-donnees-qc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/10/05/definition-donnees-qc/">Définition de données avec QC</a>
+    </h1>
+    <p>
+      <span>2006-10-05</span>
+      <span>#qc</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Les <a href="/2006/09/27/pseudo-types-donnees-qc/">&quot;pseudo-types&quot;
+de données de QC</a> présentaient quels types de données utiliser avec QC.</p>
+<p>Pour parvenir à ce résultat, on peut créer les tables dont on a besoin
+directement dans Access, TOAD, SQL Server Enterprise Manager… pour la base de
+données cible en veillant à bien respecter ces consignes.</p>
+<p>Puis, lorsque le besoin d'utiliser une autre base de données se présente, il
+suffit de recréer les tables à l'identique dans l'autre base de données. Si on
+a été un peu prévoyant et que l'on dispose des scripts SQL de création de la
+base de données, il est possible de les modifier à coup de rechercher /
+remplacer pour les traduire de la syntaxe de la base de données source dans
+celle la base de données cible.</p>
+<ul>
+<li>Avantage : on ne se complique pas la vie tant qu'on a pas besoin de changer
+de base de données.</li>
+<li>Inconvénient : pas toujours évident d'avoir des scripts à jour (ou de
+pouvoir les regénérer) et le rechercher / remplacer ne fait pas tout.</li>
+</ul>
+<p>Lorsqu'il est très probable que l'application devra être multi bases (ou
+lorsque la base de données cible n'est pas encore définie au début du projet),
+il est possible de rédiger les scripts de création de la structure de la base
+de données directement dans une syntaxe &quot;multi-base&quot;.</p>
+<p>L'outil de requêtes disponible avec QC supporte un certain nombre de
+commandes DDL (Data Definition Language) qui couvrent la majorité des cas
+rencontrés dans les scripts de création et de mise à jour des tables d'une base
+de données relationnelle.</p>
+<h2>Créer une table, sa clé primaire et un index</h2>
+<pre><code>/* Create table
+*/
+CREATE TABLE test_Parametres (
+  idParametre AUTOINCREMENT,
+  libelle TEXT(100)
+);
+GO;
+
+/* Create primary key
+*/
+ALTER TABLE test_Parametres
+ADD CONSTRAINT PK_test_Parametres PRIMARY KEY (idParametre);
+GO;
+
+/* Create index
+*/
+CREATE UNIQUE INDEX UK_test_Parametres_libelle ON test_Parametres (libelle);
+GO;
+</code></pre>
+<h2>Créer une table, une clé étrangère et un index</h2>
+<pre><code>/* Create table and primary key
+*/
+CREATE TABLE test_Donnees (
+  idDonnee AUTOINCREMENT,
+  vraiFaux BOOLEAN,
+  petitEntier SMALLINT,
+  entier INT,
+  grandEntier BIGINT,
+  simplePrecision SINGLE,
+  doublePrecision DOUBLE,
+  desSous CURRENCY,
+  texteLong TEXT(2000),
+  texteCourt TEXT(100),
+  texteMemo MEMO,
+  jourHeure DATETIME,
+  idParametre INT,
+  CONSTRAINT PK_test_Donnees PRIMARY KEY (idDonnee)
+);
+GO;
+
+/* Create foreign key
+*/
+ALTER TABLE test_Donnees
+ADD CONSTRAINT FK_test_Donnees_Parametres FOREIGN KEY (idParametre)
+    REFERENCES test_Parametres (idParametre) ON DELETE CASCADE ON UPDATE CASCADE;
+GO;
+
+/* Create index
+*/
+CREATE INDEX IK_test_Donnees_texteCourt ON test_Donnees (texteCourt);
+GO;
+</code></pre>
+<p>Notes :</p>
+<ul>
+<li>dans ce cas, la création de la clé primaire a été définie au niveau de la
+commande CREATE TABLE.</li>
+<li>ON UPDATE CASCADE n'est pas directement supporté avec Oracle</li>
+</ul>
+<h2>Modifier une table</h2>
+<pre><code>/* Add a column
+*/
+ALTER TABLE test_Donnees ADD COLUMN autreChamp TEXT(50);
+GO;
+
+/* Modify a column
+*/
+ALTER TABLE test_Donnees MODIFY COLUMN autreChamp TEXT(100);
+GO;
+
+/* Rename a column
+*/
+ALTER TABLE test_Donnees RENAME COLUMN autreChamp TO autreTexte;
+GO;
+
+/* Remove a column
+*/
+ALTER TABLE test_Donnees DROP COLUMN autreTexte;
+GO;
+</code></pre>
+<p><em>Note : RENAME COLUMN ne fonctionne pas avec Access et MySQL.</em></p>
+<h2>Faire du ménage</h2>
+<pre><code>DROP TABLE test_Donnees;
+GO;
+
+DROP TABLE test_Parametres;
+GO;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/10/04/google-gadgets-site/" hreflang="fr-FR">Google Gadgets sur mon site</a>
+  <a rel="next" href="/2006/10/10/first/" hreflang="fr-FR">Premier billet</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

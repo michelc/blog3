@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comment transformer votre site web en PWA - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2017/08/18/transformer-site-web-pwa/" />
+<meta property="og:title" content="Comment transformer votre site web en PWA" />
+<meta name="description" content="La traduction d&#39;un billet très didactique de Max Böck qui donne une vision claire sur la façon de procéder pour créer une première Application Web progressive à partir d&#39;un simple site internet." />
+<meta property="og:description" content="La traduction d&#39;un billet très didactique de Max Böck qui donne une vision claire sur la façon de procéder pour créer une première Application Web progressive à partir d&#39;un simple site internet." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2017/08/18/transformer-site-web-pwa/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-08-18T10:25:43.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2017-08-18T10:25:43.000Z","datePublished":"2017-08-18T10:25:43.000Z","description":"La traduction d'un billet très didactique de Max Böck qui donne une vision claire sur la façon de procéder pour créer une première Application Web progressive à partir d'un simple site internet.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2017/08/18/transformer-site-web-pwa/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2017/08/18/transformer-site-web-pwa/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2017/08/18/transformer-site-web-pwa/">Comment transformer votre site web en PWA</a>
+    </h1>
+    <p>
+      <span>2017-08-18</span>
+      <span>#pwa</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="https://mxb.at/blog/how-to-turn-your-website-into-a-pwa/">How to turn your website into a PWA</a>&quot; de Max Böck.</p>
+</div>
+<p class="accroche">Une Application Web Progressive, ou PWA, utilise des
+fonctionnalités web modernes pour offrir une expérience utilisateur similaire à
+celle d'une application native. Tout site internet peut être une PWA -- voici
+comment faire.</p>
+<figure>
+  <img src="/public/2017/mxb-install.jpg" alt="" />
+  <figcaption>L'invite "ajouter à l'écran d'accueil" dans une PWA</figcaption>
+</figure>
+<p>Transformer un simple site internet en PWA n'est pas difficile et offre un
+grand nombre d'avantages, c'est pourquoi je souhaite vous présenter les trois
+étapes nécessaires pour y parvenir.</p>
+<p>Mais pour commencer, je vais corriger quelques idées fausses trop largement
+répandues en ce qui concerne les PWAs.</p>
+<h3>1) PWA ≠ &quot;Application&quot;</h3>
+<p>Une Application Web Progressive peut aussi bien être un blog, un site de
+présentation, une boutique ou une galerie de petits chats trop mignons. Une PWA
+est avant tout un moyen d'optimiser votre site pour plus de rapidité et un
+meilleur rendu. Vous pouvez (et vous devriez) profiter de ces nouvelles
+techniques quel que soit votre contenu.</p>
+<p><em>Remarque : le terme &quot;Application&quot; dans PWA est <a href="https://adactio.com/journal/12461">source de discussion</a>,
+car certains trouvent qu'il ne véhicule pas le bon concept. Pour moi, ça n'est
+qu'un nom. Et de toute façon, il est de plus en plus difficile de définir ce qui
+différencie un site internet d'une &quot;application web&quot;.</em></p>
+<h3>2) PWA ≠ Javascript + Application web monopage</h3>
+<p>Encore une fois, ce n'est pas parce que votre site n'est pas une
+<abbr title="Single Page Application">SPA</abbr> sous React-Redux que cela n'est
+pas pour vous. Mon site personnel est seulement composé
+<a href="https://github.com/maxboeck/mxb">de pages HTML statiques</a> générées par Jekyll,
+mais c'est une PWA tout à fait valide. Quoique vous ayez publié sur internet,
+vous pouvez donc en profiter.</p>
+<h3>3) PWA ≠ Google ou Android</h3>
+<p>Ce qui est génial, c'est que les PWAs offrent le meilleur des deux mondes :</p>
+<ul>
+<li>les liens directs et les URLs du monde web,</li>
+<li>un accès déconnecté, des notifications et plein d'autres trucs du monde des
+applications natives.</li>
+</ul>
+<p>Et tout ça en restant complètement indépendant de la plate-forme où cela
+s'exécute. Pas besoin d'AppStore ou d'un environnement iOS ou Android, mais
+juste ce bon vieux web.</p>
+<h3>4) PWA = prêt et sûr dès aujourd'hui</h3>
+<p>Dans PWA, il y a un &quot;P&quot; pour progressif ! Ce &quot;P&quot; signifie que toutes ces
+techniques ne sont que des améliorations accessoires. Si un ancien navigateur ne
+gère pas telle amélioration, il ne va pas planter. Il se contentera d'afficher
+le site web de base.</p>
+<h2>OK, mais pourquoi moi ?</h2>
+<p>Transformer votre site internet en PWA offre pas mal d'avantages :</p>
+<ul>
+<li>Une expérience utilisateur plus rapide et plus sécurisée</li>
+<li>Un meilleur classement Google</li>
+<li>Une meilleure convivialité</li>
+<li>De meilleures performances</li>
+<li>Un accès hors-ligne</li>
+</ul>
+<p>Même si vous n'en êtes pas encore à espérer que vos utilisateurs &quot;installent&quot;
+votre PWA (en plaçant un raccourci sur leur écran d'accueil), vous avez quand
+même beaucoup à gagner à faire le saut. En fait, toutes les étapes nécessaires
+pour transformer votre site en PWA vont améliorer votre site internet et sont
+communément considérées comme de bonnes pratiques du web.</p>
+<h2>Étape 1 : Le Manifeste</h2>
+<p>Un <em>manifeste</em> est un simple fichier JSON qui décrit toutes les métadonnées de
+votre PWA. Il contient des choses telles que le nom, la langue et l'icône de
+votre application. Ces informations indiquent aux navigateurs comment afficher
+votre application quand elle est installée en tant que raccourci. Ce fichier se
+présente de la façon suivante :</p>
+<pre><code>{
+ &quot;lang&quot; : &quot;fr&quot;,
+ &quot;dir&quot; : &quot;ltr&quot;,
+ &quot;name&quot; : &quot;Voici une super PWA&quot;,
+ &quot;short_name&quot; : &quot;maPWA&quot;,
+ &quot;icons&quot; :   [
+   {
+     &quot;src&quot; : &quot;\/assets\/images\/touch\/android-chrome-192x192.png&quot;,
+     &quot;sizes&quot; : &quot;192x192&quot;,
+     &quot;type&quot; : &quot;image\/png&quot;
+   }
+ ],
+ &quot;theme_color&quot; : &quot;#1a1a1a&quot;,
+ &quot;background_color&quot; : &quot;#1a1a1a&quot;,
+ &quot;start_url&quot; : &quot;/&quot;,
+ &quot;display&quot; : &quot;standalone&quot;,
+ &quot;orientation&quot; : &quot;natural&quot;
+}
+</code></pre>
+<p>Ce fichier est généralement nommé &quot;manifest.json&quot; et il est déclaré au niveau de
+la balise <code>&lt;head&gt;</code> de votre site :</p>
+<pre><code>&lt;link rel= &quot;manifest&quot; href= &quot;manifest.json&quot;&gt;
+</code></pre>
+<p>🔥 Astuce : Vous n'avez même pas à écrire ce fichier vous-même. Il faut plusieurs
+tailles d'icônes pour les différents systèmes et c'est assez compliqué pour que
+tout soit correct. Contentez-vous de faire une seule image en 500x500 (votre
+logo par exemple) et rendez-vous sur <a href="http://realfavicongenerator.net/">Real Favicon Generator</a>.
+Ils génèrent les différentes tailles nécessaires, les balises méta et vous
+fournissent un fichier manifeste tout prêt. Excellent !</p>
+<h2>Étape 2 : Passez à HTTPS</h2>
+<p>Les Applications Web Progressives doivent être servies via une connexion
+sécurisée, ce qui signifie un <strong>protocole HTTPS</strong>. HTTPS encrypte les données
+que les utilisateurs envoient vers votre serveur et empêche les intrus de
+falsifier leur connexion. Et depuis quelque temps, Google favorise les sites en
+HTTPS et les classe mieux que les sites concurrents non sécurisés.</p>
+<p>Pour passer à HTTPS, vous aurez besoin d'un certificat SSL fourni par une
+autorité de confiance. La façon d'obtenir un tel certificat dépend de la façon
+dont est hébergé votre site. Globalement, il existe deux cas de figures.</p>
+<p>👉 Si vous gérez <strong>votre propre serveur</strong> ou que vous avez un accès root à
+celui-ci, voyez du côté de <a href="https://letsencrypt.org/">LetsEncrypt</a>. C'est une
+autorité de certification gratuite, ouverte et simple qui permet à tout le monde
+de commencer à utiliser HTTPS. C'est assez facile à mettre en œuvre et aussi
+sécurisé que les autres fournisseurs.</p>
+<p>👉 Si vous êtes sur un <strong>hébergement mutualisé</strong>, la plupart d'entre eux ne
+permettent malheureusement pas d'utiliser LetsEncrypt mais offrent d'autres
+certificats SSL moyennant finance. Si vous ne savez pas comment obtenir un
+certificat, renseignez-vous auprès de votre hébergeur.</p>
+<p>Après avoir obtenu votre certificat SSL, il y aura sans doute quelques
+ajustements à faire dans votre code pour que tout soit servi via une connexion
+sécurisée. Pour plus d'informations à ce sujet, vous pouvez lire ce <a href="https://www.keycdn.com/blog/http-to-https/">guide
+détaillé de KeyCDN</a> ou suivre
+l'<a href="https://css-tricks.com/moving-to-https-on-wordpress/">article de Chris Coyier</a>
+pour migrer un site WordPress.</p>
+<p>Quand tout sera ok, vous serez gratifié d'un joli cadenas vert juste devant
+votre URL :</p>
+<p><img src="/public/2017/mxb-lock-icon.png" alt="Icone HTTPS"></p>
+<h2>Étape 3 : Le Service Worker</h2>
+<p>C'est là que la magie opère. Un Service Worker est essentiellement un bout de
+code Javascript qui sert d'intermédiaire entre le navigateur et l'hôte. Il
+s'installe automatiquement dans les navigateurs pris en charge, peut intercepter
+les requêtes effectuées sur votre site et y répondre de différentes façons.</p>
+<p>Vous pouvez configurer un nouveau SW en créant simplement un fichier Javascript
+dans le répertoire racine de votre projet. Appelons-le <code>sw.js</code>. Le contenu de ce
+fichier va dépendre de ce que vous souhaitez réaliser -- nous y viendrons dans
+une seconde.</p>
+<p>Pour informer le navigateur que nous avons l'intention d'utiliser ce fichier en
+tant que Service Worker, nous devons d'abord l'enregistrer. Dans le script
+principal de votre site, ajoutez la fonction suivante :</p>
+<pre><code>function registerServiceWorker() {
+  // enregistre le script sw avec les navigateurs qui le gèrent
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js', { scope: '/' }).then(() =&gt; {
+      console.log('Service Worker enregistré correctement.');
+    }).catch(error =&gt; {
+      console.log('Erreur lors de l''enregistrement du Service Worker : ', error);
+    });
+  }
+}
+</code></pre>
+<p>Le paramètre <code>scope</code> indique quelles requêtes doivent être interceptées par le
+SW. Il s'agit d'un chemin relatif par rapport à la racine de votre domaine. Par
+exemple, si vous le définissez à <code>/articles</code>, vous contrôlez les requêtes vers
+<code>votredomaine.com/articles/my-post</code> mais pas vers <code>/votredomaine.com/contact</code>.</p>
+<h3>La mode est au déconnecté</h3>
+<p>Il y a plusieurs trucs intéressants qui peuvent être réalisés grâce aux Service
+Workers. Vous pouvez en particulier mettre votre contenu en cache et le stocker
+en local pour qu'il soit disponible lorsque l'utilisateur est déconnecté. Cela
+aura également  un impact important sur le temps de chargement de la page même
+dans le cas où l'utilisateur est connecté, car les requêtes n'ont pas besoin
+d'accéder au réseau et les différents contenus sont immédiatement disponibles.</p>
+<p>En plus de la mise en cache traditionnelle par le navigateur, vous pouvez
+définir une liste des fichiers à mettre en cache dès que le Service Worker est
+installé -- de sorte que l'utilisateur n'a pas à naviguer vers une page pour
+qu'elle soit mise en cache. Voici comment faire cela :</p>
+<pre><code>// sw.js
+self.addEventListener('install', e =&gt; {
+ e.waitUntil(
+   // Après l'installation du service worker,
+   // ouvre un nouveau cache
+   caches.open('mon-cache-pwa').then(cache =&gt; {
+     // Ajoute toutes les URLs des éléments à mettre en cache
+     return cache.addAll([
+       '/',
+       '/index.html',
+       '/about.html',
+       '/images/doggo.jpg',
+       '/styles/main.min.css',
+       '/scripts/main.min.js',
+     ]);
+   })
+ );
+});
+</code></pre>
+<p>🔥 Astuce: Si vous souhaitez vous mettre rapidement au mode déconnecté, je vous
+recommande vivement d'utiliser <a href="https://github.com/GoogleChrome/sw-precache">sw-precache</a>.
+Il s'agit d'un outil créé par Google qui s'intègre à votre processus de
+génération Gulp ou Grunt pour <strong>générer le fichier du Service Worker à votre
+place</strong>.</p>
+<p>Vous lui donnez simplement une liste de fichiers et il suivra automatiquement
+toutes leurs modifications afin de mettre à jour votre cache Service Worker.
+Étant donné que <code>sw-precache</code> s'intègre dans le processus de génération de votre
+site, vous pouvez utiliser des caractères génériques pour définir <em>tous</em> les
+éléments à mettre en pré-cache de la façon suivante :</p>
+<pre><code>import gulp from 'gulp';
+import path from 'path';
+import swPrecache from 'sw-precache';
+
+const rootDir = '/';
+
+gulp.task('generate-service-worker', callback =&gt; {
+  swPrecache.write(path.join(rootDir, 'sw.js'), {
+    staticFileGlobs: [
+      // Suit et met en cache tous les fichiers qui correspondent à ce modèle
+      rootDir + '/**/*.{js,html,css,png,jpg,gif}',
+    ],
+    stripPrefix: rootDir
+  }, callback);
+});
+</code></pre>
+<p>Exécutez cette tâche dans votre build, et vous n'aurez plus jamais à vous
+préoccuper de l'invalidation du cache ! Dans le cas de sites plus petits, comme
+des sites statiques, vous pouvez même lui faire mettre en cache tous vos
+fichiers image, HTML, Javascript et CSS. Pour les sites ayant beaucoup de
+contenu dynamique ou de nombreuses images de grande taille qui ne sont pas
+nécessaires en permanence, il vaut mieux pré-cacher seulement un &quot;squelette&quot; de
+votre site.</p>
+<p><em>PS : Pour traiter le support du mode déconnecté de façon plus exhaustive,
+n'hésitez pas à lire &quot;<a href="https://jakearchibald.com/2014/offline-cookbook/">The Offline Cookbook</a>&quot; de Jake Archibald.</em></p>
+<h2>Testez votre PWA</h2>
+<p>Chrome <a href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk">Lighthouse Extension</a>
+est un outil de test pour vérifier les Applications Web Progressives, en ce qui
+concerne leur performance, leur accessibilité et leur conformité aux
+spécifications PWA.</p>
+<p>Il teste votre site dans plusieurs tailles et selon différentes vitesses du
+réseau, mesure le temps pour afficher la première page et d'autres facteurs de
+performance, pour vous donner des conseils utiles sur les points qui doivent
+encore être améliorés. De façon générale, c'est un très bon outil d'évaluation
+pour les sites web.</p>
+<figure class="extend">
+  <img src="/public/2017/mxb-lighthouse.png" alt="Rapport Google Lighthouse avec
+  les résultats  PWA, performance, accessibilité et meilleures pratiques" />
+  <figcaption>Rapport de Lighthouse pour mxb.at</figcaption>
+</figure>
+<p>Vous pouvez au choix installer l'extension Lighthouse depuis le
+<a href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk">Chrome Web Store</a>,
+ou bien utiliser Chrome Canary, où cette extension est déjà présente par défaut.</p>
+<h2>Lectures complémentaires</h2>
+<p>J'espère vous avoir donné un bon aperçu pour démarrer avec les PWA. Si vous
+souhaitez approfondir le sujet, voici quelques liens intéressants pour en
+apprendre plus :</p>
+<ul>
+<li>Google Developers : <a href="https://developers.google.com/web/fundamentals/getting-started/codelabs/your-first-pwapp/">Votre première Application Web Progressive</a></li>
+<li>Smashing Magazine : <a href="https://www.smashingmagazine.com/2016/08/a-beginners-guide-to-progressive-web-apps/">Un guide pour les débutants des PWAs</a></li>
+<li>Cours d'Udacity gratuit : <a href="https://www.udacity.com/course/intro-to-progressive-web-apps--ud811">Introduction aux Applications Web Progressives</a></li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2017/01/04/migration-sous-jekyll/" hreflang="fr-FR">Migration sous Jekyll</a>
+  <a rel="next" href="/2019/03/23/solitaire-feuille-route-javascript/" hreflang="fr-FR">Solitaire - Feuille de route JavaScript</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

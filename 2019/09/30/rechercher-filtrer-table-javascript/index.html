@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rechercher et filtrer une table en JavaScript - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/09/30/rechercher-filtrer-table-javascript/" />
+<meta property="og:title" content="Rechercher et filtrer une table en JavaScript" />
+<meta name="description" content="Comment faire une recherche et filtrer le contenu d&#39;une table HTML en JavaScript. Depuis le script trouvé sur codepen.io et après quelques explications arrive à une version finale légèrement retravaillée." />
+<meta property="og:description" content="Comment faire une recherche et filtrer le contenu d&#39;une table HTML en JavaScript. Depuis le script trouvé sur codepen.io et après quelques explications arrive à une version finale légèrement retravaillée." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/09/30/rechercher-filtrer-table-javascript/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/table-filter.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-09-30T10:23:34.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-09-30T10:23:34.000Z","datePublished":"2019-09-30T10:23:34.000Z","description":"Comment faire une recherche et filtrer le contenu d'une table HTML en JavaScript. Depuis le script trouvé sur codepen.io et après quelques explications arrive à une version finale légèrement retravaillée.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/09/30/rechercher-filtrer-table-javascript/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/table-filter.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/09/30/rechercher-filtrer-table-javascript/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/table-filter.jpg" alt="Ensemble d'entonnoir 4 pièces + JavaScript" /><figcaption><a href="https://www.harborfreight.com/4-piece-funnel-set-744.html">Ensemble d'entonnoir 4 pièces + JavaScript</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/09/30/rechercher-filtrer-table-javascript/">Rechercher et filtrer une table en JavaScript</a>
+    </h1>
+    <p>
+      <span>2019-09-30</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Il y a quelque temps, j'ai eu besoin de proposer une recherche simple dans un
+tableau. Normalement, je préfère le bon vieux <code>Ctrl+F</code> mais ça ne plaît pas à
+tout le monde (et aussi le but était plus de limiter l'affichage aux seules
+lignes trouvées, ce que ne permet pas la recherche de Chrome).</p>
+<p>Comme mon site n'utilisait pas encore jQuery, j'ai cherché un petit truc tout
+fait en Vanilla JS et j'ai trouvé un exemple très simple et facilement
+compréhensible avec une démonstration sur
+<a href="https://codepen.io/priyankamalviya/pen/zzWZEa">codepen.io</a>.</p>
+<h2>Le script de départ</h2>
+<p>Tout d'abord, le script tel que développé par
+<a href="https://twitter.com/priyankamalvi18">Priyanka Malviya</a> avant d'expliquer ce que
+ça fait et comment.</p>
+<pre><code>(function() {
+  'use strict';
+
+  var TableFilter = (function() {
+    var Arr = Array.prototype;
+    var input;
+
+    function onInputEvent(e) {
+      input = e.target;
+      var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+      Arr.forEach.call(table1, function(table) {
+        Arr.forEach.call(table.tBodies, function(tbody) {
+          Arr.forEach.call(tbody.rows, filter);
+        });
+      });
+    }
+
+    function filter(row) {
+      var text = row.textContent.toLowerCase();
+      var val = input.value.toLowerCase();
+      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    }
+
+    return {
+      init: function() {
+        var inputs = document.getElementsByClassName('table-filter');
+        Arr.forEach.call(inputs, function(input) {
+          input.oninput = onInputEvent;
+        });
+      }
+    };
+
+  })();
+
+ TableFilter.init();
+})();
+</code></pre>
+<h2>Comment ça marche ?</h2>
+<p>Pour pouvoir utiliser ce code, il faut ajouter à la page une zone de saisie en
+la décorant avec la classe &quot;table-filter&quot; :</p>
+<pre><code>&lt;p&gt;
+  Filtrer : &lt;input type=&quot;text&quot; class=&quot;table-filter&quot; data-table=&quot;livres&quot;&gt;
+&lt;/p&gt;
+...
+&lt;table class=&quot;livres&quot;&gt;
+  ...
+&lt;/table&gt;
+...
+&lt;script src=&quot;/scripts/js-table-filter.js&quot;&gt;&lt;/script&gt;
+
+</code></pre>
+<p>La classe &quot;table-filter&quot; du contrôle <code>&lt;input ...&gt;</code> sert à indiquer que cette
+zone de saisie est destinée à filtrer le contenu d'une table.</p>
+<p>L'attribut &quot;data-table&quot; permer de définir le nom de la classe correspondant à la
+table devant être filtrée, ici la table HTML avec la classe &quot;livres&quot;.</p>
+<p>Le script &quot;js-table-filter.js&quot; lance directement la fonction
+<code>TableFilter.init()</code> qui recherche toutes les balises avec la classe
+&quot;table-filter&quot; et applique à chacune d'elle la fonction
+<code>TableFilter.onInputEvent</code> sur son évènement <code>oninput</code>. Le cas échéant, le
+système permet donc d'avoir plusieurs tables avec chacune sa zone de saisie pour
+filtrer son contenu :</p>
+<pre><code>init: function() {
+  var inputs = document.getElementsByClassName('table-filter');
+  Arr.forEach.call(inputs, function(input) {
+    input.oninput = onInputEvent;
+  });
+}
+</code></pre>
+<p>Cet évènement se déclenche donc dès que l'utilisateur saisi ou modifie le texte
+dans la zone de recherche. Il exécute la fonction <code>onInputEvent</code> associée à cet
+évènement lors de l'initialisation.</p>
+<p>Cette fonction <code>onInputEvent</code> va effectuer la recherche en testant toutes les
+lignes existantes dans la table :</p>
+<ul>
+<li>stocke la zone de saisie ayant déclenché l'évènement <code>oninput</code> (ie
+&quot;event.target&quot;) dans la variable &quot;input&quot;</li>
+<li>retrouve la classe de la table à filtrer à partir de l'attribut &quot;data-table&quot;
+de cette zone de saisie</li>
+<li>recherche toutes les tables ayant cette classe CSS</li>
+<li>boucle sur chacune de ces tables, puis pour chaque table, sur chacun de ses
+blocs de type <code>&lt;tbody&gt;</code>, puis pour chaque &quot;body&quot;, sur chacune de ses lignes
+<code>&lt;tr&gt;</code>, et applique la fonction <code>TableFilter.filter</code> sur celles-ci.</li>
+</ul>
+<pre><code>function onInputEvent(e) {
+  input = e.target;
+  var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+  Arr.forEach.call(table1, function(table) {
+    Arr.forEach.call(table.tBodies, function(tbody) {
+      Arr.forEach.call(tbody.rows, filter);
+    });
+  });
+}
+</code></pre>
+<p>La fonction <code>filter()</code> sert pour filtrer les lignes de la table. Elle va
+afficher ou cacher une ligne selon que la recherche est positive ou pas :</p>
+<ul>
+<li>stocke le contenu &quot;textuel&quot; et en minuscule de la ligne dans la variable
+locale &quot;text&quot;</li>
+<li>stocke le texte à rechercher en minuscule dans la variable locale &quot;val&quot;</li>
+<li>affiche la ligne <code>&lt;tr&gt;</code> quand elle contient le texte recherché</li>
+<li>cache le ligne <code>&lt;tr&gt;</code> si elle ne contient pas le texte recherché</li>
+</ul>
+<pre><code>function filter(row) {
+  var text = row.textContent.toLowerCase();
+  var val = input.value.toLowerCase();
+  row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+}
+</code></pre>
+<p>Le fait de cacher / afficher une ligne se fait via la propriété CSS <code>display</code>
+que l'on défini selon le cas à &quot;none&quot; ou &quot;table-row&quot;.</p>
+<h2>1° modification : prise en main</h2>
+<p>Après avoir étudié le fonctionnement de ces quelques lignes, j'ai procédé à une
+très petite modification qui m'a permis de bien comprendre comment fonctionnait
+le code.</p>
+<pre><code>(function () {
+  &quot;use strict&quot;;
+
+  var TableFilter = (function () {
+    var Arr = Array.prototype;
+    var search;
+
+    function onInputEvent(e) {
+      search = e.target.value.toLowerCase();
+      var tables = document.getElementsByClassName(e.target.getAttribute(&quot;data-table&quot;));
+      Arr.forEach.call(tables, function (table) {
+        Arr.forEach.call(table.tBodies, function (tbody) {
+          Arr.forEach.call(tbody.rows, filter);
+        });
+      });
+    }
+
+    function filter(row) {
+      var text = row.textContent.toLowerCase();
+      row.style.display = text.indexOf(search) === -1 ? &quot;none&quot; : &quot;table-row&quot;;
+    }
+
+    return {
+      init: function () {
+        var inputs = document.getElementsByClassName(&quot;table-filter&quot;);
+        Arr.forEach.call(inputs, function (input) {
+          input.oninput = onInputEvent;
+        });
+      }
+    };
+
+  })();
+
+  TableFilter.init();
+})();
+</code></pre>
+<p>Outre la transformation des apostrophes en guillemets (je préfère), j'ai
+remplacé la variable &quot;input&quot; qui stocke le contrôle de saisie par une variable
+&quot;search&quot; qui stocke uniquement le texte à rechercher après l'avoir transformé
+en minuscule.</p>
+<p>Avantages :</p>
+<ul>
+<li>Stockage d'une simple variable de type texte plutôt qu'un objet &quot;DOM&quot;.</li>
+<li>Le texte à rechercher n'est plus transformé en minuscule à chaque ligne testée.</li>
+</ul>
+<h2>2° modification : une petite amélioration</h2>
+<p>Mon tableau affiche une liste de livres. Le système de filtre fonctionne à
+merveille : je peux taper quelques trucs et le tableau ne présente plus que les
+livres qui correspondent à la recherche.</p>
+<p>On peut cliquer sur une des lignes du tableau et cela envoie vers une page de
+détail qui affiche plus d'informations sur le livre sélectionné.</p>
+<p>Mais bizarement, quand on revient en arrière via le navigateur, on retrouve la
+liste avec le filtre pré-rempli mais pas appliqué : toutes les lignes du tableau
+sont visibles...</p>
+<p>Il faut donc trouver un truc pour ré-activer la recherche dès lors que la zone
+de saisie est pré-remplie. C'est vraiment pas compliqué et il suffit de
+déclencher l'évènement <code>oninput</code> si la zone de saisie n'est pas vide :</p>
+<pre><code>init: function() {
+  var inputs = document.getElementsByClassName('table-filter');
+  Arr.forEach.call(inputs, function(input) {
+    input.oninput = onInputEvent;
+    if (input.value !== &quot;&quot;) input.oninput({ target: input });
+  });
+}
+</code></pre>
+<p>La ligne <code>if (input.value !== &quot;&quot;) input.oninput({ target: input });</code> teste si la
+zone de saisie n'est pas vide, et si c'est le cas, déclenche l'évènement en
+lui passant la zone de saisie en cours.</p>
+<h2>3° modification : un peu de modernité</h2>
+<p>Une fois que je procrastinais, j'ai décidé de remplacer les
+<code>document.getElementsByClassName()</code> par des <code>document.querySelectorAll()</code>
+vachement plus modernes et au passage d'en profiter pour simplifier les
+différentes sélections.</p>
+<p>J'ai commencé par créer une fonction <code>TableFilter.dquery()</code> pour standardiser la
+façon d'utiliser <code>querySelectorAll()</code> et en récupérer un tableau :</p>
+<pre><code>function dquery(selector) {
+  return Array.prototype.slice.call(document.querySelectorAll(selector));
+}
+</code></pre>
+<p><em>Note : C'est du copier / coller de ma mini-librairie JavaScript <a href="/2019/04/30/dquery-remplacer-jquery/">dQuery</a>.</em></p>
+<p>J'ai alors pu modifier la façon de sélectionner les zones de saisie concernées :</p>
+<pre><code>// AVANT
+var inputs = document.getElementsByClassName(&quot;table-filter&quot;);
+Arr.forEach.call(inputs, function (input) { ... });
+
+// APRES
+var inputs = dquery(&quot;.table-filter&quot;);
+[].forEach.call(inputs, function (input) { ... });
+</code></pre>
+<p>J'ai surtout pu faire évoluer la façon de boucler sur les lignes de la table :</p>
+<pre><code>var tables = document.getElementsByClassName(e.target.getAttribute(&quot;data-table&quot;));
+Arr.forEach.call(tables, function (table) {
+  Arr.forEach.call(table.tBodies, function (tbody) {
+    Arr.forEach.call(tbody.rows, filter);
+  });
+});
+</code></pre>
+<p>qui est devenu :</p>
+<pre><code>var lignes = dquery(e.target.getAttribute(&quot;data-table&quot;) + &quot; tbody tr&quot;);
+[].forEach.call(lignes, filter);
+</code></pre>
+<p><em>Note : L'attribut &quot;data-table&quot; qui contenait jusqu'à présent &quot;livres&quot; (un nom de
+classe qui était attendu par <code>.getElementsByClassName()</code>) doit désormais être
+modifié en &quot;.livres&quot; (un sélecteur CSS qui est destiné à <code>.querySelectorAll()</code>).</em></p>
+<h2>4° modification : une légère optimisation</h2>
+<p>À chaque fois qu'on déclenche une recherche, toutes les lignes de la table sont
+transformées en minuscule pour pouvoir effectuer la comparaison... Supposons que
+j'ai une petite table avec 200 livres, si je veux filtrer sur les éléments qui
+contiennent le mot &quot;CHAT&quot;, je fais :</p>
+<ul>
+<li>200 transformations en minuscule quand je tape &quot;C&quot;</li>
+<li>+ 200 transformations en minuscule quand j'ajoute &quot;H&quot;</li>
+<li>+ 200 transformations en minuscule quand j'ajoute &quot;A&quot;</li>
+<li>+ 200 transformations en minuscule quand j'ajoute &quot;T&quot;</li>
+</ul>
+<p>C'est bête. J'ai donc mis en cache le contenu &quot;textuel&quot; de la ligne après
+l'avoir transformé en minuscule pour &quot;gagner&quot; un peu de temps :</p>
+<pre><code>if (!row.lowerTextContent) {
+  row.lowerTextContent = row.textContent.toLowerCase();
+}
+row.style.display = row.lowerTextContent.indexOf(search) === -1 ? &quot;none&quot; : &quot;table-row&quot;;
+</code></pre>
+<p><em>Note : Vu la taille des tableaux sur lesquels j'utilise &quot;js-table-filter.js&quot;,
+c'est plus par sens du détail que pour une réelle optimisation.</em></p>
+<h2>5° modification : une fonctionnalité de plus</h2>
+<p>Ce coup-ci, j'ai fait une modification un peu plus utile. Le titre de la table
+est &quot;Liste des livres&quot;, suivi du nombre de livres entre parenthèses.</p>
+<pre><code>&lt;h2&gt;Liste des livres (&lt;%= model.length %&gt;)&lt;/h2&gt;
+&lt;p&gt;
+  Filtrer : &lt;input type=&quot;text&quot; class=&quot;table-filter&quot; data-table=&quot;.livres&quot;&gt;
+&lt;/p&gt;
+...
+&lt;table class=&quot;livres&quot;&gt;
+  ...
+&lt;/table&gt;
+</code></pre>
+<p>Et quand on filtre le contenu de la table, ce compteur ne bouge pas puisqu'il
+est initialisé côté serveur et qu'il correspond au nombre total de lignes dans
+la table, qu'elles soient affichées ou cachées...</p>
+<p>J'ai donc complété le code existant pour mettre à jour ce compteur au fur et à
+mesure qu'on filtre les données :</p>
+<pre><code>...
+[].forEach.call(lignes, filter);
+var writer = input.getAttribute(&quot;data-count&quot;);
+if (writer) {
+  var count = rows.reduce(function (t, x) { return t + (x.style.display === &quot;none&quot; ? 0 : 1); }, 0);
+  dquery(writer)[0].textContent = count;
+}
+</code></pre>
+<p>Pour que ça marche, il faut ajouter un attribut &quot;data-count&quot; à la zone de saisie
+pour identifier où afficher le nombre de lignes. Et bien entendu, ajouter une
+balise correspondant à cet attribut, soit <code>&lt;span id=&quot;count&quot;&gt;...&lt;/span&gt;</code> dans
+l'exemple ci-dessous :</p>
+<pre><code>&lt;h2&gt;Liste des livres (&lt;span id=&quot;count&quot;&gt;&lt;%= model.length %&gt;&lt;/span&gt;)
+&lt;p&gt;
+  Filtrer : &lt;input type=&quot;text&quot; class=&quot;table-filter&quot; data-table=&quot;.livres&quot; data-count=&quot;#count&quot;&gt;
+&lt;/p&gt;
+...
+</code></pre>
+<p><em>Note : Si l'attribut &quot;data-count&quot; n'existe pas, alors le test <code>if (writer) { ... }</code> permet d'éviter de chercher à compter les lignes dans ce cas.</em></p>
+<h2>6° modification : simplifications</h2>
+<p>À cette occasion, on peut aussi remarquer que la classe &quot;table-filter&quot; n'est
+pas vraiment indispensable. On peut aussi bien se baser sur la présence de
+l'attribut &quot;data-table&quot; pour déterminer quels sont les contrôles de saisie
+destinés à effectuer une recherche.</p>
+<p>Ce qui donne côté HTML :</p>
+<pre><code>&lt;p&gt;
+  Filtrer : &lt;input type=&quot;text&quot; data-table=&quot;.livres&quot; data-count=&quot;#count&quot;&gt;
+&lt;/p&gt;
+</code></pre>
+<p>Et côté JavaScript :</p>
+<pre><code>// AVANT
+var inputs = dquery(&quot;.table-filter&quot;);
+[].forEach.call(inputs, function (input) { ... });
+
+// APRES
+var inputs = dquery(&quot;input[data-table]&quot;);
+[].forEach.call(inputs, function (input) { ... });
+</code></pre>
+<h2>Le fichier &quot;js-table-filter.js&quot; à ce jour</h2>
+<p>Voilà où j'en suis (en attendant de travailler à une recherche et un filtrage
+sans tenir compte des accents). Et avec quelques commentaires, le code est
+toujours aussi court et simple :</p>
+<pre><code>// Vanilla JS table filter
+// Source: https://blog.pagesd.info/2019/09/30/rechercher-filtrer-table-javascript/
+
+(function () {
+  &quot;use strict&quot;;
+
+  var TableFilter = (function () {
+    var search;
+
+    function dquery(selector) {
+      // Renvoie un tableau des éléments correspondant au sélecteur
+      return Array.prototype.slice.call(document.querySelectorAll(selector));
+    }
+
+    function onInputEvent(e) {
+      // Récupère le texte à rechercher
+      var input = e.target;
+      search = input.value.toLocaleLowerCase();
+      // Retrouve les lignes où effectuer la recherche
+      // (l'attribut data-table de l'input sert à identifier la table à filtrer)
+      var selector = input.getAttribute(&quot;data-table&quot;) + &quot; tbody tr&quot;;
+      var rows = dquery(selector);
+      // Recherche le texte demandé sur les lignes du tableau
+      [].forEach.call(rows, filter);
+      // Mise à jour du compteur de ligne (s'il y en a un de défini)
+      // (l'attribut data-count de l'input sert à identifier l'élément où afficher le compteur)
+      var writer = input.getAttribute(&quot;data-count&quot;);
+      if (writer) {
+        // S'il existe un attribut data-count, on compte les lignes visibles
+        var count = rows.reduce(function (t, x) { return t + (x.style.display === &quot;none&quot; ? 0 : 1); }, 0);
+        // Puis on affiche le compteur
+        dquery(writer)[0].textContent = count;
+      }
+    }
+
+    function filter(row) {
+      // Mise en cache de la ligne en minuscule
+      if (row.lowerTextContent === undefined)
+        row.lowerTextContent = row.textContent.toLocaleLowerCase();
+      // Masque la ligne si elle ne contient pas le texte recherché
+      row.style.display = row.lowerTextContent.indexOf(search) === -1 ? &quot;none&quot; : &quot;table-row&quot;;
+    }
+
+    return {
+      init: function () {
+        // Liste des champs de saisie avec un attribut data-table
+        var inputs = dquery(&quot;input[data-table]&quot;);
+        [].forEach.call(inputs, function (input) {
+          // Déclenche la recherche dès qu'on saisi un filtre de recherche
+          input.oninput = onInputEvent;
+          // Si on a déjà une valeur (suite à navigation arrière), on relance la recherche
+          if (input.value !== &quot;&quot;) input.oninput({ target: input });
+        });
+      }
+    };
+
+  })();
+
+  TableFilter.init();
+})();
+</code></pre>
+<p>En bonus, la partie HTML toute prête, pour quand j'ajoute ça à un un template sous
+Bootstrap 4 :</p>
+<pre><code>&lt;div class=&quot;input-group mb-3&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;span class=&quot;input-group-text&quot; id=&quot;filter&quot;&gt;Filtrer&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-table=&quot;table&quot; data-count=&quot;#count&quot; placeholder=&quot;Texte pour filtrer...&quot; aria-label=&quot;Filtre&quot; aria-describedby=&quot;filter&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<div class="encart">
+<p>English version: <a href="/2019/10/01/search-filter-table-javascript/" hreflang="en-US">Search and filter a table with JavaScript</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/09/21/crud-avec-express-postgresql-10-etapes/" hreflang="fr-FR">Application CRUD avec Express et PostgreSQL en 10 étapes</a>
+  <a rel="next" href="/2019/10/01/search-filter-table-javascript/" hreflang="en-US">Search and filter a table with JavaScript</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

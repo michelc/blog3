@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Régime XML - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/09/02/regime-d-ete/" />
+<meta property="og:title" content="Régime XML" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/09/02/regime-d-ete/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-09-02T09:29:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-09-02T09:29:00.000Z","datePublished":"2008-09-02T09:29:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/09/02/regime-d-ete/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/09/02/regime-d-ete/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/09/02/regime-d-ete/">Régime XML</a>
+    </h1>
+    <p>
+      <span>2008-09-02</span>
+      <span>#ap</span><span>#code-killer</span><span>#xml</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Cet été, j'ai eu envie d'un Altrr-Press tout beau, tout propre pour qu'il
+soit encore plus simple à utiliser et aussi un peu plus prêt pour le grand jour
+du passage sous .Net 2.0 (ou plus) : moins de code = moins de problèmes
+lors de la conversion.</p>
+<p>Pour commencer, je me suis enfin décidé à supprimer les sources d'un certain
+nombre de boites devenues inutiles mais dont les codes sources avaient été
+épargnés (voire un peu oubliés) en attendant que tous les sites existant soient
+mis à jour.</p>
+<ul>
+<li>FlashFile : insérait une animation flash (remplacé par
+IncludeFile)</li>
+<li>Image : insérait une image (remplacé par IncludeFile)</li>
+<li>Redirect : redirige le client vers une autre URL (remplacé par la
+macro [%AP.Redirect:url%])</li>
+<li>Sitemap : insérait le plan du site (remplacé par la macro
+[%AP.Site.Map%])</li>
+<li>Sitemenu : menu ou sous-menu de navigation (remplacé par la macro
+[%AP.Site.Menu:level1-level2%])</li>
+</ul>
+<p><em>Note : Si vous connaissez des sites qui ont encore besoin de ces
+boites, 20071029_update.sql et 20071030_update.sql sont vos amis.</em></p>
+<p>Pour continuer sur ma lancée, j'ai aussi cherché comment éliminer la
+<a href="/2006/01/29/boite-sqlrepeat/">boite SqlRepeat</a>
+qui prend le résultat d'une requête sous forme de DataReader pour générer un
+tableau HTML à l'aide d'un système de template très primaire.</p>
+<p>D'abord, il y a le template d'en-tête :</p>
+<pre><code>&lt;table class='repertoire'&gt;
+</code></pre>
+<p>Puis le template pour le détail des lignes :</p>
+<pre><code>&lt;tr&gt;
+  &lt;td class='col1'&gt;{0}&lt;br /&gt;&lt;/td&gt;
+  &lt;td class='col2'&gt;{1} {3} {2}&lt;br /&gt;{4}&lt;/td&gt;
+  &lt;td class='col3'&gt;Tél:&amp;amp;nbsp; {7}&lt;br /&gt;Fax: {8}&lt;/td&gt;
+&lt;/tr&gt;
+</code></pre>
+<p>Et pour finir celui pour la fin du tableau :</p>
+<pre><code>&lt;/table&gt;
+</code></pre>
+<p>Et côté code, en simplifiant ça donne à peu près ça :</p>
+<pre><code>StringBuilder html = new StringBuilder();
+html.Append(templateHead);
+DataReader dr = Data.Base.ExecuteReader(sqlQuery);
+while (dr.Read()) {
+  html.Append(ToHtmlRow(dr, templateLoop));
+}
+dr.Close();
+html.Append(templateFoot);
+</code></pre>
+<p>Pour chaque ligne du DataReader, la fonction ToHtmlRow() génère une ligne en
+remplaçant les marqueurs <code>{ # }</code> par la colonne correspondante dans la ligne en
+cours DataReader.</p>
+<p>Le but étant de supprimer une boite, il faut donc trouver par quoi la
+remplacer. Le plus simple est de passer par la boite à tout faire RawContent et
+d'y coller le tableau HTML final. Étant donné que cette boite n'est utilisée
+que sur le site de <a href="http://saint-privat.au-quotidien.info/">Saint-Privat</a>, cela semble une
+solution raisonnable. Malgré tout, la boite RawContent est plutôt destinée aux
+petits bouts de codes de quelques lignes et là les tableaux HTML dépassent la
+toise.</p>
+<p>Alors j'ai cherché s'il n'y aurait pas une autre méthode. Et TILT :
+XML. Ah ben ZUT alors!</p>
+<p>Normalement, je préfère éviter d'utiliser le XML (et surtout le XSLT) parce
+que si c'est toujours assez facile quand on commence, on se retrouve vite avec
+des sacs de noeuds pour faire trois fois rien. (Ou alors il faut recourir à un
+collègue qui parle le XML couramment mais que quand il a fini j'ai pas toujours
+compris.) Mais là, l'envie de me débarrasser d'une boite quasiment inutilisée
+étant la plus forte, j'ai succombé. Et en fait, ça n'a pas été aussi compliqué
+que ce que je craignais.</p>
+<p>Un premier bon point, c'est qu'il existe déjà une boite XmlFile qui prend un
+fichier XML pour générer du HTML en lui appliquant un fichier XSLT. C'est un
+truc qui existe depuis toujours dans IBuySpy et que j'ai adapté dans
+Altrr-Press. Dans la pratique, je ne m'en sers presque jamais, sauf de temps en
+temps pour afficher des fils <a href="/2006/01/16/rss-html-conversion/">RSS</a> ou
+<a href="/2006/01/16/atom-html-conversion/">Atom</a> ou
+bien des liens enregistrés dans <a href="/2006/01/19/blogmarks-html-conversion/">Blogmarks</a>.</p>
+<p>Dans le cas présent, il fallait donc que je me débrouille pour prendre le
+résultat de ma requête comme source XML et surtout que je réussisse à créer un
+fichier XSLT qui transforme ce résultat en tableau HTML.</p>
+<p>Pour la source XML, c'était vraiment trop facile : quelques minutes à
+passer dans l'aide et 2 lignes de codes ont suffit (merci le .Net) :</p>
+<pre><code>DataSet ds = Data.Base.ExecuteDataSet(sqlQuery);
+string xml = ds.GetXml();
+</code></pre>
+<p>Ce qui donne :</p>
+<pre><code>&lt;NewDataSet&gt;
+  &lt;Table&gt;
+    &lt;categories&gt;Electricien&lt;/categories&gt;
+    &lt;organization&gt;Ets Martin&lt;/organization&gt;
+    &lt;legalName /&gt;
+    &lt;givenName /&gt;
+    &lt;streetAddress&gt;Le Pré-Vert&lt;/streetAddress&gt;
+    &lt;postalCode&gt;12345&lt;/postalCode&gt;
+    &lt;placeName&gt;Enville&lt;/placeName&gt;
+    &lt;workPhone&gt;01 02 03 04 05&lt;/workPhone&gt;
+    &lt;faxPhone /&gt;
+  &lt;/Table&gt;
+  ...
+&lt;/NewDataSet&gt;
+</code></pre>
+<p>Puis en partant de fichiers XSLT existants et après pas mal d'essais et de
+messages d'erreurs, j'ai réussi à obtenir un fichier XSLT qui reproduisait le
+résultat de mon futur ex-système de template :</p>
+<pre><code>&lt;xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'&gt;
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;table class='repertoire'&gt;
+    &lt;xsl:for-each select='NewDataSet/Table'&gt;
+      &lt;tr&gt;
+        &lt;td class='col1'&gt;
+          &lt;xsl:value-of select='categories'/&gt;
+          &lt;br /&gt;
+        &lt;/td&gt;
+        &lt;td class='col2'&gt;
+          &lt;xsl:value-of select='organization'/&gt;
+          &lt;xsl:if test=&quot;givenName != ''&quot;&gt;
+            &lt;xsl:if test=&quot;organization != ''&quot;&gt;
+              &lt;xsl:text&gt; - &lt;/xsl:text&gt;
+            &lt;/xsl:if&gt;
+            &lt;xsl:value-of select='givenName'/&gt;
+            &lt;xsl:text&gt; &lt;/xsl:text&gt;
+            &lt;xsl:value-of select='legalName'/&gt;
+          &lt;/xsl:if&gt;
+          &lt;br /&gt;
+          &lt;xsl:value-of select='streetAddress'/&gt;
+        &lt;/td&gt;
+        &lt;td class='col3'&gt;
+          Tél: &lt;xsl:value-of select='workPhone'/&gt;
+          &lt;br /&gt;
+          &lt;xsl:if test=&quot;faxPhone != ''&quot;&gt;Fax: &lt;xsl:value-of select='faxPhone'/&gt;&lt;/xsl:if&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/xsl:for-each&gt;
+    &lt;/table&gt;
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+<p>Et même que grâce à l'instruction <code>&lt;xsl:if test=&quot;faxPhone != ''&quot;&gt; ... &lt;/xsl:if&gt;</code>, le résultat obtenu est encore mieux
+que l'original. Si je ne me retenais pas, je passerais tout en XML.</p>
+<p>Mais pour l'instant, je vais me contenter de supprimer la boite SqlRepeat et
+ses 3 fichiers sources devenus inutiles. C'est toujours ça de pris (et au final
+ça fait quand même 6 boites de moins !).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/07/22/select-not-autres-bizarreries/" hreflang="fr-FR">Select ... Not IN et autres bizarreries</a>
+  <a rel="next" href="/2008/09/05/blog-in-french/" hreflang="fr-FR">Blog in French</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

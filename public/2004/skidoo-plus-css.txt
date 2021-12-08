@@ -1,0 +1,174 @@
+@charset "iso-8859-1";
+
+/* General CSS changes for skidoo_too.css */
+.inside {
+	height: 100%; /* IE6 don't show borders otherwise */
+}
+a img {
+	border: none 0px;
+}
+.boxDefault {
+	padding: 0 0;
+	margin-top: 0;
+	margin-bottom: 20px;
+	/* border: dotted 1px #888; */
+}
+.boxDefault h3 {
+	margin-top: 0;
+}
+
+#rightColumn .inside {
+	padding: 1em 0.5em;
+}
+
+/* h3 styling for middle column */
+#middleColumn .boxHtmltext h3 {
+	background-image: url(styles/boxHtmltext.gif); 
+	background-repeat: no-repeat;
+	background-position: left 0.1em;
+	text-indent: 20px;
+}
+
+/* h3 styling for right column according to current screen */
+#rightColumn h3 {
+	color: #888;
+	border-bottom: 2px dotted #888;
+}
+#home #rightColumn h3 {
+	color: #00f;
+	border-bottom: 2px dotted #00f;
+}
+#tests #rightColumn h3 {
+	color: #f00;
+	border-bottom: 2px dotted #f00;
+}
+#admin #rightColumn h3 {
+	color: #080;
+	border-bottom: 2px dotted #080;
+}
+
+/* CSS styles for Htmltext boxes on tests/htmltext.aspx */
+#qc_test2 {
+	border: 2px solid red;
+	padding: 5px 5px;
+	background-image: url(styles/bgTest2.gif);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+}
+#qc_test2 h3 {
+	background-image: url(styles/titleTest2.gif) !important; 
+	background-position: right 0.1em !important;
+	text-indent: 0.2em !important;
+	color: white;
+	background-color: red;
+	margin-top: 0;
+	width: auto;
+	height: 100%;
+	font-variant: small-caps;
+}
+/* from DigitalWeb Magazine */
+#qc_test3 {
+	color: #000;
+	width: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 5px 5px 5px;
+	background: #e5e5e5 url(styles/bgTest3.gif) bottom left no-repeat;
+}
+#qc_test3 h3 {
+	color: #fff;
+	margin: 0 -5px;
+	background: #c0c0c0 url(styles/titleTest3.gif) top left no-repeat !important;
+	border-bottom: 1px solid #FFF;
+	text-indent: 5px !important;
+}
+#qc_test4 {
+	text-align:center;
+	line-height:180%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-weight:bold;
+	color:#666666;
+	width:auto;
+	background-image:url(styles/sternkasten.jpg);
+	background-position:top right;
+	background-repeat:no-repeat;
+	padding-top:40px;
+	margin:10px 20px 30px 0;
+}
+#qc_test4 h3 {
+	background-position: -50px -50px !important;
+}
+#qc_test4 p {
+	padding:0 45px 0 30px;
+}
+
+/* CSS Styles for Thanks Htmltext box on tests/htmltext.aspx page */
+#htmltext #qc_thanks {
+	background-image: url(styles/thanks_bg.gif);
+	background-repeat: repeat;
+	border: solid 1px #666;
+}
+#htmltext #qc_thanks h3 {
+	background-image: url(styles/thanks_title.gif);
+	padding: 0.25em 0.25em;
+	margin-top: 0;
+	border-bottom: none 0px;
+}
+#htmltext #qc_thanks p {
+	padding: 0.1em 0.5em;
+}
+
+/* CSS styles for Links boxes */
+#middleColumn .boxLinks h3 {
+	background-image: url(styles/boxLinks.gif); 
+	background-repeat: no-repeat;
+	background-position: left 0.1em;
+	text-indent: 20px;
+}
+.boxLinks ul {
+	margin: 0;
+	padding: 0 0 0 20px;
+	list-style-image: url(styles/boxLinks_li.gif);
+	list-style-position: outside;
+}
+.boxLinks li {
+	margin: 0;
+	list-style-image: url(styles/boxLinks_li.gif);
+	list-style-position: outside;
+}
+.boxLinks p {
+	margin: 0 0 0.25em 0;
+}
+
+/* CSS styles for Search Links box */
+#qc_searchlinks {
+	background-color: #fff;
+	background-image: url(styles/search_bg.gif);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	border-style: double;
+	border-width: 3px;
+	border: double 3px !important;
+}
+#qc_searchlinks h3 {
+	padding: 0.25em 0.25em;
+	margin-top: 0;
+}
+#qc_searchlinks ul {
+	padding-left: 3em;
+	padding-bottom: 1em;
+	list-style-image: url(styles/search_li.gif);
+}
+#qc_searchlinks li {
+	list-style-image: url(styles/search_li.gif);
+	font-weight: bold;
+}
+
+/* CSS styles for Image box */
+.boxImage {
+	text-align: center;
+}
+#middleColumn .boxImage img {
+	border: 1px solid #a9a9a9;
+	padding: 5px;
+}

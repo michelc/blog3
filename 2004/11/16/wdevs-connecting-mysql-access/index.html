@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Connecting to MySQL or Access - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/11/16/wdevs-connecting-mysql-access/" />
+<meta property="og:title" content="(Wdevs) Connecting to MySQL or Access" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/11/16/wdevs-connecting-mysql-access/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-11-16T07:16:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-11-16T07:16:00.000Z","datePublished":"2004-11-16T07:16:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/11/16/wdevs-connecting-mysql-access/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/11/16/wdevs-connecting-mysql-access/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/11/16/wdevs-connecting-mysql-access/">(Wdevs) Connecting to MySQL or Access</a>
+    </h1>
+    <p>
+      <span>2004-11-16</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I make some revisions to the scripts which create tables in order to use
+more standard and generic SQL syntax. After several tests, I finally get a
+|full
+script|http://web.archive.org/web/20041215050806/http://michel.monoforge.com/sources/dbscript.sql.txt]
+which almost functions on MySQL and Access.</p>
+<p>I have to add a web form to my project to run this script with somes last
+improvements specific to the database server.</p>
+<pre><code>// Get SQL script
+string sqlScript = txtScript.Text.Trim();
+// Remove comments
+Regex oReg;
+oReg = new Regex(@&quot;\/\*&lt;a href=\&quot;/s/S\&quot; title=\&quot;\s\S\&quot;&gt;\s\S&lt;/a&gt;*?\*\/&quot;);
+sqlScript = oReg.Replace(sqlScript, &quot;&quot;);
+// Subdivide script based on GO keyword
+string&lt;a href=\&quot;\&quot;&gt;&lt;/a&gt; sqlCommands = Regex.Split(sqlScript, &quot;\
+GO;&quot;, RegexOptions.IgnoreCase);
+// Run script
+IDbConnection db = Utils.Data.GetConnection();
+db.Open();
+string strResults = &quot;&lt;ul&gt;&quot;;
+foreach (string sqlString in sqlCommands) {
+  string sqlExecute = sqlString.Trim();
+  if (sqlExecute != &quot;&quot;) {
+    sqlExecute = sqlExecute.Replace(&quot;?&quot;, &quot;?&quot;);
+    if (dbConfig == &quot;Forge&quot;) {
+      // MySQL on monoForge rejects DEFAULT CHARSET=utf8
+      sqlExecute = sqlExecute.Replace(&quot; DEFAULT CHARSET=utf8&quot;, &quot;&quot;);
+    }
+    if (dbConfig == &quot;Access&quot;) {
+      sqlExecute = sqlExecute.Replace(&quot;DROP TABLE IF EXISTS &quot;, &quot;DROP TABLE &quot;);
+      if (sqlExecute.StartsWith(&quot;CREATE TABLE &quot;) == true) {
+        sqlExecute = sqlExecute.Replace(&quot;AUTO_INCREMENT&quot;, &quot;IDENTITY (1, 1)&quot;);
+        sqlExecute = sqlExecute.Replace(&quot;VARCHAR(2000)&quot;, &quot;MEMO&quot;);
+        sqlExecute = sqlExecute.Replace(&quot;VARCHAR&quot;, &quot;TEXT&quot;);
+        sqlExecute = sqlExecute.Replace(&quot;LONGTEXT&quot;, &quot;MEMO&quot;);
+        sqlExecute = sqlExecute.Replace(&quot;INT(5)&quot;, &quot;INT&quot;);
+        sqlExecute = sqlExecute.Replace(&quot; ENGINE=InnoDB&quot;, &quot;&quot;);
+        sqlExecute = sqlExecute.Replace(&quot; DEFAULT CHARSET=utf8&quot;, &quot;&quot;);
+      }
+    }
+    strResults += &quot;&lt;li&gt;&quot; + sqlExecute;
+    int result = Utils.Data.ExecuteNonQuery(sqlExecute, db);
+    if (Utils.Data.LastError != &quot;&quot;) {
+      strResults += &quot;&lt;br /&gt;&lt;strong&gt;Error:&quot; + Utils.Data.LastError + &quot;&lt;/strong&gt;&quot;;
+    } else if (Utils.Data.LastWarning != &quot;&quot;) {
+      strResults += &quot;&lt;br /&gt;&lt;em&gt;Warning: &quot; + Utils.Data.LastWarning + &quot;&lt;/em&gt;&quot;;
+    }
+    strResults += &quot;&lt;/li&gt;&quot;;
+  }
+}
+strResults += &quot;&lt;/ul&gt;&quot;;
+db.Close();
+</code></pre>
+<p>I have no real problem with classes used to handle various tables. They
+manage Access with no updates since they were build to use only very basic SQL
+commands. So that remains to confirm when I will start the admin part.</p>
+<p>I made some modifications in my sources to select between several connection
+string in the web.config:</p>
+<ul>
+<li>CnxString_Local : MySQL database on my desktop when running on
+http://localhost/,</li>
+<li>CnxString_Forge : MySQL database on monoForge when running on
+http://michel.monoforge.com/,</li>
+<li>CnxString_Local : another MySQL database when running on
+http://localhost:8088/ with XSP,</li>
+<li>CnxString_Access : for local tests with Access database.</li>
+</ul>
+<p>Now I can build a tiny &quot;portal&quot; which run on Windows or Linux (tested) and
+connect to MySQL or Access (at least on my desktop).</p>
+<p>Next steps : build more boxes (I already make prototypes this
+week-end).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/11/15/wdevs-links-box/" hreflang="en-US">(Wdevs) A links box</a>
+  <a rel="next" href="/2004/11/22/wdevs-datagrid-contacts-box/" hreflang="en-US">(Wdevs) A DataGrid for my Contacts box</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

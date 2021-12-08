@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tester Entity Framework avec SQL CE - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/12/12/tester-entity-framework-sql-ce/" />
+<meta property="og:title" content="Tester Entity Framework avec SQL CE" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/12/12/tester-entity-framework-sql-ce/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-12-12T22:22:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-12-12T22:22:00.000Z","datePublished":"2012-12-12T22:22:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/12/12/tester-entity-framework-sql-ce/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/12/12/tester-entity-framework-sql-ce/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/12/12/tester-entity-framework-sql-ce/">Tester Entity Framework avec SQL CE</a>
+    </h1>
+    <p>
+      <span>2012-12-12</span>
+      <span>#ef</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>Un petit rappel</h2>
+<p>Au cours de mes recherches pour faire des <a href="/2012/11/05/tests-unitaires-entity-framework/">tests
+unitaires avec Entity Framework</a>, j'étais tombé sur un article de Code
+Project qui présentait deux méthodes plus ou moins complémentaires pour cela,
+dont l'utilisation d'une base de données SQL Server CE créée &quot;au vol&quot;
+spécialement pour faire tourner les tests unitaires : <a href="http://www.codeproject.com/Articles/460175/Two-strategies-for-testing-Entity-Framework-Effort">Two strategies for testing Entity Framework - Effort and SQL
+CE</a>.</p>
+<p>Étant donné qu'en développement j'ai déjà tendance à privilégier SQL Server
+CE plutôt que SQL Server Express, ça ne pouvait pas mieux tomber...</p>
+<p>En plus de ça, j'avais dans mes favoris un autre article de chez <a href="http://www.arrangeactassert.com/">Arrange Act Assert</a> qui me
+sert souvent d'inspiration pour mes tests unitaires et qui proposait le même
+genre d'approche dans son billet <a href="http://www.arrangeactassert.com/code-first-entity-framework-unit-test-examples/">Code First Entity Framework Unit Test Examples</a>.</p>
+<p>Alea jacta est. Vu que tout le reste n'était pas ultra convainquant, autant
+essayer au plus simple !</p>
+<h2>Un peu de code</h2>
+<p>Ce qu'il me faut donc, c'est avoir une base de données SQL CE dédiée pour
+les tests unitaires. Pour cela, je commence par ajouter une chaîne de connexion
+dans le fichier <code>App.config</code> de mon projet de tests :</p>
+<pre><code>&lt;connectionStrings&gt;
+  &lt;add name=&quot;RepertoirContext&quot;
+       connectionString=&quot;Data Source=|DataDirectory|\Repertoir_UnitTest.sdf&quot;
+       providerName=&quot;System.Data.SqlServerCe.4.0&quot; /&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+<p>Ensuite, il faut que le projet de tests unitaires fasse référence à cette
+base de données via un objet RepertoirContext hérité de DbContext. Dans mes
+classes contrôleurs, je me contente normalement d'une ligne :</p>
+<pre><code>private RepertoirContext db = new RepertoirContext();
+</code></pre>
+<p>Mais là, je vais devoir faire un tout petit plus compliqué :</p>
+<pre><code>private RepertoirContext db { get; set; }
+
+public ContactsControllerTest()
+{
+    Database.SetInitializer&lt;RepertoirContext&gt;(new DropCreateDatabaseAlways&lt;RepertoirContext&gt;());
+    db = new RepertoirContext();
+}
+</code></pre>
+<p>La ligne <code>Database.SetInitializer ...</code> permet de s'assurer que la
+base de données est re-créée à chaque fois que la classe
+<code>ContactsControllerTest</code> est instanciée (et donc à chaque fois que
+les tests sont lancés).</p>
+<p>Et là, il ne me reste plus qu'à faire passer le DbContext de ma classe de
+tests au contrôleur à tester, ce qui peut se faire tout simplement au moment où
+je l'instancie :</p>
+<pre><code>var controller = new PeopleController(db);
+</code></pre>
+<p>Puis au niveau du contrôleur j'ajoute un constructeur qui attend un
+paramètre de type DbContext (ou plus précisément RepertoirContext) pour
+initialiser le contexte utilisé par le contrôleur :</p>
+<pre><code>private RepertoirContext db;
+
+public ContactsController() { db = new RepertoirContext(); }
+public ContactsController(RepertoirContext context) { db = context; }
+</code></pre>
+<p>La ligne <code>public ContactsController() { db = new RepertoirContext(); }</code> correspond au constructeur par défaut du contrôleur qui initialise un
+DbContext correspondant à la &quot;vraie&quot; base de données.</p>
+<p>En pratique, j'aurai pu me passer de cette ligne de code et mettre en place
+un système d'injection de dépendance. Mais pour 1 seule ligne de code...</p>
+<h2>Un premier test</h2>
+<p>Je peux maintenant tenter un premier vrai test sur ContactsController pour
+vérifier que son action <code>Index()</code> renvoie bien la vue par
+défaut :</p>
+<pre><code>//
+// GET: /Contacts/
+
+public ViewResult Index()
+{
+  var contacts = db.Contacts.To_ContactList();
+  return View(contacts);
+}
+</code></pre>
+<p>Et le test unitaire :</p>
+<pre><code>[TestMethod]
+public void ContactsIndex_doit_renvoyer_la_vue_par_defaut()
+{
+  // Arrange
+  var controller = new ContactsController(db);
+
+  // Act
+  var result = controller.Index();
+
+  // Assert
+  Assert.IsNotNull(result);
+  Assert.IsTrue(string.IsNullOrEmpty(result.ViewName));
+}
+</code></pre>
+<p>Jusqu'ici tout va bien... Ça fonctionne en local. Mais qu'est-ce que ça va
+donner quand je vais déployer vers AppHarbor ? Est-ce qu'il va me
+permettre de créer une base SQL CE temporaire pendant et pour mes
+tests ?</p>
+<ul>
+<li>Je commite</li>
+<li>Je pousse vers GitHub</li>
+<li>Je compte jusqu'à 3</li>
+<li>je vais voir ce que ça donne sur AppHarbor</li>
+<li>Ça a marché !!!</li>
+</ul>
+<h2>Une conclusion</h2>
+<p>C'est bon, je vais pouvoir faire tout un tas de tests unitaires (71 pour
+l'instant) pour vérifier que les contrôleurs font correctement ce que j'attends
+d'eux.</p>
+<p>L'avantage, c'est que même si ce n'est &quot;que&quot; du SQL Server CE, c'est du SQL
+Server quand même et donc suffisamment proche d'un mode &quot;production&quot;. En tout
+cas, c'est bien suffisant pour moi et avec ça j'ai réglé mes problèmes de tests
+unitaires liés à Entity Framework.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/11/19/colonne-memo-plus-4000-caracteres-sql-ce/" hreflang="fr-FR">Mémo de plus de 4000 caractères sous SQL CE</a>
+  <a rel="next" href="/2012/12/13/mise-a-jour-ruby-1-9-3-windows-7/" hreflang="fr-FR">Mise à jour Ruby 1.9.3 sous Windows 7</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

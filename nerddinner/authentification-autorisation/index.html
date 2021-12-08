@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NerdDinner(fr) : Authentification et Autorisation - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/nerddinner/authentification-autorisation/" />
+<meta property="og:title" content="NerdDinner(fr) : Authentification et Autorisation" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/nerddinner/authentification-autorisation/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-01-20T19:56:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-01-20T19:56:00.000Z","datePublished":"2010-01-20T19:56:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/nerddinner/authentification-autorisation/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/nerddinner/authentification-autorisation/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+<article>
+
+  <header>
+    <h1>
+      <a href="">NerdDinner(fr) : Authentification et Autorisation</a>
+    </h1>
+    <p>
+      <span>2010-01-20</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour l'instant, l'application NerdDinner laisse à toutes les personnes
+venant sur le site la possibilité de créer ou de mettre à jour les informations
+d'un dîner. L'évolution que nous allons réaliser va consister à obliger les
+utilisateurs à s'enregistrer et à se connecter pour pouvoir créer un nouveau
+dîner et à ajouter une vérification pour que seul l'utilisateur qui a créé un
+dîner puisse le modifier par la suite.</p>
+<p>Pour réaliser cela, nous allons utiliser les mécanismes d'authentification
+et d'autorisation qui vont nous permettre de sécuriser notre application.</p>
+<h2>Comprendre l'authentification et l'autorisation</h2>
+<p>L'authentification correspond au processus d'identification et de validation
+de l'identité de la personne qui accède à une application. Pour être plus
+simple, cela consiste à identifier &quot;qui&quot; est l'utilisateur final quand il vient
+sur un site internet.</p>
+<p>ASP.NET offre plusieurs méthodes pour authentifier les visiteurs d'un site.
+Pour les applications internet, l'approche la plus courante est
+&quot;l'authentification par formulaire&quot;. Ce mode d'authentification consiste pour
+le développeur à réaliser un formulaire HTML de connexion dans son application
+puis à vérifier le code utilisateur et le mot de passe saisis par le visiteur
+par rapport à une base de données d'utilisateurs ou toute autre source de
+contrôle. Dans le cas où la combinaison utilisateur / mot de passe est
+correcte, le développeur peut alors demander à ASP.NET de générer un cookie
+encrypté pour pouvoir identifier cet utilisateur lors de ses futures requêtes.
+C'est ce système d'authentification par formulaire que nous allons employer
+dans l'application NerdDinner.</p>
+<p>L'autorisation consiste quant à elle à déterminer si un utilisateur
+authentifié a le droit d'accéder à une URL ou une ressource donnée et
+d'accomplir telle ou telle action. Dans le cas de notre application NerdDinner,
+nous souhaitons par exemple que seuls les utilisateurs qui se sont connectés
+aient la permission d'accéder à l'URL /Dinners/Create pour créer de nouveaux
+dîners. Nous voulons aussi ajouter un test pour autoriser uniquement
+l'utilisateur qui a organisé un dîner à mettre à jour son contenu et en
+interdire la modification par qui que ce soit d'autre.</p>
+<h2>AccountController et l'authentification par formulaire</h2>
+<p>Lors de la création d'une nouvelle application ASP.NET MVC, Visual Studio
+part d'un modèle de projet par défaut qui sélectionne automatiquement
+l'authentification par formulaire. Et celui-ci fourni également un formulaire
+de connexion ce qui facilite énormément l'intégration d'un mécanisme de
+sécurité dans un site web.</p>
+<p>La page maitre Site.Master affiche un lien &quot;Log On&quot; dans le coin supérieur
+droit des pages lorsque l'utilisateur qui y accède n'est pas authentifié :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image113.png" alt=""></p>
+<p>Un clic sur ce lien &quot;Log On&quot; conduit l'utilisateur vers l'URL
+/Account/LogOn :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image114.png" alt=""></p>
+<p>Les visiteurs qui ne sont pas encore enregistrés peuvent le faire en
+cliquant sur le lien &quot;Register&quot; qui les conduit vers l'URL /Account/Register et
+leur permet de saisir les informations de leur compte :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image115.png" alt=""></p>
+<p>En cliquant sur le bouton &quot;Register&quot;, le nouvel utilisateur est créé dans le
+système d'utilisateurs d'ASP.NET puis authentifié via l'authentification par
+formulaire.</p>
+<p>Lorsqu'un utilisateur est connecté, le fichier Site.master remplace le lien
+&quot;Log On&quot; en haut de l'écran par un message &quot;Welcome [username]!&quot; et un lien
+&quot;Log Off&quot;. Le fait de cliquer sur le lien &quot;Log Off&quot; a pour effet de déconnecter
+l'utilisateur :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image116.png" alt=""></p>
+<p>Toutes les fonctionnalités de connexion, de déconnexion et d'enregistrement
+décrites ci-dessus sont réalisées au niveau de la classe AccountControllers qui
+Visual studio a ajoutée au projet lors de sa création. Toute la partie
+interface utilisateur qui correspond à ce contrôleur AccountController est
+quant à elle implémentée sous forme de vues dans le répertoire
+\Views\Account :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image117.png" alt=""></p>
+<p>La classe AccountController utilise le système d'authentification par
+formulaire d'ASP.NET pour générer des cookies d'authentification cryptés et
+l'API Membership de ASP.NET pour valider et stocker les codes utilisateurs et
+les mots de passe. L'API Membership est extensible et accepte n'importe quelle
+source pour enregistrer les mots de passes. ASP.NET est livré avec un
+fournisseur d'authentification par défaut qui enregistre les données code
+utilisateur / mot de passe dans une base de données SQL ou dans l'Active
+Directory.</p>
+<p>Il est possible de configurer quel fournisseur utiliser pour stocker ces
+informations dans le cadre de l'application NerdDinner. Pour cela, il faut
+ouvrir le fichier web.config dans la racine du projet et d'y chercher la
+section &lt;membership&gt;. Dans le fichier web.config généré par défaut lors
+de la création du projet, c'est le fournisseur SQL qui est sélectionné. Et il
+est configuré de façon à utiliser la chaîne de connexion nommée
+&quot;ApplicationServices&quot; pour définir l'accès à la base de données.</p>
+<p>Par défaut, la chaine de connexion &quot;ApplicationServices&quot; (qui se trouve dans
+la partie &lt;connectionString&gt; du web.config) est définie de façon à
+utiliser SQL Express. Elle pointe vers une base de données SQL Express nommée
+ASPNETDB.MDF située dans le répertoire &quot;App_Data&quot; de l'application. Si cette
+base de données n'existe pas lors de la première utilisation de l'API
+Membership, elle sera créée automatiquement par ASP.NET avec toute la structure
+de base de données nécessaire pour cela :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image118.png" alt=""></p>
+<p>Si nous préférions utiliser une véritable instance SQL Server (ou nous
+connecter à une base de données distante) au lieu d'utiliser SQL Express, tout
+ce que nous aurions à faire, c'est de modifier la chaîne de connexion
+&quot;ApplicationServices&quot; dans le fichier web.config et de nous assurer que la base
+de données vers laquelle elle pointe dispose des tables nécessaires pour l'API
+Membership. Il est possible de lancer l'utilitaire &quot;aspnet_regsql.exe&quot; présent
+dans le répertoire \Windows\Microsoft.NET\Framework\v2.0.50727\ pour ajouter
+ces éléments et ceux d'autres services pour ASP.NET à une base de données.</p>
+<h2>Utiliser le filtre [Authorize] pour l'URL /Dinners/Create</h2>
+<p>Nous n'avons pas eu à écrire la moindre ligne de code pour que l'application
+NerdDinner dispose d'un système d'authentification sécurisé et d'une gestion
+des utilisateurs. Les utilisateurs peuvent créer un compte dans notre
+application et se connecter au site ou s'en déconnecter. À partir de
+maintenant, nous allons pouvoir mettre en place une gestion des droits et nous
+appuyer sur l'état connecté ou non des visiteurs et sur leur identifiant pour
+déterminer ce qu'ils peuvent faire ou pas dans l'application.</p>
+<p>Nous allons commencer par ajouter un contrôle des autorisations à la méthode
+d'action &quot;Create&quot; de la classe DinnersController. Concrètement, nous allons
+imposer que les utilisateurs qui accèdent à l'URL /Dinners/Create soient
+connectés. Si ce n'est pas le cas, nous les redirigerons vers la page de
+connexion afin qu'ils puissent s'identifier.</p>
+<p>La mise en place de ce contrôle est assez simple. Tout ce que nous avons
+besoin de faire, c'est d'ajouter un filtre [Authorize] aux deux méthodes
+d'action Create() en procédant comme ci-dessous :</p>
+<pre><code>//
+// GET: /Dinners/Create
+[Authorize]
+public ActionResult Create() {
+   ...
+}
+
+//
+// POST: /Dinners/Create
+[AcceptVerbs(HttpVerbs.Post), Authorize]
+public ActionResult Create(Dinner dinnerToCreate) {
+   ...
+}
+</code></pre>
+<p>ASP.NET MVC offre la possibilité de créer des &quot;filtres d'action&quot;. Ceux-ci
+servent à implémenter des traitements réutilisables et à les appliquer sous
+forme d'attribut aux méthodes d'action. Le filtre [Authorize] est l'un des
+filtres d'action fourni de base par ASP.NET MVC. Il permet aux développeurs de
+déclarer des autorisations pour qu'elles s'appliquent aux actions d'un
+contrôleur ou à tout le contrôleur.</p>
+<p>Lorsqu'on l'utilise sans paramètre comme dans l'exemple précédent, le filtre
+[Authorize] impose que l'utilisateur qui effectue la requête soit connecté -
+sans quoi il est automatiquement redirigé vers le formulaire de connexion. Lors
+de cette redirection, l'URL appelée au départ est passée en paramètre dans la
+Querystring (/Account/LogOn?ReturnUrl=%2fDinners%2fCreate par exemple). Le
+contrôleur AccountController pourra ainsi renvoyer l'utilisateur vers cette
+page d'origine une fois qu'il sera connecté.</p>
+<p>Si besoin, le filtre [Authorize] peut être complété à l'aide des propriétés
+&quot;Users&quot; ou &quot;Roles&quot; qui s'emploient pour contrôler qu'en plus d'être connecté,
+l'utilisateur fait parti d'une liste d'utilisateurs autorisés ou qu'il est
+membre d'un rôle donné. Par exemple, dans le code ci-dessous, il n'y a que deux
+utilisateurs particuliers - &quot;scottgu&quot; et &quot;billg&quot; - qui ont le droit d'accéder à
+l'URL /Dinners/Create :</p>
+<pre><code>[Authorize(Users=&quot;scottgu,billg&quot;)]
+public ActionResult Create() {
+   ...
+}
+</code></pre>
+<p>Malgré tout, le fait de définir ainsi des identifiants utilisateurs en dur
+dans le code va rendre celui-ci beaucoup moins maintenable. Une meilleure
+solution consiste donc à contrôler les droits par rapport à des &quot;rôles&quot; et à
+associer les utilisateurs à ces rôles soit en passant par une base de données
+soit par l'intermédiaire de l'Active Directory (la liste des utilisateurs
+concernés étant ainsi définie à l'extérieur du code). ASP.NET propose une API
+pour gérer des rôles et fourni également un ensemble de fournisseurs pour les
+stocker (dont un pour SQL et un pour Active Directory), le tout permettant de
+simplifier l'association entre utilisateurs et rôles. Avec cela, nous pourrions
+adapter notre code pour autoriser uniquement les utilisateurs appartenant au
+rôle &quot;admin&quot; à accéder à l'URL /Dinners/Create :</p>
+<pre><code>[Authorize(Roles=&quot;admin&quot;)]
+public ActionResult Create() {
+   ...
+}
+</code></pre>
+<h2>Utiliser User.Identity.Name pour créer un dîner</h2>
+<p>Lors d'une requête, nous pouvons récupérer l'identifiant de l'utilisateur
+actuellement connecté grâce à la propriété User.Identity.Name disponible via la
+classe Controller de base.</p>
+<p>Au début, quand nous avions programmé la partie HTTP POST de l'action
+Create(), nous avions mis une chaîne en dur pour initialiser la valeur de la
+propriété &quot;HostedBy&quot; dans la classe Dinner. Nous pouvons désormais mettre à
+jour ce code pour employer la propriété User.Identity.Name à la place et en
+profiter pour inscrire automatiquement le responsable du dîner au dîner qu'il
+organise :</p>
+<pre><code>//
+// POST: /Dinners/Create
+[AcceptVerbs(HttpVerbs.Post), Authorize]
+public ActionResult Create(Dinner dinner) {
+
+   if (ModelState.IsValid) {
+     try {
+        dinner.HostedBy = User.Identity.Name;
+
+        RSVP rsvp = new RSVP();
+        rsvp.AttendeeName = User.Identity.Name;
+        dinner.RSVPs.Add(rsvp);
+
+        dinnerRepository.Add(dinner);
+        dinnerRepository.Save();
+
+        return RedirectToAction(&quot;Details&quot;, new { id=dinner.DinnerID });
+     }
+     catch {
+        ModelState.AddModelErrors(dinner.GetRuleViolations());
+     }
+   }
+
+   return View(new DinnerFormViewModel(dinner));
+}
+</code></pre>
+<p>Étant donné que nous avons ajouté un attribut [Authorize] à la méthode
+Create(), ASP.NET MVC va faire attention à ce que cette méthode d'action ne
+s'exécute que si le visiteur arrivant sur l'URL /Dinner/Create est connecté au
+site. Et si c'est le cas, la propriété User.Identity.Name contiendra
+obligatoirement un nom d'utilisateur valide.</p>
+<h2>Utiliser User.Identity.Name pour modifier un dîner</h2>
+<p>Nous allons maintenant ajouter un test pour gérer les autorisations des
+utilisateurs et faire en sorte que seul le responsable d'un dîner ait le droit
+de modifier celui-ci.</p>
+<p>Pour parvenir à cela, nous allons commencer par ajouter une méthode
+&quot;IsHostedBy(username)&quot; à l'objet Dinner (au niveau de la classe partielle
+Dinners.cs que nous avons créée auparavant). Cette méthode renvoie &quot;true&quot; ou
+&quot;false&quot; selon que l'identifiant de l'utilisateur passé en paramètre correspond
+à la valeur de la propriété HostedBy de l'objet Dinner ou non. Tout le côté
+destiné à effectuer une comparaison de chaîne sans tenir compte de la casse est
+traité au niveau de cette méthode helper :</p>
+<pre><code>public partial class Dinner {
+
+   public bool IsHostedBy(string userName) {
+
+     return HostedBy.Equals(userName,
+                                 StringComparison.InvariantCultureIgnoreCase);
+   }
+}
+</code></pre>
+<p>Puis nous allons ajouter un attribut [Authorize] aux méthodes d'action
+Edit() de la classe DinnersController. Cela nous garanti que les visiteurs qui
+accèdent à l'URL /Dinner/Edit/[id] sont bien des utilisateurs connectés.</p>
+<p>Nous pouvons alors ajouter du code au niveau des méthodes Edit pour utiliser
+la méthode helper Dinner.IsHostedBy(username) afin de vérifier que
+l'utilisateur connecté correspond bien au responsable du dîner. Si ce n'est pas
+le cas, nous afficherons une vue &quot;InvalidOwner&quot; pour terminer la requête. Le
+code qui réalise tout cela est le suivant :</p>
+<pre><code>//
+// GET: /Dinners/Edit/5
+
+[Authorize]
+public ActionResult Edit(int id) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   if (!dinner.IsHostedBy(User.Identity.Name))
+     return View(&quot;InvalidOwner&quot;);
+
+   return View(new DinnerFormViewModel(dinner));
+}
+
+//
+// POST: /Dinners/Edit/5
+[AcceptVerbs(HttpVerbs.Post), Authorize]
+public ActionResult Edit(int id, FormCollection collection) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   if (!dinner.IsHostedBy(User.Identity.Name))
+     return View(&quot;InvalidOwner&quot;);
+
+   try {
+     UpdateModel(dinner);
+
+     dinnerRepository.Save();
+
+     return RedirectToAction(&quot;Details&quot;, new {id = dinner.DinnerID});
+   }
+   catch {
+     ModelState.AddModelErrors(dinnerToEdit.GetRuleViolations());
+
+     return View(new DinnerFormViewModel(dinner));
+   }
+}
+</code></pre>
+<p>Il nous reste alors à faire un clic-droit dans le répertoire \View\Dinner et
+à sélectionner la commande Add-&gt;View pour créer la nouvelle vue
+&quot;InvalidOwner&quot; et à la remplir avec le message d'erreur ci-dessous :</p>
+<pre><code>&lt;asp:Content ID=&quot;Title&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+   &lt;title&gt;You Don't Own This Dinner&lt;/title&gt;
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Main&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+   &lt;h2&gt;Error Accessing Dinner&lt;/h2&gt;
+
+   &lt;p&gt;Sorry - but only the host of a Dinner can edit or delete it.&lt;/p&gt;
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Et maintenant, lorsqu'un utilisateur essaie de mettre à jour un dîner dont
+il n'est pas responsable, il tombe sur un message d'erreur :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image119.png" alt=""></p>
+<p>Avant de poursuivre, il faut répéter ces différentes étapes pour refaire la
+même chose en ce qui concerne les méthodes d'action Delete() de façon à
+contrôler la suppression d'un dîner et être sûr que seule la personne
+responsable du dîner aura la permission de le supprimer.</p>
+<h2>Afficher ou masquer les liens Edit et Delete</h2>
+<p>Notre page Details propose un lien vers les méthodes d'action Edit et Delete
+de la classe DinnersController :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image120.png" alt=""></p>
+<p>Pour le moment, nous affichons les liens pour les actions Edit et Delete
+sans tenir compte du fait que le visiteur est le responsable du dîner ou non.
+Nous allons améliorer ça pour que ces deux liens n'apparaissent que si le
+visiteur est l'organisateur du dîner.</p>
+<p>Pour l'instant, la méthode d'action Details() du contrôleur
+DinnersController récupère un objet Dinner et le fait passer à la vue
+Details :</p>
+<pre><code>//
+// GET: /Dinners/Details/5
+public ActionResult Details(int id) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   if (dinner == null)
+     return View(&quot;NotFound&quot;);
+
+   return View(dinner);
+}
+</code></pre>
+<p>Nous pouvons donc mettre à jour cette vue afin qu'elle utilise désormais la
+méthode helper Dinner.IsHostedBy() pour afficher ou pour masquer les liens Edit
+et Delete en fonction du résultat de celle-ci :</p>
+<pre><code>&lt;% if (Model.IsHostedBy(Context.User.Identity.Name)) { %&gt;
+
+   &lt;%= Html.ActionLink(&quot;Edit Dinner&quot;, &quot;Edit&quot;, new { id=Model.DinnerID })%&gt; |
+   &lt;%= Html.ActionLink(&quot;Delete Dinner&quot;, &quot;Delete&quot;, new {id=Model.DinnerID})%&gt;
+
+&lt;% } %&gt;
+</code></pre>
+<hr>
+<p>Index : <a href="http://tinyurl.com/NerdDinnerFR">NerdDinner en français</a> - Suite : <a href="/nerddinner/utiliser-ajax/">Utiliser
+Ajax pour saisir les inscriptions</a></p>
+
+
+  </div>
+
+</article>
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

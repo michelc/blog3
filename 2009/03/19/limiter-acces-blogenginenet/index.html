@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Limiter l&#39;accès à BlogEngine.NET - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/03/19/limiter-acces-blogenginenet/" />
+<meta property="og:title" content="Limiter l&#39;accès à BlogEngine.NET" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/03/19/limiter-acces-blogenginenet/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-03-19T05:22:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-03-19T05:22:00.000Z","datePublished":"2009-03-19T05:22:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/03/19/limiter-acces-blogenginenet/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/03/19/limiter-acces-blogenginenet/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/03/19/limiter-acces-blogenginenet/">Limiter l&#39;accès à BlogEngine.NET</a>
+    </h1>
+    <p>
+      <span>2009-03-19</span>
+      <span>#.net</span><span>#referencement</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour faire un blog privé avec <a href="http://www.dotnetblogengine.net/">BlogEngine.NET</a>, il faut modifier son
+fichier Web.config de façon à interdire l'accès aux visiteurs anonymes. Pour
+cela, il faut ajouter une <a href="http://msdn.microsoft.com/en-us/library/wce3kxhd.aspx">section
+autorization</a> dans le Web.Config :</p>
+<pre><code>  &lt;system.web&gt;
+    ...
+    &lt;authorization&gt;
+        &lt;deny users=&quot;?&quot; /&gt;
+        &lt;allow users=&quot;*&quot; /&gt;
+    &lt;/authorization&gt;
+    ...
+  &lt;/system.web&gt;
+</code></pre>
+<p>Cela permet de :</p>
+<ul>
+<li>interdire (deny) l'accès aux visiteurs anonymes (users=&quot;?&quot;)</li>
+<li>autoriser (allow) l'accès aux utilisateurs identifiées (users=&quot;*&quot;)</li>
+</ul>
+<p>De cette façon, tous les visiteurs sont forcés de s'identifier pour pouvoir
+consulter le contenu du blog =&gt; ils sont automatiquement redirigés vers
+l'écran de connexion.</p>
+<p>Dans le cas où le thème du site est up to date et qu'il utilise des
+HttpHandlers pour gérer les CSS et les JavaScripts, il faut malgré tout donner
+l'accès à ceux-ci pour que l'écran de connexion puisse fonctionner
+correctement.</p>
+<p>Là encore, il faut modifier le fichier Web.config et y ajouter des <a href="http://msdn.microsoft.com/en-us/library/b6x6shw7.aspx">éléments location</a>
+pour autoriser les visiteurs anonymes à accéder à ces 2 types de
+ressources :</p>
+<pre><code>  &lt;/system.web&gt;
+    ...
+   &lt;location path=&quot;themes/Scribbish/css.axd&quot;&gt;
+     &lt;system.web&gt;
+       &lt;authorization&gt;
+         &lt;allow users=&quot;*&quot; /&gt;
+       &lt;/authorization&gt;
+     &lt;/system.web&gt;
+   &lt;/location&gt;
+
+   &lt;location path=&quot;js.axd&quot;&gt;
+     &lt;system.web&gt;
+       &lt;authorization&gt;
+         &lt;allow users=&quot;*&quot; /&gt;
+       &lt;/authorization&gt;
+     &lt;/system.web&gt;
+   &lt;/location&gt;
+    ...
+&lt;/configuration&gt;
+</code></pre>
+<p>Pour ne pas voir à revenir modifier le fichier Web.config à chaque
+changement de thème, il est même préférable de ne pas se limiter au fichier
+&quot;themes/Scribbish/css.axd&quot;, mais d'indiquer seulement &quot;themes&quot; pour autoriser
+l'accès à toutes les ressources du dossier &quot;themes&quot; et de ses
+sous-dossiers.</p>
+<p>Pour que tout soit parfait, on peut aussi cacher le bandeau de Widgets qui
+apparait automatiquement sur toutes les pages du blog et par conséquent
+également sur la page de connexion.</p>
+<p>Pour cela, il faut mettre à jour le fichier site.master du thème
+(/themes/Scribbish/site.master dans mon cas) et remplacer la ligne :</p>
+<pre><code>&lt;blog:WidgetZone runat=&quot;server&quot; ID=&quot;rightzone&quot; /&gt;
+</code></pre>
+<p>Par :</p>
+<pre><code>&lt;% if (Page.User.Identity.IsAuthenticated) { %&gt;
+        &lt;blog:WidgetZone runat=&quot;server&quot; ID=&quot;rightzone&quot; /&gt;
+&lt;% } %&gt;
+</code></pre>
+<p>Ainsi, le bloc de Widgets ne sera généré que dans le cas des visiteurs
+identifiés.</p>
+<p>Ensuite, pour vivre complètement cachés, il faut aussi aller dans la partie
+Paramètres du blogue et passer dans l'onglet / Ping Services pour supprimer
+tous les services qui sont pingués à chaque fois que l'on publie un nouveau
+billet.</p>
+<p>Et pour finir, il est aussi préférable de modifier le fichier robots.txt
+pour interdire complètement l'accès du blog à tous les moteurs de recherche et
+autres bots qui pourraient avoir eu vent de notre existence :</p>
+<pre><code>User-agent: *
+Disallow: /
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/03/17/web-application-project-web-site-project/" hreflang="fr-FR">Web Application Project et Web Site Project</a>
+  <a rel="next" href="/2009/03/26/creer-boite-encore-plus-facilement/" hreflang="fr-FR">Créer une boite encore plus facilement</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

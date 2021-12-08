@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Placer un libellé semi-transparent sur une image - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/09/10/placer-libelle-semi-transparent-image/" />
+<meta property="og:title" content="Placer un libellé semi-transparent sur une image" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/09/10/placer-libelle-semi-transparent-image/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-09-10T15:25:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-09-10T15:25:00.000Z","datePublished":"2009-09-10T15:25:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/09/10/placer-libelle-semi-transparent-image/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/09/10/placer-libelle-semi-transparent-image/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/09/10/placer-libelle-semi-transparent-image/">Placer un libellé semi-transparent sur une image</a>
+    </h1>
+    <p>
+      <span>2009-09-10</span>
+      <span>#code-snippets</span><span>#html</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'avais vu ça il y a pas mal de temps, alors ce coup-ci je blogue pour
+essayer de ne pas oublier comment faire.</p>
+<h2>Côté Html</h2>
+<pre><code>&lt;div class=&quot;img-desc&quot;&gt;
+        &lt;img src=&quot;sample.jpg&quot; alt=&quot;&quot; /&gt;
+        &lt;cite&gt;Salone del mobile Milano, April 2008 - Peeta&lt;/cite&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Côté CSS</h2>
+<pre><code>.img-desc {
+        position: relative;
+        display: block;
+        height:335px;
+        width: 575px;
+}
+.img-desc cite {
+        background: #111;
+        filter:alpha(opacity=55);
+        opacity:.55;
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 555px;
+        padding: 10px;
+        border-top: 1px solid #999;
+}
+</code></pre>
+<h2>Sources et exemples</h2>
+<ul>
+<li><a href="http://www.sohtanaka.com/web-design/spice-up-your-images-with-css/">5 Ways to Spice up Your Images with CSS</a> : c'est le dernier effet
+présenté (Image with Caption)</li>
+<li><a href="http://www.queness.com/post/152/simple-jquery-image-slide-show-with-semi-transparent-caption">Simple JQuery Image Slide Show with Semi-Transparent
+Caption</a> : la CSS contient le même genre de technique que dans le lien
+précédent</li>
+<li><a href="http://www.cssbakery.com/2009/03/captioning-image-in-blogger.html">Semi-transparent Image Captions using CSS</a> : un tutoriel
+complet pour expliquer la technique</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/09/09/nouvelles-ardeche/" hreflang="fr-FR">Des nouvelles de l&#39;Ardèche</a>
+  <a rel="next" href="/2009/09/11/amelioration-referencement/" hreflang="fr-FR">Amélioration du référencement</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

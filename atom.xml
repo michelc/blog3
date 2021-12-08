@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>blog.pagesd.info</title>
+    <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
+    <link href="https://blog3.pagesd.info/" rel="alternate" hreflang="fr-FR" />
+    <updated>2021-11-26T11:12:40.000Z</updated>
+    <id>https://blog3.pagesd.info/atom.xml</id>
+    <link href="https://blog3.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
+    <author>
+        <name>Michel</name>
+    </author>
+    <entry>
+        <title type="html">Display a friendly name with Enum.ToString()</title>
+        <link href="https://blog3.pagesd.info/2021/11/26/display-friendly-name-with-enum-tostring/" rel="alternate" hreflang="en-US" />
+        <updated>2021-11-26T11:12:40.000Z</updated>
+        <published>2021-11-26T11:12:40.000Z</published>
+        <id>https://blog3.pagesd.info/2021/11/26/display-friendly-name-with-enum-tostring/</id>
+        <summary>One day I needed to display a label based on the value of one Enum. So I did like every time and I used the Description attribute to define some nice labels.</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog3.pagesd.info">
+&lt;p&gt;One day I needed to display a label based on the value of one &lt;code&gt;Enum&lt;/code&gt;. So I did like every time and I used the &lt;code&gt;Description&lt;/code&gt; attribute to define some nice labels.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.ComponentModel;
+
+public enum NatureType
+{
+    Ouverture,
+    Modification,
+    [Description(&amp;quot;Déblocage&amp;quot;)]
+    Deblocage,
+    [Description(&amp;quot;Alerte 3 mois&amp;quot;)]
+    Alerte3Mois,
+    [Description(&amp;quot;Alerte 6 mois&amp;quot;)]
+    Alerte6Mois
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then I copied the rather complicated code that we always been using to read this description attribute. It&#39;s a simple extension method, which is a generic method, and which uses some reflection. As I said, a simple block of code that return the description associated to an enum value or default to &lt;code&gt;.ToString()&lt;/code&gt; for values without a proper &lt;code&gt;Description&lt;/code&gt; attribute:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string GetCaption(this Enum value)
+{
+    var type = value.GetType();
+    var member = type.GetMember(value.ToString());
+    if ((member != null &amp;amp;&amp;amp; member.Length &amp;gt; 0))
+    {
+        var attributes = member[0].GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
+        if ((attributes != null &amp;amp;&amp;amp; attributes.Count() &amp;gt; 0))
+        {
+            return ((System.ComponentModel.DescriptionAttribute)attributes.ElementAt(0)).Description;
+        }
+    }
+    return value.ToString();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Really nothing very complicated. Except to paste this method to the StringHelpers.cs file of my project.&lt;/p&gt;
+&lt;p&gt;But still, it doesn&#39;t cost anything to see if C# would have invented something even simpler or more practical lately. Except a Google Search &amp;quot;c# enum friendly name&amp;quot; + Tools + Past year.&lt;/p&gt;
+&lt;p&gt;Good news! There are people who worked on it. But unfortunately, nothing new:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://dejanstojanovic.net/aspnet/2021/september/adding-display-name-to-enum-values/&quot;&gt;Adding display name to Enum values&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.delftstack.com/howto/csharp/csharp-enum-to-string/&quot;&gt;Convert Enum to String in C#&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://newbedev.com/methods-inside-enum-in-c&quot;&gt;Methods inside enum in C#&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I have a little time to spare so I try some new things:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public enum NatureType
+{
+    Ouverture,
+    Modification,
+    Déblocage,
+    Alerte_3_mois,
+    Alerte_6_mois
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ideally, I just have to code a &lt;code&gt;public override string ToString()&lt;/code&gt; in order to replace underscores with spaces and I&#39;m done!&lt;/p&gt;
+&lt;p&gt;But where the hell can I do that?&lt;/p&gt;
+&lt;p&gt;It doesn&#39;t matter, I should be able to try it with an extension method:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string ToString(this Enum value)
+{
+    return value.ToString().Replace(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Well, no :( My code compiles without causing an error, but then it&#39;s like this method doesn&#39;t exist! I set a breakpoint but I don&#39;t even get through and I still get the basic &lt;code&gt;.ToString()&lt;/code&gt; with underscores ???&lt;/p&gt;
+&lt;p&gt;That&#39;s not going to stop me. I could live with the underscores. Or I do it differently:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string ToCaption(this Enum value)
+{
+    return value.ToString().Replace(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I had to decide with &lt;code&gt;.ToFriendlyName()&lt;/code&gt; which seems more popular, but &lt;code&gt;.ToCaption()&lt;/code&gt; is shorter :)&lt;/p&gt;
+&lt;p&gt;So okay, that forces me to accept having accents in variable names (well, only in enum value names). But I think I&#39;ll use this method from now on, at least in my personal projects.&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2021/11/25/afficher-joli-libelle-avec-enum-tostring/&quot; hreflang=&quot;fr-FR&quot;&gt;Afficher un joli libellé avec Enum.ToString()&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="csharp" />
+        <category term="enum" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
+    </entry>
+    <entry>
+        <title type="html">Afficher un joli libellé avec Enum.ToString()</title>
+        <link href="https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/" rel="alternate" hreflang="fr-FR" />
+        <updated>2021-11-25T12:41:28.000Z</updated>
+        <published>2021-11-25T12:41:28.000Z</published>
+        <id>https://blog3.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/</id>
+        <summary>Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un Enum. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut Description pour définir de jolis libellés.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
+&lt;p&gt;Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un &lt;code&gt;Enum&lt;/code&gt;. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut &lt;code&gt;Description&lt;/code&gt; pour définir de jolis libellés.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.ComponentModel;
+
+public enum NatureType
+{
+    Ouverture,
+    Modification,
+    [Description(&amp;quot;Déblocage&amp;quot;)]
+    Deblocage,
+    [Description(&amp;quot;Alerte 3 mois&amp;quot;)]
+    Alerte3Mois,
+    [Description(&amp;quot;Alerte 6 mois&amp;quot;)]
+    Alerte6Mois
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis ensuite, j&#39;ai repris le code assez compliqué dont on use et abuse depuis toujours pour récupérer cette description. C&#39;est une simple méthode d&#39;extension, qui est générique, et qui utilise une pointe de rélexion. Comme je le disais, un truc simple qui est malgré tout capable de me renvoyer la description associée à une valeur de l&#39;enum ou au pire de faire un &lt;code&gt;.ToString()&lt;/code&gt; pour les valeurs sans attribut &lt;code&gt;Description&lt;/code&gt; :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string GetCaption(this Enum value)
+{
+    var type = value.GetType();
+    var member = type.GetMember(value.ToString());
+    if ((member != null &amp;amp;&amp;amp; member.Length &amp;gt; 0))
+    {
+        var attributes = member[0].GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
+        if ((attributes != null &amp;amp;&amp;amp; attributes.Count() &amp;gt; 0))
+        {
+            return ((System.ComponentModel.DescriptionAttribute)attributes.ElementAt(0)).Description;
+        }
+    }
+    return value.ToString();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Vraiment rien de compliqué. À part d&#39;ajouter cette méthode au fichier StringHelpers.cs de mon projet.&lt;/p&gt;
+&lt;p&gt;Mais quand même, ça ne me coûte rien d&#39;essayer de voir si depuis le temps C# n&#39;aurait rien inventé d&#39;encore plus simple ou plus pratique. À part un Google Search &amp;quot;c# enum friendly name&amp;quot; + Tools + Past year.&lt;/p&gt;
+&lt;p&gt;Bonne nouvelle, il y a des personnes qui s&#39;y sont attelées, mais malheureusement, rien de bien nouveau :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://dejanstojanovic.net/aspnet/2021/september/adding-display-name-to-enum-values/&quot;&gt;Adding display name to Enum values&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.delftstack.com/howto/csharp/csharp-enum-to-string/&quot;&gt;Convert Enum to String in C#&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://newbedev.com/methods-inside-enum-in-c&quot;&gt;Methods inside enum in C#&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;J&#39;ai un peu de temps à perdre alors je tente des trucs :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public enum NatureType
+{
+    Ouverture,
+    Modification,
+    Déblocage,
+    Alerte_3_mois,
+    Alerte_6_mois
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Idéalement je n&#39;ai plus qu&#39;à faire un &lt;code&gt;public override string ToString()&lt;/code&gt; pour remplacer les soulignés par des espaces et le tour est joué !&lt;/p&gt;
+&lt;p&gt;Sauf que où diable faire ça ?&lt;/p&gt;
+&lt;p&gt;C&#39;est pas grave, je dois pouvoir tenter le coup via une méthode d&#39;extension :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string ToString(this Enum value)
+{
+    return value.ToString().Replace(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ben non :( Ça compile sans provoquer d&#39;erreur, mais ensuite c&#39;est comme si ça n&#39;existait pas ! J&#39;ai beau mettre un point d&#39;arrêt, je n&#39;y passe même pas et cela renvoie toujours le &lt;code&gt;.ToString()&lt;/code&gt; de base avec les soulignés ???&lt;/p&gt;
+&lt;p&gt;C&#39;est pas ça qui va m&#39;arrêter. Soit je prends mon parti des soulignés. Soit je le fais quand même :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string ToCaption(this Enum value)
+{
+    return value.ToString().Replace(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;J&#39;ai hésité avec &lt;code&gt;.ToFriendlyName()&lt;/code&gt; qui semble un peu plus tendance, mais  &lt;code&gt;.ToCaption()&lt;/code&gt; a l&#39;avantage d&#39;être plus court :)&lt;/p&gt;
+&lt;p&gt;Alors d&#39;accord, ça m&#39;oblige à accepter d&#39;avoir quelquefois des accents dans les noms de variables (enfin seulement dans les noms de valeurs d&#39;enum). Mais je pense que désormais ça va être ma nouvelle façon de faire, au moins dans mes projets personnels.&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2021/11/26/display-friendly-name-with-enum-tostring/&quot; hreflang=&quot;en-US&quot;&gt;Display a friendly name with Enum.ToString()&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="csharp" />
+        <category term="enum" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2021/cute-puppies.jpg" />
+    </entry>
+    <entry>
+        <title type="html">Sidebar animation with CSS</title>
+        <link href="https://blog3.pagesd.info/2020/06/02/sidebar-css-animation/" rel="alternate" hreflang="en-US" />
+        <updated>2020-06-02T11:28:16.000Z</updated>
+        <published>2020-06-02T11:28:16.000Z</published>
+        <id>https://blog3.pagesd.info/2020/06/02/sidebar-css-animation/</id>
+        <summary>How to show or hide the sidebar with a small CSS animation, an icon and a jsfiddle to test it.</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog3.pagesd.info">
+&lt;p&gt;I&#39;ve already made a &lt;a href=&quot;/2020/05/20/create-template-sidebar-content/&quot;&gt;template with content + sidebar&lt;/a&gt;, then to &lt;a href=&quot;/2020/05/28/hide-show-sidebar/&quot;&gt;hide or show the sidebar&lt;/a&gt; quite simply. I will now try to improve these basic attemps with some CSS animations and a few icons.&lt;/p&gt;
+&lt;h2&gt;Animate the change of state&lt;/h2&gt;
+&lt;p&gt;It&#39;s very simple: I just complete the &amp;quot;sidebar&amp;quot; and &amp;quot;content&amp;quot; styles with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;transition: all 1s;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is a CSS property which in 1 second (to have time to see what is going on) will animate the passage of the following CSS values:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar {
+    display: block;
+}
+#content {
+    width: calc(100% - 299px);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To these new values:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.no-sidebar #sidebar {
+    display: none;
+}
+.no-sidebar #content {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, when I click on the &amp;quot;sidebar-toggle&amp;quot; button, adding the &amp;quot;no-sidebar&amp;quot; class to the &amp;quot;wrapper&amp;quot; div shouldn&#39;t immediately hide the &amp;quot;sidebar&amp;quot; and expand the &amp;quot;content&amp;quot;. It should last 1 second and be done gradually.&lt;/p&gt;
+&lt;p&gt;It works right away! Almost...&lt;/p&gt;
+&lt;p&gt;For the &amp;quot;content&amp;quot;, we can clearly see it &amp;quot;move&amp;quot; when we click on the button to use the full width of the screen.&lt;/p&gt;
+&lt;p&gt;On the other hand, the &amp;quot;sidebar” disappears or appears instantly. This is because the change of the &amp;quot;display” property from &amp;quot;block” to &amp;quot;none” is not handle by CSS animations :(&lt;/p&gt;
+&lt;p&gt;So we have to use a hack and hide the &amp;quot;sidebar&amp;quot; by taking it out of the screen. For this, we set a negative margin equal to its width:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar {
+    margin-left: 0;
+}
+
+.no-sidebar #sidebar {
+    margin-left: -299px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can speed up the animation (because otherwise the &lt;em&gt;lorem ipsum dolor sit amet...&lt;/em&gt; is pitching and will end up making me sick):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;transition: all 0.25s;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Well, it seems perfect to me.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: the &lt;code&gt;transition: all 0.25s&lt;/code&gt; must be defined twice: once for the CSS of &amp;quot;#sidebar&amp;quot; and a second time for the CSS code of &amp;quot;#content&amp;quot;.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Use an icon to switch between states&lt;/h2&gt;
+&lt;p&gt;Finally, I&#39;m not going to use an icon but a regular character with some CSS to make it look good.&lt;/p&gt;
+&lt;p&gt;And since I&#39;m not good enough, I copy/paste everything from StackOverflow: &lt;a href=&quot;https://stackoverflow.com/questions/22975037/style-a-link-to-be-a-circle-with-an-arrow-inside&quot;&gt;Style a link to be a circle with an arrow inside&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I start by replacing the button with an &lt;code&gt;a&lt;/code&gt; tag:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a href=&amp;quot;#&amp;quot; id=&amp;quot;sidebar-toggle&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then I add the CSS code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar-toggle {
+    background-color: orange;
+    border-radius: 50%;
+    display: block;
+    height: 2.2rem;
+    left: -1.1rem;
+    position: absolute;
+    text-decoration: none;
+    top: 7px;
+    width: 2.2rem;
+}
+#sidebar-toggle::after {
+    content: &amp;quot;🡐&amp;quot;;
+    color: white;
+    display: block;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: -.2rem 0 0 0;
+    text-align: center;
+}
+.no-sidebar #sidebar-toggle::after {
+    content: &amp;quot;🡒&amp;quot;;
+    margin-left: .2rem;
+}
+#sidebar-toggle:hover {
+    background-color: goldenrod;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Note: For both arrows, I picked from &lt;a href=&quot;http://xahlee.info/comp/unicode_arrows.html&quot;&gt;Unicode Arrows&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Good, it works.&lt;/p&gt;
+&lt;p&gt;To be almost perfect, I have to position this &amp;quot;icon&amp;quot; right on the edge between the &amp;quot;sidebar&amp;quot; and the &amp;quot;content&amp;quot;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar-toggle {
+    position: absolute;
+    left: -1.25rem;
+    top: 7px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plus, remember to hide it when printing:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;@media print {
+    #sidebar-toggle { display: none; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will do the trick :)&lt;/p&gt;
+&lt;h2&gt;Demonstration&lt;/h2&gt;
+&lt;script async src=&quot;//jsfiddle.net/qo6dx3w4/1/embed/result/&quot;&gt;&lt;/script&gt;
+&lt;p&gt;Well, now that I have the template I looked for and even more thanks to these last additions, I can work for real and start coding my application...&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2020/06/01/animation-css-sidebar/&quot; hreflang=&quot;fr-FR&quot;&gt;Animer une sidebar avec CSS&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="css" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
+    </entry>
+    <entry>
+        <title type="html">Animer une sidebar avec CSS</title>
+        <link href="https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/" rel="alternate" hreflang="fr-FR" />
+        <updated>2020-06-01T15:35:16.000Z</updated>
+        <published>2020-06-01T15:35:16.000Z</published>
+        <id>https://blog3.pagesd.info/2020/06/01/animation-css-sidebar/</id>
+        <summary>Comment faire apparaitre ou disparaitre la &quot;sidebar&quot; grâce à une animation CSS toute simple, une icone et un jsfiddle pour tester tout ça.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
+&lt;p&gt;J&#39;ai déjà réussi à faire un &lt;a href=&quot;/2020/05/19/creer-template-sidebar-contenu/&quot;&gt;template avec contenu + sidebar&lt;/a&gt;, puis à &lt;a href=&quot;/2020/05/27/masquer-afficher-menu-lateral/&quot;&gt;masquer la sidebar&lt;/a&gt; assez simplement. Je vais maintenant voir comment améliorer le côté très basique de mes premiers essais grâce à quelques animations CSS et autres icônes.&lt;/p&gt;
+&lt;h2&gt;Animer le changement d&#39;état&lt;/h2&gt;
+&lt;p&gt;C&#39;est tout simple, il suffit de compléter les styles de &amp;quot;sidebar&amp;quot; et &amp;quot;content&amp;quot; avec :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;transition: all 1s;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Il s&#39;agit d&#39;une propriété CSS qui en 1 seconde (pour avoir le temps de voir ce qui se passe) va animer le passage des valeurs CSS suivantes :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar {
+    display: block;
+}
+#content {
+    width: calc(100% - 299px);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;À ces nouvellles valeurs :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.no-sidebar #sidebar {
+    display: none;
+}
+.no-sidebar #content {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Maintenant, quand je vais cliquer sur le bouton &amp;quot;sidebar-toggle&amp;quot;, le fait d&#39;ajouter la classe &amp;quot;no-sidebar&amp;quot; à la div &amp;quot;wrapper&amp;quot; ne devrait pas immédiatement masquer la &amp;quot;sidebar&amp;quot; et élargir le &amp;quot;content&amp;quot;. Cela devrait durer 1 seconde et se faire progressivement.&lt;/p&gt;
+&lt;p&gt;Ça marche du 1° coup ! À moitié...&lt;/p&gt;
+&lt;p&gt;Pour le &amp;quot;content&amp;quot;, on le voit bien &amp;quot;bouger&amp;quot; quand on clique sur le bouton pour occuper toute la largeur de l&#39;écran.&lt;/p&gt;
+&lt;p&gt;Par contre, la &amp;quot;sidebar&amp;quot; disparait ou apparait instantanément. C&#39;est parce que le changement de la propriété &amp;quot;display&amp;quot; de &amp;quot;block&amp;quot; en &amp;quot;none&amp;quot; n&#39;est pas pris en compte par les animations CSS :(&lt;/p&gt;
+&lt;p&gt;Il faut donc ruser et cacher &amp;quot;sidebar&amp;quot; en la sortant de l&#39;écran. Pour cela, on lui met une marge négative égale à sa largeur :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar {
+    margin-left: 0;
+}
+
+.no-sidebar #sidebar {
+    margin-left: -299px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On peut alors accélérer l&#39;animation (parce que sinon le &lt;em&gt;lorem ipsum dolor sit amet...&lt;/em&gt; tangue et va finir par me rendre malade) :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;transition: all 0.25s;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et ben c&#39;est parfait pour moi.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note : le &lt;code&gt;transition: all 0.25s&lt;/code&gt; doit être défini 2 fois : une fois au niveau du CSS de &amp;quot;#sidebar&amp;quot; et une seconde fois pour le code CSS de &amp;quot;#content&amp;quot;.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Utiliser une icône pour basculer d&#39;un état à l&#39;autre&lt;/h2&gt;
+&lt;p&gt;Finalement, je ne vais pas utiliser une icône mais un bête caractère avec un peu de CSS pour que cela ressemble à quelque chose.&lt;/p&gt;
+&lt;p&gt;Et comme je ne suis pas assez doué, je copie / colle tout depuis StackOverflow : &lt;a href=&quot;https://stackoverflow.com/questions/22975037/style-a-link-to-be-a-circle-with-an-arrow-inside&quot;&gt;Style a link to be a circle with an arrow inside&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Je commence par remplacer le bouton par une balise &lt;code&gt;a&lt;/code&gt; :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a href=&amp;quot;#&amp;quot; id=&amp;quot;sidebar-toggle&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis j&#39;ajoute le CSS :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar-toggle {
+    background-color: orange;
+    border-radius: 50%;
+    display: block;
+    height: 2.2rem;
+    left: -1.1rem;
+    position: absolute;
+    text-decoration: none;
+    top: 7px;
+    width: 2.2rem;
+}
+#sidebar-toggle::after {
+    content: &amp;quot;🡐&amp;quot;;
+    color: white;
+    display: block;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: -.2rem 0 0 0;
+    text-align: center;
+}
+.no-sidebar #sidebar-toggle::after {
+    content: &amp;quot;🡒&amp;quot;;
+    margin-left: .2rem;
+}
+#sidebar-toggle:hover {
+    background-color: goldenrod;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Note : Pour les 2 flèches, j&#39;ai pioché dans &lt;a href=&quot;http://xahlee.info/comp/unicode_arrows.html&quot;&gt;Unicode Arrows&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Et voila, ça marche.&lt;/p&gt;
+&lt;p&gt;Pour friser la perfection, je n&#39;ai plus qu&#39;à positionner cette &amp;quot;icône&amp;quot; pile sur la tranche entre la &amp;quot;sidebar&amp;quot; et le &amp;quot;content&amp;quot; :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar-toggle {
+    position: absolute;
+    left: -1.25rem;
+    top: 7px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et penser à la masquer lors des impressions :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;@media print {
+    #sidebar-toggle { display: none; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ça fera très bien l&#39;affaire :)&lt;/p&gt;
+&lt;h2&gt;Démonstration&lt;/h2&gt;
+&lt;script async src=&quot;//jsfiddle.net/qo6dx3w4/1/embed/result/&quot;&gt;&lt;/script&gt;
+&lt;p&gt;Bon, maintenant que j&#39;ai à peu près le template que je voulais et même plus grâce à ces derniers ajouts, je vais pouvoir travailler pour de vrai et commencer à coder mon application...&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2020/06/02/sidebar-css-animation/&quot; hreflang=&quot;en-US&quot;&gt;Sidebar animation with CSS&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="css" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/swing.jpg" />
+    </entry>
+    <entry>
+        <title type="html">Hide or show sidebar</title>
+        <link href="https://blog3.pagesd.info/2020/05/28/hide-show-sidebar/" rel="alternate" hreflang="en-US" />
+        <updated>2020-05-28T11:20:08.000Z</updated>
+        <published>2020-05-28T11:20:08.000Z</published>
+        <id>https://blog3.pagesd.info/2020/05/28/hide-show-sidebar/</id>
+        <summary>Today goal: hide or show the vertical menu used for navigation.</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog3.pagesd.info">
+&lt;p&gt;I&#39;m still working on a &lt;a href=&quot;/2020/05/20/create-template-sidebar-content/&quot;&gt;simple 2-column template&lt;/a&gt;. Today my goal is to hide the &amp;quot;sidebar&amp;quot; used for navigation.&lt;/p&gt;
+&lt;p&gt;An easy solution would be to add a &amp;quot;d-none&amp;quot; class to the &amp;quot;sidebar&amp;quot; (since I use Bootstrap), but that won&#39;t be enough because the &amp;quot;content&amp;quot; doesn&#39;t automatically take all the width.&lt;/p&gt;
+&lt;p&gt;Let&#39;s go step by step and see what we need to do:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hide the &amp;quot;sidebar&amp;quot; =&amp;gt; add a &amp;quot;hidden&amp;quot; class to it,&lt;/li&gt;
+&lt;li&gt;Make the &amp;quot;content&amp;quot; fill the whole screen =&amp;gt; add a &amp;quot;full-width&amp;quot; class.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On the HTML side, this would look like:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;hidden&amp;quot;&amp;gt;
+    ...
+&amp;lt;/nav&amp;gt;
+&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;full-width&amp;quot;&amp;gt;
+    ...
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And on the CSS side:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.hidden {
+    display: none;
+}
+#content.full-width {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And vice versa, when I need to display the navigation bar again:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;visible&amp;quot;&amp;gt;
+    ...
+&amp;lt;/nav&amp;gt;
+&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;less-width&amp;quot;&amp;gt;
+    ...
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then the CSS part:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.visible {
+    display: block;
+}
+#content.less-width {
+    width: calc(100% - 299px);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It works! Now let&#39;s see how to get the same result but with less complications.&lt;/p&gt;
+&lt;p&gt;My first attempt needs 4 different classes, whereas there are basically only 2 cases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We show the &amp;quot;sidebar&amp;quot; and the &amp;quot;content&amp;quot; =&amp;gt; sidebar = true (default),&lt;/li&gt;
+&lt;li&gt;We only display the &amp;quot;content&amp;quot; =&amp;gt; sidebar = false (on demand).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What can be done with a single &amp;quot;no-sidebar&amp;quot; class:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;By default this class is not used =&amp;gt; the &amp;quot;sidebar&amp;quot; is visible,&lt;/li&gt;
+&lt;li&gt;And to hide the &amp;quot;sidebar&amp;quot;, we just have to add this class.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To be clever, we can do this at the &amp;quot;wrapper&amp;quot; level, which includes &amp;quot;sidebar&amp;quot; and &amp;quot;content&amp;quot;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;div id=&amp;quot;wrapper&amp;quot; class=&amp;quot;no-sidebar&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And this time I only need two CSS rules:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.no-sidebar #sidebar {
+    display: none;
+}
+.no-sidebar #content {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Much better!&lt;/p&gt;
+&lt;p&gt;Now, all we need is a button and a bit of Javascript to show or hide the &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;button id=&amp;quot;sidebar-toggle&amp;quot;&amp;gt;Masquer / Afficher&amp;lt;/button&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The Javascript code is really simple (because jQuery will be used later for the forms):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&amp;lt;script src=&amp;quot;js/jquery-3.4.1.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script&amp;gt;
+    $(document).ready(function () {
+
+        $(&amp;quot;#sidebar-toggle&amp;quot;).on(&amp;quot;click&amp;quot;, function () {
+            $(&amp;quot;#wrapper&amp;quot;).toggleClass(&amp;quot;no-sidebar&amp;quot;);
+        });
+
+    });
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To summarize, we need just 4 elements to build a 2-columns template, with a switchable sidebar:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &amp;quot;#wrapper&amp;quot; div to enclose all the content,&lt;/li&gt;
+&lt;li&gt;A &amp;quot;#sidebar&amp;quot; nav to contain the navigation menu,&lt;/li&gt;
+&lt;li&gt;A &amp;quot;#content&amp;quot; div to present the main content,&lt;/li&gt;
+&lt;li&gt;A &amp;quot;.no-sidebar&amp;quot; class when you need to hide the sidebar.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And finally, very little CSS (without styles used to presentation):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    min-height: 100vh;
+    position: fixed;
+    width: 299px;
+}
+
+#content {
+    min-height: 100vh;
+    position: absolute;
+    right: 0;
+    width: calc(100% - 299px);
+}
+
+.no-sidebar #sidebar {
+    display: none;
+}
+
+.no-sidebar #content {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And if necessary hide the &amp;quot;sidebar&amp;quot; when printing (as it is intended to contain navigational elements only):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;@media print {
+    #sidebar { display: none;}
+    #content { width: 100%; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can also just add the bootstrap &amp;quot;d-print-none&amp;quot; class to &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2020/clic2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Yay! My first animated GIF for centuries, or at least since the last century (created with &lt;a href=&quot;https://ezgif.com/&quot;&gt;https://ezgif.com/&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;It wasn&#39;t complicated... So I would probably write a third part to work on the &amp;quot;artistic&amp;quot; side:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use an icon to show or hide the sidebar,&lt;/li&gt;
+&lt;li&gt;Add an animation to switch from one state to another.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2020/05/27/masquer-afficher-menu-lateral/&quot; hreflang=&quot;fr-FR&quot;&gt;Masquer ou afficher le menu latéral&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="css" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
+    </entry>
+    <entry>
+        <title type="html">Masquer ou afficher le menu latéral</title>
+        <link href="https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/" rel="alternate" hreflang="fr-FR" />
+        <updated>2020-05-27T10:08:34.000Z</updated>
+        <published>2020-05-27T10:08:34.000Z</published>
+        <id>https://blog3.pagesd.info/2020/05/27/masquer-afficher-menu-lateral/</id>
+        <summary>L&#39;objectif du jour : pouvoir masquer le menu latéral qui sert pour la navigation.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog3.pagesd.info">
+&lt;p&gt;Je continue à travailler sur un &lt;a href=&quot;/2020/05/19/creer-template-sidebar-contenu/&quot;&gt;template simplissime à 2 colonnes&lt;/a&gt;. L&#39;objectif du jour étant de pouvoir masquer le menu latéral qui sert pour la navigation.&lt;/p&gt;
+&lt;p&gt;La solution simple, ce serait de mettre une classe &amp;quot;d-none&amp;quot; à la &amp;quot;sidebar&amp;quot; (puisque j&#39;utilise Bootstrap), mais cela ne sera pas suffisant parce que le &amp;quot;content&amp;quot; ne prend pas automatiquement toute la largeur.&lt;/p&gt;
+&lt;p&gt;Allons y pas à pas et voyons ce qu&#39;il faut faire :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Masquer la &amp;quot;sidebar&amp;quot; =&amp;gt; lui ajouter une classe &amp;quot;hidden&amp;quot;,&lt;/li&gt;
+&lt;li&gt;Faire en sorte que le &amp;quot;content&amp;quot; occupe tout l&#39;écran =&amp;gt; ajouter une classe &amp;quot;full-width&amp;quot;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ce qui côté HTML donnerait :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;hidden&amp;quot;&amp;gt;
+    ...
+&amp;lt;/nav&amp;gt;
+&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;full-width&amp;quot;&amp;gt;
+    ...
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et côté CSS :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.hidden {
+    display: none;
+}
+#content.full-width {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et inversement, quand je veux ré-afficher la barre de navigation :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;visible&amp;quot;&amp;gt;
+    ...
+&amp;lt;/nav&amp;gt;
+&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;less-width&amp;quot;&amp;gt;
+    ...
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plus :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.visible {
+    display: block;
+}
+#content.less-width {
+    width: calc(100% - 299px);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ça marche ! Voyons maintenant comment obtenir le même résultat un peu plus intelligement...&lt;/p&gt;
+&lt;p&gt;Mon premier essai mobilise 4 classes différentes alors qu&#39;en gros il n&#39;y a que 2 possibilités :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On a une &amp;quot;sidebar&amp;quot; et le &amp;quot;content&amp;quot; =&amp;gt; sidebar = true (par défaut),&lt;/li&gt;
+&lt;li&gt;On n&#39;a que le &amp;quot;content&amp;quot; =&amp;gt; sidebar = false (à la demande).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ce que je peux faire en utilisant une seule classe &amp;quot;no-sidebar&amp;quot; :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Par défaut cette classe n&#39;est pas utilisée =&amp;gt; la &amp;quot;sidebar&amp;quot; est visible,&lt;/li&gt;
+&lt;li&gt;Et pour masquer la &amp;quot;sidebar&amp;quot; il suffit d&#39;ajouter cette classe.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pour être malin, je fais ça au niveau du &amp;quot;wrapper&amp;quot; qui englobe &amp;quot;sidebar&amp;quot; et &amp;quot;content&amp;quot; :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;div id=&amp;quot;wrapper&amp;quot; class=&amp;quot;no-sidebar&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et ce coup-ci je n&#39;ai besoin que de 2 règles CSS :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.no-sidebar #sidebar {
+    display: none;
+}
+.no-sidebar #content {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Bien mieux !&lt;/p&gt;
+&lt;p&gt;Maintenant, il suffit d&#39;un bouton et d&#39;un rien de Javascript pour afficher ou masquer la &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;button id=&amp;quot;sidebar-toggle&amp;quot;&amp;gt;Masquer / Afficher&amp;lt;/button&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Le code Javascript vraiment tout simple (et qui utilise jQuery parce que j&#39;en aurai aussi besoin pour mes formulaires) :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&amp;lt;script src=&amp;quot;js/jquery-3.4.1.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script&amp;gt;
+    $(document).ready(function () {
+
+        $(&amp;quot;#sidebar-toggle&amp;quot;).on(&amp;quot;click&amp;quot;, function () {
+            $(&amp;quot;#wrapper&amp;quot;).toggleClass(&amp;quot;no-sidebar&amp;quot;);
+        });
+
+    });
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pour récapituler, il suffit de 4 éléments pour réaliser une présentation sur 2 colonnes, avec une barre latérale rétractable :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Une div &amp;quot;#wrapper&amp;quot; pour englober tout le contenu,&lt;/li&gt;
+&lt;li&gt;Un nav &amp;quot;#sidebar&amp;quot; pour contenir la barre latérale pour le menu de navigation,&lt;/li&gt;
+&lt;li&gt;Une div &amp;quot;#content&amp;quot; pour contenir le contenu principal,&lt;/li&gt;
+&lt;li&gt;Une classe .no-sidebar quand il faut masquer la barre latérale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Et finalement, de très peu de CSS (si on enlève tout ce qui sert à présenter le contenu) :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    min-height: 100vh;
+    position: fixed;
+    width: 299px;
+}
+
+#content {
+    min-height: 100vh;
+    position: absolute;
+    right: 0;
+    width: calc(100% - 299px);
+}
+
+.no-sidebar #sidebar {
+    display: none;
+}
+
+.no-sidebar #content {
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plus éventuellement pour ne pas imprimer la &amp;quot;sidebar&amp;quot; (comme elle destinée à contenir des éléments de navigation uniquement) :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;@media print {
+    #sidebar { display: none;}
+    #content { width: 100%; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On peut aussi se contenter d&#39;ajouter la classe Bootstrap &amp;quot;d-print-none&amp;quot; à &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2020/clic2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Youpi ! Mon 1° GIF animé depuis des siècles, ou en tout cas depuis le siècle dernier (créé grâce à &lt;a href=&quot;https://ezgif.com/&quot;&gt;https://ezgif.com/&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;C&#39;était pas très compliqué... Aussi je ferais sans doute une 3° partie pour améliorer le côté &amp;quot;artistique&amp;quot; :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Utiliser une icone pour afficher ou cacher la &amp;quot;sidebar&amp;quot;,&lt;/li&gt;
+&lt;li&gt;Ajouter une animation pour passer d&#39;un état à l&#39;autre.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2020/05/28/hide-show-sidebar/&quot; hreflang=&quot;en-US&quot;&gt;Hide or show sidebar&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="css" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog3.pagesd.info/public/2020/switches.jpg" />
+    </entry>
+</feed>

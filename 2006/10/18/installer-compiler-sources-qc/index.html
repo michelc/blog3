@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Installer et compiler les sources de QC - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/10/18/installer-compiler-sources-qc/" />
+<meta property="og:title" content="Installer et compiler les sources de QC" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/10/18/installer-compiler-sources-qc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-10-18T18:03:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-10-18T18:03:00.000Z","datePublished":"2006-10-18T18:03:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/10/18/installer-compiler-sources-qc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/10/18/installer-compiler-sources-qc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/10/18/installer-compiler-sources-qc/">Installer et compiler les sources de QC</a>
+    </h1>
+    <p>
+      <span>2006-10-18</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Installation des sources de QC sur un poste de développement</p>
+<ul>
+<li>Décompacter l'archive complète de la solution dans le sous-répertoire
+C:\Portals\qc ou D:\Portals\qc</li>
+<li>Créer un répertoire virtuel &quot;qc&quot; qui pointe sur le sous-répertoire
+X:\Portals\qc</li>
+<li>Donner à l'utilisateur ASPNET TOUS les droits sur le sous-répertoire
+X:\Portals\qc\data</li>
+<li>Tester que http://localhost/qc fonctionne correctement =&gt; installation
+réussie :)</li>
+</ul>
+<p>Compilation des sources de QC</p>
+<ul>
+<li>Rechercher tous les fichiers *.csproj.user dans X:\Portals\qc et ses
+sous-répertoires pour les supprimer</li>
+<li>Sous Visual Studio, le chargement de la solution X:\Portals\qc\qc.sln ne
+doit pas planter (ne pas la mettre sous Source Safe)</li>
+<li>Recompiler toute la solution (Générer - regénérer la solution) doit donner
+un message style &quot;Régénération globale : # a réussi, 0 a échoué, 0 a été
+ignoré&quot; =&gt; compilation réussie :)</li>
+<li>Tout sauvegarder puis fermer la solution afin de sauvegarder les
+.csproj.user de C: ou D:</li>
+<li>Tester que http://localhost/qc est toujours OK</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/10/13/recherche-mots-vides/" hreflang="fr-FR">Recherche et mots vides</a>
+  <a rel="next" href="/2006/10/19/structure-solution-qc/" hreflang="fr-FR">Structure d&#39;une solution sous QC</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

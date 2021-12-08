@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ruby, or et parenthèses - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/03/01/ruby-parentheses/" />
+<meta property="og:title" content="Ruby, or et parenthèses" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/03/01/ruby-parentheses/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-03-01T11:22:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-03-01T11:22:00.000Z","datePublished":"2012-03-01T11:22:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/03/01/ruby-parentheses/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/03/01/ruby-parentheses/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/03/01/ruby-parentheses/">Ruby, or et parenthèses</a>
+    </h1>
+    <p>
+      <span>2012-03-01</span>
+      <span>#ruby</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Question du collègue derrière les écrans de l'autre coté du bureau d'en
+face : <em><code>True or False</code> ça doit faire quoi ?</em></p>
+<p>Très bon réflexe de ma part, plutôt que de démarrer mon cerveau, je lance
+PowerShell + IRB :</p>
+<pre><code>C:\&gt; irb
+irb(main):001:0&gt; puts true or false
+true
+=&gt; false
+irb(main):002:0&gt;
+</code></pre>
+<p>Question perfide : <em>Et dans l'autre sens ?</em></p>
+<p>Ben pareil ?</p>
+<pre><code>irb(main):002:0&gt; puts false or true
+false
+=&gt; true
+irb(main):003:0&gt;
+</code></pre>
+<p>Heu... Qu'est-ce qui se passe là ?</p>
+<p>Je recommence autrement :</p>
+<pre><code>irb(main):003:0&gt; puts true || false
+true
+=&gt; nil
+irb(main):004:0&gt; puts false || true
+true
+=&gt; nil
+irb(main):005:0&gt;
+</code></pre>
+<p>C'est mieux !</p>
+<p>Mais à quoi ça sert d'avoir le choix entre <em><code>or</code></em> et
+<em><code>||</code></em> si c'est pour que ça soit pas pareil ?</p>
+<p>DuckDuckGo &quot;ruby or&quot; =&gt; <a href="http://adamloving.com/internet-programming/ruby-boolean-operator-or-ruby-parsing-bug">Ruby boolean operator (or ruby parsing) bug</a></p>
+<p>En résumé, l'affectation est prioritaire sur l'opérateur
+<em><code>or</code></em>.</p>
+<pre><code>irb(main):005:0&gt; puts (true or false)
+true
+=&gt; nil
+irb(main):006:0&gt; puts (false or true)
+true
+=&gt; nil
+irb(main):007:0&gt;
+</code></pre>
+<p>Jamais je vais m'en souvenir.</p>
+<p>Et sinon, c'était quoi la question déjà ?</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/12/23/configurer-elmah-utiliser-sql-server/" hreflang="fr-FR">Configurer ELMAH pour utiliser SQL Server</a>
+  <a rel="next" href="/2012/03/08/optimiser-insert-multiples-oracle/" hreflang="fr-FR">Optimiser les INSERT multiples (dans Oracle)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

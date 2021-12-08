@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SuperDo : Une todo liste avec Sinatra et DataMapper - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/09/02/superdo-todo-liste-sinatra-datamapper/" />
+<meta property="og:title" content="SuperDo : Une todo liste avec Sinatra et DataMapper" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/09/02/superdo-todo-liste-sinatra-datamapper/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-09-02T18:21:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-09-02T18:21:00.000Z","datePublished":"2010-09-02T18:21:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/09/02/superdo-todo-liste-sinatra-datamapper/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/09/02/superdo-todo-liste-sinatra-datamapper/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/09/02/superdo-todo-liste-sinatra-datamapper/">SuperDo : Une todo liste avec Sinatra et DataMapper</a>
+    </h1>
+    <p>
+      <span>2010-09-02</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/3/30/superdo_a_sinatra_and_datamapper_to_do_list/">SuperDo - A Sinatra and DataMapper To Do List</a>&quot; de Darren Jones.</p>
+</div>
+<p>Dans ce nouveau tutoriel dédié à Sinatra, <a href="http://dazzl.co.uk/">Darren</a> explique comment construire une petite application de
+type Todo liste qui utilisera une base de données pour enregistrer les
+différentes tâches. Cela donnera l'occasion d'aborder les points
+suivants :</p>
+<ul>
+<li>Installer SQLIte et DataMapper</li>
+<li>Se connecter à la base de données</li>
+<li>Gérer les actions de types CRUD</li>
+<li>Utiliser des URLs de type RESTFul</li>
+</ul>
+<p>Avant de commencer, il est bien entendu nécessaire d'avoir procédé à
+l'<a href="/2010/07/22/installer-sinatra-windows-7/">installation de Ruby, de Ruby Gems et de Sinatra</a>.</p>
+<p>L'application que nous allons développer s'appellera <a href="http://superdo.heroku.com/">Superdo</a> et nous pouvons d'ores
+et déjà voir ce qu'elle donnera sur la version que Darren à déployé sur
+<a href="http://heroku.com/">Heroku</a>.</p>
+<h2>Installer SQLite et Datamapper</h2>
+<p>Dans ce tutoriel, nous allons utiliser <a href="http://www.sqlite.org/">SQLite</a> comme base de données et <a href="http://datamapper.org/">DataMapper</a> comme ORM pour nous
+connecter à notre base de données.</p>
+<p>Nous devons donc commencer par installer SQLite sous Windows 7 en
+téléchargeant la version la plus récente de sqlite3.dll depuis le site de
+SQLite, soit sqlitedll-3_6_23_1.zip à ce jour. Après avoir décompacté cette
+archive, il ne reste qu'à copier le fichier sqlite3.dll dans le répertoire
+C:\Ruby\bin.</p>
+<p>Puis il faut installer le gem qui permet la prise en charge de SQLite par
+Ruby :</p>
+<pre><code>C:\Ruby&gt;gem install sqlite3-ruby --no-rdoc --no-ri
+</code></pre>
+<p>Ce qui donne le résultat suivant :</p>
+<pre><code>=============================================================================
+
+  You've installed the binary version of sqlite3-ruby.
+  It was built using SQLite3 version 3.6.23.1.
+  It's recommended to use the exact same version to avoid potential issues.
+
+  At the time of building this gem, the necessary DLL files where available
+  in the following download:
+
+  http://www.sqlite.org/sqlitedll-3_6_23_1.zip
+
+  You can put the sqlite3.dll available in this package in your Ruby bin
+  directory, for example C:\Ruby\bin
+
+=============================================================================
+
+Successfully installed sqlite3-ruby-1.3.1-x86-mingw32
+1 gem installed
+</code></pre>
+<p><em>Note : Les paramètres <code>--no-rdoc --no-ri</code>
+ont permis d'éviter d'installer la documentation en local.</em></p>
+<p>On installe ensuite le gem Datamapper :</p>
+<pre><code>C:\Ruby&gt;gem install data_mapper --no-rdoc --no-ri
+</code></pre>
+<p>Ce qui donne :</p>
+<pre><code>Successfully installed extlib-0.9.15
+Successfully installed addressable-2.2.0
+Successfully installed dm-core-1.0.2
+Successfully installed dm-aggregates-1.0.2
+Successfully installed dm-migrations-1.0.2
+Successfully installed dm-constraints-1.0.2
+Successfully installed dm-transactions-1.0.2
+Successfully installed fastercsv-1.5.3
+Successfully installed json_pure-1.4.6
+Successfully installed dm-serializer-1.0.2
+Successfully installed dm-timestamps-1.0.2
+Successfully installed dm-validations-1.0.2
+Successfully installed uuidtools-2.1.1
+Successfully installed stringex-1.1.0
+Successfully installed dm-types-1.0.2
+Successfully installed data_mapper-1.0.2
+16 gems installed
+</code></pre>
+<p>Et il ne reste plus qu'à installer l'adaptateur SQLite pour que Datamapper
+puisse gérer les bases de données SQLite :</p>
+<pre><code>C:\Ruby&gt;gem install dm-sqlite-adapter --no-rdoc --no-ri
+</code></pre>
+<p>Ce qui donne :</p>
+<pre><code>=============================================================================
+
+  You've installed the binary version of do_sqlite3.
+  It was built using Sqlite3 version 3_6_23_1.
+  It's recommended to use the exact same version to avoid potential issues.
+
+  At the time of building this gem, the necessary DLL files where available
+  in the following download:
+
+  http://www.sqlite.org/sqlitedll-3_6_23_1.zip
+
+  You can put the sqlite3.dll available in this package in your Ruby bin
+  directory, for example C:\Ruby\bin
+
+=============================================================================
+
+Successfully installed data_objects-0.10.2
+Successfully installed do_sqlite3-0.10.2-x86-mingw32
+Successfully installed dm-do-adapter-1.0.2
+Successfully installed dm-sqlite-adapter-1.0.2
+4 gems installed
+</code></pre>
+<p>Après cela, tout est en place pour pouvoir développer une application web
+avec du contenu dynamique.</p>
+<h2>Se connecter à la base de données</h2>
+<p>La première chose à faire est de créer un répertoire nommé &quot;todo&quot; pour notre
+application et de commencer par y enregistrer un fichier &quot;main.rb&quot; avec le code
+ci-dessous :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'dm-core'
+require 'dm-migrations'
+
+DataMapper.setup(:default, ENV['DATABASE_URL'] || &quot;sqlite3://#{Dir.pwd}/development.db&quot;)
+
+class Task
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+end
+
+DataMapper.auto_upgrade!
+</code></pre>
+<p>Ça fait pas mal de nouveaux trucs d'un coup, aussi je vais les expliquer un
+par un.</p>
+<p>Les 4 premières lignes déclarent les gems nécessaires :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'dm-core'
+require 'dm-migrations'
+</code></pre>
+<p>On a besoin de &quot;rubygems&quot; et de &quot;sinatra&quot; pour toutes les applications
+Sinatra et le gem &quot;dm-core&quot; est nécessaire pour DataMapper. Par rapport au
+tutoriel de Darren, on a besoin en plus du gem &quot;dm-migrations&quot; car il n'est
+plus intégré à &quot;dm_core&quot; depuis le passage en version 1.00 de DataMapper.</p>
+<p>Le morceau de code suivant permet de se connecter à la base de
+données :</p>
+<pre><code>DataMapper.setup(:default, ENV['DATABASE_URL'] || &quot;sqlite3://#{Dir.pwd}/development.db&quot;)
+</code></pre>
+<p>Voila un bout de code très intéressant qui vaut le coup d'être conservé. Il
+commence par tester si l'application est déployée sur Heroku et dans ce cas se
+connecte à la base de données qui y est hébergée. Dans le cas contraire, il se
+connecte à une base de données SQLite locale nommée &quot;development.db&quot;. Si
+celle-ci n'existe pas encore, SQLite la crée automatiquement.</p>
+<p>Le bloc de code suivant créé une classe Task avec ses propriétés :</p>
+<pre><code>class Task
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+end
+</code></pre>
+<p>Vous aurez besoin de la ligne de code <code>include DataMapper::Resource</code> dans toutes les classes qui utilisent DataMapper.
+Puis les 3 lignes suivantes définissent les propriétés de votre classe Task. La
+première défini un identifiant unique propre à chaque tâche. Le type
+<code>Serial</code> qui lui est associé indique que la propriété &quot;id&quot; doit être
+auto-incrémentée à chaque fois qu'une nouvelle tâche est ajoutée à la base de
+données. La deuxième propriété &quot;name&quot; va servir à un libellé pour chaque tâche
+et nous indiquons à DataMapper que celui-ci sera de type <code>String</code>.
+Et enfin, la dernière propriété &quot;completed_at&quot; est définie en tant que
+<code>DateTime</code> pour enregistrer à quel moment la tâche a été marquée
+comme terminée. Cette propriété nous permettra également de savoir si la tâche
+a été réalisée ou non : une tâche dont la propriété &quot;completed_at&quot; sera à
+nil étant considérée comme à faire.</p>
+<p>La dernière ligne du fichier &quot;main.rb&quot; contient l'appel à la méthode
+auto_upgrade! :</p>
+<pre><code>DataMapper.auto_upgrade!
+</code></pre>
+<p>Cette méthode indique à DataMapper de mettre à jour la base de données pour
+refléter toutes modifications apportées à la classe Task. Grâce à cela, nous
+pouvons ajouter ou supprimer des propriétés à la classe Task et DataMapper se
+chargera de répercuter ces modifications dans la base de données. Cela permet
+de développer très rapidement et nous évite de mettre les mains dans le
+cambouis pour essayer de faire évoluer la structure de notre base de données.
+La commande <code>auto_upgrade!</code> a l'avantage de conserver les données
+existantes dans la base de données. Si vous préférez repartir d'une base de
+données vide, vous pouvez choisir d'utiliser la commande
+<code>DataMapper.auto_migrate!</code> qui efface définitivement toutes les
+données déjà présentes dans la base de données.</p>
+<p>OK. Maintenant que la base de données est configurée, nous allons pouvoir la
+tester. Comme nous n'avons pas encore d'interface web, nous allons ouvrir une
+invite de commandes et aller dans le répertoire &quot;todo&quot; pour lancer la commande
+suivante :</p>
+<pre><code>C:\Ruby\projets\todo&gt;irb -r main.rb
+</code></pre>
+<p>Cela a pour effet d'ouvrir un shell &quot;irb&quot;, mais étant donné que nous avons
+ajouté l'option &quot;-r main.rb&quot;, tout le code de notre fichier &quot;main.rb&quot; est
+chargé dans notre session. Par conséquent, nous avons accès à la base de
+données et pouvons créer, rechercher ou supprimer des tâches.</p>
+<p>Pour commencer, examinons la liste de nos tâches :</p>
+<pre><code>irb(main):001:0&gt; Task.all
+=&gt; []
+</code></pre>
+<p>Cette commande renvoie à juste titre un tableau vide puisque pour l'instant
+nous n'avons encore aucune tâche dans notre base de données. On va donc en
+créer une nouvelle :</p>
+<pre><code>irb(main):002:0&gt; t = Task.new
+=&gt; #&lt;Task @id=nil @name=nil @completed_at=nil&gt;
+irb(main):003:0&gt; t.name = &quot;Acheter du lait&quot;
+=&gt; &quot;Get milk&quot;
+</code></pre>
+<p>Pour l'instant, cette tâche n'existe qu'en mémoire. Nous devons
+explicitement l'enregistrer dans la base de données :</p>
+<pre><code>irb(main):004:0&gt; t.save
+=&gt; true
+</code></pre>
+<p>Vérifions que cela a correctement fonctionné en recherchant maintenant la
+première tâche :</p>
+<pre><code>irb(main):005:0&gt; Task.first
+=&gt; #&lt;Task @id=1 @name=&quot;Acheter du lait&quot; @completed_at=nil&gt;
+</code></pre>
+<p>Il existe une autre façon pour créer une nouvelle tâche, en utilisant la
+commande <code>create</code> :</p>
+<pre><code>irb(main):006:0&gt; Task.create(:name =&gt; &quot;Acheter des bananes&quot;)
+=&gt; #&lt;Task @id=2 @name=&quot;Acheter des bananes&quot; @completed_at=&lt;not loaded&gt;&gt;
+</code></pre>
+<p>Nous pouvons ajouter des paramètres en les plaçant entre parenthèses après
+le nom de méthode et en utilisant la notation hash du langage Ruby. Avec la
+commande <code>create</code>, il n'est pas nécessaire d'enregistrer nous même
+la nouvelle tâche, car elle est automatiquement sauvegardée dans la base de
+données. Nous pouvons vérifier cela en demandant à afficher toutes les tâches
+de la table Tasks :</p>
+<pre><code>irb(main):007:0&gt; Task.all
+=&gt; [#&lt;Task @id=1 @name=&quot;Acheter du lait&quot; @completed_at=nil&gt;, #&lt;Task @id=2 @name=
+&quot;Acheter des bananes&quot; @completed_at=nil&gt;]
+</code></pre>
+<p>Comme vous le constatez, nos deux tâches apparaissent désormais dans le
+tableau. Mais ça risque de devenir un peu compliqué pour s'y retrouver parmi
+toutes les tâches dès lors qu'on aura un grand nombre d'enregistrement. C'est
+pourquoi nous pouvons plus simplement utiliser la méthode
+<code>count</code> :</p>
+<pre><code>irb(main):008:0&gt; Task.all.count
+=&gt; 2
+</code></pre>
+<p>Cela nous indique qu'il y a actuellement 2 tâches enregistrées dans la base
+de données.</p>
+<p>Nous avons donc vu comment créer et rechercher des enregistrements dans
+notre base de données. Nous allons à présent voir comment les modifier.
+Supposons que nous préférions le lait demi-écrémé. Nous devons tout d'abord
+retrouver le bon enregistrement :</p>
+<pre><code>irb(main):009:0&gt; t = Task.first(:name =&gt; &quot;Acheter du lait&quot;)
+=&gt; #&lt;Task @id=1 @name=&quot;Acheter du lait&quot; @completed_at=nil&gt;
+</code></pre>
+<p>Il s'agit là d'une des façons de retrouver des enregistrements dans une base
+de données. Dans notre cas, nous voulons retrouver la tâche dont la propriété
+&quot;name&quot; contient &quot;Acheter du lait&quot; pour la charger dans la variable t. Nous
+avons alors deux méthodes pour modifier cet enregistrement. La première
+consiste à modifier manuellement la variable t puis à la sauvegarder :</p>
+<pre><code>irb(main):010:0&gt; t.name = &quot;Acheter du lait demi-écrémé&quot;
+=&gt; &quot;Acheter du lait demi-écrémé&quot;
+irb(main):011:0&gt; t.save
+=&gt; true
+irb(main):012:0&gt; t
+=&gt; #&lt;Task @id=1 @name=&quot;Acheter du lait demi-écrémé&quot; @completed_at=nil&gt;
+</code></pre>
+<p>La seconde méthode est d'utiliser la méthode <code>update</code>. Disons que
+finallement nous voulons du lait entier :</p>
+<pre><code>irb(main):013:0&gt; t.update(:name =&gt; &quot;Acheter du lait entier&quot;)
+=&gt; true
+irb(main):014:0&gt; t
+=&gt; #&lt;Task @id=1 @name=&quot;Acheter du lait entier&quot; @completed_at=nil&gt;
+</code></pre>
+<p>Et pour finir, voyons comment gérer la dernière des actions CRUD : la
+suppression. Disons que nous n'avons pas besoin de lait ce qui fait que nous
+pouvons supprimer cette tâche. On commence donc par retrouver cette tâche puis
+nous la supprimons à l'aide de la commande <code>destroy</code> :</p>
+<pre><code>irb(main):015:0&gt; t = Task.get(1)
+=&gt; #&lt;Task @id=1 @name=&quot;Acheter du lait entier&quot; @completed_at=nil&gt;
+irb(main):016:0&gt; t.destroy
+=&gt; true
+</code></pre>
+<p>Cette fois-ci, j'ai employé la méthode <code>get</code> pour retrouver la
+tâche dont l'identifiant est 1. Cette syntaxe n'est utilisable que lorsque l'on
+passe par la clé primaire pour effectuer la recherche. Dans notre cas, la clé
+primaire est la propriété id dont la valeur est 1 pour la tâche recherchée.
+Nous aurons souvent recours à cette méthode par la suite pour retrouver les
+tâches à partir d'URLs uniques. Nous pouvons désormais vérifier que la tâche a
+bien été supprimée en redemandant la liste de toutes les tâches :</p>
+<pre><code>irb(main):017:0&gt; Task.all
+=&gt; [#&lt;Task @id=2 @name=&quot;Acheter des bananes&quot; @completed_at=nil&gt;]
+</code></pre>
+<p>Nous constatons alors que seule la tâche &quot;Acheter des bananes&quot; reste
+enregistrée dans notre base de données.</p>
+<p>C'était plutôt amusant et le fait d'utiliser la console constitue une
+excellente entrée en matière pour faire des essais et tester notre base de
+données. Mais notre objectif étant de créer une application internet, il est
+temps de développer une interface pour toutes ces actions.</p>
+<h2>Associer des URLs RESTful aux actions CRUD</h2>
+<p>L'interface web que nous allons créer pour interagir avec notre base de
+données suivra une architecture <a href="http://fr.wikipedia.org/wiki/Representational_State_Transfer">REST</a>. Cela consiste à utiliser les verbes http POST, GET, PUT et
+DELETE. Ceux-ci sont très similaires aux actions CRUD (Create, Read, Update et
+Delete) destinées à mettre à jour la base de données. Chaque tâche aura sa
+propre URL de la forme &quot;/tasks/:id&quot; où &quot;:id&quot; correspond à l'identifiant unique
+de la tâche. Par exemple, la tâche &quot;Acheter des bananes&quot; que nous avons créée
+auparavant aurait l'URL &quot;/tasks/2&quot; étant donné que son identifiant est 2. Le
+fait qu'il faille lire, modifier ou supprimer une tâche dépendra du verbe http
+que le navigateur enverra. Par conséquent, même si l'URL sera toujours la même,
+l'action effectuée sera différente. Et chacune de ces actions sera traitée par
+un handler différent dans notre application Sinatra.</p>
+<p>Commençons par créer le handler qui va servir à consulter les tâches. Pour
+cela, nous devons modifier le code du fichier &quot;main.rb&quot; de la façon
+suivante :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'dm-core'
+require 'dm-migrations'
+
+DataMapper.setup(:default, ENV['DATABASE_URL'] || &quot;sqlite3://#{Dir.pwd}/development.db&quot;)
+
+class Task
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+end
+
+# Afficher une tâche
+get '/task/:id' do
+  @task = Task.get(params[:id])
+  erb :task
+end
+
+DataMapper.auto_upgrade!
+</code></pre>
+<p>Le handler qui sert à afficher une tâche est contenu dans le code
+ci-dessous :</p>
+<pre><code># Afficher une tâche
+get '/task/:id' do
+  @task = Task.get(params[:id])
+  erb :task
+end
+</code></pre>
+<p>Ce code recherche la tâche dont l'identifiant est égal au paramètre &quot;id&quot;
+mentionné dans l'URL et affecte cette tâche à la variable d'instance @task qui
+pourra être utilisée au niveau de la vue. Nous demandons ensuite à Sinatra
+d'afficher la vue &quot;task&quot; à l'aide d'erb. Il nous faut donc créer une vue
+&quot;task.erb&quot; dans le dossier &quot;views&quot; contenant les vues de notre application et y
+saisir le code ci-dessous :</p>
+<pre><code>&lt;h2&gt;&lt;%= @task.name %&gt;&lt;/h2&gt;
+</code></pre>
+<p>Il n'y a là rien d'extraordinaire. Juste un titre pour afficher le libellé
+de la tâche. Pendant que nous y sommes, nous allons créer le layout de notre
+application. Pour cela, nous créons un fichier &quot;layout.erb&quot; dans le même
+répertoire &quot;views&quot; avec le code suivant :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;fr&quot;&gt;
+  &lt;head&gt;
+    &lt;title&gt;To Do Liste&lt;/title&gt;
+    &lt;meta charset=windows-1250 /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;To Do Liste&lt;/h1&gt;
+
+    &lt;%= yield %&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Là encore, rien de bien spécial. Nous nous contentons d'un code HTML très
+basique avec un simple titre annonçant &quot;To Do Liste&quot;. On sauvegarde et on va
+pouvoir tester tout ça en lançant le serveur :</p>
+<pre><code>C:\Ruby\projets\todo&gt;ruby main.rb
+</code></pre>
+<p>Nous pouvons alors utiliser notre navigateur pour consulter l'URL
+&quot;http://localhost:4567/task/2&quot; et on obtient l'écran suivant :</p>
+<p><img src="/public/2010/todo-1.png" alt=""></p>
+<h2>Créer de nouvelles tâches</h2>
+<p>Passons maintenant à la création d'une nouvelle tâche par l'intermédiaire
+d'un formulaire web. La façon standard de faire ça est de découper l'action de
+création en deux handlers :</p>
+<ul>
+<li>le premier est nommé &quot;new&quot; et sert à afficher un formulaire de saisie</li>
+<li>le second est nommé &quot;create&quot; et sert pour créer la nouvelle tâche à partir
+des données saisies (généralement en arrière plan)</li>
+</ul>
+<p>Commençons par l'action &quot;new&quot; et son formulaire. Le code de l'action est
+très simple puisque nous souhaitons seulement afficher un formulaire de saisie
+lorsque l'utilisateur consulte l'URL &quot;/task/new&quot;. Pour réaliser cela, copiez le
+code ci-dessous <strong>avant</strong> le code pour l'action &quot;show&quot; (sans quoi
+il ne serait pas pris en compte) :</p>
+<pre><code># Saisir une nouvelle tâche
+get '/task/new' do
+  erb :new
+end
+</code></pre>
+<p>Ce code se contente d'afficher la vue &quot;new.erb&quot; que nous allons
+immédiatement créer dans le dossier &quot;views&quot; en saisisant les quelques lignes
+suivantes :</p>
+<pre><code>&lt;form action=&quot;/task/create&quot; method=&quot;POST&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Ajouter la tâche&quot;/&gt;
+&lt;/form&gt;
+</code></pre>
+<p>C'est un formulaire simple qui permet à l'utilisateur de saisir le libellé
+d'une nouvelle tâche dans une zone de saisie nommée &quot;name&quot; (ce qui correspond à
+la colonne &quot;name&quot; de la table des tâches, ce qui n'est pas obligatoire mais
+beaucoup plus facile).</p>
+<p>Le bouton submit va envoyer cette information vers l'URL &quot;/task/create&quot; pour
+laquelle nous allons créer le handler correspondant. Son code est un peu plus
+compliqué que celui de l'action &quot;new&quot;, mais pas tant que ça :</p>
+<pre><code># Créer une nouvelle tâche
+post '/task/create' do
+  task = Task.new(:name =&gt; params[:name])
+  if task.save
+    status 201
+    redirect '/task/' + task.id.to_s
+  else
+    status 412
+    redirect '/tasks'
+  end
+end
+</code></pre>
+<p>Examinons d'un peu plus près ce qui se passe dans ce code. Pour commencer,
+il s'exécute lorsqu'il s'agit d'une requête POST étant donné que nous attendons
+les données postées depuis le formulaire. Puis il crée une nouvelle tâche en
+lui donnant comme nom la valeur stockée dans le paramètre &quot;name&quot; en provenance
+du formulaire. Ensuite nous vérifions que la tâche a bien été enregistrée. Si
+c'est le cas, nous définissons le statut http à 201 (la valeur standard pour
+signifier que quelque chose a été créé) et renvoyons l'utilisateur vers l'URL
+affichant la tâche en concaténant son identifiant après &quot;/task/&quot; (ce qui
+correspond à l'action d'affichage d'une tâche que nous avions développée
+auparavant). Dans le cas où la tâche n'a pas été sauvegardée, nous renvoyons un
+statut http à 412 ce qui indique au navigateur que certaines conditions (comme
+la validation de données) n'ont pas été remplies. L'utilisateur est alors
+redirigé vers la page d'index &quot;/tasks&quot; (que nous n'avons pas encore créé mais
+dont nous nous occuperons très bientôt).</p>
+<p>Nous pouvons alors tester tout cela et créer une nouvelle tâche à l'aide du
+navigateur en allant à l'URL &quot;http://localhost:4567/task/new&quot; qui nous présente
+le formulaire de saisie reproduit ci-dessous :</p>
+<p><img src="/public/2010/todo-2.png" alt=""></p>
+<p>Continuez et ajoutez plusieurs nouvelles tâches. À chaque fois que vous
+validez le formulaire, vous devez voir apparaitre une nouvelle page qui affiche
+le nom de la nouvelle tâche créée.</p>
+<p>Arrivé à ce point, le contenu de votre fichier &quot;main.rb&quot; doit être le
+suivant :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'dm-core'
+require 'dm-migrations'
+
+DataMapper.setup(:default, ENV['DATABASE_URL'] || &quot;sqlite3://#{Dir.pwd}/development.db&quot;)
+
+class Task
+  include DataMapper::Resource
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+end
+
+# Saisir une nouvelle tâche
+get '/task/new' do
+  erb :new
+end
+
+# Créer une nouvelle tâche
+post '/task/create' do
+  task = Task.new(:name =&gt; params[:name])
+  if task.save
+    status 201
+    redirect '/task/' + task.id.to_s
+  else
+    status 412
+    redirect '/tasks'
+  end
+end
+
+# Afficher une tâche
+get '/task/:id' do
+  @task = Task.get(params[:id])
+  erb :task
+end
+
+DataMapper.auto_upgrade!
+</code></pre>
+<h2>Afficher la liste des tâches</h2>
+<p>Pour l'instant, nous pouvons créer de nouvelles tâches et les afficher une
+par une. Nous allons maintenant afficher une liste qui contiendra toutes les
+tâches existantes. Pour cela, nous commençons par créer l'action
+suivante :</p>
+<pre><code># Afficher toutes les tâches
+get '/tasks' do
+  @tasks = Task.all
+  erb :index
+end
+</code></pre>
+<p>Ce code récupère tout simplement la liste de toutes les tâches enregistrées
+dans la base de données via la méthode &quot;all&quot; et les stocke dans la variable
+d'instance &quot;@tasks&quot; qui sera utilisable dans la vue. Puis il affiche la vue
+&quot;index.erb&quot; que nous allons créer dans le sous-répertoire &quot;views&quot; :</p>
+<pre><code>&lt;h2&gt;Liste des tâches :&lt;/h2&gt;
+&lt;% unless @tasks.empty? %&gt;
+&lt;ul&gt;
+&lt;% @tasks.each do |task| %&gt;
+  &lt;li &lt;%= &quot;class=\&quot;completed\&quot;&quot; if task.completed_at %&gt;&gt;
+    &lt;a href=&quot;/task/&lt;%=task.id%&gt;&quot;&gt;&lt;%= task.name %&gt;&lt;/a&gt;
+  &lt;/li&gt;
+&lt;% end %&gt;
+&lt;/ul&gt;
+&lt;% else %&gt;
+&lt;p&gt;Aucune tâche enregistrée !&lt;/p&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>Cette vue commence par tester si le tableau des tâches est vide. Si ce n'est
+pas le cas, elle parcours ce tableau pour créer une liste à puces à partir des
+tâches qu'il contient. Pour chaque tâche, elle teste si celle-ci a été terminée
+ou non et ajoute une classe &quot;completed&quot; lorsque c'est le cas. Cela nous servira
+plus tard lorsque nous travaillerons sur la feuille de style de notre
+application. Dans le cas où le tableau &quot;@tasks&quot; est vide, nous affichons
+simplement un message pour indiquer qu'il n'y a pas de tâche. Si vous lancez
+votre navigateur pour visiter l'URL &quot;http://localhost:4567/tasks&quot;, vous obtenez
+l'écran suivant :</p>
+<p><img src="/public/2010/todo-3.png" alt=""></p>
+<h2>Modifier des tâches</h2>
+<p>Il ne nous reste plus que quelques traitements à gérer, à savoir la
+modification et la suppression. Nous allons pour l'instant permettre aux
+utilisateurs de modifier les tâches existantes. Comme pour la création avec les
+actions &quot;new&quot; et &quot;create&quot;, la modification nécessite une action &quot;edit&quot; associée
+avec une action &quot;update&quot;. L'action &quot;edit&quot; affiche un formulaire qui permet à
+l'utilisateur de saisir les informations d'une tâche et de valider. C'est
+l'action &quot;update&quot; qui effectue la mise à jour dans la base de données. Voici ce
+que donne ces deux actions dans le code ci-dessous :</p>
+<pre><code># Modifier une tâche existante
+get '/task/:id/edit' do
+  @task = Task.get(params[:id])
+  erb :edit
+end
+
+# Mettre à jour une tâche
+put '/task/:id' do
+  task = Task.get(params[:id])
+  task.completed_at = params[:completed] ? Time.now : nil
+  task.name = (params[:name])
+  if task.save
+    status 201
+    redirect '/task/' + task.id.to_s
+  else
+    status 412
+    redirect '/tasks'
+  end
+end
+</code></pre>
+<p>Nous devons également créer un fichier &quot;edit.erb&quot; dans le sous-répertoire
+des vues :</p>
+<pre><code>&lt;form action=&quot;/task/&lt;%= @task.id %&gt;&quot; method=&quot;post&quot;&gt;
+  &lt;input name=&quot;_method&quot; type=&quot;hidden&quot; value=&quot;put&quot; /&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;&lt;%= @task.name %&gt;&quot;&gt;
+  &lt;input id=&quot;completed&quot; name=&quot;completed&quot; type=&quot;checkbox&quot; value=&quot;done&quot; &lt;%= @task.completed_at ? &quot;checked&quot; : &quot;&quot; %&gt;/&gt;
+  &lt;input id=&quot;task_submit&quot; name=&quot;commit&quot; type=&quot;submit&quot; value=&quot;Modifier&quot; /&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Il y a pas mal de trucs à voir là dedans. Pour commencer, le handler &quot;edit&quot;
+se contente d'afficher un formulaire lorsque l'utilisateur accède à l'URL
+&quot;task/2/edit&quot;. Le formulaire est assez semblable à celui pour créer une
+nouvelle tâche, à quelques différences près. Il contient un champ pour le nom
+qui est pré-rempli avec le libellé de la tâche, une case à cocher si on veut
+signaler que la tâche est terminée et un bouton pour envoyer les données
+saisies.</p>
+<p>La particularité de ce formulaire est qu'il poste ses données vers l'URL
+&quot;task/2&quot;, soit la même URL que celle que nous utilisons déjà pour afficher une
+tâche. C'est pourquoi on défini un champ caché avec la ligne <code>&lt;input name=&quot;_method&quot; type=&quot;hidden&quot; value=&quot;put&quot; /&gt;</code> pour indiquer qu'il
+s'agit en fait d'une requête http PUT et pas d'une simple requête POST. Cet
+artifice est nécessaire parce qu'à l'heure actuelle, il n'existe aucun
+navigateur qui sache gérer les requêtes PUT. Cela a pour effet d'envoyer la
+requête sous forme de POST mais Sinatra voyant qu'il y a un champ caché
+&quot;_method&quot; avec la valeur &quot;put&quot;, il agit comme s'il avait reçu une requête http
+PUT et la transmet au handler pour l'URL &quot;task/2/edit&quot; qui correspond à un PUT,
+soit la méthode &quot;update&quot; dans notre code.</p>
+<p>Le handler &quot;update&quot; est assez proche du handler &quot;create&quot;. Il commence par
+accéder à la base de données pour retrouver la tâche à modifier en utilisant
+l'id stocké dans la collection &quot;params&quot; (notez au passage que celui-ci provient
+de l'URL et pas du formulaire). Il vérifie ensuite si la case à cocher a été
+cochée et si c'est le cas il initialise la propriété &quot;completed_at&quot; avec
+l'heure en cours, pour indiquer que la tâche est terminée. Dans le cas
+contraire, il affecte simplement la valeur nil à cette propriété. Puis après
+avoir mis à jour la propriété &quot;name&quot;, la tâche est enregistrée en suivant la
+même méthode qu'au niveau du handler &quot;create&quot;.</p>
+<p>Testons tout ça. Supposons qu'armé de courage je décide de vraiment faire du
+sport et plus particulièrement du vélo. Je vais donc cliquer sur le lien &quot;Faire
+du sport&quot; dans la liste des tâches puis ajouter &quot;/edit&quot; à la fin de l'URL de la
+page obtenue (c'est pas très ergonomique mais on s'occupera de ça plus tard).
+Cela a pour effet d'afficher le formulaire de mise à jour de la tâche où je
+vais pouvoir modifier le nom en &quot;Faire du velo&quot; puis cliquer sur le bouton
+&quot;Modifier&quot; pour enregistrer la modification.</p>
+<p><img src="/public/2010/todo-4.png" alt=""></p>
+<h2>Supprimer des tâches.</h2>
+<p>Le dernier traitement à prendre en compte est la suppression de tâches
+existantes. Nous allons faire cela en deux étapes. En premier lieu, nous allons
+ajouter un lien pour la suppression dans la vue &quot;edit&quot;. Pour cela, nous ouvrons
+le fichier &quot;edit.erb&quot; pour le modifier comme ci-dessous :</p>
+<pre><code>&lt;form action=&quot;/task/&lt;%= @task.id %&gt;&quot; method=&quot;post&quot;&gt;
+  &lt;input name=&quot;_method&quot; type=&quot;hidden&quot; value=&quot;put&quot; /&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;&lt;%= @task.name %&gt;&quot;&gt;
+  &lt;input id=&quot;completed&quot; name=&quot;completed&quot; type=&quot;checkbox&quot; value=&quot;done&quot; &lt;%= @task.completed_at ? &quot;checked&quot; : &quot;&quot; %&gt;/&gt;
+  &lt;input id=&quot;task_submit&quot; name=&quot;commit&quot; type=&quot;submit&quot; value=&quot;Modifier&quot; /&gt;
+&lt;/form&gt;
+
+&lt;p&gt;&lt;a href=&quot;/task/&lt;%= @task.id %&gt;/delete&quot;&gt;Supprimer cette tâche&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p>La dernière ligne dans ce code ajoute un lien vers l'URL &quot;/task/:id/delete&quot;
+qui va conduire vers une page où nous demanderons à l'utilisateur s'il est
+certain de vouloir supprimer la tâche. Nous allons donc ajouter le traitement
+pour faire confirmer la suppression à notre fichier &quot;main.rb&quot; :</p>
+<pre><code># Confirmer la suppression
+get '/task/:id/delete' do
+  @task = Task.get(params[:id])
+  erb :delete
+end
+</code></pre>
+<p>Ce code recherche la tâche dont l'identifiant est mentionné dans l'URL puis
+stocke cette tâche dans la variable d'instance &quot;@task&quot;. Encore une fois, nous
+devons utiliser une variable d'instance (qui est préfixée par un @) car nous
+aurons besoin d'y faire référence dans la vue de confirmation. Et maintenant,
+il nous reste à coder cet écran de confirmation en créant un fichier
+&quot;delete.erb&quot; dans le sous-répertoire des vues et en y saisissant le code
+ci-dessous :</p>
+<pre><code>&lt;h2&gt;&lt;%= @task.name %&gt;&lt;h2&gt;
+&lt;h3&gt;Est-ce que vous souhaitez réellement supprimer cette tâche ?&lt;/h3&gt;
+&lt;form action=&quot;/task/&lt;%= @task.id %&gt;&quot; method=&quot;post&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;_method&quot; value=&quot;delete&quot; /&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Supprimer&quot;&gt; ou &lt;a href=&quot;/tasks&quot;&gt;Annuler&lt;/a&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Le fonctionnement de cette vue est très proche du formulaire pour la
+modification. Vous pouvez voir que là aussi nous avons besoin d'un champ caché
+pour simuler la méthode http DELETE étant donné que quasiment aucun navigateur
+ne sait la gérer. Et nous avons en plus ajouté un lien pour annuler la demande
+de suppression et revenir à la liste des tâches.</p>
+<p>Il ne nous reste donc plus qu'à créer le code pour gérer l'action qui va
+réellement supprimer la tâche dans la base de données. Pour cela, nous devons
+ajouter le code suivant à notre fichier &quot;main.rb&quot; :</p>
+<pre><code># Supprimer une tâche
+delete '/task/:id' do
+  Task.get(params[:id]).destroy
+  redirect '/tasks'
+end
+</code></pre>
+<p>Nous pouvons alors tester ce code en supprimant la tâche &quot;Faire du vélo&quot; (de
+toute façon je n'ai pas de vélo). On clique sur cette tâche dans la liste des
+tâches, on ajoute &quot;/edit&quot; à la fin de l'URL obtenue puis là on suit le lien
+&quot;Supprimer la tâche&quot; ce qui nous amène sur l'écran de confirmation
+ci-dessous :</p>
+<p><img src="/public/2010/todo-5.png" alt=""></p>
+<p>Ces deux derniers traitements sont une excellente illustration de la façon
+dont REST fonctionne. Les actions pour afficher, modifier et supprimer une
+tâche correspondent toutes à la même URL (par exemple &quot;/task/2&quot;) et concernent
+le même objet (la tâche dont l'identifiant est 2 dans notre exemple). Mais
+elles accomplissent toutes des fonctions très différentes et elles sont
+sélectionnées en fonction du verbe http employé (soit GET, UPDATE et DELETE
+respectivement).</p>
+<p>Le code source du fichier &quot;main.rb&quot; complet présente désormais le contenu
+suivant :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'dm-core'
+require 'dm-migrations'
+
+DataMapper.setup(:default, ENV['DATABASE_URL'] || &quot;sqlite3://#{Dir.pwd}/development.db&quot;)
+
+class Task
+  include DataMapper::Resource
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+end
+
+# Saisir une nouvelle tâche
+get '/task/new' do
+  erb :new
+end
+
+# Créer une nouvelle tâche
+post '/task/create' do
+  task = Task.new(:name =&gt; params[:name])
+  if task.save
+    status 201
+    redirect '/task/' + task.id.to_s
+  else
+    status 412
+    redirect '/tasks'
+  end
+end
+
+# Modifier une tâche existante
+get '/task/:id/edit' do
+  @task = Task.get(params[:id])
+  erb :edit
+end
+
+# Mettre à jour une tâche
+put '/task/:id' do
+  task = Task.get(params[:id])
+  task.completed_at = params[:completed] ? Time.now : nil
+  task.name = (params[:name])
+  if task.save
+    status 201
+    redirect '/task/' + task.id.to_s
+  else
+    status 412
+    redirect '/tasks'
+  end
+end
+
+# Confirmer la suppression
+get '/task/:id/delete' do
+  @task = Task.get(params[:id])
+  erb :delete
+end
+
+# Supprimer une tâche
+delete '/task/:id' do
+  Task.get(params[:id]).destroy
+  redirect '/tasks'
+end
+
+# Afficher une tâche
+get '/task/:id' do
+  @task = Task.get(params[:id])
+  erb :task
+end
+
+# Afficher toutes les tâches
+get '/tasks' do
+  @tasks = Task.all
+  erb :index
+end
+
+DataMapper.auto_upgrade!
+</code></pre>
+<p>Celui-ci contient à présent les 7 handlers REST traditionnels : index,
+show, new, create, edit, update et delete ainsi qu'une action supplémentaire
+pour faire confirmer la suppression.</p>
+<h2>Améliorer l'interface utilisateur</h2>
+<p>Notre application est maintenant complète, mais il reste encore quelques
+points où pouvons encore l'améliorer. Comme je l'ai indiqué auparavant, son
+code suit les conventions de Rails en ce qui concerne les URLs REST. Ce qui est
+bien avec Sinatra, c'est que vous pouvez faire les choses à votre façon. C'est
+pourquoi je vais maintenant modifier certaines de ces URLs.</p>
+<p>Pour commencer, je préfèrerais que ce soit la page principale qui affiche la
+liste de toutes les tâches plutôt que d'avoir une URL &quot;/tasks&quot; pour cela. Cette
+modification est toute simple à faire :</p>
+<pre><code># Afficher toutes les tâches
+get '/' do
+  @tasks = Task.all
+  erb :index
+end
+</code></pre>
+<p>J'aimerais aussi que le formulaire pour créer une nouvelle tâche apparaisse
+dans la page principale, à la suite de la liste des tâches. Pour cela, il
+suffit de copier le code du fichier &quot;new.erb&quot; dans le fichier &quot;index.erb&quot; (tous
+deux dans le sous-répertoire views). Le fichier &quot;index.erb&quot; contient alors le
+code suivant :</p>
+<pre><code>&lt;h2&gt;Liste des tâches :&lt;/h2&gt;
+&lt;% unless @tasks.empty? %&gt;
+&lt;ul&gt;
+&lt;% @tasks.each do |task| %&gt;
+  &lt;li &lt;%= &quot;class=\&quot;completed\&quot;&quot; if task.completed_at %&gt;&gt;
+    &lt;a href=&quot;/task/&lt;%=task.id%&gt;&quot;&gt;&lt;%= task.name %&gt;&lt;/a&gt;
+  &lt;/li&gt;
+&lt;% end %&gt;
+&lt;/ul&gt;
+&lt;% else %&gt;
+&lt;p&gt;Aucune tâche enregistrée !&lt;/p&gt;
+&lt;% end %&gt;
+
+&lt;h2&gt;Créer une tâche&lt;/h2&gt;
+&lt;form action=&quot;/task/create&quot; method=&quot;POST&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Ajouter la tâche&quot;/&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Il est ensuite possible de supprimer le fichier new.erb qui ne sert plus à
+rien ainsi que le handler pour l'action &quot;new&quot; dans le fichier &quot;main.rb&quot; (par
+contre, il faut conserver celui pour l'action &quot;create&quot;). Je vais également
+supprimer l'action &quot;show&quot; et la vue &quot;task.erb&quot; qui lui est associée étant donné
+que cela ne sert qu'à afficher le nom d'une tâche, ce que l'on peut déjà voir
+dans la liste des tâches. L'avantage de cette suppression, c'est que l'URL
+&quot;/task/:id&quot; ne sert plus et que je vais pouvoir l'utiliser pour afficher le
+formulaire de mise à jour d'une tâche. Pour cela, il faut donc modifier
+l'action &quot;edit&quot; comme suit :</p>
+<pre><code># Modifier une tâche existante
+get '/task/:id' do
+  @task = Task.get(params[:id])
+  erb :edit
+end
+</code></pre>
+<p>Votre code fait tout de suite plus propre. Il reste encore quelques
+redirections qui pointent vers des URLs qui n'existent plus et qu'il faut donc
+corriger, généralement pour les faire pointer vers la racine du site. Suite à
+tout cela, le code du fichier &quot;main.erb&quot; est beaucoup plus léger et doit
+ressembler à ceci :</p>
+<pre><code>require 'rubygems'
+require 'sinatra'
+require 'dm-core'
+require 'dm-migrations'
+
+DataMapper.setup(:default, ENV['DATABASE_URL'] || &quot;sqlite3://#{Dir.pwd}/development.db&quot;)
+
+class Task
+  include DataMapper::Resource
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+end
+
+# Créer une nouvelle tâche
+post '/task/create' do
+  task = Task.new(:name =&gt; params[:name])
+  if task.save
+    status 201
+    redirect '/'
+  else
+    status 412
+    redirect '/'
+  end
+end
+
+# Modifier une tâche existante
+get '/task/:id' do
+  @task = Task.get(params[:id])
+  erb :edit
+end
+
+# Mettre à jour une tâche
+put '/task/:id' do
+  task = Task.get(params[:id])
+  task.completed_at = params[:completed] ? Time.now : nil
+  task.name = (params[:name])
+  if task.save
+    status 201
+    redirect '/'
+  else
+    status 412
+    redirect '/'
+  end
+end
+
+# Confirmer la suppression
+get '/task/:id/delete' do
+  @task = Task.get(params[:id])
+  erb :delete
+end
+
+# Supprimer une tâche
+delete '/task/:id' do
+  Task.get(params[:id]).destroy
+  redirect '/'
+end
+
+# Afficher toutes les tâches
+get '/' do
+  @tasks = Task.all
+  erb :index
+end
+
+DataMapper.auto_upgrade!
+</code></pre>
+<p>J'ai aussi décidé d'ajouter un lien de retour vers la page d'accueil quand
+on clique sur le titre de la page. Pour que ce lien apparaisse partout, il faut
+modifier le fichier &quot;layout.erb&quot; dans le sous-répertoire des vues :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;fr&quot;&gt;
+  &lt;head&gt;
+    &lt;title&gt;To Do Liste&lt;/title&gt;
+    &lt;meta charset=windows-1250 /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;&lt;a href=&quot;/&quot;&gt;To Do Liste&lt;/a&gt;&lt;/h1&gt;
+
+    &lt;%= yield %&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>L'application est désormais plus simple à utiliser et fonctionne de façon
+beaucoup plus intuitive :</p>
+<p><img src="/public/2010/todo-6.png" alt=""></p>
+<h2>Améliorer le code</h2>
+<p>Après ces modifications visibles par l'utilisateur, je vais réaliser
+quelques modifications destinées à simplifier le code de l'application. Pour
+commencer, je vais ajouter quelques méthodes pour faciliter la gestion des
+tâches terminées. Étant donné qu'il s'agit de méthodes liées aux tâches, il
+faut les placer dans la définition de la classe :</p>
+<pre><code>class Task
+  include DataMapper::Resource
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+
+  def completed?
+    true if completed_at
+  end
+
+  def self.completed
+    all(:completed_at.not =&gt; nil)
+  end
+end
+</code></pre>
+<p>La première méthode est une méthode d'instance: elle est définie au niveau
+de la tâche, comme dans le cas d'une propriété. Elle considère que s'il y a une
+date de définie pour la propriété &quot;completed_at&quot; c'est que la tâche est
+terminée et renvoie donc &quot;true&quot; dans ce cas, ou &quot;false&quot; dans le cas
+contraire.</p>
+<p>La seconde méthode est une méthode de classe et porte sur toutes les tâches.
+Elle peut servir pour filtrer vos recherches à l'aide de DataMapper. Par
+exemple, le fait d'utiliser Task.completed permettra de retrouver toutes les
+tâches qui sont terminées. Un truc très intéressant avec ces méthodes, c'est
+qu'elles peuvent être chainées les unes aux autres pour affiner les recherches.
+Par exemple, s'il existait une méthode de classe nommée &quot;important&quot; qui
+renvoyait toutes les tâches importantes (c'est pas trop possible pour
+l'instant, mais on pourrait parfaitement ajouter un tel truc à l'avenir !),
+alors on pourrait utiliser Task.important.completed pour retrouver toutes les
+tâches importantes qui sont terminées.</p>
+<p>Je souhaiterais aussi avoir une méthode pour générer un lien vers une tâche.
+Vous sous souvenez peut-être du code assez minable que j'avais utilisé pour
+générer un tel lien dans la vue &quot;index.erb&quot; :</p>
+<pre><code>&lt;a href=&quot;/task/&lt;%=task.id%&gt;&quot;&gt;&lt;%= task.name %&gt;&lt;/a&gt;
+</code></pre>
+<p>Cela serait beaucoup plus propre si nous pouvions masquer cette complexité
+dans une méthode d'instance au niveau de la classe Task :</p>
+<pre><code>class Task
+  include DataMapper::Resource
+  property :id, Serial
+  property :name, String
+  property :completed_at, DateTime
+
+  def completed?
+    true if completed_at
+  end
+
+  def self.completed
+    all(:completed_at.not =&gt; nil)
+  end
+
+  def link
+    &quot;&lt;a href=\&quot;task/#{self.id}\&quot;&gt;#{self.name}&lt;/a&gt;&quot;
+  end
+end
+</code></pre>
+<p>La méthode &quot;link&quot; est vraiment toute simple. Elle renvoie une chaine
+contenant le code html qui fait un lien vers la page de mise à jour d'une
+tâche. Pour cela, j'ai utilisé l'interpolation de texte qui consiste à placer
+du code Ruby devant être évalué à l'intérieur de #{}. Et pour faire référence à
+la tâche concerné par la méthode, j'ai employé le mot-clé &quot;self&quot;.</p>
+<p>Après cela, nous pouvons simplifier le contenu de la vue &quot;index.erb&quot; pour
+utiliser ces différents méthodes, ce qui donne le code suivant :</p>
+<pre><code>&lt;h2&gt;Liste des tâches :&lt;/h2&gt;
+&lt;% unless @tasks.empty? %&gt;
+&lt;ul&gt;
+&lt;% @tasks.each do |task| %&gt;
+  &lt;li &lt;%= &quot;class=\&quot;completed\&quot;&quot; if task.completed? %&gt;&gt;
+    &lt;%= task.link %&gt;
+  &lt;/li&gt;
+&lt;% end %&gt;
+&lt;/ul&gt;
+&lt;% else %&gt;
+&lt;p&gt;Aucune tâche enregistrée !&lt;/p&gt;
+&lt;% end %&gt;
+
+&lt;h2&gt;Créer une tâche&lt;/h2&gt;
+&lt;form action=&quot;/task/create&quot; method=&quot;POST&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Ajouter la tâche&quot;/&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Notre source est devenu bien plus lisible et par conséquent beaucoup plus
+facile à maintenir. Pour devenir parfait, il ne nous reste plus qu'à faire
+ressortir les tâches qui ont été accomplies. Étant donné que celles-ci sont
+d'ores et déjà marquées d'une classe CSS &quot;completed&quot; (il vous suffit d'afficher
+le code source de la page pour contrôler ça), on a juste besoin d'ajouter une
+ligne de CSS dans le fichier &quot;layout.erb&quot; :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;fr&quot;&gt;
+  &lt;head&gt;
+    &lt;title&gt;To Do Liste&lt;/title&gt;
+    &lt;meta charset=windows-1250 /&gt;
+    &lt;style&gt;
+      .completed {text-decoration: line-through;}
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;&lt;a href=&quot;/&quot;&gt;To Do Liste&lt;/a&gt;&lt;/h1&gt;
+
+    &lt;%= yield %&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Après cette ultime fioriture, vous pouvez compléter votre todo liste ou
+indiquer que certaines tâches sont terminées et avoir un retour visuel direct
+dans la liste des tâches de l'écran principal. Au final, votre application doit
+ressembler à la copie d'écran ci-dessous :</p>
+<p><img src="/public/2010/todo-7.png" alt=""></p>
+<h2>Conclusion</h2>
+<p>Ce tutoriel correspond à une application de base de données toute simple,
+mais cela constitue un bon point de départ. Notre application n'est peut être
+pas tout à fait à la hauteur de son nom étant donné que pour l'instant il faut
+pas mal chercher pour faire ressortir tout son côté &quot;Super&quot;. Mais en nous
+appuyant sur cette base, nous avons des tas de perspectives d'évolutions. Vous
+pourriez par exemple essayer de gérer différentes listes de tâches (pour
+étudier les associations sous DataMapper), vous pourriez ajouter un peu de
+Javascript ou de jQuery pour améliorer l'interface utilisateur ou encore vous
+pourriez intégrer une notion de priorité et afficher les tâches prioritaires en
+haut de liste...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/09/01/departements-limitrophes/" hreflang="fr-FR">Départements limitrophes</a>
+  <a rel="next" href="/2010/09/08/aspnetmvc-2-nouvelle-syntaxe-encoder-sortie-html/" hreflang="fr-FR">ASP.NET MVC 2 : Nouvelle syntaxe ‹%: %› pour encoder la sortie HTML</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

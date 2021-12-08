@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser ASP.NET MVC et NHibernate (1° partie) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-1/" />
+<meta property="og:title" content="Utiliser ASP.NET MVC et NHibernate (1° partie)" />
+<meta name="description" content="Pour accompagner mes premiers essais avec NHibernate, j&#39;ai traduit le tutoriel que César Intriago a publié sous forme d&#39;une série de 3 articles." />
+<meta property="og:description" content="Pour accompagner mes premiers essais avec NHibernate, j&#39;ai traduit le tutoriel que César Intriago a publié sous forme d&#39;une série de 3 articles." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-1/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-01-29T09:49:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-01-29T09:49:00.000Z","datePublished":"2010-01-29T09:49:00.000Z","description":"Pour accompagner mes premiers essais avec NHibernate, j'ai traduit le tutoriel que César Intriago a publié sous forme d'une série de 3 articles.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-1/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/01/29/utiliser-aspnetmvc-nhibernate-1/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-1/">Utiliser ASP.NET MVC et NHibernate (1° partie)</a>
+    </h1>
+    <p>
+      <span>2010-01-29</span>
+      <span>#mvc</span><span>#nhibernate</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://forerunnerg34.wordpress.com/2009/11/03/using-asp-net-mvc-and-nhibernate-part-1/">Using ASP.NET MVC and NHibernate (Part 1)</a>&quot; de César Intriago.</p>
+</div>
+<p>Dans cet article je vais expliquer comment installer et configurer
+NHibernate pour l'utiliser dans une application ASP.NET MVC. Ceci est le
+premier article d'une série dans laquelle je montrerai comment installer
+NHibernate pour une application .Net.</p>
+<p><img src="/public/2010/asp-net-mvc-nhibernate.jpg" alt="Utiliser ASP.NET MVC et NHibernate"></p>
+<h2>NHibernate c'est quoi ?</h2>
+<p>NHibernate est un outil de mapping Objet-Relationnel (object-relational
+mapping ou ORM en anglais) pour .Net qui permet de faire correspondre des
+modèles orientés objets avec une base de données. Comme vous le verrez dans cet
+article, NHibernate s'occupera de la plupart des tâches relatives à la couche
+de persistance. Vous pouvez avoir plus d'informations au sujet de NHibernate à
+partir du site consacré à la <a href="http://nhforge.org/">communauté NHibernate</a>.</p>
+<p>Vous pouvez <a href="http://sourceforge.net/projects/nhibernate/files/">télécharger la dernière version de NHibernate sur
+SourceForge</a>. Les exemples de code dans cet article sont basés sur
+NHibernate 2.1.1 (la version la plus récente disponible au moment de la
+rédaction de cet article).</p>
+<h2>Installer NHibernate</h2>
+<p>Téléchargez et dézippez NHibernate sur votre ordinateur. Ça y est,
+NHibernate est installé.</p>
+<h2>Créer le projet ASP.NET MVC</h2>
+<p>Créez un nouveau projet ASP.NET MVC et <strong>n'oubliez pas de créer un
+projet de test</strong>.</p>
+<p>Ajoutez deux nouveaux projets de type &quot;Bibliothèque de classe&quot; à votre
+solution : <strong>Infrastructure</strong> et <strong>Core</strong> (pour
+que tout soit structuré du mieux possible).</p>
+<p>Dans le projet Core, ajoutez une référence à l'assemblie
+<strong>NHibernate</strong>.</p>
+<h2>La base de données</h2>
+<p>Pour notre exemple, nous allons créer un modèle contenant des
+<strong>Posts</strong> (des billets en français) et des
+<strong>Categories</strong>. C'est un modèle très simple qui nous aidera à bien
+comprendre comment NHibernate fonctionne : un billet (ou post) peut
+appartenir à une ou plusieurs catégories et une catégorie peut contenir zéro ou
+plus de zéro billets :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/postscategoriesmodel.png" alt=""></p>
+<p>Nous allons utiliser SQL Server 2008 Express Edition pour créer notre base
+de données, une autre solution étant de créer notre modèle dans Visual Studio
+et de demander à NHibernate de créer la base de données pour nous. Mais dans
+notre cas, nous allons créer manuellement la base de données.</p>
+<h2>Créer le Modèle</h2>
+<p>L'étape suivante va consister à créer notre modèle qui est une
+représentation orientée objet de notre base de données. Pour cela nous allons
+utiliser le concepteur de classes de Visual Studio :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/postscategoriesmodel1.png" alt=""></p>
+<h2>Les Repository</h2>
+<p>Un Repository nous permet de créer, sélectionner, modifier et supprimer nos
+objets et il est indépendant de la base de données. Pour ce tutoriel, nous
+avons besoin de créer deux repositorys : <strong>PostRepository</strong>
+et <strong>CategoryRepository</strong>. Tout deux vont implémenter la même
+interface présentée ci-dessous :</p>
+<h3>IRepository.cs</h3>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Core
+{
+    public interface IRepository&lt;T&gt;
+    {
+        void Save(T entity);
+        void Update(T entity);
+        void Delete(Guid id);
+        T GetById(Guid id);
+        T GetAll();
+    }
+}
+</code></pre>
+<p>Pour créer nous deux repositorys, nous avons d'abord besoin d'une une classe
+helper pour créer une <strong>session NHibernate</strong> sur notre base de
+données :</p>
+<h3>NHibernateHelper.cs</h3>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NHibernate.Cfg;
+using NHibernate;
+
+namespace Core.Domain.Repositories
+{
+
+    public class NHibernateHelper
+    {
+        private static ISessionFactory _sessionFactory;
+
+        private static ISessionFactory SessionFactory
+        {
+            get
+            {
+                if (_sessionFactory == null)
+                {
+                    var configuration = new Configuration();
+                    configuration.Configure();
+                    _sessionFactory = configuration.BuildSessionFactory();
+                }
+                return _sessionFactory;
+            }
+        }
+
+        public static ISession OpenSession()
+        {
+            return SessionFactory.OpenSession();
+        }
+    }
+}
+</code></pre>
+<p>Ensuite, nous pouvons créer les repositorys :</p>
+<h3>PostRepository.cs</h3>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Core.Domain.Model;
+using NHibernate;
+using NHibernate.Criterion;
+
+namespace Core.Domain.Repositories
+{
+    public class PostRepository: IRepository&lt;Post&gt;
+    {
+        #region IRepository&lt;Post&gt; Members
+
+        void IRepository&lt;Post&gt;.Save(Post entity)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Save(entity);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        void IRepository&lt;Post&gt;.Update(Post entity)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Update(entity);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        void IRepository&lt;Post&gt;.Delete(Guid id)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Delete(id);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        Post IRepository&lt;Post&gt;.GetById(Guid id)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+                return session.CreateCriteria&lt;Post&gt;().Add(Restrictions.Eq(&quot;Id&quot;, id)).UniqueResult&lt;Post&gt;();
+        }
+
+        Post IRepository&lt;Post&gt;.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
+}
+</code></pre>
+<h3>CategoryRepository.cs</h3>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Core.Domain.Model;
+using NHibernate;
+using NHibernate.Criterion;
+
+namespace Core.Domain.Repositories
+{
+    public class CategoryRepository: IRepository&lt;Category&gt;
+    {
+        #region IRepository&lt;Category&gt; Members
+
+        void IRepository&lt;Category&gt;.Save(Category entity)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Save(entity);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        void IRepository&lt;Category&gt;.Update(Category entity)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Update(entity);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        void IRepository&lt;Category&gt;.Delete(Guid id)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Delete(id);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        Category IRepository&lt;Category&gt;.GetById(Guid id)
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+                return session.CreateCriteria&lt;Category&gt;().Add(Restrictions.Eq(&quot;Id&quot;, id)).UniqueResult&lt;Category&gt;();
+        }
+
+        Category IRepository&lt;Category&gt;.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
+}
+</code></pre>
+<p>Comme vous pouvez le constater, c'est dans les repositorys que nous plaçons
+le code pour appeler les méthodes NHibernate, ce que nous faisons en créant un
+objet <strong>Session</strong> en premier.</p>
+<h2>Où est-ce que nous en sommes...</h2>
+<p>Avant de continuer, revoyons un peu ce que nous avons déjà fait :</p>
+<ul>
+<li>Nous avons créé un projet *<em>Core</em>  - qui référence la librairie
+NHibernadte.dll</li>
+<li>Dans ce projet <strong>Core</strong>, nous avons créé deux classes qui
+représentent notre modèle : &quot;Post.cs&quot; et &quot;Category.cs&quot;, la classe Post
+ayant une collection de catégories.</li>
+<li>Nous avons cré deux repositorys pour enregistrer, modifier, supprimer et
+retrouver les objets de notre modèle.</li>
+</ul>
+<h2>Les Mappings</h2>
+<p>Il est temps de faire quelque chose dans notre projet
+<strong>Infrastructure</strong> où nous mapperont notre modèle à notre base de
+données, ce qui se fait via des fichiers XML avec NHibernate. Nous allons
+suivre la convention de nommage qui existe au sujet des fichiers maps :
+[ClassName].hbm.xml.</p>
+<p>Nous allons créer deux nouveaux fichiers :
+<strong>Category.hbm.xml</strong> et <strong>Post.hbm.xml</strong>. Le contenu
+de chacun de ces fichiers fait correspondre une classe à une table, une
+propriété à une colonne, et indique aussi le type de données. Pour cette
+première partie du tutoriel, nous avons besoin de créer le fichier
+<strong>Category.hbm.xml</strong> :</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;hibernate-mapping xmlns=&quot;urn:nhibernate-mapping-2.2&quot;
+                                    namespace=&quot;Core.Domain.Model&quot;
+                                    assembly=&quot;Core&quot;&gt;
+
+  &lt;class name=&quot;Category&quot; table=&quot;Categories&quot; dynamic-update=&quot;true&quot;&gt;
+    &lt;cache usage=&quot;read-write&quot;/&gt;
+    &lt;id name=&quot;Id&quot; column=&quot;Id&quot; type=&quot;Guid&quot;&gt;
+      &lt;generator class=&quot;guid&quot;/&gt;
+    &lt;/id&gt;
+    &lt;property name=&quot;Name&quot; length=&quot;100&quot;/&gt;
+  &lt;/class&gt;
+&lt;/hibernate-mapping&gt;
+</code></pre>
+<p>Important : Vous devez définir l'action de génération
+de ces deux fichiers à &quot;<strong>Ressource incorporée</strong>&quot; afin que
+NHibernate puisse trouver le bon fichier dans l'assembly.</p>
+<h2>Configurer NHibernate</h2>
+<p>Nous sommes presque prêts. La prochaine étape va consister définir la chaine
+de connexion à la base de données et quelques paramètres pour NHibernate. Cette
+configuration doit être stockée dans un fichier &quot;hibernate.cfg.xml&quot;
+(<strong>définissez l'action de génération de ce fichier à &quot;Ressource
+incorporée&quot;</strong>). NHibernate dispose d'une fonctionnalité spéciale de
+&quot;Lazy-Loading&quot; pour <em>dynamic proxy systems</em>, et nous devons ajouter les
+références suivantes à notre projet Infrastructure pour qu'il puisse
+l'utiliser :</p>
+<ul>
+<li>Castle.Core</li>
+<li>Castle.DynamicProxy2</li>
+<li>NHibernate.ByteCode.Castle.dll</li>
+</ul>
+<p>Nous pouvons alors créer le fichier de configuration XML suivant :</p>
+<h3>hibernate.cfg.xml</h3>
+<pre><code>&lt;hibernate-configuration xmlns=&quot;urn:nhibernate-configuration-2.2&quot;&gt;
+  &lt;session-factory&gt;
+    &lt;property name=&quot;connection.driver_class&quot;&gt;NHibernate.Driver.SqlClientDriver&lt;/property&gt;
+    &lt;property name=&quot;connection.connection_string&quot;&gt;server=.\SQLExpress;database=NHibernate101;Integrated Security=true;&lt;/property&gt;
+    &lt;property name=&quot;show_sql&quot;&gt;true&lt;/property&gt;
+    &lt;property name=&quot;dialect&quot;&gt;NHibernate.Dialect.MsSql2008Dialect&lt;/property&gt;
+    &lt;property name=&quot;cache.use_query_cache&quot;&gt;false&lt;/property&gt;
+    &lt;property name=&quot;adonet.batch_size&quot;&gt;100&lt;/property&gt;
+    &lt;property name=&quot;proxyfactory.factory_class&quot;&gt;NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle&lt;/property&gt;
+    &lt;mapping assembly=&quot;Infrastructure&quot; /&gt;
+  &lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;
+</code></pre>
+<p>La ligne <code>&lt;property name=&quot;proxyfactory.factory_class&quot;&gt;...</code>
+utilise la fonctionalité de &quot;lazy loading&quot; au sujet de laquelle vous trouverez
+plus d'informations sur le site d'<a href="https://www.hibernate.org/162.html">Hibernate</a>.</p>
+<h2>Test unitaire de NHibernate</h2>
+<p>Il est enfin temps de tester notre configuration de NHibernate ! Nous
+allons ajouter quelques données à notre table &quot;Categories&quot;. Pour cela nous
+avons besoin que notre projet de test référence l'assembly NHibernate et d'y
+copier le fichier hibernate.cfg.xml.</p>
+<p>Ajouter les références suivantes :</p>
+<ul>
+<li>Castle.Core</li>
+<li>Castle.DynamicProxy2</li>
+<li>Infrastructure</li>
+<li>NHibernate</li>
+<li>NHibernate.ByteCode.Castle</li>
+</ul>
+<p>Puis ajouter la méthode de test suivante :</p>
+<pre><code>[TestMethod]
+        [DeploymentItem(&quot;hibernate.cfg.xml&quot;)]
+        public void CanCreateCategory()
+        {
+            IRepository&lt;Category&gt; repo = new CategoryRepository();
+            Category category = new Category();
+            category.Name = &quot;ASP.NET&quot;;
+
+            repo.Save(category);
+
+        }
+</code></pre>
+<p>Lancer le projet de test et notre méthode de test CanCreateCategory devrait
+réussir le test (avec un peu de chance) :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/test.jpg" alt=""></p>
+<p>Nous pouvons alors vérifier dans la base de données que la nouvelle
+catégorie a bien été ajoutée :</p>
+<p><img src="http://forerunnerg34.files.wordpress.com/2009/11/database.jpg" alt=""></p>
+<p>Dans la <a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-2/">prochaine partie</a> de ce tutoriel, nous complèterons le modèle
+et les tests unitaires puis nous attaquerons la création de notre application
+ASP.NET MVC.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/01/28/encore-plus-traduction-nerddinner/" hreflang="fr-FR">Encore plus de traduction de NerdDinner</a>
+  <a rel="next" href="/2010/01/29/utiliser-aspnetmvc-nhibernate-2/" hreflang="fr-FR">Utiliser ASP.NET MVC et NHibernate (2° partie)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NerdDinner(fr) : ViewData et ViewModel - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/nerddinner/viewdata-viewmodel/" />
+<meta property="og:title" content="NerdDinner(fr) : ViewData et ViewModel" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/nerddinner/viewdata-viewmodel/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-12-17T09:42:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-12-17T09:42:00.000Z","datePublished":"2009-12-17T09:42:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/nerddinner/viewdata-viewmodel/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/nerddinner/viewdata-viewmodel/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+<article>
+
+  <header>
+    <h1>
+      <a href="">NerdDinner(fr) : ViewData et ViewModel</a>
+    </h1>
+    <p>
+      <span>2009-12-17</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Nous avons jusqu'à présent réalisé plusieurs types de formulaires et abordé
+la façon de les utiliser pour créer, modifier et supprimer des données (CRUD).
+Nous allons maintenant faire passer notre application au niveau supérieur et
+mettre en œuvre des formulaires encore plus sophistiqués. Cela nous permettra
+d'étudier les deux approches envisageables pour faire passer des informations
+des contrôleurs vers les vues : ViewData et ViewModel.</p>
+<h2>Transmettre des données des contrôleurs vers les vues</h2>
+<p>Une des caractéristiques du modèle MVC est qu'il incite à pratiquer une
+stricte &quot;séparation des préoccupations&quot; entre les différents composants de
+l'application. Les modèles, les contrôleurs et les vues ont tous des fonctions
+et des responsabilités bien définies, et ils communiquent les uns avec les
+autres via des méthodes également bien définies. Cette séparation favorise la
+testabilité et la réutilisation du code.</p>
+<p>Quand un contrôleur décide de renvoyer une réponse HTML, c'est lui qui est
+responsable de transmettre précisément à la vue toutes les informations qui lui
+sont nécessaires pour produire cette réponse. Les vues &lt;u&gt;ne devraient
+jamais&lt;/u&gt; avoir à interroger la base de données ou à réaliser des
+traitements logiques. Elles devraient uniquement se consacrer à générer le code
+résultant des données qui lui ont été fournies par le contrôleur.</p>
+<p>Pour l'instant, les modèles de données que notre contrôleur
+DinnersController fait passer aux différentes vues sont plutôt simples et
+directs : une liste d'objets Dinners pour l'action Index() et un simple objet
+Dinner dans le cas des actions Details(), Edit(), Create() et Delete(). Si nous
+voulons enrichir l'interface utilisateur de notre application, nous aurons
+généralement besoin de faire passer plus que ces objets basiques pour que les
+vues puissent générer les réponses HTML. Par exemple, nous pourrions changer la
+zone &quot;Country&quot; dans les vues Edit et Create pour qu'elle utilise une liste
+déroulante au lieu d'une simple saisie de texte. Plutôt que de coder en dur le
+contenu de cette liste déroulante dans nos différentes vues, nous pouvons
+construire ce contenu dynamiquement en récupérant la liste des pays acceptés
+par l'application. Par conséquent, nous aurons besoin de trouver un système
+pour que le contrôleur fasse passer cette liste des pays en plus de l'objet
+Dinner aux vues Edit et Create.</p>
+<p>Nous allons maintenant examiner deux méthodes différentes pour faire
+cela.</p>
+<h2>Utiliser le dictionnaire ViewData</h2>
+<p>La classe de base du contrôleur expose une propriété ViewData de type
+dictionnaire. Celle-ci peut s'employer pour faire passer des données
+supplémentaires des contrôleurs vers les vues.</p>
+<p>Dans notre exemple, pour remplacer la zone de texte &quot;Country&quot; par une liste
+déroulante dans la vue Edit, nous pouvons mettre à jour le code de l'action
+Edit() pour qu'en plus de l'objet Dinner elle fasse passer un objet SelectList
+qui pourra être utilisé pour le contenu de la liste déroulante.</p>
+<pre><code>//
+// GET: /Dinners/Edit/5
+public ActionResult Edit(int id) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   ViewData[&quot;Countries&quot;] = new SelectList(PhoneValidator.Countries,
+                                              dinner.Country);
+
+   return View(dinner);
+}
+</code></pre>
+<p>Le constructeur de l'objet SelectList prend deux paramètres : une liste de
+pays pour remplir la liste déroulante ainsi que le code du pays actuellement
+sélectionné.</p>
+<p>Nous pouvons alors mettre à jour la vue Edit.aspx pour remplacer le Helper
+Html.TextBox() que nous utilisions jusqu'alors par le helper
+Html.DropDownlist() :</p>
+<pre><code>&lt;%= Html.DropDownList(&quot;Country&quot;, ViewData[&quot;Countries&quot;] as SelectList) %&gt;
+</code></pre>
+<p>Le helper Html.DropDownList() attend deux paramètres. Le premier contient le
+nom de l'élément du formulaire à générer. Le second est l'objet SelectList que
+nous avons fait passer via le dictionnaire ViewData. Pour ce second paramètre,
+nous utilisons le mot clé C# &quot;as&quot; pour que l'élément du dictionnaire soit
+converti en SelectList.</p>
+<p>Et maintenant, quand nous lançons l'application pour accéder à l'URL
+/Dinners/Edit/1, nous pouvons constater que l'interface utilisateur a bien été
+modifiée pour afficher une liste déroulante au lieu de la zone de texte :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image097.png" alt=""></p>
+<p>Étant donné que nous renvoyons aussi la vue Edit dans le cas où l'action
+Edit() est appelée en mode HTTP GET (dans le cas où une erreur s'est produite),
+nous devons faire en sorte que la SelectList soit également ajoutée au
+dictionnaire ViewData avant que la vue soit appelée :</p>
+<pre><code>//
+// POST: /Dinners/Edit/5
+[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Edit(int id, FormCollection collection) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   try {
+     UpdateModel(dinner);
+
+     dinnerRepository.Save();
+
+     return RedirectToAction(&quot;Details&quot;, new { id=dinner.DinnerID });
+   }
+   catch {
+     ModelState.AddModelErrors(dinner.GetRuleViolations());
+
+     ViewData[&quot;countries&quot;] = new SelectList(PhoneValidator.AllCountries,
+                                                 dinner.Country);
+
+     return View(dinner);
+   }
+}
+</code></pre>
+<p>Une fois cela terminé, l'action Edit() du contrôleur DinnersController prend
+désormais en charge une liste déroulante.</p>
+<h2>Utiliser une classe ViewModel</h2>
+<p>L'avantage du dictionnaire ViewData est d'être simple et rapide à mettre en
+œuvre. Cependant, certains développeurs n'aiment pas trop cette approche basée
+sur des chaines &quot;magiques&quot;, étant donné qu'en cas d'erreurs de frappe,
+celles-ci ne seront pas détectées à la compilation mais seulement au moment de
+l'exécution. De plus, le dictionnaire ViewData n'étant pas typé, cela nous
+contraint à utiliser l'opérateur &quot;as&quot; pour l'utiliser avec un langage fortement
+typé tel que C# dans les vues.</p>
+<p>Pour remédier à ces imperfections, il est possible d'utiliser une autre
+approche basée sur la technique de la ViewModel. Cette pratique consiste à
+créer des classes fortement typées que l'on construit en fonction de ce que
+l'on a besoin de faire dans nos vues. Ces classes exposent donc les propriétés
+correspondant au contenu et aux valeurs dynamiques nécessaires dans les vues.
+Notre classe contrôleur va donc initialiser ces classes puis les transmettre
+aux vues qui les utiliseront. Cette technique apporte plusieurs avantages : la
+sécurité du typage de données, la vérification à la compilation et la
+disponibilité de l'IntelliSense dans l'éditeur de vues.</p>
+<p>Par exemple, pour gérer des situations où nous voulons la mise à jour des
+dîners, nous pouvons créer une classe &quot;DinnerFormViewModel&quot; qui expose deux
+propriétés fortement typées : un objet Dinner et un objet SelectList pour
+remplir la liste déroulante des pays :</p>
+<pre><code>public class DinnerFormViewModel {
+
+   // Properties
+   public Dinner Dinner { get; private set; }
+   public SelectList Countries { get; private set; }
+
+   // Constructor
+   public DinnerFormViewModel(Dinner dinner) {
+
+     Dinner = dinner;
+     Countries = new SelectList(PhoneValidator.Countries,
+                                      dinner.Country);
+   }
+}
+</code></pre>
+<p>Nous pouvons ensuite mettre à jour l'action Edit() pour qu'elle crée un
+objet DinnerFormViewModel à partir de l'objet Dinner issu du repository, puis
+qu'elle le fasse passer à la vue :</p>
+<pre><code>// GET: /Dinners/Edit/5
+public ActionResult Edit(int id) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+   return View(new DinnerFormViewModel(dinner));
+}
+</code></pre>
+<p>Il ne nous reste plus qu'à mettre à jour notre vue pour qu'elle attende
+désormais un objet &quot;DinnerFormViewModel&quot; au lieu d'un objet &quot;Dinner&quot; en
+changeant l'attribut &quot;inherits&quot; qui apparait sur la première ligne du fichier
+Edit.aspx :</p>
+<pre><code>Inherits=&quot;System.Web.Mvc.ViewPage&lt;NerdDinner.Controllers.DinnerFormViewModel&gt;
+</code></pre>
+<p>Une fois que nous avons fait cela, l'IntelliSense disponible au sein de la
+vue est mise à jour pour refléter le type &quot;DinnerFormViewModel&quot; de l'objet
+Model que nous lui passons :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image098.png" alt=""></p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image099.png" alt=""></p>
+<p>Nous pouvons alors mettre à jour le code de notre vue pour en tirer parti.
+Comme vous le remarquez ci-dessous, nous ne modifions pas les noms des zones de
+saisies que nous créons : les différents éléments du formulaire s'appellent
+toujours &quot;Title&quot;, &quot;Country&quot;… Par contre, nous avons mis à jour les méthodes
+Helper pour retrouver leurs valeurs depuis la classe &quot;DinnerFormViewModel&quot; :</p>
+<pre><code>&lt;p&gt;
+   &lt;label for=&quot;Title&quot;&gt;Dinner Title:&lt;/label&gt;
+   &lt;%= Html.TextBox(&quot;Title&quot;, Model.Dinner.Title) %&gt;
+   &lt;%= Html.ValidationMessage(&quot;Title&quot;, &quot;*&quot;) %&gt;
+&lt;/p&gt;
+...
+&lt;p&gt;
+   &lt;label for=&quot;Country&quot;&gt;Country:&lt;/label&gt;
+   &lt;%= Html.DropDownList(&quot;Country&quot;, Model.Countries) %&gt;
+   &lt;%= Html.ValidationMessage(&quot;Country&quot;, &quot;*&quot;) %&gt;
+&lt;/p&gt;
+...
+</code></pre>
+<p>Puis nous mettons à jour la partie HTTP POST de l'action Edit() pour
+utiliser également la classe DinnerFormViewModel dans le cas où nous avons
+besoin de gérer les erreurs de saisie :</p>
+<pre><code>//
+// POST: /Dinners/Edit/5
+[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Edit(int id, FormCollection collection) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   try {
+     UpdateModel(dinner);
+
+     dinnerRepository.Save();
+
+     return RedirectToAction(&quot;Details&quot;, new { id=dinner.DinnerID });
+   }
+   catch {
+     ModelState.AddModelErrors(dinner.GetRuleViolations());
+
+     return View(new DinnerFormViewModel(dinner));
+   }
+}
+</code></pre>
+<p>Nous pouvons aussi utiliser cette classe DinnerFormViewModel au niveau des
+méthodes d'action Create() afin qu'elles utilisent la même liste déroulante des
+pays. Ce qui donne le code suivant pour la partie HTTP GET de l'action
+Create() :</p>
+<pre><code>//
+// GET: /Dinners/Create
+public ActionResult Create() {
+
+   Dinner dinner = new Dinner() {
+     EventDate = DateTime.Now.AddDays(7)
+   };
+
+   return View(new DinnerFormViewModel(dinner));
+}
+</code></pre>
+<p>Et pour la partie HTTP POST de l'action Create() :</p>
+<pre><code>//
+// POST: /Dinners/Create
+[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Create(Dinner dinner) {
+
+   if (ModelState.IsValid) {
+
+     try {
+        dinner.HostedBy = &quot;SomeUser&quot;;
+
+        dinnerRepository.Add(dinner);
+        dinnerRepository.Save();
+
+        return RedirectToAction(&quot;Details&quot;, new { id=dinner.DinnerID });
+     }
+     catch {
+        ModelState.AddModelErrors(dinnerToCreate.GetRuleViolations());
+     }
+   }
+
+   return View(new DinnerFormViewModel(dinnerToCreate));
+}
+</code></pre>
+<p>Après quoi nos formulaires de création et de modification offrent tous les
+deux une liste déroulante pour sélectionner le pays où va se dérouler le
+dîner.</p>
+<h2>Utiliser une classe ViewModel personnalisée</h2>
+<p>Dans notre exemple, la classe DinnerFormViewModel expose directement une
+propriété de type Dinner et une autre de type SelectList. Cette formule est
+bien adaptée dans le cas où l'interface utilisateur que nous voulons créer
+repose assez fidèlement sur les objets de notre modèle de données.</p>
+<p>Pour les scénarios où cela ne suffirait pas, une solution qui s'offre à vous
+est de créer une classe ViewModel totalement spécifique dont le contenu
+correspond exactement à ce dont la vue a besoin, quitte à ce que cette classe
+ViewModel soit totalement différente des objets du modèle de données. Par
+exemple, il est tout à fait possible qu'elle propose des propriétés sous des
+noms différents ou qu'elle contienne des propriétés issues de plusieurs objets
+du modèle de données.</p>
+<p>Ces classes ViewModel personnalisées peuvent aussi bien servir pour faire
+passer des données depuis les contrôleurs vers les vues que pour traiter les
+informations remontées des formulaires vers les méthodes d'action des
+contrôleurs. Dans ce cas, la méthode action peut dans un premier temps utiliser
+les données du formulaire pour mettre à jour un objet ViewModel. Puis elle part
+de cet objet ViewModel pour retrouver et modifier un objet du modèle de
+données.</p>
+<p>Les classes ViewModel personnalisées offrent une très grande souplesse. Cela
+vaut le coup d'y penser dès que vous trouvez que le code de vos vues ou les
+actions de vos contrôleurs commencent à devenir trop compliqués à suivre. C'est
+souvent le signal que votre modèle ne correspond pas vraiment à l'interface
+utilisateur que vous essayez de développer et qu'une classe ViewModel
+personnalisée ne ferait pas de mal.</p>
+<hr>
+<p>Index : <a href="http://tinyurl.com/NerdDinnerFR">NerdDinner en français</a> - Suite : <a href="/nerddinner/master-page-vues-partielles/">Master page et Vues partielles</a></p>
+
+
+  </div>
+
+</article>
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

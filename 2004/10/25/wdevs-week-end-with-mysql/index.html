@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) My week-end with MySQL - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/10/25/wdevs-week-end-with-mysql/" />
+<meta property="og:title" content="(Wdevs) My week-end with MySQL" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/10/25/wdevs-week-end-with-mysql/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-10-25T10:08:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-10-25T10:08:00.000Z","datePublished":"2004-10-25T10:08:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/10/25/wdevs-week-end-with-mysql/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/10/25/wdevs-week-end-with-mysql/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/10/25/wdevs-week-end-with-mysql/">(Wdevs) My week-end with MySQL</a>
+    </h1>
+    <p>
+      <span>2004-10-25</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I choose to install MySQL 4.1.6 as there is a <a href="http://dev.mysql.com/tech-resources/articles/4.1/installer.html">msi
+installer</a>. And I was affraid of cygwin that seems to come with 4.0 version.
+MySQL-Front and SQLyorg are ok with it but <a href="http://www.bytefx.com/">ByteFX Data Provider</a> returns an error when opening
+connection : &quot;Client does not support authentication protocol requested by
+server; consider upgrading MySQL client&quot;.</p>
+<p>So I consider upgrading to MySQL Connector/Net 1.0.0-beta available on
+<a href="http://dev.mysql.com/downloads/">mysql.com</a> and
+<code>MySqlConnection.open()</code> is ok but <code>MySqlParameter()</code> is down. For a strange
+reason, parameter name and type are necessary when instancing a new object.</p>
+<p>Even if I don't read the 1318 pages of pdf manual, I discover some
+interesting, bad and good things:</p>
+<ul>
+<li>parameters are in the form <code>?param1</code> and not <code>@param1</code>,</li>
+<li>no concatenation operator but a <code>concat()</code> function,</li>
+<li>foreign keys exists but you should use InnoDB tables instead of
+MyISAM.</li>
+</ul>
+<p>My biggest problem is MySQL Connector/Net. Since I can't access internet
+until monday, I don't know wheter monoForge supports it or only accepts ByteFX
+Data Provider.</p>
+<p>Despite this, I create and fill my first table.</p>
+<pre><code>CREATE TABLE qc_portals (
+    idPortal varchar(20) NOT NULL default '',
+    title varchar(50) NOT NULL default '',
+    shortTitle varchar(20) default NULL,
+    PRIMARY KEY  (idPortal)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO qc_portals VALUES ('default','I am testing monoForge','myPortal');
+</code></pre>
+<p>The purpose of this table is clear. Regarding its contents, it don't use an
+autoincrement ID cause I prefer a more readeable id. And in fact, I plan to
+have only one portal in a first time. The shortTitle field is a shorter title
+to use with &quot;title&quot; tag and will be displayed in the navigator title bar.</p>
+<p>My second table will handle each screen for a given portal. IBuySpy or DNN
+have &quot;Tabs&quot; but I don't think it's a speaking word. As ASP.NET already have a
+Page class, I use the term &quot;screen&quot;.</p>
+<pre><code>CREATE TABLE qc_screens (
+    idScreen varchar(20) NOT NULL default '',
+    idPortal varchar(20) NOT NULL default '',
+    title varchar(100) default NULL,
+    shortTitle varchar(50) default NULL,
+    order1 int(4) default NULL,
+    order2 int(4) default NULL,
+    order3 int(4) default NULL,
+    PRIMARY KEY (idScreen),
+    KEY idPortal (idPortal)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE qc_screens
+    ADD FOREIGN KEY (idPortal) REFERENCES qc_portals (idPortal) ON DELETE CASCADE ON UPDATE CASCADE;
+
+INSERT INTO qc_screens VALUES ('home','default','Welcome','Home',1,0,0);
+INSERT INTO qc_screens VALUES ('tests','default','Tests','Tests',2,0,0);
+INSERT INTO qc_screens VALUES ('admin','default','Administration','Admin',3,0,0);
+</code></pre>
+<p>In this case too I vote for a string id. Later I could use it to maintain
+clean urls. The shortTitle field will be used for tabs and menu options.
+Order1, order2 and order3 define how screens are organized.</p>
+<pre><code>order1  order2  order3  screen
+   1       0       0    Home
+   2       0       0    Tests
+   2       1       0    - Tables
+   2       1       1    --- Portals
+   2       1       2    --- Screens
+   2       2       0    - Modules
+   2       3       0    - Layout
+</code></pre>
+<p>The bad new is that I will have a limit of 3 levels. But at this time, I
+think that should be enough. The good new is that I need only one <code>SELECT</code> with
+an <code>ORDER BY order1, order2, order3</code> to read the full site map.</p>
+<p>I already have some source code to use these two tables. It works on my PC
+(ASP.NET and MySQL 4.1). This evening I'll test it on monoForge and post about
+it.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/10/22/wdevs-first-move/" hreflang="en-US">(Wdevs) First move</a>
+  <a rel="next" href="/2004/10/26/wdevs-dura-linux-sed-linux/" hreflang="en-US">(Wdevs) Dura Linux, sed Linux</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

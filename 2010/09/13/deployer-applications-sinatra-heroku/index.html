@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Déployer des applications Sinatra sur Heroku - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/09/13/deployer-applications-sinatra-heroku/" />
+<meta property="og:title" content="Déployer des applications Sinatra sur Heroku" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/09/13/deployer-applications-sinatra-heroku/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-09-13T16:41:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-09-13T16:41:00.000Z","datePublished":"2010-09-13T16:41:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/09/13/deployer-applications-sinatra-heroku/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/09/13/deployer-applications-sinatra-heroku/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/09/13/deployer-applications-sinatra-heroku/">Déployer des applications Sinatra sur Heroku</a>
+    </h1>
+    <p>
+      <span>2010-09-13</span>
+      <span>#git</span><span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/1/16/deploying_sinatra_apps_on_heroku/">Deploying Sinatra Apps on Heroku</a>&quot; de Darren Jones.</p>
+</div>
+<p>Vous avez enfin terminé votre super application web, mais ça n'a pas
+beaucoup d'intérêt si personne en peut s'en servir. Ce qu'il vous faut, c'est
+lancer votre application à l'assaut d'internet !</p>
+<h2>Heroku</h2>
+<p><a href="http://heroku.com/">Heroku</a> est de très loin la
+façon la plus simple pour déployer des applications Sinatra. Il s'agit d'un
+excellent service pour tous ceux qui ont besoin d'héberger des applications en
+Ruby (avec des frameworks tels que Rails, Merb, Rameze et bien entendu
+Sinatra). L'hébergement est gratuit pour les petits sites de base, y compris la
+base de données, et s'adapte lorsque votre application devient plus populaire.
+Heroku s'occupe de tous les trucs compliqués en matière d'hébergement et
+convient parfaitement pour mettre en production des sites à grande échelle. le
+tout accompagné d'un excellent support et d'une large documentation.</p>
+<p><strong>Avant d'aller plus loin, vous devez avoir <a href="/2010/07/29/guide-demarrer-git/">installé Git</a> étant donné qu'il est nécessaire pour faire un
+déploiement sur Heroku.</strong></p>
+<h2>Inscription</h2>
+<p>Pour commencer, vous devez créer un compte sur Heroku en vous enregistrant
+gratuitement à l'adresse <a href="http://heroku.com/signup">http://heroku.com/signup</a>.</p>
+<h2>Installer le gem Heroku</h2>
+<p>On part du principe que vous avez déjà <a href="/2010/07/22/installer-sinatra-windows-7/">installé Ruby, Gems et Sinatra</a> et par conséquent vous n'avez
+plus qu'à lancer la commande suivante à partir d'une invite de
+commande :</p>
+<pre><code>C:\Ruby&gt;gem install heroku --no-rdoc --no-ri
+</code></pre>
+<p>ce qui donne :</p>
+<pre><code>Successfully installed mime-types-1.16
+Successfully installed rest-client-1.4.2
+Successfully installed rake-0.8.7
+Successfully installed configuration-1.1.0
+Successfully installed launchy-0.3.7
+Successfully installed heroku-1.10.0
+6 gems installed
+</code></pre>
+<p>Il s'agit d'une petite application en ligne de commande qui va vous
+permettre d'interagir avec vos sites hébergés sur Heroku. Vous pouvez consulter
+sa documentation à l'adresse <a href="http://docs.heroku.com/heroku-command">http://docs.heroku.com/heroku-command</a>.</p>
+<h2>Envoyer votre clé SSH</h2>
+<p>Pour pouvoir communiquer avec Heroku, vous devez utiliser une clé SSH. Si
+vous n'en avez pas encore, vous pouvez en générez une en tapant la commande
+suivante dans une console Git Bash (et pas une simple invite de
+commande) :</p>
+<pre><code>$ ssh-keygen -t rsa -C &quot;yourname@gmail.com&quot;
+</code></pre>
+<p>Vous trouverez plus d'informations pour <a href="http://help.github.com/msysgit-key-setup/">générer une clé SSH
+sur Github</a> (vous devriez d'ailleurs avoir déjà généré votre clé SSH lors de
+votre inscription à Github).</p>
+<p>Une fois que vous disposez d'une clé SSH, vous devez l'enregistrer dans
+votre compte Heroku, en utilisant la ligne de commande :</p>
+<pre><code>C:\Ruby&gt;heroku keys:add
+</code></pre>
+<p>Ce qui devrait vous renvoyer le message suivant :</p>
+<pre><code>Enter your Heroku credentials.
+Email: youremail@gmail.com
+Password:
+</code></pre>
+<p>Répondez à la question qui vous est posée et vous obtiendrez le message
+ci-dessous :</p>
+<pre><code>Uploading ssh public key C:\Users
+om.utilisateur/.ssh/id_rsa.pub
+</code></pre>
+<p><strong>Ce paramétrage de la clé SSH ne doit être réalisé qu'une seule fois.
+À partir de maintenant, vous n'aurez plus qu'à effectuer les étapes décrites
+dans la suite de ce tutoriel à chaque fois que vous souhaiterez mettre en ligne
+une de vos applications Sinatra.</strong></p>
+<h2>Le fichier rackup</h2>
+<p>Pour déployer une application Sinatra, vous avez besoin d'un fichier rackup.
+Celui-ci doit être créé dans la racine de votre application et doit se nommer
+&quot;config.ru&quot; pour que le serveur web puisse le retrouver facilement. Pour notre
+premier essai, nous nous plaçons dans le répertoire de l'application Reverse
+que nous avons développée et versionnée sous GIT au cours des tutoriels
+précédents pour y créer un fichier &quot;config.ru&quot; avec le contenu
+suivant :</p>
+<pre><code>require 'main'
+run Sinatra::Application
+</code></pre>
+<p>Il faut ensuite penser à ajouter ce fichier au référentiel Git :</p>
+<pre><code>$ git commit -a -m &quot;Ajout du fichier rackup pour déployer sur Heroku&quot;
+</code></pre>
+<h2>Le manifeste gem</h2>
+<p>Pour définir les dépendances gems de votre application, il faut également
+configurer un fichier de manifeste. Il s'agit d'un simple fichier texte nommé
+&quot;.gems&quot; à placer dans la racine de votre application et dans lequel on
+enregistre les gems nécessaires à notre application. Dans le cas de
+l'application Reverse, il suffit donc d'y faire apparaitre une seule ligne, à
+savoir :</p>
+<pre><code>sinatra
+</code></pre>
+<p>Là encore, il ne faut pas oublier d'ajouter ce fichier au référentiel
+Git :</p>
+<pre><code>$ git commit -a -m &quot;Ajout du manifeste gem pour déployer sur Heroku&quot;
+</code></pre>
+<p>Notez que dans le cas de l'application SuperDo, le
+fichier &quot;.gems&quot; devra contenir les 3 lignes suivantes pour que l'application
+fonctionne correctement une fois déployée :</p>
+<pre><code>sinatra
+data_mapper
+dm-postgres-adapter
+</code></pre>
+<h2>Ajouter votre site sur Heroku</h2>
+<p>La dernière étape consiste à placer votre site sur Heroku. Ouvrez une invite
+de commande et accédez au répertoire de votre application &quot;Reverse&quot;. Vous devez
+ensuite choisir un nom pour votre application (vous ne pouvez pas utiliser
+&quot;reverse&quot; parce que Daz l'a déjà pris, ni &quot;reversefr&quot; puisque je l'ai pris !).
+Pour commencer, il faut créer l'application sur Heroku en entrant la ligne de
+commande suivante depuis une console Git Bash :</p>
+<pre><code>$ heroku create appname
+</code></pre>
+<p>Ce qui donne le résultat ci-dessous :</p>
+<pre><code>Creating appname.... done
+Created http://appname.heroku.com/ | git@heroku.com:appname.git
+Git remote heroku added
+</code></pre>
+<p>Il reste alors à pousser notre application vers Heroku à l'aide de Git en
+lançant la commande :</p>
+<pre><code>$ git push heroku master
+</code></pre>
+<p>Ce qui donne alors quelque chose du style :</p>
+<pre><code>Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 441 bytes, done.
+Total 4 (delta 3), reused 0 (delta 0)
+
+-----&gt; Heroku receiving push
+-----&gt; Sinatra app detected
+       Compiled slug size is 588K
+-----&gt; Launching...... done
+       http://appname.heroku.com deployed to Heroku
+
+To git@heroku.com:appname.git
+   3b3ed7c..350b521  master -&gt; master
+</code></pre>
+<p>Et maintenant, il est enfin possible de naviguer vers l'URL
+&quot;http://appname.heroku.com/&quot; pour voir votre application prendre son envol sur
+internet !</p>
+<h2>Mise à jour du site</h2>
+<p>Il vous suffit d'une ligne de commande Git pour pouvoir déployer les
+modifications que vous avez apportées à votre application (à condition de les
+avoir commitées !). Dans le cas où vous souhaitez déployer la branche master de
+votre référentiel Git, vous n'avez qu'à taper la commande suivante :</p>
+<pre><code>$ git push heroku master
+</code></pre>
+<p>C'est là tout l'intérêt d'utiliser Git pour déployer une application sur
+Heroku. Grâce à son système de branches, on peut développer sur une branche et
+utiliser une autre branche pour la version en production.</p>
+<p>J'espère que ce billet aura réussi à vous convaincre qu'il est très facile
+de déployer des applications développées avec Sinatra et que Heroku est un
+service parfaitement adapté pour cela. À votre tour de mettre votre application
+en ligne !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/09/08/aspnetmvc-2-nouvelle-syntaxe-encoder-sortie-html/" hreflang="fr-FR">ASP.NET MVC 2 : Nouvelle syntaxe ‹%: %› pour encoder la sortie HTML</a>
+  <a rel="next" href="/2010/09/15/installer-nesta-windows/" hreflang="fr-FR">Installer Nesta sous Windows</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Suite des essais LINQ to NHibernate - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/02/19/suite-essais-linq-to-nhibernate/" />
+<meta property="og:title" content="Suite des essais LINQ to NHibernate" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/02/19/suite-essais-linq-to-nhibernate/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-02-19T06:55:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-02-19T06:55:00.000Z","datePublished":"2010-02-19T06:55:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/02/19/suite-essais-linq-to-nhibernate/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/02/19/suite-essais-linq-to-nhibernate/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/02/19/suite-essais-linq-to-nhibernate/">Suite des essais LINQ to NHibernate</a>
+    </h1>
+    <p>
+      <span>2010-02-19</span>
+      <span>#linq</span><span>#nhibernate</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Cette fois-ci je vais me contenter de refaire le même genre de tests que
+lors de mes <a href="/2010/02/17/premiers-essais-linq-to-nhibernate/">premiers essais avec LINQ to NHibernate</a> d'hier. Mais
+aujourd'hui, au lieu de partir d'un contact pour accéder au groupe auquel il
+est lié, je vais explorer l'autre côté de la relation entre les deux tables et
+partir d'un groupe puis accéder aux contacts qui lui sont rattachés.</p>
+<h2>Essai numéro 1</h2>
+<p>Je commence doucement avec une requête LINQ toute simple :</p>
+<pre><code>var linq1 = (from g in _session.Linq&lt;Group&gt;()
+             where g.Id == id
+             select g).FirstOrDefault();
+</code></pre>
+<p>Sans trop de surprise (maintenant que j'ai quelques essais au compteur),
+NHibernate génère la requête SQL suivante :</p>
+<pre><code>SELECT top 1
+       this_.Id as Id0_0_,
+       this_.Name as Name0_0_
+FROM   Groups this_
+WHERE  this_.Id = @p0; // @p0 = 1
+</code></pre>
+<p>Puis j'essaie d'accéder à la propriété Contacts de l'objet Group que vient
+de renvoyer la première requête LINQ :</p>
+<pre><code>int count = linq1.Contacts.Count();
+</code></pre>
+<p>NHibernate génère alors une seconde requête SQL afin de charger la liste des
+contacts associés au groupe :</p>
+<pre><code>SELECT contacts0_.groupId as groupId1_,
+       contacts0_.Id as Id1_,
+       contacts0_.Id as Id1_0_,
+       contacts0_.FirstName as FirstName1_0_,
+       contacts0_.LastName as LastName1_0_,
+       contacts0_.Phone as Phone1_0_,
+       contacts0_.Email as Email1_0_,
+       contacts0_.groupId as groupId1_0_
+FROM   Contacts contacts0_
+WHERE  contacts0_.groupId=@p0; // @p0 = 1
+</code></pre>
+<p>Jusqu'ici, c'est tout pareil par rapport aux résultats que que j'avais
+obtenus au cours de mon premier essai dans l'autre sens.</p>
+<h2>Essai numéro 2</h2>
+<p>Comme lors de mes premiers tests, ce deuxième essai va consister à utiliser
+la méthode Extend(&quot;Entité&quot;) pour vérifier que cela fonctionne à peu près de la
+même façon que pour aller du contact vers le groupe. Ce qui me donne donc la
+requête LINQ suivante :</p>
+<pre><code>var linq2 = (from g in _session.Linq&lt;Group&gt;().Expand(&quot;Contacts&quot;)
+             where g.Id == id
+             select g).FirstOrDefault();
+</code></pre>
+<p>Et comme je pouvais presque m'y attendre, cela a eu pour effet de faire
+apparaitre une jointure avec la table Contacts dans la requête SQL qui est
+générée par NHibernate :</p>
+<pre><code>SELECT top 1
+       this_.Id as Id0_1_,
+       this_.Name as Name0_1_,
+       contacts2_.groupId as groupId3_,
+       contacts2_.Id as Id3_,
+       contacts2_.Id as Id1_0_,
+       contacts2_.FirstName as FirstName1_0_,
+       contacts2_.LastName as LastName1_0_,
+       contacts2_.Phone as Phone1_0_,
+       contacts2_.Email as Email1_0_,
+       contacts2_.groupId as groupId1_0_
+FROM   Groups this_
+       left outer join Contacts contacts2_ on this_.Id=contacts2_.groupId
+WHERE  this_.Id = @p0; // @p0 = 1
+</code></pre>
+<p>Et comme hier, le fait d'accéder à la liste des contacts de l'objet Group
+renvoyé n'a pas d'impact et NHibernate ne génère pas une nouvelle requête
+SQL :</p>
+<pre><code>int count2 = linq2.Contacts.Count();
+</code></pre>
+<p>Jusqu'ici, tout va toujours bien puisque NHibernate se comporte toujours
+rigoureusement de la même façon dans les deux sens de la relation.</p>
+<h2>Interlude</h2>
+<p>Pour rester le plus synchro possible avec mon billet précédent, voici le
+fichier de mapping NHibernate que j'ai défini pour les groupes :</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;hibernate-mapping xmlns=&quot;urn:nhibernate-mapping-2.2&quot; namespace=&quot;ContactManager.Models&quot; assembly=&quot;ContactManager&quot;&gt;
+
+  &lt;class name=&quot;Group&quot; table=&quot;Groups&quot; dynamic-update=&quot;true&quot;&gt;
+
+    &lt;cache usage=&quot;read-write&quot; /&gt;
+
+    &lt;id name=&quot;Id&quot; column=&quot;Id&quot; type=&quot;integer&quot;&gt;
+      &lt;generator class=&quot;identity&quot; /&gt;
+    &lt;/id&gt;
+    &lt;property name=&quot;Name&quot; type=&quot;string&quot; /&gt;
+    &lt;bag
+        name=&quot;Contacts&quot;
+        inverse=&quot;true&quot;
+        lazy=&quot;true&quot;&gt;
+      &lt;key column=&quot;groupId&quot; /&gt;
+      &lt;one-to-many class=&quot;Contact&quot; /&gt;
+    &lt;/bag&gt;
+
+  &lt;/class&gt;
+
+ &lt;/hibernate-mapping&gt;
+</code></pre>
+<p>Comme dans le fichier Contact.hbm.xml d'hier, ce fichier de mapping spécifie
+également la relation qui existe entre les tables Groups et Contacts. Par
+rapport à la simple balise <code>&lt;many-to-one ... /&gt;</code> d'hier, il
+faut utiliser un élément <code>&lt;bag ... /&gt;</code> pour représenter le
+fait qu'à un groupe sont liés plusieurs contacts.</p>
+<h2>Essai numéro 3</h2>
+<p>Dans le fichier de mapping Group.hbm.xml, le fait que je fasse du
+lazy-loading est pour l'instant défini de façon explicite grâce à l'attribut
+<code>lazy=&quot;false&quot;</code>. Par conséquent, si je souhaite maintenant ne plus
+faire de lazy-loading, il est donc nécessaire que je modifie le mapping
+NHibernate de la façon suivante :</p>
+<pre><code>...
+    &lt;bag
+        name=&quot;Contacts&quot;
+        inverse=&quot;true&quot;
+        lazy=&quot;false&quot;&gt;
+      &lt;key column=&quot;groupId&quot; /&gt;
+      &lt;one-to-many class=&quot;Contact&quot; /&gt;
+    &lt;/bag&gt;
+...
+</code></pre>
+<p>Et désormais, si je reprend la même requête LINQ qu'au début de ce
+billet :</p>
+<pre><code>var linq3 = (from g in _session.Linq&lt;Group&gt;()
+             where g.Id == id
+             select g).FirstOrDefault();
+</code></pre>
+<p>Lorsque je l'exécute, je peux voir que NHibernate a cette fois-ci généré 2
+requêtes SQL différentes. La première sert pour charger les informations du
+groupe et la seconde permet de charger les données correspondantes aux contacts
+qui sont rattachés au groupe :</p>
+<pre><code>SELECT top 1
+       this_.Id as Id0_0_,
+       this_.Name as Name0_0_
+FROM   Groups this_
+WHERE  this_.Id = @p0; // @p0 = 1
+
+SELECT contacts0_.groupId as groupId1_,
+       contacts0_.Id as Id1_,
+       contacts0_.Id as Id1_0_,
+       contacts0_.FirstName as FirstName1_0_,
+       contacts0_.LastName as LastName1_0_,
+       contacts0_.Phone as Phone1_0_,
+       contacts0_.Email as Email1_0_,
+       contacts0_.groupId as groupId1_0_
+FROM   Contacts contacts0_
+WHERE  contacts0_.groupId=@p0; // @p0 = 1
+</code></pre>
+<h2>Deuxième bilan</h2>
+<p>Ce qui est vraiment bien, c'est que ça fonctionne exactement de la même
+façon dans les deux sens ! Et donc normalement, une fois que je serai un
+peu mieux rodé à l'utilisation de NHibernate et de LINQ to NHibernate, je
+devrais grosso-modo réussir à prévoir ce qui va se passer sans trop de
+problème.</p>
+<p>Par contre, j'ai encore pas mal de difficultés en ce qui concerne le
+mapping. Pour l'instant je fais surtout du copié / collé de différents trucs
+trouvés sur internet (dont le tutoriel <a href="/2010/01/29/utiliser-aspnetmvc-nhibernate-1/">Utiliser ASP.NET MVC et NHibernate</a>) =&gt; je ne sais pas trop
+(et je me demande) s'il est nécessaire / obligatoire / conseillé de définir la
+relation dans les deux fichiers de mapping ou si on peut se contenter de faire
+ça d'un seul côté (c'est à dire dans un seul fichier de mapping). C'est
+d'ailleurs peut-être à ça que sert l'attribut
+<code>inverse=&quot;true&quot;</code> ? =&gt; Encore pas mal trucs à creuser pour
+plus tard...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/02/19/afficher-sql-genere-par-nhibernate/" hreflang="fr-FR">Afficher le SQL généré par NHibernate</a>
+  <a rel="next" href="/2010/02/22/convertir-sql-linq-introduction/" hreflang="fr-FR">Convertir SQL en LINQ : Introduction</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

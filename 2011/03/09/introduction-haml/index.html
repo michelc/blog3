@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Introduction à Haml - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/03/09/introduction-haml/" />
+<meta property="og:title" content="Introduction à Haml" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/03/09/introduction-haml/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-03-09T16:53:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-03-09T16:53:00.000Z","datePublished":"2011-03-09T16:53:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/03/09/introduction-haml/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/03/09/introduction-haml/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/03/09/introduction-haml/">Introduction à Haml</a>
+    </h1>
+    <p>
+      <span>2011-03-09</span>
+      <span>#ruby</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'aime bien les vidéos de Screencasts.org, surtout leur côté 5/10 minutes
+vite fait pour aborder (ou réviser) un sujet. Après l'<a href="/2011/03/08/introduction-sinatra/">introduction à Sinatra</a>, j'ai donc décidé de suivre l'<a href="http://screencasts.org/episodes/introduction-to-haml">introduction à Haml</a>. <a href="http://haml-lang.com/">Haml</a> (qui se prononce AMeul, comme dans meule) est un langage de
+template très concis destiné à remplacer HTML dans les applications Rails ou
+Sinatra.</p>
+<p>Cette fois-ci, la vidéo est accompagnée de sa retranscription complète ce
+qui rend son visionnage encore plus facile.</p>
+<p>Après 10 secondes de publicité, on enchaine sur un rappel de la dure
+condition des développeurs en quête de beauté et de simplicité dans un monde
+d'IE6, SOAP et autre Dreamweaver.</p>
+<p>On rentre ensuite dans le vif du sujet en démarrant avec un petit morceau de
+code HTML (beurk beurk beurk) tel qu'on en voit souvent :</p>
+<pre><code>&lt;div id=&quot;profile&quot;&gt;
+  &lt;div class=&quot;left column&quot;&gt;
+    &lt;div id=&quot;date&quot;&gt; 11 November 2010 &lt;/div&gt;
+    &lt;div id=&quot;address&quot;&gt; 1 Infinite Loop &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;right column&quot;&gt;
+    &lt;div id=&quot;email&quot;&gt; steve@apple.com &lt;/div&gt;
+    &lt;div id=&quot;bio&quot;&gt; Makes magical tablets &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Puis, à partir de ce truc, on nous retrace par petites touches successives
+la genèse de Haml (miam miam miam) :</p>
+<pre><code>#profile
+  .left.column
+    #date 11 November 2010
+    #address 1 Infinite Loop
+  .right.column
+    #email steve@apple.com
+    #bio Makes magical tablets
+</code></pre>
+<p>Pour bien enfoncer le clou, on fait aussi le parallèle entre le template Erb
+correspondant (ouuh !) :</p>
+<pre><code>&lt;div id=&quot;profile&quot;&gt;
+  &lt;div class=&quot;left column&quot;&gt;
+    &lt;div id=&quot;date&quot;&gt;&lt;%= print_date %&gt;&lt;/div&gt;
+    &lt;div id=&quot;address&quot;&gt;&lt;%= user.address %&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;right column&quot;&gt;
+    &lt;div id=&quot;email&quot;&gt;&lt;%= user.email %&gt;&lt;/div&gt;
+    &lt;div id=&quot;bio&quot;&gt;&lt;%= user.bio %&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Et l'équivalent sous Haml (ouah !) :</p>
+<pre><code>#profile
+  .left.column
+    #date= print_date
+    #address= user.address
+  .right.column
+    #email= user.email
+    #bio= user.bio
+</code></pre>
+<p>Viennent ensuite quelques explications sur la syntaxe :</p>
+<ul>
+<li>!!! pour déclarer du doctype</li>
+<li>%element pour définir un élément (%html pour la balise &lt;html ...&gt;, %p
+pour la balise &lt;p&gt;...)</li>
+<li>%element#id pour définir un identifiant</li>
+<li>%element.class pour définir une classe</li>
+<li>possibilité d'omettre %div qui est la balise par défaut</li>
+<li>ajouter des attributs sous la forme (attribut=&quot;valeur&quot;)</li>
+<li>importance de l'indentation pour imbriquer les balises</li>
+</ul>
+<p>Le tutoriel se termine par l'installation d'Haml (<code>gem install haml</code>), un exemple d'utilisation en ligne de commande et un lien pour
+<a href="http://haml-lang.com/try.html">tester Haml en
+ligne</a>.</p>
+<p>Pour l'instant, je suis dubitatif et je me demande si c'est une vrai bonne
+idée de masquer autant que ça HTML ?</p>
+<p>Juste pour référence, voilà ce que l'exemple de code donnerait avec <a href="http://haacked.com/archive/2011/01/06/razor-syntax-quick-reference.aspx">Razor</a> où on reste plus calqué sur le code HTML :</p>
+<pre><code>&lt;div id=&quot;profile&quot;&gt;
+  &lt;div class=&quot;left column&quot;&gt;
+    &lt;div id=&quot;date&quot;&gt;@Me.print_date()&lt;/div&gt;
+    &lt;div id=&quot;address&quot;&gt;@user.address&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;right column&quot;&gt;
+    &lt;div id=&quot;email&quot;&gt;@user.email&lt;/div&gt;
+    &lt;div id=&quot;bio&quot;&gt;@user.bio&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Malgré tout (pour s'entrainer en attendant de suivre l'<a href="http://screencasts.org/episodes/introduction-to-sass">introduction à Sass</a>) le site <a href="http://html2haml.heroku.com/">Html2Haml</a> permet de convertir du code HTML en Haml et un
+<a href="http://thomas-brian.developpez.com/articles/haml/">tutoriel en français sur Haml</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/03/08/introduction-sinatra/" hreflang="fr-FR">Introduction à Sinatra</a>
+  <a rel="next" href="/2011/03/30/vs-2010-sql-server-2008-express-windows-7-64-bits/" hreflang="fr-FR">VS 2010, SQL Server 2008 Express et Windows 7 64 bits</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

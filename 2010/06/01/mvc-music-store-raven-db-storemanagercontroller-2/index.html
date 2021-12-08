@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : StoreManagerController (2° partie) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/06/01/mvc-music-store-raven-db-storemanagercontroller-2/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : StoreManagerController (2° partie)" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/06/01/mvc-music-store-raven-db-storemanagercontroller-2/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-06-01T16:40:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-06-01T16:40:00.000Z","datePublished":"2010-06-01T16:40:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/06/01/mvc-music-store-raven-db-storemanagercontroller-2/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/06/01/mvc-music-store-raven-db-storemanagercontroller-2/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/06/01/mvc-music-store-raven-db-storemanagercontroller-2/">MVC Music Store / Raven DB : StoreManagerController (2° partie)</a>
+    </h1>
+    <p>
+      <span>2010-06-01</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/31/porting-mvc-music-store-to-raven-storemanagercontroller-part-2.aspx">Porting MVC Music Store to Raven: StoreManagerController, part 2</a>&quot;, le dernier de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Le contrôleur StoreManagerController contient encore deux méthodes que nous
+n'avons pas étudiées. Nous allons devoir les aborder de façon un peu
+différente.</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_E224/image_thumb.png" alt=""></p>
+<p>Est-ce que vous devinez pourquoi ?</p>
+<p>C'est parce qu'au départ nous étions d'accord sur le fait qu'il n'y avait
+aucune raison valable de gérer les artistes en tant que document spécifique.
+Après tout, il ne s'agit que de données de référence. Sauf que maintenant nous
+devons y faire référence.</p>
+<p>C'est sûr qu'on pourrait créer une série de documents artistes, ce qui
+faciliterait énormément la migration du code :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_E224/image_thumb_1.png" alt=""></p>
+<p>Mais je continue à penser que les artistes n'existent pas réellement en tant
+qu'entité indépendante dans notre modèle. Par conséquent, au lieu de suivre
+cette voie nous allons plutôt faire une projection.</p>
+<p>Nous commençons par définir un index &quot;Artists&quot; à l'aide des requêtes linq
+map / reduce suivantes :</p>
+<pre><code>// map 
+from album in docs.Albums
+select new { album.Artist.Id, album.Artist.Name }
+
+// reduce 
+from artist in results
+group artist by new { artist.Id, artist.Name } into g
+select new { g.Key.Id, g.Key.Name }
+</code></pre>
+<p>Si vous regardez attentivement ce code, vous pouvez voir que sa
+fonctionnalité principale est de faire un distinct sur l'ensemble des artistes
+de tous les albums.</p>
+<p>Si bien que maintenant nous pouvons coder nos deux dernières méthodes comme
+ceci :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenStoreManagerC_E224/image_thumb_2.png" alt=""></p>
+<p>Il faut bien comprendre un truc : ça ne coûte rien de faire des
+requêtes avec Raven, parce que Raven ne permet les requêtes que sur des index
+et que ces index sont créés en tache de fond, ce qui contribue à rendre les
+requêtes très rapides.</p>
+<p>Et cela remet en cause la façon dont vous allez concevoir votre système et
+de votre modèle de données. Avec Raven, vous cherchez à axer la plupart de vos
+traitements sur des index et interroger ces index, parce que c'est ce qui est
+le moins gourmand.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/31/mvc-music-store-raven-db-storemanagercontroller/" hreflang="fr-FR">MVC Music Store / Raven DB : StoreManagerController</a>
+  <a rel="next" href="/2010/06/23/intellisense-mapping-nhibernate-visual-studio/" hreflang="fr-FR">Activer l&#39;intellisense pour le mapping NHibernate dans Visual Studio</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

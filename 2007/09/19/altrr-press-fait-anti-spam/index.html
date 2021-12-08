@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Altrr-Press fait de l&#39;anti-spam - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2007/09/19/altrr-press-fait-anti-spam/" />
+<meta property="og:title" content="Altrr-Press fait de l&#39;anti-spam" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2007/09/19/altrr-press-fait-anti-spam/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2007-09-19T10:23:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2007-09-19T10:23:00.000Z","datePublished":"2007-09-19T10:23:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2007/09/19/altrr-press-fait-anti-spam/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2007/09/19/altrr-press-fait-anti-spam/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2007/09/19/altrr-press-fait-anti-spam/">Altrr-Press fait de l&#39;anti-spam</a>
+    </h1>
+    <p>
+      <span>2007-09-19</span>
+      <span>#ap</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour l'instant, on ne peut pas vraiment dire que les sites réalisés avec
+Altrr-Press croulent sous le spam. Et une fois n'est pas coutumes, ce n'est
+vraiment dû à la qualité de son code mais au simple fait qu'aucun d'entre eux
+ne reçoit tant de visites que ça.</p>
+<p>Malgré tout, j'ai quand même réussi à récolter quelques spammes :</p>
+<ul>
+<li>un site bar an se ren en &quot;.com&quot; souhaitait au fil de ses urls m'offrir des
+fleurs, des cadeaux ou des cartes de voeux,</li>
+<li>un autre cumulait le &quot;free&quot;, le &quot;linux&quot; et le &quot;forum&quot; en .info pour mieux
+me proposer tout un arsenal de ouaib-cames libres ou pas,</li>
+<li>etc...</li>
+</ul>
+<p>Mais quoiqu'il en soit, rien de catastrophique. Donc avant de sortir la
+grosse artillerie et de chercher à implémenter Askimet en C#, il y a
+certainement moyen de faire simple, vite et bien.</p>
+<p>C'est même très facile parce que j'avais repéré il y a quelques temps un
+article de Joe Tan qui expliquait comment il avait réalisé un <a href="http://tantannoodles.com/toolkit/spam-filter/">filtre anti-spam simple
+pour WordPress</a>.</p>
+<p>Son principe est vraiment tout simple. L'auteur a constaté que 90 % du spam
+dont il souffrait obéissait à l'une des 3 règles suivantes :</p>
+<ul>
+<li>il y a au minimum 5 liens vers des sites internet,</li>
+<li>il y a des liens en <a href="http://en.wikipedia.org/wiki/BBCode">bbcode</a> (style
+[url=http://www.example.com]example[/url]),</li>
+<li>on y retrouve fréquemment certains mots clés comme v-ag-a, c-alis...</li>
+</ul>
+<p>La solution qu'il a mis au point consiste donc à tester ces 3 particularités
+et à suspecter le message d'être un spam dès lors que l'une d'entre elle
+s'applique.</p>
+<p>Après quelques tests à base d'indexOf puis l'assistance de Philippe pour
+régixfier tout ça, la boite de Feedback d'Altrr-Press dispose maintenant d'une
+fonction IsSpam() qui le cas échéant permet de préfixer le sujet du message
+d'un &quot;SPAM&quot; accusateur.</p>
+<pre><code>public static bool isSpam (string content) {
+        // http://tantannoodles.com/toolkit/spam-filter/
+        content = content.ToLower();
+        bool isInvalid = false;
+        if (content.IndexOf(@&quot;[url]http://&quot;) != -1) {
+                // [url]http://www.example.com[/url] style links =&gt; spam
+                isInvalid = true;
+        } else if (content.IndexOf(@&quot;[url=http://&quot;) != -1) {
+                // [url=http://www.example.com]example[/url] style links =&gt; spam
+                isInvalid = true;
+        } else {
+                // remove internal link
+                content = content.Replace(Common.websiteUrl, &quot;&quot;);
+                // 5 or more links to external sites =&gt; spam
+                if (Regex.Matches(content, @&quot;http://&quot;).Count &gt;= 5) {
+                        isInvalid = true;
+                }
+        }
+        if (isInvalid == false) {
+                // potential spam words =&gt; spam
+                string bads = @&quot;cialis|ebony|nude|porn|porno|pussy|upskirt|ringtones|phentermine|viagra&quot;;
+                if (Regex.IsMatch(content, bads) == true) {
+                        isInvalid = true;
+                }
+        }
+        return isInvalid;
+}
+</code></pre>
+<p>Et pour le jour où ça ne suffira plus, j'ai aussi un <a href="http://haacked.com/archive/2007/09/11/honeypot-captcha.aspx">pôt de miel</a>
+en réserve (à mon avis encore améliorable avec un attribut maxlength à
+zéro).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2007/09/17/disappearing-text-images-ie/" hreflang="en-US">Disappearing Text or Images in IE?</a>
+  <a rel="next" href="/2007/10/04/quatre-etapes-c-deux-trop/" hreflang="fr-FR">Quatre étapes, c&#39;est deux de trop</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Un MapPath() plus souple - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2006/03/14/mappath-plus-souple/" />
+<meta property="og:title" content="Un MapPath() plus souple" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2006/03/14/mappath-plus-souple/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2006-03-14T05:51:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2006-03-14T05:51:00.000Z","datePublished":"2006-03-14T05:51:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2006/03/14/mappath-plus-souple/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2006/03/14/mappath-plus-souple/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2006/03/14/mappath-plus-souple/">Un MapPath() plus souple</a>
+    </h1>
+    <p>
+      <span>2006-03-14</span>
+      <span>#.net</span><span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La méthode MapPath() renvoie le chemin d'accès physique qui correspond à
+l'url qui lui est passé en argument.</p>
+<p>Le problème est que Server.MapPath() n'accepte que les répertoires virtuels
+comme paramètre, qu'il s'agisse d'une url absolue (here/myfile.txt) ou relative
+(../yourdir/yourfile.txt) ou même d'une url commençant par un tilde
+(~/ourdir/ourfile.txt).</p>
+<p>Mais elle provoque une erreur dès que son argument est une url complète
+(http://www.example.com/mydir/myfile.txt) ou correspond déjà à une adresse
+physique (D:\websites\example.com\mydir\myfile.txt).</p>
+<p>Pour simplifier l'utilisation de la méthode MapPath() et éviter de tester
+ses arguments à chaque appel, ajout d'une méthode MapPath() améliorée à la
+classe Common.cs. :</p>
+<pre><code>///&lt;summary&gt;
+/// Same as Server.MapPath but don't hang on physical path
+///&lt;/summary&gt;
+public static string MapPath (string path) {
+   string temp = path;
+   try {
+      temp = System.Web.HttpContext.Current.Server.MapPath(path);
+   } catch (Exception ex) {
+      try {
+         System.Uri utemp = new System.Uri(path);
+         if (utemp.IsFile == true) {
+            temp = utemp.LocalPath;
+         } else {
+            temp = System.Web.HttpContext.Current.Server.MapPath(utemp.LocalPath);
+         }
+      } catch {
+         throw ex;
+      }
+   }
+   return (temp);
+}
+</code></pre>
+<p>Màj du 19/03 : gère le cas où l'url passée en argument comprend des
+paramètres (here/myflash.swf?file=test.mp3).</p>
+<pre><code>public static string MapPath (string path) {
+   string temp = path + &quot;?&quot;;
+   temp = temp.Split('?')[0];
+   try {
+      temp = Context.Server.MapPath(temp);
+   } catch (Exception ex) {
+      try {
+         Uri utemp = new Uri(temp);
+         if (utemp.IsFile == true) {
+            temp = utemp.LocalPath;
+         } else {
+            temp = Context.Server.MapPath(utemp.LocalPath);
+         }
+      } catch {
+         throw ex;
+      }
+   }
+   return (temp);
+}
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2006/03/09/fun-boxes/" hreflang="fr-FR">Fun Boxes</a>
+  <a rel="next" href="/2006/03/19/boite-feedback/" hreflang="fr-FR">Boite Feedback</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Macro ClassScreen() - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/10/04/macro-classscreen/" />
+<meta property="og:title" content="Macro ClassScreen()" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/10/04/macro-classscreen/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-10-04T09:33:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-10-04T09:33:00.000Z","datePublished":"2004-10-04T09:33:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2004/10/04/macro-classscreen/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/10/04/macro-classscreen/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/10/04/macro-classscreen/">Macro ClassScreen()</a>
+    </h1>
+    <p>
+      <span>2004-10-04</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ajouté la macro ClassScreen() qui renvoie une chaine en fonction du nombre
+de colonnes réellement présentes dans l'écran en cours.</p>
+<ul>
+<li>layout3 : les 3 colonnes sont utilisées,</li>
+<li>layout2L : la colonne de gauche est utilisée mais pas celle de
+droite,</li>
+<li>layout2R : la colonne de droite est utilisée mais pas celle de
+gauche,</li>
+<li>layout1 : les colonnes de gauche et de droite ne sont pas
+utilisées.</li>
+</ul>
+<p>Cette macro peut s'utiliser par exemple dans <code>&lt;body id=&quot;&lt;%= IdScreen() %&gt;&quot;&gt;</code>
+pour paramétrer les styles CSS en fonction du nombre de colonnes utiles.
+Pourrait aussi s'employer pour référencer un fichier CSS spécifique :
+<code>&lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;%= ClassScreen() %&gt;.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;</code>.</p>
+<p>Voir aussi: <a href="/2004/09/22/body-styling/">&lt;body&gt; Styling</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/10/03/prototype-sqlreader/" hreflang="fr-FR">Prototype SqlReader</a>
+  <a rel="next" href="/2004/10/04/liens-datagrid/" hreflang="fr-FR">Liens DataGrid</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

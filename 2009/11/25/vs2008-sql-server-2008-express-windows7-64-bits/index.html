@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VS 2008, SQL Server 2008 Express et Windows 7 64 bits - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/11/25/vs2008-sql-server-2008-express-windows7-64-bits/" />
+<meta property="og:title" content="VS 2008, SQL Server 2008 Express et Windows 7 64 bits" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/11/25/vs2008-sql-server-2008-express-windows7-64-bits/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-11-25T13:23:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-11-25T13:23:00.000Z","datePublished":"2009-11-25T13:23:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/11/25/vs2008-sql-server-2008-express-windows7-64-bits/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/11/25/vs2008-sql-server-2008-express-windows7-64-bits/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/11/25/vs2008-sql-server-2008-express-windows7-64-bits/">VS 2008, SQL Server 2008 Express et Windows 7 64 bits</a>
+    </h1>
+    <p>
+      <span>2009-11-25</span>
+      <span>#boulot</span><span>#sql-server</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Depuis que j'ai mon nouveau portable, je galère comme pas possible pour m'y
+sentir comme chez moi et laisser tomber mon ancien PC. La principale cause de
+tout ces problèmes (mais pas la seule), c'est que je suis maintenant sous
+Windows 7 en version 64 bits (alors que j'aurais très bien pu m'en passer vu
+que je reste scotché à 4 GO de mémoire à cause d'un tranchement entre <a href="http://www.fromageetdessert.com/" title="ça n'a rien à voir, mais c'est pas grave">fromage ou dessert</a>).</p>
+<p>Le dernier problème en date c'est SQL Server Express 2008 (avec Service Pack
+1 s'il vous plait). J'ai commencé par passer un temps fou à installer /
+désinstaller / réinstaller / combiner / décombiner / recombiner Visual Studio
+2008 Professional Edition, SQL Server Express 2005 et SQL Server Express 2008
+pour réussir en début d'après-midi à faire fonctionner mes quelques essais
+d'applications ASP.NET MVC que j'avais créées sur mon vieux PC sous XP.</p>
+<p>Ce matin, j'avais encore le message d'erreur suivant :</p>
+<pre><code>The database 'BLABLA.MDF' cannot be opened because it is version 655. This server supports version 612 and earlier. A downgrade path is not supported.
+</code></pre>
+<p><em>(en fait, mon message d'erreur à moi était en français mais je l'ai
+perdu, si c'est pas malheureux...)</em></p>
+<p>Je bataille tant que je peux pour désinstaller complètement SQL Server
+Express 2005 puis installer SQL Server Express 2008 à partir du Web Platform
+Installer et ça le fait presque : je n'ai plus d'erreur quand je lance mes
+projets ContactManager et NerdDinner !!!</p>
+<p>Mais il reste encore un problème : pas possible de créer une nouvelle
+base de données. Je vais sur App_Data, je clique-droit, je fais &quot;Ajouter&quot;, je
+fais &quot;Nouvel élément...&quot;, je choisis &quot;Base de données SQL Server&quot;, je laisse le
+nom &quot;Database1.mdf&quot; par défaut, je clique sur le bouton &quot;Ajouter&quot; et
+patatras :</p>
+<pre><code>SQL Server Express 2005 doit fonctionner correctement pour permettre les connexions aux fichiers SQL Server (*.mdf). Vérifiez l'installation du composant ou téléchargez-le à partir de l'URL suivante : http://go.microsoft.com/fwlink/?LinkId=49251
+</code></pre>
+<p>ou en anglais pour faciliter les recherches sous Google :</p>
+<pre><code>Connections to SQL Server files (*.mdf) require SQL Server Express 2005 to function properly. Please verify the installation of the component of download from the URL: http://go.microsoft.com/fwlink/?LinkId=49251 (http://go.microsoft.com/fwlink/?LinkId=49251)
+</code></pre>
+<p>Et en fait c'est bigrement compliqué pour trouver la bonne réponse sous
+Google, mais après des tas de liens, je réussi à tomber sur LA solution :
+c'est une fonctionnalité bien connue (en tout cas depuis janvier 2009) de
+Visual Studio 2008 SP1 quand on se connecte à une instance 64 bits de SQL
+Server Express 2008. Y'a même un article n° 957944 tout exprès pour ça dans la
+Knowledge Base de Microsoft : <a href="http://support.microsoft.com/?scid=kb;en-us;957944&amp;x=17&amp;y=13" title="ça c'est du titre">FIX: Error message when you connect to
+a 64-bit instance of SQL Server Express 2008 by using Visual Studio 2008
+Service Pack 1 (SP1): &quot;Connections to SQL Server files (*.mdf) require SQL
+Server Express 2005 to function properly&quot;</a>.</p>
+<p>Comme je suis quelqu'un de très conciliant, je fait tout ce qu'on me demande
+et j'appelle le support Microsoft. Je me retrouve je ne sais trop où (hello la
+verte Erin ?) et après quelques interludes musicaux y'a un monsieur qui vérifie
+une dernière fois que je j'ai bien un problème puis me demande mon adresse mél
+pour m'envoyer le correctif.</p>
+<p>J'aurais lui donner mon adresse GMail parce que ça fait une demi-heure et je
+ne vois toujours rien venir...</p>
+<h2>Mise à jour 24 heures après</h2>
+<p>Toujours pas de nouvelle de Microsoft. Et pourtant, j'ai aussi mis sur le
+coup un ex-collègue qui a travaillé à Dublin dans un centre d'appel à
+destination des développeurs MS. Comme j'en ai eu marre d'attendre, j'ai lancé
+une recherche sur &quot;[hotfix 957944](http://www.google.com/?q=hotfix 957944)&quot; et j'ai eu droit à tout plein de réponses, dont une sur
+<a href="http://stackoverflow.com/questions/293281/why-wont-visual-studio-2008-create-mdf-files-with-sql-server-2008-developer-ins/1582599#1582599">StackOverflow</a> que je me suis empressé de consulter en
+premier. Et là, ils expliquent même comment télécharger le fameux hotfix 957944
+en direct...</p>
+<p>Je fais la manipulation indiquée =&gt; ça me demande mon adresse mail. Ce
+coup-ci je donne mon compte gmail et même pas 5 secondes après j'ai un nouveau
+message dans mon Inbox avec un lien pour aller récupérer ce satané hotfix. Je
+télécharge, j'installe, ça décompacte un VS90SP1-KB957944-x86.exe que je lance,
+ça mouline et c'est fini ! Reste plus qu'à lancer VS 2008 pour vérifier
+que je peux enfin créer une base de données et ça marche !!!</p>
+<p>La meilleure façon d'obtenir quelque chose de Microsoft, c'est de demander à
+Google d'aller rechercher sur StackOverflow :)</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/11/25/realisation-modele-nerddinner/" hreflang="fr-FR">Réalisation du modèle pour NerdDinner</a>
+  <a rel="next" href="/2009/11/26/creation-controleur-dinnerscontroller/" hreflang="fr-FR">Création du contrôleur DinnersController.cs</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

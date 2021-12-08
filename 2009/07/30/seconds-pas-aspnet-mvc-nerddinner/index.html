@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Seconds pas avec ASP.NET MVC et NerdDinner - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/07/30/seconds-pas-aspnet-mvc-nerddinner/" />
+<meta property="og:title" content="Seconds pas avec ASP.NET MVC et NerdDinner" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/07/30/seconds-pas-aspnet-mvc-nerddinner/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-07-30T14:24:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-07-30T14:24:00.000Z","datePublished":"2009-07-30T14:24:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/07/30/seconds-pas-aspnet-mvc-nerddinner/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/07/30/seconds-pas-aspnet-mvc-nerddinner/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/07/30/seconds-pas-aspnet-mvc-nerddinner/">Seconds pas avec ASP.NET MVC et NerdDinner</a>
+    </h1>
+    <p>
+      <span>2009-07-30</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La fois d'avant, j'avais seulement fait la toute <a href="/2009/07/17/premier-essai-aspnet-mvc/">première étape du
+tutoriel NerdDinner</a> de Scott Guthrie, à savoir :</p>
+<ul>
+<li>créer le projet NerdDinner,</li>
+<li>vérifier qu'il fonctionnait bien comme prévu,</li>
+<li>exécuter les tests unitaires avec NUnit.</li>
+</ul>
+<p>Ce coup-ci, je me suis attaqué aux deux parties suivantes qui concernent la
+base de données :</p>
+<ul>
+<li>Creating the Database</li>
+<li>Building the Model</li>
+</ul>
+<p>La création de la base de données s'est très bien passée. Le seul truc à
+noter c'est que la fenêtre &quot;Server Explorer&quot; s'appelle en fait &quot;Database
+Explorer&quot; sous VWD. Pour la création des tables, pas de problème non plus, si
+ce n'est que c'est un peu fastidieux. Je me demande si écrire un bête script
+SQL ne serait pas tout aussi pratique... En tout cas, pour l'ajout des données,
+ils auraient quand même pu donner un script tout prêt pour éviter d'avoir à
+tout ressaisir !</p>
+<p>En ce qui concerne la réalisation du modèle, pas de problème non plus :
+bien que je sois sous VWD, tout se passe exactement comme décrit dans le
+tutoriel. Pour essayer de refaire les premiers essais d'intellisense tels
+qu'ils apparaissent dans le tutoriel, le plus simple est de se placer dans le
+source HomeController.cs après lui avoir ajouté la ligne &quot;<code>using NerdDinner.Models;</code>&quot; .</p>
+<p>Pour le reste de la partie &quot;Building the Model&quot;, je suis allé jusqu'au bout
+et j'ai tapé moi-même tout le code source proposé (à part les expressions
+régulières). Pour l'instant, je n'ai pas forcément tout assimilé en ce qui
+concerne LINQ to SQL et le pattern &quot;Repository&quot;, mais c'est déjà ça de
+pris...</p>
+<p>Et pour finir, j'ai décidé d'installer &quot;SQL Server Management Studio&quot;. Après
+bien des péripéties, ça a enfin (et assez inexplicablement) réussi. Ça m'a
+permis de générer le script pour créer les deux tables Dinners et RSVP et pour
+initialiser leur contenu avec quelques données de tests.</p>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/09/23/troisieme-etape-aspnetmvc/">Troisième étape avec ASP.NET MVC</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/07/17/premier-essai-aspnet-mvc/" hreflang="fr-FR">Premier pas avec ASP.NET MVC et NerdDinner</a>
+  <a rel="next" href="/2009/09/09/nouvelles-ardeche/" hreflang="fr-FR">Des nouvelles de l&#39;Ardèche</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

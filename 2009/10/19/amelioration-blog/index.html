@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Amélioration du blog de l&#39;Ardèche - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/10/19/amelioration-blog/" />
+<meta property="og:title" content="Amélioration du blog de l&#39;Ardèche" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/10/19/amelioration-blog/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-10-19T16:42:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-10-19T16:42:00.000Z","datePublished":"2009-10-19T16:42:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/10/19/amelioration-blog/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/10/19/amelioration-blog/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/10/19/amelioration-blog/">Amélioration du blog de l&#39;Ardèche</a>
+    </h1>
+    <p>
+      <span>2009-10-19</span>
+      <span>#ap</span><span>#referencement</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Cette fois-ci, j'ai cherché à améliorer le <a href="http://07-ardeche.com/blog.aspx">blog de l'Ardèche</a>. Jusqu'à
+présent, c'était presque plus proche d'une saisie de pages à la chaine que d'un
+véritable blog digne de ce nom.</p>
+<p>Dans un premier temps, j'ai fait évoluer la partie administration du blog.
+J'ai amélioré le contrôle utilisateur employé pour le wysiwyg afin qu'il soit
+plus adapté lors de la saisie du résumé des billets. Et j'en ai profité pour
+gérer de façon plus cohérente le contrôle du code html saisi, notamment en ce
+qui concerne la vérification des urls relatives.</p>
+<p>Comme pour l'instant j'utilise surtout le blog pour saisir des informations
+destinées à l'agenda, j'ai décidé d'ajouter la saisie d'une période de dates à
+chaque billet. Ce n'est peut-être pas très orthodoxe, mais au moins je peux
+faire ressortir cette période lors de l'affichage des billets.</p>
+<p>J'ai aussi fait quelques essais pour générer en automatique le résumé des
+billets en fonction des premières lignes du billet complet. Mais il faudrait
+que je revoie ça autrement. Mais au moins, je suis certain de toujours avoir un
+résumé (ou plutôt une accroche) que je peux utiliser pour définir la balise
+&lt;description&gt; de la page dans laquelle est publiée le billet.</p>
+<p>Après m'être occupé de mes besoins, je me suis consacré à ceux des
+visiteurs. Pour commencer (et pour me faire un peu plaisir), j'ai mis en place
+le format <a href="http://microformats.org/wiki/hatom-fr">hAtom</a> pour publier les billets du blog.</p>
+<pre><code>&lt;div class=&quot;hentry&quot; id=&quot;post-23&quot;&gt;
+  &lt;h3 class=&quot;entry-title&quot;&gt;
+    &lt;a href=&quot;/blog/2009/10/2eme-festival-soupes-pays-ardeche-meridionale.aspx&quot; rel=&quot;bookmark&quot;&gt;2ème Festival des Soupes du Pays de l'Ardèche Méridionale&lt;/a&gt;
+  &lt;/h3&gt;
+  &lt;p class=&quot;published&quot; title=&quot;2009-10-17T14:25:32&quot;&gt;Publié le samedi 17 octobre 2009, 14:25.&lt;/p&gt;
+  &lt;div class=&quot;entry-content&quot;&gt;
+    ...
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Puis j'ai travaillé à la navigation. Jusqu'à présent, on pouvait consulter
+le contenu d'un billet mais une fois là, il fallait savoir se débrouiller pour
+poursuivre la consultation du blog ou du site. C'est maintenant de l'histoire
+ancienne puisque j'ai ajouté des liens vers le billet précédent et vers le
+billet suivant ainsi qu'un lien qui permet de revenir à l'index des billets du
+blog.</p>
+<p>Et en ce qui concerne cette page principale du blog, comme elle commençait à
+atteindre une certaine longueur, je lui ai ajouté un système de pagination pour
+présenter une dizaine de billets dans chaque page. Et puis finalement, j'ai
+préféré faire apparaitre les billets complets dans les pages d'archives comme
+c'est le cas avec Dotclear. Par conséquent, j'ai dû réviser le nombre de
+billets par page à la baisse et pour l'instant j'en fait apparaitre cinq par
+page.</p>
+<p>Et pour finir, j'ai ajouté un fil Atom des billets du blog. J'ai fait ça un
+peu à la barbare (à coup de StringBuilder) et pour compenser, j'ai utilisé
+FeedBurner pour le publier : <a href="http://feeds.feedburner.com/07-ardeche">http://feeds.feedburner.com/07-ardeche</a>. Après ça, je n'ai eu qu'à
+ajouter la ligne suivante à mon template pour activer la découverte automatique
+de mon nouveau fil Atom :</p>
+<pre><code>&lt;link rel=&quot;alternate&quot; type=&quot;application/atom+xml&quot; title=&quot;Atom 1.0&quot; href=&quot;http://feeds.feedburner.com/07-ardeche&quot; /&gt;
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/15/faire-site-rien/" hreflang="fr-FR">Faire un site pour rien</a>
+  <a rel="next" href="/2009/10/20/test-driven-development-aspnetmvc-suite/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (suite)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

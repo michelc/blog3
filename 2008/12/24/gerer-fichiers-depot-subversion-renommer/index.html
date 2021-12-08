@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gérer les fichiers d&#39;un dépôt Subversion : renommer - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/12/24/gerer-fichiers-depot-subversion-renommer/" />
+<meta property="og:title" content="Gérer les fichiers d&#39;un dépôt Subversion : renommer" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/12/24/gerer-fichiers-depot-subversion-renommer/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-12-24T13:32:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-12-24T13:32:00.000Z","datePublished":"2008-12-24T13:32:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/12/24/gerer-fichiers-depot-subversion-renommer/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/12/24/gerer-fichiers-depot-subversion-renommer/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/12/24/gerer-fichiers-depot-subversion-renommer/">Gérer les fichiers d&#39;un dépôt Subversion : renommer</a>
+    </h1>
+    <p>
+      <span>2008-12-24</span>
+      <span>#svn</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour ajouter un fichier ou le modifier, ce n'est pas si compliqué que
+ça : on fait comme d'habitude, puis on en rajoute un peu pour que ça soit
+pris en compte par Subversion.</p>
+<p>Par contre, quand on a besoin de renommer un fichier, il ne faut surtout pas
+faire comme d'habitude, mais perdre ses automatismes et faire différemment.</p>
+<h2>1° méthode : la mauvaise</h2>
+<p>Dans l'explorateur de solution de Visual Studio, faire clic-droit sur
+NouvelleClasse.cs pour le renommer en Extract.cs. On recompile la solution puis
+on la sauvegarde. Si on va dans l'explorateur de fichiers Windows, on a
+maintenant :</p>
+<p><img src="/public/2008/01-fichier-ko-renommer.png" alt=""></p>
+<ul>
+<li>le fichier CheckUrls.csproj est marqué d'un point d'exclamation rouge
+puisque son contenu a changé (il contenait auparavant un fichier
+NouvelleClasse.cs et maintenant un fichier Extract.cs)</li>
+<li>le fichier Extract.cs n'a pas de marque car il n'a pas été intégré au
+répertoire de travail</li>
+</ul>
+<p>Il faut donc :</p>
+<ul>
+<li>ajouter le fichier Extract.cs au répertoire de travail (clic-droit,
+TortoiseSVN, Add..., OK, OK)</li>
+<li>mais aussi supprimer le fichier NouvelleClasse.cs du répertoire de travail
+(clic-droit, &quot;SVN Check for modification&quot;, clic-droit sur NouvelleClasse.cs,
+Delete)</li>
+</ul>
+<p><img src="/public/2008/02-fichier-ko-renommer.png" alt=""></p>
+<ul>
+<li>commiter les modifications apportées au projet D:\Portals\Tests
+(clic-droit, SVN Commit...)</li>
+</ul>
+<p><img src="/public/2008/03-fichier-ko-renommer.png" alt=""> <img src="/public/2008/04-fichier-ko-renommer.png" alt=""></p>
+<p>Le souci avec cette méthode, c'est que en ce qui concerne Subversion, la vie
+du fichier Extract.cs vient juste de commencer et qu'il ne fait absolument pas
+le lien avec fichier NouvelleClasse.cs qui vient d'être supprimé. Par
+conséquent, il sera incapable de me donner l'historique des modifications
+apportés depuis la création du fichier NouvelleClasse.cs</p>
+<h2>2° méthode : la bonne</h2>
+<p>C'est pourquoi il existe une autre méthode, un peu moins naturelle, mais
+beaucoup plus avantageuse.</p>
+<ul>
+<li>Dans l'explorateur de solution de Visual Studio, faire un clic-droit sur le
+fichier NouvelleClasse.cs et choisir de l'exclure du projet (le plus dur c'est
+de perdre l'habitude de choisir Renommer)</li>
+<li>Dans l'explorateur de fichiers Windows, faire un clic-droit sur le fichier
+NouvelleClasse.cs, choisir TortoiseSVN puis l'option Rename...</li>
+</ul>
+<p><img src="/public/2008/05-fichier-ok-renommer.png" alt=""></p>
+<ul>
+<li>Et indiquer Extract.cs comme nouveau nom de fichier puis valider</li>
+</ul>
+<p><img src="/public/2008/06-fichier-ok-renommer.png" alt=""></p>
+<ul>
+<li>Repasser dans l'explorateur de solution de Visual Studio, faire un
+clic-droit sur le projet et ajouter un élément existant, en l'occurrence le
+fichier Extract.cs</li>
+</ul>
+<p>Une fois cela terminé sans se planter, on peut souffler un peu avant de
+recompiler le projet et sauver le tout. Si on revient dans l'explorateur de
+fichiers de Windows, on peut constater que les 2 fichiers CheckUrls.csproj et
+Extract.cs sont repérés.</p>
+<p><img src="/public/2008/07-fichier-ok-renommer.png" alt=""></p>
+<p>C'est mieux qu'avec la mauvaise méthode : on n'a même pas à ajouter
+Extract.cs et à supprimer NouvelleClasse.cs du répertoire de travail. Comme
+quoi, quand on fait les choses bien, on est toujours gagnant.</p>
+<p>Et pour finir, il ne reste plus qu'à commiter les modifications d'un
+clic-droit sur le répertoire D:\Portals\Tests suivi de &quot;SVN
+Commit...&quot; :</p>
+<p><img src="/public/2008/08-fichier-ok-renommer.png" alt=""></p>
+<p>Par rapport à la mauvaise méthode, on peut constater que le statut du
+fichier est &quot;added (+)&quot; au lieu d'un simple &quot;added&quot;.</p>
+<p><img src="/public/2008/09-fichier-ok-renommer.png" alt=""></p>
+<p>Et ce coup-ci, si on consulte l'historique du fichier Extract.cs (clic-droit
+sur le fichier puis TortoiseSVN et &quot;Show Log&quot;, on peut vérifier que du point de
+vue de Subversion, il n'y a pas eu disparition d'un fichier et apparition d'un
+nouveau fichier mais que c'est toujours le même fichier NouvelleClasse.cs qui a
+juste subi un changement de nom.</p>
+<p><img src="/public/2008/10-fichier-ok-renommer.png" alt=""></p>
+<p><em>Note : Bien entendu, vous ne devez pas essayer de faire la mauvaise
+méthode chez vous.</em></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/12/23/gerer-fichiers-depot-subversion-modifier/" hreflang="fr-FR">Gérer les fichiers d&#39;un dépôt Subversion : modifier</a>
+  <a rel="next" href="/2009/01/06/gerer-fichiers-depot-subversion-supprimer/" hreflang="fr-FR">Gérer les fichiers d&#39;un dépôt Subversion : supprimer</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

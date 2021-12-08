@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A new CSS and 5 tips to know - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/12/17/new-css-tips-to-know/" />
+<meta property="og:title" content="A new CSS and 5 tips to know" />
+<meta name="description" content="For the coming new year, I have refreshed the visual style of my blog. Besides the &#39;tout nouveau, tout beau&#39; point, it allowed me to find 2 or 3 things from CSS and Jekyll that I didn&#39;t know." />
+<meta property="og:description" content="For the coming new year, I have refreshed the visual style of my blog. Besides the &#39;tout nouveau, tout beau&#39; point, it allowed me to find 2 or 3 things from CSS and Jekyll that I didn&#39;t know." />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/12/17/new-css-tips-to-know/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/sapin-de-noel.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-12-17T10:09:42.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-12-17T10:09:42.000Z","datePublished":"2019-12-17T10:09:42.000Z","description":"For the coming new year, I have refreshed the visual style of my blog. Besides the 'tout nouveau, tout beau' point, it allowed me to find 2 or 3 things from CSS and Jekyll that I didn't know.","inLanguage":"en-US","url":"https://blog3.pagesd.info/2019/12/17/new-css-tips-to-know/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/sapin-de-noel.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/12/17/new-css-tips-to-know/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/sapin-de-noel.jpg" alt="Christmas tree - Rodion Kutsaev" /><figcaption><a href="https://unsplash.com/photos/ySNkCkdKyTY">Christmas tree - Rodion Kutsaev</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/12/17/new-css-tips-to-know/">A new CSS and 5 tips to know</a>
+    </h1>
+    <p>
+      <span>2019-12-17</span>
+      <span>#css</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>For the coming new year, I have refreshed the visual style of my blog. Besides the &quot;tout nouveau, tout beau&quot; point, it allowed me to find 2 or 3 things from CSS and <a href="https://jekyllrb.com/">Jekyll</a> that I didn't know.</p>
+<p>I started by changing the font. Until recently, I used to like the &quot;Century Gothic&quot; font a lot, but lately I've preferred to stick to system fonts.</p>
+<ul>
+<li>Before: <code>font-family: &quot;Century Gothic&quot;, &quot;Trebuchet MS&quot;, Verdana, Helvetica, Sans-Serif;</code></li>
+<li>After: <code>font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif;</code></li>
+</ul>
+<p>I also increased the default font size and came back to a &quot;true&quot; black to improve readability.</p>
+<ul>
+<li>Before: <code>color: #444; font-size: 14px;</code></li>
+<li>After: <code>color: #000; font-size: 16px;</code></li>
+</ul>
+<p>During my last style update, I decided to no longer display the content in the center of the screen, but rather on the left side. Finally (or at least for now), I find that centering the content is clearer and that it gives some &quot;page&quot; aspect that makes reading easier.</p>
+<ul>
+<li>After: <code>.container { margin: 0 auto; padding: 1rem; }</code></li>
+</ul>
+<p>And to improve the readability and clean side of the page, I have increased the horizontal &quot;margin&quot; on PC screens:</p>
+<pre><code class="language-css">@media screen and (min-width: 48rem) {
+    .container {
+        padding: 1rem 3rem;
+    }
+}
+</code></pre>
+<p>I like to separate internal and external links. Over time, I have tried different solutions: adding an icon next to external links, underlining external links only (or vice versa), using a different color for each type of link... For this time, I choose to present external links with a light bold.</p>
+<ul>
+<li>After: <code>a[href*='//'] { font-weight: 600; }</code></li>
+</ul>
+<p><strong>Tip #1</strong>: I said &quot;light&quot; bold because before (the last time I tried), using <code>font-weight: 600;</code> or <code>font-weight: 900;</code> didn't make any difference. Now I can see the difference very clearly, at least on my PC....</p>
+<p>For my titles, I more or less kept what I had in the previous version, especially in terms of colors.</p>
+<ul>
+<li>h1: blue =&gt; blog name and main navigation</li>
+<li>h2: chocolate =&gt; post title</li>
+<li>h3: green =&gt; post subtitles</li>
+<li>h4: grey =&gt; level 2 subtitles</li>
+</ul>
+<p>I was therefore satisfied with the following modifications:</p>
+<ol>
+<li>The blog title (h1) is <code>16px</code> by default and changes to <code>1.5rem</code> on PC screens</li>
+<li>I increased the size of the other titles and their vertical margins to improve readability</li>
+<li>The post title (h2) is now centered, which makes it much more visible on small screens</li>
+<li>Added <code>line-height: 1;</code> to avoid too big line spacing when titles expand on several lines with small screens</li>
+</ol>
+<p>For the source code parts, I tried to do a bit like <a href="https://dev.to/">dev.to</a> and highlight them compared to the rest of the content. To do this, I used:</p>
+<ul>
+<li>a &quot;very light&quot; gray background color: <code>background-color: #f8f8f8f8;</code></li>
+<li>slightly darker vertical borders: <code>border-color: #eee;</code></li>
+</ul>
+<p>But above all, I &quot;stick&quot; this block to the edges of the page, so that it looks better compared to the rest of the content (especially on PC screens).</p>
+<pre><code class="language-css">.container { padding: 1rem; }
+pre { margin: 1rem -1rem; }
+
+@media screen and (min-width: 48rem) {
+    .container { padding: 1rem 3rem; }
+    pre { margin: 1rem -3rem; }
+}
+</code></pre>
+<p>And finally, I shared this style with the one for other types of &quot;blocks&quot;, such as quotes and <code>div.insert</code>:</p>
+<pre><code class="language-css">blockquote, pre, .encart {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+    clear: both;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    margin: 1rem -1rem;
+    padding: .5rem 1rem;
+    text-align: left;
+}
+
+blockquote {
+    background-color: #fbfaea; /* ocre */
+    border-color: #e3d0aa;
+}
+
+pre {
+    background-color: #f8f8f8; /* gris */
+    border-color: #eee;
+    font-size: small;
+}
+
+.encart {
+    background-color: #eaf7ff; /* bleu */
+    border-color: #6b90da;
+}
+</code></pre>
+<p><strong>Tip #2</strong>: <code>color-adjust: exact</code> allows these blocks to also have a background color when printed.</p>
+<p>Also, for source code, I used again a snippet of CSS which automatically word-wrap line inside source code. This avoids having to scroll horizontally to see the entire code or worse to lose end of lines when printing.</p>
+<pre><code class="language-css">/* https://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag */
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap !important;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+</code></pre>
+<p>After a few tries, I decided to reserve this for PC screens and printing.</p>
+<p>Speaking of printing, I also made sure that the full width of the page is used:</p>
+<pre><code class="language-css">@media print {
+    .container {
+        max-width: 100rem;
+        padding: 0 !important;
+    }
+}
+</code></pre>
+<p>But despite everything, you must leave some margin otherwise everything is stuck on the edges of the page. A simple <code>margin</code> or<code> padding</code> is not enough:</p>
+<ul>
+<li>this has an effect on the horizontal margins =&gt; ok</li>
+<li>the margin-top only works on the 1st printed page =&gt; ko</li>
+<li>the margin-bottom only works on the last printed page =&gt; ko</li>
+</ul>
+<p>That's where my <strong>tip #3</strong> comes in:</p>
+<pre><code class="language-css">@page {
+    margin: 1.5cm 1cm; /* centimeters for IE */
+}
+</code></pre>
+<p>And of course, for the impressions to be perfect, I hide unnecessary content:</p>
+<pre><code class="language-css">@media print {
+    div &gt; header, nav, .pub { display: none; }
+}
+</code></pre>
+<p>Not bad at all. I still had to make 2 more changes. First, I have a problem with the archive page that generates list with <code>&lt;li&gt;&lt;p&gt;Post title&lt;/p&gt;&lt;/li&gt;</code>. This makes a big interline between the different posts of the same month. Rather than bother to understand the problem, I go with a CSS tweak:</p>
+<pre><code class="language-css">li p {
+    margin: 0 auto; /* archives page generate &lt;li&gt;&lt;p&gt;...&lt;/p&gt;&lt;/li&gt; */
+}
+</code></pre>
+<p>And lately, I have sometimes used an &quot;encart&quot; div to display a table of contents. For example:</p>
+<pre><code class="language-markdown">&lt;div class=&quot;encart&quot;&gt;
+
+1. [Comment j'ai (bientôt) remplacé jQuery](/2019/04/30/dquery-remplacer-jquery/)
+2. [Une version compatible IE9 / ES5](/2019/05/07/dquery-compatibilite-ie9-es5/)
+3. [Ma librairie pour manipuler le DOM](/2019/05/14/dquery-librairie-js-manipulation-dom/)
+4. [La délégation des évènements en JS](/2019/05/21/dquery-delegation-evenement-javascript/)
+5. [Délégation d'évènements et « event.target »](/2019/05/28/dquery-delegation-evenement-event-target/)
+6. [Délégation d'évènements et iOS](/2019/06/04/dquery-delegation-evenement-ios/)
+
+&lt;/div&gt;
+</code></pre>
+<p>Well, that doesn't work... The Markdown code inside the <code>div</code> tag is not transformed into html :( For the simplest cases with only one link, I used to replace the <code>div.encart</code> tag by its Markdown equivalent, using the <code>{:.encart}</code> syntax:</p>
+<pre><code>&lt;div class=&quot;encart&quot;&gt;
+
+Version en français : &lt;a href=&quot;/2019/12/09/menu-hamburger-bootstrap-vanilla-js/&quot; hreflang=&quot;fr-FR&quot;&gt;Gérer le menu hamburger de Bootstrap 4 en Vanilla JS&lt;/a&gt;.
+
+&lt;/div&gt;
+</code></pre>
+<p>For more complicated cases, I had given up and written everything in HTML. But during the revision of my CSS style, I look a little further and fortunately there is a solution: <a href="https://stackoverflow.com/a/23384161">Embedding Markdown in Jekyll HTML</a>.</p>
+<p><strong>Tip #4</strong>: Just add a <code>markdown=&quot;1&quot;</code> attribute to make the Markdown code inside an HTML tag also correctly transformed.</p>
+<pre><code class="language-markdown">&lt;div class=&quot;encart&quot; markdown=&quot;1&quot;&gt;
+
+...
+
+&lt;/div&gt;
+</code></pre>
+<p>I know I insist, but here's a <strong>5th tip</strong>: always create a print CSS to ensure a good result when printing.</p>
+<div class="encart">
+<p>Version en français : <a href="/2019/12/16/nouvelle-css-quelques-trucs/" hreflang="fr-FR">Nouvelle CSS et 5 trucs bons à savoir</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/12/16/nouvelle-css-quelques-trucs/" hreflang="fr-FR">Nouvelle CSS et 5 trucs bons à savoir</a>
+  <a rel="next" href="/2019/12/23/update-table-from-another-table/" hreflang="en">Updating a table from another table</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

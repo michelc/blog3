@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer une nouvelle Toolbox en C# - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/09/23/creer-nouvelle-toolbox-c-sharp/" />
+<meta property="og:title" content="Créer une nouvelle Toolbox en C#" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/09/23/creer-nouvelle-toolbox-c-sharp/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-09-23T13:01:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-09-23T13:01:00.000Z","datePublished":"2004-09-23T13:01:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2004/09/23/creer-nouvelle-toolbox-c-sharp/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/09/23/creer-nouvelle-toolbox-c-sharp/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/09/23/creer-nouvelle-toolbox-c-sharp/">Créer une nouvelle Toolbox en C#</a>
+    </h1>
+    <p>
+      <span>2004-09-23</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce document explique comment créer une nouvelle Toolbox sous forme de
+Private Assembly. Une Toolbox regroupe logiquement plusieurs briques dans une
+même Private Assembly et physiquement les sous-répertoires relatifs à chacune
+de ces briques dans un même répertoire. L'exemple qui suit montre de façon
+détaillée comment créer la Toolbox Exemples. Plus tard, nous verrons comment
+ajouter des briques à l'intérieur de celle-ci.</p>
+<ul>
+<li>Lancer Visual Studio 2003 et ouvrir la solution portal.</li>
+<li>Créér le projet correspondant à la Private Assembly
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur la
+solution &quot;portal&quot; et choisir Ajouter - Nouveau Projet</li>
+<li>dans la boite de dialogue sélectionner le type de projet &quot;Projet Visual C#&quot;
+et le modèle &quot;Projet Web Vide&quot;</li>
+<li>définir l'emplacement à http://localhost/inportal/Exemples et valider en
+cliquant sur OK</li>
+</ul>
+</li>
+<li>Renommer le projet
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le projet
+qui vient d'être créé (Animation dans le cas présent) et choisir Renommer puis
+indiquer &quot;inPortal.Exemples&quot;</li>
+<li>cliquer à nouveau avec le bouton droit sur le projet et choisir
+Propriétés</li>
+<li>dans la boite de dialogue, sélectionner Propriété communes - Général</li>
+<li>définir Nom de l'assembly à &quot;inPortal.Exemples&quot;</li>
+<li>définir Espace de noms par défaut à &quot;inPortal.Exemples&quot;</li>
+</ul>
+</li>
+<li>Ajouter des références
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Références&quot; du projet &quot;inPortal.Exemples&quot; et choisir Ajouter une
+référence</li>
+<li>cliquer sur l'onglet &quot;Projets&quot;</li>
+<li>sélectionner &quot;inPortal&quot; et valider</li>
+</ul>
+</li>
+<li>Référencer le projet
+<ul>
+<li>dans l'explorateur de solutions, cliquer avec le bouton droit sur le
+dossier &quot;Références&quot; du projet &quot;inPortal.Framework&quot; et choisir Ajouter une
+référence</li>
+<li>cliquer sur l'onglet &quot;Projets&quot;</li>
+<li>sélectionner &quot;inPortal.Exemples&quot; et valider</li>
+</ul>
+</li>
+<li>Générer la solution
+<ul>
+<li>dans la barre de menu, cliquer sur Générer - Générer la solution
+(Ctrl+Maj+B)</li>
+<li>le résultat doit être de la forme &quot;Génération : 9 a réussi, 0 a
+échoué, 0 a été ignoré&quot;</li>
+</ul>
+</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/09/23/meta-robots/" hreflang="fr-FR">Meta Robots</a>
+  <a rel="next" href="/2004/09/23/creer-nouvelle-brick-c-sharp/" hreflang="fr-FR">Créer une nouvelle Brick en C#</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

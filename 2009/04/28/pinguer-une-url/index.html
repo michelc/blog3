@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pinguer une Url - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/04/28/pinguer-une-url/" />
+<meta property="og:title" content="Pinguer une Url" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/04/28/pinguer-une-url/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-04-28T09:30:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-04-28T09:30:00.000Z","datePublished":"2009-04-28T09:30:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/04/28/pinguer-une-url/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/04/28/pinguer-une-url/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/04/28/pinguer-une-url/">Pinguer une Url</a>
+    </h1>
+    <p>
+      <span>2009-04-28</span>
+      <span>#code-snippets</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Il est quelquefois très pratique de pouvoir exécuter un traitement sur un
+site web. Par exemple, dans PI il existe une page pour sauvegarder
+automatiquement la base de données. Le problème, c'est que sous Windows, il
+n'est pas possible de faire une tache planifiée qui appelle directement une
+page web.</p>
+<p>J'avais écrit il y a quelques temps un petit utilitaire UrlPing pour faire
+une requête sur une page web en indiquant simplement l'url à atteindre. Tout
+marchait plutôt bien depuis plus d'un an jusqu'à ce qu'hier j'essaie de
+l'utiliser avec une url qui ne correspond pas à un &quot;vrai&quot; fichier .aspx mais à
+une url &quot;rewritée&quot;. Et là, cela provoque une erreur du type &quot;<a href="http://stackoverflow.com/questions/518181/too-many-automatic-redirections-were-attempted-error-message-when-using-a-httpweb">Tentatives de redirection
+automatique trop nombreuses</a>&quot;.</p>
+<p>J'en ai donc profité pour améliorer le code et le publier si jamais cela
+intéresse quelqu'un.</p>
+<pre><code>using System;
+using System.Net;
+
+namespace Altrr.Tools.UrlPing
+{
+  class Start
+  {
+    [STAThread]
+    static void Main(string[] args)
+    {
+      if (args.Length == 1)
+      {
+        string url = args[0];
+        Console.Write(url + &quot; : &quot;);
+        try
+        {
+          var request = (HttpWebRequest)HttpWebRequest.Create(url);
+          request.CookieContainer = new CookieContainer();
+          request.Method = &quot;HEAD&quot;;
+
+          var response = (HttpWebResponse)request.GetResponse();
+          Console.WriteLine(&quot;OK (&quot; + Convert.ToInt32(response.StatusCode) + &quot; - &quot; + response.StatusDescription + &quot;)&quot;);
+
+          string urlr = response.ResponseUri.ToString();
+          if (url != urlr) {
+            Console.WriteLine(&quot;-------\n&quot; + urlr);
+          }
+        }
+        catch (Exception ex)
+        {
+          Console.WriteLine(&quot;KO\n-------\n&quot; + ex.Message);
+        }
+      }
+      else
+      {
+        Console.WriteLine(&quot;Syntax : UrlPing url&quot;);
+      }
+    }
+  }
+}
+</code></pre>
+<h2>Mises à jour</h2>
+<p>Si jamais le site visé renvoie une erreur <code>401 - Non autorisé</code> et que
+l'authentification est basé sur Active Directory, il faut initialiser l'objet
+<code>HttpWebRequest</code> de la façon suivante :</p>
+<pre><code>          request.Method = &quot;GET&quot;;
+          request.UseDefaultCredentials = true;
+          request.PreAuthenticate = true;
+          request.Credentials = CredentialCache.DefaultCredentials;
+</code></pre>
+<p>Dans le cas où l'utilisateur en cours n'aurait pas les droits nécessaires, c'est
+juste un petit peu plus compliqué :</p>
+<pre><code>          request.Method = &quot;GET&quot;;
+          request.UseDefaultCredentials = false;
+          request.PreAuthenticate = true;
+          var cache = new CredentialCache();
+          cache.Add(new Uri(url)
+                  , &quot;NTLM&quot;
+                  , new NetworkCredential(&quot;username&quot;, &quot;password&quot;, &quot;domain&quot;));
+          request.Credentials = cache;
+</code></pre>
+<p>Et pour mémoire, ça ne marche pas du tout avec <code>request.Method = &quot;HEAD&quot;;</code> !</p>
+<h2>Version PowerShell</h2>
+<pre><code># Crée un objet PSCredential
+# (pour ne pas avoir à saisir login/motpasse interactivement)
+
+$mon_password = ConvertTo-SecureString &quot;password&quot; -AsPlainText -Force
+$mon_credential = New-Object System.Management.Automation.PSCredential (&quot;domain\username&quot;, $mon_password)
+
+# Pingue l'URL
+
+$mon_url = &quot;http://www.mon-intranet.com/&quot;
+Invoke-RestMethod -Uri $mon_url -Credential $mon_credential
+</code></pre>
+<p>Sources :</p>
+<ul>
+<li><a href="https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.utility/invoke-restmethod">https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.utility/invoke-restmethod</a></li>
+<li><a href="https://blogs.msdn.microsoft.com/koteshb/2010/02/12/powershell-how-to-create-a-pscredential-object/">https://blogs.msdn.microsoft.com/koteshb/2010/02/12/powershell-how-to-create-a-pscredential-object/</a></li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/04/21/systemnetmail-smtpgmailcom/" hreflang="fr-FR">System.Net.Mail et smtp.gmail.com</a>
+  <a rel="next" href="/2009/06/05/ouvrir-document-dehors-navigateur/" hreflang="fr-FR">Ouvrir un document en dehors du navigateur</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

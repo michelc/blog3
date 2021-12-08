@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Remplir les champs d&#39;un formulaire PDF - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/09/26/remplir-champs-formulaire-pdf/" />
+<meta property="og:title" content="Remplir les champs d&#39;un formulaire PDF" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/09/26/remplir-champs-formulaire-pdf/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-09-26T08:09:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-09-26T08:09:00.000Z","datePublished":"2008-09-26T08:09:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/09/26/remplir-champs-formulaire-pdf/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/09/26/remplir-champs-formulaire-pdf/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/09/26/remplir-champs-formulaire-pdf/">Remplir les champs d&#39;un formulaire PDF</a>
+    </h1>
+    <p>
+      <span>2008-09-26</span>
+      <span>#boulot</span><span>#csharp</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Après avoir réussi à <a href="/2008/09/25/lister-champs-formulaire-pdf/">lister les champs d'un
+formulaire PDF</a>, ce coup-ci je fais un premier essai pour mettre des données
+dans mon formulaire. Pour commencer, je me contente d'y mettre un compteur
+numérique, ce qui va me permettre de repérer chaque champ dans le
+formulaire.</p>
+<pre><code>namespace Altrr.iText {
+
+    using System;
+    using System.Collections;
+    using System.IO;
+    using iTextSharp.text.pdf;
+
+    /// &lt;summary&gt;
+    /// Tests du composant iTextSharp
+    /// &lt;/summary&gt;
+    public class Start {
+
+        /// &lt;summary&gt;
+        /// Point d'entrée principal de l'application.
+        /// &lt;/summary&gt;
+        [STAThread]
+        static void Main (string[] args) {
+
+            string pdfSource = @&quot;D:\Altrr\iText\register_form1.pdf&quot;;
+            if (args.Length == 1) {
+                pdfSource = args[0];
+            }
+            FillFields(pdfSource);
+
+        }
+
+        /// &lt;summary&gt;
+        /// Remplis les différents champs d'un formulaire PDF
+        /// &lt;/summary&gt;
+        static void FillFields (string pdfSource) {
+
+            // Création d'un objet PDF Reader basé sur le formulaire PDF
+            Console.WriteLine(pdfSource + &quot; :&quot;);
+            PdfReader pdfReader = new PdfReader(pdfSource);
+
+            // Création d'un objet PDF Stamper à partir du formulaire PDF
+            string pdfRempli = pdfSource.Replace(&quot;.pdf&quot;, &quot;_test.pdf&quot;);
+            PdfStamper pdfStamper = new PdfStamper(pdfReader, new FileStream(pdfRempli, FileMode.Create));
+            AcroFields fields = pdfStamper.AcroFields;
+
+            // Boucle pour remplir les différents champs
+            int i = 0;
+            foreach (DictionaryEntry field in fields.Fields) {
+                // nom du champ
+                string key = field.Key.ToString();
+                // type du champ (et selon le cas liste des valeurs possibles)
+                string type = &quot;&quot;;
+                i++;
+                string data = i.ToString();
+                string[] list = null;
+                switch (fields.GetFieldType(key)) {
+                    case AcroFields.FIELD_TYPE_CHECKBOX:
+                        type = &quot;CheckBox&quot;;
+                        list = fields.GetAppearanceStates(key);
+                        break;
+                    case AcroFields.FIELD_TYPE_COMBO:
+                        type = &quot;Combo&quot;;
+                        list = fields.GetListOptionExport(key);
+                        break;
+                    case AcroFields.FIELD_TYPE_LIST:
+                        type = &quot;List&quot;;
+                        list = fields.GetListOptionExport(key);
+                        break;
+                    case AcroFields.FIELD_TYPE_NONE:
+                        type = &quot;None&quot;;
+                        break;
+                    case AcroFields.FIELD_TYPE_PUSHBUTTON:
+                        type = &quot;PushButton&quot;;
+                        break;
+                    case AcroFields.FIELD_TYPE_RADIOBUTTON:
+                        type = &quot;RadioButton&quot;;
+                        list = fields.GetAppearanceStates(key);
+                        break;
+                    case AcroFields.FIELD_TYPE_SIGNATURE:
+                        type = &quot;Signature&quot;;
+                        break;
+                    case AcroFields.FIELD_TYPE_TEXT:
+                        type = &quot;Text&quot;;
+                        break;
+                }
+                if (list != null) {
+                    data = list[list.Length - 1];
+                }
+                Console.WriteLine(&quot;- &quot; + key + &quot; : &quot; + data);
+                fields.SetField(key, data);
+            }
+            // Fermeture du formulaire PDF rempli
+            pdfStamper.Close();
+        }
+
+    }
+}
+</code></pre>
+<p>Maintenant, il me reste à trouver comment éviter de créer physiquement un
+nouveau fichier à chaque fois. Étant donné que c'est destiné à être utilisé
+dans une application ASP.NET, je préfèrerais trouver une méthode qui me
+permette de renvoyer directement le résultat vers le poste client. Normalement,
+c'est le genre de chose qui devrait se trouver facilement sur Google (à
+condition que cela soit réalisable).</p>
+<p>Et ce qui serait bien, c'est de voir s'il est possible à partir du
+formulaire modèle de remplir plusieurs pages avec des données différentes
+données. De cette façon, je pourrais gérer des impressions groupées de
+plusieurs documents à la fois.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/09/25/lister-champs-formulaire-pdf/" hreflang="fr-FR">Lister les champs d&#39;un formulaire PDF</a>
+  <a rel="next" href="/2008/09/29/repeter-formulaire-pdf-plusieurs-pages/" hreflang="fr-FR">Répéter un formulaire PDF sur plusieurs pages</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

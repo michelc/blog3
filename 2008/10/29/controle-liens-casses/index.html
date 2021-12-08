@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contrôle des liens cassés - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/10/29/controle-liens-casses/" />
+<meta property="og:title" content="Contrôle des liens cassés" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/10/29/controle-liens-casses/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-10-29T16:23:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-10-29T16:23:00.000Z","datePublished":"2008-10-29T16:23:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/10/29/controle-liens-casses/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/10/29/controle-liens-casses/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/10/29/controle-liens-casses/">Contrôle des liens cassés</a>
+    </h1>
+    <p>
+      <span>2008-10-29</span>
+      <span>#ap</span><span>#referencement</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>À force de référencer des sites dans l'<a href="http://07-ardeche.com/">annuaire sur l'Ardèche</a>, il faut aussi de temps en
+temps penser à vérifier que tout les liens enregistrés sont toujours bien
+valides.</p>
+<p>Pour cela, la table dir_Links contient un champ <code>status</code> qui est
+initialisé à 0 par défaut lors de la création pour indiquer qu'il s'agit d'un
+lien valide. Le principe est ensuite de faire varier cette valeur de la façon
+suivante :</p>
+<ul>
+<li>augmenter cette valeur de 1 à chaque fois que le lien ne fonctionne
+pas</li>
+<li>remettre cette valeur à zéro lorsque le lien est re-valide</li>
+</ul>
+<p>Et bien entendu, lorsque cette valeur est trop élevée il convient de
+supprimer le lien. La notion de &quot;trop élevé&quot; va dépendre du nombre de fois où
+on a contrôlé les liens cassés. Dans le cas où on on fait un contrôle général
+par mois, on peut considérer que 2 ou 3 c'est déjà une valeur trop élevée.</p>
+<p>Pour réaliser le contrôle des urls référencées, j'ai développé un petit
+utilitaire qui prend la liste des liens existants, contrôle que leur url répond
+correctement puis génère un état récapitulatif.</p>
+<h2>Utilisation</h2>
+<p>Pour commencer, il faut créer la requête suivante dans la base de
+données :</p>
+<pre><code>SELECT dir_Links.idLink AS id, dir_Links.title, dir_Links.url, dir_Links.status
+FROM   dir_Links
+ORDER BY dir_Links.idLink;
+</code></pre>
+<p>Puis exécuter cette requête et exporter son résultat au format TXT
+(tabulations, nom champ sur 1° ligne, aucun délimiteur chaine) dans
+D:\Portals\pi\pi_test.txt.</p>
+<p>Et pour finir, on lance le programme CheckUrls =&gt; après 5 à 10 minutes
+cela aura généré un fichier pi_test.html avec les liens posant problèmes,
+regroupés par type de problèmes.</p>
+<h2>Contenu de http://localhost/pi/pi_test.html</h2>
+<ul>
+<li>1° colonne : champ status actuel (0 : OK, &gt;0 : KO)</li>
+<li>2° colonne : titre du lien dans PI (clic pour formulaire mise à
+jour)</li>
+<li>3° colonne : url du lien dans PI (clic pour aller sur le site)</li>
+<li>4° colonne : erreur http</li>
+<li>5° colonne : url obtenue (clic pour la suivre)</li>
+<li>6° colonne : complément erreur / url obtenue</li>
+</ul>
+<p>Il est possible de copier ce fichier sur le site de production. De cette
+façon, si on est connecté en tant qu'administrateur, on peut aller directement
+mettre à jour le lien en cliquand sur la 2° colonne de ce rapport.</p>
+<h2>Types de problèmes</h2>
+<ul>
+<li>resurrected : liens avec status &gt; 0 qui &quot;re-marchent&quot; =&gt; à
+vérifier et réactiver</li>
+<li>permanent : redirection permanente =&gt; généralement à prendre en
+compte sauf si redirige vers une &quot;ferme&quot; à liens</li>
+<li>notfound : n'existent plus (ou n'aiment pas les robots)</li>
+<li>redirect : redirection plus ou moins bien faite =&gt; à traiter au cas
+par cas</li>
+<li>others : autres résultats bizarres</li>
+<li>ok : tout ce qui va bien</li>
+</ul>
+<h2>Que faire de ça</h2>
+<ul>
+<li>toujours vérifier le nouveau lien avant mise à jour</li>
+<li>ne pas oublier de mettre à jour le champ status dans le formulaire du
+lien</li>
+<li>essayer de prendre en compte les permanent redirect</li>
+<li>être plus circonspect avec les autres redirect</li>
+<li>m'a permis de corriger quelques erreurs de frappe (http:wwwtoto.com au lieu
+de http:www.toto.com)</li>
+<li>dans un premier temps corriger les sructures d'urls qui ont changés
+(sitesperso.orange.fr/xxxx en perso.orange.fr/xxxx, aliceadsl... ou
+www.toto.com/sitev1/ en www.toto.com ...)</li>
+<li>ne pas toucher quand www.azerty.com remplacé par azerty.free.fr ou autre et
+que www.azerty.com marche toujours</li>
+<li>ne pas toucher quand www.azerty.fr.st remplacé par azerty.free.fr ou autre
+et que www.azerty.fr.st marche toujours (quoique ?)</li>
+<li>corriger quand www.azerty.com redirigé permanent sur azerty.com</li>
+<li>quand un lien est cassé et que mène sur rien ou erreur =&gt; espérer que ce
+n'est qu'un pb temporaire et donc ne pas supprimer immédiatement</li>
+<li>quand un lien mène sur une &quot;ferme&quot; à lien qui nous propose d'acheter le
+lien =&gt; soit la boite a disparue, soit elle a dû changer d'url (parce
+qu'elle a changé de prestataire ?)</li>
+<li>quand un lien ne marche plus, faire des recherches sur titre lien / tag /
+commune =&gt; on peut arriver à découvrir la nouvelle adresse du site</li>
+<li>etc...</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/10/22/vignettes-ecrans/" hreflang="fr-FR">Faire des vignettes d&#39;écrans de sites internet</a>
+  <a rel="next" href="/2008/10/30/nouveau-theme-boxed/" hreflang="fr-FR">Nouveau thème Boxed</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mise à jour de la configuration de Jekyll - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/12/30/maj-configuration-jekyll/" />
+<meta property="og:title" content="Mise à jour de la configuration de Jekyll" />
+<meta name="description" content="Après avoir un peu rafraîchi la charte graphique de mon blogue, je me suis lancé dans sa mise à jour. Depuis que j&#39;étais passé de GandiBlog à Jekyll il restait toujours quelques bricoles à faire. Comme je me suis remis à bloguer, ça vaut le coup de m&#39;y attaquer." />
+<meta property="og:description" content="Après avoir un peu rafraîchi la charte graphique de mon blogue, je me suis lancé dans sa mise à jour. Depuis que j&#39;étais passé de GandiBlog à Jekyll il restait toujours quelques bricoles à faire. Comme je me suis remis à bloguer, ça vaut le coup de m&#39;y attaquer." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/12/30/maj-configuration-jekyll/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/source-code.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-12-30T11:16:12.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-12-30T11:16:12.000Z","datePublished":"2019-12-30T11:16:12.000Z","description":"Après avoir un peu rafraîchi la charte graphique de mon blogue, je me suis lancé dans sa mise à jour. Depuis que j'étais passé de GandiBlog à Jekyll il restait toujours quelques bricoles à faire. Comme je me suis remis à bloguer, ça vaut le coup de m'y attaquer.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/12/30/maj-configuration-jekyll/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/source-code.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/12/30/maj-configuration-jekyll/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/source-code.jpg" alt="Source code on a screen - Sai Kiran Anagani" /><figcaption><a href="https://unsplash.com/photos/5Ntkpxqt54Y">Source code on a screen - Sai Kiran Anagani</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/12/30/maj-configuration-jekyll/">Mise à jour de la configuration de Jekyll</a>
+    </h1>
+    <p>
+      <span>2019-12-30</span>
+      <span>#jekyll</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Après avoir un peu rafraîchi la charte graphique de mon blogue, je me suis lancé dans sa mise à jour. En fait, depuis que j'étais passé de GandiBlog à Jekyll il y a près de 3 ans, il restait toujours quelques bricoles à faire pour finaliser la migration. Et comme cette année je me suis remis à bloguer, ça vaut le coup de m'y attaquer.</p>
+<h2>Correction du fil Atom</h2>
+<p>Pour commencer, un bug monstrueux : le fil Atom ne fonctionnait pas à cause d'un truc vraiment trop bête. La balise <code>&lt;link rel=&quot;alternate&quot; type=&quot;application/atom+xml&quot;&gt;</code> pointait vers <code>/atom.xml</code> et alors que le fichier &quot;_config.yaml&quot; déclarait <code>path: feed/atom</code>.</p>
+<p>=&gt; correction de l'attribut <code>path</code> dans &quot;_config.yaml&quot; :</p>
+<pre><code class="language-yaml">plugins:
+  - jekyll-feed
+
+feed:
+  path: atom.xml
+</code></pre>
+<p>Grâce à ça, je vois enfin apparaître mes billets dans <a href="http://www.feeddemon.com/">FeedDemon</a> :)</p>
+<h2>Ajout d'images sur les billets</h2>
+<p>Ces derniers temps, j'essaie de mettre des images à chaque fois que je publie un nouveau billet. J'avais commencé avant de republier sur <a href="https://dev.to/">dev.to</a>, mais c'est vrai que le fait d'avoir à chercher une illustration pour eux m'encourage fortement à continuer sur <a href="https://blog.pagesd.info/">blog.pagesd.info</a>. Pour faire apparaître l'image sur ce blog, j'insère le code HTML suivant vers le début de mon billet :</p>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;img src=&quot;/public/2019/sapin-de-noel.jpg&quot; alt=&quot;sapin-de-noel&quot; /&gt;
+  &lt;figcaption&gt;
+    &lt;a href=&quot;https://unsplash.com/photos/ySNkCkdKyTY&quot;&gt;Sapin de Noël - Rodion Kutsaev&lt;/a&gt;
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>Pour l'instant, l'image sur mon blog est dimensionnée en 640 x 480 pixels alors que celle destinée à dev.to est en 1000 x 420 pixels. En attendant d'avoir une seule image pour les 2 publications, je peux déjà enregistrer l'image au niveau du Front Matter YAML pour qu'elle soit automatiquement réutilisée dans le fil Atom :</p>
+<pre><code class="language-markdown">---
+date: 2019-12-16 12:09:42 +02:00
+tags: [ css ]
+title: &quot;Nouvelle CSS et 5 trucs bons à savoir&quot;
+image: &quot;/public/2019/sapin-de-noel.jpg&quot;
+---
+
+...
+
+&lt;figure&gt;
+  &lt;img src=&quot;{{ page.image }}&quot; alt=&quot;sapin-de-noel&quot; /&gt;
+  &lt;figcaption&gt;
+    &lt;a href=&quot;https://unsplash.com/photos/ySNkCkdKyTY&quot;&gt;Sapin de Noël - Rodion Kutsaev&lt;/a&gt;
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>Et je n'ai rien d'autre à faire pour que cette image soit réutilisée par le plugin <a href="https://github.com/jekyll/jekyll-feed">Jekyll Feed</a> :</p>
+<pre><code class="language-xml">&lt;entry&gt;
+  ...
+  &lt;media:thumbnail url=&quot;https://blog.pagesd.info/public/2019/sapin-de-noel.jpg&quot;/&gt;
+  &lt;media:content medium=&quot;image&quot; url=&quot;https://blog.pagesd.info/public/2019/sapin-de-noel.jpg&quot;/&gt;
+&lt;/entry&gt;
+</code></pre>
+<h2>Ajout du plugin Jekyll SEO Tag</h2>
+<p>Maintenant que je défini l'illustration de mes billets dans l'en-tête, je veux bien entendu que cela serve aussi quand je fais de la publicité pour mes billets sur Twitter. Je pourrais faire ça à la main dans le template &quot;_layout/default.html&quot;, mais il existe un plugin qui fait ça et même un peu plus : <a href="https://github.com/jekyll/jekyll-seo-tag">Jekyll SEO Tag</a>.</p>
+<p>Et ce qui est très important, c'est que ce plugin fait partie des rares privilégiés à être accepté par Github Pages : <a href="https://help.github.com/en/github/working-with-github-pages/about-github-pages-and-jekyll#plugins">About GitHub Pages and Jekyll</a> (et suivre le lien &quot;Dependency versions&quot;).</p>
+<p>C'est super simple à faire en 2 temps 3 mouvements. D'abord ajouter ce plugin à la liste des plugins déjà utilisés dans &quot;_config.yaml&quot; :</p>
+<pre><code class="language-yaml">plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+</code></pre>
+<p>Puis j'ajoute <code>{% seo %}</code> dans le template &quot;_layout/default.html&quot; :</p>
+<pre><code class="language-html">    ...
+    {% seo title=false %}
+  &lt;/head&gt;
+</code></pre>
+<p><em>Note : je ne fais pas de <code>gem 'jekyll-seo-tag'</code> pour ajouter le plugin à mon fichier &quot;Gemfile&quot; parce que je n'ai pas installé Jekyll en local. Je compte exclusivement sur Github Pages pour publier mon blogue.</em></p>
+<p>J'ai ajouté <code>title=false</code> pour éviter que le plugin ajoute la balise <code>&lt;title&gt;</code> que j'insère déjà à ma sauce un peu plus haut. Et magie de l'informatique, mes billets comprennent désormais tout un tas de truc en plus pour améliorer le référencement :</p>
+<pre><code class="language-html">&lt;meta name=&quot;generator&quot; content=&quot;Jekyll v3.8.5&quot; /&gt;
+&lt;meta property=&quot;og:title&quot; content=&quot;Nouvelle CSS et 5 trucs bons à savoir&quot; /&gt;
+&lt;meta name=&quot;author&quot; content=&quot;michel&quot; /&gt;
+&lt;meta property=&quot;og:locale&quot; content=&quot;en&quot; /&gt;
+&lt;meta name=&quot;description&quot; content=&quot;English version: A new CSS and 5 tips to know.&quot; /&gt;
+&lt;meta property=&quot;og:description&quot; content=&quot;English version: A new CSS and 5 tips to know.&quot; /&gt;
+&lt;link rel=&quot;canonical&quot; href=&quot;https://blog.pagesd.info/2019/12/16/nouvelle-css-quelques-trucs/&quot; /&gt;
+&lt;meta property=&quot;og:url&quot; content=&quot;https://blog.pagesd.info/2019/12/16/nouvelle-css-quelques-trucs/&quot; /&gt;
+&lt;meta property=&quot;og:site_name&quot; content=&quot;blog.pagesd.info&quot; /&gt;
+&lt;meta property=&quot;og:image&quot; content=&quot;https://blog.pagesd.info/public/2019/sapin-de-noel.jpg&quot; /&gt;
+&lt;meta property=&quot;og:type&quot; content=&quot;article&quot; /&gt;
+&lt;meta property=&quot;article:published_time&quot; content=&quot;2019-12-16T10:09:42+00:00&quot; /&gt;
+&lt;script type=&quot;application/ld+json&quot;&gt;...&lt;/script&gt;
+</code></pre>
+<p>Parfait. Je retrouve bien mon sapin de Noël. Sinon, <code>generator</code> c'est moyen. <code>application/ld+json</code> c'est quoi ? Et par contre, les &quot;descriptions&quot; c'est tout pourri :(</p>
+<h2>Personnalisation du résumé du billet</h2>
+<p>Avec Jekyll, à chaque billet est associé un extrait (&quot;excerpt&quot; en anglais) qui peut être utilisé via <code>post.excerpt</code> dans une table des matières par exemple. C'est aussi ce qu'utilise le plugin Jekyll SEO Tag pour initialiser les descriptions qu'il génère.</p>
+<p>Le problème qu'il y a, c'est que dans mon cas, les extraits générés par Jekyll ne sont pas géniaux. Par défaut, Jekyll prend le premier paragraphe du billet. On peut éventuellement rallonger ça en définissant un <code>excerpt_separator: &lt;!--more--&gt;</code> dans &quot;_config.yaml&quot; puis en marquant la fin de l'extrait par un <code>&lt;!--more--&gt;</code> dans les billets.</p>
+<p>J'ai donc 3 solutions :</p>
+<ol>
+<li>Ajouter un <code>&lt;!--more--&gt;</code> dans tous (?) les billets, mais j'aurais quand même le lien pour la traduction en début de l'extrait</li>
+<li>Enlever le lien vers la traduction en début de billet, mais je trouve plus sympa de prévenir dès le début qu'il existe une version traduite pour ceux que ça intéresse.</li>
+<li>Définir manuellement le contenu de l'extrait par une clé <code>excerpt</code> dans le Front Matter.</li>
+</ol>
+<p>Comme je ne crois pas que Github Pages me laisse créer mes propres plugins dans le répertoire &quot;_plugins&quot; (à tester pour plus tard sans trop d'espoir), je laisse de côté la méthode de <a href="https://dev.to/scottw">Scott Watermasysk</a> : <a href="https://scottw.com/blog/better-jekyll-excerpts/">Better Jekyll Excerpts</a>.</p>
+<p>Pour l'instant, je pars sur la méthode n° 3 et je modifie le Front Matter de mes billets :</p>
+<pre><code class="language-markdown">---
+date: 2019-12-16 12:09:42 +02:00
+tags: [ css ]
+title: &quot;Nouvelle CSS et 5 trucs bons à savoir&quot;
+image: &quot;/public/2019/sapin-de-noel.jpg&quot;
+excerpt: &quot;Pour la nouvelle année à venir, j'ai un peu rafraîchi la charte graphique de mon blogue. Outre le côté 'tout nouveau, tout beau', cela m'a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas.&quot;
+---
+</code></pre>
+<p>Mais je vais pas passer ma vie dessus =&gt; je ne fais ça que pour les billets récents et j'essaierai de m'y tenir à l'avenir. Ou bien je chercherai une autre solution...</p>
+<h2>Changement de la structure des billets</h2>
+<p>Ça c'est un truc perso que je traîne depuis que je blogue. J'ai toujours utilisé la balise <code>&lt;h1&gt;</code> pour le titre du blogue, ce qui me laisse avec la balise <code>&lt;h2&gt;</code> pour le titre du billet et les balises <code>&lt;h3&gt;</code> et <code>&lt;h4&gt;</code> pour les différentes sous-parties de l'article.</p>
+<p>Mais je vois bien que c'est un peu bizarre et que généralement on utilise la balise <code>&lt;h1&gt;</code> pour le titre du billet. Outre le fait que ces jours-ci ce doit être mieux d'un point de vue SEO, cela me permettrait de plus facilement republier mes billets en anglais sur [dev.to] (actuellement je dois faire attention à remplacer les <code>### ... </code> par des <code>## ... </code>).</p>
+<p>Je me suis donc lancé dans toute une série de rechercher / remplacer pour mettre à jour tous mes billets et après avoir corrigé quelques vieux billets mal structurés, je suis enfin entré dans le rang :</p>
+<ul>
+<li>h1 = titre du billet</li>
+<li>h2 = sous-titres du billet</li>
+<li>h3 = sous-titres de niveau 2</li>
+</ul>
+<h2>Mise à jour de la page d'archive</h2>
+<p>Ça faisait partie des bricoles que j'avais prévues de faire il y a 3 ans, à savoir afficher les mois en français et pas en anglais. J'ai trouvé quelques pistes un peu partout :</p>
+<ul>
+<li>L'inévitable Christophe Ducamp : <a href="https://www.christopheducamp.com/2013/12/26/jekyll-localiser-la-date/">Comment localiser la date en français dans Jekyll ?</a></li>
+<li>La mise à jour où il renvoie : <a href="http://ouyaah.legtux.org/informatique/web/2017/05/19/traduire-date-jekyll.html">Traduire la date dans Jekyll</a></li>
+<li>Quelques pistes sur Stack Overflow : <a href="https://stackoverflow.com/questions/10714980/locale-specific-date-in-jekyll">Locale specific date in Jekyll</a></li>
+</ul>
+<p>Au final, j'ai fait ça :</p>
+<pre><code class="language-liquid">  {% capture month %}{{ post.date | date: &quot;%m&quot; }}{% endcapture %}
+  {% if current_month != month %}
+    {% assign current_month = month %}
+### {% case month %}
+      {% when &quot;01&quot; %}Janvier {{ year }}
+      {% when &quot;02&quot; %}Février {{ year }}
+      {% when &quot;03&quot; %}Mars {{ year }}
+      {% when &quot;04&quot; %}Avril {{ year }}
+      {% when &quot;05&quot; %}Mai {{ year }}
+      {% when &quot;06&quot; %}Juin {{ year }}
+      {% when &quot;07&quot; %}Juillet {{ year }}
+      {% when &quot;08&quot; %}Août {{ year }}
+      {% when &quot;09&quot; %}Septembre {{ year }}
+      {% when &quot;10&quot; %}Octobre {{ year }}
+      {% when &quot;11&quot; %}Novembre {{ year }}
+      {% when &quot;12&quot; %}Décembre {{ year }}
+    {% endcase %}
+  {% endif %}
+</code></pre>
+<p>C'est pas très beau et j'ai un peu beaucoup galéré parce que je voulais aussi en profiter ajouter l'année à côté du nom du mois. Et <a href="https://kramdown.gettalong.org/">kramdown</a> s'obstinait à séparer le mois de l'année ce qui fait que je me retrouvais avec le nom du mois en sous-titre <code>&lt;h3&gt;Décembre&lt;/h3&gt;</code> et l'année sur une ligne à part <code>&lt;p&gt;2019&lt;/p&gt;</code>, quand ce n'était pas <code>&lt;pre&gt;2019&lt;/pre&gt;</code>.</p>
+<h2>Suppression de la coloration syntaxique</h2>
+<p>Puisque j'en suis sur kramdown, j'en profite pour supprimer la coloration dans les blocs de code, le fameux &quot;<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code">Code and Syntax Highlighting</a>&quot; de Markdown. Je ne l'utilise pas sur ce blogue et c'est donc du gaspillage que Jekyll perde du temps à générer ça et que Github se ruine à stocker le supplément de code HTML que cela représente.</p>
+<p>La solution est encore une fois sur <a href="https://help.github.com/en/github/working-with-github-pages/about-github-pages-and-jekyll#syntax-highlighting">About GitHub Pages and Jekyll</a> avec 3 lignes supplémentaires dans &quot;_config.yaml&quot; :</p>
+<pre><code class="language-yaml">kramdown:
+  syntax_highlighter_opts:
+    disable : true
+</code></pre>
+<p>Au final, ça fait baisser pas mal la taille de certains billets avec beaucoup de code et ça améliore donc les performances de mon blogue.</p>
+<h2>Sélection de la langue des billets</h2>
+<p>En regardant de plus près mon nouveau fil Atom ou les balises générées par le plugin Jekyll SEO Tag, je me suis rendu compte que j'avais un nouveau problème. Ils indiquent tous les deux que mes billets sont en anglais. Dans certains cas, c'est pas faux, mais dans la grande majorité, c'est pas ça du tout.</p>
+<p>Et comme depuis quelques temps j'essaie de publier mes billets en français et en anglais, c'est quand même un problème sérieux. La solution, c'est de commencer par signaler que mon blogue est en français au niveau du fichier &quot;_config.yaml&quot; :</p>
+<pre><code class="language-yaml">title: blog.pagesd.info
+author: michel
+lang: fr-FR
+</code></pre>
+<p><em>Note : Je ne sais pas trop ce qui est le mieux : <code>fr-FR</code>, <code>fr-fr</code> ou <code>fr</code> tout court.</em></p>
+<p>Puis pour tous les billets en anglais, je modifie le Front Matter pour redéfinir l'attribut <code>lang</code> :</p>
+<pre><code class="language-markdown">---
+date: 2019-12-17 12:09:42 +02:00
+tags: [ css ]
+lang: en-US
+title: &quot;A new CSS and 5 tips to know&quot;
+---
+</code></pre>
+<p>Il faut ensuite modifier le template dans &quot;_layout/default.html&quot; pour utiliser la langue définie dans le billet ou sinon la langue générale du blogue :</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;{{ page.lang | default: site.lang }}&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    ...
+</code></pre>
+<p>Pour faire bonne mesure, je précise aussi la langue dans les liens suivant / précédent en bas de chaque billet :</p>
+<pre><code class="language-html">&lt;nav class=&quot;paginate&quot;&gt;
+  {% if post.previous.url %}
+    &lt;a href=&quot;{{ post.previous.url }}&quot; hreflang=&quot;{{ post.previous.lang | default: site.lang }}&quot;&gt;{{ post.previous.title }}&lt;/a&gt;
+  {% endif %}
+  {% if post.next.url %}
+    &lt;a href=&quot;{{ post.next.url }}&quot; hreflang=&quot;{{ post.next.lang | default: site.lang }}&quot;&gt;{{ post.next.title }}&lt;/a&gt;
+  {% endif %}
+&lt;/nav&gt;
+</code></pre>
+<p>Et aussi dans les liens entre les traductions :</p>
+<pre><code class="language-html">English version: [A new CSS ...]({% post_url &quot;...&quot; %}){:hreflang=&quot;en&quot;}.
+</code></pre>
+<p>Ou :</p>
+<pre><code class="language-html">Version en français : [Nouvelle CSS ...]({% post_url &quot;...&quot; %}){:hreflang=&quot;fr&quot;}.
+</code></pre>
+<p>Le coup du <code>{:hreflang=&quot;xx&quot;}</code> n'a pas été facile à trouver, mais pourtant ça existe bel et bien : <a href="https://kramdown.gettalong.org/syntax.html#inline-links">Additional link attributes can be added by using a span IAL after the inline link</a>.</p>
+<div class="encart">
+<p>English version: <a href="/2019/12/30/jekyll-configuration-update/" hreflang="en-US">Jekyll configuration update</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/12/23/update-table-from-another-table/" hreflang="en">Updating a table from another table</a>
+  <a rel="next" href="/2019/12/30/jekyll-configuration-update/" hreflang="en">Jekyll configuration update</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

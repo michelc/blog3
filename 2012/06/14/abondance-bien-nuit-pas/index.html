@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Abondance de bien ne nuit pas - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/06/14/abondance-bien-nuit-pas/" />
+<meta property="og:title" content="Abondance de bien ne nuit pas" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/06/14/abondance-bien-nuit-pas/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-06-14T20:56:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-06-14T20:56:00.000Z","datePublished":"2012-06-14T20:56:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/06/14/abondance-bien-nuit-pas/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/06/14/abondance-bien-nuit-pas/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/06/14/abondance-bien-nuit-pas/">Abondance de bien ne nuit pas</a>
+    </h1>
+    <p>
+      <span>2012-06-14</span>
+      <span>#ruby</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>J'ai fait une fonction pour générer un Hash qui va me servir dans la vue à
+générer les liens pour un bloc de pagination. Je lui passe le libellé du lien,
+le n° de la page vers laquelle doit pointer le lien et le numéro de la page en
+cours, avec les règles suivantes :</p>
+<ul>
+<li>si la page de destination n'est pas définie, il ne faut pas faire de lien
+mais afficher seulement le texte du lien (c'est utile pour les liens page
+précédente / page suivante quand on a atteint un des bords)</li>
+<li>si la page de destination est la même que la page en cours, il ne faut pas
+faire de lien et avoir un truc pour dire qu'on est sur la page en cours</li>
+<li>et en bonus, si la page de destination est la 1° page, il ne faut pas faire
+le lien vers &quot;/page/1&quot; mais vers &quot;/&quot; (c'est plus joli)</li>
+</ul>
+<p>Dans la pratique, je génère en fait un tableau de Hash pour les différentes
+pages. Le but, c'est ensuite d'utiliser chaque Hash pour générer un lien de mon
+bloc de navigation :</p>
+<pre><code>&lt;li&gt;
+  &lt;% if link[:here] %&gt;
+    &lt;strong&gt;&lt;%= link[:text] %&gt;&lt;/strong&gt;
+  &lt;% elsif link[:href] == nil %&gt;
+    &lt;span&gt;&lt;%= link[:text] %&gt;&lt;/span&gt;
+  &lt;% else %&gt;
+    &lt;a href=&quot;&lt;%= link[:href] %&gt;&quot;&gt;&lt;%= link[:text] %&gt;&lt;/a&gt;
+  &lt;% end %&gt;
+&lt;/li&gt;
+</code></pre>
+<p>Ce qui me permet :</p>
+<ul>
+<li>de mettre en évidence la page en cours (balise
+<code>&lt;strong&gt;</code>)</li>
+<li>de désactiver les liens avant / après si nécessaire (balise
+<code>&lt;span&gt;</code>)</li>
+</ul>
+<p>Pour la fonction qui génère le Hash, j'ai testé pas mal de trucs pour voir
+ce que Ruby permet de faire et essayer de m'éloigner un peu de mon style de
+CSharpiste, ex VB6isste.</p>
+<h2>1° essai - ce qui m'est venu naturellement (basique mais ça marche)</h2>
+<pre><code>def v1_pagination_lien(texte, destination = nil, page_courante = 0)
+  un_lien = { text: texte, href: &quot;/page/#{destination}&quot; }
+  if destination == nil
+    # pas de page de destination =&gt; pas de lien
+    un_lien[:href] = nil
+  elsif destination == page_courante
+    # page de destination est la page en cours =&gt; pas de lien
+    un_lien[:href] = nil
+    un_lien[:here] = true
+  elsif destination == 1
+    # page de destination est 1° page =&gt; lien vers racine
+    un_lien[:href] = &quot;/&quot;
+  end
+  un_lien
+end
+</code></pre>
+<h2>2° essai - ce qui pourrait se faire (je me lache)</h2>
+<pre><code>def v2_pagination_lien(texte, destination = nil, page_courante = 0)
+  {
+    text: texte,
+    here: destination == page_courante,
+    href: case destination
+          when nil then nil           # pas de destination =&gt; pas de lien
+          when page_courante then nil # destination est la page en cours =&gt; pas de lien
+          when 1 then &quot;/&quot;             # destination est la 1° page =&gt; lien vers racine
+          else &quot;/page/#{destination}&quot; # lien vers la page de destination
+          end
+  }
+end
+</code></pre>
+<h2>3° essai - ce qui ferait moins compact (bof bof bof)</h2>
+<pre><code>def v3_pagination_lien(texte, destination = nil, page_courante = 0)
+  un_lien = { text: texte }
+  un_lien[:href] = case destination
+                   when nil then
+                     # pas de destination =&gt; pas de lien
+                     nil
+                   when page_courante then
+                     # destination est la page en cours =&gt; pas de lien
+                     un_lien[:here] = true
+                     nil
+                   when 1 then
+                     # destination est la 1° page =&gt; lien vers racine
+                     &quot;/&quot;
+                   else
+                     # lien vers la page de destination
+                     &quot;/page/#{destination}&quot;
+                   end
+  un_lien
+end
+</code></pre>
+<h2>4° essai - ce qui me parait le plus lisible (à ce jour)</h2>
+<pre><code>def pagination_lien(texte, destination = nil, page_courante = 0)
+  case destination
+  when nil then
+    # pas de page de destination =&gt; pas de lien
+    un_lien = { text: texte, href: nil }
+  when page_courante then
+    # page de destination est la page en cours =&gt; pas de lien
+    un_lien = { text: texte, href: nil, here: true }
+  when 1 then
+    # page de destination est 1° page =&gt; lien vers racine
+    un_lien = { text: texte, href: &quot;/&quot; }
+  else
+    # lien vers la page de destination
+    un_lien = { text: texte, href: &quot;/page/#{destination}&quot; }
+  end
+  un_lien
+end
+</code></pre>
+<p>Je sais que le dernier <code>un_lien</code> n'est pas indispensable, mais je
+trouve que sa présence rend plus explicite ce que la fonction retourne.</p>
+<p>L'autre avantage, c'est que je me dit que si je faisais des tests unitaires,
+ce code là y répondrait parfaitement. Enfin il me semble.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/05/31/application-aspnetmvc-ef-code-first-appharbor/" hreflang="fr-FR">Application ASP.NET MVC avec EF Code First sur AppHarbor</a>
+  <a rel="next" href="/2012/07/12/utilisation-cdn-jquery-jquery-validation/" hreflang="fr-FR">Utilisation d&#39;un CDN pour jQuery et jQuery Validation</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

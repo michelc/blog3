@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>dQuery - La délégation des évènements en JS - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/05/21/dquery-delegation-evenement-javascript/" />
+<meta property="og:title" content="dQuery - La délégation des évènements en JS" />
+<meta name="description" content="Le quatrième billet de la série sur &quot;dQuery&quot; où j&#39;aborde la délégation d&#39;évènements en JavaScript, pour éviter d&#39;avoir à créer et rattacher des évènements à chaque carte du jeu." />
+<meta property="og:description" content="Le quatrième billet de la série sur &quot;dQuery&quot; où j&#39;aborde la délégation d&#39;évènements en JavaScript, pour éviter d&#39;avoir à créer et rattacher des évènements à chaque carte du jeu." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/05/21/dquery-delegation-evenement-javascript/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-21T10:30:52.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-05-21T10:30:52.000Z","datePublished":"2019-05-21T10:30:52.000Z","description":"Le quatrième billet de la série sur \"dQuery\" où j'aborde la délégation d'évènements en JavaScript, pour éviter d'avoir à créer et rattacher des évènements à chaque carte du jeu.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/05/21/dquery-delegation-evenement-javascript/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/05/21/dquery-delegation-evenement-javascript/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2019/05/21/dquery-delegation-evenement-javascript/">dQuery - La délégation des évènements en JS</a>
+    </h1>
+    <p>
+      <span>2019-05-21</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Cette série de billets retrace quelques-unes des étapes pour développer une
+mini-librairie JavaScript qui remplacera(it) un jour jQuery sur mon site de jeux
+de solitaires.</p>
+<ol>
+<li><a href="/2019/04/30/dquery-remplacer-jquery/">Comment j'ai (bientôt) remplacé jQuery</a></li>
+<li><a href="/2019/05/07/dquery-compatibilite-ie9-es5/">Une version compatible IE9 / ES5</a></li>
+<li><a href="/2019/05/14/dquery-librairie-js-manipulation-dom/">Ma librairie pour manipuler le DOM</a></li>
+<li><a href="/2019/05/21/dquery-delegation-evenement-javascript/">La délégation des évènements en JS</a></li>
+<li><a href="/2019/05/28/dquery-delegation-evenement-event-target/">Délégation d'évènements et « event.target »</a></li>
+<li><a href="/2019/06/04/dquery-delegation-evenement-ios/">Délégation d'évènements et iOS</a></li>
+</ol>
+</div>
+<p>La délégation d'évènements. Comment dire ? C'est pas compliqué, mais c'est pas
+si facile que ça... Et puis il faut s'en rappeler tout le temps !</p>
+<h2>Etape 1 : Premier re-découverte</h2>
+<p>Revenons au tout début de <a href="https://www.solitaire-play.com/">Solitaire-Play</a>.
+Au cours de mes premiers essais, je gérais le clic sur les cartes de façon
+basique :</p>
+<pre><code>$(&quot;.card&quot;).on(&quot;click&quot;, PlayCard);
+
+...
+
+function PlayCard() {
+  var card_id = this.id;
+  var card = $(card_id);
+  var pile_id = card.parent().attr(&quot;id&quot;);
+
+  ...
+}
+</code></pre>
+<p>J'attachais donc un évènement clic aux 52 cartes du jeu (en vrai un peu moins,
+puisque je me limitais aux cartes jouables du dessus des piles).</p>
+<p>Et à chaque fois que je réaffichais une pile, je ré-attachais un évènement clic
+à toutes les cartes jouables de la pile. Tout ça parce que pour simplifier, je
+supprimais la pile puis je la recréais pour la réafficher complètement à chaque
+fois que je modifiais le contenu d'une pile de cartes. Ça devait craindre un peu
+et mieux vaut ne pas trop réfléchir à ce que devenait tous ces évènements...</p>
+<p>Un beau jour, j'ai quand même vu qu'il était possible d'ajouter un &quot;filtre&quot; à
+la méthode <code>.on()</code> de jQuery. Ainsi, au lieu d'attacher 52 évènements clic aux
+cartes :</p>
+<pre><code>$(&quot;.card&quot;).on(&quot;click&quot;, PlayCard);
+</code></pre>
+<p>Je pouvais me contenter d'attacher 13 évènements clic aux 13 piles (dans le cas
+de Klondike solitaire) :</p>
+<pre><code>$(&quot;.pile&quot;).on(&quot;click&quot;, &quot;.card&quot;, PlayCard);
+</code></pre>
+<p>C'était plus &quot;léger&quot; (13 c'est mieux que 52) et surtout je n'avais plus à le
+refaire à chaque fois que je réaffichais une pile de cartes !</p>
+<p>Et c'est comme ça que j'ai pour la première fois re-découvert la délégation
+d'évènement... Parce que bien entendu, j'avais déjà lu des trucs à ce sujet il
+y a fort longtemps, genre &quot;<a href="https://davidwalsh.name/event-delegate">How JavaScript Event Delegation Works</a>&quot;
+ou &quot;<a href="https://delicious-insights.com/fr/articles/dix-bonnes-pratiques-javascript/#4-utiliser-la-d-l-gation-d-v-nements-plut-t-que-des-tas-de-gestionnaires-troits">Utiliser la délégation d'évènements...</a>&quot;.</p>
+<h2>Etape 2 : Deuxième re-découverte</h2>
+<p>Les années passent et un jour je tombe sur
+<a href="https://github.com/vladocar/nanoJS/">NanoJS</a> et je me mets en tête de
+l'utiliser pour mes jeux qui n'ont pas besoin de drag and drop.</p>
+<p>Là je m'aperçois que j'utilise des <code>$(...).on(évènement, fonction)</code> et aussi un
+<code>$(...).on(&quot;click&quot;, filtre, fonction)</code>. Qu'à cela ne tienne, je simplifie ce
+dernier en <code>$(... + &quot; &quot; + filtre).on(&quot;click&quot;, fonction)</code>.</p>
+<p>Et ça marche ! Presque. Oui, parce que je ne faisais pas un bête :</p>
+<pre><code>$(&quot;.pile&quot;).on(&quot;click&quot;, &quot;.card&quot;, PlayCard);
+</code></pre>
+<p>Entre temps, j'avais aussi &quot;optimisé&quot; le truc :</p>
+<pre><code>$(&quot;.pile&quot;).on(&quot;click&quot;, &quot;.card:last-child&quot;, PlayCard);
+</code></pre>
+<p>Mais le problème n'était pas là. Le souci venait du fait qu'en remplaçant ça
+par <code>$(&quot;.pile .card&quot;).on(&quot;click&quot;, PlayCard)</code>, j'attachais les évènements clic
+aux cartes et plus aux piles, comme à mes tout début. Et que tous s'effondrait
+dès que je réaffichais complètement une pile.</p>
+<p>Et c'est là que j'ai re-re-découvert un peu brutalement qu'il y avait un truc
+qui s'appellerait la délégation d'évènements...</p>
+<h2>Etape 3 : Un peu d'aide</h2>
+<p>Pffuuuuuuu ! Je cherche comment m'en sortir et je fini par tomber sur le blogue
+de <a href="http://jesmodrazik.fr/">Jesmo Drazik</a>, avec des billets en français très
+utiles pour &quot;apprendre à se servir de ce qu'on a&quot; :</p>
+<ul>
+<li><a href="http://jesmodrazik.fr/article/apprendre-a-se-servir-de-ce-quon-a-manipuler-dom/">Manipuler le DOM</a></li>
+<li><a href="http://jesmodrazik.fr/article/apprendre-a-se-servir-de-ce-quon-a-event-delegation/">La délégation d'évènements</a></li>
+</ul>
+<p>Le premier article m'a permis de &quot;réviser&quot; et conforter un peu ce que j'avais
+déjà fait avec dQuery. Et le deuxième article m'a sauvé la vie (au moins).</p>
+<p>Il y explique entre autre pourquoi la délégation d'évènements c'est bien et même
+que c'est mieux. Mais surtout, il y présente clairement comment faire ça :</p>
+<pre><code>// Notre fonction a besoin :
+// - de l'élément sur lequel écouter l'événement
+// - du type d'événement à écouter
+// - du sélecteur auquel les éléments doivent correspondre pour lancer le callback
+// - le callback à lancer
+function delegate(element, eventType, selector, callback) {
+  // on écoute l'événement sur l'élément parent
+  element.addEventListener(eventType, function(event) {
+    // si event.target correspond au sélecteur voulu...
+    if (event.target &amp;&amp; event.target.matches(selector)) {
+      // ... on exécute le callback
+      callback(event);
+    }
+  });
+}
+</code></pre>
+<h2>Etape 4 : Je peux le faire</h2>
+<p>Je passe les détails, mais après beaucoup d'essais, pas mal de lectures et
+quelques âneries, je fini par arriver à remplacer la courte méthode <code>.on()</code>
+d'origine de NanoJS :</p>
+<pre><code>on: function (type, fn) {
+  return this.each(function (i) {
+    i.addEventListener(type, fn, false);
+  });
+},
+</code></pre>
+<p>Par un truc un peu plus compliqué / perfectionné :</p>
+<pre><code>on: function (type, filter, fn) {
+  // Attache un gestionnaire d'évènement
+  var delegation = (typeof filter === &quot;string&quot;);
+
+  // Syntaxe .on(type, fn)
+  if (!delegation) {
+    // Le paramètre &quot;filter&quot; est en fait le paramètre &quot;fn&quot;
+    fn = filter;
+    // Attache un gestionnaire d'évènement à chaque élément sélectionné
+    return this.each(function (i) {
+      i.addEventListener(type, fn, false);
+    });
+  }
+
+  // Syntaxe .on(type, filter, fn)
+  // =&gt; effectue une délégation d'évènement
+  var _filter = this.selector + &quot; &quot; + filter;
+  document.addEventListener(type, function (event) {
+    if (event.target.matches(_filter)) fn(event);
+  }, false);
+  return this;
+},
+</code></pre>
+<h2>Etape 5 : Ne pas laisser IE9 de côté</h2>
+<p>Malheureusement, la méthode <code>.matches()</code> n'existe pas sous IE9. Il faut donc
+passer par un &quot;polyfill&quot; prêt à l'emploi :</p>
+<pre><code>/**
+ * Element.matches() polyfill (simple version)
+ * https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
+ */
+
+if (!Element.prototype.matches)
+  Element.prototype.matches = Element.prototype.msMatchesSelector ||
+                              Element.prototype.webkitMatchesSelector;
+}
+</code></pre>
+<p>Et puis, selon <a href="https://gomakethings.com/">Chris Ferdinandi</a>, il semblerait que
+<code>.matches()</code> pose quelques soucis dans le cas où le clic se produit sur un objet
+à l'intérieur de l'objet auquel on s'intéresse.</p>
+<p>Par exemple, dans mon cas je m'intéresse aux clics effectués sur des <code>&lt;div class=&quot;card&quot;&gt;</code>. Mais comme ces <code>&lt;div&gt;</code> peuvent contenir d'autres éléments
+<code>&lt;div&gt;</code>, si on clique sur un de ces éléments &quot;intérieurs&quot;, la méthode
+<code>.matches(&quot;.card&quot;)</code> renverra faux :(</p>
+<p>D'après son article &quot;<a href="https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/">Checking event target selectors with event bubbling in vanilla
+JavaScript</a>&quot;,
+il est plus précis de passer par la méthode <code>.closest()</code> :</p>
+<ul>
+<li><code>if (event.target.matches(_filter)) ...</code> =&gt; pas mal</li>
+<li><code>if (event.target.closest(_filter)) ...</code> =&gt; mieux</li>
+</ul>
+<p>L'(in)évitable polyfill pour IE9 :</p>
+<pre><code>/**
+ * Element.closest() polyfill (simple version)
+ * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+ */
+
+if (!Element.prototype.closest) {
+  Element.prototype.closest = function(s) {
+    var el = this;
+    if (!document.documentElement.contains(el)) return null;
+    do {
+      if (el.matches(s)) return el;
+      el = el.parentElement || el.parentNode;
+    } while (el !== null &amp;&amp; el.nodeType === 1);
+    return null;
+  };
+}
+</code></pre>
+<p>C'est bien, c'est beau, mais ça ne fonctionne pas... Il me manque encore un ou
+deux petits réglages pour que tout marche comme sur des roulettes.</p>
+<p>À suivre...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/05/14/dquery-librairie-js-manipulation-dom/" hreflang="fr-FR">dQuery - Ma librairie JS pour manipuler le DOM</a>
+  <a rel="next" href="/2019/05/28/dquery-delegation-evenement-event-target/" hreflang="fr-FR">dQuery - Délégation d&#39;évènements et « event.target »</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

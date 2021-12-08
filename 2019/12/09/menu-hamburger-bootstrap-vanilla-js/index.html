@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gérer le menu hamburger de Bootstrap 4 en Vanilla JS - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/12/09/menu-hamburger-bootstrap-vanilla-js/" />
+<meta property="og:title" content="Gérer le menu hamburger de Bootstrap 4 en Vanilla JS" />
+<meta name="description" content="Bootstrap 4 c&#39;est super pour le côté responsive, mais 57 ko de JavaScript juste pour gérer le menu hamburger, c&#39;est trop." />
+<meta property="og:description" content="Bootstrap 4 c&#39;est super pour le côté responsive, mais 57 ko de JavaScript juste pour gérer le menu hamburger, c&#39;est trop." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/12/09/menu-hamburger-bootstrap-vanilla-js/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/hamburger-menu.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-12-09T10:24:10.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-12-09T10:24:10.000Z","datePublished":"2019-12-09T10:24:10.000Z","description":"Bootstrap 4 c'est super pour le côté responsive, mais 57 ko de JavaScript juste pour gérer le menu hamburger, c'est trop.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/12/09/menu-hamburger-bootstrap-vanilla-js/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/hamburger-menu.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/12/09/menu-hamburger-bootstrap-vanilla-js/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/hamburger-menu.jpg" alt="Hamburger with a beer - Edward Franklin" /><figcaption><a href="https://unsplash.com/photos/Nb_Q-M3Cdzg">Hamburger with a beer - Edward Franklin</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/12/09/menu-hamburger-bootstrap-vanilla-js/">Gérer le menu hamburger de Bootstrap 4 en Vanilla JS</a>
+    </h1>
+    <p>
+      <span>2019-12-09</span>
+      <span>#javascript</span><span>#bootstrap</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>Présentation</h2>
+<p>J'ai développé il y a quelque temps une petite application en ASP.NET MVC pour
+laquelle j'ai déjà eu besoin de <a href="/2019/09/30/rechercher-filtrer-table-javascript/">filtrer les tables en JavaScript</a>.</p>
+<p>Ce site utilise Bootstrap 4, ce qui me permet d'avoir un résultat totalement
+responsive sans trop d'efforts. En particulier la barre de navigation qui
+s'affiche en totalité lorsqu'il y a assez de place ou bien est remplacée par un
+menu &quot;hamburger&quot; sur les écrans plus petits.</p>
+<p>Ce résultat est obtenu très simplement par le code standard de Bootstrap pour
+réaliser une barre de navigation :</p>
+<pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg&quot;&gt;
+  &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Accueil&lt;/a&gt;
+  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarSupportedContent&quot; aria-controls=&quot;navbarSupportedContent&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
+    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarSupportedContent&quot;&gt;
+    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+      &lt;li class=&quot;nav-item&quot;&gt;
+        &lt;a class=&quot;nav-link&quot; href=&quot;/un&quot;&gt;Un&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li class=&quot;nav-item&quot;&gt;
+        &lt;a class=&quot;nav-link&quot; href=&quot;/deux&quot;&gt;Deux&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li class=&quot;nav-item&quot;&gt;
+        &lt;a class=&quot;nav-link&quot; href=&quot;/trois&quot;&gt;Trois&lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre>
+<p>Sous Windows, la barre de navigation est affichée avec les entrées &quot;Accueil&quot;,
+&quot;Un&quot;, &quot;Deux&quot; et &quot;Trois&quot;. En émulant un smartphone, seul le menu &quot;Accueil&quot;
+apparait avec à côté une &quot;icone&quot; hamburger. En cliquant sur celle-ci, cela fait
+apparaître un sous-menu avec les choix &quot;Un&quot;, &quot;Deux&quot; et &quot;Trois&quot;.</p>
+<p>Le fait d'avoir cliqué sur le menu hamburger a pour effet de modifier la balise
+<code>div#navbarSupportedContent</code> et de lui ajouter une classe &quot;show&quot; (après une très
+légère animation).</p>
+<pre><code class="language-html">&lt;div class=&quot;collapse navbar-collapse show&quot; id=&quot;navbarSupportedContent&quot;&gt;
+  ...
+&lt;/div&gt;
+</code></pre>
+<p>Et si on re-clique sur le menu hamburger, le sous-menu disparait à nouveau parce
+que la <code>div#navbarSupportedContent</code> perd sa classe &quot;show&quot; :</p>
+<pre><code class="language-html">&lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarSupportedContent&quot;&gt;
+  ...
+&lt;/div&gt;
+</code></pre>
+<h2>Le problème qu'il y a</h2>
+<p>Pour l'instant, c'est la seule fonctionnalité de Bootstrap que j'utilise dans
+cette application et qui ait besoin du script &quot;bootstrap.min.js&quot;. Mais malgré
+tout, uniquement pour cette fonctionnalité somme toute assez ridicule, je suis
+obligé d'embarquer 2 scripts sur toutes mes pages :</p>
+<ul>
+<li>jquery-3.4.1.min.js (87 ko)</li>
+<li>bootstrap.min.js (57 ko)</li>
+</ul>
+<p>C'est un peu du gaspillage...</p>
+<p>Dans la pratique, j'ai besoin de jQuery, mais uniquement sur les formulaires de
+saisie, parce que comme c'est une appication ASP.NET MVC, je reste classique et
+j'utilise le plugin <a href="https://jqueryvalidation.org/">jQuery Validation</a>. Mais je
+trouve que c'est pas très écologique de le charger sur toutes les pages sous
+prétexte que c'est plus simple et que de toute façon il est en cache au bout
+d'un moment. Sans parler des 57 ko de &quot;bootstrap.min.js&quot; qui lui ne me sert
+strictement à rien d'autre qu'au menu hamburger...</p>
+<h2>La solution (à base de jQuery)</h2>
+<p>C'est pourquoi j'ai décidé d'écrire mon propre script &quot;navbar-toggler.js&quot;.</p>
+<pre><code class="language-javascript">$(&quot;button.navbar-toggler&quot;).on(&quot;click&quot;, function(e) {
+  var target = $(this).data(&quot;target&quot;);
+  $(target).toggleClass(&quot;show&quot;);
+});
+</code></pre>
+<p>Et c'est tout :</p>
+<ul>
+<li><code>$(&quot;button.navbar-toggler&quot;)</code> retrouve le bouton servant à switcher le sous-menu</li>
+<li><code>.on(&quot;click&quot;, ...)</code> sert à gérer le clic sur ce bouton</li>
+<li><code>$(this)</code> retrouve le bouton cliqué</li>
+<li><code>.data(&quot;target&quot;)</code> retrouve la valeur de son attribut &quot;data-target&quot; (soit
+&quot;#navbarSupportedContent&quot; dans notre cas)</li>
+<li><code>$(target)</code> retrouve la div contenant le sous-menu</li>
+<li><code>.toggleClass(&quot;show&quot;)</code> ajoute ou enlève la classe &quot;show&quot; de cette div, ce qui
+permet de l'afficher ou de la masquer</li>
+</ul>
+<p>J'aurai pu me contenter d'un <code>$(&quot;#navbarSupportedContent&quot;).toggleClass(&quot;show&quot;)</code>
+puisque la valeur de &quot;data-target&quot; ne changera jamais, mais puisque l'attribut
+est défini, autant l'utiliser...</p>
+<p>Ce qui est important, c'est que je n'ai pas &quot;fabriqué&quot; un nouveau système de
+menu hamburger ou quoique ce soit d'autre. J'utilise simplement toute la partie
+HTML et CSS que Bootstrap 4 offre à ce sujet. Je bénéficie ainsi de tout le côté
+responsive qui va avec cette barre de navigation et qui convient parfaitement.</p>
+<p>Bonus : J'ai perdu la partie animation à l'affichage ou au masquage du menu
+hamburger, mais ça c'est meilleur pour ma tension.</p>
+<h2>La même solution (en Vanilla JS)</h2>
+<p>Pour être parfait, ce mini script ne devrait même pas compter sur jQuery. C'est
+donc ce à quoi je vais m'attaquer maintenant.</p>
+<pre><code class="language-javascript">document.querySelectorAll(&quot;button.navbar-toggler&quot;)[0].addEventListener(&quot;click&quot;, function (event) {
+  var target = this.getAttribute(&quot;data-target&quot;);
+  var subbar = document.querySelectorAll(data_target)[0];
+  subbar.className = (subbar.className + &quot; show&quot;).replace(/ show show/, &quot;&quot;);
+});
+</code></pre>
+<p>C'est quasiment pareil !</p>
+<ul>
+<li><code>document.querySelectorAll(&quot;button.navbar-toggler&quot;)[0]</code> retrouve le bouton
+servant à switcher le sous-menu</li>
+<li><code>.addEventListener(&quot;click&quot;, ...)</code> sert à gérer le clic sur ce bouton</li>
+<li><code>this</code> retrouve le bouton cliqué</li>
+<li><code>.getAttribute(&quot;target&quot;)</code> retrouve la valeur de son attribut &quot;data-target&quot;</li>
+<li><code>document.querySelectorAll(data_target)[0]</code> retrouve la div contenant le sous-menu</li>
+<li><code>(subbar.className + &quot; show&quot;).replace(/ show show/, &quot;&quot;)</code> ajoute ou enlève la
+classe &quot;show&quot; de cette div, ce qui permet de l'afficher ou de la masquer</li>
+</ul>
+<h2>Le fichier &quot;js-navbar-toggler.js&quot; final</h2>
+<p>Ce qui donne le fichier source suivant, prêt à être intégré via un <code>&lt;script src=&quot;/js/js-navbar-toggler.js&quot;&gt;&lt;/script&gt;</code> :</p>
+<pre><code class="language-javascript">// Vanilla JS navbar toggler for Bootstrap 4
+// Source: https://blog.pagesd.info/2019/12/09/gerer-menu-hamburger-bootstrap-vanilla-js
+
+(function () {
+  &quot;use strict&quot;;
+
+  document.querySelectorAll(&quot;button.navbar-toggler&quot;)[0].addEventListener(&quot;click&quot;, function (event) {
+    var target = this.getAttribute(&quot;data-target&quot;);
+    var subbar = document.querySelectorAll(target)[0];
+    subbar.className = (subbar.className + &quot; show&quot;).replace(/ show show/, &quot;&quot;);
+  });
+
+})();
+</code></pre>
+<div class="encart">
+<p>English version: <a href="/2019/12/10/bootstrap-hamburger-menu-vanilla-js/" hreflang="en-US">Switch Bootstrap 4 hamburger menu with Vanilla JS</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/12/04/generate-random-number-javascript/" hreflang="en-US">Generate a random number with JavaScript</a>
+  <a rel="next" href="/2019/12/10/bootstrap-hamburger-menu-vanilla-js/" hreflang="en-US">Switch Bootstrap 4 hamburger menu with Vanilla JS</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

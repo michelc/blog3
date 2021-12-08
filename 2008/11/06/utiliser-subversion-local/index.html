@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utiliser Subversion en local - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/11/06/utiliser-subversion-local/" />
+<meta property="og:title" content="Utiliser Subversion en local" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/11/06/utiliser-subversion-local/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-11-06T16:17:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-11-06T16:17:00.000Z","datePublished":"2008-11-06T16:17:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/11/06/utiliser-subversion-local/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/11/06/utiliser-subversion-local/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/11/06/utiliser-subversion-local/">Utiliser Subversion en local</a>
+    </h1>
+    <p>
+      <span>2008-11-06</span>
+      <span>#svn</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour compléter ma catégorie <a href="/tags/svn/">Subversion</a>, je vais décrire ce que je
+fais habituellement quand je veux passer un de mes projets personnel en &quot;local&quot;
+sous Subversion (au moins la prochaine fois je n'aurai pas à réfléchir pour
+savoir comment faire). Dans ce cas, j'utilise uniquement TortoiseSVN, sans
+avoir besoin d'installer autre chose sur le poste de travail.</p>
+<p>Si on s'en tient à la documentation, c'est quelque chose de très
+simple : il suffit de créer un dépôt Subversion, d'y importer notre
+projet, de supprimer le projet d'origine puis de le ré-extraire à partir du
+dépôt pour disposer d'une copie de travail versionnée.</p>
+<p>Mais généralement, je ne vais pas forcément versionner tous les fichiers
+présents dans les répertoires de mon projet et par conséquent le fait
+d'enchainer une suppression et une extraction me fera perdre des
+fichiers :</p>
+<ul>
+<li>Ceux qui seront re-créés par compilation : pas de problème</li>
+<li>Les autres : le web.config, quelques fichiers de paramètres,
+éventuellement la base de données Access…</li>
+</ul>
+<p>Sans compter que dans le cas d'un projet web, la suppression du répertoire
+projet n'est pas toujours possible puisqu'il correspond à un répertoire virtuel
+pour IIS et que même quand on y arrive, cela oblige à redonner les droits qui
+vont bien sur chaque répertoire.</p>
+<p>Par conséquent, la &quot;bonne&quot; solution, c'est de ne pas importer le dépôt mais
+de l'extraire immédiatement après sa création sur le répertoire du projet
+d'origine puis d'ajouter les fichiers du projet au dépôt.</p>
+<h2>Etape 1 : Créer un dépôt Subversion</h2>
+<p>Pour passer un projet sous Subversion, il faut commencer par créer un
+&quot;repository&quot; (un dépôt ou référentiel en bon français) pour y enregistrer les
+données nécessaires au contrôle de version.</p>
+<p>Pour cela, il faut créer un dossier sur le disque dur et d'un coup de
+baguette magique transformer ce bête répertoire en &quot;repository&quot; Subversion.</p>
+<p>On commence par se placer dans le répertoire où on souhaite enregistrer le
+dépôt Subversion : pour mes projets en local, c'est toujours D:\SVN</p>
+<p>Il faut y créer un nouveau sous-répertoire : &quot;Tests&quot; par exemple</p>
+<p>Puis faire clic-droit sur le dossier nouvellement créé puis choisir
+&quot;TortoiseSVN&quot; puis &quot;Create repository here...&quot;</p>
+<p><img src="/public/2008/01-create.png" alt=""></p>
+<p>Choisir le type &quot;Native filesystems (FSFS)&quot; et cliquer sur OK</p>
+<p><img src="/public/2008/02-filesystem.png" alt=""></p>
+<p>On obtient alors le message &quot;The repository was successfully created&quot;.</p>
+<p><img src="/public/2008/03-created.png" alt=""></p>
+<p>Si on ouvre le dossier &quot;Tests&quot;, on constate qu'il contient maintenant un
+certain nombre de fichiers et de dossiers.</p>
+<p><img src="/public/2008/04-inside.png" alt=""></p>
+<p>Le dépôt Subversion que je viens de créer est encore totalement vide. Il est
+stocké dans le répertoire D:\SVN\Tests et son url est file:///D:/SVN/Tests.</p>
+<h2>Etape 2 : Organiser le dépôt Subversion</h2>
+<p>Avant de remplir mon dépôt Subversion, il faut d'abord organiser la façon
+dont seront enregistrées les données dans le dépôt. Comme je ne cherche pas
+midi à quatorze heure, je vais simplement suivre la structure la plus standard
+pour un dépôt, à savoir trunk, branches et tags.</p>
+<p>Pour cela, je fais à nouveau clic-droit sur le dossier correspondant au
+dépôt que je viens de créer (D:\SVN\Tests dans mon cas) pour choisir
+&quot;TortoiseSVN&quot; puis &quot;Repo-browser&quot;.</p>
+<p><img src="/public/2008/05-browse.png" alt=""></p>
+<p>Cela ouvre directement une fenêtre pour naviguer dans le dépôt, mais
+celui-ci ne contient encore rien d'autre qu'un dossier D:/SVN/Tests. Faire
+clic-droit sur ce dossier et choisir la commande &quot;Create folder…&quot;</p>
+<p><img src="/public/2008/06-folder.png" alt=""></p>
+<p>Puis indiquer &quot;branches&quot; comme nouveau nom de dossier</p>
+<p><img src="/public/2008/07-branches.png" alt=""></p>
+<p>Et accepter &quot;Create folder remotely&quot; comme message de log</p>
+<p><img src="/public/2008/08-remotely.png" alt=""></p>
+<p>Répéter l'opération en créant les dossiers tags et trunk.</p>
+<p><img src="/public/2008/09-org.png" alt=""></p>
+<p>Mon dépôt Subversion est toujours quasiment vide, mais il est désormais prêt
+à l'emploi.</p>
+<h2>Etape 3 : Obtenir une copie de travail du dépôt Subversion</h2>
+<p>Dans cette étape, je vais faire en sorte de &quot;relier&quot; le répertoire de mon
+projet au dépôt Subversion, de façon à ce que Subversion le considère comme un
+répertoire de travail de mon dépôt.</p>
+<p>Pour cela, je quitte le répertoire D:\SVN où est stocké le dépôt pour aller
+dans le répertoire où est enregistrée la solution que je veux passer sous
+Subversion. En fait, je vais plutôt dans le répertoire contenant le répertoire
+où est placé le projet.</p>
+<p>Faire clic-droit sur le répertoire de la solution, D:\Portals\Tests dans le
+cas présent et choisir la commande &quot;SVN Checkout...&quot;.</p>
+<p><img src="/public/2008/10-co-menu.png" alt=""></p>
+<p>Il apparaît alors la boite de dialogue suivante :</p>
+<p><img src="/public/2008/11-co-dlg.png" alt=""></p>
+<p>Bien vérifier que l'url du dépôt (URL of repository) et le répertoire de
+travail (Checkout directory) sont corrects puis valider. Étant donné que le
+répertoire choisi contient déjà les sources de mon projet, cela provoque
+l'apparition du message d'erreur suivant :</p>
+<p><img src="/public/2008/12-co-alert.png" alt=""></p>
+<p><s>Croiser les doigts</s> Confirmer en cliquant sur le bouton &quot;Yes&quot;. Et
+là on obtient un message indiquant que l'extraction est terminée.</p>
+<p><img src="/public/2008/13-co-end.png" alt=""></p>
+<p>Le répertoire D:\Portals\Tests est désormais considéré par Subversion comme
+étant le répertoire de travail lié au dépôt Subversion. Par contre, les
+fichiers sources qui y sont enregistrés ne sont toujours pas intégrés au dépôt
+et par conséquent, le dépôt Subversion est toujours aussi vide qu'à la fin de
+l'étape précédente.</p>
+<h2>Etape 4 : Ajouter mes fichiers sources au dépôt Subversion</h2>
+<p>Cette dernière étape va consister à ajouter les fichiers de mon projet dans
+le dépôt Subversion.</p>
+<p>Pour cela, il faut revenir dans le répertoire D:\Portals et faire un clic
+droit sur le sous-répertoire Tests et choisir &quot;SVN Check for modification&quot;</p>
+<p><img src="/public/2008/14-check.png" alt=""></p>
+<p>Il apparait un écran listant tous les fichiers enregistrés dans le
+répertoire D:\Portals\Tests (à l'exception de ceux ignorés par
+TortoiseSVN).</p>
+<p>Sélectionner tous ces fichiers en faisant Ctrl+A puis clic-droit et choisir
+la commande &quot;Add&quot;.</p>
+<p><img src="/public/2008/15-working.png" alt=""></p>
+<p>Après quelques secondes, la liste des fichiers est mise à jour et le contenu
+de la colonne &quot;Text status&quot; est passé de &quot;non-versionned&quot; à &quot;added&quot;. Cela
+signifie que les fichiers sources de la solution ont bien été ajoutés au
+répertoire de travail.</p>
+<p><img src="/public/2008/16-added.png" alt=""></p>
+<p>Cependant, si je consulte le contenu de mon dépôt, il est toujours vide.
+Mais c'est normal. En effet, le répertoire D:\Portals\Tests n'est qu'une copie
+de travail du dépôt Subversion. Tout ce qui est fait dans ce répertoire n'est
+pas automatiquement &quot;répercuté&quot; dans le dépôt, mais seulement lorsque je le
+demanderai.</p>
+<p>Il me reste donc à mettre à jour le dépôt à partir du répertoire de travail.
+Si besoin, refaire clic-droit, &quot;SVN Check for modification&quot;, re-sélectionner
+tous les fichiers puis clic-droit &quot;Commit&quot;.</p>
+<p><img src="/public/2008/17-commit.png" alt=""></p>
+<p>Après encore quelques secondes, il apparaît un nouvel écran pour saisir un
+message et au-dessous la liste de tous les fichiers cochés</p>
+<p>Taper &quot;Importation du projet d'origine&quot; puis valider.</p>
+<p><img src="/public/2008/18-message.png" alt=""></p>
+<p>Quelques dernières secondes d'attentes agrémentées par un défilement où l'on
+a le temps de reconnaître les différents fichiers de la solution</p>
+<p><img src="/public/2008/19-commited.png" alt=""></p>
+<p>À ce point, j'ai créé un dépôt Subversion stocké dans D:\SVN\Tests et
+celui-ci contient les fichiers sources versionnés de mon projet. Par ailleurs,
+le répertoire D:\Portals\Tests n'est plus un simple répertoire de mon disque
+dur, mais il est devenu une copie de travail de mon dépôt Subversion :</p>
+<ul>
+<li>de cette façon il y a de jolies icones qui indiquent l'état de chaque
+fichier source,</li>
+<li>je peux valider mes modifications (SVN Commit…) ou annuler mes bêtises
+(TortoiseSVN puis Revert…).</li>
+</ul>
+<p>En gros, je fais enfin du contrôle des sources pour mon projet Tests.</p>
+<h2>Donc, pour résumer :</h2>
+<ul>
+<li>Créer un répertoire et le transformer en dépôt Subversion</li>
+<li>Organiser le contenu du dépôt Subversion</li>
+<li>Extraire une copie de travail dans le répertoire du projet</li>
+<li>Y ajouter les sources du projet et commiter</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/10/30/nouveau-theme-boxed/" hreflang="fr-FR">Nouveau thème Boxed</a>
+  <a rel="next" href="/2008/11/12/ajout-fichiers-depot-subversion/" hreflang="fr-FR">Ajout de fichiers au dépôt Subversion</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

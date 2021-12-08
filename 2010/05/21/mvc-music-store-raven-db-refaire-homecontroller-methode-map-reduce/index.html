@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Refaire HomeController, méthode map/reduce - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Refaire HomeController, méthode map/reduce" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-21T11:27:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-21T11:27:00.000Z","datePublished":"2010-05-21T11:27:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce/">MVC Music Store / Raven DB : Refaire HomeController, méthode map/reduce</a>
+    </h1>
+    <p>
+      <span>2010-05-21</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/21/porting-mvc-music-store-to-raven-porting-the-homecontroller-the.aspx">Porting MVC Music Store to Raven: Porting the HomeController, the map/reduce way</a>&quot;, le quatrième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Actuellement, le contrôleur HomeController contient le code
+suivant :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheHom_1FB9/image_2.png" alt=""></p>
+<p>Je n'aime vraiment pas quand un contrôleur se charge de faire des requêtes,
+mais ça n'est pas le sujet pour l'instant.</p>
+<p>Grâce à <a href="http://efprof.com/">EF Prof</a>, on peut voir
+à quoi ressemble cette requête :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheHom_1FB9/image_thumb_1.png" alt=""></p>
+<p>Et là on se trouve face à un problème très intéressant : il ne nous est
+pas possible de reproduire cette requête. En effet, cette requête porte sur
+plusieurs tables que dans notre modèle nous avons réparties dans différents
+documents.</p>
+<p>Il existe plusieurs méthodes pour résoudre cela. Une des façon de faire
+serait de définir un index <a href="http://ayende.com/Blog/archive/2010/03/14/map-reduce-ndash-a-visual-explanation.aspx">map / reduce</a> au niveau des documents orders.</p>
+<p><em>Note: Oui, je sais <a href="http://browsertoolkit.com/fault-tolerance.png">ce que vous allez dire</a>.</em></p>
+<p>La méthode que je suis sur le point de vous montrer n'est pas celle que je
+conseillerais dans la réalité. Mais je veux malgré tout vous la présenter. Dans
+mon prochain billet, je vous expliquerai la façon dont Raven permet de gérer ça
+dans les formes.</p>
+<p>Avec Raven, le map / reduce consiste simplement en quelques requêtes Linq.
+Il n'y a donc pas de raison de s'affoler. Pour mémoire, nous avons défini les
+documents suivant dans notre base de données :</p>
+<p><img src="/public/2010/ravendb4.png" alt=""></p>
+<p>Nous créons l'index &quot;SoldAlbums&quot; à l'aide des requêtes suivantes :</p>
+<pre><code>// map
+from order in docs.Orders
+from line in order.Lines
+select new{ line.Album, line.Quantity }
+
+// reduce
+from result in results
+group result by result.Album into g
+select new{ Album = g.Key, Quantity = g.Sum(x=&gt;x.Quantity) }
+</code></pre>
+<p>Comme vous pouvez le voir, il s'agit de deux requêtes Linq toute
+simples.</p>
+<p>Leur résultat devrait être le suivant :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheHom_1FB9/image_thumb_4.png" alt=""></p>
+<p>Dès lors que nous avons cela, c'est un jeu d'enfant d'en faire découler
+GetTopSellingAlbums. En fait, la fonction ci-dessous implémente exactement la
+même logique et renvoie le même résultat que l'implémentation
+d'origine :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheHom_1FB9/image_thumb_6.png" alt=""></p>
+<p>La façon dont elle fonctionne est très simple. Nous sélectionnons les albums
+les plus vendus (en triant les quantités par ordre décroissant), puis nous les
+chargeons depuis la base de données. Et dans le cas où nous aurions moins
+d'albums vendus que ce que nous comptons afficher, nous complétons avec
+d'autres albums normaux.</p>
+<p>Au final ce code exécute 2 ou 3 requêtes. Je n'aime vraiment pas ça, mais
+sur ma machine, cela prend environ moins de 10 ms pour faire ces trois
+requêtes, ce qui est tout à fait supportable.</p>
+<p>Je vous ai présenté cette solution parce que je voulais vous montrer que
+c'était une approche du problème, mais pas la solution recommandée pour le
+résoudre. Nous verrons une meilleure approche dans le billet suivant.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/20/mvc-music-store-raven-db-migrer-donnees/" hreflang="fr-FR">MVC Music Store / Raven DB : Migrer les données</a>
+  <a rel="next" href="/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode/" hreflang="fr-FR">MVC Music Store / Raven DB : Refaire HomeController, la bonne méthode</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

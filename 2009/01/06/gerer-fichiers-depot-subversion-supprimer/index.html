@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gérer les fichiers d&#39;un dépôt Subversion : supprimer - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/01/06/gerer-fichiers-depot-subversion-supprimer/" />
+<meta property="og:title" content="Gérer les fichiers d&#39;un dépôt Subversion : supprimer" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/01/06/gerer-fichiers-depot-subversion-supprimer/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-01-06T10:54:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-01-06T10:54:00.000Z","datePublished":"2009-01-06T10:54:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/01/06/gerer-fichiers-depot-subversion-supprimer/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/01/06/gerer-fichiers-depot-subversion-supprimer/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/01/06/gerer-fichiers-depot-subversion-supprimer/">Gérer les fichiers d&#39;un dépôt Subversion : supprimer</a>
+    </h1>
+    <p>
+      <span>2009-01-06</span>
+      <span>#svn</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce qui est important pour supprimer un fichier, c'est de ne pas faire ça
+directement dans Visual Studio mais de passer par TortoiseSVN pour que la
+suppression du fichier soit correctement prise en compte par Subversion.</p>
+<h2>1° étape : supprimer le fichier du projet</h2>
+<p>Dans l'explorateur de solution de Visual Studio, faire un clic-droit sur le
+fichier Extract.cs puis choisir la commande Exclure du projet (et surtout pas
+Supprimer).</p>
+<p>Suite à cela, recompiler le projet puis le sauvegarder =&gt; Visual Studio
+aura bien compris que le fichier Extract.cs ne fait plus partie du projet, même
+s'il existe encore physiquement sur le disque dur.</p>
+<h2>2° étape : supprimer le fichier du répertoire de travail</h2>
+<p>Il faut maintenant expliquer à TortoiseSVN que le fichier Extract.cs n'a
+plus de raison d'exister et qu'il doit donc disparaitre des fichiers
+versionnés.</p>
+<p>Pour cela, il faut aller dans l'explorateur de fichiers de Windows, dans le
+répertoire D:\Portals\Tests pour faire un clic-droit sur le fichier Extract.cs
+pour choisir la commande TortoiseSVN puis la sous-commande Delete :</p>
+<p><img src="/public/2009/01-fichier-supprimer.png" alt=""></p>
+<p>Le fichier Extract.cs est alors immédiatement supprimé du répertoire de
+travail D:\Portals\Tests et il n'est plus géré par TortoiseSVN côté client. Par
+contre il existe toujours dans le dépôt Subversion côté serveur.</p>
+<h2>3° étape : supprimer le fichier du dépôt Subversion</h2>
+<p>Si on veut que le fichier Extract.cs disparaisse du dépôt Subversion
+(notamment pour que les autres utilisateurs du dépôt sachent qu'il a été
+supprimé), il reste à effectuer un commit.</p>
+<p>Faire un clic-droit sur le répertoire D:\Portals\Tests et choisir l'option
+&quot;SVN Commit...&quot;</p>
+<p><img src="/public/2009/02-fichier-supprimer.png" alt=""></p>
+<p>Comme dans le cas de l'ajout d'un fichier dans le dépôt Subversion, il est
+important de bien vérifier que le fichier supprimé est mentionné mais aussi que
+le fichier projet apparait dans la liste puisqu'il a été modifié suite à
+l'exclusion du fichier Extract.cs.</p>
+<p>Saisir un message expliquant la modification apportée au projet et
+valider :</p>
+<p><img src="/public/2009/03-fichier-supprimer.png" alt=""></p>
+<p>Ça y est, le fichier Extract.cs a été définitivement supprimé du dépôt
+Subversion commen en témoigne l'action &quot;Deleting
+D:\Portals\Tests\Extracts.cs&quot;.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/12/24/gerer-fichiers-depot-subversion-renommer/" hreflang="fr-FR">Gérer les fichiers d&#39;un dépôt Subversion : renommer</a>
+  <a rel="next" href="/2009/02/26/iis-flv-page-cannot-be-found/" hreflang="fr-FR">IIS et FLV : The page cannot be found</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

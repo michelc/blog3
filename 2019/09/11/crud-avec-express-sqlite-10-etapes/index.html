@@ -1,0 +1,1317 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Application CRUD avec Express et SQlite en 10 étapes - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/09/11/crud-avec-express-sqlite-10-etapes/" />
+<meta property="og:title" content="Application CRUD avec Express et SQlite en 10 étapes" />
+<meta name="description" content="Un assez long tutoriel pour apprendre à développer une application Node JS avec le framework web Express et la base de données SQLite." />
+<meta property="og:description" content="Un assez long tutoriel pour apprendre à développer une application Node JS avec le framework web Express et la base de données SQLite." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/09/11/crud-avec-express-sqlite-10-etapes/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/library-bookshelf.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-09-11T10:14:22.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-09-11T10:14:22.000Z","datePublished":"2019-09-11T10:14:22.000Z","description":"Un assez long tutoriel pour apprendre à développer une application Node JS avec le framework web Express et la base de données SQLite.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/09/11/crud-avec-express-sqlite-10-etapes/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/library-bookshelf.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/09/11/crud-avec-express-sqlite-10-etapes/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/library-bookshelf.jpg" alt="Library Bookshelf - Open Grid Scheduler" /><figcaption><a href="https://www.flickr.com/photos/opengridscheduler/22468805072">Library Bookshelf - Open Grid Scheduler</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/09/11/crud-avec-express-sqlite-10-etapes/">Application CRUD avec Express et SQlite en 10 étapes</a>
+    </h1>
+    <p>
+      <span>2019-09-11</span>
+      <span>#javascript</span><span>#node</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Le but de ce projet ultra simple est de développer une application Node JS pour
+apprendre comment :</p>
+<ul>
+<li>Créer réellement un site web très-très basique avec Express.</li>
+<li>Gérer la mise à jour d'une base de données SQL (SQlite en l'occurence).</li>
+</ul>
+<p>Ce billet n'est qu'un tutoriel pour voir comment ça marche et avoir une base de
+départ pour me former petit à petit à Node et à Express (et sans doute plus tard
+à Sequelize). Ce n'est absolument pas un guide des bonnes pratiques à suivre
+pour développer de &quot;vraies&quot; applications. Ce n'est pas non plus un article pour
+apprendre à programmer ou pour convaincre qui que ce soit d'utiliser Node,
+Express ou SQL...</p>
+<p>Le code JavaScript final est visible dans l'<a href="#annexe">annexe</a> en fin de billet.
+Le code complet de l'application est disponible sur
+<a href="https://github.com/michelc/AppTest">GitHub</a>.</p>
+<p>Pour l'instant, il n'y a pas de site de démonstration du projet terminé. Je n'ai
+pas (encore) trouvé de solution facile pour l'héberger (surtout avec une base de
+données SQlite). Je ferai peut-être un autre tutoriel le jour où je m'attaquerai
+à ce problème. Ça a pris du temps, mais c'est fait : <a href="/2020/02/11/deployer-application-glitch-5-etapes/">Déployer une application
+sur Glitch en 5 étapes</a> !</p>
+<p><em>Note : J'ai depuis rédigé un deuxième tutoriel qui reprend exactement celui-ci,
+mais en se connectant à une base de données PostgreSQL à la place : <a href="/2019/09/21/crud-avec-express-postgresql-10-etapes/">Application
+CRUD avec Express et PostgreSQL en 10
+étapes</a>.</em></p>
+<p><strong>Sommaire</strong></p>
+<ol>
+<li><a href="#crud1">Créer un nouveau projet Node</a></li>
+<li><a href="#crud2">Ajouter des modules au projet Node</a></li>
+<li><a href="#crud3">Créer l'application Express</a></li>
+<li><a href="#crud4">Ajouter des vues EJS</a></li>
+<li><a href="#crud5">Utiliser les vues dans Express</a></li>
+<li><a href="#crud6">Premiers pas avec le module SQlite3</a></li>
+<li><a href="#crud7">Modifier une fiche</a></li>
+<li><a href="#crud8">Créer une nouvelle fiche</a></li>
+<li><a href="#crud9">Supprimer une fiche</a></li>
+<li><a href="#crud10">Conclusion</a></li>
+</ol>
+<p><a id="crud1"></a></p>
+<h2>1. Créer un nouveau projet Node</h2>
+<h3>Créer un dossier pour le projet</h3>
+<p>On peut commencer au niveau de la ligne de commande (ou &quot;Invite de commande&quot;
+sous Windows) :</p>
+<pre><code>E:\&gt; cd Code
+E:\Code&gt; mkdir AppTest
+</code></pre>
+<p>Cela crée un sous-dossier &quot;AppTest&quot; dans mon répertoire &quot;E:\Code&quot; qui sert pour
+tester différents trucs.</p>
+<h3>Ouvrir le dossier sous Visual Code</h3>
+<p>Toujours en ligne de commande, lancer Visual Code pour ouvrir le dossier
+&quot;AppTest&quot; :</p>
+<pre><code>E:\Code&gt; cd AppTest
+E:\Code\AppTest&gt; code .
+</code></pre>
+<p>À partir de là, l'invite de commande de Windows ne sert plus à rien et peut être
+fermée. La suite se déroulera dans Visual Code ou dans son terminal.</p>
+<h3>Initialiser le projet Node</h3>
+<p>Pour cela, il faut ouvrir le terminal de Visual Code et lancer la commande
+<code>npm init</code> :</p>
+<ul>
+<li>Menu : View / Terminal</li>
+<li>Ou raccourci : Ctrl+ù</li>
+</ul>
+<p>=&gt;</p>
+<pre><code>PS E:\Code\AppTest&gt; npm init -y
+</code></pre>
+<p>=&gt;</p>
+<pre><code>Wrote to E:\Code\AppTest\package.json:
+
+{
+  &quot;name&quot;: &quot;AppTest&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+</code></pre>
+<p><em>Note : Pour cet exemple, il est plus rapide de faire un <code>npm init -y</code> (ou <code>npm init --yes</code>) que de taper &lt;Entrée&gt; à chaque question pour accepter la valeur par
+défaut.</em></p>
+<p>Dans Visual Code, il apparait maintenant le fichier &quot;package.json&quot; créé par
+NPM dans le dossier racine du projet (&quot;E:\Code\AppTest&quot; dans le cas présent).</p>
+<p><a id="crud2"></a></p>
+<h2>2. Ajouter des modules au projet Node</h2>
+<h3>Choix techniques</h3>
+<p>L'objectif de ce tutoriel est de tester le développement d'une application Node
+de type web. Pour cela, il faut donc installer <a href="https://expressjs.com/">Express</a>
+car c'est le framework Node le plus utilisé pour ce genre d'application.</p>
+<p>Express a besoin d'un système de templates pour générer les vues. Pour ne pas me
+compliquer la vie, je choisis <a href="https://github.com/mde/ejs/">EJS</a> : il y a du
+vrai HTML dedans et ça ressemble énormément à la syntaxe d'ASP (d'avant Razor).</p>
+<p>Pour gérer la base de données le plus simplement possible,
+<a href="https://sqlite.org/">SQlite</a> sera suffisant. Surtout c'est ce qu'il y a de plus
+facile : pas de serveur à installer et zéro problème sous Windows. Avec Node JS,
+c'est le module SQlite3 qui sert d'interface pour SQlite.</p>
+<h3>Installer les dépendances</h3>
+<p>Cela se fait en ligne de commande, dans le terminal de Visual Code :</p>
+<pre><code>PS E:\Code\AppTest&gt; npm install express
+PS E:\Code\AppTest&gt; npm install ejs
+PS E:\Code\AppTest&gt; npm install sqlite3
+</code></pre>
+<p>Ou pour aller plus vite :</p>
+<pre><code>PS E:\Code\AppTest&gt; npm install express ejs sqlite3
+</code></pre>
+<p>Lorsque l'installation de ces trois dépendances (et de leurs propres
+dépendances) est terminée, le fichier &quot;package.json&quot; contient une nouvelle
+section &quot;dependencies&quot; qui enregistre la liste des dépendances du projet :</p>
+<pre><code>{
+  &quot;name&quot;: &quot;AppTest&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;ejs&quot;: &quot;^2.7.1&quot;,
+    &quot;express&quot;: &quot;^4.17.1&quot;,
+    &quot;sqlite3&quot;: &quot;^4.1.0&quot;
+  }
+}
+</code></pre>
+<p><em>Note : Dans des tutoriels un peu anciens, on voit encore la syntaxe <code>npm install --save xxxxx</code> pour enregistrer la liste des dépendances dans le fichier
+&quot;package.json&quot;, mais ce n'est plus nécessaire depuis la version 5 de NPM.</em></p>
+<h3>Le dossier &quot;node_modules&quot;</h3>
+<p>Le sous-répertoire &quot;node_modules&quot; est employé par NPM pour stocker tous les
+fichiers de dépendances d'un projet Node.</p>
+<p>Lorsque le projet est versionné dans GIT, ce dossier doit être ignoré pour ne
+pas être commité dans le référentiel :</p>
+<ul>
+<li>C'est généralement un dossier énorme</li>
+<li>La commande <code>npm install</code> sans argument permet de (ré)installer les
+dépendances</li>
+</ul>
+<p>Pour tester, on peut supprimer le dossier &quot;node_modules&quot; :</p>
+<pre><code>PS E:\Code\AppTest&gt; rd node_modules /s /q
+</code></pre>
+<p><em>Note : Sous Windows, les options <code>/s /q</code> permettent de tout supprimer sans se
+poser de question.</em></p>
+<p>Puis on installe toutes les dépendances listées dans le fichier &quot;package.json&quot; :</p>
+<pre><code>PS E:\Code\AppTest&gt; npm install
+</code></pre>
+<p><a id="crud3"></a></p>
+<h2>3. Créer l'application Express</h2>
+<h3>Vérifier que ça peut marcher...</h3>
+<p>Pour être certain que tout est installé correctement, le plus sûr est de
+commencer par un fichier &quot;index.js&quot; avec un contenu minimum :</p>
+<pre><code>const express = require(&quot;express&quot;);
+
+const app = express();
+
+app.listen(3000, () =&gt; {
+  console.log(&quot;Serveur démarré (http://localhost:3000/) !&quot;);
+});
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;Bonjour le monde...&quot;);
+});
+</code></pre>
+<p>Puis, dans le terminal de Visual Code :</p>
+<pre><code>PS E:\Code\AppTest&gt; node index
+</code></pre>
+<p>=&gt;</p>
+<pre><code>Serveur démarré (http://localhost:3000/) !
+</code></pre>
+<p>Il ne reste plus qu'à contrôler que ça marche réellement :</p>
+<ul>
+<li>Lancer un navigateur</li>
+<li>Aller à l'URL &quot;http://localhost:3000/&quot;</li>
+<li>Le message &quot;Bonjour le monde...&quot; doit apparaitre comme ci-dessous :</li>
+</ul>
+<p><img src="/public/2019/crud-01-test.png" alt="Page d'accueil pour tester..."></p>
+<p>C'est OK =&gt; arrêter le serveur en tapant Ctrl+C dans le terminal de Visual Code.</p>
+<h3>Comment ça marche ?</h3>
+<ul>
+<li>La première ligne référence / importe le module Express.</li>
+</ul>
+<pre><code>const express = require(&quot;express&quot;);
+</code></pre>
+<ul>
+<li>La ligne suivante sert à instancier un serveur Express.</li>
+</ul>
+<pre><code>const app = express();
+</code></pre>
+<ul>
+<li>Ce serveur est ensuite démarré et attend les requêtes arrivant sur le port
+3000. La fonction callback sert à afficher un message informatif lorsque le
+serveur est prêt à recevoir des requêtes.</li>
+</ul>
+<pre><code>app.listen(3000, () =&gt; {
+  console.log(&quot;Serveur démarré (http://localhost:3000/) !&quot;);
+});
+</code></pre>
+<ul>
+<li>Ensuite vient une fonction pour répondre aux requêtes GET pointant sur la
+racine du site.</li>
+</ul>
+<pre><code>app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;Bonjour le monde...&quot;);
+});
+</code></pre>
+<p>Grosso-modo...</p>
+<h3>Et plus précisément ?</h3>
+<p>Cela n'en a pas l'air, mais la méthode <code>app.get()</code> fait beaucoup de choses en
+seulement 3 lignes de codes.</p>
+<p>Elle répond aux requêtes HTTP GET qui arrivent sur l'URL qui lui est passée en
+1° paramètre. Dans notre cas, il s'agit de &quot;/&quot;, c'est à dire la racine du site.</p>
+<p>Lorsqu'une telle requête arrive, elle est passée à la fonction callback qui est
+définie en tant que 2° paramètre. Ici, il s'agit de la fonction arrow suivante :</p>
+<pre><code>(req, res) =&gt; {
+  res.send(&quot;Bonjour le monde...&quot;);
+}
+</code></pre>
+<p>Cette fonction callback reçoit en paramètres deux objets somme toute assez
+communs pour tout bon serveur web qui se respecte :</p>
+<ul>
+<li>la variable <code>req</code> qui contient un objet <code>Request</code></li>
+<li>la variable <code>res</code> qui contient un objet <code>Response</code></li>
+</ul>
+<p>L'objet <code>Request</code> correspond à la requête HTTP qui a été envoyée par le
+navigateur (ou tout autre client). On peut donc y retrouver les informations
+relatives à cette requête, comme ses paramètres, les headers, les cookies, le
+body, etc...</p>
+<p>L'objet <code>Response</code> correspond quant à lui à la réponse HTTP qui sera renvoyée au
+navigateur (ou à tout autre client) en bout de compte.</p>
+<p>Dans notre programme, la réponse sera le texte &quot;Bonjour le monde...&quot; qui est
+envoyé grâce à la méthode <code>Response.send()</code>, qui fait &quot;juste&quot; deux trucs :</p>
+<ul>
+<li>Elle renvoie le texte dans la partie body de la réponse HTTP</li>
+<li>Elle met fin à la connection</li>
+</ul>
+<p><em>Note : C'est quand même pas mal de technique pour ce tutoriel.</em></p>
+<h3>Améliorer le lancement de l'application Node JS</h3>
+<p>Revenons à des choses plus simples. Dans la section &quot;scripts&quot; du fichier
+&quot;package.json&quot;, il est conseillé d'ajouter une ligne pour &quot;automatiser&quot; le
+lancement de l'application Node :</p>
+<pre><code>&quot;start&quot;: &quot;node index&quot;
+</code></pre>
+<p>Ce qui donne (sans oublier la virgule en bout de ligne) :</p>
+<pre><code>{
+  &quot;name&quot;: &quot;AppTest&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node index&quot;,
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;ejs&quot;: &quot;^2.7.1&quot;,
+    &quot;express&quot;: &quot;^4.17.1&quot;,
+    &quot;sqlite3&quot;: &quot;^4.1.0&quot;
+  }
+}
+</code></pre>
+<p>On peut maintenant lancer le programme par :</p>
+<pre><code>PS E:\Code\AppTest&gt; npm start
+</code></pre>
+<p>=&gt;</p>
+<pre><code>&gt; AppTest@1.0.0 start E:\Code\AppTest
+&gt; node index.js
+
+Serveur démarré (http://localhost:3000/) !
+</code></pre>
+<p>Et ne pas oublier le Ctrl+C pour arrêter le serveur Express à la fin.</p>
+<p><em>Note : Il est possible d'utiliser le module &quot;nodemon&quot; pour ne plus devoir
+arrêter / redémarrer le serveur à chaque modification du code source. Mais je
+préfère éviter d'aborder trop de choses à la fois dans ce tutoriel.</em></p>
+<p><a id="crud4"></a></p>
+<h2>4. Ajouter des vues EJS</h2>
+<p>Comme le but de l'application est d'avoir plusieurs fonctionnalités, on a besoin
+de créer plusieurs vues. Malheureusement, EJS ne gère pas les &quot;layouts&quot;. Il faut
+donc louvoyer en insérant une vue partielle au début de la vue pour tout le HTML
+qui doit venir avant le contenu spécifique à la vue et une seconde vue partielle
+avec le code HTML pour &quot;terminer&quot; la page.</p>
+<p>Dans le cas de la vue correspondant à la requête vers la racine du site (soit
+un &quot;GET /&quot;), il faudra donc créer la vue &quot;index.ejs&quot; et les deux vues partielles
+réutilisables &quot;_header.ejs&quot; et &quot;_footer.ejs&quot;.</p>
+<p><em>Note : Ces trois fichiers doivent être enregistrés dans un dossier &quot;views&quot; qui
+doit donc être créé en premier lieu.</em></p>
+<h3>Vue partielle &quot;views/_header.ejs&quot;</h3>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;fr&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+  &lt;title&gt;AppTest&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/bootstrap.min.css&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;div class=&quot;container&quot;&gt;
+
+    &lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
+      &lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;AppTest&lt;/a&gt;
+      &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;
+          &lt;a class=&quot;nav-link&quot; href=&quot;/about&quot;&gt;A propos&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;
+          &lt;a class=&quot;nav-link&quot; href=&quot;/data&quot;&gt;Données&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;
+          &lt;a class=&quot;nav-link&quot; href=&quot;/livres&quot;&gt;Livres&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+</code></pre>
+<h3>Vue &quot;views/index.ejs&quot;</h3>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Bonjour le monde...&lt;/h1&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<h3>Vue partielle &quot;views/_footer.ejs&quot;</h3>
+<pre><code>    &lt;footer&gt;
+      &lt;p&gt;&amp;copy; 2019 - AppTest&lt;/p&gt;
+    &lt;/footer&gt;
+
+  &lt;/div&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p><em>Note : À part les deux <code>&lt;%- include(vue_partielle) -%&gt;</code>, ce n'est que du HTML.
+C'est un des avantages de EJS par rapport à d'autres moteurs de template pour
+éviter d'avoir à se disperser quand on débute.</em></p>
+<h3>Ajouter une feuille de style</h3>
+<p>Comme on peut le voir dans les trois vues ci-dessus, elles font référence à
+<a href="https://getbootstrap.com/">Bootstrap 4</a>.</p>
+<p>Pour cela, il faut créer un dossier &quot;public&quot; dans lequel on crée ensuite un
+sous-dossier &quot;css&quot; où il suffit de copier le fichier &quot;bootstrap.min.css&quot;
+correspondant à la version 4.3.1 de Bootstrap dans mon cas.</p>
+<p><a id="crud5"></a></p>
+<h2>5. Utiliser les vues dans Express</h2>
+<p><em>Note : Si cela n'avait pas été fait en début de projet, il aurait été nécessaire
+d'installer le module &quot;EJS&quot; par un <code>npm install ejs</code> pour pouvoir l'utiliser.</em></p>
+<h3>Modifications de &quot;index.js&quot;</h3>
+<p>Pour utiliser les vues créées dans l'application Express, il faut modifier
+quelque peu le fichier &quot;index.js&quot;.</p>
+<ul>
+<li>Indiquer qu'il faut utiliser le moteur de template EJS.</li>
+</ul>
+<pre><code>app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+</code></pre>
+<p><em>Note : Il n'est pas nécessaire de faire un <code>const ejs = require(&quot;ejs&quot;)</code> avant
+car Express s'en charge pour nous.</em></p>
+<ul>
+<li>Indiquer que les vues sont enregistrées dans le dossier &quot;views&quot;.</li>
+</ul>
+<pre><code>app.set(&quot;views&quot;, __dirname + &quot;/views&quot;);
+</code></pre>
+<p>Ou mieux, en utilisant le module &quot;path&quot; inclus avec Node :</p>
+<pre><code>const path = require(&quot;path&quot;);
+...
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+</code></pre>
+<p><em>Note : Il n'y a pas besoin d'installer auparavant le module <code>path</code> par NPM,
+parce que c'est un module standard de Node JS.</em></p>
+<ul>
+<li>Indiquer que les fichiers statiques sont enregistrés dans le dossier &quot;public&quot;
+et ses sous-répertoires. C'est un paramétrage qui est nécessaire pour que le
+fichier &quot;bootstrap.min.css&quot; copié précédemment dans &quot;public/css&quot; soit
+accessible.</li>
+</ul>
+<pre><code>app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+</code></pre>
+<ul>
+<li>Et enfin, renvoyer la vue &quot;index.ejs&quot; plutôt qu'un simple message &quot;Bonjour le
+monde...&quot; comme auparavant.</li>
+</ul>
+<pre><code>app.get(&quot;/&quot;, (req, res) =&gt; {
+  // res.send(&quot;Bonjour le monde...&quot;);
+  res.render(&quot;index&quot;);
+});
+</code></pre>
+<h3>Vérifier que cela fonctionne</h3>
+<ul>
+<li>Faire un <code>npm start</code> dans le terminal de Visual Code</li>
+<li>Naviguer vers &quot;http://localhost:3000/&quot; avec Chrome</li>
+<li>La page suivante doit apparaitre :</li>
+</ul>
+<p><img src="/public/2019/crud-02-vues.png" alt="Page d'accueil avec la vue &quot;index.ejs&quot;"></p>
+<h3>Ajouter un chemin &quot;/about&quot;</h3>
+<p>La barre de navigation de l'application contient un choix &quot;A propos&quot; qui envoie
+vers l'URL &quot;http://localhost:3000/about&quot;. Ce menu est défini dans la partie
+&quot;nav&quot; de la vue partielle &quot;_header.ejs&quot;, mais pour l'instant, rien n'existe pour
+gérer cette route.</p>
+<ul>
+<li>Dans &quot;index.js&quot;, ajouter une fonction pour répondre à une requête vers
+&quot;/about&quot; et renvoyer la vue &quot;about.ejs&quot; dans ce cas.</li>
+</ul>
+<pre><code>app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+</code></pre>
+<ul>
+<li>Créer une nouvelle vue &quot;about.ejs&quot; dans le dossier &quot;views&quot; (en ré-utilisant
+les deux vues partielles).</li>
+</ul>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;A propos de AppTest&lt;/h1&gt;
+
+&lt;p&gt;Bla bla bla ...&lt;/p&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<ul>
+<li>
+<p>Arrêter le serveur par Ctrl+C (si cela n'avait pas été fait plus tôt).</p>
+</li>
+<li>
+<p>Rédemarrer le serveur par <code>npm start</code> (c'est obligatoire pour prendre en
+compte les modifications apportées au projet).</p>
+</li>
+<li>
+<p>Naviguer vers &quot;http://localhost:3000/&quot;.</p>
+</li>
+<li>
+<p>Cliquer sur le menu &quot;A propos&quot;, ce qui donne :</p>
+</li>
+</ul>
+<p><img src="/public/2019/crud-03-about.png" alt="Page d'à propos avec la vue &quot;about.ejs&quot;"></p>
+<h3>Envoyer des données du serveur vers la vue</h3>
+<p>La barre de navigation de l'application contient aussi le choix &quot;Données&quot; qui
+envoie vers l'URL &quot;http://localhost:3000/data&quot;. Cette URL va servir pour voir
+comment &quot;injecter&quot; des données dans la vue depuis le programme.</p>
+<p>Tout d'abord, il faut ajouter une fonction à &quot;index.js&quot; pour prendre en compte
+l'URL &quot;/data&quot; et rendre la vue correspondante, mais cette fois-ci en indiquant
+en plus l'objet à lui transmettre.</p>
+<pre><code>app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    titre: &quot;Test&quot;,
+    items: [&quot;un&quot;, &quot;deux&quot;, &quot;trois&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+</code></pre>
+<p>Puis il faut ajouter une vue &quot;data.ejs&quot; dans le dossier &quot;views&quot; pour afficher
+les données qui lui sont transmises par l'application.</p>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;&lt;%= model.titre %&gt;&lt;/h1&gt;
+
+&lt;ul&gt;
+
+  &lt;% for (let i = 0; i &lt; model.items.length; i++) { %&gt;
+    &lt;li&gt;&lt;%= model.items[i] %&gt;&lt;/li&gt;
+  &lt;% } %&gt;
+
+&lt;/ul&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p><em>Note : Le but de ce tutoriel n'est pas trop d'expliquer le fonctionnement d'EJS.
+J'ai justement choisi ce moteur de template parce que sa syntaxe à base de <code>&lt;% ... %&gt;</code> est assez répandue, que ce soit avec ASP, PHP, Ruby... Et pour le reste,
+c'est du JavaScript (d'où le nom Embedded JavaScript).</em></p>
+<p>Et maintenant, quand on navigue vers &quot;http://localhost:3000/data&quot; après avoir
+redémarré le site, on obtient :</p>
+<p><img src="/public/2019/crud-04-data.png" alt="Données envoyées à la vue"></p>
+<h3>Le fichier &quot;index.js&quot; mis à jour</h3>
+<pre><code>const express = require(&quot;express&quot;);
+const path = require(&quot;path&quot;);
+
+// Création du serveur Express
+const app = express();
+
+// Configuration du serveur
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+
+// Démarrage du serveur
+app.listen(3000, () =&gt; {
+    console.log(&quot;Serveur démarré (http://localhost:3000/) !&quot;);
+});
+
+// GET /
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  // res.send(&quot;Bonjour le monde...&quot;);
+  res.render(&quot;index&quot;);
+});
+
+// GET /about
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+
+// GET /data
+app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    titre: &quot;Test&quot;,
+    items: [&quot;un&quot;, &quot;deux&quot;, &quot;trois&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+</code></pre>
+<p><a id="crud6"></a></p>
+<h2>6. Premiers pas avec le module SQlite3</h2>
+<p><em>Note : Si cela n'avait pas été fait en début de projet, il aurait été nécessaire
+d'installer le module SQlite3 par un <code>npm install sqlite3</code> pour pouvoir accéder
+à une base de données SQlite sous Node.</em></p>
+<h3>Déclarer le module SQlite3</h3>
+<p>Il faut commencer par référencer &quot;sqlite3&quot; en tête du programe &quot;index.js&quot;, avec
+les deux autres déclarations pour &quot;express&quot; et &quot;path&quot;.</p>
+<pre><code>const sqlite3 = require(&quot;sqlite3&quot;).verbose();
+</code></pre>
+<p>La méthode &quot;.verbose()&quot; permet d'avoir plus d'informations en cas de problème.</p>
+<h3>Connexion à la base de données SQlite</h3>
+<p>Ajouter ensuite le code pour se connecter à la base de données, juste avant de
+démarrer le serveur Express.</p>
+<pre><code>const db_name = path.join(__dirname, &quot;data&quot;, &quot;apptest.db&quot;);
+const db = new sqlite3.Database(db_name, err =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Connexion réussie à la base de données 'apptest.db'&quot;);
+});
+</code></pre>
+<p>La base de données sera enregistrée dans le dossier &quot;data&quot;, sous le nom
+&quot;apptest.db&quot;. Elle est créée automatiquement si elle n'existe pas encore. Par
+contre, il est quand même nécessaire de créer le dossier &quot;data&quot; depuis Visual
+Code.</p>
+<p>Après que ce code ait été exécuté, la variable &quot;db&quot; est un objet <code>Database</code> du
+module SQlite3 qui représente la connexion à la base de données. Cet objet va
+servir par la suite à accéder au contenu de la base de données et à effectuer
+des requêtes sur cette base de données.</p>
+<h3>Création d'une table &quot;Livres&quot;</h3>
+<p>Pour ce tutoriel, on va créer une table de livres avec 4 colonnes :</p>
+<ul>
+<li>Livre_ID : l'identifiant automatique</li>
+<li>Titre : le titre du livre</li>
+<li>Auteur : l'auteur du livre</li>
+<li>Commentaires : un champ mémo avec quelques notes sur le livre</li>
+</ul>
+<p>La requête SQL pour créer une telle table sous SQlite est la suivante :</p>
+<pre><code>CREATE TABLE IF NOT EXISTS Livres (
+  Livre_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  Titre VARCHAR(100) NOT NULL,
+  Auteur VARCHAR(100) NOT NULL,
+  Commentaires TEXT
+);
+</code></pre>
+<p>Ce qui donne :</p>
+<p><img src="/public/2019/crud-00-desc.png" alt="Structure de la table Livres"></p>
+<p>Pour savoir comment on peut faire ça dans Node, on va créer la table depuis
+l'application. À cette fin, il suffit d'ajouter le code ci-dessous juste après
+s'être connecté à la base de données.</p>
+<pre><code>const sql_create = `CREATE TABLE IF NOT EXISTS Livres (
+  Livre_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  Titre VARCHAR(100) NOT NULL,
+  Auteur VARCHAR(100) NOT NULL,
+  Commentaires TEXT
+);`;
+
+db.run(sql_create, err =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Création réussie de la table 'Livres'&quot;);
+});
+</code></pre>
+<p>Ce code utilise la méthode <code>.run()</code> de l'objet <code>Database</code> du module SQlite3.
+Cette méthode exécute la requête SQL qui lui est passé en 1° paramètre puis
+appelle la fonction callback correspondant au 2° paramètre, en lui passant un
+objet <code>err</code> pour pouvoir vérifier si l'exécution de la requête s'est déroulée
+correctement.</p>
+<p><em>Note : La table ne sera créée que si elle n'existe pas encore, grâce à la clause
+SQL &quot;IF NOT EXISTS&quot;. Ça ne serait pas super pour une vraie application, mais là
+c'est juste un tutoriel.</em></p>
+<h3>Alimenter la table &quot;Livres&quot;</h3>
+<p>Pour faciliter la suite du tutoriel, il est plus pratique d'insérer dès
+maintenant quelques livres dans la base de données. Sous SQlite, on pourrait
+passer la requête suivante :</p>
+<pre><code>INSERT INTO Livres (Livre_ID, Titre, Auteur, Commentaires) VALUES
+(1, 'Mrs. Bridge', 'Evan S. Connell', 'Premier de la série'),
+(2, 'Mr. Bridge', 'Evan S. Connell', 'Second de la série'),
+(3, 'L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne');
+</code></pre>
+<p>Si on a pas de client SQlite sous la main, c'est faisable en JavaScript, juste
+après avoir crée la table &quot;Livres&quot; (parce qu'il ne faut pas que l'insertion des
+livres ait lieu avant la création la table) :</p>
+<pre><code>  ...
+  console.log(&quot;Création réussie de la table 'Livres'&quot;);
+  // Alimentation de la table
+  const sql_insert = `INSERT INTO Livres (Livre_ID, Titre, Auteur, Commentaires) VALUES
+  (1, 'Mrs. Bridge', 'Evan S. Connell', 'Premier de la série'),
+  (2, 'Mr. Bridge', 'Evan S. Connell', 'Second de la série'),
+  (3, 'L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne');`;
+  db.run(sql_insert, err =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(&quot;Alimentation réussie de la table 'Livres'&quot;);
+  });
+</code></pre>
+<p>Normalement, il n'est pas utile de définir les identifiants lors des INSERT,
+mais dans ce cas, cela permet d'éviter que les données soient ré-insérées à
+chaque fois que le serveur démarre.</p>
+<p>La première fois, la console affiche &quot;Alimentation réussie de la table 'Livres'&quot;
+et les fois suivantes l'erreur &quot;SQLITE_CONSTRAINT: UNIQUE constraint failed:
+Livres.Livre_ID&quot; puisque les 3 lignes existent déjà.</p>
+<p>À présent, la table &quot;Livres&quot; contient les 3 lignes suivantes :</p>
+<p><img src="/public/2019/crud-00-livres.png" alt="Contenu de la table Livres"></p>
+<h3>Afficher la liste des livres</h3>
+<p>Maintenant que la table &quot;Livres&quot; contient quelques données, il est possible de
+créer une méthode pour l'URL &quot;http://localhost:3000/livres&quot; du site de façon à
+lire la liste des livres enregistrés dans la base de données et à afficher cette
+liste dans la vue.</p>
+<p>Pour lire la liste des livres, c'est assez simple. On fait une requête du style
+&quot;SELECT * FROM ...&quot; que l'on exécute via la méthode <code>db.all()</code> du module
+SQlite3. Une fois la requête terminée, cette méthode <code>db.all()</code> appelle une
+fonction callback en lui passant éventuellement une erreur et la liste des
+résultats obtenus par la requête SQL. Si tout va bien, la fonction callback peut
+alors transmettre ces résultats à la vue.</p>
+<pre><code>app.get(&quot;/livres&quot;, (req, res) =&gt; {
+  const sql = &quot;SELECT * FROM Livres ORDER BY Titre&quot;;
+  db.all(sql, [], (err, rows) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;livres&quot;, { model: rows });
+  });
+});
+</code></pre>
+<p>Quelques explications sur la ligne de code <code>db.all(sql, [], (err, rows) =&gt; { ... }</code> :</p>
+<ul>
+<li>Le 1° paramètre est la requête SQL à exécuter</li>
+<li>Le 2° paramètre est un tableau avec les variables nécessaires à la requête.
+Ici, la valeur &quot;[]&quot;  est employée parce que la requête n'a pas besoin de
+variable.</li>
+<li>Le 3° paramètre est une fonction callback appelée après l'exécution de la
+requête SQL.</li>
+<li>&quot;(err, rows)&quot; correspond aux paramètres passés à la fonction callback. &quot;err&quot;
+contient éventuellement un objet erreur et &quot;rows&quot; est un tableau contenant la
+liste des lignes renvoyées par le SELECT.</li>
+</ul>
+<p>Pour afficher cette liste de livres, on peut dans un premier temps créer une vue
+&quot;livres.ejs&quot; dans le dossier &quot;views&quot; avec le code suivant :</p>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Liste des livres&lt;/h1&gt;
+
+&lt;ul&gt;
+
+  &lt;% for (const book of model) { %&gt;
+    &lt;li&gt;
+      &lt;%= book.Titre %&gt;
+      &lt;em&gt;(&lt;%= book.Auteur %&gt;)&lt;/em&gt;
+    &lt;/li&gt;
+  &lt;% } %&gt;
+
+&lt;/ul&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>Après avoir relancé l'application par <code>npm start</code>, on obtient le résultat
+suivant en cliquant sur le menu &quot;Livres&quot; :</p>
+<p><img src="/public/2019/crud-05-list.png" alt="La liste des livres"></p>
+<p><em>Note : Il faut faire attention et bien écrire &quot;book.Titre&quot; et pas &quot;book.titre&quot;
+parce que la table &quot;Livres&quot; a été créée en utilisant des majuscules comme
+initiales pour les noms des colonnes.</em></p>
+<h3>Afficher les livres sous forme de tableau</h3>
+<p>Maintenant que la méthode pour afficher la liste des livres fonctionne, on va
+améliorer la présentation de ces données. La vue de l'étape précédente utilisait
+une simple liste &quot;ul / li&quot; pour afficher les livres. Le code de cette vue
+&quot;livres.ejs&quot; va être totalement modifié pour employer une table HTML.</p>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Liste des livres (&lt;%= model.length %&gt;)&lt;/h1&gt;
+
+&lt;div class=&quot;table-responsive-sm&quot;&gt;
+  &lt;table class=&quot;table table-hover&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Titre&lt;/th&gt;
+        &lt;th&gt;Auteur&lt;/th&gt;
+        &lt;th&gt;Commentaires&lt;/th&gt;
+        &lt;th class=&quot;d-print-none&quot;&gt;
+          &lt;a class=&quot;btn btn-sm btn-success&quot; href=&quot;/create&quot;&gt;Ajouter&lt;/a&gt;
+        &lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;% for (const book of model) { %&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;%= book.Titre %&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;%= book.Auteur %&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;%= book.Commentaires %&gt;&lt;/td&gt;
+          &lt;td class=&quot;d-print-none&quot;&gt;
+            &lt;a class=&quot;btn btn-sm btn-warning&quot; href=&quot;/edit/&lt;%= book.Livre_ID %&gt;&quot;&gt;Modifier&lt;/a&gt;
+            &lt;a class=&quot;btn btn-sm btn-danger&quot; href=&quot;/delete/&lt;%= book.Livre_ID %&gt;&quot;&gt;Effacer&lt;/a&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;% } %&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>Et voilà ! Ctrl+C si nécessaire, <code>npm start</code> puis naviguer vers l'URL
+&quot;http://localhost:3000/livres&quot; pour avoir une vraie table Bootstrap.</p>
+<p><img src="/public/2019/crud-06-table.png" alt="Les livres sous forme de table"></p>
+<p>L'avantage de cette nouvelle vue est de fournir des boutons [Ajouter],
+[Modifier] et [Effacer] pour mettre à jour la table des livres, ce qui est
+indispensable pour la suite du tutoriel.</p>
+<p><a id="crud7"></a></p>
+<h2>7. Modifier une fiche</h2>
+<p>Cette partie du tutoriel va montrer comment modifier une fiche existante. On
+commencera par créer les vues nécéssaires pour saisir les informations du livre
+à modifier. Puis on codera une méthode servant à afficher le formulaire de
+saisie lorsque la route GET /edit/xxx sera appellée (via un clic sur le bouton
+[Modifier] dans la liste des livres). Et pour finir, une méthode correspondant à
+la route POST /edit/xxx servira à mettre à jour la base de données lorsque
+l'utilisateur validera les modifications apportées via le bouton [Modifier] en
+bas du formulaire de saisie.</p>
+<h3>Les vues &quot;views/edit.ejs&quot; et &quot;views/_editor.ejs&quot;</h3>
+<p>La vue principale pour pouvoir modifier une fiche est un formulaire Bootstrap
+assez classique.</p>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Modifier une fiche&lt;/h1&gt;
+
+&lt;form action=&quot;/edit/&lt;%= model.Livre_ID %&gt;&quot; method=&quot;post&quot;&gt;
+  &lt;div class=&quot;form-horizontal&quot;&gt;
+
+    &lt;%- include(&quot;_editor&quot;) -%&gt;
+
+    &lt;div class=&quot;form-group row&quot;&gt;
+      &lt;label class=&quot;col-form-label col-sm-2&quot;&gt;&lt;/label&gt;
+      &lt;div class=&quot;col-sm-10&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Modifier&quot; class=&quot;btn btn-default btn-warning&quot; /&gt;
+        &lt;a class=&quot;btn btn-outline-dark cancel&quot; href=&quot;/livres&quot;&gt;Annuler&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>La vue précédente fait appel à la vue partielle &quot;_editor.ejs&quot; qui contient le
+code HTML dédié aux différents champs de saisie. Cette vue partielle servira
+également un peu plus loin pour ajouter une nouvelle fiche.</p>
+<pre><code>&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Titre&quot;&gt;Titre&lt;/label&gt;
+  &lt;div class=&quot;col-sm-8&quot;&gt;
+    &lt;input autofocus class=&quot;form-control&quot; name=&quot;Titre&quot; value=&quot;&lt;%= model.Titre %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Auteur&quot;&gt;Auteur&lt;/label&gt;
+  &lt;div class=&quot;col-sm-7&quot;&gt;
+    &lt;input class=&quot;form-control&quot; name=&quot;Auteur&quot; value=&quot;&lt;%= model.Auteur %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Commentaires&quot;&gt;Commentaires&lt;/label&gt;
+  &lt;div class=&quot;col-sm-10&quot;&gt;
+    &lt;textarea class=&quot;form-control&quot; cols=&quot;20&quot; name=&quot;Commentaires&quot; maxlength=&quot;32000&quot; rows=&quot;7&quot;&gt;&lt;%= model.Commentaires %&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>La route GET /edit/xxx</h3>
+<p>Il faut ensuite coder une première route pour afficher le livre à modifier
+lorsque on répond à la requête GET /edit/xxx (quand l'utilisateur a cliqué sur
+un bouton [Modifier] dans la liste des livres).</p>
+<p>Pour cela, on défini l'URL à gérer sous la forme &quot;/edit/:id&quot; où &quot;:id&quot; correspond
+à l'identifiant de la fiche à modifier. Cet identifiant est récupérable via
+l'objet <code>Request</code> du framework Express, dans la liste de ses paramètres :
+<code>req.params.id</code>.</p>
+<p>On peut alors faire une requête &quot;SELECT ...&quot; pour obtenir la fiche correspondant
+à cet identifiant. Cette requête est exécutée via la méthode <code>db.get()</code> de
+SQlite3 qui renvoie un seul résultat et qu'il est donc plus pratique d'utiliser
+que la méthode <code>db.all()</code> lorsqu'on fait un SELECT par identifiant. Dans ce cas,
+on passe en 2° paramètre l'identifiant du livre à afficher parce qu'on a utilisé
+une requête paramétrée (via le &quot;... = ?&quot;) pour éviter l'injection SQL. Lorsque
+la requête est terminée, la fonction callback peut à son tour transmettre le
+résultat obtenu à la vue.</p>
+<pre><code>// GET /edit/5
+app.get(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = ?&quot;;
+  db.get(sql, id, (err, row) =&gt; {
+    // if (err) ...
+    res.render(&quot;edit&quot;, { model: row });
+  });
+});
+</code></pre>
+<p>Après redémarrage du serveur, voici le formulaire de saisie qui s'affiche
+désormais lorsque l'utilisateur clique sur un bouton [Modifier] dans la liste
+des livres :</p>
+<p><img src="/public/2019/crud-07-edit.png" alt="Formulaire de modification d'un livre"></p>
+<h3>La route POST /edit/xxx</h3>
+<p>Et pour finir, il ne reste plus qu'à coder la route pour sauvegarder les
+modifications apportées à la fiche, lors de la requête POST /edit/xxx. Le &quot;post&quot;
+se produit lorsque l'utilisateur valide sa saisie en cliquant sur le bouton
+[Modifier] du formulaire de saisie.</p>
+<p>Là aussi, l'identifiant est retrouvé via le paramètre &quot;id&quot; de l'objet <code>Request</code>.
+Et les données saisies sont disponibles via la propriété <code>body</code> de cet objet
+<code>Request</code> pour être stockées dans un tableau temporaire avec l'identifiant.</p>
+<p><em>Note : pour que <code>Request.body</code> récupère les valeurs postées, il est nécessaire
+d'ajouter un middleware à la configuration du serveur. Ce point sera expliqué
+plus précisément dans la partie suivante...</em></p>
+<p>La modification en base de donnée se fait via une requête &quot;UPDATE ...&quot; exécutée
+avec la méthode <code>db.run()</code> de SQlite3 à laquelle on passe également le tableau
+contenant les donnés modifiées et l'identifiant du livre à mettre à jour.</p>
+<p>Après avoir exécuté la requête &quot;UPDATE ...&quot; avec la méthode <code>db.run()</code> de
+SQlite3, la fonction callback redirige l'utilisateur vers la liste des livres à
+l'aide de la méthode <code>Response.redirect()</code> d'Express.</p>
+<pre><code>// POST /edit/5
+app.post(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const book = [req.body.Titre, req.body.Auteur, req.body.Commentaires, id];
+  const sql = &quot;UPDATE Livres SET Titre = ?, Auteur = ?, Commentaires = ? WHERE (Livre_ID = ?)&quot;;
+  db.run(sql, book, err =&gt; {
+    // if (err) ...
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+</code></pre>
+<p><em>Note : Dans le cadre d'une vraie application, il faudrait impérativement avoir
+un contrôle de saisie côté client et côté serveur, mais ce n'est pas le sujet de
+ce tutoriel.</em></p>
+<h3>Le middleware &quot;express.urlencoded()&quot;</h3>
+<p>Comme évoqué dans la partie précédente, il est nécessaire d'utiliser le
+middleware &quot;express.urlencoded()&quot; pour que <code>Request.body</code> récupère les valeurs
+postées. Cela se fait tout simplement par un <code>app.use()</code> lors de la
+configuration du serveur.</p>
+<pre><code>// Configuration du serveur
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(&quot;public&quot;));
+app.use(express.urlencoded({ extended: false })); // &lt;--- paramétrage du middleware
+</code></pre>
+<p>Ce middleware permet de récupérer les données envoyées en tant que
+&quot;Content-Type: application/x-www-form-urlencoded&quot;, ce qui est le standard pour
+les valeurs postées depuis un formulaire. Pour information, on l'utilise très
+souvent avec le middleware &quot;express.json()&quot; pour les données envoyées en tant
+que &quot;Content-Type: application/json&quot;, mais ici ce n'est pas nécessaire.</p>
+<p><em>Note : Il y a des exemples qui utilisent encore le module &quot;body-parser&quot; à la
+place, mais ce n'est plus utile depuis la version 4.1.6 de Express.</em></p>
+<p><a id="crud8"></a></p>
+<h2>8. Créer une nouvelle fiche</h2>
+<h3>La vue &quot;views/create.ejs&quot;</h3>
+<p>La vue principale pour enregistrer un nouveau livre ressemble beaucoup à la vue
+codée pour modifier une fiche. Comme elle, elle fait appel à la vue partielle
+&quot;_editor.ejs&quot; pour ce qui concerne les différents champs de saisie.</p>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Ajouter une fiche&lt;/h1&gt;
+
+&lt;form action=&quot;/create&quot; method=&quot;post&quot;&gt;
+  &lt;div class=&quot;form-horizontal&quot;&gt;
+
+    &lt;%- include(&quot;_editor&quot;) -%&gt;
+
+    &lt;div class=&quot;form-group row&quot;&gt;
+      &lt;label class=&quot;col-form-label col-sm-2&quot;&gt;&lt;/label&gt;
+      &lt;div class=&quot;col-sm-10&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Ajouter&quot; class=&quot;btn btn-default btn-success&quot; /&gt;
+        &lt;a class=&quot;btn btn-outline-dark cancel&quot; href=&quot;/livres&quot;&gt;Annuler&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<h3>La route GET /create</h3>
+<p>Par rapport à la modification, cette fonction est beaucoup plus simple. Elle se
+contente de renvoyer la vue &quot;create.ejs&quot; en lui transmettant un objet &quot;livre&quot;
+vide (parce que la vue partielle &quot;_editor.ejs&quot; attend un tel objet).</p>
+<pre><code>// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  res.render(&quot;create&quot;, { model: {} });
+});
+</code></pre>
+<p>Dans le cas d'une table plus riche que la table &quot;Livres&quot;, il serait possible de
+définir des valeurs par défaut en codant cette méthode de la façon suivante :</p>
+<pre><code>// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  const book = {
+    Auteur: &quot;Victor Hugo&quot;
+  }
+  res.render(&quot;create&quot;, { model: book });
+});
+</code></pre>
+<p>Comme on peut le voir ci-dessous, le formulaire de saisie pour ajouter un
+nouveau livre ressemble pas mal à celui pour modifier une fiche. C'est un des
+avantages de la vue partielle &quot;_editor.ejs&quot;.</p>
+<p><img src="/public/2019/crud-08-create.png" alt="Formulaire de création d'un livre"></p>
+<h3>La route POST /create</h3>
+<p>Lorsque l'utilisateur clique sur le bouton [Ajouter] pour valider son formulaire
+de saisie, le navigateur envoie une requête &quot;post&quot; vers cette route. La méthode
+qui lui est associée ressemble beaucoup à celle mise en place pour la
+modification d'une fiche :</p>
+<ul>
+<li>Elle récupère les données saisies via la propriété <code>body</code> de l'objet <code>Request</code>
+du framework Express.</li>
+<li>La méthode <code>db.run()</code> de SQlite3 sert pour exécuter une requête &quot;INSERT INTO
+...&quot;.</li>
+<li>La fonction callback redirige l'utilisateur vers la liste des livres.</li>
+</ul>
+<pre><code>// POST /create
+app.post(&quot;/create&quot;, (req, res) =&gt; {
+  const sql = &quot;INSERT INTO Livres (Titre, Auteur, Commentaires) VALUES (?, ?, ?)&quot;;
+  const book = [req.body.Titre, req.body.Auteur, req.body.Commentaires];
+  db.run(sql, book, err =&gt; {
+    // if (err) ...
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+</code></pre>
+<p><a id="crud9"></a></p>
+<h2>9. Supprimer une fiche</h2>
+<h3>Les vues &quot;views/delete.ejs&quot; et &quot;views/_display.ejs&quot;</h3>
+<p>La vue principale pour pouvoir supprimer une fiche doit en premier lieu afficher
+les informations du livre sélectionné pour permettre à l'utilisateur de
+confirmer sa suppression en toute connaissance. Elle ressemble par conséquent
+beaucoup aux vues &quot;edit.ejs&quot; et &quot;create.ejs&quot;.</p>
+<pre><code>&lt;%- include(&quot;_header&quot;) -%&gt;
+
+&lt;h1&gt;Effacer une fiche ?&lt;/h1&gt;
+
+&lt;form action=&quot;/delete/&lt;%= model.Livre_ID %&gt;&quot; method=&quot;post&quot;&gt;
+  &lt;div class=&quot;form-horizontal&quot;&gt;
+
+    &lt;%- include(&quot;_display&quot;) -%&gt;
+
+    &lt;div class=&quot;form-group row&quot;&gt;
+      &lt;label class=&quot;col-form-label col-sm-2&quot;&gt;&lt;/label&gt;
+      &lt;div class=&quot;col-sm-10&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Effacer&quot; class=&quot;btn btn-default btn-danger&quot; /&gt;
+        &lt;a class=&quot;btn btn-outline-dark cancel&quot; href=&quot;/livres&quot;&gt;Annuler&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;%- include(&quot;_footer&quot;) -%&gt;
+</code></pre>
+<p>Cette vue fait appel à la vue partielle &quot;_display.ejs&quot; qui contient le code HTML
+pour afficher les différents informations d'un livre. Pratiquement, ce code est
+quasi identique à celui de la vue &quot;_editor.ejs&quot;, si ce n'est que les champs de
+saisie sont en &quot;readonly&quot;.</p>
+<pre><code>&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Titre&quot;&gt;Titre&lt;/label&gt;
+  &lt;div class=&quot;col-sm-8&quot;&gt;
+    &lt;input readonly class=&quot;form-control&quot; id=&quot;Titre&quot; value=&quot;&lt;%= model.Titre %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Auteur&quot;&gt;Auteur&lt;/label&gt;
+  &lt;div class=&quot;col-sm-7&quot;&gt;
+    &lt;input readonly class=&quot;form-control&quot; id=&quot;Auteur&quot; value=&quot;&lt;%= model.Auteur %&gt;&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;form-group row&quot;&gt;
+  &lt;label class=&quot;col-form-label col-sm-2&quot; for=&quot;Commentaires&quot;&gt;Commentaires&lt;/label&gt;
+  &lt;div class=&quot;col-sm-10&quot;&gt;
+    &lt;textarea readonly class=&quot;form-control&quot; cols=&quot;20&quot; id=&quot;Commentaires&quot; maxlength=&quot;32000&quot; rows=&quot;7&quot;&gt;&lt;%= model.Commentaires %&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Si la table &quot;Livres&quot; contenait plus de colonnes que ce qu'il est possible
+d'afficher horizontalement dans la liste des livres, cette vue &quot;_display.ejs&quot;
+pourrait également être utilisée dans le cadre d'une route et d'une vue
+&quot;details&quot; qui serviraient à afficher l'intégralité de la fiche.</p>
+<h3>La route GET /delete/xxx</h3>
+<p>C'est le même code que la méthode GET /edit/xxx, si ce n'est qu'il renvoie la
+vue &quot;delete.ejs&quot; plutôt que la vue &quot;edit.ejs&quot;.</p>
+<pre><code>// GET /delete/5
+app.get(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = ?&quot;;
+  db.get(sql, id, (err, row) =&gt; {
+    // if (err) ...
+    res.render(&quot;delete&quot;, { model: row });
+  });
+});
+</code></pre>
+<p>L'interface utilisateur est assez proche du formulaire de saisie habituel. Assez
+ironiquement, les trois zones de saisie ne sont en fait pas saisissables (et
+donc grisés selon les conventions de Bootstrap) :</p>
+<p><img src="/public/2019/crud-09-delete.png" alt="Formulaire de suppression d'un livre"></p>
+<h3>La route POST /delete/xxx</h3>
+<p>Cette fonction toute simple répond à la requête &quot;post&quot; envoyée par le navigateur
+suite au clic sur le bouton [Effacer] pour confirmer la suppression du livre.
+Son code ressemble à pas mal de ce qui a déjà été vu jusqu'ici :</p>
+<ul>
+<li>Elle retrouve l'identifiant du livre à supprimer via <code>req.params.id</code>.</li>
+<li>La méthode <code>db.run()</code> de SQlite3 exécute une requête &quot;DELETE ...&quot; pour cet
+identifiant.</li>
+<li>La fonction callback redirige l'utilisateur vers la liste des livres.</li>
+</ul>
+<pre><code>// POST /delete/5
+app.post(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;DELETE FROM Livres WHERE Livre_ID = ?&quot;;
+  db.run(sql, id, err =&gt; {
+    // if (err) ...
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+</code></pre>
+<p><a id="crud10"></a></p>
+<h2>10. Conclusion</h2>
+<p>Personnellement, ce tutoriel m'a permis de bien avancer. J'ai enfin écrit une
+application web permettant de mettre à jour une base de données SQL avec Node JS
+qui ressemble à ce que je peux faire avec Sinatra pour de petits trucs. Cela
+m'a donné un bon aperçu de tout ce qui est nécessaire et de voir que finalement
+ce n'est pas très éloigné de ce dont j'ai l'habitude avec ASP.NET MVC ou
+Sinatra.</p>
+<p>Plus généralement, pour le côté Node, ce tutoriel a donné l'occasion de réviser
+un peu l'utilisation de NPM et son impact sur le fichier &quot;package.json&quot;.</p>
+<ul>
+<li>npm init et npm init -y pour initialiser un projet</li>
+<li>npm install ... (sans --save) pour installer des modules</li>
+<li>npm start pour lancer le projet</li>
+</ul>
+<p>Même si ce tutoriel n'a fait qu'effleurer ce que permet le framework Express,
+l'application développée constitue un bon point d'entrée pour s'entrainer avec
+une partie des méthodes offertes par Express. Au final, cela suffit pour réussir
+à organiser une application basique à la Sinatra.</p>
+<ul>
+<li>app.set(...) et app.use(...) pour configurer le serveur et les middlewares</li>
+<li>app.listen(port, callback) pour démarrer le serveur</li>
+<li>app.get(url, callback) pour répondre aux requêtes GET</li>
+<li>app.post(url, callback) pour les POST depuis les formulaires de saisie</li>
+<li>req.params.* pour récupérer les paramètres nommés de l'URL (la route)</li>
+<li>req.body.* pour accéder aux données postées par le formulaire de saisie</li>
+</ul>
+<p>En ce qui concerne les vues, quelques-unes des fonctionnalités de base ont été
+passées en revue.</p>
+<ul>
+<li>res.send(&quot;texte&quot;) pour renvoyer un texte</li>
+<li>res.render(view_name, model) pour renvoyer une vue</li>
+<li>res.redirect(url) pour rediriger l'utilisateur</li>
+<li>utilisation de vues partielles pour se simplifier le travail</li>
+<li>et EJS ressemble beaucoup à ce qui se fait avec ASP ou aux vues ERB de Sinatra</li>
+</ul>
+<p>Côté base de données, le programme a montré comment gérer une base SQlite et que
+c'est suffisament simple pour commencer (du moins quand on connait SQL). Mais
+cela semble assez spécifique au module SQlite3 et il reste à voir comment faire
+avec PostgreSQL, MySQL, Oracle ou Sql Server... L'idéal serait d'avoir quelque
+chose comme ADO.NET (ou ODBC à la rigueur) avant de passer à un véritable ORM.</p>
+<ul>
+<li>new sqlite3.Database() pour se connecter à la base de données (voire la créer)</li>
+<li>db.run(sql, [ params ], callback) pour exécuter des requêtes de mise à jour</li>
+<li>db.all(sql, [ params ], callback) pour une requête SELECT renvoyant plusieurs
+lignes</li>
+<li>db.get(sql, [ params ], callback) pour un SELECT par identifant</li>
+</ul>
+<p>Pour ce qui est de JavaScript lui-même, cette application a surtout eu
+l'avantage de mettre en pratique quelques-unes des &quot;nouveautés&quot; du langage.</p>
+<ul>
+<li>employer des fonctions arrows pour les callbacks</li>
+<li>déclarer des constantes à chaque fois que c'est possible (c'est à dire
+toujours dans le programme développé)</li>
+<li>utiliser des boucles for ... of plus simples que des boucles classiques for
+(let i = 0; i &lt; liste.length; i++)</li>
+</ul>
+<p><a id="annexe"></a></p>
+<h2>Annexe - Le code complet de &quot;index.js&quot;</h2>
+<p>Ce n'est pas pour <em>rallonger</em> le billet, mais pour ceux qui comme moi aiment avoir
+une vue d'ensemble d'un programme. Et autant en profiter pour mettre en avant
+quelques petits chiffres :</p>
+<ul>
+<li>148 lignes de codes</li>
+<li>3 dépendances NPM (ejs, express et sqlite3)</li>
+<li>3 modules importés (express, path et sqlite3)</li>
+</ul>
+<p><em>Note : Le code complet de l'application est également disponible sur
+<a href="https://github.com/michelc/AppTest">GitHub</a>.</em></p>
+<pre><code>const express = require(&quot;express&quot;);
+const path = require(&quot;path&quot;);
+const sqlite3 = require(&quot;sqlite3&quot;).verbose();
+
+// Création du serveur Express
+const app = express();
+
+// Configuration du serveur
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+app.use(express.urlencoded({ extended: false }));
+
+// Connexion à la base de donnée SQlite
+const db_name = path.join(__dirname, &quot;data&quot;, &quot;apptest.db&quot;);
+const db = new sqlite3.Database(db_name, err =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Connexion réussie à la base de données 'apptest.db'&quot;);
+});
+
+// Création de la table Livres (Livre_ID, Titre, Auteur, Commentaires)
+const sql_create = `CREATE TABLE IF NOT EXISTS Livres (
+  Livre_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  Titre VARCHAR(100) NOT NULL,
+  Auteur VARCHAR(100) NOT NULL,
+  Commentaires TEXT
+);`;
+db.run(sql_create, err =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Création réussie de la table 'Livres'&quot;);
+  // Alimentation de la table
+  const sql_insert = `INSERT INTO Livres (Livre_ID, Titre, Auteur, Commentaires) VALUES
+  (1, 'Mrs. Bridge', 'Evan S. Connell', 'Premier de la série'),
+  (2, 'Mr. Bridge', 'Evan S. Connell', 'Second de la série'),
+  (3, 'L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne');`;
+  db.run(sql_insert, err =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(&quot;Alimentation réussie de la table 'Livres'&quot;);
+  });
+});
+
+// Démarrage du serveur
+app.listen(3000, () =&gt; {
+  console.log(&quot;Serveur démarré (http://localhost:3000/) !&quot;);
+});
+
+// GET /
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  // res.send(&quot;Bonjour le monde...&quot;);
+  res.render(&quot;index&quot;);
+});
+
+// GET /about
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+
+// GET /data
+app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    titre: &quot;Test&quot;,
+    items: [&quot;un&quot;, &quot;deux&quot;, &quot;trois&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+
+// GET /livres
+app.get(&quot;/livres&quot;, (req, res) =&gt; {
+  const sql = &quot;SELECT * FROM Livres ORDER BY Titre&quot;;
+  db.all(sql, [], (err, rows) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;livres&quot;, { model: rows });
+  });
+});
+
+// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  res.render(&quot;create&quot;, { model: {} });
+});
+
+// POST /create
+app.post(&quot;/create&quot;, (req, res) =&gt; {
+  const sql = &quot;INSERT INTO Livres (Titre, Auteur, Commentaires) VALUES (?, ?, ?)&quot;;
+  const book = [req.body.Titre, req.body.Auteur, req.body.Commentaires];
+  db.run(sql, book, err =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+
+// GET /edit/5
+app.get(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = ?&quot;;
+  db.get(sql, id, (err, row) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;edit&quot;, { model: row });
+  });
+});
+
+// POST /edit/5
+app.post(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const book = [req.body.Titre, req.body.Auteur, req.body.Commentaires, id];
+  const sql = &quot;UPDATE Livres SET Titre = ?, Auteur = ?, Commentaires = ? WHERE (Livre_ID = ?)&quot;;
+  db.run(sql, book, err =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+
+// GET /delete/5
+app.get(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = ?&quot;;
+  db.get(sql, id, (err, row) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;delete&quot;, { model: row });
+  });
+});
+
+// POST /delete/5
+app.post(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;DELETE FROM Livres WHERE Livre_ID = ?&quot;;
+  db.run(sql, id, err =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+</code></pre>
+<div class="encart">
+<p>English version: <a href="/2019/10/08/crud-with-express-sqlite-10-steps/" hreflang="en-US">CRUD application with Express and SQlite in 10 steps</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/08/22/solitaire-animation-autoplay/" hreflang="fr-FR">Solitaire - Animation du déplacement des cartes</a>
+  <a rel="next" href="/2019/09/21/crud-avec-express-postgresql-10-etapes/" hreflang="fr-FR">Application CRUD avec Express et PostgreSQL en 10 étapes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

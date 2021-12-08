@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tester la partie POST d&#39;une action Create() - 1/2 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/10/01/tester-partie-post-action-create/" />
+<meta property="og:title" content="Tester la partie POST d&#39;une action Create() - 1/2" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/10/01/tester-partie-post-action-create/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-10-01T17:35:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-10-01T17:35:00.000Z","datePublished":"2012-10-01T17:35:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/10/01/tester-partie-post-action-create/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/10/01/tester-partie-post-action-create/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/10/01/tester-partie-post-action-create/">Tester la partie POST d&#39;une action Create() - 1/2</a>
+    </h1>
+    <p>
+      <span>2012-10-01</span>
+      <span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>L'action à tester</h2>
+<p>Il s'agit de l'action Create() en mode POST de mon application de gestion de
+contacts, pour le cas où l'utilisateur valide son formulaire pour créer un
+nouveau contact de type &quot;personne&quot;.</p>
+<p>Typiquement, son rôle est de vérifier que la saisie est correcte et en
+fonction de cela de déterminer s'il faut :</p>
+<ul>
+<li>créer la nouvelle personne dans la base de données</li>
+<li>renvoyer l'utilisateur en saisie pour correction</li>
+</ul>
+<pre><code>//
+// POST: /People/Create
+
+[HttpPost, ValidateAntiForgeryToken]
+public ActionResult Create(ViewPerson person)
+{
+  if (ModelState.IsValid)
+  {
+    var contact = new Contact();
+    contact.Update_With_ViewPerson(person);
+    db.Contacts.Add(contact);
+    db.SaveChanges();
+
+    this.Flash(string.Format(&quot;La fiche de {0} a été insérée&quot;, contact.DisplayName));
+    return RedirectToAction(&quot;Details&quot;, new { id = contact.Contact_ID, slug = contact.Slug });
+  }
+
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+</code></pre>
+<p>Pour l'instant, je vais concentrer mes tests unitaires sur le cas où la
+saisie est incorrecte.</p>
+<p>Comme je débute encore en ce qui concerne les tests unitaires, pour être
+bien certain que je fais mon test à peu près correctement, je modifie
+légèrement le code de l'action pour éviter les effets de bord :</p>
+<pre><code>//
+// POST: /People/Create
+
+[HttpPost, ValidateAntiForgeryToken]
+public ActionResult Create(ViewPerson person)
+{
+  if (ModelState.IsValid)
+  {
+    var contact = new Contact();
+    /*
+    contact.Update_With_ViewPerson(person);
+    db.Contacts.Add(contact);
+    db.SaveChanges();
+
+    this.Flash(string.Format(&quot;La fiche de {0} a été insérée&quot;, contact.DisplayName));
+    */
+    return RedirectToAction(&quot;Details&quot;, new { id = contact.Contact_ID, slug = contact.Slug });
+  }
+
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+</code></pre>
+<h2>1° test : Si erreur Alors je reste en saisie</h2>
+<p>Je vais commencer par vérifier que Create() me renvoie la vue par défaut
+quand j'ai une erreur de saisie :</p>
+<pre><code>[TestMethod]
+public void PeopleCreate_post_doit_renvoyer_la_vue_par_defaut_quand_saisie_incorrecte()
+{
+  // Arrange
+  var controller = new PeopleController();
+  var person = new ViewPerson
+  {
+    LastName = &quot;test&quot;,
+    Phone1 = &quot;0&quot;
+  };
+  controller.ModelState.AddModelError(&quot;global&quot;, &quot;message&quot;);
+
+  // Act
+  var result = controller.Create(person) as ViewResult;
+
+  // Assert
+  Assert.IsNotNull(result, &quot;People.Create() aurait dû renvoyer un ViewResult&quot;);
+  Assert.IsTrue(string.IsNullOrEmpty(result.ViewName), &quot;People.Create() aurait dû utiliser la vue par défaut&quot;);
+}
+</code></pre>
+<pre><code>var person = new ViewPerson { LastName = &quot;test&quot;, Phone1 = &quot;0&quot;
+};
+</code></pre>
+<p>=&gt; initialise un objet ViewPerson que je sais valide.</p>
+<pre><code>controller.ModelState.AddModelError(&quot;global&quot;, &quot;message&quot;);
+</code></pre>
+<p>=&gt; déclare que l'objet comporte une erreur.</p>
+<pre><code>var result = controller.Create(person) as ViewResult;
+</code></pre>
+<p>=&gt; appelle l'action People.Create() en lui passant mon objet ViewPerson,
+ce qui me permet d'accéder à la version &quot;POST&quot; de mon action.</p>
+<pre><code>Assert.IsNotNull(result, &quot;...&quot;);
+</code></pre>
+<p>=&gt; 1° test pour vérifier que l'action répond bien par un <code>return View</code> et pas par un <code>return RedirectToAction</code>.</p>
+<pre><code>Assert.IsTrue(string.IsNullOrEmpty(result.ViewName),
+&quot;...&quot;);
+</code></pre>
+<p>=&gt; 2° test pour vérifier que l'action n'a pas défini le nom de la vue à
+utiliser et qu'elle laisse faire le moteur de vue pour qu'il utilise la vue par
+défaut</p>
+<p>Comme je débute vraiment, je fais deux contre-vérifications :</p>
+<ul>
+<li>je commente la ligne avec <code>AddModelError</code> et je relance le test
+pour vérifier que dans ce cas il va bien échouer parce que n'ayant pas défini
+d'erreur, l'action a renvoyé un <code>RedirectResult</code> et pas un
+<code>ViewResult</code> et j'ai donc le message &quot;People.Create() aurait dû
+renvoyer un ViewResult&quot; : OK</li>
+<li>je modifie <code>return View(person);</code> en <code>return View(&quot;Create&quot;, person);</code> dans l'action et je relance le test pour pour vérifier que j'ai
+bien le message &quot;People.Create() aurait dû utiliser la vue par défaut&quot; :
+OK</li>
+</ul>
+<p><em>Note : Je n'ai pas à tester que la vue par défaut sera
+bien Create.cshtml. Ca, c'est le travail de ceux qui ont développé ASP.NET
+MVC.</em></p>
+<p>Conclusion : Grâce à ce test unitaire, je suis
+maintenant certain qu'en cas d'erreur de saisie l'action People.Create() me
+renverra en saisie. C'est donc quelque chose que je n'ai plus à vérifier dans
+les tests suivants.</p>
+<h2>2° test : Si erreur Alors on me dit quoi</h2>
+<p>Là, je vais vérifier que quand j'ai une erreur de saisie, Create() me
+renvoie bien la liste de ces erreurs dans ModelState, ce qui me permettra de
+les afficher dans la vue :</p>
+<pre><code>[TestMethod]
+public void PeopleCreate_post_doit_renvoyer_les_erreurs_quand_saisie_incorrecte()
+{
+  // Arrange
+  var controller = new PeopleController();
+  var person = new ViewPerson
+  {
+    LastName = &quot;test&quot;,
+    Phone1 = &quot;0&quot;
+  };
+  controller.ModelState.AddModelError(&quot;global&quot;, &quot;message&quot;);
+
+  // Act
+  var result = controller.Create(person) as ViewResult;
+
+  // Assert
+  Assert.IsTrue(result.ViewData.ModelState.Count &gt; 0, &quot;People.Create() aurait dû renvoyer des erreurs dans ModelState&quot;);
+}
+</code></pre>
+<pre><code>Assert.IsTrue(result.ViewData.ModelState.Count &gt; 0,
+&quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier que le ModelState contient bien des erreurs.</p>
+<p><em>Note : En fait, c'est un test idiot ! S'il y a
+des erreurs dans le ModelState en entrée, c'est le boulot de ASP.NET MVC de
+mettre ModelState.IsValid à false et de renvoyer ces erreurs dans
+<code>result.ViewData.ModelState</code>. Et c'est donc le boulot de ceux qui
+ont développé ça d'avoir unitairement testé tout ce qui va bien.</em></p>
+<p>Conclusion : un test pour rien à supprimer.</p>
+<h2>2° test : Si erreur Alors la liste des sociétés est initialisée</h2>
+<p>Dans ce &quot;vrai&quot; 2° test, je vais vérifier que l'action Create() a bien
+initialisé la liste des sociétés existantes dont la vue Create.cshtml a besoin
+pour générer une liste déroulante qui permet aux utilisateur de rattacher la
+personne créée à une société.</p>
+<pre><code>[TestMethod]
+public void PeopleCreate_post_doit_initialiser_la_liste_des_societes_quand_saisie_incorrecte()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var person = new ViewPerson
+  {
+    LastName = &quot;test&quot;,
+    Phone1 = &quot;0&quot;
+  };
+  controller.ModelState.AddModelError(&quot;global&quot;, &quot;message&quot;);
+
+  // Act
+  var result = controller.Create(person) as ViewResult;
+
+  // Assert
+  var model = result.ViewData.Model as ViewPerson;
+  Assert.IsNotNull(model.Companies, &quot;Model.Companies devrait être initialisée&quot;);
+}
+</code></pre>
+<pre><code>var model = result.ViewData.Model as ViewPerson;
+</code></pre>
+<p>=&gt; récupère l'objet transmis à la vue par le contrôleur.</p>
+<pre><code>Assert.IsNotNull(model.Companies, &quot;...&quot;);
+</code></pre>
+<p>=&gt; test pour vérifier que la propriété Companies n'est pas nulle (ce qui
+est le cas par défaut) et que l'action Create() l'a bien initialisée avec la
+liste des sociétés existantes (c'est ce que fait la ligne
+<code>person.Companies = ListCompanies(person.Company_ID);</code> dans le
+source de l'action).</p>
+<p><em>Note : Ce test créée le contrôleur en lui passant un
+paramètre &quot;db&quot; pour définir un objet RepertoirContext spécifique au test. Il
+s'agit d'un objet de type DbContext car la méthode ListCompanies() appelée par
+l'action Create() passe par Entity Framework pour retrouver la liste des
+sociétés existantes dans la base de données.</em></p>
+<p>Conclusion : je reviendrai une autre fois sur la
+méthode que j'ai choisi d'utiliser pour effectuer mes tests liés à Entity
+Framework Code First.</p>
+<h2>3° test : Si erreur Alors je peux corriger ma saisie</h2>
+<p>Dans ce test, je vais vérifier que lorsqu'il y a une erreur, l'action
+Create() retransmet bien à la vue l'objet ViewPerson qu'elle a traité, de façon
+à permettre à l'utilisateur de corriger sa saisie sans avoir à tout
+ressaisir.</p>
+<pre><code>[TestMethod]
+public void PeopleCreate_post_doit_renvoyer_le_meme_objet_ViewPerson_a_la_vue_quand_saisie_incorrecte()
+{
+  // Arrange
+  var controller = new PeopleController(db);
+  var person = new ViewPerson
+  {
+      LastName = &quot;test&quot;,
+      Phone1 = &quot;0&quot;
+  };
+  controller.ModelState.AddModelError(&quot;global&quot;, &quot;message&quot;);
+
+  // Act
+  var result = controller.Create(person) as ViewResult;
+
+  // Assert
+  var model = result.ViewData.Model as ViewPerson;
+  Assert.IsNotNull(model, &quot;Model devrait être du type ViewPerson&quot;);
+  Assert.AreEqual(person.LastName, model.LastName, &quot;Model aurait dû correspondre à la saisie&quot;);
+  Assert.AreEqual(person.Phone1, model.Phone1, &quot;Model aurait dû correspondre à la saisie&quot;);
+}
+</code></pre>
+<pre><code>Assert.IsNotNull(model, &quot;Model devrait être du type
+ViewPerson&quot;);
+</code></pre>
+<p>=&gt; 1° test pour vérifier que l'action transmet bien un objet de type
+<code>ViewPerson</code>.</p>
+<pre><code>Assert.AreEqual(person.LastName, model.LastName, &quot;...&quot;);
+</code></pre>
+<pre><code>Assert.AreEqual(person.Phone1, model.Phone1, &quot;...&quot;);
+</code></pre>
+<p>=&gt; 2° test pour vérifier que l'action retransmet bien ce qu'elle a
+reçu.</p>
+<p>Au passage, il est à noter que le &quot;vrai&quot; but de ce test n'est pas de
+vérifier que le ViewPerson en entrée est le &quot;même&quot; que le ViewPerson transmis à
+la vue (c'est pas mon boulot...). Ce que je teste, c'est que l'objet ViewPerson
+est bien re-transmis à la vue en cas d'erreur de saisie et que dans mon code de
+l'action Create() j'ai fait correctement ma part du boulot et que j'ai bien
+codé :</p>
+<pre><code>return View(person);
+</code></pre>
+<p>et pas :</p>
+<pre><code>return View();
+</code></pre>
+<p>ou quelque chose comme :</p>
+<pre><code>return View(new ViewPerson());
+</code></pre>
+<p>Tout comme dans le test n° 1 je contrôlais en fait que je n'avais pas
+codé :</p>
+<pre><code>return View(&quot;Create&quot;);
+</code></pre>
+<p>Conclusion : Je pense qu'avec ces 3 tests unitaires je
+dois être à peu près complet pour traiter le cas où la saisie est incorrecte,
+ce qui finalement se résume grosso-modo au 2 lignes de code
+suivantes :</p>
+<pre><code>public ActionResult Create(ViewPerson person)
+{
+  person.Companies = ListCompanies(person.Company_ID);
+  return View(person);
+}
+</code></pre>
+<p>Après ça, il faudra que je teste le POST quand ça marche et que l'action
+Create() enregistre la nouvelle personne (màj : c'est fait avec la
+<a href="/2012/10/02/tester-partie-post-action-create-2/">2° partie de ce billet</a>).</p>
+<h2>Ce que je ne teste pas</h2>
+<p>Je n'ai pas fait de test unitaire pour contrôler que <code>public ActionResult Create(ViewPerson person)</code> avec un objet ViewPerson
+incorrect (avec ses propriétés obligatoires laissées vides) génère bien des
+erreurs dans ModelState.</p>
+<ul>
+<li>Ce n'est pas un contrôle qui est fait par mon contrôleur et par conséquent
+c'est un test unitaire qui ne me concerne pas directement : il a déjà été
+fait par les personnes qui ont développé ASP.NET MVC.</li>
+<li>Cependant, il doit falloir que je teste que j'ai bien pensé à mettre les
+attributs <code>[Required]</code> sur les propriétés obligatoires de mes
+objets. Mais là ça concerne les tests unitaires de mes modèles.</li>
+</ul>
+<p>Je n'ai pas non plus fait de test unitaire pour contrôler qu'un objet
+<code>ViewPerson</code> correct génère un objet <code>Contact</code> correct.
+Là aussi, ce n'est pas un test lié à mon contrôleur, mais c'est un test qui
+concerne mon mapping ViewModel / Model.</p>
+<p>Et pour finir, je ne teste pas que l'action Create() en mode POST soit bien
+marquée par l'attribut <code>[ValidateAntiForgeryToken]</code>. Pour l'instant,
+je n'ai pas cherché et donc pas trouvé comment faire...</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/09/05/verifier-numero-siret-poste/" hreflang="fr-FR">Vérifier un numéro de siret de la Poste</a>
+  <a rel="next" href="/2012/10/02/tester-partie-post-action-create-2/" hreflang="fr-FR">Tester la partie POST d&#39;une action Create() - 2/2</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Premier pas avec ASP.NET MVC et NerdDinner - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/07/17/premier-essai-aspnet-mvc/" />
+<meta property="og:title" content="Premier pas avec ASP.NET MVC et NerdDinner" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/07/17/premier-essai-aspnet-mvc/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-07-17T09:16:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-07-17T09:16:00.000Z","datePublished":"2009-07-17T09:16:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/07/17/premier-essai-aspnet-mvc/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/07/17/premier-essai-aspnet-mvc/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/07/17/premier-essai-aspnet-mvc/">Premier pas avec ASP.NET MVC et NerdDinner</a>
+    </h1>
+    <p>
+      <span>2009-07-17</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ce coup-ci je me lance enfin et je vais tenter de suivre pas à pas la
+réalisation de l'application <a href="http://www.nerddinner.com/">NerdDinner</a> telle qu'elle est expliquée dans le <a href="http://weblogs.asp.net/scottgu/archive/2009/03/10/free-asp-net-mvc-ebook-tutorial.aspx">tutoriel ASP.NET MVC de ScottGu</a>.</p>
+<p>Après avoir vérifié que le .Net Framework 3.5 est déjà présent sur mon PC,
+fait un rapide Windows Update puis redémarré mon ordinateur, j'ai commencé par
+le début et lancé l'installation de ASP.NET MVC, Visual Web Developer 2008
+Express et SQL Server 2008 Express en utilisant le <a href="http://www.microsoft.com/web/downloads">Microsoft Web Platform
+Installer</a>. C'est un peu long mais ça se fait vraiment tout seul et le seul
+truc bizarre c'est qu'il faut souvent redémarrer la machine...</p>
+<p>Enfin je peux lancer Microsoft Visual Web Developer 2008 Express Edition (ou
+VWD pour parler plus vite) et faire <strong>File - New Project</strong>,
+sélectionner Visual C# / Web et le template ASP.NET MVC Web Application, donner
+le nom NerdDinner et cliquer sur OK. Ça marche ! Mais ça ne me propose pas
+la création du projet de test puisque je n'ai que la version Express et que je
+n'ai pas installé d'outil de test unitaire.</p>
+<p>C'est pas grave, je Start Debuging, je répond Yes un peu partout et
+j'atterris sur ma première Home Page ASP.NET MVC. Je clique un peu partout
+comme indiqué dans le tutoriel et c'est bien tout pareil :</p>
+<ul>
+<li>la Home Page</li>
+<li>la page About Us</li>
+<li>la page Log On</li>
+<li>la page Register</li>
+</ul>
+<p>Déjà une bonne chose de faite. Avant d'aller plus loin, je quitte et
+j'efface mon projet NerdDinner pour tout recommencer une fois que j'aurais
+installé un framework de tests unitaires.</p>
+<p>Après quelques recherches sur internet, il semblerait qu'il existe un
+<a href="http://blogs.msdn.com/webdevtools/archive/2009/04/28/updated-nunit-templates-for-asp-net-mvc-1-0-rtm.aspx">template NUnit / MVC pour VWD</a>. Ça date de la version RTM de
+ASP.NET MVC mais ça vaut quand même le coup d'essayer...</p>
+<ul>
+<li>Télécharger et installer NUnit à partir de <a href="http://www.nunit.org/">http://www.nunit.org/</a></li>
+<li>Télécharger <a href="http://blogs.msdn.com/webdevtools/archive/2009/04/28/updated-nunit-templates-for-asp-net-mvc-1-0-rtm.aspx">NUnit Test Templates</a></li>
+<li>Décompacter NUnitRTM.zip</li>
+<li>Lancer installNUnit.cmd</li>
+</ul>
+<p>Dans mon cas, tout s'est bien passé. Je peux donc recommencer la partie
+&quot;File - New Project&quot; du tutoriel NerdDinner. Et là, après le clic sur OK pour
+créer mon projet NerdDinner, j'ai bien une boite de dialogue pour m'inviter à
+créer le projet de test unitaire correspondant :</p>
+<p><img src="/public/2009/nunit-create.png" alt=""></p>
+<p>Après avoir cliqué sur le bouton OK, je lance ma seconde application ASP.NET
+MVC et là c'est KO : <em>There where build errors</em> (et plus précisément
+<em>The type or namespace name 'NUnit' could not be found</em>). En fait, cela
+vient du fait qu'il y a un petit triangle jaune devant nunit.framework dans le
+dossier References du projet NerdDinner.Tests. Ça se corrige très facilement en
+supprimant la référence puis en la re-ajoutant.</p>
+<p>Quand on relance l'exécution, il y a encore un souci parce que c'est le
+projet NerdDinner.Tests qui est actif (son nom est en gras) et qu'il s'agit
+d'un projet de type Class Library qui ne peut pas être démarré directement par
+VWD. Il faut donc cliquer sur le projet NerdDinner et le définir en tant que
+projet de démarrage et tout roule !</p>
+<p>Par contre, pas moyen de lancer les tests unitaires depuis VWD. Il faut
+passer par NUnit lui-même :</p>
+<ul>
+<li>File - Open Project...</li>
+<li>Aller dans le répertoire bin/Debug ou bin/Release du projet
+NerdDinner.Tests</li>
+<li>Y ouvrir la dll NerdDinner.Tests.dll</li>
+</ul>
+<p>On peut alors lancer les tests unitaires automatiquement générés avec notre
+projet de base an cliquant sur le gros bouton &quot;Run&quot;. Et comme je n'ai encore
+touché à rien, tout les tests sont réussis :)</p>
+<p><a href="/public/2009/nunit-run.png" title="NUnit-Run.png, juil 2009"><img src="/public/2009/nunit-run.png" alt="NUnit-Run.png"></a></p>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/07/30/seconds-pas-aspnet-mvc-nerddinner/">Seconds pas avec ASP.NET MVC et NerdDinner</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/06/25/proprietes-automatiques-c-sharp/" hreflang="fr-FR">Les propriétés automatiques du c#</a>
+  <a rel="next" href="/2009/07/30/seconds-pas-aspnet-mvc-nerddinner/" hreflang="fr-FR">Seconds pas avec ASP.NET MVC et NerdDinner</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

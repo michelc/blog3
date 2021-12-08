@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notion de visibilité des boites - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/08/08/notion-visibilite-boites/" />
+<meta property="og:title" content="Notion de visibilité des boites" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/08/08/notion-visibilite-boites/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-08-08T07:54:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-08-08T07:54:00.000Z","datePublished":"2005-08-08T07:54:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/08/08/notion-visibilite-boites/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/08/08/notion-visibilite-boites/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/08/08/notion-visibilite-boites/">Notion de visibilité des boites</a>
+    </h1>
+    <p>
+      <span>2005-08-08</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Dans la table qc_Boxes, remplacement du champ booléen alwaysVisible par un
+champ entier visibility qui peut prendre une des trois valeurs
+suivantes :</p>
+<ul>
+<li>0 : la boite est visible dans l'écran où elle est placée (équivalent
+de alwaysVisible = false)</li>
+<li>1 : la boite est visible dans tous les sous-écrans de celui où elle
+est placée (et y compris dans celui-ci)</li>
+<li>2: la boite est visible dans tous les écrans (équivalent de alwaysVisible =
+true)</li>
+</ul>
+<p>Modifications apportées pour que cela fonctionne :</p>
+<ul>
+<li>Engine.Boxes et Engine.Admin.adminBox pour gérer le champ visibility au
+lieu du champ alwaysVisible</li>
+<li>Config.cs pour tester sur la propriété visibility plutôt que
+alwaysVisible</li>
+<li>mise à jour de la base de données via le script 20050807_update.sql</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/08/08/table-utilisateurs/" hreflang="fr-FR">Table des utilisateurs</a>
+  <a rel="next" href="/2005/08/08/gestion-erreurs-engine-data/" hreflang="fr-FR">Gestion d&#39;erreurs dans Engine.Data</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

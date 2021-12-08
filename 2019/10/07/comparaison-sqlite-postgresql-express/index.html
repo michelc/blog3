@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comparaison de l&#39;utilisation de SQlite ou PostgreSQL avec Express - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/10/07/comparaison-sqlite-postgresql-express/" />
+<meta property="og:title" content="Comparaison de l&#39;utilisation de SQlite ou PostgreSQL avec Express" />
+<meta name="description" content="Après avoir rédigé deux tutoriels Node JS + Express pour accéder aux bases de données SQlite puis PostgreSQL, j&#39;ai constaté qu&#39;il n&#39;y avait pas de gros écarts entre les deux systèmes." />
+<meta property="og:description" content="Après avoir rédigé deux tutoriels Node JS + Express pour accéder aux bases de données SQlite puis PostgreSQL, j&#39;ai constaté qu&#39;il n&#39;y avait pas de gros écarts entre les deux systèmes." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/10/07/comparaison-sqlite-postgresql-express/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/microscope.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-10-07T10:36:44.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-10-07T10:36:44.000Z","datePublished":"2019-10-07T10:36:44.000Z","description":"Après avoir rédigé deux tutoriels Node JS + Express pour accéder aux bases de données SQlite puis PostgreSQL, j'ai constaté qu'il n'y avait pas de gros écarts entre les deux systèmes.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/10/07/comparaison-sqlite-postgresql-express/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/microscope.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/10/07/comparaison-sqlite-postgresql-express/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/microscope.jpg" alt="Observing samples under the microscope - Trust "Tru" Katsande" /><figcaption><a href="https://unsplash.com/photos/6q5QG8iIgRo">Observing samples under the microscope - Trust "Tru" Katsande</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/10/07/comparaison-sqlite-postgresql-express/">Comparaison de l&#39;utilisation de SQlite ou PostgreSQL avec Express</a>
+    </h1>
+    <p>
+      <span>2019-10-07</span>
+      <span>#javascript</span><span>#node</span><span>#sql</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Après avoir rédigé deux tutoriels sur Express pour accéder à des bases de données
+<a href="/2019/09/11/crud-avec-express-sqlite-10-etapes/">SQlite</a> puis
+<a href="/2019/09/21/crud-avec-express-postgresql-10-etapes/">PostgreSQL</a>,
+j'ai pu me rendre compte qu'il n'y avait pas de si gros écarts que çà entre les
+deux systèmes.</p>
+<p>Pour l'instant, j'ai compté 5 différences, plus ou moins importantes :</p>
+<ul>
+<li>Le marqueur pour les paramètres SQL : &quot;$1&quot; ou &quot;?&quot;</li>
+<li>La façon de définir les paramètres : toujours un array ou pas</li>
+<li>Les méthodes disponibles : .query() ou .run() + .all() + .get()</li>
+<li>Les paramètres transmis à la fonction callback</li>
+<li>Les noms des colonnes en minuscules</li>
+</ul>
+<h2>Marqueurs pour les paramètres SQL</h2>
+<p>Généralement, les exemples pour SQlite utilisent des &quot; ?, ?, ? ... &quot; pour
+répérer les paramètres dans les requêtes paramétrées. J'ai donc suivi cette
+méthode. Quand on passe à PostgreSQL, on voit plutôt des &quot; $1, $2, $3 ... &quot;.</p>
+<pre><code>db.run(&quot;UPDATE Livres SET Titre = ? WHERE Livre_ID = ?&quot;, [titre, id], callback);
+query.pool(&quot;UPDATE Livres SET Titre = $1 WHERE Livre_ID = $2&quot;, [titre, id], callback);
+</code></pre>
+<p>Mais ce n'est absolument pas un problème, parce que la base de données SQlite
+supporte très bien les paramètres sous la forme &quot; $1, $2, $3 ... &quot;.</p>
+<pre><code>db.run(&quot;UPDATE Livres SET Titre = $1 WHERE Livre_ID = $2&quot;, [titre, id], callback);
+</code></pre>
+<p>Et d'un !</p>
+<h2>Paramètres SQL sous forme de tableau</h2>
+<p>Lorsqu'il n'y a qu'un paramètre SQL, le module SQlite3 accepte que celui-ci soit
+transmis en tant que valeur, et pas via un tableau :</p>
+<pre><code>db.get(&quot;SELECT * FROM Livres WHERE Livres_ID = $1&quot;, id, callback);
+</code></pre>
+<p>Alors que pour le module node-postgres, il faut impérativement que ce soit sous
+forme de tableau :</p>
+<pre><code>pool.query(&quot;SELECT * FROM Livres WHERE Livres_ID = $1&quot;, [id], callback);
+</code></pre>
+<p>De même, lorsqu'il ne s'agit pas d'une requête paramétrée, le module SQlite3
+permet de zapper complètement le paramètre, alors que le module node-postgres
+exige un tableau vide :</p>
+<pre><code>db.all(&quot;SELECT * FROM Livres&quot;, callback);
+pool.query(&quot;SELECT * FROM Livres&quot;, [], callback);
+</code></pre>
+<p>Mais ce coup-ci, c'est le module SQlite3 qui se montre très conciliant et on
+peut faire exactement comme avec node-postgres :</p>
+<pre><code>db.get(&quot;SELECT * FROM Livres WHERE Livres_ID = $1&quot;, [id], callback);
+db.all(&quot;SELECT * FROM Livres&quot;, [], callback);
+</code></pre>
+<p>C'est même limite mieux, parce qu'ainsi on est certain de ne pas avoir oublié
+de paramètre par erreur.</p>
+<p>Et de deux.</p>
+<h2>.query() vs .run(), .all() et .get()</h2>
+<p>Le module SQlite3 défini 3 méthodes :</p>
+<ul>
+<li><code>.run()</code> pour éxécuter des requêtes de mise à jour</li>
+<li><code>.all()</code> pour effectuer des &quot;SELECT&quot; renvoyant plusieurs lignes</li>
+<li><code>.get()</code> pour les &quot;SELECT&quot; par identifiant qui renvoient une seule ligne</li>
+</ul>
+<p>Alors que côté node-postgres, tout se fait avec une seule méthode <code>.query()</code>.</p>
+<p>Après tests, on peut très bien n'utiliser que la méthode <code>.all()</code> du module
+SQlite3, car elle gère parfaitement :</p>
+<ul>
+<li>les &quot;SELECT&quot; à partir d'un identifiant : ça paraissait évident</li>
+<li>les requêtes de mise à jour : cool !</li>
+</ul>
+<p>On peut donc sans problème écrire :</p>
+<pre><code>db.all(&quot;CREATE TABLE Livres ...&quot;, [], callback);
+db.all(&quot;UPDATE Livres SET Titre = $1 WHERE Livre_ID = $2&quot;, [titre, id], callback);
+db.all(&quot;SELECT * FROM Livres WHERE Livres_ID = $1&quot;, [id], callback);
+db.all(&quot;SELECT * FROM Livres&quot;, [], callback);
+</code></pre>
+<p>Tout comme on le fait avec node-postgres :</p>
+<pre><code>pool.query(&quot;CREATE TABLE Livres ...&quot;, [], callback);
+pool.query(&quot;UPDATE Livres SET Titre = $1 WHERE Livre_ID = $2&quot;, [titre, id], callback);
+pool.query(&quot;SELECT * FROM Livres WHERE Livres_ID = $1&quot;, [id], callback);
+pool.query(&quot;SELECT * FROM Livres&quot;, [], callback);
+</code></pre>
+<p>Et de trois...</p>
+<h2>Paramètres de la fonction callback</h2>
+<p>La méthode <code>.query()</code> du module node-postgres renvoie toujours 2 objets à la
+fonction callback qu'elle enchaine :</p>
+<ul>
+<li>un objet <code>Error</code> (selon le pattern &quot;error-first&quot; popularisé par Node)</li>
+<li>un objet <code>Result</code> qui contient le résultat renvoyé par la requête exécutée et
+des informations sur l'excécution de cette requête.</li>
+</ul>
+<p>Du coté du module SQlite3, la méthode <code>.all()</code> fourni également 2 objets à sa
+fonction callback :</p>
+<ul>
+<li>un objet <code>Error</code></li>
+<li>un tableau de &quot;rows&quot; qui contient les lignes renvoyées par la requête.</li>
+</ul>
+<p>Si on utilise <code>.all()</code> à toutes les sauces, cela va en fait donner :</p>
+<ul>
+<li>un tableau avec la liste des lignes obtenues pour une requête &quot;SELECT&quot;
+retournant plusieurs lignes</li>
+<li>un tableau avec l'unique ligne trouvée pour une requête &quot;SELECT&quot; à partir d'un
+identifiant</li>
+<li>un tableau vide pour une requête de mise à jour</li>
+</ul>
+<p>C'est donc là qu'il faut ruser et faire d'une pierre deux coups en ajoutant une
+méthode <code>.query()</code> à l'objet <code>Database</code> du module SQlite3 de façon à renvoyer un
+objet qui ressemble suffisament au <code>Result</code> du module node-postgres :</p>
+<pre><code>db.query = function (sql, params, callback) {
+  if (!Array.isArray(params)) throw new Error(&quot;params n'est pas un tableau !&quot;);
+  this.all(sql, params, function (err, rows) {
+    callback(err, { rows: rows });
+  });
+};
+</code></pre>
+<p><em>Note : je déclenche une erreur si &quot;params&quot; n'est pas un tableau parce que le but
+pendant le développement sur SQlite est d'être le plus proche de ce qui devra
+fonctionner en production avec PostgreSQL. Et donc, si j'oublie d'utiliser un
+tableau, autant que ça plante pendant le développement plutôt qu'en prod.</em></p>
+<p>Grâce à cette nouvelle méthode, on peut finalement écrire le <strong>même</strong> code pour
+SQlite (via le module SQlite3) que pour PostgreSQL (via le module
+node-postgres), au nom de la méthode près :</p>
+<pre><code>xxx.query(&quot;CREATE TABLE Livres ...&quot;, [], (err, result) =&gt; {});
+xxx.query(&quot;UPDATE Livres SET Titre = $1 WHERE Livre_ID = $2&quot;, [titre, id], (err, result) =&gt; {});
+xxx.query(&quot;SELECT * FROM Livres WHERE Livres_ID = $1&quot;, [id], (err, result) =&gt; {});
+xxx.query(&quot;SELECT * FROM Livres&quot;, [], (err, result) =&gt; {});
+</code></pre>
+<p>Et de quatre !</p>
+<h2>Le problème des minuscules</h2>
+<p>J'ai pour habitude de mettre les mots-clés SQL en majucule et les noms de
+tables, colonnes, vues, séquences... en PascalCase.</p>
+<p>Ça marche très bien en C# avec ADO.NET / <a href="https://stackexchange.github.io/Dapper/">Dapper</a>.
+En Ruby, je n'ai pas eu de problèmes (sans doute parce que j'ai toujours utilisé
+<a href="https://datamapper.org/">DataMapper</a> ou <a href="https://sequel.jeremyevans.net/">Sequel</a>).
+Mais en JavaScript ça devient embêtant vu qu'il est très sensitif sur la casse.</p>
+<p>Donc, dans les 2 tutoriels, j'avais créé une table de test de la façon suivante :</p>
+<pre><code>CREATE TABLE IF NOT EXISTS Livres (
+  Livre_ID XXXXXXXXXX,
+  Titre VARCHAR(100) NOT NULL,
+  Auteur VARCHAR(100) NOT NULL,
+  Commentaires TEXT
+);
+</code></pre>
+<p>La base de données SQlite a respecté à la lettre ma façon d'écrire et a créé une
+table &quot;Livres&quot; avec les colonnes &quot;Livre_ID&quot;, &quot;Titre&quot;, &quot;Auteur&quot; et
+&quot;Commentaires&quot;.</p>
+<p>La base PostgreSQL a tout passé en minuscules est créé une table &quot;livres&quot; avec
+les colonnes &quot;livre_id&quot;, &quot;titre&quot;, &quot;auteur&quot; et &quot;commentaires&quot;.</p>
+<p>Dans les 2 cas, je peux faire des requêtes SQL comme je veux :</p>
+<pre><code>SELECT Titre FROM Livres WHERE Livre_ID = 1
+SELECT titre FROM livres WHERE livre_id = 1
+SELECT TITRE FROM livres WHERE livre_ID = 1
+...
+</code></pre>
+<p>Mais dans les 2 cas, les noms des propriétés de l'objet renvoyé reprennent
+exactemement le nom des colonnes dans la base de données.</p>
+<p>Et par conséquent, pour la requête suivante :</p>
+<pre><code>xxx.query(&quot;SELECT * FROM Livres WHERE livre_ID = $1&quot;, [1], (err, result) =&gt; {
+  console.log(result.rows[0]);
+});
+</code></pre>
+<p>J'obtiens cet objet avec SQlite3 :</p>
+<pre><code>{
+  Livre_ID: 1,
+  Titre: &quot;Mrs. Bridge&quot;,
+  Auteur: &quot;Evan S. Connell&quot;,
+  Commentaire: &quot;Premier de la série&quot;
+}
+</code></pre>
+<p>Et celui-ci avec node-postgres :</p>
+<pre><code>{
+  livre_id: 1,
+  titre: &quot;Mrs. Bridge&quot;,
+  auteur: &quot;Evan S. Connell&quot;,
+  commentaire: &quot;Premier de la série&quot;
+}
+</code></pre>
+<p>C'est pas la peine de se compliquer la vie, et le plus simple c'est que
+dorénavant j'utilise des minuscules pour nommer les objets dans la base de
+données (du moins dans les requêtes <a href="">Data Definition Language</a>) :</p>
+<pre><code>CREATE TABLE IF NOT EXISTS livres (
+  livre_id XXXXXXXXXX,
+  titre VARCHAR(100) NOT NULL,
+  auteur VARCHAR(100) NOT NULL,
+  commentaires TEXT
+);
+</code></pre>
+<p>Et de cinq =&gt; plus de différence.</p>
+<h2>Créer un objet &quot;commun&quot;</h2>
+<p>Actuellement, je ne me connecte pas aux 2 bases de données de la même façon :</p>
+<pre><code>// SQlite
+const db = new sqlite3.Database(db_name, err =&gt; { ... });
+// PostgreSQL
+const pool = new Pool({ ... });
+</code></pre>
+<p>Déjà, je vais toujours utiliser le nom de variable &quot;db&quot; parce que &quot;pool&quot; c'est
+pas génial. Et surtout, je vais me baser sur <code>process.env.NODE_ENV</code> pour décider
+comment réaliser la connexion.</p>
+<p>Ce qui va donner quelque chose comme :</p>
+<pre><code>// Connexion à la base de données
+let db = null;
+if (process.env.NODE_ENV === 'production') {
+  // PostgreSQL
+  db = new Pool({
+    ...
+  });
+} else {
+  // SQlite
+  const db_name = path.join(__dirname, &quot;data&quot;, &quot;apptest.db&quot;);
+  db = new sqlite3.Database(db_name, err =&gt; {
+    ...
+  });
+  // Bidouille pour ressembler à node-postgres
+  db.query = function (sql, params, callback) {
+    ...
+  };
+}
+console.log(&quot;Connexion réussie à la base de données&quot;);
+</code></pre>
+<p><em>Note : Il faudrait voir comment isoler ce système un peu confus dans 2 fichiers
+séparés. Mais chaque chose en son temps.</em></p>
+<h2>Conclusion</h2>
+<p>J'ai résolu les problèmes liés au fait que les modules SQlite3 et node-postgres
+fonctionnent un peu différement. Il a suffit de quelques modifications pour
+réussir à mettre au point une solution suffisament simple pour avoir exactement
+le même code pour les 2 bases de données :</p>
+<ul>
+<li>SQlite pour le développement</li>
+<li>PostgreSQL en production</li>
+</ul>
+<p>Je n'ai pas besoin de gérer plus que ces 2 bases de données. C'est déjà ce que
+je fais avec Sinatra (SQlite + PostgreSQL) ou ASP.NET MVC (SQL Server CE + SQL
+Server).</p>
+<p>Il reste cependant quelques problèmes avec SQL. C'est un langage assez standard,
+mais il faut faire attention. Par exemple, pour créer l'identifiant unique dans
+la table &quot;livres&quot;, je dois faire différemment selon la base de données :</p>
+<ul>
+<li>SQlite : <code>livre_id INTEGER PRIMARY KEY AUTOINCREMENT</code></li>
+<li>PostgreSQL : <code>livre_id SERIAL PRIMARY KEY</code></li>
+</ul>
+<p>Et puis il y a quelques autres trucs. Mais ça ne devrait pas poser trop de
+problème pour les &quot;petites&quot; applications de débutant. Si j'ai besoin de faire
+plus, ça voudra dire qu'il est temps que je regarde du côté des ORMs (ou que je
+fasse des scripts SQL séparés).</p>
+<p>En attendant ce jour, je peut bidouiller :</p>
+<pre><code>db.query = function (sql, params, callback) {
+  if (!Array.isArray(params)) throw new Error(&quot;params n'est pas un tableau !&quot;);
+  sql = sql.replace(/SERIAL PRIMARY KEY/, &quot;INTEGER PRIMARY KEY AUTOINCREMENT&quot;);
+  this.all(sql, params, function (err, rows) {
+    callback(err, { rows: rows });
+  });
+};
+</code></pre>
+<p><em>Note : Ça doit bien ralentir un chouilla, mais on est en développement, ça
+laisse du temps pour réfléchir.</em></p>
+<h2>Le code complet de &quot;index.js&quot;</h2>
+<p>Comme toujours, l'intégralité du fichier &quot;index.js&quot; pour avoir une vue
+d'ensemble du nouveau fonctionnement.</p>
+<pre><code>const express = require(&quot;express&quot;);
+const path = require(&quot;path&quot;);
+const { Pool } = require(&quot;pg&quot;);
+const sqlite3 = require(&quot;sqlite3&quot;).verbose();
+
+// Création du serveur Express
+const app = express();
+
+// Configuration du serveur
+app.set(&quot;view engine&quot;, &quot;ejs&quot;);
+app.set(&quot;views&quot;, path.join(__dirname, &quot;views&quot;));
+app.use(express.static(path.join(__dirname, &quot;public&quot;)));
+app.use(express.urlencoded({ extended: false }));
+
+// Connexion à la base de données
+let db = null;
+if (process.env.NODE_ENV === 'production') {
+  // PostgreSQL en production
+  db = new Pool({
+    user: &quot;mystere&quot;,
+    host: &quot;xxxxx.elephantsql.com&quot;,
+    database: &quot;mystere&quot;,
+    password: &quot;untrucsecretquinarienafaireici&quot;,
+    port: 5432
+  });
+} else {
+  // SQlite par défaut
+  const db_name = path.join(__dirname, &quot;data&quot;, &quot;apptest.db&quot;);
+  db = new sqlite3.Database(db_name, err =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+  });
+  // Bidouille pour ressembler à node-postgres
+  db.query = function (sql, params, callback) {
+    if (!Array.isArray(params)) throw new Error(&quot;params n'est pas un tableau !&quot;);
+    sql = sql.replace(/SERIAL PRIMARY KEY/, &quot;INTEGER PRIMARY KEY AUTOINCREMENT&quot;);
+    this.all(sql, params, function (err, rows) {
+      callback(err, { rows: rows });
+    });
+  };
+}
+console.log(&quot;Connexion réussie à la base de données&quot;);
+
+// Création de la table Livres (Livre_ID, Titre, Auteur, Commentaires)
+const sql_create = `CREATE TABLE IF NOT EXISTS livres (
+  livre_id SERIAL PRIMARY KEY,
+  titre VARCHAR(100) NOT NULL,
+  auteur VARCHAR(100) NOT NULL,
+  commentaires TEXT
+);`;
+db.query(sql_create, [], (err, result) =&gt; {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log(&quot;Création réussie de la table 'Livres'&quot;);
+  // Alimentation de la table
+  db.query(&quot;SELECT COUNT(*) AS count FROM Livres&quot;, [], (err, result) =&gt; {
+    const count = result.rows[0].count;
+    if (count === 0) {
+      const sql_insert = `INSERT INTO Livres (Titre, Auteur, Commentaires) VALUES
+        ('Mrs. Bridge', 'Evan S. Connell', 'Premier de la série'),
+        ('Mr. Bridge', 'Evan S. Connell', 'Second de la série'),
+        ('L''ingénue libertine', 'Colette', 'Minne + Les égarements de Minne');`;
+      db.query(sql_insert, [], (err, result) =&gt; {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log(&quot;Alimentation réussie de la table 'Livres'&quot;);
+      });
+    }
+  });
+});
+
+// Démarrage du serveur
+app.listen(3000, () =&gt; {
+  console.log(&quot;Serveur démarré (http://localhost:3000/) !&quot;);
+});
+
+// GET /
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  // res.send(&quot;Bonjour le monde...&quot;);
+  res.render(&quot;index&quot;);
+});
+
+// GET /about
+app.get(&quot;/about&quot;, (req, res) =&gt; {
+  res.render(&quot;about&quot;);
+});
+
+// GET /data
+app.get(&quot;/data&quot;, (req, res) =&gt; {
+  const test = {
+    titre: &quot;Test&quot;,
+    items: [&quot;un&quot;, &quot;deux&quot;, &quot;trois&quot;]
+  };
+  res.render(&quot;data&quot;, { model: test });
+});
+
+// GET /livres
+app.get(&quot;/livres&quot;, (req, res) =&gt; {
+  const sql = &quot;SELECT * FROM Livres ORDER BY Titre&quot;;
+  db.query(sql, [], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;livres&quot;, { model: result.rows });
+  });
+});
+
+// GET /create
+app.get(&quot;/create&quot;, (req, res) =&gt; {
+  res.render(&quot;create&quot;, { model: {} });
+});
+
+// POST /create
+app.post(&quot;/create&quot;, (req, res) =&gt; {
+  const sql = &quot;INSERT INTO Livres (Titre, Auteur, Commentaires) VALUES ($1, $2, $3)&quot;;
+  const book = [req.body.titre, req.body.auteur, req.body.commentaires];
+  db.query(sql, book, (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+
+// GET /edit/5
+app.get(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = $1&quot;;
+  db.query(sql, [id], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;edit&quot;, { model: result.rows[0] });
+  });
+});
+
+// POST /edit/5
+app.post(&quot;/edit/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const book = [req.body.titre, req.body.auteur, req.body.commentaires, id];
+  const sql = &quot;UPDATE Livres SET Titre = $1, Auteur = $2, Commentaires = $3 WHERE (Livre_ID = $4)&quot;;
+  db.query(sql, book, (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+
+// GET /delete/5
+app.get(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;SELECT * FROM Livres WHERE Livre_ID = $1&quot;;
+  db.query(sql, [id], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render(&quot;delete&quot;, { model: result.rows[0] });
+  });
+});
+
+// POST /delete/5
+app.post(&quot;/delete/:id&quot;, (req, res) =&gt; {
+  const id = req.params.id;
+  const sql = &quot;DELETE FROM Livres WHERE Livre_ID = $1&quot;;
+  db.query(sql, [id], (err, result) =&gt; {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect(&quot;/livres&quot;);
+  });
+});
+</code></pre>
+<div class="encart">
+<p>English version: <a href="/2019/10/22/comparing-sqlite-postgresql-express/" hreflang="en-US">Comparing SQlite or PostgreSQL with Express</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/10/01/search-filter-table-javascript/" hreflang="en-US">Search and filter a table with JavaScript</a>
+  <a rel="next" href="/2019/10/08/crud-with-express-sqlite-10-steps/" hreflang="en-US">CRUD application with Express and SQlite in 10 steps</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

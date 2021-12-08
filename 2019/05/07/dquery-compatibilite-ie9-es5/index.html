@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>dQuery - Une version compatible IE9 / ES5 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/05/07/dquery-compatibilite-ie9-es5/" />
+<meta property="og:title" content="dQuery - Une version compatible IE9 / ES5" />
+<meta name="description" content="Le deuxième billet consacré au développement de &quot;dQuery.js&quot;, avec quelques adaptations pour qu&#39;elle fonctionne (encore) sous IE9 :)." />
+<meta property="og:description" content="Le deuxième billet consacré au développement de &quot;dQuery.js&quot;, avec quelques adaptations pour qu&#39;elle fonctionne (encore) sous IE9 :)." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/05/07/dquery-compatibilite-ie9-es5/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-07T13:04:36.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-05-07T13:04:36.000Z","datePublished":"2019-05-07T13:04:36.000Z","description":"Le deuxième billet consacré au développement de \"dQuery.js\", avec quelques adaptations pour qu'elle fonctionne (encore) sous IE9 :).","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/05/07/dquery-compatibilite-ie9-es5/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/05/07/dquery-compatibilite-ie9-es5/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2019/05/07/dquery-compatibilite-ie9-es5/">dQuery - Une version compatible IE9 / ES5</a>
+    </h1>
+    <p>
+      <span>2019-05-07</span>
+      <span>#javascript</span><span>#jquery</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Cette série de billets retrace quelques-unes des étapes pour développer une
+mini-librairie JavaScript qui remplacera(it) un jour jQuery sur mon site de jeux
+de solitaires.</p>
+<ol>
+<li><a href="/2019/04/30/dquery-remplacer-jquery/">Comment j'ai (bientôt) remplacé jQuery</a></li>
+<li><a href="/2019/05/07/dquery-compatibilite-ie9-es5/">Une version compatible IE9 / ES5</a></li>
+<li><a href="/2019/05/14/dquery-librairie-js-manipulation-dom/">Ma librairie pour manipuler le DOM</a></li>
+<li><a href="/2019/05/21/dquery-delegation-evenement-javascript/">La délégation des évènements en JS</a></li>
+<li><a href="/2019/05/28/dquery-delegation-evenement-event-target/">Délégation d'évènements et « event.target »</a></li>
+<li><a href="/2019/06/04/dquery-delegation-evenement-ios/">Délégation d'évènements et iOS</a></li>
+</ol>
+</div>
+<p>Pour l'instant, je m'accorde encore le besoin d'être compatible avec IE9, et
+par conséquent EcmaScript 5.</p>
+<p>Il est certain qu'aujourd'hui, ce n'est pas franchement indispensable. Mais je
+me dis qu'il y a bien quelques joueurs en entreprises qui doivent se coltiner un
+PC avec IE9 pour faire tourner de vieilles applications intranet que personne ne
+veut mettre à jour...</p>
+<p>Et puis surtout, le côté &quot;challenge&quot; me donne l'occasion de &quot;mieux&quot; étudier et
+maitriser le code que je fais (j'espère).</p>
+<p>Quoiqu'il en soit, étant donné la taille de <a href="https://github.com/vladocar/nanoJS/">NanoJS</a>,
+il n'y a franchement rien d'insurmontable à assurer un maximum de compatibilité
+avec le navigateur Internet Explorer 9.</p>
+<p>Premier truc, dans NanoJS, la méthode <code>.removeClass()</code> ne fonctionne que si la
+propriété <code>.classList</code> existe (donc pas IE9). Alors que la méthode <code>.addClass()</code>
+gère ça et passe par la propriété <code>.className</code> (connue de IE9) si besoin.</p>
+<p>Donc une méthode <code>.removeClass()</code> basée que la propriété <code>.className</code> quand
+nécessaire :</p>
+<pre><code>removeClass: function (v) {
+  return this.each(function (i) {
+    if (i.classList) {
+      i.classList.remove(v);
+    } else {
+      i.className = i.className.replace(&quot; &quot; + v, &quot;&quot;);
+    }
+  });
+},
+</code></pre>
+<p>Ou mieux, avec une expression régulière copiée / collée d'internet :</p>
+<pre><code>removeClass: function (v) {
+  return this.each(function (i) {
+    if (i.classList) {
+      i.classList.remove(v);
+    } else {
+      i.className = i.className.replace(new RegExp(v + &quot; *&quot;, &quot;g&quot;), &quot;&quot;);
+    }
+  });
+},
+</code></pre>
+<p>Puis un truc facile. La propriété <code>.innerText</code> n'est pas &quot;standard&quot; et il est
+préférable d'employer <code>.textContent</code> (ce n'est pas vraiment un problème lié à
+IE9, mais plutôt avec les vieux Firefox) :</p>
+<pre><code>text: function (v) {
+  return this.each(function (i) {
+    i.textContent = v;
+  });
+},
+</code></pre>
+<p>Pour la méthode <code>.css(propriété, valeur)</code>, les propriétés snake-case posent
+problème :</p>
+<ul>
+<li><code>element.style[&quot;background-color&quot;] = &quot;red&quot;</code> =&gt; KO</li>
+<li><code>element.style[&quot;backgroundColor&quot;] = &quot;red&quot;</code> =&gt; OK</li>
+</ul>
+<p>Il suffit donc de transformer le libellé des propriétés snake-case en
+camel-case :</p>
+<pre><code>css: function (a, v) {
+  a = a.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
+  return this.each(function (i) {
+    i.style[a] = v;
+  });
+},
+</code></pre>
+<p>Pour finir, je me suis débarrassé du seul <code>$(&quot;#win&quot;).is(&quot;:visible&quot;)</code> dont
+j'avais besoin dans mes sources. J'ai remplacé ça par du code basé non plus sur
+le résultat (est-ce que l'écran de réussite est visible) mais sur le fait que la
+partie était gagnée ou pas (<code>game.state !== 0</code>). Ce qui m'a permis de supprimer
+la méthode <code>.is(...)</code> qui était quelque peu frauduleuse :</p>
+<pre><code>is: function (v) {
+  // Toujours $(..).is(&quot;:visible&quot;)
+  return this.value[0].offsetParent !== null;
+},
+</code></pre>
+<p>Ce n'était vraiment pas compliqué, et au final ma version source &quot;arrangée&quot; de
+NanoJS est la suivante :</p>
+<pre><code>!(function () {
+
+  var nano = function (s) {
+    if (typeof s === &quot;string&quot;) {
+      this.value = Array.prototype.slice.call(document.querySelectorAll(s));
+    } else if (typeof s === &quot;object&quot;) {
+      this.value = [s];
+    }
+  };
+
+  nano.prototype = {
+    each: function (fn) {
+      [].forEach.call(this.value, fn);
+      return this;
+    },
+    css: function (a, v) {
+      a = a.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
+      return this.each(function (i) {
+        i.style[a] = v;
+      });
+    },
+    hide: function () {
+      return this.each(function (i) {
+        i.style.display = &quot;none&quot;;
+      });
+    },
+    show: function () {
+      return this.each(function (i) {
+        i.style.display = &quot;block&quot;;
+      });
+    },
+    on: function (type, fn) {
+      return this.each(function (i) {
+        i.addEventListener(type, fn, false);
+      });
+    },
+    addClass: function (v) {
+      return this.each(function (i) {
+        if (i.classList) {
+          i.classList.add(v)
+        } else {
+          i.className += &quot; &quot; + v;
+        }
+      });
+    },
+    removeClass: function (v) {
+      return this.each(function (i) {
+        if (i.classList) {
+          i.classList.remove(v);
+        } else {
+          i.className = i.className.replace(new RegExp(v + &quot; *&quot;, &quot;g&quot;), &quot;&quot;);
+        }
+      });
+    },
+    html: function (v) {
+      return this.each(function (i) {
+        i.innerHTML = v;
+      });
+    },
+    append: function (v) {
+      return this.each(function (i) {
+        i.insertAdjacentHTML(&quot;beforeend&quot;, v);
+      });
+    },
+    text: function (v) {
+      return this.each(function (i) {
+        i.textContent = v;
+      });
+    },
+    remove: function () {
+      return this.each(function (i) {
+        i.parentNode.removeChild(i);
+      });
+    },
+    parent: function () {
+      this.value = [this.value[0].parentNode];
+      return this;
+    },
+    attr: function (v) {
+      return this.value[0].getAttribute(v);
+    },
+  };
+
+  window.$ = function (selector) {
+    return new nano(selector);
+  };
+
+})();
+</code></pre>
+<p>Et toujours moins de 100 lignes de code !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/04/30/dquery-remplacer-jquery/" hreflang="fr-FR">dQuery - Comment j&#39;ai (bientôt) remplacé jQuery</a>
+  <a rel="next" href="/2019/05/14/dquery-librairie-js-manipulation-dom/" hreflang="fr-FR">dQuery - Ma librairie JS pour manipuler le DOM</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Une nouvelle boite de recherche - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/06/24/nouvelle-boite-recherche/" />
+<meta property="og:title" content="Une nouvelle boite de recherche" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/06/24/nouvelle-boite-recherche/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-06-24T06:49:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-06-24T06:49:00.000Z","datePublished":"2009-06-24T06:49:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/06/24/nouvelle-boite-recherche/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/06/24/nouvelle-boite-recherche/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/06/24/nouvelle-boite-recherche/">Une nouvelle boite de recherche</a>
+    </h1>
+    <p>
+      <span>2009-06-24</span>
+      <span>#ap</span><span>#code-killer</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Jusqu'à présent, pour gérer la recherche sur un site Altrr-Press, il était
+possible de créer une boite de type Google Search. Ce type de boite employait
+l'<a href="http://code.google.com/apis/soapsearch/">interface
+SOAP de Google Search</a> pour obtenir le résultat d'une recherche effectuée
+par Google. Dans la pratique, il y a tellement peu de sites Altrr-Press qui
+utilise ce type de boite qu'il aurait aussi bien pu passer à la trappe comme
+cela avait été le cas pour les boites Msn Search et Yahoo Search.</p>
+<p>Ça faisait quelque temps que je savais que Google allait mettre
+définitivement fin au support de son interface SOAP à partir du 31 août, mais
+étant donné le peu d'utilité que j'en avais, j'avais un peu de mal à me plonger
+dans leur <a href="http://code.google.com/apis/ajaxsearch/web.html/">API de recherche en AJAX</a>. Heureusement pour moi, ce que Google prend
+d'une main, il le redonne de l'autre et grâce aux tous nouveaux <a href="http://google-code-updates.blogspot.com/2009/05/introducing-google-web-elements.html">Google Web Elements</a>, je vais pouvoir faire évoluer mon CMS
+sans trop me casser la tête.</p>
+<p>Pour commencer, rendez-vous sur la page des <a href="http://www.google.com/webelements/">Google Web Elements</a> ou
+il suffit de cliquer sur le lien &quot;Custom Search&quot; pour obtenir immédiatement le
+code javascript à utiliser pour insérer une boite de recherche sur son site.
+Étant donné que que je cherche à disposer d'un système de recherche à
+l'intérieur de mon site exclusivement, cela me convient et je peux donc
+utiliser ce code tel quel :</p>
+<pre><code>&lt;!-- Google Custom Search Element --&gt;
+&lt;div id=&quot;cse&quot; style=&quot;width:100%;&quot;&gt;Loading&lt;/div&gt;
+&lt;script src=&quot;http://www.google.com/jsapi&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  google.load('search', '1');
+  google.setOnLoadCallback(function(){
+    new google.search.CustomSearchControl().draw('cse');
+  }, true);
+&lt;/script&gt;
+</code></pre>
+<p>Si je le souhaite, Google me propose aussi d'utiliser ma clé Google AdSense
+pour valoriser les recherches effectuées sur mon site. Pour cela, il suffit de
+remplacer le choix &quot;Automatically search my site&quot; par &quot;Search my site and use
+AdSense for Search&quot;. Le code javascript proposé est alors légèrement modifié
+pour faire apparaitre ma clé Google AdSense. avec la ligne suivante :</p>
+<pre><code>&lt;!-- Google Custom Search Element --&gt;
+&lt;div id=&quot;cse&quot; style=&quot;width:100%;&quot;&gt;Loading&lt;/div&gt;
+&lt;script src=&quot;http://www.google.com/jsapi&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  google.load('search', '1');
+  google.setOnLoadCallback(function(){
+    var cse = new google.search.CustomSearchControl();
+    cse.enableAds('pub-5475403929650645');
+    cse.draw('cse');
+  }, true);
+&lt;/script&gt;
+</code></pre>
+<p>Dans la pratique, avec Altrr-Press il est tout de même préférable de
+modifier la ligne de code avec la clé en dur de façon à utiliser la macro qui
+renvoie la clé enregistrée globalement au niveau du site internet :</p>
+<pre><code>    cse.enableAds('[%AP.AdSenseKey%]');
+</code></pre>
+<p>C'est vraiment pas compliqué à faire et ça marche. Le seul petit problème,
+c'est que ça ouvre les liens dans une nouvelle fenêtre !!!</p>
+<p>Finalement je vais quand même devoir faire un détour par les <a href="http://code.google.com/apis/ajax/">APIS AJAX de Google</a> et
+plus particulièrement l'<a href="http://code.google.com/apis/ajaxsearch/web.html">API AJAX
+consacrée à la recherche</a> qui va me permettre de résoudre ce léger problème.
+Et après quelques petites recherches, je tombe enfin sur ce qu'il me faut, à
+savoir la méthode setLinkTarget(linkTarget).</p>
+<blockquote>
+<p>This method is called to set the link target used for links embedded in
+search results. The default value is google.search.Search.LINK_TARGET_BLANK
+which specifies that links will open in a new browser window. When this method
+is called, a search control wide link target setting is established. This
+effects all searchers that are currently attached to the search control as well
+as all searchers that are subsequently added to the control.</p>
+</blockquote>
+<p>Et selon la documentation de référence de Google, linkTarget peut prendre
+une des valeurs suivantes :</p>
+<ul>
+<li>google.search.Search.LINK_TARGET_BLANK - links will open in a new window,
+e.g., &lt;A href=... target=_blank ...&gt;</li>
+<li>google.search.Search.LINK_TARGET_SELF - links will open in the same window
+and frame, e.g., &lt;A href=... target=_self ...&gt;</li>
+<li>google.search.Search.LINK_TARGET_TOP - links will open in the topmost
+frame, e.g., &lt;A href=... target=_top ...&gt;</li>
+<li>google.search.Search.LINK_TARGET_PARENT - links will open in either the
+topmost frame, or replace the current frame, e.g., &lt;A href=...
+target=_parent ...&gt;</li>
+<li>anything-else - links will open in the specified frame or window, e.g.,
+&lt;A href=... target=anything-else ...&gt;</li>
+</ul>
+<p>Après quelques essais, notamment à l'aide de l'excellent <a href="http://code.google.com/apis/ajax/playground/?exp=search">Code
+Playground</a> et je finis par obtenir le code javascript suivant :</p>
+<pre><code>&lt;!-- Google Custom Search Element --&gt;
+&lt;div id=&quot;cse&quot; style=&quot;width:100%;&quot;&gt;Loading&lt;/div&gt;
+&lt;script src=&quot;http://www.google.com/jsapi&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  google.load('search', '1');
+  google.setOnLoadCallback(function(){
+    var cse = new google.search.CustomSearchControl();
+    cse.enableAds('[%AP.AdSenseKey%]');
+    cse.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
+    cse.draw('cse');
+  }, true);
+&lt;/script&gt;
+</code></pre>
+<p>Comme je suis un peu pointilleux, il me restait encore un détail mineur à
+régler : Google insère un lien libellé &quot;Autres résultats »&quot; juste après la
+pagination des résultats. Et quand on clique dessus (en pensant dans mon cas
+aller sur la page suivante des résultats), cela quitte le site et redirige sur
+une page chez Google qui reprend la même recherche. Ce n'est pas bien génant,
+mais j'ai quand même préféré cacher ce lien une ligne de CSS :</p>
+<pre><code>&lt;style&gt;.gsc-trailing-more-results {display:none !important;}&lt;/style&gt;
+</code></pre>
+<p>Et donc, au jour d'aujourd'hui, pour placer une boite de recherche Google
+dans un site construit avec Altrr-Press, il suffit de copier / coller le code
+suivant dans une boite RawContent :</p>
+<pre><code>&lt;!-- Google Custom Search Element --&gt;
+&lt;div id=&quot;cse&quot; style=&quot;width:100%;&quot;&gt;Loading&lt;/div&gt;
+&lt;script src=&quot;http://www.google.com/jsapi&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  google.load('search', '1');
+  google.setOnLoadCallback(function(){
+    var cse = new google.search.CustomSearchControl();
+    cse.enableAds('[%AP.AdSenseKey%]');
+    cse.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
+    cse.draw('cse');
+  }, true);
+&lt;/script&gt;
+&lt;style&gt;.gsc-trailing-more-results {display:none !important;}&lt;/style&gt;
+</code></pre>
+<p>Avec en prime une démonstration en direct-live sur la nouvelle page de
+recherche pour le <a href="http://saint-privat.au-quotidien.info/recherche.aspx">site de
+Saint-Privat</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/06/19/fonction-xslt-parametres/" hreflang="fr-FR">Une fonction XSLT avec des paramètres</a>
+  <a rel="next" href="/2009/06/25/types-nullables-c-sharp/" hreflang="fr-FR">Les types nullables en c#</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

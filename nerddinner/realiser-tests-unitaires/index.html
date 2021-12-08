@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NerdDinner(fr) : Réaliser des tests unitaires - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/nerddinner/realiser-tests-unitaires/" />
+<meta property="og:title" content="NerdDinner(fr) : Réaliser des tests unitaires" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/nerddinner/realiser-tests-unitaires/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-02-02T12:17:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-02-02T12:17:00.000Z","datePublished":"2010-02-02T12:17:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/nerddinner/realiser-tests-unitaires/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/nerddinner/realiser-tests-unitaires/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+<article>
+
+  <header>
+    <h1>
+      <a href="">NerdDinner(fr) : Réaliser des tests unitaires</a>
+    </h1>
+    <p>
+      <span>2010-02-02</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Nous allons développer une série de tests unitaires automatisés pour
+vérifier les fonctionnalités de NerdDinner.À l'avenir, cela nous permettra
+d'apporter des modifications et des améliorations à notre application en toute
+confiance.</p>
+<h2>Pourquoi faire des tests unitaires ?</h2>
+<p>Un matin, alors que vous allez tranquillement au boulot, vous avez un éclair
+de génie : &quot;Bon sang, mais c'est bien sûr ! Si je faisais ce petit truc dans
+l'application, ça serait quelque chose !&quot;. Et ce petit truc ça peut être
+n'importe quoi : refactoriser du code pour le simplifier, ajouter une nouvelle
+fonctionnalité, corriger un bogue…</p>
+<p>Puis vous arrivez devant votre PC et là vous vous dîtes : &quot;Est-ce bien
+raisonnable ?&quot;. Et si jamais cette modification avait des effets inattendus ou
+qu'elle casse quelque chose ? Peut-être bien que la modification est très simple
+à faire et qu'elle ne va prendre que quelques minutes, mais si jamais il faut
+ensuite y passer des heures pour tester tous les cas possibles... Et si jamais
+on oubliait un cas et que ça passe en production ? Ouille ! Est-ce que ça vaut
+vraiment le coup de s'attaquer à cette modification ?</p>
+<p>Les tests unitaires sont comme un filet de sécurité qui vous permet
+d'améliorer continuellement votre application et qui vous évite le vertige
+devant le code sur lequel vous travaillez. Le fait d'avoir des tests
+automatisés pour vérifier une fonctionnalité très rapidement vous permet de
+coder sans crainte et vous donne l'assurance nécessaire pour faire des
+améliorations que vous auriez eu peur d'attaquer. Ils permettent aussi d'écrire
+des applications qui seront plus facilement maintenables et qui dureront plus
+longtemps, ce qui offre un bien meilleur retour sur investissement.</p>
+<p>Avec le framework ASP.NET MVC, les tests unitaires des fonctionnalités d'une
+application deviennent quelque chose de facile et de naturel. Avec lui, vous
+avez la possibilité de suivre un cycle de développement basé sur les tests
+(Test-Driven Development ou TDD en anglais) qui consiste à écrire des tests
+puis à programmer en s'appuyant sur ceux-ci.</p>
+<h2>Le projet NerdDinner.Tests</h2>
+<p>Quand nous avons créé la solution NerdDinner au tout début de ce tutoriel,
+nous sommes passés par une boite de dialogue qui nous demandait si nous
+voulions créer un projet de test unitaire pour notre application :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image009.png" alt=""></p>
+<p>Nous avions conservé l'option &quot;Yes, create a unit test project&quot;, ce qui
+avait eu pour effet d'ajouter le projet &quot;NerdDinner.Test&quot; à notre solution :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image142.png" alt=""></p>
+<p>Le projet NerdDinner.Test fait référence à l'assembly du projet NerdDinner,
+ce qui permet d'ajouter facilement des tests automatisés pour contrôler notre
+application.</p>
+<h2>Créer des tests unitaires pour le modèle Dinner</h2>
+<p>Nous allons ajouter quelques tests au projet NerdDinner.Test pour vérifier
+le fonctionnement de la classe Dinner que nous avons créée lors de la
+réalisation de notre couche modèle.</p>
+<p>Pour cela, nous commençons par ajouter un nouveau dossier &quot;Models&quot; dans le
+projet de test pour y placer les tests qui vont concerner notre modèle de
+données. Puis nous faisons un clic-droit sur ce dossier pour choisir la
+commande Add-&gt;New Test, ce qui fait apparaitre la boite de dialogue &quot;Add New
+Test&quot; qui nous permet de créer un nouveau test.</p>
+<p>Nous pouvons alors créer un nouveau test en choisissant le template &quot;Unit
+Test&quot; et en lui donnant le nom &quot;DinnerTest.cs&quot; :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image143.png" alt=""></p>
+<p>Une fois que nous cliquons sur le bouton &quot;OK&quot;, Visual Studio va ajouter le
+fichier DinnerTest.cs au projet puis ouvrir celui-ci :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image144.png" alt=""></p>
+<p>Le contenu par défaut du template &quot;Unit Test&quot; de Visual Studio est un peu
+trop usine à gaz à mon goût. Nous allons donc le nettoyer pour conserver
+uniquement le code ci-dessous :</p>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NerdDinner.Models;
+
+namespace NerdDinner.Tests.Models {
+
+   [TestClass]
+   public class DinnerTest {
+
+   }
+}
+</code></pre>
+<p>L'attribut [TestClass] au dessus de la classe DinnerTest indique qu'il
+s'agit d'une classe qui contiendra des tests et éventuellement du code pour
+initialiser ces tests ou nettoyer après leur exécution. Nous pourrons définir
+des tests à l'intérieur de cette classe en lui ajoutant des méthodes publiques
+que nous ferons précéder d'un attribut [TestMethod].</p>
+<p>Voici les deux premiers tests que nous allons ajouter pour contrôler notre
+classe Dinner. Le premier d'entre eux vérifie qu'un objet Dinner n'est pas
+valide s'il est créé sans que l'ensemble de ses propriétés soit défini
+correctement. Le second test vérifie qu'un objet Dinner est valide quand il est
+créé en définissant toutes ses propriétés avec des valeurs correctes :</p>
+<pre><code>[TestClass]
+public class DinnerTest {
+
+   [TestMethod]
+   public void Dinner_Should_Not_Be_Valid_When_Some_Properties_Incorrect() {
+
+     //Arrange
+     Dinner dinner = new Dinner() {
+        Title = &quot;Test title&quot;,
+        Country = &quot;USA&quot;,
+        ContactPhone = &quot;BOGUS&quot;
+     };
+
+     // Act
+     bool isValid = dinner.IsValid;
+
+     //Assert
+     Assert.IsFalse(isValid);
+   }
+
+   [TestMethod]
+   public void Dinner_Should_Be_Valid_When_All_Properties_Correct() {
+
+     //Arrange
+     Dinner dinner = new Dinner {
+        Title = &quot;Test title&quot;,
+        Description = &quot;Some description&quot;,
+        EventDate = DateTime.Now,
+        HostedBy = &quot;ScottGu&quot;,
+        Address = &quot;One Microsoft Way&quot;,
+        Country = &quot;USA&quot;,
+        ContactPhone = &quot;425-703-8072&quot;,
+        Latitude = 93,
+        Longitude = -92,
+     };
+
+     // Act
+     bool isValid = dinner.IsValid;
+
+     //Assert
+     Assert.IsTrue(isValid);
+   }
+
+}
+</code></pre>
+<p>Comme vous pouvez le voir dans ce code, nos tests ont des noms très
+explicites (et même un peu à rallonge).Nous avons fait cela parce qu'au final,
+nous pourrions avoir des centaines voire des milliers de petits tests et que ce
+sera plus facile pour comprendre en un coup d'œil à quoi sert et ce que fait
+chacun d'eux (surtout quand il faut s'y retrouver dans la fenêtre qui affiche
+les résultats des tests).Les noms donnés aux tests doivent toujours être
+définis en fonction de la fonctionnalité qu'ils vérifient. Dans notre code,
+nous avons utilisé une règle de nommage &quot;Nom_Devrait_Verbe&quot;.</p>
+<p>Nous avons organisé nos tests en suivant le modèle &quot;AAA&quot;, c'est-à-dire
+&quot;Arrange, Act, Assert&quot; :</p>
+<ul>
+<li>Arrange : préparation de l'élément à tester</li>
+<li>Act : réalisation du test et récupération de son résultat</li>
+<li>Assert : vérification du bon fonctionnement</li>
+</ul>
+<p>Quand on écrit des tests unitaires, il faut éviter qu'un test individuel
+fasse trop de choses. Au lieu de ça, chaque test doit porter sur un seul
+élément de base (c'est beaucoup plus pratique pour découvrir d'où vient le
+problème en cas d'échec de certains tests). Un bon truc pour y parvenir est de
+ne faire qu'un test et de n'avoir qu'une commande &quot;Assert&quot; dans chaque test
+unitaire. Si vous avez plus d'une commande &quot;Assert&quot; dans une méthode de test,
+vérifiez-bien qu'elles servent toutes à tester la même chose. Et en cas de
+doute, ajoutez un autre test unitaire.</p>
+<h2>Lancer les tests</h2>
+<p>Avec Visual Studio 2008 Professional (ou une version supérieurs), il est
+possible d'exécuter les projets de tests unitaires directement au sein de
+l'environnement de développement. Nous pouvons utiliser la commande
+&quot;Test-&gt;Run-&gt;All Tests in Solution&quot; (ou taper Ctrl R, A) pour lancer
+l'exécution de tous nos tests unitaires. Nous pouvons aussi placer le curseur
+dans une classe de test ou à l'intérieur d'une méthode de test particulière et
+utiliser la commande &quot;Test-&gt;Run-&gt;Tests in Current Context&quot; (ou Ctrl R, T)
+pour n'exécuter qu'une partie des tests unitaires.</p>
+<p>Pour exécuter les deux tests unitaires que nous venons de définir, il suffit
+donc de placer le curseur dans la classe DinnerTest puis de taper &quot;Ctrl R, T&quot;.
+Visual Studio affiche alors une fenêtre &quot;Tests Results&quot; dans laquelle nous
+pouvons voir les résultats pour nos deux tests unitaires :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image145.png" alt=""></p>
+<p>Note : la colonne &quot;Class Name&quot; ne s'affiche pas par défaut.
+Pour l'ajouter, utilisez la commande &quot;Add/Remove Columns&quot; qui apparait grâce à
+un clic-droit dans la fenêtre &quot;Tests Results&quot;.</p>
+<p>Nos deux tests ont seulement pris une fraction de seconde pour s'exécuter -
+et comme vous pouvez le voir ils ont tous les deux réussis. Nous pouvons donc
+aller plus loin et compléter ceux-ci en créant des tests supplémentaires pour
+vérifier la validation de règles spécifiques et le fonctionnement des deux
+méthodes d'assistance IsUserHost() et IsUserRegistered() que nous avons
+ajoutées à la classe Dinner. À l'avenir, grâce à ces tests, la mise à jour des
+traitements métiers ou des règles de validation va devenir plus simple et moins
+risquée. Nous pourrons alors ajouter une nouvelle règle de validation puis
+contrôler en quelques secondes que cela n'a pas eu d'impact sur les
+fonctionnalités existantes.</p>
+<p>Comme vous pouvez le voir, le fait d'avoir utilisé des noms de test parlant
+il est facile de comprendre rapidement ce que chaque test contrôle.</p>
+<p>Vous pouvez remarquer que le fait d'avoir employé des noms de test très
+parlant facilite énormément la tâche pour comprendre ce que chaque test est
+sensé contrôler. Je vous recommande d'utiliser la commande &quot;Tools-&gt;Options&quot;
+pour accéder à l'écran de configuration &quot;Test Tools / Test Execution&quot; et de
+cocher &quot;Double-clicking a failed or inconclusive unit test result displays the
+point of failure in the test&quot;. Cela vous permettra de double-cliquer sur un
+test en erreur dans la fenêtre des résultats de test et d'accéder directement
+au point qui pose problème.</p>
+<h2>Créer des tests unitaires pour DinnersController</h2>
+<p>Nous allons à présent créer quelques tests unitaires pour vérifier les
+fonctionnalités du contrôleur DinnersController. Pour commencer, nous faisons
+un clic-droit sur le répertoire &quot;Controllers&quot; du projet de tests pour choisir
+la commande &quot;Add-New Test&quot;. Puis nous demandons à créer un &quot;Unit test&quot; que nous
+appellerons &quot;DinnersControllerTest.cs&quot;.</p>
+<p>Nous pouvons alors créer deux méthodes de tests qui vont nous permettre de
+vérifier l'action Details() dans DinnersController. La première vérifiera que
+Details() renvoie une vue lorsqu'on demande un dîner existant. La seconde
+contrôlera que c'est la vue &quot;NotFound&quot; qui est renvoyé quand on demande un
+dîner qui n'existe pas :</p>
+<pre><code>[TestClass]
+public class DinnersControllerTest {
+
+   [TestMethod]
+   public void DetailsAction_Should_Return_View_For_ExistingDinner() {
+
+     // Arrange
+     var controller = new DinnersController();
+
+     // Act
+     var result = controller.Details(1) as ViewResult;
+
+     // Assert
+     Assert.IsNotNull(result, &quot;Expected View&quot;);
+   }
+
+   [TestMethod]
+   public void DetailsAction_Should_Return_NotFoundView_For_BogusDinner() {
+
+     // Arrange
+     var controller = new DinnersController();
+
+     // Act
+     var result = controller.Details(999) as ViewResult;
+
+     // Assert
+     Assert.AreEqual(&quot;NotFound&quot;, result.ViewName);
+   }
+}
+</code></pre>
+<p>Le code ci-dessus se compile sans problème. Cependant, lorsque nous lançons
+l'exécution des tests, ils échouent tous les deux :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image146.png" alt=""></p>
+<p>En consultant les messages d'erreur, on peut voir que nos deux tests ont
+échoués parce que la classe DinnerRepository n'a pas pu se connecter à la base
+de données. Notre application NerdDinner utilise une chaine de connexion vers
+un fichier de base de données SQL Server Express local, présent dans le
+répertoire \App_Data du projet NerdDinner. Étant donné que le projet
+NerdDinner.Tests se compile et s'exécute dans un autre répertoire que celui du
+projet NerdDinner, le chemin relatif pour accéder à la base de données n'est
+pas valable.</p>
+<p>Nous <em>pourrions</em> résoudre ce problème en copiant le fichier contenant
+notre base de données SQL Server dans notre projet de test puis ajouter une
+chaine de connexion vers celui-ci dans le fichier de configuration App.config
+du projet. Cela nous permettrait de débloquer et de faire fonctionner nos deux
+tests ci-dessus.</p>
+<p>Malgré tout, le fait de faire des tests unitaires en utilisant une véritable
+base de données provoque un certain nombre de difficultés, et en
+particulier :</p>
+<ul>
+<li>Cela ralentit considérablement la vitesse d'exécution des tests unitaires.
+Plus le temps d'exécution des tests est long, moins vous serez enclins à les
+exécuter régulièrement. Dans l'idéal, il faudrait que vos tests unitaires
+s'exécutent en quelques secondes - pour devenir quelque chose d'aussi naturel
+que la compilation de votre projet.</li>
+<li>Cela complique les traitements d'initialisation et de nettoyage pour chaque
+test. Il faut que chaque test unitaire puisse être isolé et indépendant les uns
+des autres (sans effets secondaires ou interdépendances). Si vous travaillez
+avec une vraie base de données, vous devez être conscient de cela et en tenir
+compte.</li>
+</ul>
+<p>Nous allons maintenant aborder le modèle de conception appelé &quot;injection de
+dépendance&quot; (ou DI = Dependancy Injection) qui va nous aider à gérer ce genre
+de problèmes et nous éviter d'avoir à travailler sur une vraie base de données
+pour réaliser les tests.</p>
+<h2>L'injection de dépendance</h2>
+<p>Pour l'instant, la classe DinnersController est étroitement &quot;liée&quot; à la
+classe DinnerRepository. Cette notion de &quot;lien&quot; fait référence au fait qu'une
+classe dépend explicitement d'une autre classe pour pouvoir fonctionner :</p>
+<pre><code>public class DinnersController : Controller {
+
+   DinnerRepository dinnerRepository = new DinnerRepository();
+
+   //
+   // GET: /Dinners/Details/5
+   public ActionResult Details(int id) {
+
+     Dinner dinner = dinnerRepository.FindDinner(id);
+
+     if (dinner == null)
+        return View(&quot;NotFound&quot;);
+
+     return View(dinner);
+   }
+</code></pre>
+<p>Étant donné que la classe DinnerRepository a besoin d'accéder à la base de
+données, le fait que la classe DinnersController soit étroitement liée à cette
+classe DinnerRepository nous oblige à avoir une base de données pour que les
+méthodes d'action de DinnersController puissent être testées.</p>
+<p>Il est possible d'éviter ça en employant un modèle de conception qui
+s'appelle &quot;injection de dépendance&quot;. C'est une technique dans laquelle les
+dépendances (comme par exemple le fait d'avoir besoin d'initialiser un
+repository pour accéder à la base de données) ne sont plus définies de façon
+implicite au niveau de la classe qui en a besoin.</p>
+<p>Au lieu de ça, les dépendances sont transmises de façon explicite à la
+classe qui en a besoin en tant qu'argument pour son constructeur. Et si en plus
+cette dépendance est définie sous forme d'interface, cela nous donne alors la
+possibilité de faire passer une &quot;fausse&quot; implémentation de celle-ci dans le
+cadre des tests unitaires. Cela permet ainsi de créer une implémentation
+particulière pour les tests qui n'aura pas besoin d'accéder à une vraie base de
+données pour fonctionner.</p>
+<p>Pour mettre cela en pratique, nous allons d'ores et déjà ajouter cette
+notion d'injection de dépendance au niveau du contrôleur DinnersController.</p>
+<h2>Extraire l'interface IDinnerRepository</h2>
+<p>La première étape consiste à créer une interface IDinnerRepository qui
+contractualise les éléments que doit fournir le repository pour que le
+contrôleur puisse retrouver et mettre à jour des objets Dinners.</p>
+<p>Nous pouvons créer cette interface nous même en faisant un clic-droit sur le
+dossier \Models puis en choisissant la commande Add-&gt;New Item et ajouter une
+nouvelle interface appelée IDinnerRepository.cs.</p>
+<p>Ou alors, nous pouvons employer les outils de refactoring intégrés dans
+Visual Studio Professional (ou versions supérieures) pour extraire et créer
+automatiquement une interface à notre place à partir de la classe
+DinnerRepository existante. Pour extraire cette interface à l'aide de Visual
+Studio, il suffit de placer le curseur dans la classe DinnerRepository puis de
+faire un clic droit pour choisir la commande Refactor-&gt;Extract
+Interface :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image147.png" alt=""></p>
+<p>Cela va lancer la boite de dialogue &quot;Extraire l'interface&quot; qui nous demande
+de donner un nom à l'interface à créer. Elle nous propose par défaut le nom
+IDinnerRepository et sélectionne automatiquement toutes les méthodes publiques
+de la classe DinnerRepository pour les ajouter à l'interface :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image148.png" alt=""></p>
+<p>Puis quand nous cliquons sur le bouton &quot;OK&quot;, Visual Studio ajoute
+l'interface IDinnerRepository à l'application :</p>
+<pre><code>public interface IDinnerRepository {
+
+   IQueryable&lt;Dinner&gt; FindAllDinners();
+   IQueryable&lt;Dinner&gt; FindByLocation(float latitude, float longitude);
+   IQueryable&lt;Dinner&gt; FindUpcomingDinners();
+   Dinner GetDinner(int id);
+
+   void Add(Dinner dinner);
+   void Delete(Dinner dinner);
+
+   void Save();
+}
+</code></pre>
+<p>Et la classe DinnerRepository existante est mise à jour pour indiquer
+qu'elle implémente l'interface IDinnerRepository :</p>
+<pre><code>public class DinnerRepository : IDinnerRepository {
+   ...
+}
+</code></pre>
+<h2>Ajouter l'injection de dépendance à DinnersController</h2>
+<p>Nous pouvons maintenant passer à la phase de mise à jour de la classe
+DinnersController pour qu'elle utilise désormais cette nouvelle interface.</p>
+<p>Pour l'instant, il y a du code en &quot;dur&quot; dans la classe DinnersController qui
+fait que le champ &quot;dinnerRepository&quot; est toujours une instance de la classe
+DinnerRepository :</p>
+<pre><code>public class DinnersController : Controller {
+
+   DinnerRepository dinnerRepository = new DinnerRepository();
+
+   ...
+}
+</code></pre>
+<p>Nous allons faire un premier changement pour que le type du champ
+&quot;dinnerRepository&quot; soit IDinnerRepository au lieu de DinnerRepository. Puis
+nous ajoutons deux constructeurs publics à la classe DinnersController. Un de
+ces constructeurs attend un argument de type IDinnerRepository. L'autre
+constructeur n'a pas d'argument. C'est le constructeur par défaut du contrôleur
+qui utilise une instance de la classe DinnerRepository :</p>
+<pre><code>public class DinnersController : Controller {
+
+   IDinnerRepository dinnerRepository;
+
+   public DinnersController()
+     : this(new DinnerRepository()) {
+   }
+
+   public DinnersController(IDinnerRepository repository) {
+     dinnerRepository = repository;
+   }
+
+   ...
+}
+</code></pre>
+<p>Étant donné qu'ASP.NET MVC instancie toujours les classes contrôleurs en
+utilisant leur constructeur par défaut, ce code nous assure que lors de son
+exécution, le contrôleur DinnersController continuera à utiliser la classe
+DinnerRepository pour gérer l'accès aux données.</p>
+<p>Nous pouvons à présent passer à la phase suivante et mettre à jour nos tests
+unitaires pour qu'ils emploient constructeur qui attend un argument pour lui
+faire passer une &quot;fausse&quot; implémentation du repository. Cette &quot;fausse&quot;
+implémentation n'aura pas besoin d'accéder à une vraie base de données et se
+contentera de travailler avec des données en mémoire.</p>
+<h2>Créer la classe FakeDinnerRepository</h2>
+<p>Nous allons donc voir comment créer une classe FakeDinnerRepository.</p>
+<p>Pour commencer on va créer un répertoire &quot;Fakes&quot; dans notre projet
+NerdDinner.Tests puis on va y ajouter une nouvelle classe FakeDinnerRepository
+en faisant un clic-droit sur ce dossier et en appelant la commande Add-&gt;New
+Class :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image149.png" alt=""></p>
+<p>Nous devons ensuite modifier le code de la classe FakeDinnerRepository pour
+qu'elle implémente l'interface IDinnerRepository. Pour cela, il est tout
+simplement possible de faire un clic-droit dessus et de choisir la commande
+&quot;Implement interface IDinnerRepository&quot;</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image150.png" alt=""></p>
+<p>Grâce à cela, Visual studio va ajouter automatiquement tous les membres de
+l'interface IDinnerRepository à la classe FakeDinnerRepository avec pour chacun
+d'entre eux une implémentation par défaut :</p>
+<pre><code>public class FakeDinnerRepository : IDinnerRepository {
+
+   public IQueryable&lt;Dinner&gt; FindAllDinners() {
+     throw new NotImplementedException();
+   }
+
+   public IQueryable&lt;Dinner&gt; FindByLocation(float lat, float long){
+     throw new NotImplementedException();
+   }
+
+   public IQueryable&lt;Dinner&gt; FindUpcomingDinners() {
+     throw new NotImplementedException();
+   }
+
+   public Dinner GetDinner(int id) {
+     throw new NotImplementedException();
+   }
+
+   public void Add(Dinner dinner) {
+     throw new NotImplementedException();
+   }
+
+   public void Delete(Dinner dinner) {
+     throw new NotImplementedException();
+   }
+
+   public void Save() {
+     throw new NotImplementedException();
+   }
+}
+</code></pre>
+<p>Il nous suffit alors de modifier le code de la classe FakeDinnerRepository
+pour qu'il emploie une collection List&lt;Dinner&gt; qui lui sera passé en tant
+qu'argument dans son constructeur :</p>
+<pre><code>public class FakeDinnerRepository : IDinnerRepository {
+
+   private List&lt;Dinner&gt; dinnerList;
+
+   public FakeDinnerRepository(List&lt;Dinner&gt; dinners) {
+     dinnerList = dinners;
+   }
+
+   public IQueryable&lt;Dinner&gt; FindAllDinners() {
+     return dinnerList.AsQueryable();
+   }
+
+   public IQueryable&lt;Dinner&gt; FindUpcomingDinners() {
+     return (from dinner in dinnerList
+                where dinner.EventDate &gt; DateTime.Now
+                select dinner).AsQueryable();
+   }
+
+   public IQueryable&lt;Dinner&gt; FindByLocation(float lat, float lon) {
+     return (from dinner in dinnerList
+                where dinner.Latitude == lat &amp;&amp; dinner.Longitude == lon
+                select dinner).AsQueryable();
+   }
+
+   public Dinner GetDinner(int id) {
+     return dinnerList.SingleOrDefault(d =&gt; d.DinnerID == id);
+   }
+
+   public void Add(Dinner dinner) {
+     dinnerList.Add(dinner);
+   }
+
+   public void Delete(Dinner dinner) {
+     dinnerList.Remove(dinner);
+   }
+
+   public void Save() {
+     foreach (Dinner dinner in dinnerList) {
+        if (!dinner.IsValid)
+           throw new ApplicationException(&quot;Rule violations&quot;);
+     }
+   }
+}
+</code></pre>
+<p>Nous disposons désormais d'une implémentation de l'interface
+IDinnerRepository qui n'a pas besoin d'une base de données et qui est capable
+de fonctionner avec une liste d'objets Dinners en mémoire.</p>
+<h2>Utiliser FakeDinnerRepository pour faire les tests unitaires</h2>
+<p>Nous pouvons maintenant revenir aux tests unitaires de la classe
+DinnersController qui avaient échoués tout à l'heure étant donné que la base de
+données n'était pas accessible. Nous allons mettre à jour le code de nos
+méthodes de test pour qu'elles utilisent une instance de FakeDinnerRepository
+et qu'elles la fassent passer au contrôleur DinnersController :</p>
+<pre><code>[TestClass]
+public class DinnersControllerTest {
+
+   List&lt;Dinner&gt; CreateTestDinners() {
+
+     List&lt;Dinner&gt; dinners = new List&lt;Dinner&gt;();
+
+     for (int i = 0; i &lt; 101; i++) {
+
+        Dinner sampleDinner = new Dinner() {
+           DinnerID = i,
+           Title = &quot;Sample Dinner&quot;,
+           HostedBy = &quot;SomeUser&quot;,
+           Address = &quot;Some Address&quot;,
+           Country = &quot;USA&quot;,
+           ContactPhone = &quot;425-555-1212&quot;,
+           Description = &quot;Some description&quot;,
+           EventDate = DateTime.Now.AddDays(i),
+           Latitude = 99,
+           Longitude = -99
+        };
+        dinners.Add(sampleDinner);
+     }
+     return dinners;
+   }
+
+   DinnersController CreateDinnersController() {
+     var repository = new FakeDinnerRepository(CreateTestDinners());
+     return new DinnersController(repository);
+   }
+
+   [TestMethod]
+   public void DetailsAction_Should_Return_View_For_Dinner() {
+
+     // Arrange
+     var controller = CreateDinnersController();
+
+     // Act
+     var result = controller.Details(1);
+
+     // Assert
+     Assert.IsInstanceOfType(result, typeof(ViewResult));
+   }
+
+   [TestMethod]
+   public void DetailsAction_Should_Return_NotFoundView_For_BogusDinner() {
+
+     // Arrange
+     var controller = CreateDinnersController();
+
+     // Act
+     var result = controller.Details(999) as ViewResult;
+
+     // Assert
+     Assert.AreEqual(&quot;NotFound&quot;, result.ViewName);
+   }
+}
+</code></pre>
+<p>Et maintenant, quand nous relançons nos tests, ils réussissent tous les
+deux :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image151.png" alt=""></p>
+<p>Et encore mieux, ils ne prennent qu'une fraction de secondes pour s'exécuter
+et il n'y a pas besoin de prévoir de traitements compliqués à faire pour les
+préparer et remettre au propre après leur exécution.À partir de maintenant,
+nous avons la possibilité de tester tout le code des méthodes d'action de la
+classe DinnersController (depuis la liste jusqu'à la pagination, la fiche
+détail, la création, la modification et la suppression) sans avoir le moindre
+besoin de nous connecter à une vraie base de données.</p>
+<h2>Remarque : Les frameworks pour l'injection de dépendance</h2>
+<p>Gérer à la main l'injection de dépendance (comme nous l'avons fait
+ci-dessus) marche très bien, mais ça risque de devenir de plus en plus
+difficile à maintenir au fur et à mesure que le nombre de dépendances et de
+composants va augmenter.</p>
+<p>Il existe plusieurs frameworks pour gérer l'injection de dépendance en .NET
+qui peuvent nous apporter une plus grande souplesse dans la façon de gérer les
+dépendances entre les objets. Ces frameworks - généralement connus sous le nom
+de &quot;Inversion of Control&quot; (IoC) - offrent des mécanismes qui autorisent un bien
+meilleur niveau de configuration pour définir et transmettre les dépendances
+entre objets au moment de l'exécution, le plus souvent en employant l'injection
+de constructeur. Parmi les frameworks les plus populaires en .NET, on trouve :
+AutoFac, NInject, Spring.NET, StructureMap et Windsor.</p>
+<p>ASP.NET MVC fourni des API d'extensions pour permettre aux développeurs
+d'intervenir lors de la résolution ou de l'instanciation des contrôleurs. Cela
+permet entre autre aux frameworks d'injection de dépendance ou d'IoC de
+s'intégrer de façon totalement transparente. En utilisant un framework de type
+DI ou IoC, nous pourrions donc supprimer le constructeur par défaut de notre
+classe DinnersController, ce qui nous libèrerait complètement du lien qui
+existe entre celui-ci et la classe DinnerRepository.</p>
+<p>Nous n'allons pas utiliser de framework d'injection de dépendance ou IoC
+dans le cadre du tutoriel NerdDinner. Mais c'est quelque chose qui mériterait
+vraiment d'être envisagé à l'avenir si nous venions à faire évoluer le code et
+les fonctionnalités de l'application.</p>
+<h2>Créer des tests unitaires pour l'action Edit</h2>
+<p>Nous allons maintenant créer quelques tests unitaires pour vérifier la
+fonctionnalité Edit du contrôleur DinnersController. Pour commencer, nous
+allons tester le côté HTTP GET de l'action Edit :</p>
+<pre><code>//
+// GET: /Dinners/Edit/5
+[Authorize]
+public ActionResult Edit(int id) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   if (!dinner.IsHostedBy(User.Identity.Name))
+     return View(&quot;InvalidOwner&quot;);
+
+   return View(new DinnerFormViewModel(dinner));
+}
+</code></pre>
+<p>Nous allons réaliser un test destiné à contrôler que l'on obtient bien une
+vue basée sur un objet DinnerFormViewModel quand on fait une requête pour
+consulter un dîner existant :</p>
+<pre><code>[TestMethod]
+public void EditAction_Should_Return_View_For_ValidDinner() {
+
+   // Arrange
+   var controller = CreateDinnersController();
+
+   // Act
+   var result = controller.Edit(1) as ViewResult;
+
+   // Assert
+   Assert.IsInstanceOfType(result.ViewData.Model,
+                               typeof(DinnerFormViewModel));
+}
+</code></pre>
+<p>Mais quand nous lançons ce test, nous pouvons voir qu'il échoue parce qu'une
+exception due à une référence nulle se produit quand la méthode Edit tente
+d'accéder à la propriété User.Identity.Name à travers le helper
+Dinner.IsHostedBy().</p>
+<p>L'objet User disponible au niveau de la classe contrôleur regroupe toutes
+les informations relatives à l'utilisateur connecté et il est initialisé par
+ASP.NET MVC au moment de la création du contrôleur. Étant donné que notre test
+ne s'exécute pas à partir d'un serveur web, l'objet User n'est donc pas
+initialisé par ASP.NET MVC, ce qui fait que nous nous retrouvons avec une
+référence nulle.</p>
+<h2>Simuler la propriété User.Identity.Name</h2>
+<p>Les frameworks de mocking facilitent les tests car ils permettant de créer
+dynamiquement de faux objets nécessaires pour réussir les tests. On peut par
+exemple utiliser un framework de mocking au niveau du test de l'action Edit
+pour simuler un objet User que la classe DinnersController va pouvoir utiliser
+pour retrouver le nom de l'utilisateur. Cela évitera qu'une exception soit
+levée à cause d'une référence nulle quand nous ferons notre test.</p>
+<p>Il existe de nombreux frameworks de mocking utilisable avec ASP.NET MVC.
+Vous trouverez une liste de certains d'entre eux sur le site <a href="http://www.mockframeworks.com/">http://www.mockframeworks.com/</a>. Pour les tests dans notre application
+NerdDinner, nous allons utiliser un framework open source appelé &quot;Moq&quot; que vous
+pouvez télécharger gratuitement depuis l'adresse <a href="http://www.mockframeworks.com/moq">http://www.mockframeworks.com/moq</a>.</p>
+<p>Une fois celui-ci téléchargé, nous pouvons référencer la librairie Moq.dll
+dans notre projet NerdDinner.Tests :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image152.png" alt=""></p>
+<p>Puis nous ajoutons une méthode helper surchargée
+&quot;CreateDinnersControllerAs(username)&quot; à notre classe de test qui va prendre un
+nom d'utilisateur comme argument et qui va &quot;simuler&quot; la propriété
+User.Identity.Name dans l'instance DinnersController créée pour nos tests.</p>
+<pre><code>DinnersController CreateDinnersControllerAs(string userName) {
+
+   var mock = new Mock&lt;ControllerContext&gt;();
+   mock.SetupGet(p =&gt; p.HttpContext.User.Identity.Name).Returns(userName);
+   mock.SetupGet(p =&gt; p.HttpContext.Request.IsAuthenticated).Returns(true);
+
+   var controller = CreateDinnersController();
+   controller.ControllerContext = mock.Object;
+
+   return controller;
+}
+</code></pre>
+<p>Dans le code ci-dessus, nous avons utilisé le framework Moq pour créer un
+objet de type Mock qui simule l'objet ControllerContext que ASP.NET MVC
+transmet aux classes contrôleurs pour exposer des objets tels que User,
+Request, Response ou Session. Nous employons la méthode &quot;SetupGet&quot; de cet objet
+mock pour indiquer que nous souhaitons que la propriété
+HttpContext.User.Identity.Name de l'objet ControllerContext renvoie la variable
+chaîne username que nous avons fait passer à notre méthode
+&quot;CreateDinnersControllerAs&quot;.</p>
+<p>Nous pouvons simuler autant de propriétés et de méthodes de l'objet
+ControllerContext que nous le souhaitons. Pour illustrer cela, j'ai aussi fait
+un appel à SetupGet() pour simuler la propriété Request.IsAuthenticated. Elle
+n'est pas réellement nécessaire pour les tests que nous faisons, mais cela me
+permet de présenter la façon dont vous pouvez simuler les propriétés de l'objet
+Request. Une fois que nous avons simulé tout ce dont nous avions besoin, nous
+n'avons qu'à assigner l'instance de l'objet ControllerContext simulé que nous
+venons de créer à l'objet DinnersController qui est renvoyé par notre méthode
+helper.</p>
+<p>Et nous pouvons alors écrire des tests unitaires qui utilisent cette
+nouvelle méthode helper pour réaliser différents scénarios de test autour de
+notre action Edit :</p>
+<pre><code>[TestMethod]
+public void EditAction_Should_Return_EditView_When_ValidOwner() {
+
+   // Arrange
+   var controller = CreateControllerAs(&quot;SomeUser&quot;);
+
+   // Act
+   var result = controller.Edit(1) as ViewResult;
+
+   // Assert
+   Assert.IsInstanceOfType(result.ViewData.Model,
+                               typeof(DinnerFormViewModel));
+}
+
+[TestMethod]
+public void EditAction_Should_Return_InvalidOwnerView_When_InvalidOwner() {
+
+   // Arrange
+   var controller = CreateControllerAs(&quot;NotOwnerUser&quot;);
+
+   // Act
+   var result = controller.Edit(1) as ViewResult;
+
+   // Assert
+   Assert.AreEqual(result.ViewName, &quot;InvalidOwner&quot;);
+}
+</code></pre>
+<p>Et ce coup-ci, nos tests passent avec succès quand nous les lançons :</p>
+<p><img src="http://nerddinnerbook.s3.amazonaws.com/Images/image153.png" alt=""></p>
+<h2>Tester le scénario UpdateModel()</h2>
+<p>Pour l'instant, nous avons donc testé le côté HTTP GET de l'action Edit.
+Nous allons maintenant créer quelques tests pour contrôler le côté HTTP POST de
+cette action :</p>
+<pre><code>//
+// POST: /Dinners/Edit/5
+[AcceptVerbs(HttpVerbs.Post), Authorize]
+public ActionResult Edit (int id, FormCollection collection) {
+
+   Dinner dinner = dinnerRepository.GetDinner(id);
+
+   if (!dinner.IsHostedBy(User.Identity.Name))
+     return View(&quot;InvalidOwner&quot;);
+
+   try {
+     UpdateModel(dinner);
+
+     dinnerRepository.Save();
+
+     return RedirectToAction(&quot;Details&quot;, new { id=dinner.DinnerID });
+   }
+   catch {
+     ModelState.AddModelErrors(dinner.GetRuleViolations());
+
+     return View(new DinnerFormViewModel(dinner));
+   }
+}
+</code></pre>
+<p>La nouveauté intéressante pour nous dans le scénario de test de cette partie
+POST c'est qu'elle fait appel à la méthode helper UpdateModel() qui est fournie
+par la classe Controller. Nous allons devoir utiliser cette méthode pour binder
+des valeurs postées en tant que formulaire avec l'instance de notre objet
+Dinner.</p>
+<p>Les deux tests unitaires ci-dessous montrent comment nous pouvons procéder
+pour fournir des données postées en tant que formulaire à la méthode
+UpdateModel() pour qu'elle puisse les utiliser. Pour cela, nous devons créer et
+initialiser un objet FormCollection puis assigner celui-ci à la propriété
+&quot;ValueProvider&quot; du contrôleur.</p>
+<p>Le premier test vérifie que lorsque l'enregistrement est réussi, le
+navigateur est redirigé vers l'action Details. Le second test s'assure que
+quand on poste des données incorrectes, l'action Edit réaffiche la vue Edit et
+la complète avec un message d'erreur.</p>
+<pre><code>public void EditAction_Should_Redirect_When_Update_Successful() {
+
+   // Arrange
+   var controller = CreateDinnersControllerAs(&quot;SomeUser&quot;);
+
+   var formValues = new FormCollection() {
+     { &quot;Title&quot;, &quot;Another value&quot; },
+     { &quot;Description&quot;, &quot;Another description&quot; }
+   };
+
+   controller.ValueProvider = formValues.ToValueProvider();
+
+   // Act
+   var result = controller.Edit(1, formValues) as RedirectToRouteResult;
+
+   // Assert
+   Assert.AreEqual(&quot;Details&quot;, result.RouteValues[&quot;Action&quot;]);
+}
+
+[TestMethod]
+public void EditAction_Should_Redisplay_With_Errors_When_Update_Fails() {
+
+   // Arrange
+   var controller = CreateDinnersControllerAs(&quot;SomeUser&quot;);
+
+   var formValues = new FormCollection() {
+     { &quot;EventDate&quot;, &quot;Bogus date value!!!&quot;}
+   };
+
+   controller.ValueProvider = formValues.ToValueProvider();
+
+   // Act
+   var result = controller.Edit(1, formValues) as ViewResult;
+
+   // Assert
+   Assert.IsNotNull(result, &quot;Expected redisplay of view&quot;);
+   Assert.IsTrue(result.ViewData.ModelState.Count &gt; 0, &quot;Expected errors&quot;);
+}
+</code></pre>
+<h2>Conclusion sur les tests unitaires</h2>
+<p>Nous avons abordé les concepts de base en ce qui concerne les tests
+unitaires qui s'appliquent aux classes contrôleurs. Nous pouvons maintenant
+utiliser ces techniques pour créer très facilement des centaines de tests très
+simples afin de contrôler le fonctionnement de notre application.</p>
+<p>Étant donné que ces tests n'ont pas besoin de se connecter à une vraie base
+de données, ils sont ultra-rapides et super-faciles à exécuter. Il nous serait
+donc possible de réaliser des centaines de tests en quelques secondes et
+d'obtenir immédiatement un retour pour savoir si telle ou telle modification a
+cassé quelque chose qui fonctionnait bien jusqu'à présent. C'est quelque chose
+de très important qui va nous apporter l'assurance nécessaire pour continuer à
+améliorer et à enrichir notre application.</p>
+<p>Si nous avons abordé les tests unitaires à la fin de ce tutoriel, ce n'est
+absolument pas parce que c'est un truc qu'il ne faut faire qu'au tout dernier
+moment quand on développe ! Bien au contraire ! En fait, il faudrait écrire vos
+tests unitaires le plus tôt possible au cours du développement. En procédant
+ainsi, cela vous permet d'avoir un retour immédiat au fur et à mesure que vous
+codez votre application. Cela vous aide à avoir une vision d'ensemble des
+différents cas d'utilisation de votre application et cela vous aiguille pour la
+concevoir de façon structurée et pour éviter les risques
+d'interdépendances.</p>
+<p>Dans un autre chapitre du livre &quot;Professional ASP.NET MVC 1.0&quot;, nous
+discuterons du développement piloté par les tests (ou TDD = Test Driven
+Development) et nous verrons comment appliquer cette technique avec ASP.NET
+MVC. Le développement piloté par les tests est basé sur une approche itérative
+dans laquelle vous écrivez d'abord les tests que votre code devra ensuite
+réussir. Si vous faites du TDD, vous abordez chaque fonctionnalité de votre
+application en créant un test pour contrôler à priori la fonctionnalité que
+vous allez développer. Le fait de commencer par écrire un test unitaire vous
+permet d'être certain d'avoir bien compris ce que doit faire cette fonction et
+comment elle est censée opérer. Ce n'est qu'une fois que vous avez fini
+d'écrire le test (et après avoir vérifié que tel quel il échoue lamentablement)
+que vous allez pouvoir commencer à coder réellement la fonctionnalité qui est
+contrôlée par ce test. Et étant donné que vous avez déjà passé pas mal de temps
+à réfléchir sur ce que fait la fonction et comment elle est supposée le faire,
+vous avez une bien meilleure compréhension du besoin et de la façon la plus
+adaptée pour y répondre. Puis quand vous avez terminé de programmer la
+fonctionnalité attendue, vous n'avez plus qu'à relancer le test unitaire pour
+savoir immédiatement si votre code fait correctement ce qu'on attend de lui.
+Allez, plus que 8 chapitres à lire avant d'en arriver au chapitre 10 consacré
+au développement piloté par les tests…</p>
+<hr>
+<p>Index : <a href="http://tinyurl.com/NerdDinnerFR">NerdDinner en français</a> - Suite : <a href="/nerddinner/conclusion/">Conclusion
+du tutoriel NerdDinner</a></p>
+
+
+  </div>
+
+</article>
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Correction Announcements box - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/08/08/correction-announcements-box/" />
+<meta property="og:title" content="Correction Announcements box" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/08/08/correction-announcements-box/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-08-08T07:52:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-08-08T07:52:00.000Z","datePublished":"2005-08-08T07:52:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/08/08/correction-announcements-box/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/08/08/correction-announcements-box/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/08/08/correction-announcements-box/">Correction Announcements box</a>
+    </h1>
+    <p>
+      <span>2005-08-08</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Modification de la méthode employée pour définir si un contenu doit être
+visible ou non. Jusqu'à présent, cela utilisait une solution empruntée à
+IBuySpy mais qui ne marchait pas.</p>
+<pre><code>Visible='&lt;%# DataBinder.Eval(Container.DataItem, &quot;summary&quot;) != String.Empty %&gt;'
+</code></pre>
+<p>Ajout de la propriété IsNotEmpty(object text) à BoxControls.cs pour pouvoir
+utiliser :</p>
+<pre><code>Visible='&lt;%# IsNotEmpty(DataBinder.Eval(Container.DataItem, &quot;summary&quot;)) %&gt;'
+</code></pre>
+<p>Et ça marche !</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/08/08/correction-evolution-discussions-box/" hreflang="fr-FR">Correction/évolution Discussions box</a>
+  <a rel="next" href="/2005/08/08/table-utilisateurs/" hreflang="fr-FR">Table des utilisateurs</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

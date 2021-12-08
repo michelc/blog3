@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) An image box - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/11/15/wdevs-image-box/" />
+<meta property="og:title" content="(Wdevs) An image box" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/11/15/wdevs-image-box/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-11-15T15:23:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-11-15T15:23:00.000Z","datePublished":"2004-11-15T15:23:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/11/15/wdevs-image-box/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/11/15/wdevs-image-box/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/11/15/wdevs-image-box/">(Wdevs) An image box</a>
+    </h1>
+    <p>
+      <span>2004-11-15</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Compared to IBuySpy, I use a specific table to store information about the
+image rather than using the general ModuleSettings table. First, I currently
+don't have build a settings table. Second, this box is more an attempt to check
+what I need to do when creating a new box.</p>
+<p>First, the sql scripts to:</p>
+<ul>
+<li>create table qc_Images, its primary key and the foreign key to link with
+qc_Boxes</li>
+<li>add the box type in qc_BoxTypes (INSERT INTO qc_BoxTypes ...)</li>
+<li>add a sample screen in qc_Screens (INSERT INTO qc_Screens ...)</li>
+<li>add a sample box in qc_Images for the sample screen (INSERT INTO qc_Images
+...)</li>
+</ul>
+<p>Second, two class to handle the table:</p>
+<ul>
+<li>Image : basic properties of an Image box (url, title, link,
+size...)</li>
+<li>ImageDB : data logic to add/query/delete within the qc_Images
+table</li>
+</ul>
+<p>Third, a little user web control to display the content.</p>
+<p>In the future, I will have to add a web control to edit the content. But
+currently I use SQL script to update my content.</p>
+<p>For the css, I only set a pretty border when the <a href="http://web.archive.org/web/20041215050806/http://michel.monoforge.com/default.aspx?idScreen=image">
+image box</a> is displayed in the middle column. But it should be possible to
+build something better with <a href="http://www.alistapart.com/articles/cssdropshadows/">some shadows</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/11/08/wdevs-look-htmltext-with-css-no-tables/" hreflang="en-US">(Wdevs) Look Ma! Htmltext with CSS, no tables</a>
+  <a rel="next" href="/2004/11/15/wdevs-links-box/" hreflang="en-US">(Wdevs) A links box</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

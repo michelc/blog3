@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Migrer les données - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/20/mvc-music-store-raven-db-migrer-donnees/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Migrer les données" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/20/mvc-music-store-raven-db-migrer-donnees/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-20T11:12:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-20T11:12:00.000Z","datePublished":"2010-05-20T11:12:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/20/mvc-music-store-raven-db-migrer-donnees/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/20/mvc-music-store-raven-db-migrer-donnees/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/20/mvc-music-store-raven-db-migrer-donnees/">MVC Music Store / Raven DB : Migrer les données</a>
+    </h1>
+    <p>
+      <span>2010-05-20</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/20/porting-mvc-music-store-to-raven-data-migration.aspx">Porting MVC Music Store to Raven: Data migration</a>&quot;, le troisième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Voici le code nécessaire pour lire les données dans la base de données de
+<a href="http://mvcmusicstore.codeplex.com/">MVC Music Store</a>
+et les transformer en documents comme attendu par Raven :</p>
+<pre><code>using (var documentStore = new DocumentStore { Url = &quot;http://localhost:8080&quot; })
+{
+    documentStore.Initialise();
+    using (var session = documentStore.OpenSession())
+    {
+        foreach (var album in storeDB.Albums.Include(&quot;Artist&quot;).Include(&quot;Genre&quot;))
+        {
+            session.Store(new
+            {
+                Id = &quot;albums/&quot; + album.AlbumId,
+                album.AlbumArtUrl,
+                Arist = new { album.Artist.Name, Id = &quot;artists/&quot; + album.Artist.ArtistId },
+                Genre = new { album.Genre.Name, Id = &quot;genres/&quot; + album.Genre.GenreId },
+                album.Price,
+                album.Title,
+            });
+        }
+        foreach (var genre in storeDB.Genres)
+        {
+            session.Store(new
+            {
+                genre.Description,
+                genre.Name,
+                Id = &quot;genres/&quot; + genre.GenreId
+            });
+        }
+        session.SaveChanges();
+    }
+}
+</code></pre>
+<p>Comme vous pouvez le constater, c'est plutôt simple. Et même si c'est moi
+qui le dit, plutôt bien foutu.</p>
+<p>J'ai utilisé des types anonymes parce que je me contente de migrer les
+données. Je ne m'occupe pas vraiment de savoir comment gérer les types pour
+l'instant.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/19/mvc-music-store-raven-db-configurer-application/" hreflang="fr-FR">MVC Music Store / Raven DB : Configurer l&#39;application</a>
+  <a rel="next" href="/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce/" hreflang="fr-FR">MVC Music Store / Raven DB : Refaire HomeController, méthode map/reduce</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Utilier des dates dans les fichiers BAT - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2008/10/17/utilisation-dates-fichiers-bat/" />
+<meta property="og:title" content="Utilier des dates dans les fichiers BAT" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2008/10/17/utilisation-dates-fichiers-bat/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-10-17T07:53:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2008-10-17T07:53:00.000Z","datePublished":"2008-10-17T07:53:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2008/10/17/utilisation-dates-fichiers-bat/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2008/10/17/utilisation-dates-fichiers-bat/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2008/10/17/utilisation-dates-fichiers-bat/">Utilier des dates dans les fichiers BAT</a>
+    </h1>
+    <p>
+      <span>2008-10-17</span>
+      <span>#code-snippets</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Pour commencer, le truc de base :</p>
+<pre><code>ECHO %Date%
+17/10/2008
+ECHO %Time%
+ 9:58:13,70
+</code></pre>
+<p>Mais on peut faire mieux en utilisant la syntaxe
+%Date**:~x,y**% ou %Time**:~x,y**%, où :</p>
+<ul>
+<li>x représente la position du 1° caractère dans la date ou l'heure en
+cours</li>
+<li>y correspond au nombre de caractères à extraire</li>
+</ul>
+<p>La longueur d'une date étant de 10 caractères, x peut prendre une valeur
+allant de 0 à 9. Par contre, si la valeur de y est supérieure au nombre de
+caractères présents à partir de la position x, cela n'a pas d'importance :
+cela ne renverra que le nombre de caractères disponibles.</p>
+<p>Donc pour avoir une date au format YYYY-MM-DD, il faut utiliser la syntaxe
+suivante :</p>
+<pre><code>ECHO %Date:~6,4%-%Date:~3,2%-%Date:~0,2%
+2008-10-17
+</code></pre>
+<p>On peut aussi utiliser une valeur négative pour x pour compter les
+caractères de la droite vers la gauche. Dans ce cas, la valeur de x peut aller
+de -1 à -10 (-1 étant le dernier caractère de la date, -2 l'avant-dernier...).
+En utilisant une valeur négative, on obtiendra une date au format YYYY-MM-DD
+avec la syntaxe suivante :</p>
+<pre><code>ECHO %Date:~-4,4%-%Date:~-7,2%-%Date:~-10,2%
+2008-10-17
+</code></pre>
+<p>Et c'est pareil pour les heures : il faut utiliser la syntaxe suivante
+pour obtenir une heure au format HH-MM-SS :</p>
+<pre><code>ECHO %Time:~0,2%-%Time:~3,2%-%Time:~6,2%
+10-03-44
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2008/10/07/configuration-tortoisesvn/" hreflang="fr-FR">Configuration de TortoiseSVN</a>
+  <a rel="next" href="/2008/10/20/ceci-pas-subversion/" hreflang="fr-FR">Ceci n&#39;est pas du Subversion</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

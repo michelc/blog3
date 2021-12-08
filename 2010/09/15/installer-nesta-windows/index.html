@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Installer Nesta sous Windows - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/09/15/installer-nesta-windows/" />
+<meta property="og:title" content="Installer Nesta sous Windows" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/09/15/installer-nesta-windows/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-09-15T19:58:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-09-15T19:58:00.000Z","datePublished":"2010-09-15T19:58:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/09/15/installer-nesta-windows/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/09/15/installer-nesta-windows/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/09/15/installer-nesta-windows/">Installer Nesta sous Windows</a>
+    </h1>
+    <p>
+      <span>2010-09-15</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Mise à jour : L'installation et le fonctionnement de
+Nesta ont changé depuis ce billet. Il est donc préférable de se reporter au
+site <a href="http://nestacms.com/">http://nestacms.com/</a> pour
+obtenir des informations plus actualisées (mais l'installation du toolkit
+DevKit pour RedCloth est toujours d'actualité).</p>
+<hr>
+<p>Pour essayer d'approfondir mes connaissances en Ruby et Sinatra, j'ai
+regardé ce qui existait comme exemples d'applications Sinatra toutes faites en
+essayant plus particulièrement de trouver quelque chose de simple pour gérer
+des sites internet.</p>
+<p>J'ai finalement décidé de tester <a href="http://nestacms.com/">Nesta</a> qui me parait assez facile à utiliser et devrait être assez
+simple à prendre en main étant donné qu'au total il ne représente qu'une
+vingtaine de kilo-octets de code Ruby.</p>
+<p>Nesta est un CMS (système de gestion de contenu) plutôt léger, très bien
+adapté pour gérer de petits blogues ou sites internet. Il est développé en Ruby
+et il utilise bien entendu le framework Sinatra.</p>
+<p>Pour pouvoir installer Nesta sur Windows, j'ai dû commencer par mettre à
+jour mon <a href="/2010/07/22/installer-sinatra-windows-7/">installation du Ruby</a> parce que je n'avais pas <a href="http://github.com/oneclick/rubyinstaller/wiki/development-kit">installé le toolkit DevKit</a>. Je n'en avait pas eu besoin jusqu'à
+présent, mais il s'est avéré indispensable pour terminer l'installation du gem
+<a href="http://redcloth.org/">RedCloth</a> qui nécessite une
+compilation de je ne sais trop quoi.</p>
+<p>Une fois ce point réglé, il faut utiliser Git à partir de Git Bash pour
+récupérer une copie de Nesta sur mon poste de travail :</p>
+<pre><code>$ git clone git://github.com/gma/nesta.git
+</code></pre>
+<p>Arrivé là, j'ai continué à suivre le tutoriel <a href="http://nestacms.com/docs/quick-start">Quick Start</a> proposé
+sue le site de Nesta et j'ai installé le système de gestion de dépendances
+<a href="http://gembundler.com/">bundler</a> qui va ensuite se
+charger du reste de l'installation :</p>
+<pre><code>$ gem install bundler
+$ cd nesta
+$ bundle install
+</code></pre>
+<p>La dernière commande <code>bundle install</code> a alors donné le résultat
+suivant :</p>
+<pre><code>Fetching source index for http://rubygems.org/
+Using rake (0.8.7)
+Installing RedCloth (4.2.2) Temporarily enhancing PATH to include DevKit...
+with native extensions
+Installing builder (2.1.2)
+Installing haml (3.0.12)
+Using json_pure (1.4.6)
+Using rubyforge (2.0.4)
+Using hoe (2.6.2)
+Installing hpricot (0.8.2) with native extensions
+Using syntax (1.0.0)
+Installing maruku (0.6.0)
+Using rack (1.2.1)
+Installing rack-test (0.5.3)
+Installing rspec (1.3.0)
+Installing rspec_hpricot_matchers (1.0)
+Installing shotgun (0.8)
+Using sinatra (1.0)
+Installing test-unit (1.2.3)
+Using bundler (1.0.0)
+Your bundle is complete! Use `bundle show [gemname]` to see where a bundled gem
+is installed.
+</code></pre>
+<p>Puis, comme indiqué sur le site de Nesta, j'ai récupéré le fichier de
+configuration et quelques pages d'exemple :</p>
+<pre><code>$ cp config/config.yml.sample config/config.yml
+$ bundle exec rake setup:sample_content
+</code></pre>
+<p>Ensuite, étant donné que ShotGun ne fonctionne pas sous Windows (lu je ne
+sais plus où mais vu de mes yeux vu), je n'ai pas utilisé la commande
+<code>bundle exec shotgun app.rb</code> et j'ai lancé l'application avec la
+commande :</p>
+<pre><code>ruby app.rb
+</code></pre>
+<p>Et tada !</p>
+<p><img src="/public/2010/nesta.png" alt=""></p>
+<p>(ok, entre temps j'ai aussi fait une ou deux traductions du contenu du site
+d'exemple)</p>
+<p>Prochaine étape : l'installer sous Heroku ?</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/09/13/deployer-applications-sinatra-heroku/" hreflang="fr-FR">Déployer des applications Sinatra sur Heroku</a>
+  <a rel="next" href="/2010/09/22/y-a-du-boulot/" hreflang="fr-FR">Y&#39;a du boulot !</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

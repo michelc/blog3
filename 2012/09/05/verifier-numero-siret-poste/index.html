@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vérifier un numéro de siret de la Poste - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2012/09/05/verifier-numero-siret-poste/" />
+<meta property="og:title" content="Vérifier un numéro de siret de la Poste" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2012/09/05/verifier-numero-siret-poste/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-09-05T16:47:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2012-09-05T16:47:00.000Z","datePublished":"2012-09-05T16:47:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2012/09/05/verifier-numero-siret-poste/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2012/09/05/verifier-numero-siret-poste/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2012/09/05/verifier-numero-siret-poste/">Vérifier un numéro de siret de la Poste</a>
+    </h1>
+    <p>
+      <span>2012-09-05</span>
+      <span>#boulot</span>
+    </p>
+  </header>
+
+  <div>
+
+<p><img src="/public/2012/logo-la-poste.png" alt="">Rappel : les Siren (9 chiffres) servent
+à identifier les sociétés et les Siret (14 chiffres) les établissements de ces
+sociétés.</p>
+<h2>Formule de Luhn</h2>
+<p>La vérification de la validité d'un Siren ou d'un Siret est basé sur la
+<a href="http://fr.wikipedia.org/wiki/Syst%C3%A8me_d'identification_du_r%C3%A9pertoire_des_%C3%A9tablissements#Calcul_et_validit.C3.A9_d.27un_num.C3.A9ro_SIRET">formule de Luhn</a>.</p>
+<p>Pour cela, on multiplie les chiffres de rang impair à partir de la droite
+par 1, ceux de rang pair par 2. La somme des chiffres obtenus doit être
+<s>congru au modulo 10</s> multiple de 10.</p>
+<h2>Vérifier la clé du siret 73282932000074</h2>
+<pre><code>73282932000074 -.
+                |
+                v
+| Position | Chiffre | Multiplication | Résultat       |
+|----------|---------|----------------|----------------|
+|    14    |    7    |      7 x 2     | 14 =&gt; 1+4 =&gt; 5 |
+|    13    |    3    |      3 x 1     |  3             |
+|    12    |    2    |      2 x 2     |  4             |
+|    11    |    8    |      8 x 1     |  8             |
+|    10    |    2    |      2 x 2     |  4             |
+|     9    |    9    |      9 x 1     |  9             |
+|     8    |    3    |      3 x 2     |  6             |
+|     7    |    2    |      2 x 1     |  2             |
+|     6    |    0    |      0 x 2     |  0             |
+|     5    |    0    |      0 x 1     |  0             |
+|     4    |    0    |      0 x 2     |  0             |
+|     3    |    0    |      0 x 1     |  0             |
+|     2    |    7    |      7 x 2     | 14 =&gt; 1+4 =&gt; 5 |
+|     1    |    4    |      4 x 1     |  4             |
+--------------------------------------|----------------|
+                                      |   Somme = 50   |
+
+50 est un multiple de 10 =&gt; le n° de siret est valide
+</code></pre>
+<p>Notes :</p>
+<ul>
+<li>Dans le cas où la multiplication donne un résultat à 2 chiffres (donc
+supérieur à 9), on prend la somme de ces 2 chiffres : 7 x 2 = 14 =&gt; on
+prend 1 + 4 = 5</li>
+<li>Il existe un &quot;truc&quot; pour calculer cette somme de 2 chiffres, c'est d'oter 9
+du nombre obtenu : 7 x 2 = 14 =&gt; on prend 14 - 9 = 5</li>
+</ul>
+<h2>Cas des siret de La Poste</h2>
+<p>Ça c'est le truc habituel. Sauf que depuis que la Poste a changé de statut
+et qu'elle est devenue une société anonyme, elle n'a plus droit qu'à un seul
+Siren : 356 000 000. (je ne sais pas comment c'était avant : pas de
+siren, plusieurs siren... / après vérification, plusieurs siren). Et tous ses
+établissements doivent donc avoir un Siret en 356 000 000 #####.</p>
+<p>Le problème c'est que la Poste a vraiment beaucoup d'établissements. Par
+conséquent, à défaut de rallonger le n° de siret, il a fallu adapter le calcul
+de la clé de contrôle des siret spécifiquement pour La Poste (et
+<strong>uniquement</strong> dans le cas d'un siret de la Poste).</p>
+<p>Le nouvel algorithme de contrôle pour les Siret de la forme 356 000 000
+XXXXX est le suivant :</p>
+<blockquote>
+<p>La somme simple des chiffres du SIRET doit être congrue à 0 modulo 5, c'est
+à dire qu'elle doit être un multiple de 5.</p>
+<p><em>Frédéric Tardieu - Chef de la division Répertoire Inter-administratif
+Sirene au sein de la direction des Statistiques d'Entreprises de
+l'Insee.</em></p>
+</blockquote>
+<h2>Vérifier la clé du siret 35600000049837</h2>
+<pre><code>35600000049837 --.
+                 |
+                 v
+| Position |  Chiffre   |
+|----------|------------|
+|    14    |         3  |
+|    13    |         5  |
+|    12    |         6  |
+|    11    |         0  |
+|    10    |         0  |
+|     9    |         0  |
+|     8    |         0  |
+|     7    |         0  |
+|     6    |         0  |
+|     5    |         4  |
+|     4    |         9  |
+|     3    |         8  |
+|     2    |         3  |
+|     1    |         7  |
+-----------|------------|
+           | Somme = 45 |
+
+45 est un multiple de 5 =&gt; le n° de siret est valide
+</code></pre>
+<p>Ce nouvel algorithme permet d'immatriculer jusqu'à 18 000 établissements
+environ, soit presque deux fois plus que dans le cas général, tout en
+maintenant un contrôle sur l'identifiant.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2012/08/22/migrer-repository-mercurial-git/" hreflang="fr-FR">Migrer un repository de Mercurial vers Git</a>
+  <a rel="next" href="/2012/10/01/tester-partie-post-action-create/" hreflang="fr-FR">Tester la partie POST d&#39;une action Create() - 1/2</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

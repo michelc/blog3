@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Installer ELMAH avec NuGet - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/09/28/installer-elmah-nuget/" />
+<meta property="og:title" content="Installer ELMAH avec NuGet" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/09/28/installer-elmah-nuget/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-09-28T18:39:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-09-28T18:39:00.000Z","datePublished":"2011-09-28T18:39:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/09/28/installer-elmah-nuget/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/09/28/installer-elmah-nuget/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/09/28/installer-elmah-nuget/">Installer ELMAH avec NuGet</a>
+    </h1>
+    <p>
+      <span>2011-09-28</span>
+      <span>#.net</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Jusqu'à présent, j'ai un peu tendance à utiliser <a href="http://nuget.org/">NuGet</a> uniquement pour mettre à jour Entity Framework, jQuery
+et consorts et dans mes très grands jours pour voir ce que donne un package de
+ci de là.</p>
+<p>Après avoir terminé le chapitre de <a href="http://www.amazon.fr/gp/product/1118076583/ref=as_li_qf_sp_asin_tl?ie=UTF8&amp;tag=07arde-21&amp;linkCode=as2&amp;camp=1642&amp;creative=6746&amp;creativeASIN=1118076583">Professional ASP.NET MVC 3</a> consacré à NuGet, je me lance et
+j'en profite pour installer <a href="http://code.google.com/p/elmah/">ELMAH</a>. C'est l'exemple donné dans le livre et c'est un outil que
+j'avais déjà essayé d'utiliser du temps de mes WebForms puis de MVC 1.0 mais
+que j'avais chaque fois laissé tombé par manque de temps.</p>
+<p>Je vais éviter la console pour l'instant et faire l'installation par un
+clic-droit sur la branche &quot;Références&quot; de mon projet puis en sélectionnant
+l'option &quot;Manage NuGet Packages...&quot;.</p>
+<p><img src="/public/2011/elmah01.png" alt=""></p>
+<p><em>Note : Cette option est également disponible quand on
+fait un clic droit sur la solution ou le nom du projet, mais dans ce cas elle
+plus difficile à repérer étant donné le plus grand nombre d'options
+proposées.</em></p>
+<p>Il apparait alors la fenêtre &quot;Manage NuGet Packages&quot; qui liste par défaut
+tous les packages du monde en commençant par les plus téléchargés. Une fois là,
+le plus simple est d'utiliser la zone de recherche en haut à droite et d'y
+taper &quot;elmah&quot; pour n'afficher que les packages appropriés. Malgré tout, il
+reste encore une quinzaine de packages dans la liste !</p>
+<p><img src="/public/2011/elmah02.png" alt=""></p>
+<p>En cliquant sur un package, la colonne de droite est mise à jour et affiche
+tout un tas d'informations sur le package, avec entre autre sa version, sa
+description et ses dépendances. Comme rien n'est précisé dans le livre,
+j'installe le premier résultat obtenu (et donc le plus téléchargé), à savoir
+&quot;ELMAH&quot; (tout court) en cliquant sur le bouton &quot;Install&quot; qui apparait
+opportunément lorsque la souris le survole. Et c'est parti !</p>
+<p><img src="/public/2011/elmah03.png" alt=""></p>
+<p>Par contre, si j'avais accédé à la fenêtre &quot;Manage NuGet
+Packages&quot; par un clic-droit sur la solution, j'aurai eu droit à un préliminaire
+me demandant d'indiquer pour quels projet je souhaitais installer le
+package :</p>
+<p><img src="/public/2011/elmah04.png" alt=""></p>
+<p>Une fois que l'installation (très rapide) est terminée, la fenêtre &quot;Manage
+NuGet Packages&quot; est rafraichie et je peux constater par une coche verte que le
+package &quot;ELMAH&quot; est désormais installé, ainsi que le package &quot;ELMAH Core
+Library (no config)&quot; dont il dépend.</p>
+<p>Je peux alors fermer NuGet en cliquant sur le bouton &quot;Close&quot; en bas à gauche
+et constater que la librairie &quot;Elmah&quot; est maintenant référencée dans mon
+projet.</p>
+<p><img src="/public/2011/elmah05.png" alt=""></p>
+<p>Et ce n'est pas tout ! Le fichier Web.config a été modifié pour
+incorporer tous les paramètres nécessaires au bon fonctionnement de Elmah</p>
+<pre><code>...
+&lt;configuration&gt;
+  &lt;configSections&gt;
+    &lt;sectionGroup name=&quot;elmah&quot;&gt;
+      &lt;section name=&quot;security&quot; requirePermission=&quot;false&quot; type=&quot;Elmah.SecuritySectionHandler, Elmah&quot; /&gt;
+      &lt;section name=&quot;errorLog&quot; requirePermission=&quot;false&quot; type=&quot;Elmah.ErrorLogSectionHandler, Elmah&quot; /&gt;
+      &lt;section name=&quot;errorMail&quot; requirePermission=&quot;false&quot; type=&quot;Elmah.ErrorMailSectionHandler, Elmah&quot; /&gt;
+      &lt;section name=&quot;errorFilter&quot; requirePermission=&quot;false&quot; type=&quot;Elmah.ErrorFilterSectionHandler, Elmah&quot; /&gt;
+    &lt;/sectionGroup&gt;
+...
+    &lt;httpModules&gt;
+      &lt;add name=&quot;ErrorLog&quot; type=&quot;Elmah.ErrorLogModule, Elmah&quot; /&gt;
+      &lt;add name=&quot;ErrorMail&quot; type=&quot;Elmah.ErrorMailModule, Elmah&quot; /&gt;
+      &lt;add name=&quot;ErrorFilter&quot; type=&quot;Elmah.ErrorFilterModule, Elmah&quot; /&gt;
+    &lt;/httpModules&gt;
+    &lt;httpHandlers&gt;
+      &lt;add verb=&quot;POST,GET,HEAD&quot; path=&quot;elmah.axd&quot; type=&quot;Elmah.ErrorLogPageFactory, Elmah&quot; /&gt;
+    &lt;/httpHandlers&gt;
+  &lt;/system.web&gt;
+...
+  &lt;system.webServer&gt;
+    &lt;modules runAllManagedModulesForAllRequests=&quot;true&quot;&gt;
+      &lt;add name=&quot;ErrorLog&quot; type=&quot;Elmah.ErrorLogModule, Elmah&quot; preCondition=&quot;managedHandler&quot; /&gt;
+      &lt;add name=&quot;ErrorMail&quot; type=&quot;Elmah.ErrorMailModule, Elmah&quot; preCondition=&quot;managedHandler&quot; /&gt;
+      &lt;add name=&quot;ErrorFilter&quot; type=&quot;Elmah.ErrorFilterModule, Elmah&quot; preCondition=&quot;managedHandler&quot; /&gt;
+    &lt;/modules&gt;
+    &lt;handlers&gt;
+      &lt;add name=&quot;Elmah&quot; path=&quot;elmah.axd&quot; verb=&quot;POST,GET,HEAD&quot; type=&quot;Elmah.ErrorLogPageFactory, Elmah&quot; preCondition=&quot;integratedMode&quot; /&gt;
+    &lt;/handlers&gt;
+  &lt;/system.webServer&gt;
+</code></pre>
+<p>Je peux alors lancer l'application et me rendre à l'URL /elmah.axd pour
+constater que tout fonctionne sans encombre :</p>
+<p><img src="/public/2011/elmah06.png" alt=""></p>
+<p>Il ne me reste plus qu'à provoquer quelques erreurs :</p>
+<ul>
+<li>accéder à un fichier /readme.txt inexistant</li>
+<li>tester une route /Foo/Bar/1 qui n'existe pas</li>
+</ul>
+<p>Puis retourner à l'adresse /elmah.axd pour m'assurer que ces deux erreurs
+ont bien été prises en compte :</p>
+<p><img src="/public/2011/elmah07.png" alt=""></p>
+<p>C'est déjà pas mal pour un début.</p>
+<p>Il faut juste que je revois un peu la configuration pour que tout ça soit
+géré de façon plus pérenne et ne plus avoir &quot;<code>This log is provided by the In-Memory Error Log</code>&quot;. Et aussi voir comment faire pour recevoir
+automatiquement un mél d'Elmah quand un problème survient.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/09/23/comic-strip/" hreflang="fr-FR">Comic strip</a>
+  <a rel="next" href="/2011/09/29/configurer-elmah-envoi-email-erreur/" hreflang="fr-FR">Configurer ELMAH pour envoyer les erreurs par email</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

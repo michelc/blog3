@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Correction problème double click - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/12/14/correction-probleme-double-click/" />
+<meta property="og:title" content="Correction problème double click" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/12/14/correction-probleme-double-click/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-12-14T11:37:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-12-14T11:37:00.000Z","datePublished":"2005-12-14T11:37:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2005/12/14/correction-probleme-double-click/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/12/14/correction-probleme-double-click/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/12/14/correction-probleme-double-click/">Correction problème double click</a>
+    </h1>
+    <p>
+      <span>2005-12-14</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Certains utilisateurs cliquent plusieurs fois sur le bouton [OK] (à cause
+d'un problème de souris ou parce qu'ils ont l'habitude de double-cliquer pour
+valider). Lorsque l'on ne teste pas si les données saisies sont uniques (cas
+des messages d'un forum par exemple), cela conduit à créer deux enregistrements
+au lieu d'un.</p>
+<p>Pour contourner ce problème, le bouton de validation est caché via
+l'évènement client &quot;onclick&quot;. Et pour éviter de mettre à jour les boutons de
+chaque formulaire, la modification est gérée de façon globale au niveau de
+l'évènement serveur &quot;Render&quot; de default.aspx.cs :</p>
+<pre><code>protected override void Render(HtmlTextWriter output) {
+    // Get normal html ouput
+    StringBuilder stringBuilder = new StringBuilder();
+    StringWriter stringWriter = new StringWriter(stringBuilder);
+    HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter);
+    base.Render(htmlWriter);
+    string html = stringBuilder.ToString();
+    // Enhance submit buttons
+    string onclick1 = &quot;\&quot;if (typeof(Page_ClientValidate) == 'function') Page_ClientValidate();&quot;;
+    string onclick2 = &quot;\&quot;this.style.display='none';&quot;;
+    html = html.Replace(&quot;onclick=&quot; + onclick1, &quot;onclick=&quot; + onclick2 + onclick1.Substring(1));
+    // Render updated html
+    output.Write(html);
+}
+</code></pre>
+<p><em>Note: La modification de default.aspx.cs est suffisante étant donné qu'il
+s'agit de la seule &quot;vrai&quot; page de Quick-Content et que toutes les autres pages
+ne sont que de l'url rewriting.</em></p>
+<p>Voir aussi : <a href="/2005/12/14/comment-resoudre-probleme-double-clic-aspnet/">
+Comment résoudre le problème du &quot;double-clic&quot; en asp.net</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/12/14/generer-googlesearchservicedll-partir-googlesearchwsdl/" hreflang="fr-FR">Générer GoogleSearchService.dll à partir de GoogleSearch.wsdl</a>
+  <a rel="next" href="/2005/12/14/comment-resoudre-probleme-double-clic-aspnet/" hreflang="fr-FR">Comment résoudre le problème du &quot;double-clic&quot; en asp.net</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

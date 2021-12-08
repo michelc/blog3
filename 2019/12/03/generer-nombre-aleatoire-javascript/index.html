@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Générer un nombre aléatoire en JavaScript - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/12/03/generer-nombre-aleatoire-javascript/" />
+<meta property="og:title" content="Générer un nombre aléatoire en JavaScript" />
+<meta name="description" content="Comment générer un nombre aléatoire en JavaScript, mais aussi comment utiliser le module &#39;seedrandom&#39; pour rendre le hasard plus prévisible." />
+<meta property="og:description" content="Comment générer un nombre aléatoire en JavaScript, mais aussi comment utiliser le module &#39;seedrandom&#39; pour rendre le hasard plus prévisible." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/12/03/generer-nombre-aleatoire-javascript/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/xkcd-221.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-12-03T10:13:15.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-12-03T10:13:15.000Z","datePublished":"2019-12-03T10:13:15.000Z","description":"Comment générer un nombre aléatoire en JavaScript, mais aussi comment utiliser le module 'seedrandom' pour rendre le hasard plus prévisible.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/12/03/generer-nombre-aleatoire-javascript/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/xkcd-221.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/12/03/generer-nombre-aleatoire-javascript/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/xkcd-221.jpg" alt="XKCD #221 - Random Number" /><figcaption><a href="https://xkcd.com/221/">XKCD #221 - Random Number</a></figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/12/03/generer-nombre-aleatoire-javascript/">Générer un nombre aléatoire en JavaScript</a>
+    </h1>
+    <p>
+      <span>2019-12-03</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<h2>La méthode &quot;Math.random()&quot;</h2>
+<p>Pour obtenir un nombre au hasard, il faut utiliser la fonction <code>Math.random()</code>
+qui renvoie un pseudo nombre aléatoire qui est :</p>
+<ul>
+<li>supérieur ou égal à 0.0</li>
+<li>strictement inférieur à 1.0</li>
+</ul>
+<p>Donc, si on veut obtenir un numéro de carte à jouer, soit un nombre entier entre
+1 et 52, il faut :</p>
+<ul>
+<li>Multiplier le résultat de <code>Math.random()</code> par 52, ce qui nous donne un nombre
+entre 0.0 et 51.999...</li>
+<li>Arrondir ce nombre à la valeur entière inférieure avec la fonction
+<code>Math.floor()</code> pour avoir un entier entre 0 et 51 (compris)</li>
+<li>Ajouter 1 à cette valeur pour avoir un nombre entre 1 et 52</li>
+</ul>
+<pre><code>// Obtient un entier entre 1 et 52
+const cardNumber = 1 + Math.floor(52 * Math.random());
+</code></pre>
+<p><em>Note: On parle de &quot;pseudo&quot; nombre aléatoire, parce que pour un ordinateur, ça
+n'est pas facile de reproduire le hasard et qu'il est plus simple de simuler.</em></p>
+<h2>Le module &quot;Math.seedrandom()&quot;</h2>
+<p>Pour changer du travail (C# / Oracle), j'ai créé il y a quelque temps un site de
+jeux de solitaires, <a href="https://www.solitaire-play.com/">Solitaire-Play</a>, avec des
+solitaires comme Klondike, Canfield, Freecell, Golf...</p>
+<p>Chaque jeu dispose d'un système de conseils. Dans la plupart des cas, je me
+contente de proposer les cartes qui sont jouables en fonction de la règle du
+jeu. Mais dans le cas de Klondike Solitaire, j'ai essayé de faire un peu mieux
+et d'avoir un algorithme qui &quot;réflechisse&quot; pour optimiser les chances de gagner.</p>
+<p>Pour mettre au point et vérifier que ce que je développe a un impact positif,
+j'ai un programme qui teste le taux de réussite des parties jouées en suivant
+uniquement les conseils de mon programme.</p>
+<p>Pour avoir des valeurs suffisament significatives, je teste les résultats pour
+1000 parties. Le problème, c'est que par défaut, je n'obtiens jamais exactement
+le même pourcentage de réussite à chaque fois que je lance un jeu de test. Ce
+qui assez est &quot;normal&quot;, puisque il s'agit à chaque fois de 1000 parties
+totalement aléatoires.</p>
+<p>J'ai donc cherché s'il était possible de &quot;forcer&quot; le hasard et que mes tests
+portent toujours sur les mêmes 1000 parties. Ce qui me permettrait de mieux
+évaluer les améliorations que j'apporte à mon système de conseils.</p>
+<p>C'est ainsi que j'ai trouvé le package &quot;<a href="https://github.com/davidbau/seedrandom">seedrandom.js</a>&quot;
+de David Bau. Ce code permet de rendre &quot;prévisible&quot; le résultat de la méthode
+<code>Math.random()</code>.</p>
+<p>Comme dans mon cas je ne l'utilise que pour effectuer des tests, je me contente
+d'appeler la fonction <code>Math.seedrandom(&quot;seed&quot;)</code> avant ma série de 1000 tests. Au
+final, mon programme de test ressemble désormais au code suivant :</p>
+<pre><code>function Test_Run (seed) {
+  if (seed) Math.seedrandom(seed);
+  var play_count = 0;
+  var win_count = 0;
+  for (var i = 0; i &lt; 1000; i++) {
+    play_count++;
+    Test_Run_One();
+    if (game.state() &gt; 0) win_count++;
+  }
+  console.log(play_count + &quot; jeux =&gt; &quot;
+          + &quot;{ gagnés: &quot; + win_count
+          + &quot;, perdus: &quot; + (play_count - win_count)
+          + &quot;, pourcentage: &quot; + (Math.round(win_count * 1000 / play_count) / 10)
+          + &quot; }&quot;);
+}
+</code></pre>
+<p>J'ai testé avec plusieurs valeurs pour &quot;seed&quot; et j'ai obtenu les résultats
+suivants :</p>
+<ul>
+<li>Test_Run(&quot;michel&quot;) =&gt; 41% de parties gagnées</li>
+<li>Test_Run(&quot;hasard&quot;) =&gt; 41.2% de parties gagnées</li>
+<li>Test_Run(&quot;randomize&quot;) =&gt; 39.3 de parties gagnées</li>
+</ul>
+<p>En faisant jouer mon système du mieux que je peux, je peux donc espérer gagner
+4 parties sur 10. Ce qui est déjà pas mal pour de bêtes &quot;if ... else&quot;. Et donc,
+en utilisant la chaine &quot;randomize&quot; comme valeur d'initialisation, cela me
+permettra de mieux voir les progrès accomplis par mon système de conseils, au
+fur et à mesure que je le ferai évoluer. Le but étant bien entendu d'arriver au
+minimum à un résultat de 50% de réussite...</p>
+<div class="encart">
+<p>English version: <a href="/2019/12/04/generate-random-number-javascript/" hreflang="en-US">Generate a random number with JavaScript</a>.</p>
+</div>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/11/26/problem-using-latest-nodejs/" hreflang="en-US">The problem with blindly using the latest Node</a>
+  <a rel="next" href="/2019/12/04/generate-random-number-javascript/" hreflang="en-US">Generate a random number with JavaScript</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

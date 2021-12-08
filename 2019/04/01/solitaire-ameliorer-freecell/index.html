@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solitaire - Améliorer FreeCell - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2019/04/01/solitaire-ameliorer-freecell/" />
+<meta property="og:title" content="Solitaire - Améliorer FreeCell" />
+<meta name="description" content="J&#39;ai enfin ajouté un FreeCell à mon site de jeux de solitaires, mais c&#39;est encore une version très basique qu&#39;il y a moyen d&#39;améliorer." />
+<meta property="og:description" content="J&#39;ai enfin ajouté un FreeCell à mon site de jeux de solitaires, mais c&#39;est encore une version très basique qu&#39;il y a moyen d&#39;améliorer." />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2019/04/01/solitaire-ameliorer-freecell/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://blog3.pagesd.info/public/2019/freecell.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:published_time" content="2019-04-01T11:34:26.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2019-04-01T11:34:26.000Z","datePublished":"2019-04-01T11:34:26.000Z","description":"J'ai enfin ajouté un FreeCell à mon site de jeux de solitaires, mais c'est encore une version très basique qu'il y a moyen d'améliorer.","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2019/04/01/solitaire-ameliorer-freecell/","@type":"BlogPosting","image":"https://blog3.pagesd.info/public/2019/freecell.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2019/04/01/solitaire-ameliorer-freecell/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+<figure class="cover-image"><img src="/public/2019/freecell.jpg" alt="Microsoft FreeCell - Windows 3.1" /><figcaption>Microsoft FreeCell - Windows 3.1</figcaption></figure>
+
+  <header>
+    <h1>
+      <a href="/2019/04/01/solitaire-ameliorer-freecell/">Solitaire - Améliorer FreeCell</a>
+    </h1>
+    <p>
+      <span>2019-04-01</span>
+      <span>#javascript</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart" markdown="1">
+<p>Ce billet fait partie d'une série consacrée au travail en cours sur mon site de
+solitaires et aux évolutions que je souhaite y apporter :</p>
+<ol>
+<li><a href="/2019/03/23/solitaire-feuille-route-javascript/">Introduction</a></li>
+<li><a href="/2019/03/27/solitaire-passer-jquery-vanilla-js/">Passer de jQuery à Vanilla JS</a></li>
+<li><a href="/2019/04/01/solitaire-ameliorer-freecell/">Améliorer FreeCell</a></li>
+<li><a href="/2019/04/08/solitaire-ajouter-animations-css/">Ajouter des animations CSS</a></li>
+<li><a href="/2019/04/15/solitaire-drag-and-drop-sans-jquery-ui/">Drag and drop sans jQuery UI</a></li>
+<li><a href="/2019/04/25/solitaire-remplacer-ajaxmin/">Remplacer AjaxMin, etc...</a></li>
+</ol>
+</div>
+<p>Côté jeux, je viens de mettre en production
+<a href="https://www.solitaire-play.com/freecell/">FreeCell</a>, un jeu incontournable sur
+un site de solitaires. Mais c'est encore une version assez basique puisqu'on
+peut seulement jouer les cartes du dessus de chaque pile.</p>
+<p>Une première évolution quasiment inévitable serait d'implémenter le
+&quot;<a href="http://www.solitairelaboratory.com/fcfaq.html#Supermove">SuperMove</a>&quot;. Cela
+consiste à jouer plusieurs cartes à la fois alors que la règle du jeu ne permet
+de jouer que la carte du dessus des piles du tableau.</p>
+<p>Cependant, lorsque les cartes d'une pile sont ordonnées correctement (par
+exemple 9 rouge, 8 noir, 7 rouge et 6 noir), il est possible de les déplacer en
+groupe d'une pile à l'autre (sur un 10 noir dans mon exemple). Ce n'est possible
+que s'il y a assez de piles vides (parmi les &quot;freecell&quot; ou les piles du tableau)
+pour découper ce déplacement en plusieurs déplacements individuels :</p>
+<ul>
+<li>le 6 noir va sur une &quot;freecell&quot;</li>
+<li>le 7 rouge sur une autre</li>
+<li>le 8 noir aussi</li>
+<li>le 9 rouge peut aller sur le 10 noir</li>
+<li>le 8 noir est ramené sur le 9 rouge</li>
+<li>le 7 rouge revient sur le 8 noir</li>
+<li>et le 6 noir sur le 7 rouge</li>
+</ul>
+<p>Pour développer ça, il faut modifier le déplacement des cartes pour que le drag
+and drop gère plus d'une carte à la fois. Le nombre de cartes déplaçable grâce à
+un &quot;SuperMove&quot; variant en fonction du nombre de piles vides disponibles pour
+décomposer ce déplacement. Ce n'est pas évident, mais pas insurmontable non
+plus.</p>
+<p>Une autre évolution intéressante serait de gérer un &quot;AutoPlay&quot;. Cela consiste à
+jouer automatiquement les cartes qui peuvent aller sur les fondations et qu'il
+ne sert plus à rien de laisser sur le tableau :</p>
+<ul>
+<li>les As (bien évidemment)</li>
+<li>les Deux, une fois que les As correspondants ont été joués</li>
+<li>les Trois, à condition que les Deux de la couleur opposée soient déjà sur les
+fondations</li>
+<li>les Quatre, dès que les Trois de couleur opposée ne sont plus sur le tableau</li>
+<li>etc...</li>
+</ul>
+<p>Cela sera suffisant pour reproduire un &quot;AutoPlay&quot; du niveau de celui du FreeCell
+de Microsoft. Comme j'ai déjà un système de conseils, cela devrait être assez
+simple à programmer. Par contre, le problème principal sera de faire en sorte
+que le joueur puisse se rendre compte de ce qui se passe...</p>
+<p>Par exemple, si je faisais ça maintenant, voici comment cela se déroulerait :</p>
+<ul>
+<li>Le joueur fait un déplacement qui libère une carte pouvant être jouée
+automatiquement</li>
+<li>Cette carte est <strong>instantanément</strong> ajoutée à la fondation correspondante</li>
+<li>Le joueur doit réfléchir pour comprendre qu'un &quot;AutoPlay&quot; vient d'avoir
+lieu...</li>
+</ul>
+<p>Pour rendre cet &quot;AutoPlay&quot; plus parlant et compréhensible, il faudrait que
+j'ajoute une temporisation et même un effet visuel quand un &quot;AutoPlay&quot; se
+produit. De cette façon, le joueur serait averti de ce qui se passe et se
+rendrait compte qu'un coup vient d'être joué en automatique...</p>
+<p>Dans l'immédiat, la suite pour moi c'est d'attaquer les modifications pour la
+partie &quot;SuperMove&quot;. En ce qui concerne le côté &quot;AutoPlay&quot;, cela devra attendre
+un peu. Il faudrait que je commence par creuser du côté des &quot;effets spéciaux&quot; et
+des animations en JavaScript et CSS avant d'aller plus loin.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2019/03/27/solitaire-passer-jquery-vanilla-js/" hreflang="fr-FR">Solitaire - Passer de jQuery à Vanilla JS</a>
+  <a rel="next" href="/2019/04/08/solitaire-ajouter-animations-css/" hreflang="fr-FR">Solitaire - Ajouter des animations CSS</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) MySQL case sensitivity - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/11/02/wdevs-mysql-case-sensitivity/" />
+<meta property="og:title" content="(Wdevs) MySQL case sensitivity" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/11/02/wdevs-mysql-case-sensitivity/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-11-02T18:06:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-11-02T18:06:00.000Z","datePublished":"2004-11-02T18:06:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2004/11/02/wdevs-mysql-case-sensitivity/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/11/02/wdevs-mysql-case-sensitivity/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/11/02/wdevs-mysql-case-sensitivity/">(Wdevs) MySQL case sensitivity</a>
+    </h1>
+    <p>
+      <span>2004-11-02</span>
+      <span>#qc</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>I rename qc_portals to qc_Portals and qc_screens to qc_Screens since my SQL
+code in Portals.cs and Screens.cs differs from my SQL scripts to create
+tables.</p>
+<p>I'm not sure, but last week it seems that I have an error with &quot;SELECT ...
+FROM qc_Portals&quot; when running on monoForge. I don't have such an error on my
+local database.</p>
+<p>I don't know where it come from:</p>
+<ul>
+<li>I made a mistake,</li>
+<li>It come from MySQL on a Linux platform,</li>
+<li>It's from MySQL Connector/Net,</li>
+<li>It's because I use InnoDB engine instead of MyISAM,</li>
+<li>MySQL on monoForge don't accept &quot;CHARSET=utf8&quot; in &quot;CREATE TABLE&quot;</li>
+<li>...</li>
+</ul>
+<p>Normally, I don't like languages with case-sensitivity, except when the
+editor manages all that for me, as with VS.NET and C#. But in practice, I tend
+to use it in my SQL command so that my code is prettier. So, it's not a problem
+and for the moment I will not seek after this behavior.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/11/02/wdevs-project-fundations/" hreflang="en-US">(Wdevs) Project fundations</a>
+  <a rel="next" href="/2004/11/04/wdevs-controls-boxes/" hreflang="en-US">(Wdevs) Of controls and boxes</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

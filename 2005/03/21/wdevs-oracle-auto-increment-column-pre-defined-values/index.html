@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-US">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>(Wdevs) Oracle, auto-increment column and pre-defined values - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2005/03/21/wdevs-oracle-auto-increment-column-pre-defined-values/" />
+<meta property="og:title" content="(Wdevs) Oracle, auto-increment column and pre-defined values" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:url" content="https://blog3.pagesd.info/2005/03/21/wdevs-oracle-auto-increment-column-pre-defined-values/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2005-03-21T15:17:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2005-03-21T15:17:00.000Z","datePublished":"2005-03-21T15:17:00.000Z","inLanguage":"en-US","url":"https://blog3.pagesd.info/2005/03/21/wdevs-oracle-auto-increment-column-pre-defined-values/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2005/03/21/wdevs-oracle-auto-increment-column-pre-defined-values/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2005/03/21/wdevs-oracle-auto-increment-column-pre-defined-values/">(Wdevs) Oracle, auto-increment column and pre-defined values</a>
+    </h1>
+    <p>
+      <span>2005-03-21</span>
+      <span>#qc</span><span>#sql</span><span>#wdevs</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>This week-end, I looked for a way to have auto-increment column in Oracle
+while having the possibility to set a given value in some inserts.</p>
+<p>Several years ago, I used a trigger where the pseudo auto-incremented column
+was initialized with a sequence only when its value is empty.</p>
+<pre><code>CREATE OR REPLACE TRIGGER TRG_BI_all_Increments
+   BEFORE INSERT
+   ON all_Increments
+   FOR EACH ROW
+BEGIN
+   IF (:NEW.ID IS NULL) THEN
+      SELECT SEQ_all_Increments.NEXTVAL INTO :NEW.ID FROM DUAL;
+   END IF;
+END;
+</code></pre>
+<p>That enabled me to initialize parameters tables with default values from an
+sql script. The drawback was that once the data are loaded, the start value for
+the sequence had to be manually reset to the maxim value inserted in order to
+avoid duplicate errors.</p>
+<p>I rewrote it so that when an INSERT statement define the ID value, the
+triggeer checks if this value is greather than the current sequence value and
+in this case automatically reset the sequence to the inserted value.</p>
+<pre><code>/* create table */
+CREATE TABLE all_Increments (
+    id   INT NOT NULL ,
+    test VARCHAR2(100) ,
+    CONSTRAINT PK_all_Increments
+    PRIMARY KEY ( id )
+);
+
+/* create sequence */
+CREATE SEQUENCE SEQ_all_Increments
+    START WITH 1
+    MAXVALUE 1.0E28
+    MINVALUE 1
+    NOCYCLE
+    NOCACHE
+    ORDER;
+
+/* create trigger */
+CREATE OR REPLACE TRIGGER TRG_BI_all_Increments
+    BEFORE INSERT
+    ON all_Increments
+    FOR EACH ROW
+DECLARE
+    last_Sequence NUMBER;
+    last_InsertID NUMBER;
+BEGIN
+    IF (:NEW.id IS NULL) THEN
+         SELECT SEQ_all_Increments.NEXTVAL INTO :NEW.id FROM DUAL;
+    ELSE
+         SELECT NVL(Last_Number, 0) INTO last_Sequence
+           FROM User_Sequences
+          WHERE UPPER(Sequence_Name) = UPPER('SEQ_all_Increments');
+         SELECT :NEW.id INTO last_InsertID FROM DUAL;
+         WHILE (last_InsertID &gt; last_Sequence) LOOP
+              SELECT SEQ_all_Increments.NEXTVAL INTO last_Sequence FROM DUAL;
+         END LOOP;
+    END IF;
+END;
+
+/* test values */
+INSERT INTO all_Increments (id, test) values (1, 'one');
+INSERT INTO all_Increments (id, test) values (2, 'two');
+INSERT INTO all_Increments (id, test) values (3, 'three');
+INSERT INTO all_Increments (id, test) values (10, 'ten');
+INSERT INTO all_Increments (test) values ('eleven?');
+INSERT INTO all_Increments (id, test) values (5, 'five?');
+INSERT INTO all_Increments (test) values ('twelve?');
+</code></pre>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2005/03/18/wdevs-ibuyspy-roles-not-enough/" hreflang="en-US">(Wdevs) IBuySpy Roles are not enough</a>
+  <a rel="next" href="/2005/03/24/wdevs-gestion-erreurs-application-web/" hreflang="fr-FR">(Wdevs) Gestion des erreurs d&#39;une application Web</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Language" content="fr" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Plan du site - Essai 01 - 2° test</title>
+  <link rel="stylesheet" href="doPlan.css" type="text/css" />
+  <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+  <script type="text/javascript" src="ui.core.js"></script>
+  <script type="text/javascript" src="ui.sortable.js"></script>
+
+<style type="text/css">
+body
+{
+  font-family: Arial;
+  font-size: 75%;
+}
+a
+{
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  var sortOpts = {
+    items: "li", 
+    cursor: "crosshair",
+    forcePlaceholderSize: true
+  }
+  $("ul.ap-sitemap").sortable(sortOpts);
+});
+</script>
+
+<div id="plan_container">
+
+<ul class="ap-sitemap">
+  <li><a href="#">Burger Meals</a>
+    <ul>
+      <li><a href="#">Beef</a>
+        <ul>
+          <li><a href="#">Quarter Pounder</a></li>
+          <li><a href="#">Half Pounder</a></li>
+          <li><a href="#">Cheese Burger</a></li>
+          <li><a href="#">Double Burger</a></li>
+          <li><a href="#">Ranch Burger</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Chicken</a>
+        <ul>
+          <li><a href="#">Chargrilled Chicken</a></li>
+          <li><a href="#">Chicken Burger</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Fish</a>
+        <ul>
+          <li><a href="#">Fish Burger</a></li>
+          <li><a href="#">Fisherman's Delight</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#">Snacks</a>
+    <ul>
+      <li><a href="#">Brownies</a></li>
+      <li><a href="#">Cookies</a></li>
+      <li><a href="#">Fries</a>
+        <ul>
+          <li><a href="#">Normal Fries</a></li>
+          <li><a href="#">Cheesy Fries</a></li>
+          <li><a href="#">Curry Fries</a></li>
+          <li><a href="#">Curly Fries</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#">Drinks</a>
+    <ul>
+      <li><a href="#">Shakes</a>
+        <ul>
+          <li><a href="#">Chocolate Shake</a></li>
+          <li><a href="#">Vanilla Shake</a></li>
+          <li><a href="#">Strawberry Shake</a></li>
+          <li><a href="#">Banana Shake</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Sodas</a>
+        <ul>
+          <li><a href="#">Coke</a></li>
+          <li><a href="#">Lemonade</a></li>
+          <li><a href="#">Sprite</a></li>
+          <li><a href="#">Mountain Dew</a></li>
+          <li><a href="#">Dr.Pepper</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Cocktails</a>
+        <ul>
+          <li><a href="#">Tom Collins</a></li>
+          <li><a href="#">Tequila Sunrise</a></li>
+          <li><a href="#">Sea Breeze</a></li>
+          <li><a href="#">Virgin Mary</a></li>
+          <li><a href="#">Bloody Mary</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Juices</a>
+        <ul>
+          <li><a href="#">Apple Juice</a></li>
+          <li><a href="#">Orange</a></li>
+          <li><a href="#">Cranberry</a></li>
+          <li><a href="#">Kiwi</a></li>
+          <li><a href="#">Pineapple</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#">Salads</a>
+    <ul>
+      <li><a href="#">Tuna Salad</a></li>
+      <li><a href="#">Cesar Salad</a></li>
+      <li><a href="#">Green Salad</a></li>
+      <li><a href="#">Prawn Salad</a></li>
+    </ul>
+  </li>
+  <li><a href="#">Deserts</a>
+    <ul>
+      <li><a href="#">Pancakes</a>
+        <ul>
+          <li><a href="#">Short Pancake Stack</a></li>
+          <li><a href="#">Long Pancake Stack</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Waffles</a>
+        <ul>
+          <li><a href="#">Waffles with ice cream</a></li>
+          <li><a href="#">Waffles with syrup</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Ice Cream</a>
+        <ul>
+          <li><a href="#">Mixed Cup</a></li>
+          <li><a href="#">Banana Split</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Fresh Fruit</a>
+        <ul>
+          <li><a href="order.php?add=46">Melon Medley</a></li>
+          <li><a href="order.php?add=47">Seasonal Fruit</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configuration et paramétrage avec Sinatra - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2011/05/03/configuration-parametrage-sinatra/" />
+<meta property="og:title" content="Configuration et paramétrage avec Sinatra" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2011/05/03/configuration-parametrage-sinatra/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-05-03T17:37:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2011-05-03T17:37:00.000Z","datePublished":"2011-05-03T17:37:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2011/05/03/configuration-parametrage-sinatra/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2011/05/03/configuration-parametrage-sinatra/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2011/05/03/configuration-parametrage-sinatra/">Configuration et paramétrage avec Sinatra</a>
+    </h1>
+    <p>
+      <span>2011-05-03</span>
+      <span>#ruby</span><span>#sinatra</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du tutoriel &quot;<a href="http://ididitmyway.herokuapp.com/past/2010/11/9/sinatra_settings_and_configuration/">Sinatra Settings and Configuration</a>&quot; de Darren Jones.</p>
+</div>
+<h2>Définir des paramètres</h2>
+<p>Pour définir des variables session d'application qui seront accessible
+partout dans une application, on peut utiliser la commande <code>set</code> en
+respectant la syntaxe suivante :</p>
+<pre><code>set :name, 'MonSite'
+set :author, 'Michel'
+</code></pre>
+<p>Ces variables sont ensuite utilisables dans notre code Ruby sous la forme
+<code>settings.name</code> et <code>settings.author</code> :</p>
+<pre><code>get '/hello' do
+  &quot;Cette page a été rédigée par &quot; + settings.author
+end
+</code></pre>
+<p>Puis en se connectant à l'URL &quot;/hello&quot; on obtient alors :</p>
+<pre><code>Cette page a été rédigée par Michel.
+</code></pre>
+<p>On peut également utiliser la commande <code>set</code> pour modifier les
+paramètres de certains gems, comme par exemple :</p>
+<pre><code>set :haml, { :format =&gt; :html5 }
+</code></pre>
+<p>Grâce à quoi Haml génèrera du code HTML5 avec le doctype correct, pas de
+barre fermante pour la balise image, etc...</p>
+<p>Il est même possible de modifier les paramètres par défaut de Sinatra. C'est
+ce qui permet par exemple de redéfinir le répertoire &quot;public&quot; :</p>
+<pre><code>set :public, Proc.new { root }
+</code></pre>
+<p>De cette façon, le répertoire &quot;public&quot; sera identique au répertoire racine
+du site.</p>
+<p>Et pour modifier le répertoire où sont enregistrées les vues :</p>
+<pre><code>set :views, Proc.new { File.join(root, &quot;templates&quot;) }
+</code></pre>
+<p>Après cela, Sinatra recherchera dans le dossier &quot;templates&quot; pour tous les
+fichiers de vues de notre application (en lieu et place du répertoire &quot;views&quot;
+utilisé par défaut).</p>
+<p>Quand le paramètre correspond à un booléen, il est possible d'utiliser les
+commandes <code>enable</code> et <code>disable</code> plutôt que la commande
+<code>set</code> :</p>
+<pre><code>enable :sessions
+disable :twitter
+</code></pre>
+<p>Ce qui est exactement identique à :</p>
+<pre><code>set :sessions, true
+set :twitter, false
+</code></pre>
+<p>La <a href="http://www.sinatrarb.com/configuration.html">documentation officielle de Sinatra</a> fourni d'autres explications et
+des exemple, entre autre la liste des paramètres internes de Sinatra.</p>
+<h2>Les blocs de configuration</h2>
+<p>Sinatra permet de regrouper un ensemble de paramètres dans un bloc de
+configuration :</p>
+<pre><code>configure do
+  set :name, 'michel'
+  set :haml, { :format =&gt; :html5 }
+end
+</code></pre>
+<p>Cela va initialiser tous les paramètres ainsi que tout ce qui est nécessaire
+au démarrage.</p>
+<p>Et cerise sur le gâteau, on peut définir un bloc de configuration pour
+chaque environnement :</p>
+<pre><code>configure :development do
+  set :db, File.join(&quot;sqlite3://&quot;,settings.root, &quot;development.db&quot;
+end
+
+configure :test do
+  set :db, File.join(&quot;sqlite3://&quot;,settings.root, &quot;test.db&quot;
+end
+
+configure :production do
+  File.join(&quot;sqlite3://&quot;,settings.root, &quot;production.db&quot;
+  set :sass, { :style =&gt; :compressed }
+end
+</code></pre>
+<p>Comme vous pouvez le voir, j'ai configuré Sass pour que sa sortie soit
+compressée en production et que le fichier généré soit le plus petit possible.
+Il existe tout un tas d'autres options pour <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#options">Sass</a> et <a href="http://haml-lang.com/docs/yardoc/file.HAML_REFERENCE.html#options">Haml</a> qui peuvent être initialisées de cette façon.</p>
+<h2>Gérer des paramètres d'environnement sur Heroku</h2>
+<p>Pour finir, on a la possibilité de définir des variables d'environnement
+directement sur Heroku, ce qui nous évite d'avoir à rendre la valeur de
+certains paramètres publics. Supposons que nous ayons le code
+ci-dessous :</p>
+<pre><code>set :password, 't0psecret'
+</code></pre>
+<p>Le hic c'est que si on compte partager notre code, les autres personnes
+auront accès à notre mot de passe top secret ! La solution dans ce cas là
+c'est de définir une variable d'environnement appelée &quot;PASSWORD&quot;, chose de très
+simple à faire depuis une console bash. Il suffit de se placer dans le
+répertoire de l'application et d'entrer le code ci-dessous :</p>
+<pre><code>$ heroku config:add PASSWORD=t0psecret
+</code></pre>
+<p>Ce qui doit renvoyer le message suivant :</p>
+<pre><code>Adding config vars:
+  PASSWORD    =&gt; t0psecret
+Restarting app...done.
+</code></pre>
+<p>Il faut utiliser la commande <code>config</code> seule pour lister toutes
+les variables d'environnement existantes sur Heroku :</p>
+<pre><code>$ heroku config
+</code></pre>
+<p>Comme on peut le voir suite à cette commande, Heroku défini déjà par
+lui-même un certain nombre de variables d'environnement de façon automatique
+dans le but de nous faciliter la vie :</p>
+<pre><code>PASSWORD =&gt; t0psecret
+DATABASE_URL =&gt; postgres://ibzju...s.com/ibzjubamts
+RACK_ENV     =&gt; production
+URL          =&gt; http://bloggl.heroku.com
+</code></pre>
+<p>Si on a besoin de se débarrasser de toutes les variables de configuration,
+on peut employer la commande suivante :</p>
+<pre><code>$ heroku config:clear
+</code></pre>
+<p>Ce que Heroku confirmera avant de redémarrer l'application :</p>
+<pre><code>Clearing all config vars and restarting app...done.
+</code></pre>
+<p>Après avoir créé nos variables d'environnement sur Heroku, il ne nous reste
+plus qu'à modifier notre code source pour en tirer parti :</p>
+<pre><code>set :password, ENV['PASSWORD'] || 'secret'
+</code></pre>
+<p>Ce code va utiliser la variable d'environnement enregistrée dans
+ENV['PASSWORD'] si elle est définie ou sinon se contenter du simple mot de
+passe &quot;secret&quot; défini en dur dans le code. Grâce à cette méthode vous ne
+risquez pas de divulguer quoique ce soit d'important ou de personnel dans votre
+code source Ruby.</p>
+<p>Pour être complet, le Dev Center d'Heroku présente d'autres informations
+concernant l'<a href="http://devcenter.heroku.com/articles/config-vars">utilisation des variables de configuration sur Heroku</a>.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2011/04/29/formulaire-contact-sinatra/" hreflang="fr-FR">Un formulaire de contact avec Sinatra</a>
+  <a rel="next" href="/2011/05/04/erreurs-404-autres-sinatra/" hreflang="fr-FR">Erreurs 404 et autres avec Sinatra</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

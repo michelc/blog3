@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modules.configRoles - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2004/09/22/modules-configroles/" />
+<meta property="og:title" content="Modules.configRoles" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2004/09/22/modules-configroles/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2004-09-22T16:39:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2004-09-22T16:39:00.000Z","datePublished":"2004-09-22T16:39:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2004/09/22/modules-configroles/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2004/09/22/modules-configroles/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2004/09/22/modules-configroles/">Modules.configRoles</a>
+    </h1>
+    <p>
+      <span>2004-09-22</span>
+      <span>#qc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Ajouté le champ configRoles à la table Modules pour gérer les droits
+concernant le paramétrage du module suite à la mise en œuvre de <a href="/2004/09/22/bricks-configsource/">configSource</a>.</p>
+<ul>
+<li>/Core/Components/Modules.cs : ajout de la propriété configRoles à la
+classe Module</li>
+<li>/Core/Components/Modules.cs : prise en compte du champ configRoles
+dans la classe ModulesDB</li>
+<li>/Core/Pages/editModules.ascx.  - : gestion du champ configRoles</li>
+<li>/Core/Setup/maj_Portal.sql : modification script création table
+Modules</li>
+<li>/Core/Setup/maj_Temp.sql : instructions pour màj de la table
+Modules</li>
+<li>mise à jour manuelle du contenu de la table Modules</li>
+</ul>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2004/09/22/bricks-configsource/" hreflang="fr-FR">Bricks.configSource</a>
+  <a rel="next" href="/2004/09/22/utils-applicationpath/" hreflang="fr-FR">Utils.applicationPath</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

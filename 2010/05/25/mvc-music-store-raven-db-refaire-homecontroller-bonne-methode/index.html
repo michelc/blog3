@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVC Music Store / Raven DB : Refaire HomeController, la bonne méthode - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode/" />
+<meta property="og:title" content="MVC Music Store / Raven DB : Refaire HomeController, la bonne méthode" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-25T11:11:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-05-25T11:11:00.000Z","datePublished":"2010-05-25T11:11:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/05/25/mvc-music-store-raven-db-refaire-homecontroller-bonne-methode/">MVC Music Store / Raven DB : Refaire HomeController, la bonne méthode</a>
+    </h1>
+    <p>
+      <span>2010-05-25</span>
+      <span>#mvc</span><span>#nosql</span>
+    </p>
+  </header>
+
+  <div>
+
+<div class="encart">
+<p>Ceci est la traduction du billet &quot;<a href="http://ayende.com/Blog/archive/2010/05/22/porting-mvc-music-store-to-raven-porting-the-homecontroller-the-again.aspx">Porting MVC Music Store to Raven: Porting the HomeController, the Right Way</a>&quot;, le cinquième de la série consacrée au portage de l'application MVC Music Store sous RavenDB par Oren Eini, alias Ayende Rahien.</p>
+</div>
+<p>Comme je l'ai indiqué dans le billet précédent, nous pouvons solutionner le
+problème de la méthode GetTopSellingAlbums() grâce au map/reduce, mais cela
+n'est pas vraiment la bonne façon de faire les choses. Le problème en procédant
+de la sorte (en plus des regards effrayés et des cris de détresse que vous
+suscitez dès que vous mentionnez cette solution), c'est qu'on essaie de
+résoudre le problème selon une logique relationnelle. Et d'ailleurs, la
+solution précédente est quasiment identique à la façon dont une base de données
+relationnelle pourrait traiter ce genre de requête. Voyons plutôt quelle serait
+l'approche d'une base de données documents pour résoudre ce genre de
+problème.</p>
+<p>La réponse est évidente à trouver : rappelez-vous que les documents
+sont indépendants et réfléchissez à nouveau à la question. Ce que nous
+cherchons à savoir, c'est quels sont les albums les plus vendus. Si nous
+ajoutions une propriété CountSold à l'album, cela deviendrait immédiatement
+bien plus simple de répondre à cette question. Et pour cela, il nous suffit de
+mettre à jour les différents albums qui font parti de la commande lorsque
+celle-ci est validée. C'est quelque chose de tout à fait acceptable et ce genre
+d'opération est couramment effectuée, y compris avec des bases de données
+SQL.</p>
+<p>Pour l'instant, laissons de côté la façon de créer la propriété CountSold et
+de l'initialiser avec les bonnes valeurs (je verrai ça dans mon prochain
+billet). Nous supposerons donc que c'est déjà fait et qu'il ne nous reste plus
+qu'à trouver comment résoudre le problème de notre méthode
+GetTopSellingAlbums().</p>
+<p>Et bien, c'est plutôt simple. Tout ce que nous avons à faire, c'est de
+définir un index sur CountSold.</p>
+<pre><code>// AlbumsByCountSold
+from album in docs.Albums
+select new { album.CountSold };
+</code></pre>
+<p>Avec ça, nous pouvons implémenter la fonction GetTopSellingAlbums() de la
+façon suivante :</p>
+<p><img src="http://ayende.com/Blog/images/ayende_com/Blog/WindowsLiveWriter/PortingMVCMusicStoretoRavenPortingtheHom_2CD9/image_thumb.png" alt=""></p>
+<p>C'est fait : simple, efficace et même élégant (même si c'est moi qui le
+dit).</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/05/21/mvc-music-store-raven-db-refaire-homecontroller-methode-map-reduce/" hreflang="fr-FR">MVC Music Store / Raven DB : Refaire HomeController, méthode map/reduce</a>
+  <a rel="next" href="/2010/05/25/mvc-music-store-raven-db-faire-evoluer-modele-donnees/" hreflang="fr-FR">MVC Music Store / Raven DB : Faire évoluer le modèle de données</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

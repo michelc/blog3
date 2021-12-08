@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Faire fonctionner ASP.NET MVC sur IIS 6 - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2010/04/02/faire-fonctionner-aspnetmvc-iis-6/" />
+<meta property="og:title" content="Faire fonctionner ASP.NET MVC sur IIS 6" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2010/04/02/faire-fonctionner-aspnetmvc-iis-6/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-04-02T13:54:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2010-04-02T13:54:00.000Z","datePublished":"2010-04-02T13:54:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2010/04/02/faire-fonctionner-aspnetmvc-iis-6/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2010/04/02/faire-fonctionner-aspnetmvc-iis-6/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2010/04/02/faire-fonctionner-aspnetmvc-iis-6/">Faire fonctionner ASP.NET MVC sur IIS 6</a>
+    </h1>
+    <p>
+      <span>2010-04-02</span>
+      <span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Voici la façon la plus simple possible qui soit pour qu'une application
+ASP.NET MVC puisse être installée et fonctionner sur un serveur IIS 6 qui n'y
+est pas préparé. Personnellement, j'ai dû refaire ça hier et j'avais presque
+oublié comment m'y prendre. Donc, pour ne pas prendre de risque, je préfère
+noter tout ça pour la prochaine fois où je pourrais en avoir besoin.</p>
+<p>Concrètement, je n'ai rien inventé et tout vient du billet de Phil
+Haack : <a href="http://haacked.com/archive/2008/11/26/asp.net-mvc-on-iis-6-walkthrough.aspx">ASP.NET MVC on IIS 6 Walkthrough</a>.</p>
+<h2>Ajouter l'extension .aspx aux routes MVC</h2>
+<p>Pour que MVC fonctionne sur un IIS 6 où ASP.NET s'attend à avoir des URLs
+avec des extensions &quot;.aspx&quot;, il faut commencer par mettre à jour les routes
+définies dans le fichier Global.asax.cs pour qu'elles prennent en compte cette
+extension.</p>
+<h3>Comment faire</h3>
+<p>Pour cela, il faut modifier la méthode RegisterRoutes comme
+ci-dessous :</p>
+<pre><code>public static void RegisterRoutes(RouteCollection routes)
+{
+  routes.IgnoreRoute(&quot;{resource}.axd/{*pathInfo}&quot;);
+
+  routes.MapRoute(
+    &quot;Default&quot;,
+    &quot;{controller}.aspx/{action}/{id}&quot;,
+    new { action = &quot;Index&quot;, id = &quot;&quot; }
+  );
+
+  routes.MapRoute(
+    &quot;Root&quot;,
+    &quot;&quot;,
+    new { controller = &quot;Home&quot;, action = &quot;Index&quot;, id = &quot;&quot; }
+  );
+}
+</code></pre>
+<p>La première route (nommée &quot;Default&quot;) fait qu'on aura plus des URLs du style
+&quot;http://www.example.com/Controller/Action/Id&quot; mais
+&quot;http://www.example.com/Action**.aspx**/Action/Id&quot; que IIS 6 sait
+très bien gérer.</p>
+<p>La seconde route (nommée &quot;Root&quot;) est nécessaire pour gérer l'URL
+&quot;http://www.example.com/&quot; que la route &quot;Default&quot; ne sait plus prendre en compte
+puisqu'elle attend une extension &quot;.aspx&quot;.</p>
+<h3>Remarque</h3>
+<p>Pour que l'URL &quot;http://www.example.com/&quot; fonctionne, il faut également
+penser à configurer IIS pour que le fichier Default.aspx soit un des documents
+par défaut du site (à la place ou en plus des fichiers Index.aspx,
+Index.htm...).</p>
+<h3>Attention</h3>
+<p>Étant donné que nos URLs prennent des &quot;.aspx&quot;, il faut aussi modifier le
+fichier Web.Config pour mettre à jour l'URL qui y est paramétrée pour effectuer
+l'authentification. Rechercher &quot;loginUrl=&quot; et remplacer :</p>
+<pre><code>&lt;forms loginUrl=&quot;~/Account/LogOn&quot; ...
+</code></pre>
+<p>Par :</p>
+<pre><code>&lt;forms loginUrl=&quot;~/Account.aspx/LogOn&quot; ...
+</code></pre>
+<p>Après ce gros morceau, il ne devrait pas y avoir d'autre problème avec les
+URLs. Sauf si on a codé en dur des liens au lieu d'utiliser les helpers
+Html.ActionLink() ou Url.Action() qui vont bien... Mais ça, c'est le métier qui
+rentre.</p>
+<h2>Installer ASP.NET MVC sur le serveur IIS 6</h2>
+<p>Je rigole. C'est beaucoup trop compliqué à faire.</p>
+<p>Par contre, ce qui est beaucoup plus fastoche, c'est de copier
+System.Web.Mvc.dll dans le répertoire &quot;bin&quot; de l'application !</p>
+<h2>Un dernier truc</h2>
+<p>Tant qu'à faire de modifier le Web.Config, autant en profiter pour lui
+ajouter la ligne :</p>
+<pre><code>&lt;customErrors mode=&quot;Off&quot; /&gt;
+</code></pre>
+<p>Au moins, avec ça, si jamais il y a un problème on est sûr d'avoir un bel
+écran jaune avec des messages d'erreur en pagaille.</p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2010/03/24/developper-application-contacts-aspnetmvc-mongo-db/" hreflang="fr-FR">Développer une application de contacts avec ASP.NET MVC et MongoDB</a>
+  <a rel="next" href="/2010/04/16/gmail-notifier-hs/" hreflang="fr-FR">GMail Notifier HS</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

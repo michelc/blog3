@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Attention à la fermeture des balises - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2014/05/12/attention-fermeture-balises/" />
+<meta property="og:title" content="Attention à la fermeture des balises" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2014/05/12/attention-fermeture-balises/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-05-12T11:49:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2014-05-12T11:49:00.000Z","datePublished":"2014-05-12T11:49:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2014/05/12/attention-fermeture-balises/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2014/05/12/attention-fermeture-balises/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2014/05/12/attention-fermeture-balises/">Attention à la fermeture des balises</a>
+    </h1>
+    <p>
+      <span>2014-05-12</span>
+      <span>#html</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Soit une page HTML normalement compliquée mais qui après avoir viré toutes les
+CSS et tous les Javascript pourrait se ramener à ça :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      a { background-color: yellow; border: 1px solid red; padding: 20px; }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;div&gt;
+    &lt;a href=&quot;/toto&quot;&gt;TOTO&lt;/ a&gt;
+  &lt;/div&gt;
+  &lt;h1&gt;TITRE&lt;/h1&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Voilà ce à quoi naïvement je pense aboutir :</p>
+<p><img src="/public/2014/bug-je-veux-ca.png" alt=""></p>
+<p>Et pour de vrai, j'ai le lien qui se répète inexpliquablement sur le titre :</p>
+<p><img src="/public/2014/bug-au-secours.png" alt=""></p>
+<p>Afficher le code source de la page :</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      a { background-color: yellow; border: 1px solid red; padding: 20px; }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;div&gt;
+    &lt;a href=&quot;/toto&quot;&gt;TOTO&lt;/ a&gt;
+  &lt;/div&gt;
+  &lt;h1&gt;TITRE&lt;/h1&gt;
+&lt;/html&gt;
+</code></pre>
+<p>=&gt; Oui, c'est bien ça que j'ai dit.</p>
+<p>Inspecter l'élément :</p>
+<pre><code>&lt;html&gt;&lt;head&gt;
+    &lt;style&gt;
+      a { background-color: yellow; border: 1px solid red; padding: 20px; }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;&lt;div&gt;
+    &lt;a href=&quot;/toto&quot;&gt;TOTO&lt;!-- a--&gt;
+  &lt;/a&gt;&lt;/div&gt;&lt;a href=&quot;/toto&quot;&gt;
+  &lt;h1&gt;TITRE&lt;/h1&gt;
+&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+<p>=&gt; C'est quoi ce truc ! Chrome est bugué ?</p>
+<p>Flûte, sous IE c'est trop quasi pareil :</p>
+<p><img src="/public/2014/bug-toi-aussi.png" alt=""></p>
+<p>F12, outils de développement :</p>
+<pre><code>&lt;html&gt;&lt;head&gt;
+    &lt;style&gt;
+      a { background-color: yellow; border: 1px solid red; padding: 20px; }
+    &lt;/style&gt;
+
+  &lt;/head&gt;&lt;body&gt;&lt;div&gt;
+    &lt;a href=&quot;/toto&quot;&gt;TOTO
+  &lt;/a&gt;&lt;/div&gt;&lt;a href=&quot;/toto&quot;&gt;
+  &lt;h1&gt;TITRE&lt;/h1&gt;
+&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+<p>=&gt; C'est un complot !</p>
+<p>Et donc, ce n'est qu'un très et trop long moment plus tard, après avoir élagué
+au maximum mon code source d'origine, que le problème m'a enfin tapé dans
+l'oeil :</p>
+<blockquote>
+<p>On ne doit pas écrire <code>&lt;/ a&gt;</code> mais <code>&lt;/a&gt;</code>
+sans ESPACE. <code>&lt;/a &gt;</code> à la rigueur, mais jamais jamais jamais
+<code>&lt;/ a&gt;</code> ou <code>&lt; /a&gt;</code>.</p>
+</blockquote>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2014/05/05/302-redirect-permanent-mvc-ie/" hreflang="fr-FR">302 Redirect Permanent, MVC et IE</a>
+  <a rel="next" href="/2016/10/10/installer-visual-code-node-js-typescript/" hreflang="fr-FR">Installer Visual Code, Node.js et TypeScript</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

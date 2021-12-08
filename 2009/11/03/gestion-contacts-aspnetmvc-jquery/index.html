@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestion de contacts avec ASP.NET MVC et jQuery - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/11/03/gestion-contacts-aspnetmvc-jquery/" />
+<meta property="og:title" content="Gestion de contacts avec ASP.NET MVC et jQuery" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/11/03/gestion-contacts-aspnetmvc-jquery/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-11-03T14:15:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-11-03T14:15:00.000Z","datePublished":"2009-11-03T14:15:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/11/03/gestion-contacts-aspnetmvc-jquery/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/11/03/gestion-contacts-aspnetmvc-jquery/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/11/03/gestion-contacts-aspnetmvc-jquery/">Gestion de contacts avec ASP.NET MVC et jQuery</a>
+    </h1>
+    <p>
+      <span>2009-11-03</span>
+      <span>#jquery</span><span>#mvc</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>La dernière étape du tutoriel <a href="/2009/11/02/utiliser-ajax-aspnetmvc/">Développer une application de gestion de contacts avec ASP.NET
+MVC</a> consistait à ajouter de l'Ajax dans l'application pour la rendre plus
+performante et plus moderne. Pour parvenir à cela, le tutoriel utilisait
+Ajax.NET pour les requêtes Ajax et jQuery pour les animations.</p>
+<p>De mon côté, j'ai préféré faire entièrement confiance à la librairie
+<a href="http://jquery.com/" title="The Write Less, Do More, JavaScript Library">jQuery</a> : à la fois pour
+les animations et pour les fonctionnalités Ajax.</p>
+<h2>Utilisation d'une vue partielle via jQuery</h2>
+<p>Il suffit de remplacer les 3 fonctions Javascript beginContactList(),
+successContactList() et failureContactList() par le tout petit script
+suivant :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+
+    $(document).ready(function() {
+
+        // Ajax Loading
+        $(&quot;#leftColumn li a&quot;).click(function() {
+
+            $(&quot;#leftColumn li&quot;).removeClass('selected');
+            $(this).parent().addClass('selected');
+
+            var url = $(this).attr(&quot;href&quot;);
+
+            $(&quot;#divContactList&quot;)
+                .fadeOut()
+                .load(url, function() {
+                    $(this).fadeIn();
+                });
+
+            return false;
+
+        });
+
+    });
+
+&lt;/script&gt;
+</code></pre>
+<p>Explication de code :</p>
+<ul>
+<li><code>$(&quot;#leftColumn li a&quot;)</code> pour toutes les balises
+<code>&lt;a&gt;</code> comprises dans un élément <code>&lt;li&gt;</code>
+apparaissant dans la balise ayant l'identifiant <code>leftColumn</code></li>
+<li><code>.click(function()</code> on associe une fonction à l'évènement
+&quot;click&quot; de ces balises</li>
+<li><code>$(&quot;#leftColumn li&quot;).removeClass('selected');</code> supprime la
+classe &quot;selected&quot; de tous les éléments <code>&lt;li&gt;</code></li>
+<li><code>$(this).parent().addClass('selected');</code> ajoute la classe
+&quot;selected&quot; au parent du lien <code>&lt;a&gt;</code> qui a été cliqué</li>
+<li><code>var url = $(this).attr(&quot;href&quot;);</code> retrouve l'url correspondant
+au lien <code>&lt;a&gt;</code> qui a été cliqué</li>
+<li><code>$(&quot;#divContactList&quot;)</code> sélectionne l'élément ayant l'identifiant
+<code>divContactList</code></li>
+<li><code>.fadeOut()</code> fait disparaitre progressivement l'élément
+sélectionné</li>
+<li><code>.load(url, function() {</code> charge un contenu externe pointé par
+url dans l'élément sélectionné puis appelle une fonction lorsque le chargement
+est terminé</li>
+<li><code>$(this).fadeIn();</code> fait apparaitre progressivement l'élément
+sélectionné</li>
+<li><code>return false;</code> annule l'action en cours, c'est à dire le clic
+sur un lien =&gt; le navigateur ne vas pas charger la page dont l'url est
+définie dans la propriété <code>href</code> de la balise
+<code>&lt;a&gt;</code></li>
+</ul>
+<p>L'avantage avec cette solution, c'est que du point de vue du développeur, on
+doit connaitre uniquement jQuery et pas jQuery (pour les animations destinées à
+rassurer l'utilisateur) + Ajax.NET.</p>
+<p>D'autre part, on continue à utiliser la fonction Html.ActionLink() au lieu
+de la fonction Ajax.ActionLink() au niveau de la vue Index.aspx :</p>
+<pre><code>    &lt;ul id=&quot;leftColumn&quot;&gt;
+    &lt;% foreach (var item in Model.Groups) { %&gt;
+        &lt;li&lt;%= Html.Selected(item.Id, Model.SelectedGroup.Id) %&gt;&gt;
+            &lt;%= Html.ActionLink(item.Name, &quot;Index&quot;, new { id = item.Id }) %&gt;
+        &lt;/li&gt;
+    &lt;% } %&gt;
+    &lt;/ul&gt;
+</code></pre>
+<p>Ce qui en HTML donne le code suivant :</p>
+<pre><code>    &lt;ul id=&quot;leftColumn&quot;&gt;
+        &lt;li class=&quot;selected&quot;&gt;
+            &lt;a href=&quot;/Contact/Index/1&quot;&gt;Business&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;/Contact/Index/2&quot;&gt;Friends&lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+</code></pre>
+<p>On a bien une balise <code>&lt;a&gt;</code> toute simple (<code>&lt;a href=&quot;/Contact/Index/1&quot;&gt;Business&lt;/a&gt;</code>) qui est parfaite pour
+être sélectionnée en jQuery avec l'expression <code>$(&quot;#leftColumn li a&quot;)</code>.</p>
+<p>Pour mémoire, utiliser Ajax.NET et sa méthode Ajax.ActionLink(), c'est pas
+l'horrible soupe des WebForms, mais ça commence quand même à faire
+peur :</p>
+<pre><code>    &lt;ul id=&quot;leftColumn&quot;&gt;
+        &lt;li class=&quot;selected&quot;&gt;
+                &lt;a groupid=&quot;1&quot; href=&quot;/Contact/Index/1&quot; onclick=&quot;Sys.Mvc.AsyncHyperlink.handleClick(this, new Sys.UI.DomEvent(event), { insertionMode: Sys.Mvc.InsertionMode.replace, updateTargetId: 'divContactList', onBegin: Function.createDelegate(this, beginContactList), onFailure: Function.createDelegate(this, failureContactList), onSuccess: Function.createDelegate(this, successContactList) });&quot;&gt;Business&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+                &lt;a groupid=&quot;2&quot; href=&quot;/Contact/Index/2&quot; onclick=&quot;Sys.Mvc.AsyncHyperlink.handleClick(this, new Sys.UI.DomEvent(event), { insertionMode: Sys.Mvc.InsertionMode.replace, updateTargetId: 'divContactList', onBegin: Function.createDelegate(this, beginContactList), onFailure: Function.createDelegate(this, failureContactList), onSuccess: Function.createDelegate(this, successContactList) });&quot;&gt;Friends&lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+</code></pre>
+<h2>Faire les suppressions via jQuery</h2>
+<p>Là aussi, c'est un jeu d'enfant que de se débarrasser de Ajax.NET :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+
+    $(document).ready(function() {
+
+        // Ajax Loading
+        ...
+
+        // Ajax Deletes
+        $(&quot;.delete a&quot;).click(function() {
+            var answer = confirm('Delete contact?');
+            if (answer == true) {
+                var url = $(this).attr(&quot;href&quot;);
+                $(&quot;#divContactList&quot;)
+                    .fadeOut()
+                    .html($.ajax({
+                        type: &quot;DELETE&quot;,
+                        url: url,
+                        cache: false,
+                        async: false
+                    }).responseText)
+                    .fadeIn();
+            }
+            return false;
+        });
+
+    });
+
+&lt;/script&gt;
+</code></pre>
+<p>On associe une fonction à tous les liens compris dans une classe &quot;delete&quot;
+(ce qui se dit <code>$(&quot;.delete a&quot;).click(function() { ... })</code> en
+jQuery). Cette fonction commence par demander à l'utilisateur de confirmer
+qu'il veut bien supprimer le contact (ce qui se dit &quot;Delete Contact?&quot; en
+anglais). Si l'utilisateur répond par l'affirmative (<code>answer == true</code>), on fait disparaitre la balise contenant la liste des contacts, on
+remplace son contenu par le résultat d'une requête Ajax puis on la fait
+ré-apparaitre.</p>
+<p>Et pour finir, on fait un <code>return false;</code> pour éviter que le
+navigateur suive le lien cliqué et atterrisse sur le formulaire de suppression
+qu'on a laissé là pour les navigateurs qui ne supportent pas le Javascript.</p>
+<p>Pour information, j'ai utilisé le paramètre <code>async: false</code> pour
+attendre que la requête Ajax soit terminée côté serveur. En effet, ce n'est
+qu'à la fin de l'action AjaxDelete() que le contrôleur nous renvoie la liste
+des contacts mis à jour. Sans ce paramètre, le navigateur lancerait la requête
+Ajax puis mettrait immédiatement à jour le contenu de la divContactList, ce qui
+ne marcherait pas puisque la requête Ajax n'aurait encore rien renvoyé.</p>
+<h2>Mise à jour (12/11/2009)</h2>
+<p>Cette méthode présente un tout petit défaut. La fonction jQuery chargée
+d'ajaxifier les liens pour la suppression s'exécute une fois que la page a été
+chargée (c'est le propre de la méthode <code>$(document).ready( ... )</code>).</p>
+<p>Le problème, c'est que lorsque on change de groupe, on remplace
+dynamiquement une partie du contenu de la page sans la recharger
+entièrement ! Et c'est là que le bât blesse. Les liens suppression du
+nouveau contenu ne sont donc pas ajaxifiés et se comportent de façon
+classique :</p>
+<ul>
+<li>lien vers la vue destinée à faire confirmer la suppression du contrat</li>
+<li>post vers l'action Delete du contrôleur Contact en cas de confirmation</li>
+</ul>
+<p>Heureusement, ce n'est pas trop compliqué à corriger. Il suffit de penser à
+relancer le bout de code jQuery <code>$(&quot;.delete a&quot;).click( ... )</code> une
+fois le contenu mis à jour.</p>
+<p>Au final, cela donne donc le source javascript suivant :</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+
+    $(document).ready(function() {
+
+        // Ajax Loading
+        $(&quot;#leftColumn li a&quot;).click(function() {
+            $(&quot;#leftColumn li&quot;).removeClass('selected');
+            $(this).parent().addClass('selected');
+            var url = $(this).attr(&quot;href&quot;);
+            $(&quot;#divContactList&quot;)
+                .fadeOut()
+                .load(url, function() {
+                    $(this).fadeIn();
+                    BindDelete();
+                });
+            return false;
+        });
+
+        // Ajax Deletes on page loading
+        BindDelete();
+
+    });
+
+    function BindDelete() {
+        // Ajax Deletes
+        $(&quot;.delete a&quot;).click(function() {
+            var answer = confirm('Delete contact?');
+            if (answer == true) {
+                var url = $(this).attr(&quot;href&quot;);
+                $(&quot;#divContactList&quot;)
+                    .fadeOut()
+                    .html($.ajax({
+                        type: &quot;DELETE&quot;,
+                        url: url,
+                        cache: false,
+                        async: false
+                    }).responseText)
+                    .fadeIn();
+                    BindDetete();
+            }
+            return false;
+        });
+    }
+
+&lt;/script&gt;
+</code></pre>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/">Portage du tutoriel Contact Manager sous LINQ to SQL</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/11/02/utiliser-ajax-aspnetmvc/" hreflang="fr-FR">Utiliser Ajax avec ASP.NET MVC</a>
+  <a rel="next" href="/2009/11/13/portage-tutoriel-contact-manager-linq-to-sql/" hreflang="fr-FR">Portage du tutoriel Contact Manager sous LINQ to SQL</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>

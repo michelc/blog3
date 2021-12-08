@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr-FR">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test-Driven Development avec ASP.NET MVC (suite) - blog.pagesd.info</title>
+    <link rel="shortcut icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="alternate" href="/atom.xml" title="blog.pagesd.info" type="application/atom+xml">
+    <meta name="author" content="Michel" />
+<link rel="canonical" href="https://blog3.pagesd.info/2009/10/20/test-driven-development-aspnetmvc-suite/" />
+<meta property="og:title" content="Test-Driven Development avec ASP.NET MVC (suite)" />
+<meta property="og:locale" content="fr-FR" />
+<meta property="og:url" content="https://blog3.pagesd.info/2009/10/20/test-driven-development-aspnetmvc-suite/" />
+<meta property="og:site_name" content="blog.pagesd.info" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-10-20T14:30:00.000Z" />
+<script type="application/ld+json">{"headline":"blog.pagesd.info","dateModified":"2009-10-20T14:30:00.000Z","datePublished":"2009-10-20T14:30:00.000Z","inLanguage":"fr-FR","url":"https://blog3.pagesd.info/2009/10/20/test-driven-development-aspnetmvc-suite/","@type":"BlogPosting","image":"","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog3.pagesd.info/2009/10/20/test-driven-development-aspnetmvc-suite/"},"author":{"@type":"Person","name":"Michel"},"@context":"https://schema.org"}</script>
+  </head>
+
+  <body><div class="container">
+
+    <header><nav>
+      <a class="title" href="/">blog.pagesd.info</a>
+      // <a href="/archives/">archives</a>
+      // <a href="/traductions/">traductions</a>
+    </nav></header>
+
+
+
+<article>
+
+
+
+  <header>
+    <h1>
+      <a href="/2009/10/20/test-driven-development-aspnetmvc-suite/">Test-Driven Development avec ASP.NET MVC (suite)</a>
+    </h1>
+    <p>
+      <span>2009-10-20</span>
+      <span>#mvc</span><span>#unit-test</span>
+    </p>
+  </header>
+
+  <div>
+
+<p>Enfin, ça y est, je vais enfin faire des trucs pour de vrai : modifier
+la base de données, écrire du code qui permet à l'utilisateur de réellement
+gérer des groupes de contacts... et venir à bout de la <a href="/2009/10/09/test-driven-development-aspnetmvc-suite/" title="Test-Driven Development avec ASP.NET MVC (suite)">6°
+partie du tutoriel pour gérer des contacts</a>.</p>
+<h2>Mises à jour comme dans le tutoriel</h2>
+<h3>La base de données : facile</h3>
+<p>Pour commencer, direction le &quot;Database Explorer&quot; pour modifier la base de
+données :</p>
+<ul>
+<li>création d'une table &quot;Groups&quot; pour enregistrer les groupes de contacts</li>
+<li>ajout d'une colonne &quot;GroupId&quot; à la table &quot;Contacts&quot; pour y stocker
+l'identifiant du groupe auquel est rattaché le contact</li>
+<li>définition de la relation entre les tables &quot;Contacts&quot; et &quot;Groups&quot;</li>
+</ul>
+<h3>Le modèle : encore plus facile</h3>
+<p>Rien à ajouter au tutoriel.</p>
+<h3>Le Repositiry : ça se complique</h3>
+<p>Zut ! Le tutoriel donne bien les modifications à apporter repository
+(l'interface et la classe), mais pas un seul mot sur les autres modifications
+nécessaires...</p>
+<ul>
+<li>Au début de cette 6° partie, on avait créé une <a href="/2009/10/06/test-driven-development-aspnetmvc/">classe Group</a> à la main puisqu'on n'avait pas encore touché à
+la base de données. Ce coup-ci, pour que ça marche il faut la supprimer sinon
+on ne peut pas compiler parce que &quot;<em>Missing partial modifier on declaration
+of type 'ContactManager.Models.Group'; another partial declaration of this type
+exists</em>&quot;.</li>
+<li>Les méthodes CreateContact() et EditContact() du repository attendent
+désormais un premier paramètre <code>int groupId</code> =&gt; il faut donc
+modifier le service ContactManagerService pour que celui-ci le leur fasse
+passer !</li>
+<li>Qu'à cela ne tienne, un rapide coup d'oeil sur sur les sources finis de la
+6° partie me confirme qu'il faut aussi faire apparaitre ce paramètre groupId au
+niveau du service : dans l'appel aux méthodes du repository mais aussi
+dans les signatures des méthodes du service</li>
+<li>Et bien sûr, ça ne compile toujours pas puisque le contrôleur
+ContactController ne fait pas passer ce paramètre groupId aux méthodes de
+ContactManagerService...</li>
+</ul>
+<p>Stop ! J'efface tout et je recommence pas à pas. En un, gérer la table
+des groupes. En deux, modifier la gestion des contacts pour tenir compte des
+groupes.</p>
+<h2>Mises à jour à ma façon</h2>
+<p>Une fois revenu en arrière :</p>
+<ul>
+<li>mise à jour de la base de données en créant seulement la table &quot;Groups&quot;,
+sans toucher à la table &quot;Contacts&quot;</li>
+<li>mise à jour du modèle pour prendre en compte la nouvelle table (et pas la
+relation entre les tables &quot;Groups&quot; et &quot;Contacts&quot; puisqu'elle n'a pas été
+créée)</li>
+<li>suppression de Models/Group.cs</li>
+<li>mise à jour du repository pour la partie qui concerne les opérations sur la
+table &quot;Groups&quot;</li>
+<li>mise à jour du FaleRepository pour que ça compile</li>
+<li>un coup de tests unitaires et tout continue à être bon.</li>
+</ul>
+<h2>Ajout de la vue Index</h2>
+<p>Ça avance bien, donc je continue :</p>
+<ul>
+<li>création d'une vue Groups/Index en automatique</li>
+<li>modification de site.master pour ajouter un onglet &quot;Manage Contact
+Groups&quot;</li>
+<li>compilation =&gt; ça marche, mais la liste est vide (normal puisque la
+table &quot;Groups&quot; est vide)</li>
+</ul>
+<p>Passage par le &quot;Database Explorer&quot; (Show Table Data) pour ajouter un premier
+groupe &quot;Business&quot; et là la liste ressemble enfin à quelque chose. Et toujours
+rien de cassé niveau tests unitaires !</p>
+<p>D'après ce que je vois dans la copie d'écran du tutoriel, la liste des
+groupes est un peu &quot;spéciale&quot;. Elle ne contient pas de bouton &quot;Edit&quot; mais
+seulement un lien image pour supprimer. Et pas de lien pour créer un nouveau
+groupe, mais directement une zone de texte pour saisir le libellé d'un nouveau
+groupe et un nouton &quot;Create&quot; pour l'enregistrer.</p>
+<p>Donc retour sur la vue Index pour essayer d'arriver à la même chose. Pour
+commencer, de simples copier / coller depuis la vue Index des Contacts
+suffisent pour modifier la liste. C'est juste un peu plus compliqué pour
+ajouter les contrôles nécessaires pour la création d'un nouveau groupe, mais
+pas infaisable.</p>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;IEnumerable&lt;ContactManager.Models.Group&gt;&gt;&quot; %&gt;
+
+&lt;asp:Content ID=&quot;Content1&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+        Index
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Content2&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+    &lt;h2&gt;Index&lt;/h2&gt;
+
+    &lt;%= Html.ValidationSummary() %&gt;
+
+    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;th class=&quot;actions delete&quot;&gt;
+                Delete
+            &lt;/th&gt;
+            &lt;th&gt;
+                Name
+            &lt;/th&gt;
+        &lt;/tr&gt;
+
+    &lt;% foreach (var item in Model) { %&gt;
+
+        &lt;tr&gt;
+            &lt;td class=&quot;actions delete&quot;&gt;
+                &lt;a href='&lt;%= Url.Action(&quot;Delete&quot;, new {id=item.Id}) %&gt;'&gt;&lt;img src=&quot;../../Content/Delete.png&quot; alt=&quot;Delete&quot; /&gt;&lt;/a&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;%= Html.Encode(item.Name) %&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+
+    &lt;% } %&gt;
+
+        &lt;tr&gt;
+            &lt;th&gt;
+                Add
+            &lt;/th&gt;
+            &lt;th&gt;
+                &lt;%= Html.TextBox(&quot;Name&quot;) %&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;Create&quot; /&gt;
+                &lt;%= Html.ValidationMessage(&quot;Name&quot;, &quot;*&quot;) %&gt;
+            &lt;/th&gt;
+        &lt;/tr&gt;
+
+    &lt;/table&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Et c'est OK pour l'interface utilisateur. Après avoir vérifié que le
+contrôleur a bien le code nécessaire pour gérer le Create, je compile,
+j'exécute et je tente de créer un nouveau groupe &quot;Friends&quot;. Et ça ne marche pas
+:( J'ai beau m'acharner sur le bouton &quot;Create&quot;, rien ne se passe...</p>
+<p>Ok ! J'ai pas de balise &lt;form&gt; dans ma page ! Il faut penser
+à englober les contrôles &lt;input&gt; entre</p>
+<pre><code>&lt;% using (Html.BeginForm(&quot;Create&quot;, &quot;Group&quot;)) { %&gt;
+</code></pre>
+<p>et</p>
+<pre><code>&lt;% } %&gt;
+</code></pre>
+<p>MVC, c'est pas encore automatique pour moi. Je recommence, resaisi
+&quot;Friends&quot;, clique sur le bouton &quot;Create&quot; et boum !</p>
+<pre><code>Erreur du serveur dans l'application '/'.
+--------------------------------------------------------------------------------
+The view 'Create' or its master could not be found. The following locations were searched:
+~/Views/Group/Create.aspx
+~/Views/Group/Create.ascx
+~/Views/Shared/Create.aspx
+~/Views/Shared/Create.ascx
+Description : Une exception non gérée s'est produite au moment de l'exécution de la demande Web actuelle. Contrôlez la trace de la pile pour plus d'informations sur l'erreur et son origine dans le code.
+</code></pre>
+<p>Quoi encore ? Pourquoi diable est-ce que ça veut afficher une vue
+Create ? J'ai rien demandé moi !</p>
+<p>...</p>
+<p>Ça y est, j'ai trouvé le coupable dans GroupController.cs :</p>
+<pre><code>public ActionResult Create(Group groupToCreate)
+{
+    if (_service.CreateGroup(groupToCreate))
+        return RedirectToAction(&quot;Index&quot;);
+    return View(&quot;Create&quot;);
+}
+</code></pre>
+<p>Il y a un <code>return View(&quot;Create&quot;);</code> alors que la création se fait
+dans la vue Index =&gt; à remplacer par <code>return View(&quot;Index&quot;);</code>.</p>
+<p>Je re-lance, re-saisi &quot;Friends&quot;, re-clique sur &quot;Create&quot; et re-boum. Mais ce
+coup-ci je me retrouve dans le débugueur avec une erreur
+&quot;<em>NullReferenceException was Unhandled by user code</em>&quot; sur la ligne
+<code>&lt;% foreach (var item in Model) { %&gt;</code>.</p>
+<p>...</p>
+<p>Ça va bien finir par marcher. Mais pour gagner du temps, je vais pomper sur
+le source de GroupController.cs du tutoriel où il y a un <code>return View(&quot;Index&quot;, _service.ListGroups());</code>. J'aurai pu trouver ! Dans
+l'action Index il y a déjà un <code>return View(_service.ListGroups());</code>.
+C'est sûr que si je renvoie la vue Index sans lui passer la liste des groupes,
+ça peut pas marcher...</p>
+<p>Je re-lance, re-saisi &quot;Friends&quot;, re-clique sur &quot;Create&quot; et voilà-t-y pas que
+ça me dit &quot;<em>A value is required.</em>&quot; (en rouge en plus). Je re-lance,
+re-saisi &quot;Friends&quot; (des fois que le coup d'avant j'ai oublié ou qu'il aurait
+pas bien compris), re-clique sur &quot;Create&quot; et pareil.</p>
+<p>C'est parce que je suis idiot. Comment qu'elle fait mon action Create si je
+lui dit pas de récupérer les valeurs du POST pour fabriquer l'objet Group à
+insérer ? Je regarde comment fait le Create dans ContactController.cs,
+copie / colle et c'est parti :</p>
+<pre><code>[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Create([Bind(Exclude = &quot;Id&quot;)]Group groupToCreate)
+{
+    if (_service.CreateGroup(groupToCreate))
+        return RedirectToAction(&quot;Index&quot;);
+    return View(&quot;Index&quot;, _service.ListGroups());
+}
+</code></pre>
+<p>Je re-lance, re-saisi &quot;Friends&quot;, re-clique sur &quot;Create&quot; et euréka !
+J'ai réussi à insérer un nouveau groupe !!!</p>
+<p>Je re-lance, ne saisi rien dans la zone texte, clique sur le bouton &quot;Create&quot;
+et j'ai bien un message &quot;<em>Name is required.</em>&quot; pour m'apprendre à vouloir
+créer un groupe sans lui donner de nom.</p>
+<p>Je re-lance, clique sur l'image &quot;Delete&quot; devant le groupe &quot;Friends&quot; et ça me
+sort une erreur &quot;<em>La ressource est introuvable.</em>&quot;. Ah ouais, j'ai pas
+encore géré la suppression.</p>
+<h2>Ajout de la suppression d'un groupe</h2>
+<p>Avant d'attaquer ça, je refais vite un coup de tests unitaires pour vérifier
+que tout continue de fonctionner comme prévu et ouf! rien de cassé.</p>
+<p>J'ajoute l'action Delete au contrôleur GroupController.cs, en faisant tout
+comme dans GroupContact.cs :</p>
+<pre><code>public ActionResult Delete(int id)
+{
+    var groupToDelete = _service.GetGroup(id);
+    return View(groupToDelete);
+}
+
+[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Delete(Contact groupToDelete)
+{
+    if (_service.DeleteGroup(groupToDelete))
+        return RedirectToAction(&quot;Index&quot;);
+    return View();
+}
+</code></pre>
+<p>Un filet rouge sous <code>_service.GetGroup</code> et
+<code>_service.DeleteGroup</code> me rappelle que ces deux méthodes ne sont pas
+encore implémentées dans ContactManagerService.cs (et pas déclarées dans
+IContactManagerService.cs par la même occasion).</p>
+<pre><code>public bool DeleteGroup(Group groupToDelete)
+{
+    // Database logic
+    try
+    {
+        _repository.DeleteGroup(groupToDelete);
+    }
+    catch
+    {
+        return false;
+    }
+    return true;
+}
+
+public Group GetGroup(int id)
+{
+    return _repository.GetGroup(id);
+}
+</code></pre>
+<p>Il me reste alors à créer une vue Delete (strongly-typed view, empty
+content) puis à m'inspirer de la vue Contact/Delete.aspx pour la
+compléter :</p>
+<pre><code>&lt;%@ Page Title=&quot;&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Views/Shared/Site.Master&quot; Inherits=&quot;System.Web.Mvc.ViewPage&lt;ContactManager.Models.Group&gt;&quot; %&gt;
+
+&lt;asp:Content ID=&quot;Content1&quot; ContentPlaceHolderID=&quot;TitleContent&quot; runat=&quot;server&quot;&gt;
+        Delete
+&lt;/asp:Content&gt;
+
+&lt;asp:Content ID=&quot;Content2&quot; ContentPlaceHolderID=&quot;MainContent&quot; runat=&quot;server&quot;&gt;
+
+    &lt;h2&gt;Delete&lt;/h2&gt;
+
+    &lt;p&gt;
+    Are you sure that you want to delete the entry for
+    &lt;%= Model.Name %&gt;
+    &lt;/p&gt;
+
+    &lt;% using (Html.BeginForm(new { Id = Model.Id }))
+       { %&gt;
+       &lt;p&gt;
+            &lt;input type=&quot;submit&quot; value=&quot;Delete&quot; /&gt; &amp;nbsp; &lt;%=Html.ActionLink(&quot;Cancel&quot;, &quot;Index&quot;) %&gt;
+        &lt;/p&gt;
+    &lt;% } %&gt;
+
+&lt;/asp:Content&gt;
+</code></pre>
+<p>Je lance, clique sur l'image &quot;Delete&quot; devant le groupe &quot;Friends&quot;, clique sur
+le bouton &quot;Delete&quot; pour confirmer et plus de groupe &quot;Friends&quot;. Trop fort, je
+peux aussi supprimer un groupe !!!</p>
+<p>Je re-lance, clique sur l'image &quot;Delete&quot; devant le groupe &quot;Business&quot;, clique
+sur le lien &quot;Cancel&quot; pour annuler et le groupe &quot;Business&quot; est toujours là. Des
+fois, l'informatique ça marche comme on voudrait...</p>
+<p>Allez hop ! Encore un coup de tests unitaires pour me conditionner et
+c'est tout pour aujourd'hui.</p>
+<hr>
+<p>Billet suivant dans la série : <a href="/2009/10/29/test-driven-development-aspnetmvc-suite/">Test-Driven Development avec ASP.NET MVC (suite)</a></p>
+
+
+  </div>
+
+</article><nav class="paginate">
+  <a rel="prev" href="/2009/10/19/amelioration-blog/" hreflang="fr-FR">Amélioration du blog de l&#39;Ardèche</a>
+  <a rel="next" href="/2009/10/29/test-driven-development-aspnetmvc-suite/" hreflang="fr-FR">Test-Driven Development avec ASP.NET MVC (suite)</a>
+</nav>
+
+
+
+    <footer>
+      <a href="/">blog.pagesd.info</a> --
+      <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
+    </footer>
+
+  </div></body>
+
+</html>
