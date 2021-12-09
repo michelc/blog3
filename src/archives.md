@@ -8,23 +8,23 @@ cover:
 excerpt: La page des archive de ce blogue, où je reprend à peu près tout ce que j'ai publié un peu partout depuis septembre 2004...
 ---
 
-{% set current_year = "" %}
-{% set current_month = "" %}
+{%- set current_year = "" -%}
+{%- set current_month = "" -%}
 
 {% for post in collections.posts %}
 
-  {% set year = post.date.getFullYear() %}
+  {%- set year = post.date.getFullYear() -%}
   {% if current_year != year %}
-    {% set current_year = year %}
-    {% set current_month = "" %}
+    {%- set current_year = year -%}
+    {%- set current_month = "" -%}
 ## {{ year }}
-  {% endif %}
+  {% endif -%}
 
-  {% set month = post.date.getMonth() %}
+  {%- set month = post.date.getMonth() -%}
   {% if current_month != month %}
-    {% set current_month = month %}
+    {%- set current_month = month -%}
 ### {{ post.date | date("MMMM yyyy") | capitalize }}
-  {% endif %}
+  {% endif -%}
 
-* [{{ post.data.title }}]({{ post.url }})
+* [{{ post.data.title }}]({{ post.url }}) {% for tag in post.data.tags %}<span>#{{ tag }}</span>{% endfor %}
 {% endfor %}
