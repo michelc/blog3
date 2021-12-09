@@ -4,6 +4,11 @@ layout: page
 permalink: nerddinner/
 redirect_from: "pages/NerdDinner/Introduction"
 title: "NerdDinner (en français) : Introduction"
+cover:
+  image: /public/nerddinner.jpg
+  link: http://www.amazon.fr/gp/product/0470384611?ie=UTF8&amp;tag=07arde-21&amp;linkCode=as2&amp;camp=1642&amp;creative=19458&amp;creativeASIN=0470384611
+  text: Professional ASP.NET MVC 1.0
+excerpt: Traduction en français du tutoriel ASP.NET MVC NerdDinner de Scott Guthrie, publiée dans le livre "Professional ASP.NET MVC 1.0".
 ---
 
 Cette page contient la traduction en français de la table des matières du

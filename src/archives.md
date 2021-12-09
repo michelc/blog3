@@ -1,6 +1,10 @@
 ---
 layout: page.njk
 title: Archives
+cover:
+  image: /public/archives.jpg
+  link: https://unsplash.com/photos/05HLFQu8bFw
+  text: Document folders on the shelves - Viktor Talashuk
 excerpt: La page des archive de ce blogue, où je reprend à peu près tout ce que j'ai publié un peu partout depuis septembre 2004...
 ---
 

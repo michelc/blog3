@@ -3,6 +3,10 @@ date: 2017-08-18
 layout: page.njk
 title: Traductions
 tags: [ "traduction" ]
+cover:
+  image: /public/traductions.jpg
+  link: https://unsplash.com/photos/IYm2PCy0f8c
+  text: Globe - Lucas George Wendt
 excerpt: La liste des traductions réalisées au fil du temps... généralement pour essayer d'assimiler au mieux un sujet.
 ---
 
