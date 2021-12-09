@@ -4,7 +4,8 @@ module.exports = function(eleventyConfig) {
 
   // Copie des fichiers statiques
   eleventyConfig.addPassthroughCopy("src/css")
-                .addPassthroughCopy("src/public");
+                .addPassthroughCopy("src/public")
+                .addPassthroughCopy('CNAME');
 
   // Rafraichit le site lorsque les CSS sont modifiés
   eleventyConfig.addWatchTarget("src/css");
