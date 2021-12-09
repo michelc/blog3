@@ -14,7 +14,7 @@ date:
 tags: [ ]
 title: ""
 cover:
-  image: /public/2021/cute-puppies.jpg
+  image: /public/
   link: 
   text: 
 excerpt: 
@@ -24,7 +24,7 @@ excerpt:
 * date : sous la forme aaaa-mm-jj hh:mm:ss +02:00
 * tags : entre crochets [ un, deux ], même s'il n'y en a qu'un !
 * title : entre guillemets (par habitude ?)
-* image.cover : /public/aaa/nom-fichier.jpg
+* image.cover : /public/aaaa/nom-fichier.jpg
 * image.link : facultatif
 * image.text : facultatif
 * excerpt : obligatoire ! (et entre guillemets si contient un ":")
