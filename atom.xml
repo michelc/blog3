@@ -3,12 +3,179 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2021-12-08T17:47:27.000Z</updated>
+    <updated>2021-12-10T15:47:47.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Comment créer un badge / avatar en CSS</title>
+        <link href="https://blog.pagesd.info/2021/12/10/creer-badge-avatar-css/" rel="alternate" hreflang="fr-FR" />
+        <updated>2021-12-10T15:47:47.000Z</updated>
+        <published>2021-12-10T15:47:47.000Z</published>
+        <id>https://blog.pagesd.info/2021/12/10/creer-badge-avatar-css/</id>
+        <summary>Ce n&#39;est pas très compliqué, et en à peine 30 lignes de CSS et une pincée de flexbox on peut afficher des badges ou des avatars très corrects.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Il y a quelques temps, j&#39;avais développé une petite application pour consulter plus facilement les tickets d&#39;assistance qui m&#39;étaient affectés. J&#39;ai depuis laissé tombé ce programme, mais comme cela m&#39;avait donné l&#39;occasion de présenter les échanges sous forme de conversation, je sauvegarde ici comment j&#39;affichais les badges pour identifier les utilisateurs.&lt;/p&gt;
+&lt;p&gt;Pour commencer, je défini un carré de 100px sur 100px auquel j&#39;applique des coins arrondis grâce à la propriété &lt;code&gt;border-radius&lt;/code&gt; à 50% pour que le carré devienne rond. Puis je colorie en vert pour que cela soit visible sur un fond blanc et j&#39;ajoute une bordure assez épaisse pour que cela ressorte encore mieux.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
+  .badge {
+    /* Un rond vert */
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: limegreen;
+    border: 10px solid silver;
+  }
+&amp;lt;/style&amp;gt;
+
+&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/badge-01.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Ensuite, j&#39;ajoute les initiales de la personne qui a écrit le ticket ou le commentaire, en blanc, en gros et en gras.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
+  .badge {
+    /* Un rond vert */
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: limegreen;
+    border: 10px solid silver;
+    /* Des initiales blanches */
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
+    font-size: 55px;
+    font-weight: bold;
+  }
+&amp;lt;/style&amp;gt;
+
+&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/badge-02.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Et il ne me reste plus qu&#39;à centrer ces initiales horizontalement et verticalement. Heureusement, ça fait longtemps que d&#39;autres collectionnent les solutions pour savoir &lt;a href=&quot;https://css-tricks.com/centering-css-complete-guide/&quot;&gt;comment tout centrer avec CSS&lt;/a&gt;...&lt;/p&gt;
+&lt;p&gt;J&#39;utilise la méthode à base de flexbox :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
+  .badge {
+    /* Un rond vert */
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: limegreen;
+    border: 10px solid silver;
+    /* Des initiales blanches */
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
+    font-size: 55px;
+    font-weight: bold;
+    /* Et centrées */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+&amp;lt;/style&amp;gt;
+
+&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/badge-03.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;A première vue, je dirais que c&#39;est pas tout à fait au centre et que ça penche un peu vers le bas. Mais c&#39;est super simple et ça répond très correctement à mon problème.&lt;/p&gt;
+&lt;p&gt;Dans l&#39;application d&#39;origine, j&#39;avais aussi un bout de code côté serveur pour générer une couleur de fond en fonction du trigramme de la personne. Mais je vais laisser ça de côté pour l&#39;instant.&lt;/p&gt;
+&lt;p&gt;Par contre, j&#39;avais aussi géré la possibilité d&#39;avoir des images à la place des initiales pour mieux faire ressortir certains utilisateurs dans les conversations. Pour ça, j&#39;avais notamment utilisé des dessins de &lt;a href=&quot;https://www.instagram.com/cameronmarkart/&quot;&gt;Cameron Mark&lt;/a&gt; pour représenter les deux personnes responsables de l&#39;assistance de niveau 1.&lt;/p&gt;
+&lt;p&gt;En faisant au plus simple, la modification nécessaire pour remplacer les initiales par une photo consiste en deux choses :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Afficher l&#39;image correspondant à la personne,&lt;/li&gt;
+&lt;li&gt;Masquer les initiales devenues inutiles.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
+  .badge {
+    /* Un rond vert */
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: limegreen;
+    border: 10px solid silver;
+    /* Des initiales blanches */
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
+    font-size: 55px;
+    font-weight: bold;
+    /* Et centrées */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .badge-avatar {
+    /* Cacher les initiales */
+    color: transparent;
+    /* Afficher l&#39;image */
+    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.jpg&amp;quot;);
+    background-position: center;
+    background-size: cover;
+  }
+&amp;lt;/style&amp;gt;
+
+&amp;lt;div class=&amp;quot;badge badge-avatar&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;La ligne &lt;code&gt;background-position: center&lt;/code&gt; permet de s&#39;assurer que l&#39;image est bien centrée. Et avec &lt;code&gt;background-size: cover&lt;/code&gt;, la photo est redimensionnée au mieux pour être aussi grande que possible (et donc remplir au mieux le badge), tout en conservant ses proportions.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/badge-04.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Pour donner un peu de vie à l&#39;interface utilisateur, on peut animer le badge quand la souris survole l&#39;élément qui le contient, en changeant la couleur de la bordure.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;  :hover &amp;gt; .badge {
+    border-color: orange;
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;C&#39;est quasi-terminé. Dans la pratique, un badge de 100 pixels de large (sans compter les bordures de 10 pixels) ça prend pas mal de place. Et donc, pour pouvoir définir des badges de différentes tailles, j&#39;utilise des &lt;a href=&quot;https://developer.mozilla.org/fr/docs/Web/CSS/Using_CSS_custom_properties&quot;&gt;variables CSS&lt;/a&gt; pour redéfinir la hauteur et la largeur du badge, mais aussi l&#39;épaisseur de la bordure et la taille des caractères.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
+  .badge-75 {
+    --badge-size: 75px;
+  }
+  
+  .badge-200 {
+    --badge-size: 200px;
+  }
+  
+  .badge {
+    /* Un rond vert */
+    height: var(--badge-size);
+    width: var(--badge-size);
+    border-radius: 50%;
+    background-color: limegreen;
+    border: calc(var(--badge-size) / 10) solid lightgray;
+    /* Des initiales blanches */
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
+    font-size: calc(var(--badge-size) / 1.75);
+    font-weight: bold;
+    /* Et centrées */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .badge-avatar {
+    /* Cacher les initiales */
+    color: transparent;
+    /* Afficher l&#39;image */
+    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.jpg&amp;quot;);
+    background-position: center;
+    background-size: cover;
+  }
+&amp;lt;/style&amp;gt;
+
+&amp;lt;div class=&amp;quot;badge badge-75&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
+&amp;lt;div class=&amp;quot;badge badge-200&amp;quot;&amp;gt;CD&amp;lt;/div&amp;gt;
+&amp;lt;div class=&amp;quot;badge badge-avatar badge-75&amp;quot;&amp;gt;EF&amp;lt;/div&amp;gt;
+&amp;lt;div class=&amp;quot;badge badge-avatar badge-200&amp;quot;&amp;gt;GH&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et voilà ! A peine 30 lignes de CSS pour un résultat très satisfaisant. Maintenant, si jamais j&#39;en ai à nouveau besoin, je saurais où retrouver ça.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/badge-05.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+        </content>
+        <category term="css" />
+        <category term="html" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/systeme-bertillon.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/systeme-bertillon.jpg" />
+    </entry>
     <entry>
         <title type="html">Migration sous Eleventy</title>
         <link href="https://blog.pagesd.info/2021/12/08/migration-sous-eleventy/" rel="alternate" hreflang="fr-FR" />
@@ -414,147 +581,5 @@ public enum NatureType
         <category term="css" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2020/swing.jpg" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2020/swing.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Hide or show sidebar</title>
-        <link href="https://blog.pagesd.info/2020/05/28/hide-show-sidebar/" rel="alternate" hreflang="en-US" />
-        <updated>2020-05-28T11:20:08.000Z</updated>
-        <published>2020-05-28T11:20:08.000Z</published>
-        <id>https://blog.pagesd.info/2020/05/28/hide-show-sidebar/</id>
-        <summary>Today goal: hide or show the vertical menu used for navigation.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;I&#39;m still working on a &lt;a href=&quot;/2020/05/20/create-template-sidebar-content/&quot;&gt;simple 2-column template&lt;/a&gt;. Today my goal is to hide the &amp;quot;sidebar&amp;quot; used for navigation.&lt;/p&gt;
-&lt;p&gt;An easy solution would be to add a &amp;quot;d-none&amp;quot; class to the &amp;quot;sidebar&amp;quot; (since I use Bootstrap), but that won&#39;t be enough because the &amp;quot;content&amp;quot; doesn&#39;t automatically take all the width.&lt;/p&gt;
-&lt;p&gt;Let&#39;s go step by step and see what we need to do:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Hide the &amp;quot;sidebar&amp;quot; =&amp;gt; add a &amp;quot;hidden&amp;quot; class to it,&lt;/li&gt;
-&lt;li&gt;Make the &amp;quot;content&amp;quot; fill the whole screen =&amp;gt; add a &amp;quot;full-width&amp;quot; class.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;On the HTML side, this would look like:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;hidden&amp;quot;&amp;gt;
-    ...
-&amp;lt;/nav&amp;gt;
-&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;full-width&amp;quot;&amp;gt;
-    ...
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And on the CSS side:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.hidden {
-    display: none;
-}
-#content.full-width {
-    width: 100%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And vice versa, when I need to display the navigation bar again:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;nav id=&amp;quot;sidebar&amp;quot; class=&amp;quot;visible&amp;quot;&amp;gt;
-    ...
-&amp;lt;/nav&amp;gt;
-&amp;lt;div id=&amp;quot;content&amp;quot; class=&amp;quot;less-width&amp;quot;&amp;gt;
-    ...
-&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then the CSS part:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar.visible {
-    display: block;
-}
-#content.less-width {
-    width: calc(100% - 299px);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It works! Now let&#39;s see how to get the same result but with less complications.&lt;/p&gt;
-&lt;p&gt;My first attempt needs 4 different classes, whereas there are basically only 2 cases:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;We show the &amp;quot;sidebar&amp;quot; and the &amp;quot;content&amp;quot; =&amp;gt; sidebar = true (default),&lt;/li&gt;
-&lt;li&gt;We only display the &amp;quot;content&amp;quot; =&amp;gt; sidebar = false (on demand).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;What can be done with a single &amp;quot;no-sidebar&amp;quot; class:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;By default this class is not used =&amp;gt; the &amp;quot;sidebar&amp;quot; is visible,&lt;/li&gt;
-&lt;li&gt;And to hide the &amp;quot;sidebar&amp;quot;, we just have to add this class.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;To be clever, we can do this at the &amp;quot;wrapper&amp;quot; level, which includes &amp;quot;sidebar&amp;quot; and &amp;quot;content&amp;quot;:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;div id=&amp;quot;wrapper&amp;quot; class=&amp;quot;no-sidebar&amp;quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And this time I only need two CSS rules:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.no-sidebar #sidebar {
-    display: none;
-}
-.no-sidebar #content {
-    width: 100%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Much better!&lt;/p&gt;
-&lt;p&gt;Now, all we need is a button and a bit of Javascript to show or hide the &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;button id=&amp;quot;sidebar-toggle&amp;quot;&amp;gt;Masquer / Afficher&amp;lt;/button&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The Javascript code is really simple (because jQuery will be used later for the forms):&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;&amp;lt;script src=&amp;quot;js/jquery-3.4.1.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;script&amp;gt;
-    $(document).ready(function () {
-
-        $(&amp;quot;#sidebar-toggle&amp;quot;).on(&amp;quot;click&amp;quot;, function () {
-            $(&amp;quot;#wrapper&amp;quot;).toggleClass(&amp;quot;no-sidebar&amp;quot;);
-        });
-
-    });
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To summarize, we need just 4 elements to build a 2-columns template, with a switchable sidebar:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;A &amp;quot;#wrapper&amp;quot; div to enclose all the content,&lt;/li&gt;
-&lt;li&gt;A &amp;quot;#sidebar&amp;quot; nav to contain the navigation menu,&lt;/li&gt;
-&lt;li&gt;A &amp;quot;#content&amp;quot; div to present the main content,&lt;/li&gt;
-&lt;li&gt;A &amp;quot;.no-sidebar&amp;quot; class when you need to hide the sidebar.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;And finally, very little CSS (without styles used to presentation):&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#wrapper {
-    display: flex;
-    width: 100%;
-}
-
-#sidebar {
-    min-height: 100vh;
-    position: fixed;
-    width: 299px;
-}
-
-#content {
-    min-height: 100vh;
-    position: absolute;
-    right: 0;
-    width: calc(100% - 299px);
-}
-
-.no-sidebar #sidebar {
-    display: none;
-}
-
-.no-sidebar #content {
-    width: 100%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And if necessary hide the &amp;quot;sidebar&amp;quot; when printing (as it is intended to contain navigational elements only):&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;@media print {
-    #sidebar { display: none;}
-    #content { width: 100%; }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We can also just add the bootstrap &amp;quot;d-print-none&amp;quot; class to &amp;quot;sidebar&amp;quot;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2020/clic2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Yay! My first animated GIF for centuries, or at least since the last century (created with &lt;a href=&quot;https://ezgif.com/&quot;&gt;https://ezgif.com/&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;It wasn&#39;t complicated... So I would probably write a third part to work on the &amp;quot;artistic&amp;quot; side:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Use an icon to show or hide the sidebar,&lt;/li&gt;
-&lt;li&gt;Add an animation to switch from one state to another.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2020/05/27/masquer-afficher-menu-lateral/&quot; hreflang=&quot;fr-FR&quot;&gt;Masquer ou afficher le menu latéral&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="css" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2020/switches.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2020/switches.jpg" />
     </entry>
 </feed>
