@@ -48,7 +48,7 @@ Currently, images on my blog are 640 x 480 pixels while those on dev.to are 1000
 ```markdown
 ---
 date: 2019-12-16 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 ---
@@ -138,7 +138,7 @@ For now, I'm going to use method #3 and I'm modifying the Front Matter of my pos
 ```markdown
 ---
 date: 2019-12-16 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 excerpt: "Pour la nouvelle année à venir, j'ai un peu rafraîchi la charte graphique de mon blogue. Outre le côté 'tout nouveau, tout beau', cela m'a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas."
@@ -230,7 +230,7 @@ Then for all English posts, I change the Front Matter to redefine the `lang` att
 ```markdown
 ---
 date: 2019-12-17 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 lang: en-US
 title: "A new CSS and 5 tips to know"
 ---

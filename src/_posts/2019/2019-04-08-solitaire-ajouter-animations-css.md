@@ -1,6 +1,6 @@
 ---
 date: 2019-04-08 12:29:24 +02:00
-tags: [ javascript ]
+tags: [ css, html, javascript ]
 title: "Solitaire - Ajouter des animations CSS"
 cover:
   image: /public/2019/animation.jpg

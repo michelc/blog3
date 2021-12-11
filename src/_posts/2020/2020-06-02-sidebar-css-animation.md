@@ -1,7 +1,7 @@
 ---
 date: 2020-06-02 13:28:16 +02:00
 lang: en-US
-tags: [ css ]
+tags: [ css, html ]
 title: "Sidebar animation with CSS"
 cover:
   image: /public/2020/swing.jpg

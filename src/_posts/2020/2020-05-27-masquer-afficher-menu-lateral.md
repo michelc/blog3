@@ -1,6 +1,6 @@
 ---
 date: 2020-05-27 12:08:34 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Masquer ou afficher le menu latéral"
 cover:
   image: /public/2020/switches.jpg

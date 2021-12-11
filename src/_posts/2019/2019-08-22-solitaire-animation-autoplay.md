@@ -1,6 +1,6 @@
 ---
 date: 2019-08-22 12:48:18 +02:00
-tags: [ CSS ]
+tags: [ css, html, javascript ]
 title: "Solitaire - Animation du déplacement des cartes"
 cover:
   image: /public/2019/escalator.jpg

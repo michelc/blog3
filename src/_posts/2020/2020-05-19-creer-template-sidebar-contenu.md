@@ -1,6 +1,6 @@
 ---
 date: 2020-05-19 19:42:12 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Créer un template simple avec sidebar + contenu"
 cover:
   image: /public/2020/first-plan.jpg

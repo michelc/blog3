@@ -1,6 +1,6 @@
 ---
 date: 2019-12-17 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 lang: en-US
 title: "A new CSS and 5 tips to know"
 cover:

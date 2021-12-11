@@ -1,7 +1,7 @@
 ---
 date: 2020-05-28 13:20:08 +02:00
 lang: en-US
-tags: [ css ]
+tags: [ css, html ]
 title: "Hide or show sidebar"
 cover:
   image: /public/2020/switches.jpg

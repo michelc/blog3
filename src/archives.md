@@ -26,5 +26,5 @@ excerpt: La page des archive de ce blogue, où je reprend à peu près tout ce q
 ### {{ post.date | date("MMMM yyyy") | capitalize }}
   {% endif -%}
 
-* [{{ post.data.title }}]({{ post.url }}) {% for tag in post.data.tags %}<span>#{{ tag }}</span>{% endfor %}
+* <a href="{{ post.url }}" hreflang="{{ post.data.lang }}">{{ post.data.title }}</a> {% for tag in post.data.tags %}<span>#{{ tag }}</span>{% endfor %}
 {% endfor %}

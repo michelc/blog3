@@ -1,6 +1,6 @@
 ---
 date: 2019-12-16 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 cover:
   image: /public/2019/sapin-de-noel.jpg

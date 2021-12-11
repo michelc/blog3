@@ -1,6 +1,6 @@
 ---
 date: 2020-06-01 17:35:16 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Animer une sidebar avec CSS"
 cover:
   image: /public/2020/swing.jpg

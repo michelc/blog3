@@ -1,6 +1,6 @@
 ---
 date: 2019-07-04 12:28:18 +02:00
-tags: [ CSS ]
+tags: [ css, html, javascript ]
 title: "Solitaire - Animation CSS en fin de partie"
 cover:
   image: /public/2019/fireworks.jpg

@@ -47,7 +47,7 @@ Pour l'instant, l'image sur mon blog est dimensionnée en 640 x 480 pixels alors
 ```markdown
 ---
 date: 2019-12-16 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 ---
@@ -137,7 +137,7 @@ Pour l'instant, je pars sur la méthode n° 3 et je modifie le Front Matter de m
 ```markdown
 ---
 date: 2019-12-16 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 title: "Nouvelle CSS et 5 trucs bons à savoir"
 image: "/public/2019/sapin-de-noel.jpg"
 excerpt: "Pour la nouvelle année à venir, j'ai un peu rafraîchi la charte graphique de mon blogue. Outre le côté 'tout nouveau, tout beau', cela m'a permis de voir 2 ou 3 trucs de CSS et de Jekyll que je ne connaissais pas."
@@ -228,7 +228,7 @@ Puis pour tous les billets en anglais, je modifie le Front Matter pour redéfini
 ```markdown
 ---
 date: 2019-12-17 12:09:42 +02:00
-tags: [ css ]
+tags: [ css, html ]
 lang: en-US
 title: "A new CSS and 5 tips to know"
 ---
