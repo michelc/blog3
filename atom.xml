@@ -643,6 +643,7 @@ public enum NatureType
 
         </content>
         <category term="css" />
+        <category term="html" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2020/swing.jpg" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2020/swing.jpg" />
     </entry>
