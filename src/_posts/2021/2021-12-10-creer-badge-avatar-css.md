@@ -11,7 +11,7 @@ excerpt: Ce n'est pas très compliqué, et en à peine 30 lignes de CSS et une p
 
 Il y a quelques temps, j'avais développé une petite application pour consulter plus facilement les tickets d'assistance qui m'étaient affectés. J'ai depuis laissé tombé ce programme, mais comme cela m'avait donné l'occasion de présenter les échanges sous forme de conversation, je sauvegarde ici comment j'affichais les badges pour identifier les utilisateurs.
 
-Pour commencer, je défini un carré de 100px sur 100px auquel j'applique des coins arrondis grâce à la propriété `border-radius` à 50% pour que le carré devienne rond. Puis je colorie en vert pour que cela soit visible sur un fond blanc et j'ajoute une bordure assez épaisse pour que cela ressorte encore mieux.
+Pour commencer, je défini un carré de 100px sur 100px auquel j'applique des coins arrondis grâce à la propriété `border-radius` à 50% pour que le carré devienne rond. Puis je colorie en vert pour que cela soit visible sur un fond blanc et j'ajoute une bordure argentée assez épaisse pour que cela ressorte encore mieux.
 
 ```html
 <style>
@@ -189,3 +189,9 @@ C'est quasi-terminé. Dans la pratique, un badge de 100 pixels de large (sans co
 Et voilà ! A peine 30 lignes de CSS pour un résultat très satisfaisant. Maintenant, si jamais j'en ai à nouveau besoin, je saurais où retrouver ça.
 
 ![](/public/2021/badge-05.png)
+
+<div class="encart">
+
+English version: {% goto_en "How to create a badge / avatar in CSS", "2021-12-11-create-badge-avatar-css" %}.
+
+</div>
