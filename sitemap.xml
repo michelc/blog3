@@ -2134,10 +2134,14 @@
   </url>
   <url>
     <loc>https://blog.pagesd.info/archives/</loc>
-    <lastmod>2021-12-11</lastmod>
+    <lastmod>2021-12-20</lastmod>
   </url>
   <url>
     <loc>https://blog.pagesd.info/</loc>
-    <lastmod>2021-12-11</lastmod>
+    <lastmod>2021-12-20</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.pagesd.info/2021/12/20/eleventy-creation-site/</loc>
+    <lastmod>2021-12-20</lastmod>
   </url>
 </urlset>

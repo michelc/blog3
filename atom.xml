@@ -3,12 +3,235 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2021-12-11T09:13:27.000Z</updated>
+    <updated>2021-12-20T12:29:43.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Création de mon site Eleventy</title>
+        <link href="https://blog.pagesd.info/2021/12/20/eleventy-creation-site/" rel="alternate" hreflang="fr-FR" />
+        <updated>2021-12-20T12:29:43.000Z</updated>
+        <published>2021-12-20T12:29:43.000Z</published>
+        <id>https://blog.pagesd.info/2021/12/20/eleventy-creation-site/</id>
+        <summary>Pour migrer mon ancien blogue de Jekyll vers Eleventy, j&#39;ai commencé de façon classique en suivant les instructions disponibles un peu partout, en particulier la page Getting started sur le site d&#39;Eleventy.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Pour migrer mon ancien blogue de Jekyll vers Eleventy, j&#39;ai commencé de façon classique en suivant les instructions disponibles un peu partout, en particulier la page &lt;a href=&quot;https://www.11ty.dev/docs/getting-started/&quot;&gt;Getting started&lt;/a&gt; sur le site d&#39;Eleventy.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir blog11
+cd blog11
+npm init -y
+npm install --save-dev @11ty/eleventy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis sous VS Code, je modifie l&#39;entrée &amp;quot;scripts&amp;quot; du fichier &amp;quot;package.json&amp;quot; pour pouvoir facilement lancer mon site par un simple &lt;code&gt;npm start&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;  &amp;quot;scripts&amp;quot;: {
+    &amp;quot;build&amp;quot;: &amp;quot;npx @11ty/eleventy&amp;quot;,
+    &amp;quot;start&amp;quot;: &amp;quot;npx @11ty/eleventy --serve&amp;quot;
+  },
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Comme je vais utiliser &lt;a href=&quot;https://git-scm.com/&quot;&gt;Git&lt;/a&gt;, je crée un fichier &amp;quot;.gitignore&amp;quot; pour indiquer les éléments que Git ne doit pas gérer.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;node_modules/
+package-lock.json
+_site/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Note : Pour l&#39;instant, j&#39;exclus les classiques &amp;quot;node_modules/&amp;quot; et &amp;quot;package-lock.json&amp;quot; comme dans tous mes projets Node JS. J&#39;y ajoute le dossier &amp;quot;_site/&amp;quot; où Eleventy génèrera le contenu du site.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Par défaut, Eleventy ne gère pas les fichiers référencés dans le fichier &amp;quot;.gitignore&amp;quot;. Mais il est également possible d&#39;exclure d&#39;autres fichiers spécifiquement pour Eleventy en utilisant un fichier &amp;quot;.eleventyignore&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;README.md
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pour entrer dans le vif du sujet, j&#39;ajoute le fichier &amp;quot;.eleventy.js&amp;quot; pour configurer Eleventy. Ce fichier sert à regrouper tout ce qui permet de configurer Eleventy, y compris pour remplacer certains trucs qui sinon devraient être gérés au niveau de la ligne de commande.&lt;/p&gt;
+&lt;p&gt;Dans mon cas, je copie le contenu proposé par Sia Karamalegos dans son tutoriel &lt;a href=&quot;https://sia.codes/posts/itsiest-bitsiest-eleventy-tutorial/&quot;&gt;Itsiest, Bitsiest Eleventy Tutorial&lt;/a&gt; qui reprend uniquement les valeurs par défaut employées par Eleventy. Mais je trouve plus clair de savoir à quoi m&#39;attendre.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;module.exports = function(eleventyConfig) {
+  // Set custom directories for input, output, includes, and data
+  return {
+    dir: {
+      input: &amp;quot;src&amp;quot;,
+      includes: &amp;quot;_includes&amp;quot;,
+      data: &amp;quot;_data&amp;quot;,
+      output: &amp;quot;_site&amp;quot;
+    }
+  };
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;La ligne &lt;code&gt;input: &amp;quot;src&amp;quot;&lt;/code&gt; indique que les fichiers sources du site sont stockés dans le répertoire &amp;quot;src&amp;quot;. Je crée donc ce répertoire.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir src
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;La ligne &lt;code&gt;includes: &amp;quot;_includes&amp;quot;&lt;/code&gt; indique que la charte graphique sera stockée dans le répertoire &amp;quot;_includes&amp;quot; du dossier &amp;quot;src&amp;quot;. De même, la ligne &lt;code&gt;data: &amp;quot;_data&amp;quot;&lt;/code&gt; indique que le paramétrage global du site est enregistré dans le répertoire &amp;quot;_data&amp;quot; du dossier &amp;quot;src&amp;quot;. Je crée donc ces 2 répertoires à l&#39;intérieur du répertoire &amp;quot;src&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd src
+mkdir _includes
+mkdir _data
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pour tester que ça marche, je crée enfin un premier fichier &amp;quot;index.md&amp;quot; dans le répertoire &amp;quot;src&amp;quot; avec un peu de contenu.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;# Mon nouveau Blogue
+
+C&#39;est parti pour la migration de Jekyll vers Eleventy.
+
+Jusqu&#39;ici tout va bien...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis je &amp;quot;compile&amp;quot; :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ce qui donne :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; blog11@1.0.0 start
+&amp;gt; npx @11ty/eleventy --serve
+
+Writing _site/index.html from ./src/index.md.
+Wrote 1 file in 0.21 seconds (v0.12.1)
+Watching…
+[Browsersync] Access URLs:
+ ---------------------------------------
+       Local: http://localhost:8080
+    External: http://192.168.42.236:8080
+ ---------------------------------------
+          UI: http://localhost:3001
+ UI External: http://localhost:3001
+ ---------------------------------------
+[Browsersync] Serving files from: _site
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Déjà il n&#39;y a pas d&#39;erreur ! Et je peux aller voir le site généré sur &lt;a href=&quot;http://localhost:8080&quot;&gt;http://localhost:8080&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/eleventy-001.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;C&#39;est bien. Mais si j&#39;affiche le code source de cette page, je peux constater que ce n&#39;est pas un contenu HTML complet. On n&#39;y retrouve que les 3 lignes du fichier source transformées en HTML.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;h1&amp;gt;Mon nouveau Blogue&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;C&#39;est parti pour la migration de Jekyll vers Eleventy.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Jusqu&#39;ici tout va bien...&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Je vais donc devoir ajouter un &amp;quot;layout&amp;quot; pour que Eleventy ait un &amp;quot;cadre&amp;quot; où insérer le HTML qu&#39;il génère à partir des fichiers Markdown. Pour cela, je crée un fichier &amp;quot;layout.njk&amp;quot; dans le sous-répertoire &amp;quot;src/_includes&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-njk&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;fr-FR&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;Mon nouveau blogue&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
+  {{ content | safe }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis il faut que j&#39;indique à Eleventy d&#39;utiliser ce layout lorsqu&#39;il génère le contenu du site. Pour cela, j&#39;ajoute un &amp;quot;front matter&amp;quot; au tout début du fichier &amp;quot;index.md&amp;quot; qui devient alors :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;---
+layout: layout.njk
+---
+# Mon nouveau Blogue
+
+C&#39;est parti pour la migration de Jekyll vers Eleventy.
+
+Jusqu&#39;ici tout va bien...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lorsque je sauvegarde le fichier, le site est recompilé automatiquement, car la commande &amp;quot;npm start&amp;quot; (qui a lancé la commande &lt;code&gt;npx @11ty/eleventy --serve&lt;/code&gt;) est toujours en cours dans le terminal de VS Code.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;File changed: src\index.md
+Writing _site/index.html from ./src/index.md.
+Wrote 1 file in 0.07 seconds (v0.12.1)
+Watching…
+[Browsersync] Reloading Browsers...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et le contenu du navigateur est lui aussi automatiquement rafraichi (grâce à &lt;a href=&quot;https://browsersync.io/&quot;&gt;Browsersync&lt;/a&gt; qui est utilisé par Eleventy).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/eleventy-002.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Rien qu&#39;au titre de l&#39;onglet qui est passé de &amp;quot;localhost:8080&amp;quot; à &amp;quot;Mon nouveau blogue&amp;quot;, je peux voir que Eleventy a bien pris en compte le nouveau layout. Mais ça ne coûte qu&#39;un clic-droit de vérifier en affichant le code source de la page.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;fr-FR&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;Mon nouveau blogue&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;&amp;lt;script id=&amp;quot;__bs_script__&amp;quot;&amp;gt;//&amp;lt;![CDATA[
+    document.write(&amp;quot;&amp;lt;script async src=&#39;/browser-sync/browser-sync-client.js?v=2.27.7&#39;&amp;gt;&amp;lt;\/script&amp;gt;&amp;quot;.replace(&amp;quot;HOST&amp;quot;, location.hostname));
+//]]&amp;gt;&amp;lt;/script&amp;gt;
+
+  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
+  &amp;lt;h1&amp;gt;Mon nouveau Blogue&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;C&#39;est parti pour la migration de Jekyll vers Eleventy.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Jusqu&#39;ici tout va bien...&amp;lt;/p&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;C&#39;est pas mal !&lt;/p&gt;
+&lt;p&gt;Mais comme on peut le voir, le titre de mon nouveau blogue apparait 2 fois : une première dans la balise &lt;code&gt;&amp;lt;title&amp;gt;&lt;/code&gt; et une seconde dans la balise &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;. Ce qui est assez normal. Ce qui est moins amusant, c&#39;est que pour cela j&#39;ai dû le répéter dans 2 fichiers différents :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dans &amp;quot;layout.njk&amp;quot; pour qu&#39;il apparaisse dans la balise &lt;code&gt;&amp;lt;title&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;dans &amp;quot;index.md&amp;quot; pour qu&#39;il s&#39;affiche dans le titre &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Et qu&#39;en plus je n&#39;ai même pas été foutu de l&#39;écrire de la même façon à chaque fois :)&lt;/p&gt;
+&lt;p&gt;C&#39;est là que le dossier &amp;quot;src/_data&amp;quot; va servir. Je vais créer un fichier &amp;quot;site.json&amp;quot; pour y renseigner tous les informations globales du site. Ça correspond au fichier &amp;quot;_config.yml&amp;quot; de Jekyll.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
+    &amp;quot;title&amp;quot;: &amp;quot;Mon nouveau Blogue&amp;quot;,
+    &amp;quot;url&amp;quot;: &amp;quot;https://mon.nouveau.blog&amp;quot;,
+    &amp;quot;lang&amp;quot;: &amp;quot;fr-FR&amp;quot;,
+    &amp;quot;description&amp;quot;: &amp;quot;Mon blog, de 2004 à aujourd&#39;hui...&amp;quot;,
+    &amp;quot;author&amp;quot;: &amp;quot;Michel&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;J&#39;en ai mis un peu plus...&lt;/p&gt;
+&lt;p&gt;Maintenant, je peux mettre à jour le layout pour y utiliser les variables globales &amp;quot;site.lang&amp;quot; et &amp;quot;site.title&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-njk&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;{{ site.title }}&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
+  {{ content | safe }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et aussi le fichier &amp;quot;index.md&amp;quot; pour y utiliser la variable globale &amp;quot;site.title&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;---
+layout: layout.njk
+---
+# {{ site.title }}
+
+C&#39;est parti pour la migration de Jekyll vers Eleventy.
+
+Jusqu&#39;ici tout va bien...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Je retourne sur le navigateur et je peux constater que maintenant c&#39;est bien &amp;quot;Mon nouveau Blogue&amp;quot; partout.&lt;/p&gt;
+&lt;p&gt;Un dernier truc pour aujourd&#39;hui. Comme le site va contenir plusieurs pages et des tas de billets, je vais avoir besoin de définir un titre pour chaque page en plus du titre général du site.&lt;/p&gt;
+&lt;p&gt;Pour donner un titre à la page, j&#39;ajoute la variable &amp;quot;title&amp;quot; dans le front matter du fichier &amp;quot;index.md&amp;quot; et je remplace l&#39;utilisation de la variable globale &amp;quot;site.title&amp;quot; par celle de cette nouvelle variable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;---
+layout: layout.njk
+title: Accueil
+---
+# {{ title }}
+
+C&#39;est parti pour la migration de Jekyll vers Eleventy.
+
+Jusqu&#39;ici tout va bien...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis j&#39;ajoute le titre de la page dans &amp;quot;layout.njk&amp;quot; , pour que l&#39;utilisateur sache sur quelle page il est en plus d&#39;avoir le titre du blogue.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-njk&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
+  {{ content | safe }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ce qui donne :&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2021/eleventy-003.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Ctrl+C dans le terminal de VS Code pour arrêter la tâche &amp;quot;npm start&amp;quot; et c&#39;est bon pour aujourd&#39;hui.&lt;/p&gt;
+&lt;p&gt;Ou alors juste :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;c:\code\blog11&amp;gt; git init -b main
+c:\code\blog11&amp;gt; git add .
+c:\code\blog11&amp;gt; git commit -m &amp;quot;Création du blog.&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+        </content>
+        <category term="11ty" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/tour-eiffel.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/tour-eiffel.jpg" />
+    </entry>
     <entry>
         <title type="html">How to create a badge / avatar in CSS</title>
         <link href="https://blog.pagesd.info/2021/12/11/create-badge-avatar-css/" rel="alternate" hreflang="fr-FR" />
@@ -109,7 +332,7 @@
     /* Hide initials */
     color: transparent;
     /* Show image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.jpg&amp;quot;);
+    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
     background-position: center;
     background-size: cover;
   }
@@ -156,7 +379,7 @@
     /* Hide initials */
     color: transparent;
     /* Show image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.jpg&amp;quot;);
+    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
     background-position: center;
     background-size: cover;
   }
@@ -279,7 +502,7 @@
     /* Cacher les initiales */
     color: transparent;
     /* Afficher l&#39;image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.jpg&amp;quot;);
+    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
     background-position: center;
     background-size: cover;
   }
@@ -326,7 +549,7 @@
     /* Cacher les initiales */
     color: transparent;
     /* Afficher l&#39;image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.jpg&amp;quot;);
+    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
     background-position: center;
     background-size: cover;
   }
@@ -536,115 +759,5 @@ public enum NatureType
         <category term="enum" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Sidebar animation with CSS</title>
-        <link href="https://blog.pagesd.info/2020/06/02/sidebar-css-animation/" rel="alternate" hreflang="en-US" />
-        <updated>2020-06-02T11:28:16.000Z</updated>
-        <published>2020-06-02T11:28:16.000Z</published>
-        <id>https://blog.pagesd.info/2020/06/02/sidebar-css-animation/</id>
-        <summary>How to show or hide the sidebar with a small CSS animation, an icon and a jsfiddle to test it.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;I&#39;ve already made a &lt;a href=&quot;/2020/05/20/create-template-sidebar-content/&quot;&gt;template with content + sidebar&lt;/a&gt;, then to &lt;a href=&quot;/2020/05/28/hide-show-sidebar/&quot;&gt;hide or show the sidebar&lt;/a&gt; quite simply. I will now try to improve these basic attemps with some CSS animations and a few icons.&lt;/p&gt;
-&lt;h2&gt;Animate the change of state&lt;/h2&gt;
-&lt;p&gt;It&#39;s very simple: I just complete the &amp;quot;sidebar&amp;quot; and &amp;quot;content&amp;quot; styles with:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;transition: all 1s;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This is a CSS property which in 1 second (to have time to see what is going on) will animate the passage of the following CSS values:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar {
-    display: block;
-}
-#content {
-    width: calc(100% - 299px);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To these new values:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.no-sidebar #sidebar {
-    display: none;
-}
-.no-sidebar #content {
-    width: 100%;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now, when I click on the &amp;quot;sidebar-toggle&amp;quot; button, adding the &amp;quot;no-sidebar&amp;quot; class to the &amp;quot;wrapper&amp;quot; div shouldn&#39;t immediately hide the &amp;quot;sidebar&amp;quot; and expand the &amp;quot;content&amp;quot;. It should last 1 second and be done gradually.&lt;/p&gt;
-&lt;p&gt;It works right away! Almost...&lt;/p&gt;
-&lt;p&gt;For the &amp;quot;content&amp;quot;, we can clearly see it &amp;quot;move&amp;quot; when we click on the button to use the full width of the screen.&lt;/p&gt;
-&lt;p&gt;On the other hand, the &amp;quot;sidebar” disappears or appears instantly. This is because the change of the &amp;quot;display” property from &amp;quot;block” to &amp;quot;none” is not handle by CSS animations :(&lt;/p&gt;
-&lt;p&gt;So we have to use a hack and hide the &amp;quot;sidebar&amp;quot; by taking it out of the screen. For this, we set a negative margin equal to its width:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar {
-    margin-left: 0;
-}
-
-.no-sidebar #sidebar {
-    margin-left: -299px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We can speed up the animation (because otherwise the &lt;em&gt;lorem ipsum dolor sit amet...&lt;/em&gt; is pitching and will end up making me sick):&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;transition: all 0.25s;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Well, it seems perfect to me.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note: the &lt;code&gt;transition: all 0.25s&lt;/code&gt; must be defined twice: once for the CSS of &amp;quot;#sidebar&amp;quot; and a second time for the CSS code of &amp;quot;#content&amp;quot;.&lt;/em&gt;&lt;/p&gt;
-&lt;h2&gt;Use an icon to switch between states&lt;/h2&gt;
-&lt;p&gt;Finally, I&#39;m not going to use an icon but a regular character with some CSS to make it look good.&lt;/p&gt;
-&lt;p&gt;And since I&#39;m not good enough, I copy/paste everything from StackOverflow: &lt;a href=&quot;https://stackoverflow.com/questions/22975037/style-a-link-to-be-a-circle-with-an-arrow-inside&quot;&gt;Style a link to be a circle with an arrow inside&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I start by replacing the button with an &lt;code&gt;a&lt;/code&gt; tag:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a href=&amp;quot;#&amp;quot; id=&amp;quot;sidebar-toggle&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then I add the CSS code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar-toggle {
-    background-color: orange;
-    border-radius: 50%;
-    display: block;
-    height: 2.2rem;
-    left: -1.1rem;
-    position: absolute;
-    text-decoration: none;
-    top: 7px;
-    width: 2.2rem;
-}
-#sidebar-toggle::after {
-    content: &amp;quot;🡐&amp;quot;;
-    color: white;
-    display: block;
-    font-size: 1.6rem;
-    font-weight: bold;
-    margin: -.2rem 0 0 0;
-    text-align: center;
-}
-.no-sidebar #sidebar-toggle::after {
-    content: &amp;quot;🡒&amp;quot;;
-    margin-left: .2rem;
-}
-#sidebar-toggle:hover {
-    background-color: goldenrod;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note: For both arrows, I picked from &lt;a href=&quot;http://xahlee.info/comp/unicode_arrows.html&quot;&gt;Unicode Arrows&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Good, it works.&lt;/p&gt;
-&lt;p&gt;To be almost perfect, I have to position this &amp;quot;icon&amp;quot; right on the edge between the &amp;quot;sidebar&amp;quot; and the &amp;quot;content&amp;quot;:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;#sidebar-toggle {
-    position: absolute;
-    left: -1.25rem;
-    top: 7px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Plus, remember to hide it when printing:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;@media print {
-    #sidebar-toggle { display: none; }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This will do the trick :)&lt;/p&gt;
-&lt;h2&gt;Demonstration&lt;/h2&gt;
-&lt;script async src=&quot;//jsfiddle.net/qo6dx3w4/1/embed/result/&quot;&gt;&lt;/script&gt;
-&lt;p&gt;Well, now that I have the template I looked for and even more thanks to these last additions, I can work for real and start coding my application...&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2020/06/01/animation-css-sidebar/&quot; hreflang=&quot;fr-FR&quot;&gt;Animer une sidebar avec CSS&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="css" />
-        <category term="html" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2020/swing.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2020/swing.jpg" />
     </entry>
 </feed>
