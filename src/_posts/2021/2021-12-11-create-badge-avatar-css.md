@@ -119,7 +119,7 @@ To be simple, the modification needed to replace the initials with a photo consi
     /* Hide initials */
     color: transparent;
     /* Show image */
-    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.jpg");
+    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.png");
     background-position: center;
     background-size: cover;
   }
@@ -174,7 +174,7 @@ It's almost done. In practice, a 100 pixel wide badge (not counting the 10 pixel
     /* Hide initials */
     color: transparent;
     /* Show image */
-    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.jpg");
+    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.png");
     background-position: center;
     background-size: cover;
   }

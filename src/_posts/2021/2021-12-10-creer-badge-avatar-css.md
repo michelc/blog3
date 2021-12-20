@@ -119,7 +119,7 @@ En faisant au plus simple, la modification nécessaire pour remplacer les initia
     /* Cacher les initiales */
     color: transparent;
     /* Afficher l'image */
-    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.jpg");
+    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.png");
     background-position: center;
     background-size: cover;
   }
@@ -174,7 +174,7 @@ C'est quasi-terminé. Dans la pratique, un badge de 100 pixels de large (sans co
     /* Cacher les initiales */
     color: transparent;
     /* Afficher l'image */
-    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.jpg");
+    background-image: url("https://blog.pagesd.info/public/2021/queen-of-hearts.png");
     background-position: center;
     background-size: cover;
   }
