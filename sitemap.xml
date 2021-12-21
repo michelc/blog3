@@ -2133,15 +2133,19 @@
     <lastmod>2021-12-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.pagesd.info/archives/</loc>
+    <loc>https://blog.pagesd.info/2021/12/20/eleventy-creation-site/</loc>
     <lastmod>2021-12-20</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.pagesd.info/archives/</loc>
+    <lastmod>2021-12-21</lastmod>
   </url>
   <url>
     <loc>https://blog.pagesd.info/</loc>
-    <lastmod>2021-12-20</lastmod>
+    <lastmod>2021-12-21</lastmod>
   </url>
   <url>
-    <loc>https://blog.pagesd.info/2021/12/20/eleventy-creation-site/</loc>
-    <lastmod>2021-12-20</lastmod>
+    <loc>https://blog.pagesd.info/2021/12/21/highlight-problems-dev-to/</loc>
+    <lastmod>2021-12-21</lastmod>
   </url>
 </urlset>

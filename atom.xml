@@ -3,12 +3,96 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2021-12-20T12:29:43.000Z</updated>
+    <updated>2021-12-21T13:04:18.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Two highlight problems on dev.to</title>
+        <link href="https://blog.pagesd.info/2021/12/21/highlight-problems-dev-to/" rel="alternate" hreflang="fr-FR" />
+        <updated>2021-12-21T13:04:18.000Z</updated>
+        <published>2021-12-21T13:04:18.000Z</published>
+        <id>https://blog.pagesd.info/2021/12/21/highlight-problems-dev-to/</id>
+        <summary>Yesterday, I had troubles to highlight my Nunjucks code on dev.to. Also, I had a very strange bug with my markdown snippets.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Yesterday, I had troubles to highlight my Nunjucks code on &lt;a href=&quot;https://dev.to/&quot;&gt;dev.to&lt;/a&gt;. Also, I had a very strange bug with my markdown snippets.&lt;/p&gt;
+&lt;h2&gt;How to highlight Nunjucks on dev.to?&lt;/h2&gt;
+&lt;p&gt;According to &lt;a href=&quot;https://github.com/forem/forem-docs/blob/main/docs/technical-overview/stack.md&quot;&gt;Forem technical docs&lt;/a&gt;, they use &lt;a href=&quot;https://github.com/rouge-ruby/rouge&quot;&gt;Rouge&lt;/a&gt; to highlight code snippets. Rouge can highlight &lt;a href=&quot;https://github.com/rouge-ruby/rouge/blob/master/docs/Languages.md&quot;&gt;over 200 different languages&lt;/a&gt;. But not &lt;a href=&quot;https://github.com/rouge-ruby/rouge/issues/758&quot;&gt;Nunjucks&lt;/a&gt;... On the other hand, it supports Liquid, Jinja and Twig who look a lot like Nunjucks.&lt;/p&gt;
+&lt;p&gt;So I did some tests directly on &lt;a href=&quot;https://dev.to/michelc&quot;&gt;dev.to&lt;/a&gt; (where results are much more relevant than here on my blog).&lt;/p&gt;
+&lt;h3&gt;Using ```liquid&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-liquid&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
+  {{ content | safe }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Using ```jinja&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jinja&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
+  {{ content | safe }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Using ```twig&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-twig&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
+  {{ content | safe }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Solution&lt;/h3&gt;
+&lt;p&gt;Liquid doesn&#39;t work. Probably because it&#39;s the template used by Forem. Jinja and Twig are fine. So I will write my Nunjucks examples by starting my code blocks with &lt;code&gt;```jinja&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;A bug with Markdown highlight?&lt;/h2&gt;
+&lt;p&gt;I don&#39;t know why, but my Markdown code snippets are not all properly highlighted. If you search for &amp;quot;layout: layout.njk&amp;quot; in my post &amp;quot;&lt;a href=&quot;https://dev.to/michelc/creation-de-mon-site-eleventy-mo2&quot;&gt;Création de mon site Eleventy&lt;/a&gt;&amp;quot; on dev.to, the first frontmatter is correctly highlighted. But not in the second and third snippets.&lt;/p&gt;
+&lt;p&gt;I always wrote:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-md&quot;&gt;---
+layout: layout.njk
+---
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But the last two times, it generates too many dashes. And it can&#39;t to recognize my code anymore?&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;--------
+layout: layout.njk
+--------
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Note: Maybe it&#39;s not related to &lt;code&gt;```markdown&lt;/code&gt;, because it also does it with only &lt;code&gt;```&lt;/code&gt; at the beginning of the code. On dev.to, I write &lt;code&gt;--------&lt;/code&gt; (8 dashes) to show exactly what I get on my previous post and it generates &lt;code&gt;-------------&lt;/code&gt; (13 dashes) instead :)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;And if I move these two blocks at the beginning of my post, the highlight is magically fixed...&lt;/p&gt;
+&lt;p&gt;If anyone has the solution, I&#39;m curious. But it&#39;s not that bad.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: It&#39;s fixed! Many thanks to &lt;a href=&quot;https://dev.to/djuber/comment/1kikf&quot;&gt;Daniel&lt;/a&gt; for solving this problem so quickly and to the whole Forem team for building such a good product.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Sure, I don&#39;t have all this problems on my &lt;a href=&quot;https://blog.pagesd.info/&quot;&gt;blog&lt;/a&gt;. But to be fair, all snippets are just raw code.&lt;/p&gt;
+
+        </content>
+        <category term="11ty" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/matrix.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/matrix.jpg" />
+    </entry>
     <entry>
         <title type="html">Création de mon site Eleventy</title>
         <link href="https://blog.pagesd.info/2021/12/20/eleventy-creation-site/" rel="alternate" hreflang="fr-FR" />
@@ -668,90 +752,6 @@ public enum NatureType
 &lt;p&gt;So okay, that forces me to accept having accents in variable names (well, only in enum value names). But I think I&#39;ll use this method from now on, at least in my personal projects.&lt;/p&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2021/11/25/afficher-joli-libelle-avec-enum-tostring/&quot; hreflang=&quot;fr-FR&quot;&gt;Afficher un joli libellé avec Enum.ToString()&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="csharp" />
-        <category term="enum" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/cute-puppies.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Afficher un joli libellé avec Enum.ToString()</title>
-        <link href="https://blog.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/" rel="alternate" hreflang="fr-FR" />
-        <updated>2021-11-25T12:41:28.000Z</updated>
-        <published>2021-11-25T12:41:28.000Z</published>
-        <id>https://blog.pagesd.info/2021/11/25/afficher-joli-libelle-avec-enum-tostring/</id>
-        <summary>Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un Enum. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut Description pour définir de jolis libellés.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Un jour, j&#39;ai eu besoin d&#39;afficher un libellé en fonction de la valeur d&#39;un &lt;code&gt;Enum&lt;/code&gt;. J&#39;ai donc fait comme à chaque fois et j&#39;ai utilisé l&#39;attribut &lt;code&gt;Description&lt;/code&gt; pour définir de jolis libellés.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.ComponentModel;
-
-public enum NatureType
-{
-    Ouverture,
-    Modification,
-    [Description(&amp;quot;Déblocage&amp;quot;)]
-    Deblocage,
-    [Description(&amp;quot;Alerte 3 mois&amp;quot;)]
-    Alerte3Mois,
-    [Description(&amp;quot;Alerte 6 mois&amp;quot;)]
-    Alerte6Mois
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Puis ensuite, j&#39;ai repris le code assez compliqué dont on use et abuse depuis toujours pour récupérer cette description. C&#39;est une simple méthode d&#39;extension, qui est générique, et qui utilise une pointe de rélexion. Comme je le disais, un truc simple qui est malgré tout capable de me renvoyer la description associée à une valeur de l&#39;enum ou au pire de faire un &lt;code&gt;.ToString()&lt;/code&gt; pour les valeurs sans attribut &lt;code&gt;Description&lt;/code&gt; :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string GetCaption(this Enum value)
-{
-    var type = value.GetType();
-    var member = type.GetMember(value.ToString());
-    if ((member != null &amp;amp;&amp;amp; member.Length &amp;gt; 0))
-    {
-        var attributes = member[0].GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
-        if ((attributes != null &amp;amp;&amp;amp; attributes.Count() &amp;gt; 0))
-        {
-            return ((System.ComponentModel.DescriptionAttribute)attributes.ElementAt(0)).Description;
-        }
-    }
-    return value.ToString();
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Vraiment rien de compliqué. À part d&#39;ajouter cette méthode au fichier StringHelpers.cs de mon projet.&lt;/p&gt;
-&lt;p&gt;Mais quand même, ça ne me coûte rien d&#39;essayer de voir si depuis le temps C# n&#39;aurait rien inventé d&#39;encore plus simple ou plus pratique. À part un Google Search &amp;quot;c# enum friendly name&amp;quot; + Tools + Past year.&lt;/p&gt;
-&lt;p&gt;Bonne nouvelle, il y a des personnes qui s&#39;y sont attelées, mais malheureusement, rien de bien nouveau :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://dejanstojanovic.net/aspnet/2021/september/adding-display-name-to-enum-values/&quot;&gt;Adding display name to Enum values&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.delftstack.com/howto/csharp/csharp-enum-to-string/&quot;&gt;Convert Enum to String in C#&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://newbedev.com/methods-inside-enum-in-c&quot;&gt;Methods inside enum in C#&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;J&#39;ai un peu de temps à perdre alors je tente des trucs :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public enum NatureType
-{
-    Ouverture,
-    Modification,
-    Déblocage,
-    Alerte_3_mois,
-    Alerte_6_mois
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Idéalement je n&#39;ai plus qu&#39;à faire un &lt;code&gt;public override string ToString()&lt;/code&gt; pour remplacer les soulignés par des espaces et le tour est joué !&lt;/p&gt;
-&lt;p&gt;Sauf que où diable faire ça ?&lt;/p&gt;
-&lt;p&gt;C&#39;est pas grave, je dois pouvoir tenter le coup via une méthode d&#39;extension :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string ToString(this Enum value)
-{
-    return value.ToString().Replace(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ben non :( Ça compile sans provoquer d&#39;erreur, mais ensuite c&#39;est comme si ça n&#39;existait pas ! J&#39;ai beau mettre un point d&#39;arrêt, je n&#39;y passe même pas et cela renvoie toujours le &lt;code&gt;.ToString()&lt;/code&gt; de base avec les soulignés ???&lt;/p&gt;
-&lt;p&gt;C&#39;est pas ça qui va m&#39;arrêter. Soit je prends mon parti des soulignés. Soit je le fais quand même :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public static string ToCaption(this Enum value)
-{
-    return value.ToString().Replace(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;J&#39;ai hésité avec &lt;code&gt;.ToFriendlyName()&lt;/code&gt; qui semble un peu plus tendance, mais  &lt;code&gt;.ToCaption()&lt;/code&gt; a l&#39;avantage d&#39;être plus court :)&lt;/p&gt;
-&lt;p&gt;Alors d&#39;accord, ça m&#39;oblige à accepter d&#39;avoir quelquefois des accents dans les noms de variables (enfin seulement dans les noms de valeurs d&#39;enum). Mais je pense que désormais ça va être ma nouvelle façon de faire, au moins dans mes projets personnels.&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2021/11/26/display-friendly-name-with-enum-tostring/&quot; hreflang=&quot;en-US&quot;&gt;Display a friendly name with Enum.ToString()&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
         </content>
