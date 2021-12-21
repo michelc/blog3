@@ -20,7 +20,7 @@
 &lt;p&gt;Yesterday, I had troubles to highlight my Nunjucks code on &lt;a href=&quot;https://dev.to/&quot;&gt;dev.to&lt;/a&gt;. Also, I had a very strange bug with my markdown snippets.&lt;/p&gt;
 &lt;h2&gt;How to highlight Nunjucks on dev.to?&lt;/h2&gt;
 &lt;p&gt;According to &lt;a href=&quot;https://github.com/forem/forem-docs/blob/main/docs/technical-overview/stack.md&quot;&gt;Forem technical docs&lt;/a&gt;, they use &lt;a href=&quot;https://github.com/rouge-ruby/rouge&quot;&gt;Rouge&lt;/a&gt; to highlight code snippets. Rouge can highlight &lt;a href=&quot;https://github.com/rouge-ruby/rouge/blob/master/docs/Languages.md&quot;&gt;over 200 different languages&lt;/a&gt;. But not &lt;a href=&quot;https://github.com/rouge-ruby/rouge/issues/758&quot;&gt;Nunjucks&lt;/a&gt;... On the other hand, it supports Liquid, Jinja and Twig who look a lot like Nunjucks.&lt;/p&gt;
-&lt;p&gt;So I did some tests directly on &lt;a href=&quot;https://dev.to/michelc&quot;&gt;dev.to&lt;/a&gt; (where results are much more relevant than here on my blog).&lt;/p&gt;
+&lt;p&gt;So I did some tests directly on &lt;a href=&quot;https://dev.to/michelc/how-to-highlight-nunjucks-on-devto-glm&quot;&gt;dev.to&lt;/a&gt; (where results are much more relevant than here on my blog where I don&#39;t highlight code).&lt;/p&gt;
 &lt;h3&gt;Using ```liquid&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&quot;language-liquid&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
