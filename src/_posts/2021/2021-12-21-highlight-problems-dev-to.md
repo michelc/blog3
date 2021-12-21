@@ -16,7 +16,7 @@ Yesterday, I had troubles to highlight my Nunjucks code on [dev.to](https://dev.
 
 According to [Forem technical docs](https://github.com/forem/forem-docs/blob/main/docs/technical-overview/stack.md), they use [Rouge](https://github.com/rouge-ruby/rouge) to highlight code snippets. Rouge can highlight [over 200 different languages](https://github.com/rouge-ruby/rouge/blob/master/docs/Languages.md). But not [Nunjucks](https://github.com/rouge-ruby/rouge/issues/758)... On the other hand, it supports Liquid, Jinja and Twig who look a lot like Nunjucks.
 
-So I did some tests directly on [dev.to](https://dev.to/michelc) (where results are much more relevant than here on my blog).
+So I did some tests directly on [dev.to](https://dev.to/michelc/how-to-highlight-nunjucks-on-devto-glm) (where results are much more relevant than here on my blog where I don't highlight code).
 
 ### Using &#96;&#96;&#96;liquid
 
