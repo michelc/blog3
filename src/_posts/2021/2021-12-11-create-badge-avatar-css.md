@@ -1,5 +1,6 @@
 ---
 date: 2021-12-11 11:13:27 +02:00
+lang: en-US
 tags: [ css, html ]
 title: "How to create a badge / avatar in CSS"
 cover:

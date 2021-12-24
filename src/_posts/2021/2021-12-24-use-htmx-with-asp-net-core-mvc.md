@@ -1,5 +1,6 @@
 ---
 date: 2021-12-24 13:07:22 +02:00
+lang: en-US
 tags: [ csharp, .net, mvc, htmx ]
 title: "Use HTMX with ASP.NET Core MVC"
 cover:
