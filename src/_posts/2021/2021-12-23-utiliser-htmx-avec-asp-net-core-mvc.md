@@ -16,7 +16,7 @@ Comme j'ai trouvé le temps de mettre au propre mes essais avec [HTMX](https://h
 
 Je crée vite fait une application ASP.NET Core MVC pour gérer une table Movies dans une base de données SQLite. J'ai donc un contrôleur "MoviesController" avec les méthodes suivantes :
 
-```
+```csharp
 // GET: Movies
 public async Task<IActionResult> Index() { ... }
 
@@ -69,7 +69,7 @@ A partir de maintenant, je vais ajouter HTMX à cette application puis lui appor
 
 Il y a plusieurs façon d'[installer HTMX](https://htmx.org/docs/#installing), mais pour faire vite, j'ajoute simplement la ligne `<script src="https://unpkg.com/htmx.org@1.6.1"></script>` dans mon fichier "/Views/Shared/_Layout.cshtml" :
 
-```csharp
+```html
         ...
         <div class="container">
             &copy; 2021 - MvcHtmx - @DateTime.Now.ToLongTimeString()
@@ -92,7 +92,7 @@ C'est un TagHelper classique qui génère le code HTML suivant : `<a href="/movi
 
 Comme mon application utilise un "layout", la majeure partie de la nouvelle page correspond mot pour mot au contenu de la page d'index... En fait, ce qui change c'est ce qui est généré par la méthode Razor `@RenderBody()`. Et d'un point de vue HTML, ce qui change, c'est le contenu de la balise `<main>`.
 
-```csharp
+```html
     </header>
 
     <div class="container">
@@ -123,7 +123,7 @@ L'attribut "[hx-push-url](https://htmx.org/attributes/hx-push-url/)" est intére
 
 Avec ces 3 nouveaux attributs, le TagHelper est maintenant :
 
-```
+```html
 <td>
   <a asp-action="Create" hx-target="main" hx-push-url="true" hx-get="/movies/create/">Créer</a>
 </td>
@@ -131,7 +131,7 @@ Avec ces 3 nouveaux attributs, le TagHelper est maintenant :
 
 Ce qui génère le code HTML suivant :
 
-```
+```html
 <td>
   <a href="/movies/create/" hx-target="main" hx-push-url="true" hx-get="/movies/create/">Créer</a>
 </td>
@@ -141,7 +141,7 @@ Ce qui génère le code HTML suivant :
 
 De la même façon, je peux modifier les liens "Modifier", "Consulter" et "Supprimer" en leur ajoutant les 3 attributs spécifiques à HTMX :
 
-```
+```html
 <td>
   <a asp-action="Edit" asp-route-id="@item.Movie_ID"
      hx-target="main" hx-push-url="true" hx-get="/movies/edit/@item.Movie_ID/">Modifier</a> |
@@ -156,26 +156,26 @@ De la même façon, je peux modifier les liens "Modifier", "Consulter" et "Suppr
 
 Les vues "Details.cshtml", "Create.cshtml", "Edit.cshtml" et "Delete.cshtml" contiennent toutes un lien `<a href="/movies/">Annuler</a>` pour quitter la page et revenir à la liste des films. Ce lien est généré via le TagHelper suivant :
 
-```
+```html
 <a asp-action="Index">Annuler</a>
 ```
 
 Que je remplace en :
 
-```
+```html
 <a asp-action="Index" hx-target="main" hx-push-url="true" hx-get="/movies/">Annuler</a>
 ```
 
 La vue "Details.cshtml" qui sert à consulter un film contient également un lien qui renvoie vers la page pour modifier le film en cours. Sa modification avec 3 attributs "hx-*" supplémentaires est désormais classique :
 
-```
+```html
 <a asp-action="Edit" asp-route-id="@Model.Movie_ID" class="btn btn-secondary"
    hx-target="main" hx-push-url="true" hx-get="/movies/edit/@Model.Movie_ID/">Modifier</a>
 ```
 
 Ensuite, la vue "Create.cshtml" contient un formulaire HTML pour envoyer les données saisies au serveur web afin qu'il s'occupe d'insérer un nouveau film dans la base de données.
 
-```
+```html
 <form asp-action="Create" method="post" class="form-horizontal">
   ...
 </form>
@@ -183,7 +183,7 @@ Ensuite, la vue "Create.cshtml" contient un formulaire HTML pour envoyer les don
 
 Personnellement, j'ai enlevé le `asp-action="Create"` parce que je fais en sorte de toujours poster un formulaire sur la même URL que celle qui affiche ce formulaire. C'est beaucoup mieux si jamais il y a des erreurs de saisie détectées après coup côté serveur.
 
-```
+```html
 <form method="post" class="form-horizontal">
   ...
 </form>
@@ -191,7 +191,7 @@ Personnellement, j'ai enlevé le `asp-action="Create"` parce que je fais en sort
 
 Je complète le TagHelper pour qu'il soit pris en compte par HTMX :
 
-```
+```html
 <form method="post" class="form-horizontal" hx-post="/movies/create/">
   ...
 </form>
@@ -201,7 +201,7 @@ Dans ce cas, l'attribut "hx-get" est remplacé par "[hx-post](https://htmx.org/a
 
 Puis je fais pareil avec la vue "Edit.cshtml" qui sert à modifier un film :
 
-```
+```html
 <form method="post" class="form-horizontal" hx-post="/movies/edit/@Model.Movie_ID/">
   ...
 </form>
@@ -209,8 +209,7 @@ Puis je fais pareil avec la vue "Edit.cshtml" qui sert à modifier un film :
 
 Et dans la vue "Delete.cshtml" qui sert pour supprimer un film :
 
-
-```
+```html
 <form method="post" class="form-horizontal" hx-post="/movies/delete/@Model.Movie_ID/">
   ...
 </form>
@@ -284,7 +283,7 @@ private IActionResult HtmxView(object model)
 
 *Note : Bien évidemment, cette méthode mériterait d'être dans un fichier "BaseController.cs"...*
 
-**Cerise sur le gateau !**  Comme je n'ai pas fait dans la dentelle et que je renvoie l'en-tête HTTP "HX-Push" dans tous les cas, je n'ai plus besoin des `hx-push-url="true"` que j'avais ajouté au niveau de chaque lien `<a>`. Je peux donc les supprimer sans perdre en fonctionnalités.
+**Cerise sur le gateau !**  Comme je n'ai pas fait dans la dentelle et que je renvoie l'en-tête HTTP "HX-Push" avec toutes les vues partielles, je n'ai plus besoin des `hx-push-url="true"` que j'avais ajouté au niveau de chaque lien `<a>`. Je peux donc les supprimer sans perdre en fonctionnalités.
 
 
 ## Récapitulatif
@@ -294,7 +293,7 @@ Une fois qu'on sait ce qu'il faut faire, ça va vite :
 1. Ajouter `<script src="https://unpkg.com/htmx.org@1.6.1"></script>` dans le layout.
 1. Remplacer les liens `<a asp-action="Toto">Tutu</a>` par `<a asp-action="Toto" hx-target="main" hx-get="/movies/toto/">Tutu</a>`
 1. Ajouter `hx-target="main" hx-get="/movies/toto/@Un_ID/"` aux liens `<a asp-action="Toto" asp-route-id="@Un_ID">Tutu</a>`
-1. Remplacer les `<form method="post" ...` par `<form method="post" hx-post="/movies/toto/xxx" ...`
+1. Transformer les `<form method="post" ...` en `<form method="post" hx-post="/movies/toto/xxx" ...`
 1. Remplacer les `return View(model);` par des `return HtmxView(model);`
 1. Ajouter la méthode `private IActionResult HtmxView(object model) { ... }` au contrôleur
 
@@ -306,3 +305,9 @@ Pour bien visualiser et comprendre les différentes modifications apportées, le
 La prochaine fois, j'expliquerai comme créer 2 nouveaux TagHelper `<a-htmx>` et `<form-htmx>` pour que toutes ces modifications soient moins tarabiscotées (et pour éviter les doublons entre "href" et "hx-get"). 
 
 Divulgachage : on passera de `<a asp-action="Toto">Tutu</a>` à `<a-htmx asp-action="Toto">Tutu</a-htmx>` !
+
+<div class="encart">
+
+English version: {% goto_en "Use HTMX with ASP.NET Core MVC", "2021-12-24-use-htmx-with-asp-net-core-mvc" %}.
+
+</div>
