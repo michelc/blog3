@@ -93,7 +93,7 @@ public async Task&lt;IActionResult&gt; DeleteConfirmed(int id) { ... }
 <p><img src="/public/2021/htmx-essai-2.jpg" alt=""></p>
 <p>Now I will add HTMX to this app and then make some a few changes to use it and avoid to reload the whole pages every time.</p>
 <h2>Step 1 - Referencing HTMX</h2>
-<p>There are several ways to install <a href="https://htmx.org/docs/#installing">HTMX</a>, but to make it quick, I simply add the line <code>&lt;script src=&quot;https://unpkg.com/htmx.org@1.6.1&quot;&gt;&lt;/script&gt;</code> in my &quot;/Views/Shared/_Layout.cshtml&quot; file:</p>
+<p>There are several ways to <a href="https://htmx.org/docs/#installing">install HTMX</a>, but to make it quick, I simply add the line <code>&lt;script src=&quot;https://unpkg.com/htmx.org@1.6.1&quot;&gt;&lt;/script&gt;</code> in my &quot;/Views/Shared/_Layout.cshtml&quot; file:</p>
 <pre><code class="language-html">        ...
         &lt;div class=&quot;container&quot;&gt;
             &amp;copy; 2021 - MvcHtmx - @DateTime.Now.ToLongTimeString()
@@ -132,7 +132,7 @@ public async Task&lt;IActionResult&gt; DeleteConfirmed(int id) { ... }
 <ol>
 <li>Without it, the address bar would not change and would still contain &quot;https://localhost/movies/&quot; which is the URL of the index page.</li>
 <li>With it, the address bar will display the URL of the page allowing to create a movie, namely &quot;https://localhost/movies/create/&quot;.</li>
-<li>This is better if the user ever bookarks this URL or gives it to someone.</li>
+<li>This is better if the user ever bookmarks this URL or gives it to someone.</li>
 <li>And most importantly, it allows the ASP.NET Core route system to work  correctly, without having to change anything.</li>
 </ol>
 <p><em>Note: A later modification will allow me to do without this attribute, without losing any of these 4 advantages.</em></p>

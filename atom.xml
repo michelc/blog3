@@ -59,7 +59,7 @@ public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
 &lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Now I will add HTMX to this app and then make some a few changes to use it and avoid to reload the whole pages every time.&lt;/p&gt;
 &lt;h2&gt;Step 1 - Referencing HTMX&lt;/h2&gt;
-&lt;p&gt;There are several ways to install &lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;HTMX&lt;/a&gt;, but to make it quick, I simply add the line &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; in my &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; file:&lt;/p&gt;
+&lt;p&gt;There are several ways to &lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;install HTMX&lt;/a&gt;, but to make it quick, I simply add the line &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; in my &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; file:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;        ...
         &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt;
             &amp;amp;copy; 2021 - MvcHtmx - @DateTime.Now.ToLongTimeString()
@@ -98,7 +98,7 @@ public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
 &lt;ol&gt;
 &lt;li&gt;Without it, the address bar would not change and would still contain &amp;quot;https://localhost/movies/&amp;quot; which is the URL of the index page.&lt;/li&gt;
 &lt;li&gt;With it, the address bar will display the URL of the page allowing to create a movie, namely &amp;quot;https://localhost/movies/create/&amp;quot;.&lt;/li&gt;
-&lt;li&gt;This is better if the user ever bookarks this URL or gives it to someone.&lt;/li&gt;
+&lt;li&gt;This is better if the user ever bookmarks this URL or gives it to someone.&lt;/li&gt;
 &lt;li&gt;And most importantly, it allows the ASP.NET Core route system to work  correctly, without having to change anything.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;em&gt;Note: A later modification will allow me to do without this attribute, without losing any of these 4 advantages.&lt;/em&gt;&lt;/p&gt;
