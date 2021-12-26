@@ -68,7 +68,7 @@ Now I will add HTMX to this app and then make some a few changes to use it and a
 
 ## Step 1 - Referencing HTMX
 
-There are several ways to install [HTMX](https://htmx.org/docs/#installing), but to make it quick, I simply add the line `<script src="https://unpkg.com/htmx.org@1.6.1"></script>` in my "/Views/Shared/_Layout.cshtml" file:
+There are several ways to [install HTMX](https://htmx.org/docs/#installing), but to make it quick, I simply add the line `<script src="https://unpkg.com/htmx.org@1.6.1"></script>` in my "/Views/Shared/_Layout.cshtml" file:
 
 ```html
         ...
@@ -117,7 +117,7 @@ The "[hx-push-url](https://htmx.org/attributes/hx-push-url/)" attribute is inter
 
 1. Without it, the address bar would not change and would still contain "https://localhost/movies/" which is the URL of the index page.
 2. With it, the address bar will display the URL of the page allowing to create a movie, namely "https://localhost/movies/create/".
-3. This is better if the user ever bookarks this URL or gives it to someone.
+3. This is better if the user ever bookmarks this URL or gives it to someone.
 4. And most importantly, it allows the ASP.NET Core route system to work  correctly, without having to change anything.
 
 *Note: A later modification will allow me to do without this attribute, without losing any of these 4 advantages.*
