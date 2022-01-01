@@ -67,6 +67,8 @@ La ligne `input: "src"` indique que les fichiers sources du site sont stockés d
 mkdir src
 ```
 
+*Note : Avec `input: "src"` j'indique à Eleventy qu'il doit traiter les fichiers du dossier "src" et de ses sous-répertoires. Par conséquent, je n'ai pas vraiment besoin d'exclure le fichier "README.md" via le fichier ".eleventyignore", puisqu'il est présent au niveau au dessus du répertoire "src".*
+
 La ligne `includes: "_includes"` indique que la charte graphique sera stockée dans le répertoire "_includes" du dossier "src". De même, la ligne `data: "_data"` indique que le paramétrage global du site est enregistré dans le répertoire "_data" du dossier "src". Je crée donc ces 2 répertoires à l'intérieur du répertoire "src".
 
 ```
