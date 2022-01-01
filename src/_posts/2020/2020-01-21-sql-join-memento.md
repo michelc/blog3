@@ -105,6 +105,8 @@ ID  Libelle  Caption
 2   Deux     Two
 ```
 
+{% include "_adsense.njk" %}
+
 
 ## CROSS JOIN
 

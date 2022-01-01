@@ -66,6 +66,8 @@ etc...
 
 => 2.84 seconds to insert 4579 lines (i.e. 1612 requests per second) => 4 times faster.
 
+{% include "_adsense.njk" %}
+
 
 ## Test results
 

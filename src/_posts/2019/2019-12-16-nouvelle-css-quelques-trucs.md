@@ -136,6 +136,8 @@ pre {
 **Truc n° 2** : `color-adjust: exact` permet que ces blocs aient aussi une
 couleur de fond à l'impression.
 
+{% include "_adsense.njk" %}
+
 Toujours pour le code source, j'ai repris mon bout de CSS qui me permet d'avoir
 automatiquement des retours à la ligne à l'intérieur du code source. Cela évite
 d'avoir à scroller horizontalement pour voir la totalité du code ou pire de

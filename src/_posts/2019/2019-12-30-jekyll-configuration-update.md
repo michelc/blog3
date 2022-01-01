@@ -118,6 +118,8 @@ I added `title=false` to prevent the plugin from adding the `<title>` tag which 
 
 Good. I can find my Christmas tree. Otherwise, "generator" is meh. "application/ld+json", I don't know? But most importantly, "descriptions" are totally wack :(
 
+{% include "_adsense.njk" %}
+
 
 ## Customizing posts excerpt
 

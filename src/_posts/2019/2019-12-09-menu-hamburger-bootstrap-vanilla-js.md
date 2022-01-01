@@ -68,6 +68,8 @@ que la `div#navbarSupportedContent` perd sa classe "show" :
 </div>
 ```
 
+{% include "_adsense.njk" %}
+
 
 ## Le problème qu'il y a
 

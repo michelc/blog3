@@ -66,6 +66,8 @@ etc...
 
 => 2,84 secondes pour insérer 4579 lignes (soit 1612 requêtes à la seconde) => 4 fois plus rapide.
 
+{% include "_adsense.njk" %}
+
 
 ## Résultat des courses
 

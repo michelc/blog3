@@ -193,6 +193,8 @@ soixante et onze".
 "trente-deux-mille-cinq-cent-soixante-et-onze". Seuls les noms tels que
 "million" ou "milliard" en sont exemptés.
 
+{% include "_adsense.njk" %}
+
 ## 1° étape : Le zéro
 
 Le trucs le plus simple à faire pour commencer, c'est de gérer le cas du 0
@@ -486,6 +488,8 @@ public static string ToWords(this int number)
   return text;
 }
 ```
+
+{% include "_adsense.njk" %}
 
 ## 5° étape : Le pluriel de vingt
 

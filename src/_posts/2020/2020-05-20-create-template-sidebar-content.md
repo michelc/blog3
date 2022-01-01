@@ -69,7 +69,11 @@ I'm making a first improvement so that the "sidebar" uses all the height:
 }
 ```
 
-Much better! I can check what happens when scrolling by adding some HTML at the end of "content":
+Much better! 
+
+{% include "_adsense.njk" %}
+
+I can check what happens when scrolling by adding some HTML at the end of "content":
 
 ```
 <p class="scroll">...</p>

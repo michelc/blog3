@@ -67,6 +67,8 @@ La documentation du [@media(hover)](https://developer.mozilla.org/en-US/docs/Web
 
 Sinon, j'ai aussi mis un `outline: none` (mais je sais qu'il ne faut pas faire ça : [Never remove CSS outlines](https://a11yproject.com/posts/never-remove-css-outlines/)) pour qu'après avoir appuyé sur un bouton il n'y ait pas de liséré autour pour montrer qu'il a toujours le focus.
 
+{% include "_adsense.njk" %}
+
 
 ## Agrandir un peu les boutons
 

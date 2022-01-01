@@ -97,6 +97,9 @@ ID  Libelle  Caption
 2   Deux     Two
 ```
 
+{% include "_adsense.njk" %}
+
+
 ## CROSS JOIN
 
 On prend tout des 2 côtés sans faire de correspondance <=> produit cartésien.

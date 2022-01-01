@@ -68,7 +68,11 @@ Une première amélioration pour que la "sidebar" utilise toute la hauteur :
 }
 ```
 
-C'est mieux. Je peux alors tester ce qui se passe en cas de défilement en ajoutant à la fin de "content" :
+C'est mieux. 
+
+{% include "_adsense.njk" %}
+
+Je peux alors tester ce qui se passe en cas de défilement en ajoutant à la fin de "content" :
 
 ```
 <p class="scroll">...</p>

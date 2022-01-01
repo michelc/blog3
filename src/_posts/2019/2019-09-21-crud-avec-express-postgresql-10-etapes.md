@@ -223,6 +223,8 @@ Puis on installe toutes les dépendances listées dans le fichier "package.json"
 PS E:\Code\AppTestPG> npm install
 ```
 
+{% include "_adsense.njk" %}
+
 
 <a id="crud3"></a>
 
@@ -692,6 +694,8 @@ app.get("/data", (req, res) => {
   res.render("data", { model: test });
 });
 ```
+
+{% include "_adsense.njk" %}
 
 
 <a id="crud6"></a>

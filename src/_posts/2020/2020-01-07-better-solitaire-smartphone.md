@@ -68,6 +68,8 @@ The [@media(hover)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hove
 
 Otherwise, I've also put an `outline: none` (but I know that I shouldn't do this: [Never remove CSS outlines](https://a11yproject.com/posts/never-remove-css-outlines/)) so that after pressing a button there's no border around it to show it still has focus.
 
+{% include "_adsense.njk" %}
+
 
 ## Enlarge buttons
 

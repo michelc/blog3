@@ -117,6 +117,8 @@ J'ai ajouté `title=false` pour éviter que le plugin ajoute la balise `<title>`
 
 Parfait. Je retrouve bien mon sapin de Noël. Sinon, `generator` c'est moyen. `application/ld+json` c'est quoi ? Et par contre, les "descriptions" c'est tout pourri :(
 
+{% include "_adsense.njk" %}
+
 
 ## Personnalisation du résumé du billet
 

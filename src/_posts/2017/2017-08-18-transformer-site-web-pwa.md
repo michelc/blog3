@@ -84,6 +84,8 @@ même beaucoup à gagner à faire le saut. En fait, toutes les étapes nécessai
 pour transformer votre site en PWA vont améliorer votre site internet et sont
 communément considérées comme de bonnes pratiques du web.
 
+{% include "_adsense.njk" %}
+
 ## Étape 1 : Le Manifeste
 
 Un *manifeste* est un simple fichier JSON qui décrit toutes les métadonnées de

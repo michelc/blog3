@@ -58,6 +58,8 @@ Clicking on the hamburger icon again, the submenu disappears because the `div#na
 </div>
 ```
 
+{% include "_adsense.njk" %}
+
 
 ## There is a problem...
 

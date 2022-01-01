@@ -107,6 +107,8 @@ pre {
 
 **Tip #2**: `color-adjust: exact` allows these blocks to also have a background color when printed.
 
+{% include "_adsense.njk" %}
+
 Also, for source code, I used again a snippet of CSS which automatically word-wrap line inside source code. This avoids having to scroll horizontally to see the entire code or worse to lose end of lines when printing.
 
 ```css
