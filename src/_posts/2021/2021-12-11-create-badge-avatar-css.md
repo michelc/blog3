@@ -87,6 +87,8 @@ I am using the flexbox method:
 
 I would say that it's not quite in the center and that it falls a bit downwards. But it's super simple and it solves my problem quite perfectly.
 
+{% include "_adsense.njk" %}
+
 In the original application, I had a piece of server code to generate a background color based on the user's trigram. But I'll leave that aside for now.
 
 Also, I managed the use of images instead of initials to better highlight some users in the conversation. For that, I used drawings by [Cameron Mark](https://www.instagram.com/cameronmarkart/) to represent the two people affected to level 1 helpdesk.

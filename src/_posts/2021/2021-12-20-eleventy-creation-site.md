@@ -123,6 +123,8 @@ C'est bien. Mais si j'affiche le code source de cette page, je peux constater qu
 <p>Jusqu'ici tout va bien...</p>
 ```
 
+{% include "_adsense.njk" %}
+
 Je vais donc devoir ajouter un "layout" pour que Eleventy ait un "cadre" où insérer le HTML qu'il génère à partir des fichiers Markdown. Pour cela, je crée un fichier "layout.njk" dans le sous-répertoire "src/_includes".
 
 ```njk

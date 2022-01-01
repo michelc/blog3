@@ -120,6 +120,8 @@ pool.query("SELECT * FROM Livres", [], callback);
 
 Et de trois...
 
+{% include "_adsense.njk" %}
+
 
 ## Paramètres de la fonction callback
 

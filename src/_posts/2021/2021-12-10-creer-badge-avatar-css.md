@@ -86,6 +86,8 @@ J'utilise la méthode à base de flexbox :
 
 A première vue, je dirais que c'est pas tout à fait au centre et que ça penche un peu vers le bas. Mais c'est super simple et ça répond très correctement à mon problème.
 
+{% include "_adsense.njk" %}
+
 Dans l'application d'origine, j'avais aussi un bout de code côté serveur pour générer une couleur de fond en fonction du trigramme de la personne. Mais je vais laisser ça de côté pour l'instant.
 
 Par contre, j'avais aussi géré la possibilité d'avoir des images à la place des initiales pour mieux faire ressortir certains utilisateurs dans les conversations. Pour ça, j'avais notamment utilisé des dessins de [Cameron Mark](https://www.instagram.com/cameronmarkart/) pour représenter les deux personnes responsables de l'assistance de niveau 1.

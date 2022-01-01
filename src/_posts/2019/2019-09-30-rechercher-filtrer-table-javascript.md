@@ -153,6 +153,8 @@ function filter(row) {
 Le fait de cacher / afficher une ligne se fait via la propriété CSS `display`
 que l'on défini selon le cas à "none" ou "table-row".
 
+{% include "_adsense.njk" %}
+
 
 ## 1° modification : prise en main
 

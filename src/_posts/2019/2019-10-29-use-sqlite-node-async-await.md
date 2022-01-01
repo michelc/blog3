@@ -125,6 +125,8 @@ TypeError: callback is not a function
 ...
 ```
 
+{% include "_adsense.njk" %}
+
 
 ## Async / Await with the SQlite3 module
 

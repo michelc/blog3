@@ -107,6 +107,8 @@ pool.query("SELECT * FROM Books", [], callback);
 
 Three...
 
+{% include "_adsense.njk" %}
+
 
 ## Callback function parameters
 

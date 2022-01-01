@@ -152,6 +152,8 @@ function filter(row) {
 Hiding/displaying a row is done via the CSS `display` property which is defined
 as "none" or "table-row".
 
+{% include "_adsense.njk" %}
+
 
 ## Modification #1: a first contact
 
