@@ -92,6 +92,13 @@ public async Task&lt;IActionResult&gt; DeleteConfirmed(int id) { ... }
 <p>De même, quand on est dans une page de détail, le lien &quot;Annuler&quot; pour revenir à la liste recharge complètement la page d'index. Et de la même façon, la validation des formulaires (pour créer, modifier ou supprimer des données) provoque un retour à la page d'index et le rechargement complet de la page.</p>
 <p><img src="/public/2021/htmx-essai-2.jpg" alt=""></p>
 <p>A partir de maintenant, je vais ajouter HTMX à cette application puis lui apporter quelques modifications pour en tirer parti et ne plus recharger l'intégralité des pages à chaque fois.</p>
+<div class="pub"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5475403929650645"
+     data-ad-slot="8049019520"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins></div>
+<script>window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }</script>
 <h2>Etape 1 - Référencer HTMX</h2>
 <p>Il y a plusieurs façon d'<a href="https://htmx.org/docs/#installing">installer HTMX</a>, mais pour faire vite, j'ajoute simplement la ligne <code>&lt;script src=&quot;https://unpkg.com/htmx.org@1.6.1&quot;&gt;&lt;/script&gt;</code> dans mon fichier &quot;/Views/Shared/_Layout.cshtml&quot; :</p>
 <pre><code class="language-html">        ...
@@ -268,7 +275,6 @@ return View(model); // Cas où on n'est pas passé par HTMX
 
 
 
-<script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <div class="pub"><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-5475403929650645"
@@ -277,11 +283,15 @@ return View(model); // Cas où on n'est pas passé par HTMX
      data-full-width-responsive="true"></ins></div>
 <script>window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }</script>
 
+
     <footer>
       <a href="/">blog.pagesd.info</a> //
       <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
     </footer>
 
-  </div></body>
+  </div>
+  
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  </body>
 
 </html>

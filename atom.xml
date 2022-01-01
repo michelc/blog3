@@ -58,6 +58,13 @@ public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
 &lt;p&gt;In the same way, when you are in a detail page, the &amp;quot;Annuler&amp;quot; link to return to the movie list reloads the entire index page. Also, after submitting a form (to create, modify or delete data), it returns to the index page and fully reloads the page.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Now I will add HTMX to this app and then make some a few changes to use it and avoid to reload the whole pages every time.&lt;/p&gt;
+&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block&quot;
+     data-ad-client=&quot;ca-pub-5475403929650645&quot;
+     data-ad-slot=&quot;8049019520&quot;
+     data-ad-format=&quot;auto&quot;
+     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
+&lt;script&gt;window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }&lt;/script&gt;
 &lt;h2&gt;Step 1 - Referencing HTMX&lt;/h2&gt;
 &lt;p&gt;There are several ways to &lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;install HTMX&lt;/a&gt;, but to make it quick, I simply add the line &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; in my &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; file:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;        ...
@@ -281,6 +288,13 @@ public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
 &lt;p&gt;De même, quand on est dans une page de détail, le lien &amp;quot;Annuler&amp;quot; pour revenir à la liste recharge complètement la page d&#39;index. Et de la même façon, la validation des formulaires (pour créer, modifier ou supprimer des données) provoque un retour à la page d&#39;index et le rechargement complet de la page.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;A partir de maintenant, je vais ajouter HTMX à cette application puis lui apporter quelques modifications pour en tirer parti et ne plus recharger l&#39;intégralité des pages à chaque fois.&lt;/p&gt;
+&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block&quot;
+     data-ad-client=&quot;ca-pub-5475403929650645&quot;
+     data-ad-slot=&quot;8049019520&quot;
+     data-ad-format=&quot;auto&quot;
+     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
+&lt;script&gt;window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }&lt;/script&gt;
 &lt;h2&gt;Etape 1 - Référencer HTMX&lt;/h2&gt;
 &lt;p&gt;Il y a plusieurs façon d&#39;&lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;installer HTMX&lt;/a&gt;, mais pour faire vite, j&#39;ajoute simplement la ligne &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; dans mon fichier &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; :&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;        ...

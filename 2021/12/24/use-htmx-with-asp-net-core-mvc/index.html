@@ -92,6 +92,13 @@ public async Task&lt;IActionResult&gt; DeleteConfirmed(int id) { ... }
 <p>In the same way, when you are in a detail page, the &quot;Annuler&quot; link to return to the movie list reloads the entire index page. Also, after submitting a form (to create, modify or delete data), it returns to the index page and fully reloads the page.</p>
 <p><img src="/public/2021/htmx-essai-2.jpg" alt=""></p>
 <p>Now I will add HTMX to this app and then make some a few changes to use it and avoid to reload the whole pages every time.</p>
+<div class="pub"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5475403929650645"
+     data-ad-slot="8049019520"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins></div>
+<script>window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }</script>
 <h2>Step 1 - Referencing HTMX</h2>
 <p>There are several ways to <a href="https://htmx.org/docs/#installing">install HTMX</a>, but to make it quick, I simply add the line <code>&lt;script src=&quot;https://unpkg.com/htmx.org@1.6.1&quot;&gt;&lt;/script&gt;</code> in my &quot;/Views/Shared/_Layout.cshtml&quot; file:</p>
 <pre><code class="language-html">        ...
@@ -267,7 +274,6 @@ return View(model); // If we did not use HTMX
 
 
 
-<script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <div class="pub"><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-5475403929650645"
@@ -276,11 +282,15 @@ return View(model); // If we did not use HTMX
      data-full-width-responsive="true"></ins></div>
 <script>window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }</script>
 
+
     <footer>
       <a href="/">blog.pagesd.info</a> //
       <a href="https://www.solitaire-play.com/">www.solitaire-play.com</a>
     </footer>
 
-  </div></body>
+  </div>
+  
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  </body>
 
 </html>
