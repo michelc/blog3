@@ -64,7 +64,7 @@ public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
      data-ad-slot=&quot;8049019520&quot;
      data-ad-format=&quot;auto&quot;
      data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }&lt;/script&gt;
+&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
 &lt;h2&gt;Step 1 - Referencing HTMX&lt;/h2&gt;
 &lt;p&gt;There are several ways to &lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;install HTMX&lt;/a&gt;, but to make it quick, I simply add the line &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; in my &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; file:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;        ...
@@ -294,7 +294,7 @@ public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
      data-ad-slot=&quot;8049019520&quot;
      data-ad-format=&quot;auto&quot;
      data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }&lt;/script&gt;
+&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
 &lt;h2&gt;Etape 1 - Référencer HTMX&lt;/h2&gt;
 &lt;p&gt;Il y a plusieurs façon d&#39;&lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;installer HTMX&lt;/a&gt;, mais pour faire vite, j&#39;ajoute simplement la ligne &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; dans mon fichier &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; :&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;        ...
@@ -644,7 +644,7 @@ Watching…
      data-ad-slot=&quot;8049019520&quot;
      data-ad-format=&quot;auto&quot;
      data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }&lt;/script&gt;
+&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
 &lt;p&gt;Je vais donc devoir ajouter un &amp;quot;layout&amp;quot; pour que Eleventy ait un &amp;quot;cadre&amp;quot; où insérer le HTML qu&#39;il génère à partir des fichiers Markdown. Pour cela, je crée un fichier &amp;quot;layout.njk&amp;quot; dans le sous-répertoire &amp;quot;src/_includes&amp;quot;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-njk&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html lang=&amp;quot;fr-FR&amp;quot;&amp;gt;
@@ -859,7 +859,7 @@ c:\code\blog11&amp;gt; git commit -m &amp;quot;Création du blog.&amp;quot;
      data-ad-slot=&quot;8049019520&quot;
      data-ad-format=&quot;auto&quot;
      data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }&lt;/script&gt;
+&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
 &lt;p&gt;In the original application, I had a piece of server code to generate a background color based on the user&#39;s trigram. But I&#39;ll leave that aside for now.&lt;/p&gt;
 &lt;p&gt;Also, I managed the use of images instead of initials to better highlight some users in the conversation. For that, I used drawings by &lt;a href=&quot;https://www.instagram.com/cameronmarkart/&quot;&gt;Cameron Mark&lt;/a&gt; to represent the two people affected to level 1 helpdesk.&lt;/p&gt;
 &lt;p&gt;To be simple, the modification needed to replace the initials with a photo consists of two things:&lt;/p&gt;
@@ -1036,7 +1036,7 @@ c:\code\blog11&amp;gt; git commit -m &amp;quot;Création du blog.&amp;quot;
      data-ad-slot=&quot;8049019520&quot;
      data-ad-format=&quot;auto&quot;
      data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;window.onload = function() { (adsbygoogle = window.adsbygoogle || []).push({}); }&lt;/script&gt;
+&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
 &lt;p&gt;Dans l&#39;application d&#39;origine, j&#39;avais aussi un bout de code côté serveur pour générer une couleur de fond en fonction du trigramme de la personne. Mais je vais laisser ça de côté pour l&#39;instant.&lt;/p&gt;
 &lt;p&gt;Par contre, j&#39;avais aussi géré la possibilité d&#39;avoir des images à la place des initiales pour mieux faire ressortir certains utilisateurs dans les conversations. Pour ça, j&#39;avais notamment utilisé des dessins de &lt;a href=&quot;https://www.instagram.com/cameronmarkart/&quot;&gt;Cameron Mark&lt;/a&gt; pour représenter les deux personnes responsables de l&#39;assistance de niveau 1.&lt;/p&gt;
 &lt;p&gt;En faisant au plus simple, la modification nécessaire pour remplacer les initiales par une photo consiste en deux choses :&lt;/p&gt;
