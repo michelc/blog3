@@ -89,6 +89,7 @@ _site/
 <p>La ligne <code>input: &quot;src&quot;</code> indique que les fichiers sources du site sont stockés dans le répertoire &quot;src&quot;. Je crée donc ce répertoire.</p>
 <pre><code>mkdir src
 </code></pre>
+<p><em>Note : Avec <code>input: &quot;src&quot;</code> j'indique à Eleventy qu'il doit traiter les fichiers du dossier &quot;src&quot; et de ses sous-répertoires. Par conséquent, je n'ai pas vraiment besoin d'exclure le fichier &quot;README.md&quot; via le fichier &quot;.eleventyignore&quot;, puisqu'il est présent au niveau au dessus du répertoire &quot;src&quot;.</em></p>
 <p>La ligne <code>includes: &quot;_includes&quot;</code> indique que la charte graphique sera stockée dans le répertoire &quot;_includes&quot; du dossier &quot;src&quot;. De même, la ligne <code>data: &quot;_data&quot;</code> indique que le paramétrage global du site est enregistré dans le répertoire &quot;_data&quot; du dossier &quot;src&quot;. Je crée donc ces 2 répertoires à l'intérieur du répertoire &quot;src&quot;.</p>
 <pre><code>cd src
 mkdir _includes
