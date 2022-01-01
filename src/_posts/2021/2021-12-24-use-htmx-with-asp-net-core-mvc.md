@@ -65,6 +65,8 @@ In the same way, when you are in a detail page, the "Annuler" link to return to 
 
 Now I will add HTMX to this app and then make some a few changes to use it and avoid to reload the whole pages every time.
 
+{% include "_adsense.njk" %}
+
 
 ## Step 1 - Referencing HTMX
 

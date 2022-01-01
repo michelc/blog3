@@ -64,6 +64,8 @@ De même, quand on est dans une page de détail, le lien "Annuler" pour revenir 
 
 A partir de maintenant, je vais ajouter HTMX à cette application puis lui apporter quelques modifications pour en tirer parti et ne plus recharger l'intégralité des pages à chaque fois.
 
+{% include "_adsense.njk" %}
+
 
 ## Etape 1 - Référencer HTMX
 
