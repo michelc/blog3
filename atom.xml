@@ -3,12 +3,256 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2021-12-24T11:07:22.000Z</updated>
+    <updated>2022-01-05T11:50:37.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Générer des fichiers pour le &quot;M&quot; de MVC avec Tada !</title>
+        <link href="https://blog.pagesd.info/2022/01/05/generer-fichiers-models-avec-tada/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-01-05T11:50:37.000Z</updated>
+        <published>2022-01-05T11:50:37.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/05/generer-fichiers-models-avec-tada/</id>
+        <summary>Ces derniers temps, j&#39;ai développé pour moi un petit programme qui permet de générer vite fait quelques un des fichiers pour la partie &quot;M&quot; d&#39;une application ASP.NET Core MVC. Cela me servira surtout pour développer des applications pour tester quelques trucs...</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;h2&gt;Un &amp;quot;problème&amp;quot; --uneenvie&lt;/h2&gt;
+&lt;p&gt;En ce moment, je (re)fais quelques tests pour savoir comment créer et organiser au plus simple
+une application ASP.NET Core MVC. J&#39;ai déjà plus ou moins trouvé comment faire en ligne de commande avec &amp;quot;dotnet&amp;quot;, l&#39;interface de ligne de commande (CLI) de .NET Core, pour :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Créer une solution pour la nouvelle application ASP.NET Core&lt;/li&gt;
+&lt;li&gt;Créer et ajouter un projet MVC à cette application&lt;/li&gt;
+&lt;li&gt;Installer et référencer Entity Framework Core pour SQL Server et SQLite&lt;/li&gt;
+&lt;li&gt;Faire un &lt;code&gt;dotnet build&lt;/code&gt; pour vérifier que tout est ok&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Puis vient le moment où il faut ajouter un modèle de données. Actuellement, je passe sous Visual Studio pour y coder les entités nécessaires puis j&#39;ajoute un &lt;code&gt;DbContext&lt;/code&gt;. Je trouve quand même que c&#39;est un peu lourd de devoir faire ça à chaque fois que je veux tester vite fait un truc (comme pour l&#39;application destinée à essayer &lt;a href=&quot;/2021/12/23/utiliser-htmx-avec-asp-net-core-mvc/&quot;&gt;HTMX avec ASP.NET Core MVC&lt;/a&gt; par exemple).&lt;/p&gt;
+&lt;p&gt;Je suppose qu&#39;il existe déjà des outils .NET Core ou des extensions Visual Studio tout prêts qui font plus ou moins ça, mais j&#39;ai quand même eu envie de tenter ça à ma façon.&lt;/p&gt;
+&lt;h2&gt;Une solution --pascompliquée&lt;/h2&gt;
+&lt;p&gt;Après quelques jours, j&#39;ai finalement obtenu une application console qui correspond assez bien à ce que je souhaitais faire et qui accepte 3 commandes :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;tada model NomEntite ...&lt;/code&gt; pour générer un fichier Models/NomEntite.cs&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tada enum NomEnum ...&lt;/code&gt; pour générer un fichier Models/NomEnum.cs&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tada context ...&lt;/code&gt; pour générer un fichier Models/ModelContext.cs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pourquoi &amp;quot;tada&amp;quot; ? Parce que c&#39;est destiné à générer des fichiers liés au modèle de données. Et que &amp;quot;Donnée&amp;quot; = &amp;quot;Data&amp;quot; =&amp;gt; &amp;quot;Da-Ta&amp;quot; =&amp;gt; Tada !&lt;/p&gt;
+&lt;p&gt;Pourquoi &amp;quot;enum&amp;quot; en plus de &amp;quot;model&amp;quot; et &amp;quot;context&amp;quot; ? Parce que généralement mon modèle &amp;quot;Movie&amp;quot; contient une propriété &amp;quot;Rating&amp;quot; de type &lt;code&gt;Enum&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;tada --help&lt;/h2&gt;
+&lt;p&gt;Je me suis fait un peu plaisir et quand on lance &lt;code&gt;tada --help&lt;/code&gt; ou &lt;code&gt;tada&lt;/code&gt; sans autre paramètre, on tombe sur l&#39;aide du programme.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1)
+
+Utilisation : tada [options] [commande] [arguments]
+
+Options :
+  -h|--help                  Affiche l&#39;aide de la ligne de commande
+  -p|--project &amp;lt;PROJET&amp;gt;      Nom du projet pour définir le namespace
+  --version                  Affiche la version utilisée
+
+Commandes :
+  model                      Génère une classe Models/NomEntite.cs
+  enum                       Génère une classe Models/NomEnum.cs
+  context                    Génère une classe Models/ProjetContext.cs
+
+Pour plus d&#39;informations sur une commande, lancer &#39;tada [commande] --help&#39;.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Note : Je gère les arguments de la ligne de commande à la main. Comparer les différentes solutions existantes et trouver celle qui (me) convient le plus me semble beaucoup trop de travail par rapport au temps que je souhaite consacrer à ce projet.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Si jamais la commande est lancée sans préciser l&#39;option &amp;quot;project&amp;quot; ou sans être dans un dossier contenant un fichier &amp;quot;*.csproj&amp;quot;, on obtient un message d&#39;erreur.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1)
+
+Projet introuvable :
+- L&#39;option --project &amp;lt;PROJET&amp;gt; n&#39;est pas définie
+- Il n&#39;existe pas de fichier PROJET.csproj dans le dossier en cours
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block&quot;
+     data-ad-client=&quot;ca-pub-5475403929650645&quot;
+     data-ad-slot=&quot;8049019520&quot;
+     data-ad-format=&quot;auto&quot;
+     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
+&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
+&lt;h2&gt;tada model --help&lt;/h2&gt;
+&lt;p&gt;De la même façon, j&#39;ai pas mal travaillé sur l&#39;aide de la commande &lt;code&gt;tada model&lt;/code&gt;. Cela m&#39;a permis à la fois de mettre au point mais aussi de documenter la syntaxe particulière qui me sert à décrire le modèle de données en un minimum d&#39;information.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1) - Génère une classe Models/NomEntite.cs
+
+Utilisation : tada model [options] [arguments]
+
+Options :
+  -h|--help                  Affiche l&#39;aide de la ligne de commande
+  -p|--project &amp;lt;PROJET&amp;gt;      Nom du projet pour définir le namespace
+                             (obtenu depuis PROJET.csproj sinon)
+
+Arguments : Nom de l&#39;entité suivi de la description de ses propriétés (sous la forme Nom:{+}Type)
+
+Exemples :
+  tada model Genre Genre_ID:int Title:+string(30) --project MvcMovie
+  tada model Genre Genre_ID:int Title:+string(30)
+
+Exemple de code généré :
+  Movie_ID:int               [Key]       // première propriété avec un nom terminé par &amp;quot;_ID&amp;quot;
+                             public int Movie_ID { get; set; }
+  Title:+string(60)          [Required]  // le type est précédé par &amp;quot;+&amp;quot;
+                             [StringLength(60)]
+                             public string Title { get; set; }
+  ReleaseDate:DateTime       public DateTime ReleaseDate { get; set; }
+  Genre:Genre                public int Genre_ID { get; set; }
+                             [ForeignKey(&amp;quot;Genre_ID&amp;quot;)]
+                             public virtual Genre Genre { get; set; }
+  Price:decimal(18,2)        [Column(TypeName = &amp;quot;decimal(18, 2)&amp;quot;)]
+                             public decimal Price { get; set; }
+  Rating:+RatingEnum         [Required]
+                             public RatingEnum Rating { get; set; }
+  Directors:Director[]       public ICollection&amp;lt;Director&amp;gt; Directors { get; set; }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;C&#39;est un peu compact, mais c&#39;est suffisament clair pour moi. Peut-être parce que c&#39;est encore tout frais dans mon esprit... Pour récapituler (et ne pas oublier), chaque propriété du modèle est décrite sous la forme &amp;quot;Nom:{+}Type&amp;quot;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;La partie &amp;quot;Nom&amp;quot; (avant les deux points) sert à définir le nom de la propriété&lt;/li&gt;
+&lt;li&gt;Lorsque les deux points sont suivis d&#39;un &amp;quot;+&amp;quot;, cela signifie que la propriété est obligatoire (ce qui correspond au fait d&#39;ajouter une attribut &lt;code&gt;[Required]&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;La partie &amp;quot;Type&amp;quot; (après les deux points ou après &amp;quot;:+&amp;quot;) indique quel est le type de la propriété&lt;/li&gt;
+&lt;li&gt;Certain types de propriété peuvent être complétés par une ou deux valeurs entre parenthèses, pour définir :
+&lt;ul&gt;
+&lt;li&gt;leur longueur maximum dans le cas des chaines : &lt;code&gt;string(60)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;leur précision dans le cas des nombres : &lt;code&gt;decimal(18,2)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Lorsque le &amp;quot;Nom&amp;quot; et le &amp;quot;Type&amp;quot; sont identiques, cela sert à définir une clé étrangère vers une autre entité&lt;/li&gt;
+&lt;li&gt;Lorsque le &amp;quot;Type&amp;quot; est suivi de &amp;quot;[]&amp;quot;, cela indique qu&#39;il s&#39;agit d&#39;une propriété de navigation de type collection&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Dans le cas d&#39;un modèle simple style &lt;code&gt;tada model Genre Genre_ID:int Title:+string(30) Movies:Movie[]&lt;/code&gt;, on obtient le code source suivant (à condition de le lancer depuis le dossier du projet &amp;quot;MvcMovie&amp;quot;) :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MvcMovie.Models
+{
+  public class Genre
+  {
+    [Key]
+    public int Genre_ID { get; set; }
+
+    [Required, StringLength(30)]
+    public string Title { get; set; }
+
+    public ICollection&amp;lt;Movie&amp;gt; Movies { get; set; }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Avec le modèle &amp;quot;Movie&amp;quot; un peu plus compliqué, la commande est un peu plus verbeuse.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;c:\Code\MvcMovie\MvcMovie&amp;gt; tada model Movie Movie_ID:int Title:+string(60) ReleaseDate:DateTime Genre:Genre Price:decimal(18,2) Rating:+RatingEnum Directors:Director[]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et elle génère une classe avec d&#39;autant plus de code :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MvcMovie.Models
+{
+  public class Movie
+  {
+    [Key]
+    public int Movie_ID { get; set; }
+
+    [Required, StringLength(60)]
+    public string Title { get; set; }
+
+    public DateTime ReleaseDate { get; set; }
+
+    [ForeignKey(&amp;quot;Genre_ID&amp;quot;)]
+    public virtual Genre Genre { get; set; }
+    public int Genre_ID { get; set; }
+
+    [Column(TypeName = &amp;quot;decimal(18, 2)&amp;quot;)]
+    public decimal Price { get; set; }
+
+    [Required]
+    public RatingEnum Rating { get; set; }
+
+    public ICollection&amp;lt;Director&amp;gt; Directors { get; set; }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;tada enum --help&lt;/h2&gt;
+&lt;p&gt;A tant qu&#39;à faire, autant tout documenter.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1) - Génère une classe Models/NomEnum.cs
+
+Utilisation : tada enum [options] [arguments]
+
+Options :
+  -h|--help                  Affiche l&#39;aide de la ligne de commande
+  -p|--project &amp;lt;PROJET&amp;gt;      Nom du projet pour définir le namespace
+                             (obtenu depuis PROJET.csproj sinon)
+
+Arguments : Nom de l&#39;enum suivi de ses valeurs
+
+Exemples :
+  tada enum Rating Enfants Interdit_moins_13_ans Interdit_mineurs Tout_public --project MvcMovie
+  tada enum Rating Enfants Interdit_moins_13_ans Interdit_mineurs Tout_public
+  tada enum -p MvcFacture Tva Normal Intermédiaire Réduit Particulier Zéro
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Par exemple, la commande &lt;code&gt;enum Rating Enfants Interdit_moins_13_ans Interdit_mineurs Tout_public&lt;/code&gt; lancée depuis le dossier du projet &amp;quot;MvcMovie&amp;quot; afficher le code suivant :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;namespace MvcMovie.Models
+{
+  public enum Rating
+  {
+    Enfants,
+    Interdit_moins_13_ans,
+    Interdit_mineurs,
+    Tout_public
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;tada context --help&lt;/h2&gt;
+&lt;p&gt;Là aussi, c&#39;est une syntaxe assez simple.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1) - Génère une classe Models/ProjetContext.cs
+
+Utilisation : tada context [options] [arguments]
+
+Options :
+  -h|--help                Affiche l&#39;aide de la ligne de commande
+  -p|--project &amp;lt;PROJET&amp;gt;    Nom du projet pour définir le namespace
+                           (obtenu depuis PROJET.csproj sinon)
+
+Arguments : Liste des entités du DbContext.
+
+Exemples :
+  tada context Movie Genre Director --project MvcMovie
+  tada context Movie Genre Director
+  tada -p MvcBlog context Blog Post Comment
+  tada context -p MvcFacture Client Article Facture Ligne
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et donc, la commande &lt;code&gt;tada context Movie Genre Director&lt;/code&gt; lancée depuis le dossier du projet &amp;quot;MvcMovie&amp;quot; va afficher :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
+namespace MvcMovie.Models
+{
+  public class MvcMovieContext : DbContext
+  {
+    public MvcMovieContext(DbContextOptions&amp;lt;MvcMovieContext&amp;gt; options) : base(options) { }
+
+    public DbSet&amp;lt;Movie&amp;gt; Movies { get; set; }
+    public DbSet&amp;lt;Genre&amp;gt; Genres { get; set; }
+    public DbSet&amp;lt;Director&amp;gt; Directors { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Conclusion --àsuivre&lt;/h2&gt;
+&lt;p&gt;Le code source de la première &amp;quot;version&amp;quot; de mon application est disponible sur &lt;a href=&quot;https://github.com/michelc/Tada&quot;&gt;GitHub&lt;/a&gt;. Comme pour l&#39;instant, je suis en phase de mise au point et de tests, les fichiers générés ne sont pas réellement écrits sur le disque, mais seulement affichés à l&#39;écran. Cela fait donc parti des évolutions à venir, avec quelques petits trucs que j&#39;ai en tête pour mettre au propre ou simplifier le code actuel.&lt;/p&gt;
+&lt;p&gt;Comme un peu paresseusement je ne codais jusqu&#39;à présent que des applications console avec .NET Framework, j&#39;ai découvert au passage que ce n&#39;était pas si évident que ça d&#39;obtenir un &amp;quot;vrai&amp;quot; fichier &amp;quot;.EXE&amp;quot; avec .NET Core. J&#39;ai réussi à trouver comment faire, mais je vais essayer de creuser un peu plus et peut-être bien rédiger un autre billet pour expliquer comment cela fonctionne...&lt;/p&gt;
+&lt;p&gt;Je compte aussi regarder comment créer un &amp;quot;&lt;a href=&quot;https://docs.microsoft.com/fr-fr/dotnet/core/tools/global-tools&quot;&gt;.NET Core global tools
+&lt;/a&gt;&amp;quot; (pour pouvoir lancer via un &lt;code&gt;dotnet tada ...&lt;/code&gt;), mais je ne suis pas certain que cela en vaille la peine pour une utilisation personnelle.&lt;/p&gt;
+
+        </content>
+        <category term="csharp" />
+        <category term=".net" />
+        <category term="mvc" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/tada.jpg" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/tada.jpg" />
+    </entry>
     <entry>
         <title type="html">Use HTMX with ASP.NET Core MVC</title>
         <link href="https://blog.pagesd.info/2021/12/24/use-htmx-with-asp-net-core-mvc/" rel="alternate" hreflang="en-US" />
@@ -953,183 +1197,6 @@ c:\code\blog11&amp;gt; git commit -m &amp;quot;Création du blog.&amp;quot;
 &lt;p&gt;&lt;img src=&quot;/public/2021/badge-05.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2021/12/10/creer-badge-avatar-css/&quot; hreflang=&quot;fr-FR&quot;&gt;Comment créer un badge / avatar en CSS&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="css" />
-        <category term="html" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/systeme-bertillon.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/systeme-bertillon.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Comment créer un badge / avatar en CSS</title>
-        <link href="https://blog.pagesd.info/2021/12/10/creer-badge-avatar-css/" rel="alternate" hreflang="fr-FR" />
-        <updated>2021-12-10T15:47:47.000Z</updated>
-        <published>2021-12-10T15:47:47.000Z</published>
-        <id>https://blog.pagesd.info/2021/12/10/creer-badge-avatar-css/</id>
-        <summary>Ce n&#39;est pas très compliqué, et en à peine 30 lignes de CSS et une pincée de flexbox on peut afficher des badges ou des avatars très corrects.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Il y a quelques temps, j&#39;avais développé une petite application pour consulter plus facilement les tickets d&#39;assistance qui m&#39;étaient affectés. J&#39;ai depuis laissé tombé ce programme, mais comme cela m&#39;avait donné l&#39;occasion de présenter les échanges sous forme de conversation, je sauvegarde ici comment j&#39;affichais les badges pour identifier les utilisateurs.&lt;/p&gt;
-&lt;p&gt;Pour commencer, je défini un carré de 100px sur 100px auquel j&#39;applique des coins arrondis grâce à la propriété &lt;code&gt;border-radius&lt;/code&gt; à 50% pour que le carré devienne rond. Puis je colorie en vert pour que cela soit visible sur un fond blanc et j&#39;ajoute une bordure argentée assez épaisse pour que cela ressorte encore mieux.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* Un rond vert */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-01.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Ensuite, j&#39;ajoute les initiales de la personne qui a écrit le ticket ou le commentaire, en blanc, en gros et en gras.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* Un rond vert */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-    /* Des initiales blanches */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: 55px;
-    font-weight: bold;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-02.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Et il ne me reste plus qu&#39;à centrer ces initiales horizontalement et verticalement. Heureusement, ça fait longtemps que d&#39;autres collectionnent les solutions pour savoir &lt;a href=&quot;https://css-tricks.com/centering-css-complete-guide/&quot;&gt;comment tout centrer avec CSS&lt;/a&gt;...&lt;/p&gt;
-&lt;p&gt;J&#39;utilise la méthode à base de flexbox :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* Un rond vert */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-    /* Des initiales blanches */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: 55px;
-    font-weight: bold;
-    /* Et centrées */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-03.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;A première vue, je dirais que c&#39;est pas tout à fait au centre et que ça penche un peu vers le bas. Mais c&#39;est super simple et ça répond très correctement à mon problème.&lt;/p&gt;
-&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
-     style=&quot;display:block&quot;
-     data-ad-client=&quot;ca-pub-5475403929650645&quot;
-     data-ad-slot=&quot;8049019520&quot;
-     data-ad-format=&quot;auto&quot;
-     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
-&lt;p&gt;Dans l&#39;application d&#39;origine, j&#39;avais aussi un bout de code côté serveur pour générer une couleur de fond en fonction du trigramme de la personne. Mais je vais laisser ça de côté pour l&#39;instant.&lt;/p&gt;
-&lt;p&gt;Par contre, j&#39;avais aussi géré la possibilité d&#39;avoir des images à la place des initiales pour mieux faire ressortir certains utilisateurs dans les conversations. Pour ça, j&#39;avais notamment utilisé des dessins de &lt;a href=&quot;https://www.instagram.com/cameronmarkart/&quot;&gt;Cameron Mark&lt;/a&gt; pour représenter les deux personnes responsables de l&#39;assistance de niveau 1.&lt;/p&gt;
-&lt;p&gt;En faisant au plus simple, la modification nécessaire pour remplacer les initiales par une photo consiste en deux choses :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Afficher l&#39;image correspondant à la personne,&lt;/li&gt;
-&lt;li&gt;Masquer les initiales devenues inutiles.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* Un rond vert */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-    /* Des initiales blanches */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: 55px;
-    font-weight: bold;
-    /* Et centrées */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .badge-avatar {
-    /* Cacher les initiales */
-    color: transparent;
-    /* Afficher l&#39;image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
-    background-position: center;
-    background-size: cover;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge badge-avatar&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;La ligne &lt;code&gt;background-position: center&lt;/code&gt; permet de s&#39;assurer que l&#39;image est bien centrée. Et avec &lt;code&gt;background-size: cover&lt;/code&gt;, la photo est redimensionnée au mieux pour être aussi grande que possible (et donc remplir au mieux le badge), tout en conservant ses proportions.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-04.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Pour donner un peu de vie à l&#39;interface utilisateur, on peut animer le badge quand la souris survole l&#39;élément qui le contient, en changeant la couleur de la bordure.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;  :hover &amp;gt; .badge {
-    border-color: orange;
-  }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;C&#39;est quasi-terminé. Dans la pratique, un badge de 100 pixels de large (sans compter les bordures de 10 pixels) ça prend pas mal de place. Et donc, pour pouvoir définir des badges de différentes tailles, j&#39;utilise des &lt;a href=&quot;https://developer.mozilla.org/fr/docs/Web/CSS/Using_CSS_custom_properties&quot;&gt;variables CSS&lt;/a&gt; pour redéfinir la hauteur et la largeur du badge, mais aussi l&#39;épaisseur de la bordure et la taille des caractères.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge-75 {
-    --badge-size: 75px;
-  }
-  
-  .badge-200 {
-    --badge-size: 200px;
-  }
-  
-  .badge {
-    /* Un rond vert */
-    height: var(--badge-size);
-    width: var(--badge-size);
-    border-radius: 50%;
-    background-color: limegreen;
-    border: calc(var(--badge-size) / 10) solid lightgray;
-    /* Des initiales blanches */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: calc(var(--badge-size) / 1.75);
-    font-weight: bold;
-    /* Et centrées */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .badge-avatar {
-    /* Cacher les initiales */
-    color: transparent;
-    /* Afficher l&#39;image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
-    background-position: center;
-    background-size: cover;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge badge-75&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&amp;lt;div class=&amp;quot;badge badge-200&amp;quot;&amp;gt;CD&amp;lt;/div&amp;gt;
-&amp;lt;div class=&amp;quot;badge badge-avatar badge-75&amp;quot;&amp;gt;EF&amp;lt;/div&amp;gt;
-&amp;lt;div class=&amp;quot;badge badge-avatar badge-200&amp;quot;&amp;gt;GH&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et voilà ! A peine 30 lignes de CSS pour un résultat très satisfaisant. Maintenant, si jamais j&#39;en ai à nouveau besoin, je saurais où retrouver ça.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-05.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2021/12/11/create-badge-avatar-css/&quot; hreflang=&quot;en-US&quot;&gt;How to create a badge / avatar in CSS&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
         </content>
