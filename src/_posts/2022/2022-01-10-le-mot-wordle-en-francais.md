@@ -50,4 +50,4 @@ Un autre chantier intéressant sera de limiter la liste des mots proposés comme
 
 En attendant, n'hésitez pas et allez tester votre vocabulaire français sur [LeMOT - Un jeu de mot chaque jour](https://www.solitaire-play.com/lemot/), pour voir si vous pouvez faire mieux que moi !
 
-![LeMOT](/public/2022/lemot2.png "Qui fait mieux ?")
+[![LeMOT](/public/2022/lemot2.png "Qui fait mieux ?")](https://www.solitaire-play.com/lemot/)
