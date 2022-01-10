@@ -3,12 +3,59 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-05T11:50:37.000Z</updated>
+    <updated>2022-01-10T11:36:08.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">LeMOT pour jouer à WORDLE en français</title>
+        <link href="https://blog.pagesd.info/2022/01/10/le-mot-wordle-en-francais/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-01-10T11:36:08.000Z</updated>
+        <published>2022-01-10T11:36:08.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/10/le-mot-wordle-en-francais/</id>
+        <summary>Ce week-end, j&#39;ai mis en ligne une version française de WORDLE. J&#39;ai développé mon propre code en Vanilla JS et en plus, j&#39;ai trouvé un super nom &quot;LeMOT&quot;, et même un slogan &quot;Un Mot, un Jour&quot; !</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Il y a quelque temps, j&#39;avais vu apparaitre de drôles d&#39;images dans Twitter. Ça ressemblait un peu à la représentation des contributions de GitHub, mais sur une seule semaine ?&lt;/p&gt;
+&lt;p&gt;J&#39;ai fini par comprendre ce que c&#39;était et j&#39;ai alors découvert &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;WORDLE&lt;/a&gt;, un nouveau jeu de mots, sorte de croisement entre Mastermind et le Pendu, développé par Josh Wardle. Wordle / Wardle : malin !&lt;/p&gt;
+&lt;p&gt;Alors bien entendu, j&#39;ai joué moi aussi, ou plutôt j&#39;ai essayé de jouer... Parce que j&#39;ai assez vite dû me rendre à l&#39;évidence et reconnaitre que mon vocabulaire en anglais n&#39;était pas assez fourni pour réussir à gagner régulièrement. Alors que je suis tout fier de pouvoir suivre des séries ou des films en VO avec les sous-titres en anglais ! Ou alors j&#39;ai une grosse lacune en ce qui concerne les mots anglais de 5 lettres ?&lt;/p&gt;
+&lt;p&gt;Il y a 2 ou 3 ans, j&#39;avais récupéré quelques listes de mots en français pour développer un programme qui me permettrait d&#39;optimiser mon jeu au Scrabble (ou tricher si on veut). Mais finalement, je n&#39;avais jamais rien programmé.&lt;/p&gt;
+&lt;p&gt;Mais ce week-end, après m&#39;être levé aux aurores vers 10h du matin, je me suis lancé ! Et juste après minuit, j&#39;avais déjà réussi à coder un truc pas mal du tout que j&#39;ai pu mettre en ligne sur mon site de jeux de solitaires : &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt;. J&#39;étais super-content parce que je ne m&#39;étais pas contenté d&#39;adapter le code de Josh Wardle, mais que j&#39;avais écrit ma propre version en Vanilla JS. Et en plus, j&#39;avais trouvé un super nom : &amp;quot;&lt;strong&gt;LeMOT&lt;/strong&gt;&amp;quot;. WORD-Le =&amp;gt; Le-WORD =&amp;gt; Le-MOT !&lt;/p&gt;
+&lt;p&gt;Et j&#39;avais même eu une idée de slogan pour compléter le titre : &amp;quot;Un Mot, un Jour&amp;quot;, inspiré de l&#39;émission de télévision &amp;quot;Un livre, un jour&amp;quot;.&lt;/p&gt;
+&lt;p&gt;Après je suis allé dormir et le lendemain, j&#39;ai continué sur ma lancée et j&#39;ai apporté tout un tas d&#39;améliorations.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Mise au point de la sauvegarde de la partie en cours, pour pouvoir y revenir plus tard si on sèche.&lt;/li&gt;
+&lt;li&gt;Ajouté un filigrane &amp;quot;version bêta&amp;quot; sous le titre du jeu parce que j&#39;ai peur des bugues :)&lt;/li&gt;
+&lt;li&gt;Minifié les fichiers JavaScript et CSS pour optimiser le chargement.&lt;/li&gt;
+&lt;li&gt;Affiché les messages dans une sorte de popup &amp;quot;flash&amp;quot; (utile pour dire si un mot est inconnu ou informer que le résultat en fin de partie a été copié dans le presse-papiers pour être collé dans Twitter ou WhatsApp).&lt;/li&gt;
+&lt;li&gt;Mise à jour du contenu de la page et des balises meta et Open Graph, avec une image inspirée de celle de WORDLE.&lt;/li&gt;
+&lt;li&gt;Modifié l&#39;export des résultats en emoji pour y ajouter la mention &amp;quot;(bêta)&amp;quot; et un hashtag &amp;quot;#LeMotLeJeu&amp;quot;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Cela m&#39;a occupé jusqu&#39;en début d&#39;après-midi. Je ne m&#39;y suis remis que vers le soir, pour gérer correctement les indices couleurs lorsqu&#39;il y a des lettres en double, que ce soit dans le mot à deviner ou dans les réponses saisies.&lt;/p&gt;
+&lt;p&gt;C&#39;était très amusant à faire et aucun doute que je vais continuer à travailler dessus.&lt;/p&gt;
+&lt;p&gt;Déjà, j&#39;ai au moins deux ou trois trucs à faire pour mettre au point mon jeu.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sur certains téléphones, la dernière rangée de touches du clavier nest pas complètement visible (en particulier quand il y a plusieurs onglets dans un groupe et que cela masque en partie le bas du clavier).&lt;/li&gt;
+&lt;li&gt;Pour aller vite, j&#39;ai utilisé des caractères Unicode pour réaliser les icones. Il faudrait les remplacer par des SVG pour que cela soit plus joli.&lt;/li&gt;
+&lt;li&gt;Vérifier à quelle heure le mot est renouvelé. J&#39;utilise les dates UTC et donc en France, cela devrait se passer à 1h du matin.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Puis il y a quelques trucs à ajouter pour essayer de reproduire au mieux les fonctionnalités du jeu d&#39;origine.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Les statistiques : pour renforcer l&#39;attrait du jeu et inciter les joueurs à chercher à gagner pendant un maximum de jours d&#39;affilé.&lt;/li&gt;
+&lt;li&gt;Avoir un bouton pour demander explicitement le partage des résultats.&lt;/li&gt;
+&lt;li&gt;Les paramètres pour gérer des jeux de couleurs adaptés pour les personnes avec des difficultés visuelles (et le &amp;quot;mode sombre&amp;quot; si à la mode)...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Un autre chantier intéressant sera de limiter la liste des mots proposés comme devinette. Dans la version originale, Josh Wardle a sélectionné seulement 20% des 12500 mots anglais de 5 lettres pour faire partie des happy few à deviner. Je ne sais pas trop pourquoi il a fait ça, ni sur quels critères. Sans doute leur fréquence d&#39;utilisation. Et donc, comment je peux faire ça en français ?&lt;/p&gt;
+&lt;p&gt;En attendant, n&#39;hésitez pas et allez tester votre vocabulaire français sur &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;LeMOT - Un jeu de mot chaque jour&lt;/a&gt;, pour voir si vous pouvez faire mieux que moi !&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Qui fait mieux ?&quot;&gt;&lt;/p&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
+    </entry>
     <entry>
         <title type="html">Générer des fichiers pour le &quot;M&quot; de MVC avec Tada !</title>
         <link href="https://blog.pagesd.info/2022/01/05/generer-fichiers-models-avec-tada/" rel="alternate" hreflang="fr-FR" />
@@ -1027,182 +1074,5 @@ c:\code\blog11&amp;gt; git commit -m &amp;quot;Création du blog.&amp;quot;
         <category term="11ty" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/tour-eiffel.jpg" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/tour-eiffel.jpg" />
-    </entry>
-    <entry>
-        <title type="html">How to create a badge / avatar in CSS</title>
-        <link href="https://blog.pagesd.info/2021/12/11/create-badge-avatar-css/" rel="alternate" hreflang="en-US" />
-        <updated>2021-12-11T09:13:27.000Z</updated>
-        <published>2021-12-11T09:13:27.000Z</published>
-        <id>https://blog.pagesd.info/2021/12/11/create-badge-avatar-css/</id>
-        <summary>Ce n&#39;est pas très compliqué, et en à peine 30 lignes de CSS et une pincée de flexbox on peut afficher des badges ou des avatars très corrects.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Some time ago, I built a small application to easily review my helpdesk tickets. I no longer use this program, but it gave me the opportunity to present the exchanges as a conversation. As a backup, I&#39;m writing here how I displayed the badges to identify the users.&lt;/p&gt;
-&lt;p&gt;To start, I create a 100px by 100px square with rounded corners thanks to the &lt;code&gt;border-radius&lt;/code&gt; property at 50% so that the square becomes a circle. Then I color it in green so that it&#39;s visible on a white background and I add a silver border thick enough to make it stand out even better.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* A green circle */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-01.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Then, I add the initials of the user who wrote the ticket or comment, in white, in big and in bold.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* A green circle */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-    /* White initials */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: 55px;
-    font-weight: bold;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-02.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;And now I just have to center these initials horizontally and vertically. Fortunately, others have been collecting solutions for a long time to &lt;a href=&quot;https://css-tricks.com/centering-css-complete-guide/&quot;&gt;center everything with CSS&lt;/a&gt;...&lt;/p&gt;
-&lt;p&gt;I am using the flexbox method:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* A green circle */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-    /* White initials */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: 55px;
-    font-weight: bold;
-    /* And centered */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-03.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;I would say that it&#39;s not quite in the center and that it falls a bit downwards. But it&#39;s super simple and it solves my problem quite perfectly.&lt;/p&gt;
-&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
-     style=&quot;display:block&quot;
-     data-ad-client=&quot;ca-pub-5475403929650645&quot;
-     data-ad-slot=&quot;8049019520&quot;
-     data-ad-format=&quot;auto&quot;
-     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
-&lt;p&gt;In the original application, I had a piece of server code to generate a background color based on the user&#39;s trigram. But I&#39;ll leave that aside for now.&lt;/p&gt;
-&lt;p&gt;Also, I managed the use of images instead of initials to better highlight some users in the conversation. For that, I used drawings by &lt;a href=&quot;https://www.instagram.com/cameronmarkart/&quot;&gt;Cameron Mark&lt;/a&gt; to represent the two people affected to level 1 helpdesk.&lt;/p&gt;
-&lt;p&gt;To be simple, the modification needed to replace the initials with a photo consists of two things:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Display the image corresponding to the person,&lt;/li&gt;
-&lt;li&gt;Hide initials that I no longer needed.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge {
-    /* A green circle */
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    background-color: limegreen;
-    border: 10px solid silver;
-    /* White initials */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: 55px;
-    font-weight: bold;
-    /* And centered */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .badge-avatar {
-    /* Hide initials */
-    color: transparent;
-    /* Show image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
-    background-position: center;
-    background-size: cover;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge badge-avatar&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The line &lt;code&gt;background-position: center&lt;/code&gt; makes sure that the image is centered. And with &lt;code&gt;background-size: cover&lt;/code&gt;, the picture is resized to be as big as possible (and thus fill the badge as well as possible), while keeping its proportions.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-04.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;To add some fun, you can animate the badge when the mouse hovers over the element that contains it, by changing the color of the border.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;  :hover &amp;gt; .badge {
-    border-color: orange;
-  }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It&#39;s almost done. In practice, a 100 pixel wide badge (not counting the 10 pixel borders) takes up a lot of space. And so, in order to be able to define badges of different sizes, I use &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties&quot;&gt;CSS variables&lt;/a&gt; to redefine the height and width of the badge, but also the border size and the size of the font.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;style&amp;gt;
-  .badge-75 {
-    --badge-size: 75px;
-  }
-  
-  .badge-200 {
-    --badge-size: 200px;
-  }
-  
-  .badge {
-    /* A green circle */
-    height: var(--badge-size);
-    width: var(--badge-size);
-    border-radius: 50%;
-    background-color: limegreen;
-    border: calc(var(--badge-size) / 10) solid lightgray;
-    /* White initials */
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif;
-    font-size: calc(var(--badge-size) / 1.75);
-    font-weight: bold;
-    /* And centered */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .badge-avatar {
-    /* Hide initials */
-    color: transparent;
-    /* Show image */
-    background-image: url(&amp;quot;https://blog.pagesd.info/public/2021/queen-of-hearts.png&amp;quot;);
-    background-position: center;
-    background-size: cover;
-  }
-&amp;lt;/style&amp;gt;
-
-&amp;lt;div class=&amp;quot;badge badge-75&amp;quot;&amp;gt;AB&amp;lt;/div&amp;gt;
-&amp;lt;div class=&amp;quot;badge badge-200&amp;quot;&amp;gt;CD&amp;lt;/div&amp;gt;
-&amp;lt;div class=&amp;quot;badge badge-avatar badge-75&amp;quot;&amp;gt;EF&amp;lt;/div&amp;gt;
-&amp;lt;div class=&amp;quot;badge badge-avatar badge-200&amp;quot;&amp;gt;GH&amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There you go ! Only 30 lines of CSS for a pretty good result. Now, if I ever need it again, I&#39;ll know where to find it.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/badge-05.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2021/12/10/creer-badge-avatar-css/&quot; hreflang=&quot;fr-FR&quot;&gt;Comment créer un badge / avatar en CSS&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="css" />
-        <category term="html" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/systeme-bertillon.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/systeme-bertillon.jpg" />
     </entry>
 </feed>
