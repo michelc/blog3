@@ -48,7 +48,7 @@
 &lt;/ul&gt;
 &lt;p&gt;Un autre chantier intéressant sera de limiter la liste des mots proposés comme devinette. Dans la version originale, Josh Wardle a sélectionné seulement 20% des 12500 mots anglais de 5 lettres pour faire partie des happy few à deviner. Je ne sais pas trop pourquoi il a fait ça, ni sur quels critères. Sans doute leur fréquence d&#39;utilisation. Et donc, comment je peux faire ça en français ?&lt;/p&gt;
 &lt;p&gt;En attendant, n&#39;hésitez pas et allez tester votre vocabulaire français sur &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;LeMOT - Un jeu de mot chaque jour&lt;/a&gt;, pour voir si vous pouvez faire mieux que moi !&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Qui fait mieux ?&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Qui fait mieux ?&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
         </content>
         <category term="javascript" />
