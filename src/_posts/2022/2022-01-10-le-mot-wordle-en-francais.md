@@ -15,7 +15,7 @@ J'ai fini par comprendre ce que c'était et j'ai alors découvert [WORDLE](https
 
 Alors bien entendu, j'ai joué moi aussi, ou plutôt j'ai essayé de jouer... Parce que j'ai assez vite dû me rendre à l'évidence et reconnaitre que mon vocabulaire en anglais n'était pas assez fourni pour réussir à gagner régulièrement. Alors que je suis tout fier de pouvoir suivre des séries ou des films en VO avec les sous-titres en anglais ! Ou alors j'ai une grosse lacune en ce qui concerne les mots anglais de 5 lettres ?
 
-Il y a 2 ou 3 ans, j'avais récupéré quelques listes de mots en français pour développer un programme qui me permettrait d'optimiser mon jeu au Scrabble (ou tricher si on veut). Mais finalement, je n'avais jamais rien programmé.
+Il y a 2 ou 3 ans, j'avais récupéré quelques listes de mots en français pour développer un programme qui me permettrait d'optimiser mon jeu au Scrabble (ou tricher si on veut). Finalement, je n'avais jamais rien programmé.
 
 Mais ce week-end, après m'être levé aux aurores vers 10h du matin, je me suis lancé ! Et juste après minuit, j'avais déjà réussi à coder un truc pas mal du tout que j'ai pu mettre en ligne sur mon site de jeux de solitaires : [https://www.solitaire-play.com/lemot/](https://www.solitaire-play.com/lemot/). J'étais super-content parce que je ne m'étais pas contenté d'adapter le code de Josh Wardle, mais que j'avais écrit ma propre version en Vanilla JS. Et en plus, j'avais trouvé un super nom : "**LeMOT**". WORD-Le => Le-WORD => Le-MOT !
 
@@ -51,3 +51,9 @@ Un autre chantier intéressant sera de limiter la liste des mots proposés comme
 En attendant, n'hésitez pas et allez tester votre vocabulaire français sur [LeMOT - Un jeu de mot chaque jour](https://www.solitaire-play.com/lemot/), pour voir si vous pouvez faire mieux que moi !
 
 [![LeMOT](/public/2022/lemot2.png "Qui fait mieux ?")](https://www.solitaire-play.com/lemot/)
+
+<div class="encart">
+
+English version: {% goto_en "LeMOT to play WORDLE in French", "2022-01-11-le-mot-play-wordle-in-french" %}.
+
+</div>
