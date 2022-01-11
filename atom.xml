@@ -3,12 +3,62 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-10T11:36:08.000Z</updated>
+    <updated>2022-01-11T11:36:08.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">LeMOT to play WORDLE in French</title>
+        <link href="https://blog.pagesd.info/2022/01/11/le-mot-play-wordle-in-french/" rel="alternate" hreflang="en-US" />
+        <updated>2022-01-11T11:36:08.000Z</updated>
+        <published>2022-01-11T11:36:08.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/11/le-mot-play-wordle-in-french/</id>
+        <summary>This weekend, I started a French version of WORDLE. I developed my own code in Vanilla JS and most importantly, I found a great name &quot;LeMOT&quot;, and even a slogan &quot;One Word, One Day&quot;!</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Some time ago, I saw some funny pictures appear on Twitter. It looked a bit like GitHub&#39;s contributions, but over a single week?&lt;/p&gt;
+&lt;p&gt;I finally figured out what it was and discovered &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;WORDLE&lt;/a&gt;, a new word game, a kind of cross between Mastermind and Hangman, created by Josh Wardle. Wordle / Wardle: clever!&lt;/p&gt;
+&lt;p&gt;So of course, I played too, or rather I tried to play... Because I quickly had to admit that my English vocabulary was not enough to win regularly. Although I&#39;m proud to follow series or movies in VO with English subtitles! Or maybe I have a big problem when it comes to 5 letter English words?&lt;/p&gt;
+&lt;p&gt;2 or 3 years ago, I had collected some French word lists to write a program that would allow me to optimize my Scrabble level (or cheat, if you want). In the end, I had never programmed anything.&lt;/p&gt;
+&lt;p&gt;But this weekend, after getting up at dawn around 10am, I went for it! And just after midnight, I had already code something pretty good that I was able to put online on my solitaire games site: &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt;. I was very happy because I didn&#39;t just adapt Josh Wardle&#39;s code, but I wrote my own version in Vanilla JS. And on top of that, I had come up with a great name: &amp;quot;&lt;strong&gt;LeMOT&lt;/strong&gt;&amp;quot;. WORD-Le =&amp;gt; Le-WORD =&amp;gt; Le-MOT !&lt;/p&gt;
+&lt;p&gt;And I even had an idea for a slogan to complete the title: &amp;quot;One Word, One Day&amp;quot;, inspired by the french TV show &amp;quot;One Book, One Day&amp;quot;.&lt;/p&gt;
+&lt;p&gt;After that I went to sleep and the next day I just kept going and made a lot of improvements.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Adjusted the backup of the game in progress, to be able to come back to it later when you are stuck.&lt;/li&gt;
+&lt;li&gt;Added a &amp;quot;beta version&amp;quot; watermark under the game title because I&#39;m afraid of bugs :)&lt;/li&gt;
+&lt;li&gt;Minimized the JavaScript and CSS files to optimize loading.&lt;/li&gt;
+&lt;li&gt;Displayed the messages in some sort of &amp;quot;flash&amp;quot; popup (useful to tell if a word is unknown or to inform that the result at the end of the game has been copied to the clipboard to be pasted in Twitter or WhatsApp).&lt;/li&gt;
+&lt;li&gt;Updated the page content and the meta and Open Graph tags, with an image inspired by WORDLE.&lt;/li&gt;
+&lt;li&gt;Modified the export of the results in emoji to add the mention &amp;quot;(beta)&amp;quot; and a hashtag &amp;quot;#LeMotLeJeu&amp;quot;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This kept me busy until early afternoon. I didn&#39;t get back to it until the evening, to properly handle the color clues when there are duplicate letters, either in the word to guess or in the answers entered.&lt;/p&gt;
+&lt;p&gt;It was a lot of fun to do and no doubt I will continue to work on it.&lt;/p&gt;
+&lt;p&gt;Already, I have at least a couple of things to do to get my game right.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On some phones, the last row of keys of the keyboard is not completely visible (especially when there are several tabs in a group and that partly hides the bottom of the keyboard).&lt;/li&gt;
+&lt;li&gt;To code quickly, I used Unicode characters to represent icons. They should be replaced by SVG to make it look nicer.&lt;/li&gt;
+&lt;li&gt;Check at what time the word is renewed. I use UTC dates and therefore in France, it should be at 1am.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then there are a few things to add to try to reproduce the original game&#39;s features as well as possible.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Statistics: to make the game more attractive and encourage people to keep playing and seek for a great winning streak.&lt;/li&gt;
+&lt;li&gt;Have a button to explicitly share your result.&lt;/li&gt;
+&lt;li&gt;Handle settings to manage color sets adapted for people with visual difficulties or the &amp;quot;dark mode&amp;quot;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Another interesting task will be to limit the list of words offered as guesses. In the original version, Josh Wardle selected only 20% of the 12500 English 5-letter words to be among the happy few to guess. I&#39;m not sure why he did this, and on what criteria. Probably their frequency of use. So, how can I do this in French?&lt;/p&gt;
+&lt;p&gt;In the meantime, feel free to test your French vocabulary on &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;LeMOT - Un jeu de mot chaque jour&lt;/a&gt;, to see if you can do better than me!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Who can do better?&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/10/le-mot-wordle-en-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;LeMOT pour jouer à WORDLE en français&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
+    </entry>
     <entry>
         <title type="html">LeMOT pour jouer à WORDLE en français</title>
         <link href="https://blog.pagesd.info/2022/01/10/le-mot-wordle-en-francais/" rel="alternate" hreflang="fr-FR" />
@@ -20,7 +70,7 @@
 &lt;p&gt;Il y a quelque temps, j&#39;avais vu apparaitre de drôles d&#39;images dans Twitter. Ça ressemblait un peu à la représentation des contributions de GitHub, mais sur une seule semaine ?&lt;/p&gt;
 &lt;p&gt;J&#39;ai fini par comprendre ce que c&#39;était et j&#39;ai alors découvert &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;WORDLE&lt;/a&gt;, un nouveau jeu de mots, sorte de croisement entre Mastermind et le Pendu, développé par Josh Wardle. Wordle / Wardle : malin !&lt;/p&gt;
 &lt;p&gt;Alors bien entendu, j&#39;ai joué moi aussi, ou plutôt j&#39;ai essayé de jouer... Parce que j&#39;ai assez vite dû me rendre à l&#39;évidence et reconnaitre que mon vocabulaire en anglais n&#39;était pas assez fourni pour réussir à gagner régulièrement. Alors que je suis tout fier de pouvoir suivre des séries ou des films en VO avec les sous-titres en anglais ! Ou alors j&#39;ai une grosse lacune en ce qui concerne les mots anglais de 5 lettres ?&lt;/p&gt;
-&lt;p&gt;Il y a 2 ou 3 ans, j&#39;avais récupéré quelques listes de mots en français pour développer un programme qui me permettrait d&#39;optimiser mon jeu au Scrabble (ou tricher si on veut). Mais finalement, je n&#39;avais jamais rien programmé.&lt;/p&gt;
+&lt;p&gt;Il y a 2 ou 3 ans, j&#39;avais récupéré quelques listes de mots en français pour développer un programme qui me permettrait d&#39;optimiser mon jeu au Scrabble (ou tricher si on veut). Finalement, je n&#39;avais jamais rien programmé.&lt;/p&gt;
 &lt;p&gt;Mais ce week-end, après m&#39;être levé aux aurores vers 10h du matin, je me suis lancé ! Et juste après minuit, j&#39;avais déjà réussi à coder un truc pas mal du tout que j&#39;ai pu mettre en ligne sur mon site de jeux de solitaires : &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt;. J&#39;étais super-content parce que je ne m&#39;étais pas contenté d&#39;adapter le code de Josh Wardle, mais que j&#39;avais écrit ma propre version en Vanilla JS. Et en plus, j&#39;avais trouvé un super nom : &amp;quot;&lt;strong&gt;LeMOT&lt;/strong&gt;&amp;quot;. WORD-Le =&amp;gt; Le-WORD =&amp;gt; Le-MOT !&lt;/p&gt;
 &lt;p&gt;Et j&#39;avais même eu une idée de slogan pour compléter le titre : &amp;quot;Un Mot, un Jour&amp;quot;, inspiré de l&#39;émission de télévision &amp;quot;Un livre, un jour&amp;quot;.&lt;/p&gt;
 &lt;p&gt;Après je suis allé dormir et le lendemain, j&#39;ai continué sur ma lancée et j&#39;ai apporté tout un tas d&#39;améliorations.&lt;/p&gt;
@@ -49,6 +99,9 @@
 &lt;p&gt;Un autre chantier intéressant sera de limiter la liste des mots proposés comme devinette. Dans la version originale, Josh Wardle a sélectionné seulement 20% des 12500 mots anglais de 5 lettres pour faire partie des happy few à deviner. Je ne sais pas trop pourquoi il a fait ça, ni sur quels critères. Sans doute leur fréquence d&#39;utilisation. Et donc, comment je peux faire ça en français ?&lt;/p&gt;
 &lt;p&gt;En attendant, n&#39;hésitez pas et allez tester votre vocabulaire français sur &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;LeMOT - Un jeu de mot chaque jour&lt;/a&gt;, pour voir si vous pouvez faire mieux que moi !&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Qui fait mieux ?&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2022/01/11/le-mot-play-wordle-in-french/&quot; hreflang=&quot;en-US&quot;&gt;LeMOT to play WORDLE in French&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
 
         </content>
         <category term="javascript" />
@@ -843,236 +896,5 @@ layout: layout.njk
         <category term="11ty" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/matrix.jpg" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/matrix.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Création de mon site Eleventy</title>
-        <link href="https://blog.pagesd.info/2021/12/20/eleventy-creation-site/" rel="alternate" hreflang="fr-FR" />
-        <updated>2021-12-20T12:29:43.000Z</updated>
-        <published>2021-12-20T12:29:43.000Z</published>
-        <id>https://blog.pagesd.info/2021/12/20/eleventy-creation-site/</id>
-        <summary>Pour migrer mon ancien blogue de Jekyll vers Eleventy, j&#39;ai commencé de façon classique en suivant les instructions disponibles un peu partout, en particulier la page Getting started sur le site d&#39;Eleventy.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Pour migrer mon ancien blogue de Jekyll vers Eleventy, j&#39;ai commencé de façon classique en suivant les instructions disponibles un peu partout, en particulier la page &lt;a href=&quot;https://www.11ty.dev/docs/getting-started/&quot;&gt;Getting started&lt;/a&gt; sur le site d&#39;Eleventy.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;mkdir blog11
-cd blog11
-npm init -y
-npm install --save-dev @11ty/eleventy
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Puis sous VS Code, je modifie l&#39;entrée &amp;quot;scripts&amp;quot; du fichier &amp;quot;package.json&amp;quot; pour pouvoir facilement lancer mon site par un simple &lt;code&gt;npm start&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;  &amp;quot;scripts&amp;quot;: {
-    &amp;quot;build&amp;quot;: &amp;quot;npx @11ty/eleventy&amp;quot;,
-    &amp;quot;start&amp;quot;: &amp;quot;npx @11ty/eleventy --serve&amp;quot;
-  },
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Comme je vais utiliser &lt;a href=&quot;https://git-scm.com/&quot;&gt;Git&lt;/a&gt;, je crée un fichier &amp;quot;.gitignore&amp;quot; pour indiquer les éléments que Git ne doit pas gérer.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;node_modules/
-package-lock.json
-_site/
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note : Pour l&#39;instant, j&#39;exclus les classiques &amp;quot;node_modules/&amp;quot; et &amp;quot;package-lock.json&amp;quot; comme dans tous mes projets Node JS. J&#39;y ajoute le dossier &amp;quot;_site/&amp;quot; où Eleventy génèrera le contenu du site.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Par défaut, Eleventy ne gère pas les fichiers référencés dans le fichier &amp;quot;.gitignore&amp;quot;. Mais il est également possible d&#39;exclure d&#39;autres fichiers spécifiquement pour Eleventy en utilisant un fichier &amp;quot;.eleventyignore&amp;quot;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;README.md
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Pour entrer dans le vif du sujet, j&#39;ajoute le fichier &amp;quot;.eleventy.js&amp;quot; pour configurer Eleventy. Ce fichier sert à regrouper tout ce qui permet de configurer Eleventy, y compris pour remplacer certains trucs qui sinon devraient être gérés au niveau de la ligne de commande.&lt;/p&gt;
-&lt;p&gt;Dans mon cas, je copie le contenu proposé par Sia Karamalegos dans son tutoriel &lt;a href=&quot;https://sia.codes/posts/itsiest-bitsiest-eleventy-tutorial/&quot;&gt;Itsiest, Bitsiest Eleventy Tutorial&lt;/a&gt; qui reprend uniquement les valeurs par défaut employées par Eleventy. Mais je trouve plus clair de savoir à quoi m&#39;attendre.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;module.exports = function(eleventyConfig) {
-  // Set custom directories for input, output, includes, and data
-  return {
-    dir: {
-      input: &amp;quot;src&amp;quot;,
-      includes: &amp;quot;_includes&amp;quot;,
-      data: &amp;quot;_data&amp;quot;,
-      output: &amp;quot;_site&amp;quot;
-    }
-  };
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;La ligne &lt;code&gt;input: &amp;quot;src&amp;quot;&lt;/code&gt; indique que les fichiers sources du site sont stockés dans le répertoire &amp;quot;src&amp;quot;. Je crée donc ce répertoire.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;mkdir src
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note : Avec &lt;code&gt;input: &amp;quot;src&amp;quot;&lt;/code&gt; j&#39;indique à Eleventy qu&#39;il doit traiter les fichiers du dossier &amp;quot;src&amp;quot; et de ses sous-répertoires. Par conséquent, je n&#39;ai pas vraiment besoin d&#39;exclure le fichier &amp;quot;README.md&amp;quot; via le fichier &amp;quot;.eleventyignore&amp;quot;, puisqu&#39;il est présent au niveau au dessus du répertoire &amp;quot;src&amp;quot;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;La ligne &lt;code&gt;includes: &amp;quot;_includes&amp;quot;&lt;/code&gt; indique que la charte graphique sera stockée dans le répertoire &amp;quot;_includes&amp;quot; du dossier &amp;quot;src&amp;quot;. De même, la ligne &lt;code&gt;data: &amp;quot;_data&amp;quot;&lt;/code&gt; indique que le paramétrage global du site est enregistré dans le répertoire &amp;quot;_data&amp;quot; du dossier &amp;quot;src&amp;quot;. Je crée donc ces 2 répertoires à l&#39;intérieur du répertoire &amp;quot;src&amp;quot;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cd src
-mkdir _includes
-mkdir _data
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Pour tester que ça marche, je crée enfin un premier fichier &amp;quot;index.md&amp;quot; dans le répertoire &amp;quot;src&amp;quot; avec un peu de contenu.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;# Mon nouveau Blogue
-
-C&#39;est parti pour la migration de Jekyll vers Eleventy.
-
-Jusqu&#39;ici tout va bien...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Puis je &amp;quot;compile&amp;quot; :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;npm start
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ce qui donne :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; blog11@1.0.0 start
-&amp;gt; npx @11ty/eleventy --serve
-
-Writing _site/index.html from ./src/index.md.
-Wrote 1 file in 0.21 seconds (v0.12.1)
-Watching…
-[Browsersync] Access URLs:
- ---------------------------------------
-       Local: http://localhost:8080
-    External: http://192.168.42.236:8080
- ---------------------------------------
-          UI: http://localhost:3001
- UI External: http://localhost:3001
- ---------------------------------------
-[Browsersync] Serving files from: _site
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Déjà il n&#39;y a pas d&#39;erreur ! Et je peux aller voir le site généré sur &lt;a href=&quot;http://localhost:8080&quot;&gt;http://localhost:8080&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/eleventy-001.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;C&#39;est bien. Mais si j&#39;affiche le code source de cette page, je peux constater que ce n&#39;est pas un contenu HTML complet. On n&#39;y retrouve que les 3 lignes du fichier source transformées en HTML.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;h1&amp;gt;Mon nouveau Blogue&amp;lt;/h1&amp;gt;
-&amp;lt;p&amp;gt;C&#39;est parti pour la migration de Jekyll vers Eleventy.&amp;lt;/p&amp;gt;
-&amp;lt;p&amp;gt;Jusqu&#39;ici tout va bien...&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
-     style=&quot;display:block&quot;
-     data-ad-client=&quot;ca-pub-5475403929650645&quot;
-     data-ad-slot=&quot;8049019520&quot;
-     data-ad-format=&quot;auto&quot;
-     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
-&lt;p&gt;Je vais donc devoir ajouter un &amp;quot;layout&amp;quot; pour que Eleventy ait un &amp;quot;cadre&amp;quot; où insérer le HTML qu&#39;il génère à partir des fichiers Markdown. Pour cela, je crée un fichier &amp;quot;layout.njk&amp;quot; dans le sous-répertoire &amp;quot;src/_includes&amp;quot;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-njk&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;fr-FR&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
-  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;Mon nouveau blogue&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
-  {{ content | safe }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Puis il faut que j&#39;indique à Eleventy d&#39;utiliser ce layout lorsqu&#39;il génère le contenu du site. Pour cela, j&#39;ajoute un &amp;quot;front matter&amp;quot; au tout début du fichier &amp;quot;index.md&amp;quot; qui devient alors :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;---
-layout: layout.njk
----
-# Mon nouveau Blogue
-
-C&#39;est parti pour la migration de Jekyll vers Eleventy.
-
-Jusqu&#39;ici tout va bien...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Lorsque je sauvegarde le fichier, le site est recompilé automatiquement, car la commande &amp;quot;npm start&amp;quot; (qui a lancé la commande &lt;code&gt;npx @11ty/eleventy --serve&lt;/code&gt;) est toujours en cours dans le terminal de VS Code.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;File changed: src\index.md
-Writing _site/index.html from ./src/index.md.
-Wrote 1 file in 0.07 seconds (v0.12.1)
-Watching…
-[Browsersync] Reloading Browsers...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et le contenu du navigateur est lui aussi automatiquement rafraichi (grâce à &lt;a href=&quot;https://browsersync.io/&quot;&gt;Browsersync&lt;/a&gt; qui est utilisé par Eleventy).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/eleventy-002.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Rien qu&#39;au titre de l&#39;onglet qui est passé de &amp;quot;localhost:8080&amp;quot; à &amp;quot;Mon nouveau blogue&amp;quot;, je peux voir que Eleventy a bien pris en compte le nouveau layout. Mais ça ne coûte qu&#39;un clic-droit de vérifier en affichant le code source de la page.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;fr-FR&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
-  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;Mon nouveau blogue&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;&amp;lt;script id=&amp;quot;__bs_script__&amp;quot;&amp;gt;//&amp;lt;![CDATA[
-    document.write(&amp;quot;&amp;lt;script async src=&#39;/browser-sync/browser-sync-client.js?v=2.27.7&#39;&amp;gt;&amp;lt;\/script&amp;gt;&amp;quot;.replace(&amp;quot;HOST&amp;quot;, location.hostname));
-//]]&amp;gt;&amp;lt;/script&amp;gt;
-
-  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
-  &amp;lt;h1&amp;gt;Mon nouveau Blogue&amp;lt;/h1&amp;gt;
-&amp;lt;p&amp;gt;C&#39;est parti pour la migration de Jekyll vers Eleventy.&amp;lt;/p&amp;gt;
-&amp;lt;p&amp;gt;Jusqu&#39;ici tout va bien...&amp;lt;/p&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;C&#39;est pas mal !&lt;/p&gt;
-&lt;p&gt;Mais comme on peut le voir, le titre de mon nouveau blogue apparait 2 fois : une première dans la balise &lt;code&gt;&amp;lt;title&amp;gt;&lt;/code&gt; et une seconde dans la balise &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;. Ce qui est assez normal. Ce qui est moins amusant, c&#39;est que pour cela j&#39;ai dû le répéter dans 2 fichiers différents :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;dans &amp;quot;layout.njk&amp;quot; pour qu&#39;il apparaisse dans la balise &lt;code&gt;&amp;lt;title&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;dans &amp;quot;index.md&amp;quot; pour qu&#39;il s&#39;affiche dans le titre &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Et qu&#39;en plus je n&#39;ai même pas été foutu de l&#39;écrire de la même façon à chaque fois :)&lt;/p&gt;
-&lt;p&gt;C&#39;est là que le dossier &amp;quot;src/_data&amp;quot; va servir. Je vais créer un fichier &amp;quot;site.json&amp;quot; pour y renseigner tous les informations globales du site. Ça correspond au fichier &amp;quot;_config.yml&amp;quot; de Jekyll.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
-    &amp;quot;title&amp;quot;: &amp;quot;Mon nouveau Blogue&amp;quot;,
-    &amp;quot;url&amp;quot;: &amp;quot;https://mon.nouveau.blog&amp;quot;,
-    &amp;quot;lang&amp;quot;: &amp;quot;fr-FR&amp;quot;,
-    &amp;quot;description&amp;quot;: &amp;quot;Mon blog, de 2004 à aujourd&#39;hui...&amp;quot;,
-    &amp;quot;author&amp;quot;: &amp;quot;Michel&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;J&#39;en ai mis un peu plus...&lt;/p&gt;
-&lt;p&gt;Maintenant, je peux mettre à jour le layout pour y utiliser les variables globales &amp;quot;site.lang&amp;quot; et &amp;quot;site.title&amp;quot;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-njk&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
-  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;{{ site.title }}&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
-  {{ content | safe }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et aussi le fichier &amp;quot;index.md&amp;quot; pour y utiliser la variable globale &amp;quot;site.title&amp;quot;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;---
-layout: layout.njk
----
-# {{ site.title }}
-
-C&#39;est parti pour la migration de Jekyll vers Eleventy.
-
-Jusqu&#39;ici tout va bien...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Je retourne sur le navigateur et je peux constater que maintenant c&#39;est bien &amp;quot;Mon nouveau Blogue&amp;quot; partout.&lt;/p&gt;
-&lt;p&gt;Un dernier truc pour aujourd&#39;hui. Comme le site va contenir plusieurs pages et des tas de billets, je vais avoir besoin de définir un titre pour chaque page en plus du titre général du site.&lt;/p&gt;
-&lt;p&gt;Pour donner un titre à la page, j&#39;ajoute la variable &amp;quot;title&amp;quot; dans le front matter du fichier &amp;quot;index.md&amp;quot; et je remplace l&#39;utilisation de la variable globale &amp;quot;site.title&amp;quot; par celle de cette nouvelle variable.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;---
-layout: layout.njk
-title: Accueil
----
-# {{ title }}
-
-C&#39;est parti pour la migration de Jekyll vers Eleventy.
-
-Jusqu&#39;ici tout va bien...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Puis j&#39;ajoute le titre de la page dans &amp;quot;layout.njk&amp;quot; , pour que l&#39;utilisateur sache sur quelle page il est en plus d&#39;avoir le titre du blogue.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-njk&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
-  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
-  {{ content | safe }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ce qui donne :&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/eleventy-003.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Ctrl+C dans le terminal de VS Code pour arrêter la tâche &amp;quot;npm start&amp;quot; et c&#39;est bon pour aujourd&#39;hui.&lt;/p&gt;
-&lt;p&gt;Ou alors juste :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;c:\code\blog11&amp;gt; git init -b main
-c:\code\blog11&amp;gt; git add .
-c:\code\blog11&amp;gt; git commit -m &amp;quot;Création du blog.&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-        </content>
-        <category term="11ty" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/tour-eiffel.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/tour-eiffel.jpg" />
     </entry>
 </feed>
