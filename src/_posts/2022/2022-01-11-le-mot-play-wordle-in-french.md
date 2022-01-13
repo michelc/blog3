@@ -4,11 +4,13 @@ lang: en-US
 tags: [ javascript, jeux ]
 title: LeMOT to play WORDLE in French
 cover:
-  image: /public/2022/lemot-jouer.png
+  image: /public/2022/lemot-wordle-fr.png
   link: https://www.solitaire-play.com/lemot/
   text: LeMOT - Un jeu de mot chaque jour
 excerpt: This weekend, I started a French version of WORDLE. I developed my own code in Vanilla JS and most importantly, I found a great name "LeMOT", and even a slogan "One Word, One Day"!
 ---
+
+> TL;TR : Let me [play Wordle in French](https://www.solitaire-play.com/lemot/)!
 
 Some time ago, I saw some funny pictures appear on Twitter. It looked a bit like GitHub's contributions, but over a single week?
 

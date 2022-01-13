@@ -3,11 +3,13 @@ date: 2022-01-10 13:36:08 +02:00
 tags: [ javascript, jeux ]
 title: LeMOT pour jouer à WORDLE en français
 cover:
-  image: /public/2022/lemot-jouer.png
+  image: /public/2022/lemot-wordle-fr.png
   link: https://www.solitaire-play.com/lemot/
   text: LeMOT - Un jeu de mot chaque jour
 excerpt: Ce week-end, j'ai mis en ligne une version française de WORDLE. J'ai développé mon propre code en Vanilla JS et en plus, j'ai trouvé un super nom "LeMOT", et même un slogan "Un Mot, un Jour" !
 ---
+
+> TL;TR : Je veux juste pouvoir [jouer à Wordle en français](https://www.solitaire-play.com/lemot/) !
 
 Il y a quelque temps, j'avais vu apparaitre de drôles d'images dans Twitter. Ça ressemblait un peu à la représentation des contributions de GitHub, mais sur une seule semaine ?
 

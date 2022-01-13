@@ -7,7 +7,7 @@ cover:
   image: /public/2021/systeme-bertillon.jpg
   link: https://fr.wikipedia.org/wiki/Bertillonnage
   text: Le Système Bertillon
-excerpt: Ce n'est pas très compliqué, et en à peine 30 lignes de CSS et une pincée de flexbox on peut afficher des badges ou des avatars très corrects.
+excerpt: It's not very complicated, and in just 30 lines of CSS and a pinch of flexbox you can display very decent badges or avatars.
 ---
 
 Some time ago, I built a small application to easily review my helpdesk tickets. I no longer use this program, but it gave me the opportunity to present the exchanges as a conversation. As a backup, I'm writing here how I displayed the badges to identify the users.
@@ -150,11 +150,11 @@ It's almost done. In practice, a 100 pixel wide badge (not counting the 10 pixel
   .badge-75 {
     --badge-size: 75px;
   }
-  
+
   .badge-200 {
     --badge-size: 200px;
   }
-  
+
   .badge {
     /* A green circle */
     height: var(--badge-size);
@@ -172,7 +172,7 @@ It's almost done. In practice, a 100 pixel wide badge (not counting the 10 pixel
     justify-content: center;
     align-items: center;
   }
-  
+
   .badge-avatar {
     /* Hide initials */
     color: transparent;
