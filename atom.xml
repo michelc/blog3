@@ -3,12 +3,61 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-11T11:36:08.000Z</updated>
+    <updated>2022-01-13T17:07:15.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Des couleurs accessibles pour LeMOT</title>
+        <link href="https://blog.pagesd.info/2022/01/13/couleurs-accessibles-lemot/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-01-13T17:07:15.000Z</updated>
+        <published>2022-01-13T17:07:15.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/13/couleurs-accessibles-lemot/</id>
+        <summary>Je continue à faire évoluer ma version du jeu Wordle en français, en essayant de rendre ses couleurs plus accessibles pour les daltoniens.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;J&#39;ai bien réfléchi et j&#39;ai décidé de changer la couleur des indices dans ma version de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://blog.pagesd.info/2022/01/10/le-mot-wordle-en-francais/&quot;&gt;Samedi&lt;/a&gt;, quand j&#39;ai créé &lt;strong&gt;LeMOT&lt;/strong&gt;, j&#39;ai repris les couleurs utilisées par Josh Wardle.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-avant.png&quot; alt=&quot;Les couleurs d&#39;origine&quot; title=&quot;Les couleurs d&#39;origine&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Dans le &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle original&lt;/a&gt;, il y a aussi un &amp;quot;Color Blind Mode&amp;quot; avec des couleurs plus constratées pour les personnes qui sont &lt;a href=&quot;https://fr.wikipedia.org/wiki/Daltonisme&quot;&gt;daltoniennes&lt;/a&gt; (color blind en anglais).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-color-blind-mode.png&quot; alt=&quot;&#39;Color Blind Mode&#39; dans Wordle&quot; title=&quot;&#39;Color Blind Mode&#39; dans Wordle&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Je ne le retrouve pas, mais j&#39;ai vu passer il y a quelques jours un tweet disant qu&#39;il serait plus simple d&#39;utiliser directement des couleurs adaptées pour tout le monde, plutôt que de les proposer via un paramétrage.&lt;/p&gt;
+&lt;p&gt;Comme mon jeu est encore récent, c&#39;est ce que j&#39;ai fait. Et désormais ma version de Wordle en français utilise directement des couleurs accessibles pour les personnes ayant des troubles de la vue.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;Les nouvelles couleurs&quot; title=&quot;Les nouvelles couleurs&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Je suis parti de la palette de couleurs &amp;quot;IBM Design Library&amp;quot; trouvé dans l&#39;article &lt;a href=&quot;https://davidmathlogic.com/colorblind/&quot;&gt;Coloring for Colorblindness&lt;/a&gt; de David Nichols. J&#39;ai ensuite testé ce que ça donnait grâce aux outils d&#39;accessibilité proposés par Firefox et j&#39;ai pu constater que tout allait bien.&lt;/p&gt;
+&lt;h2&gt;Démonstrations&lt;/h2&gt;
+&lt;h3&gt;Pas de rouge (protanopie)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/protanopie.png&quot; alt=&quot;protanopie&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Pas de vert (deutéranopie)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/deuteranopie.png&quot; alt=&quot;deutéranopie&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Pas de bleu (tritanopie))&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/triteranopie.png&quot; alt=&quot;tritanopie&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Aucune couleur (achromatopsie)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/achromatopsie.png&quot; alt=&quot;achromatopsie&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note : J&#39;ai aussi profité de ce changement de couleurs pour augmenter la taille des caractères pour les myopes comme moi, avoir moins de nuances de gris et utiliser un noir plus foncé pour le texte des caractères.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Impact sur la grille de résultat&lt;/h2&gt;
+&lt;p&gt;J&#39;ai bien entendu adapté la grille de résultat inventée par &lt;a href=&quot;https://twitter.com/irihapeta/status/1481336946190614531&quot;&gt;@irihapeta&lt;/a&gt; pour qu&#39;elle adopte le même jeu de couleur. Même si je sais que cela ne change rien aux problèmes que tous ces émojis génèrent pour les logiciels de lecteur d&#39;écran.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-grille.png&quot; alt=&quot;Grille LeMOT&quot; title=&quot;Ceci est un faux&quot;&gt;&lt;/p&gt;
+&lt;h2&gt;Avantages des couleurs accessibles&lt;/h2&gt;
+&lt;p&gt;En un, tout le monde peut directement jouer, sans avoir à chercher où et comment paramétrer le jeu.&lt;/p&gt;
+&lt;p&gt;En deux, c&#39;est des couleurs aussi jolies que celles d&#39;origine (si ce n&#39;est plus jolies).&lt;/p&gt;
+&lt;p&gt;En trois, je n&#39;ai pas besoin de coder un écran pour paramétrer ça, ni de sauvegarder ce réglage pour le réactiver à chaque visite.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note : Même si les couleurs sont désormais accessibles pour les daltoiniens, le jeu lui-même n&#39;est toujours pas accessible.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Inconvénients de changer de couleurs&lt;/h2&gt;
+&lt;p&gt;La grille de résultat va sans doute dérouter les gens, mais je ne sais pas trop quoi faire... A part bien sûr d&#39;en générer une plus accessible, ce qui n&#39;est pas un truc facile et donc réalisable dans l&#39;immédiat. De toute façon, en voyant que la dernière ligne est peinte en orange, les gens comprendront vite qu&#39;il s&#39;agit de la couleur des lettres bien placées.&lt;/p&gt;
+&lt;p&gt;Ce qui est un peu plus embêtant, c&#39;est que les joueurs commencent à être habitués à ce que VERT = lettre bien placée et ORANGE = lettre mal placée. A part quelques débutants qui hésitent encore et doivent fréquemment afficher l&#39;aide :). Sans parler de la confusion pour ceux qui jouent à Wordle en français et en anglais.&lt;/p&gt;
+&lt;p&gt;Mais pour ça, j&#39;ai trouvé une super solution dont je suis fier comme un bar-tabac !&lt;/p&gt;
+&lt;p&gt;Quand une lettre est bien placée, je la répète en filigrane à la ligne suivante. Avec ça, on peut jouer immédiatement sans avoir à réfléchir au code couleur et concentrer tout son temps de cerveau humain disponible à trouver le bon mot.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-info.png&quot; alt=&quot;A la 2ème case, la lettre E bien placée&quot; title=&quot;A la 2ème case, la lettre &#39;E&#39; bien placée&quot;&gt;&lt;/p&gt;
+&lt;p&gt;C&#39;est pas tout ça, il est temps d&#39;aller &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;jouer à Wordle en français&lt;/a&gt; :)&lt;/p&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
+    </entry>
     <entry>
         <title type="html">LeMOT to play WORDLE in French</title>
         <link href="https://blog.pagesd.info/2022/01/11/le-mot-play-wordle-in-french/" rel="alternate" hreflang="en-US" />
@@ -17,6 +66,9 @@
         <id>https://blog.pagesd.info/2022/01/11/le-mot-play-wordle-in-french/</id>
         <summary>This weekend, I started a French version of WORDLE. I developed my own code in Vanilla JS and most importantly, I found a great name &quot;LeMOT&quot;, and even a slogan &quot;One Word, One Day&quot;!</summary>
         <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
+&lt;blockquote&gt;
+&lt;p&gt;TL;TR : Let me &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;play Wordle in French&lt;/a&gt;!&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Some time ago, I saw some funny pictures appear on Twitter. It looked a bit like GitHub&#39;s contributions, but over a single week?&lt;/p&gt;
 &lt;p&gt;I finally figured out what it was and discovered &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;WORDLE&lt;/a&gt;, a new word game, a kind of cross between Mastermind and Hangman, created by Josh Wardle. Wordle / Wardle: clever!&lt;/p&gt;
 &lt;p&gt;So of course, I played too, or rather I tried to play... Because I quickly had to admit that my English vocabulary was not enough to win regularly. Although I&#39;m proud to follow series or movies in VO with English subtitles! Or maybe I have a big problem when it comes to 5 letter English words?&lt;/p&gt;
@@ -56,8 +108,8 @@
         </content>
         <category term="javascript" />
         <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
     </entry>
     <entry>
         <title type="html">LeMOT pour jouer à WORDLE en français</title>
@@ -67,6 +119,9 @@
         <id>https://blog.pagesd.info/2022/01/10/le-mot-wordle-en-francais/</id>
         <summary>Ce week-end, j&#39;ai mis en ligne une version française de WORDLE. J&#39;ai développé mon propre code en Vanilla JS et en plus, j&#39;ai trouvé un super nom &quot;LeMOT&quot;, et même un slogan &quot;Un Mot, un Jour&quot; !</summary>
         <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;blockquote&gt;
+&lt;p&gt;TL;TR : Je veux juste pouvoir &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;jouer à Wordle en français&lt;/a&gt; !&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Il y a quelque temps, j&#39;avais vu apparaitre de drôles d&#39;images dans Twitter. Ça ressemblait un peu à la représentation des contributions de GitHub, mais sur une seule semaine ?&lt;/p&gt;
 &lt;p&gt;J&#39;ai fini par comprendre ce que c&#39;était et j&#39;ai alors découvert &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;WORDLE&lt;/a&gt;, un nouveau jeu de mots, sorte de croisement entre Mastermind et le Pendu, développé par Josh Wardle. Wordle / Wardle : malin !&lt;/p&gt;
 &lt;p&gt;Alors bien entendu, j&#39;ai joué moi aussi, ou plutôt j&#39;ai essayé de jouer... Parce que j&#39;ai assez vite dû me rendre à l&#39;évidence et reconnaitre que mon vocabulaire en anglais n&#39;était pas assez fourni pour réussir à gagner régulièrement. Alors que je suis tout fier de pouvoir suivre des séries ou des films en VO avec les sous-titres en anglais ! Ou alors j&#39;ai une grosse lacune en ce qui concerne les mots anglais de 5 lettres ?&lt;/p&gt;
@@ -106,8 +161,8 @@
         </content>
         <category term="javascript" />
         <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-jouer.png" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
     </entry>
     <entry>
         <title type="html">Générer des fichiers pour le &quot;M&quot; de MVC avec Tada !</title>
@@ -812,89 +867,5 @@ return View(model); // Cas où on n&#39;est pas passé par HTMX
         <category term="htmx" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/htmx-asp-net-core-mvc.jpg" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/htmx-asp-net-core-mvc.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Two highlight problems on dev.to</title>
-        <link href="https://blog.pagesd.info/2021/12/21/highlight-problems-dev-to/" rel="alternate" hreflang="en-US" />
-        <updated>2021-12-21T13:04:18.000Z</updated>
-        <published>2021-12-21T13:04:18.000Z</published>
-        <id>https://blog.pagesd.info/2021/12/21/highlight-problems-dev-to/</id>
-        <summary>Yesterday, I had troubles to highlight my Nunjucks code on dev.to. Also, I had a very strange bug with my markdown snippets.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Yesterday, I had troubles to highlight my Nunjucks code on &lt;a href=&quot;https://dev.to/&quot;&gt;dev.to&lt;/a&gt;. Also, I had a very strange bug with my markdown snippets.&lt;/p&gt;
-&lt;h2&gt;How to highlight Nunjucks on dev.to?&lt;/h2&gt;
-&lt;p&gt;According to &lt;a href=&quot;https://github.com/forem/forem-docs/blob/main/docs/technical-overview/stack.md&quot;&gt;Forem technical docs&lt;/a&gt;, they use &lt;a href=&quot;https://github.com/rouge-ruby/rouge&quot;&gt;Rouge&lt;/a&gt; to highlight code snippets. Rouge can highlight &lt;a href=&quot;https://github.com/rouge-ruby/rouge/blob/master/docs/Languages.md&quot;&gt;over 200 different languages&lt;/a&gt;. But not &lt;a href=&quot;https://github.com/rouge-ruby/rouge/issues/758&quot;&gt;Nunjucks&lt;/a&gt;... On the other hand, it supports Liquid, Jinja and Twig who look a lot like Nunjucks.&lt;/p&gt;
-&lt;p&gt;So I did some tests directly on &lt;a href=&quot;https://dev.to/michelc/how-to-highlight-nunjucks-on-devto-glm&quot;&gt;dev.to&lt;/a&gt; (where results are much more relevant than here on my blog where I don&#39;t highlight code).&lt;/p&gt;
-&lt;h3&gt;Using ```liquid&lt;/h3&gt;
-&lt;pre&gt;&lt;code class=&quot;language-liquid&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
-  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
-  {{ content | safe }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Using ```jinja&lt;/h3&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jinja&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
-  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
-  {{ content | safe }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Using ```twig&lt;/h3&gt;
-&lt;pre&gt;&lt;code class=&quot;language-twig&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;{{ site.lang }}&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-  &amp;lt;meta http-equiv=&amp;quot;X-UA-Compatible&amp;quot; content=&amp;quot;IE=edge&amp;quot;&amp;gt;
-  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;{{ title }} - {{ site.title }}&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;!-- Le contenu généré par Eleventy sera ajouté là --&amp;gt;
-  {{ content | safe }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Solution&lt;/h3&gt;
-&lt;p&gt;Liquid doesn&#39;t work. Probably because it&#39;s the template used by Forem. Jinja and Twig are fine. So I will write my Nunjucks examples by starting my code blocks with &lt;code&gt;```jinja&lt;/code&gt;.&lt;/p&gt;
-&lt;h2&gt;A bug with Markdown highlight?&lt;/h2&gt;
-&lt;p&gt;I don&#39;t know why, but my Markdown code snippets are not all properly highlighted. If you search for &amp;quot;layout: layout.njk&amp;quot; in my post &amp;quot;&lt;a href=&quot;https://dev.to/michelc/creation-de-mon-site-eleventy-mo2&quot;&gt;Création de mon site Eleventy&lt;/a&gt;&amp;quot; on dev.to, the first frontmatter is correctly highlighted. But not in the second and third snippets.&lt;/p&gt;
-&lt;p&gt;I always wrote:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-md&quot;&gt;---
-layout: layout.njk
----
-...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;But the last two times, it generates too many dashes. And it can&#39;t to recognize my code anymore?&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;--------
-layout: layout.njk
---------
-...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note: Maybe it&#39;s not related to &lt;code&gt;```markdown&lt;/code&gt;, because it also does it with only &lt;code&gt;```&lt;/code&gt; at the beginning of the code. On dev.to, I write &lt;code&gt;--------&lt;/code&gt; (8 dashes) to show exactly what I get on my previous post and it generates &lt;code&gt;-------------&lt;/code&gt; (13 dashes) instead :)&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;And if I move these two blocks at the beginning of my post, the highlight is magically fixed...&lt;/p&gt;
-&lt;p&gt;If anyone has the solution, I&#39;m curious. But it&#39;s not that bad.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note: It&#39;s fixed! Many thanks to &lt;a href=&quot;https://dev.to/djuber/comment/1kikf&quot;&gt;Daniel&lt;/a&gt; for solving this problem so quickly and to the whole Forem team for building such a good product.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Sure, I don&#39;t have all this problems on my &lt;a href=&quot;https://blog.pagesd.info/&quot;&gt;blog&lt;/a&gt;. But to be fair, all snippets are just raw code.&lt;/p&gt;
-
-        </content>
-        <category term="11ty" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/matrix.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/matrix.jpg" />
     </entry>
 </feed>
