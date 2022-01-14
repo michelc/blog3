@@ -11,7 +11,7 @@ excerpt: Je continue à faire évoluer ma version du jeu Wordle en français, en
 
 J'ai bien réfléchi et j'ai décidé de changer la couleur des indices dans ma version de [Wordle en français](https://www.solitaire-play.com/lemot/).
 
-[Samedi](https://blog.pagesd.info/2022/01/10/le-mot-wordle-en-francais/), quand j'ai créé **LeMOT**, j'ai repris les couleurs utilisées par Josh Wardle.
+[Samedi]({% post_url "2022-01-10-le-mot-wordle-en-francais" %}), quand j'ai créé **LeMOT**, j'ai repris les couleurs utilisées par Josh Wardle.
 
 ![Les couleurs d'origine](/public/2022/lemot-avant.png "Les couleurs d'origine")
 
@@ -38,7 +38,7 @@ Je suis parti de la palette de couleurs "IBM Design Library" trouvé dans l'arti
 
 ![deutéranopie](/public/2022/deuteranopie.png)
 
-### Pas de bleu (tritanopie))
+### Pas de bleu (tritanopie)
 
 ![tritanopie](/public/2022/triteranopie.png)
 
@@ -64,12 +64,12 @@ En deux, c'est des couleurs aussi jolies que celles d'origine (si ce n'est plus 
 
 En trois, je n'ai pas besoin de coder un écran pour paramétrer ça, ni de sauvegarder ce réglage pour le réactiver à chaque visite.
 
-*Note : Même si les couleurs sont désormais accessibles pour les daltoiniens, le jeu lui-même n'est toujours pas accessible.*
+*Note : Même si les couleurs sont désormais accessibles pour les daltoniens, d'autres éléments du jeu ne sont pas accessibles.*
 
 
 ## Inconvénients de changer de couleurs
 
-La grille de résultat va sans doute dérouter les gens, mais je ne sais pas trop quoi faire... A part bien sûr d'en générer une plus accessible, ce qui n'est pas un truc facile et donc réalisable dans l'immédiat. De toute façon, en voyant que la dernière ligne est peinte en orange, les gens comprendront vite qu'il s'agit de la couleur des lettres bien placées.
+La couleur des émojis dans la grille de résultat va sans doute dérouter les gens, mais je ne sais pas trop quoi faire... A part bien sûr d'en générer une plus accessible, ce qui n'est pas un truc facile et donc réalisable dans l'immédiat. Mais normalement, en voyant que la dernière ligne est peinte en orange, les gens comprendront vite qu'il s'agit de la couleur des lettres bien placées.
 
 Ce qui est un peu plus embêtant, c'est que les joueurs commencent à être habitués à ce que VERT = lettre bien placée et ORANGE = lettre mal placée. A part quelques débutants qui hésitent encore et doivent fréquemment afficher l'aide :). Sans parler de la confusion pour ceux qui jouent à Wordle en français et en anglais.
 
@@ -80,3 +80,11 @@ Quand une lettre est bien placée, je la répète en filigrane à la ligne suiva
 ![A la 2ème case, la lettre E bien placée](/public/2022/lemot-info.png "A la 2ème case, la lettre 'E' bien placée")
 
 C'est pas tout ça, il est temps d'aller [jouer à Wordle en français](https://www.solitaire-play.com/lemot/) :)
+
+[![LeMOT](/public/2022/lemot2.png "Qui fait mieux ?")](https://www.solitaire-play.com/lemot/)
+
+<div class="encart">
+
+English version: {% goto_en "Accessible colors for LeMOT", "2022-01-14-accessibles-colors-lemot" %}.
+
+</div>
