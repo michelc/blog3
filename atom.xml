@@ -3,12 +3,63 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-13T17:07:15.000Z</updated>
+    <updated>2022-01-14T11:03:20.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Accessible colors for LeMOT</title>
+        <link href="https://blog.pagesd.info/2022/01/14/accessibles-colors-lemot/" rel="alternate" hreflang="en-US" />
+        <updated>2022-01-14T11:03:20.000Z</updated>
+        <published>2022-01-14T11:03:20.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/14/accessibles-colors-lemot/</id>
+        <summary>I continue to improv my French Wordle game, trying to make its colors more accessible to people with color blindness.</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
+&lt;p&gt;I really thought about it and decided to change the color of the clues in my game &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle in French&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This past &lt;a href=&quot;/2022/01/11/le-mot-play-wordle-in-french/&quot;&gt;Saturday&lt;/a&gt;, when I created &lt;strong&gt;LeMOT&lt;/strong&gt;, I picked the colors used by Josh Wardle.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-avant.png&quot; alt=&quot;Original colors&quot; title=&quot;Original colors&quot;&gt;&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;original Wordle&lt;/a&gt;, there is also a &amp;quot;Color Blind Mode&amp;quot; with more contrasting colors for people who are &lt;a href=&quot;https://en.wikipedia.org/wiki/Color_blindness&quot;&gt;color blind&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-color-blind-mode.png&quot; alt=&quot;&#39;Color Blind Mode&#39; in Wordle&quot; title=&quot;&#39;Color Blind Mode&#39; in Wordle&quot;&gt;&lt;/p&gt;
+&lt;p&gt;I can&#39;t find it, but a few days ago I saw a tweet saying that it would be easier to directly use colors suitable for everyone, rather than offering them through a setting.&lt;/p&gt;
+&lt;p&gt;Since my game is in its early days, that&#39;s what I did. And now my version of Wordle in French uses directly accessible colors for people with visual impairments.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;New colors&quot; title=&quot;New colors&quot;&gt;&lt;/p&gt;
+&lt;p&gt;I started with the &amp;quot;IBM Design Library&amp;quot; color palette found in the &lt;a href=&quot;https://davidmathlogic.com/colorblind/&quot;&gt;Coloring for Colorblindness&lt;/a&gt; article by David Nichols. I then tested it with the accessibility tools provided by Firefox and found that it was fine.&lt;/p&gt;
+&lt;h2&gt;Demonstrations&lt;/h2&gt;
+&lt;h3&gt;No red (protanopia)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/protanopie.png&quot; alt=&quot;protanopia&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;No green (deuteranopia)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/deuteranopie.png&quot; alt=&quot;deuteranopia&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;No blue (tritanopia)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/triteranopie.png&quot; alt=&quot;tritanopia&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;No color (achromatopsia)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/achromatopsie.png&quot; alt=&quot;achromatopsia&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Note: I also took the opportunity of this color change to increase the font size for nearsighted people like me, to have less shades of gray and to use a darker black font for the text.&lt;/p&gt;
+&lt;h2&gt;Impact on the result grid&lt;/h2&gt;
+&lt;p&gt;I have of course adapted the result grid invented by &lt;a href=&quot;https://twitter.com/irihapeta/status/1481336946190614531&quot;&gt;@irihapeta&lt;/a&gt; to adopt the same color scheme. Although I know it doesn&#39;t change the problems that all these emojis generate for screen reader software.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-grille.png&quot; alt=&quot;LeMOT grid&quot; title=&quot;This is a fake&quot;&gt;&lt;/p&gt;
+&lt;h2&gt;Advantages of accessible colors&lt;/h2&gt;
+&lt;p&gt;One, everyone can play directly, without having to think about where and how to set up the game.&lt;/p&gt;
+&lt;p&gt;Two, colors are as pretty as the original ones (if not prettier).&lt;/p&gt;
+&lt;p&gt;Three, I don&#39;t need to code a screen to set it up, nor to save this setting to reactivate it on each visit.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: Colors are now accessible for colorblind people, other elements of the game are not accessible.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Disadvantages of new colors&lt;/h2&gt;
+&lt;p&gt;The color of emojis in the result grid will probably confuse people, but I don&#39;t know what to do... Except of course to generate a more accessible one, which is not an easy thing to do right now. But normally, seeing the last line all orange, people will understand that it&#39;s represent correct letters.&lt;/p&gt;
+&lt;p&gt;What is a bit more annoying is that players are getting used to GREEN = correct letter and ORANGE = present letter. Except for some beginners who are still hesitant and frequently have to display help :). Not to mention the confusion for those who play Wordle in French and English.&lt;/p&gt;
+&lt;p&gt;But for that, I found a great solution that I&#39;m very proud of!&lt;/p&gt;
+&lt;p&gt;When a letter is correct, I repeat it as a watermark on the next line. With this, you can play immediately without having to think about the color code and concentrate all your available human brain time on finding the right word.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-info.png&quot; alt=&quot;In the 2nd box, letter E is correct&quot; title=&quot;In the 2nd box, letter E is correct&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Whatever! It&#39;s time to go &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;play Wordle in French&lt;/a&gt; :)&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/13/couleurs-accessibles-lemot/&quot; hreflang=&quot;fr-FR&quot;&gt;Des couleurs accessibles pour LeMOT&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
+    </entry>
     <entry>
         <title type="html">Des couleurs accessibles pour LeMOT</title>
         <link href="https://blog.pagesd.info/2022/01/13/couleurs-accessibles-lemot/" rel="alternate" hreflang="fr-FR" />
@@ -18,7 +69,7 @@
         <summary>Je continue à faire évoluer ma version du jeu Wordle en français, en essayant de rendre ses couleurs plus accessibles pour les daltoniens.</summary>
         <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
 &lt;p&gt;J&#39;ai bien réfléchi et j&#39;ai décidé de changer la couleur des indices dans ma version de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://blog.pagesd.info/2022/01/10/le-mot-wordle-en-francais/&quot;&gt;Samedi&lt;/a&gt;, quand j&#39;ai créé &lt;strong&gt;LeMOT&lt;/strong&gt;, j&#39;ai repris les couleurs utilisées par Josh Wardle.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/2022/01/10/le-mot-wordle-en-francais/&quot;&gt;Samedi&lt;/a&gt;, quand j&#39;ai créé &lt;strong&gt;LeMOT&lt;/strong&gt;, j&#39;ai repris les couleurs utilisées par Josh Wardle.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/lemot-avant.png&quot; alt=&quot;Les couleurs d&#39;origine&quot; title=&quot;Les couleurs d&#39;origine&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Dans le &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle original&lt;/a&gt;, il y a aussi un &amp;quot;Color Blind Mode&amp;quot; avec des couleurs plus constratées pour les personnes qui sont &lt;a href=&quot;https://fr.wikipedia.org/wiki/Daltonisme&quot;&gt;daltoniennes&lt;/a&gt; (color blind en anglais).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/wordle-color-blind-mode.png&quot; alt=&quot;&#39;Color Blind Mode&#39; dans Wordle&quot; title=&quot;&#39;Color Blind Mode&#39; dans Wordle&quot;&gt;&lt;/p&gt;
@@ -31,7 +82,7 @@
 &lt;p&gt;&lt;img src=&quot;/public/2022/protanopie.png&quot; alt=&quot;protanopie&quot;&gt;&lt;/p&gt;
 &lt;h3&gt;Pas de vert (deutéranopie)&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/deuteranopie.png&quot; alt=&quot;deutéranopie&quot;&gt;&lt;/p&gt;
-&lt;h3&gt;Pas de bleu (tritanopie))&lt;/h3&gt;
+&lt;h3&gt;Pas de bleu (tritanopie)&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/triteranopie.png&quot; alt=&quot;tritanopie&quot;&gt;&lt;/p&gt;
 &lt;h3&gt;Aucune couleur (achromatopsie)&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/achromatopsie.png&quot; alt=&quot;achromatopsie&quot;&gt;&lt;/p&gt;
@@ -43,14 +94,18 @@
 &lt;p&gt;En un, tout le monde peut directement jouer, sans avoir à chercher où et comment paramétrer le jeu.&lt;/p&gt;
 &lt;p&gt;En deux, c&#39;est des couleurs aussi jolies que celles d&#39;origine (si ce n&#39;est plus jolies).&lt;/p&gt;
 &lt;p&gt;En trois, je n&#39;ai pas besoin de coder un écran pour paramétrer ça, ni de sauvegarder ce réglage pour le réactiver à chaque visite.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note : Même si les couleurs sont désormais accessibles pour les daltoiniens, le jeu lui-même n&#39;est toujours pas accessible.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note : Même si les couleurs sont désormais accessibles pour les daltoniens, d&#39;autres éléments du jeu ne sont pas accessibles.&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;Inconvénients de changer de couleurs&lt;/h2&gt;
-&lt;p&gt;La grille de résultat va sans doute dérouter les gens, mais je ne sais pas trop quoi faire... A part bien sûr d&#39;en générer une plus accessible, ce qui n&#39;est pas un truc facile et donc réalisable dans l&#39;immédiat. De toute façon, en voyant que la dernière ligne est peinte en orange, les gens comprendront vite qu&#39;il s&#39;agit de la couleur des lettres bien placées.&lt;/p&gt;
+&lt;p&gt;La couleur des émojis dans la grille de résultat va sans doute dérouter les gens, mais je ne sais pas trop quoi faire... A part bien sûr d&#39;en générer une plus accessible, ce qui n&#39;est pas un truc facile et donc réalisable dans l&#39;immédiat. Mais normalement, en voyant que la dernière ligne est peinte en orange, les gens comprendront vite qu&#39;il s&#39;agit de la couleur des lettres bien placées.&lt;/p&gt;
 &lt;p&gt;Ce qui est un peu plus embêtant, c&#39;est que les joueurs commencent à être habitués à ce que VERT = lettre bien placée et ORANGE = lettre mal placée. A part quelques débutants qui hésitent encore et doivent fréquemment afficher l&#39;aide :). Sans parler de la confusion pour ceux qui jouent à Wordle en français et en anglais.&lt;/p&gt;
 &lt;p&gt;Mais pour ça, j&#39;ai trouvé une super solution dont je suis fier comme un bar-tabac !&lt;/p&gt;
 &lt;p&gt;Quand une lettre est bien placée, je la répète en filigrane à la ligne suivante. Avec ça, on peut jouer immédiatement sans avoir à réfléchir au code couleur et concentrer tout son temps de cerveau humain disponible à trouver le bon mot.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/lemot-info.png&quot; alt=&quot;A la 2ème case, la lettre E bien placée&quot; title=&quot;A la 2ème case, la lettre &#39;E&#39; bien placée&quot;&gt;&lt;/p&gt;
 &lt;p&gt;C&#39;est pas tout ça, il est temps d&#39;aller &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;jouer à Wordle en français&lt;/a&gt; :)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Qui fait mieux ?&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2022/01/14/accessibles-colors-lemot/&quot; hreflang=&quot;en-US&quot;&gt;Accessible colors for LeMOT&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
 
         </content>
         <category term="javascript" />
@@ -629,236 +684,6 @@ return View(model); // If we did not use HTMX
 &lt;p&gt;Spoiler: we will go from &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt; to &lt;code&gt;&amp;lt;a-htmx asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a-htmx&amp;gt;&lt;/code&gt;!&lt;/p&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2021/12/23/utiliser-htmx-avec-asp-net-core-mvc/&quot; hreflang=&quot;fr-FR&quot;&gt;Utiliser HTMX avec ASP.NET Core MVC&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-        </content>
-        <category term="csharp" />
-        <category term=".net" />
-        <category term="mvc" />
-        <category term="htmx" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/htmx-asp-net-core-mvc.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/htmx-asp-net-core-mvc.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Utiliser HTMX avec ASP.NET Core MVC</title>
-        <link href="https://blog.pagesd.info/2021/12/23/utiliser-htmx-avec-asp-net-core-mvc/" rel="alternate" hreflang="fr-FR" />
-        <updated>2021-12-23T10:50:32.000Z</updated>
-        <published>2021-12-23T10:50:32.000Z</published>
-        <id>https://blog.pagesd.info/2021/12/23/utiliser-htmx-avec-asp-net-core-mvc/</id>
-        <summary>Comment développer une application CRUD avec HTMX + ASP.NET Core MVC. Essentiellemet pour éviter de recharger / afficher intégralement les pages pour gérer les fonctions CRUD.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Comme j&#39;ai trouvé le temps de mettre au propre mes essais avec &lt;a href=&quot;https://htmx.org/&quot;&gt;HTMX&lt;/a&gt;, je peux enfin noter comment j&#39;ai développé une application CRUD toute simple avec HTMX et ASP.NET Core MVC. Dans un premier temps, mon but n&#39;est pas de faire des zip, shebam, pow, blop, wizz... mais d&#39;éviter de recharger / afficher intégralement des pages pour gérer les fonctions CRUD de base.&lt;/p&gt;
-&lt;h2&gt;Point de départ&lt;/h2&gt;
-&lt;p&gt;Je crée vite fait une application ASP.NET Core MVC pour gérer une table Movies dans une base de données SQLite. J&#39;ai donc un contrôleur &amp;quot;MoviesController&amp;quot; avec les méthodes suivantes :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;// GET: Movies
-public async Task&amp;lt;IActionResult&amp;gt; Index() { ... }
-
-// GET: Movies/Details/5
-public async Task&amp;lt;IActionResult&amp;gt; Details(int? id) { ... }
-
-// GET: Movies/Create
-public IActionResult Create() { ... }
-
-// POST: Movies/Create
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task&amp;lt;IActionResult&amp;gt; Create(MovieEditorViewModel model) { ... }
-
-// GET: Movies/Edit/5
-public async Task&amp;lt;IActionResult&amp;gt; Edit(int? id) { ... }
-
-// POST: Movies/Edit/5
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task&amp;lt;IActionResult&amp;gt; Edit(int id, MovieEditorViewModel model) { ... }
-
-// GET: Movies/Delete/5
-public async Task&amp;lt;IActionResult&amp;gt; Delete(int? id) { ... }
-
-// POST: Movies/Delete/5
-[HttpPost, ActionName(&amp;quot;Delete&amp;quot;)]
-[ValidateAntiForgeryToken]
-public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et les 5 vues qui correspondent à ces 5 actions : &amp;quot;Index.cshtml&amp;quot;, &amp;quot;Details.cshtml&amp;quot;, &amp;quot;Create.cshtml&amp;quot;, &amp;quot;Edit.cshtml&amp;quot; et &amp;quot;Delete.cshtml&amp;quot; (plus 2 vues partielles &amp;quot;_Display.cshtml&amp;quot; et &amp;quot;_Editor.cshtml&amp;quot; pour éviter de répéter du code).&lt;/p&gt;
-&lt;p&gt;Le code de cette application de départ est visible sur &lt;a href=&quot;https://github.com/michelc/MvcHtmx/tree/1-sans-htmx&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Pour tester l&#39;application, il faut cliquer sur le menu &amp;quot;Films&amp;quot; pour obtenir la liste des films qui servent de jeux d&#39;essai.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Depuis cette page d&#39;index, on peut constater que quand on clique sur les liens &amp;quot;Créer&amp;quot;, &amp;quot;Modifier&amp;quot;, &amp;quot;Consulter&amp;quot; ou &amp;quot;Supprimer&amp;quot;, la page est rechargée en totalité. En effet, la date et l&#39;heure dans le pied de page sont mis à jour à chaque fois.&lt;/p&gt;
-&lt;p&gt;De même, quand on est dans une page de détail, le lien &amp;quot;Annuler&amp;quot; pour revenir à la liste recharge complètement la page d&#39;index. Et de la même façon, la validation des formulaires (pour créer, modifier ou supprimer des données) provoque un retour à la page d&#39;index et le rechargement complet de la page.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;A partir de maintenant, je vais ajouter HTMX à cette application puis lui apporter quelques modifications pour en tirer parti et ne plus recharger l&#39;intégralité des pages à chaque fois.&lt;/p&gt;
-&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
-     style=&quot;display:block&quot;
-     data-ad-client=&quot;ca-pub-5475403929650645&quot;
-     data-ad-slot=&quot;8049019520&quot;
-     data-ad-format=&quot;auto&quot;
-     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
-&lt;h2&gt;Etape 1 - Référencer HTMX&lt;/h2&gt;
-&lt;p&gt;Il y a plusieurs façon d&#39;&lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;installer HTMX&lt;/a&gt;, mais pour faire vite, j&#39;ajoute simplement la ligne &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; dans mon fichier &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;        ...
-        &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt;
-            &amp;amp;copy; 2021 - MvcHtmx - @DateTime.Now.ToLongTimeString()
-        &amp;lt;/div&amp;gt;
-    &amp;lt;/footer&amp;gt;
-
-    &amp;lt;script src=&amp;quot;~/lib/jquery/dist/jquery.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-    &amp;lt;script src=&amp;quot;~/js/site.js&amp;quot; asp-append-version=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-    &amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-    @await RenderSectionAsync(&amp;quot;Scripts&amp;quot;, required: false)
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Etape 2 - Modifier la vue &amp;quot;Index.cshtml&amp;quot;&lt;/h2&gt;
-&lt;p&gt;La vue &amp;quot;Index.cshtml&amp;quot; contient un lien &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Create&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;&lt;/code&gt; dans l&#39;en-tête de la table pour permettre de créer un nouveau film.&lt;/p&gt;
-&lt;p&gt;C&#39;est un TagHelper classique qui génère le code HTML suivant : &lt;code&gt;&amp;lt;a href=&amp;quot;/movies/create/&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;&lt;/code&gt;. Lorsque l&#39;utilisateur clique sur ce lien, le navigateur contacte le serveur web via une requête HTTP GET et ASP.NET Core exécute l&#39;action &amp;quot;Create&amp;quot; du contrôleur &amp;quot;MoviesController&amp;quot; qui renvoie une nouvelle page au navigateur.&lt;/p&gt;
-&lt;p&gt;Comme mon application utilise un &amp;quot;layout&amp;quot;, la majeure partie de la nouvelle page correspond mot pour mot au contenu de la page d&#39;index... En fait, ce qui change c&#39;est ce qui est généré par la méthode Razor &lt;code&gt;@RenderBody()&lt;/code&gt;. Et d&#39;un point de vue HTML, ce qui change, c&#39;est le contenu de la balise &lt;code&gt;&amp;lt;main&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;    &amp;lt;/header&amp;gt;
-
-    &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt;
-        &amp;lt;main role=&amp;quot;main&amp;quot; class=&amp;quot;pb-3&amp;quot;&amp;gt;
-            @RenderBody()
-        &amp;lt;/main&amp;gt;
-    &amp;lt;/div&amp;gt;
-
-    &amp;lt;footer class=&amp;quot;border-top footer text-muted&amp;quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;C&#39;est là que HTMX entre en jeu puisqu&#39;il va permettre de ne renvoyer que le nouveau contenu pour la balise &lt;code&gt;&amp;lt;main&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Pour cela, il faut ajouter quelques informations à notre lien, pour que HTMX puisse faire son oeuvre.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;un attribut &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-get/&quot;&gt;hx-get&lt;/a&gt;&amp;quot; : &lt;code&gt;hx-get=&amp;quot;/movies/create/&amp;quot;&lt;/code&gt; pour indiquer à HTMX qu&#39;il devra faire une requête HTTP GET sur l&#39;URL &amp;quot;/movies/create/&amp;quot; qui correspond à l&#39;action &amp;quot;Create&amp;quot; du contrôleur &amp;quot;MoviesController&amp;quot;.&lt;/li&gt;
-&lt;li&gt;un attribut &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-target/&quot;&gt;hx-target&lt;/a&gt;&amp;quot; : &lt;code&gt;hx-target=&amp;quot;main&amp;quot;&lt;/code&gt; pour cibler où HTMX va devoir insérer le contenu renvoyé par l&#39;action (à la place du contenu en cours de la balise &lt;code&gt;&amp;lt;main&amp;gt;&lt;/code&gt;).&lt;/li&gt;
-&lt;li&gt;un attribut &lt;code&gt;hx-push-url=&amp;quot;true&amp;quot;&lt;/code&gt; pour que la barre d&#39;adresse du navigateur soit mise à jour.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;L&#39;attribut &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-push-url/&quot;&gt;hx-push-url&lt;/a&gt;&amp;quot; est intéressant à plus d&#39;un titre :&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Sans lui, la barre d&#39;adresse ne changerait pas et contiendrait toujours &amp;quot;https://localhost/movies/&amp;quot; qui est l&#39;URL de la page d&#39;index.&lt;/li&gt;
-&lt;li&gt;Avec lui, la barre d&#39;adresse affichera bien l&#39;URL de la page permettant de créer un film, à savoir &amp;quot;https://localhost/movies/create/&amp;quot;.&lt;/li&gt;
-&lt;li&gt;Ce qui est mieux si jamais l&#39;utilisateur enregistre cette URL ou la communique à quelqu&#39;un.&lt;/li&gt;
-&lt;li&gt;Et surtout, ça permet que le système de routes de ASP.NET Core s&#39;y retrouve correctement, sans rien avoir à changer.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;em&gt;Note : Une modification ultérieure me permettra cependant de m&#39;en passer, sans perdre aucun de ces 4 avantages.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Avec ces 3 nouveaux attributs, le TagHelper est maintenant :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;td&amp;gt;
-  &amp;lt;a asp-action=&amp;quot;Create&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/create/&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;
-&amp;lt;/td&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ce qui génère le code HTML suivant :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;td&amp;gt;
-  &amp;lt;a href=&amp;quot;/movies/create/&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/create/&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;
-&amp;lt;/td&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note : J&#39;ai testé et HTMX ne permet d&#39;avoir &lt;code&gt;&amp;lt;a href=&amp;quot;/movies/create/&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;&lt;/code&gt; pour éviter que les attributs &amp;quot;href&amp;quot; et &amp;quot;hx-get&amp;quot; fassent doublon.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;De la même façon, je peux modifier les liens &amp;quot;Modifier&amp;quot;, &amp;quot;Consulter&amp;quot; et &amp;quot;Supprimer&amp;quot; en leur ajoutant les 3 attributs spécifiques à HTMX :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;td&amp;gt;
-  &amp;lt;a asp-action=&amp;quot;Edit&amp;quot; asp-route-id=&amp;quot;@item.Movie_ID&amp;quot;
-     hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/edit/@item.Movie_ID/&amp;quot;&amp;gt;Modifier&amp;lt;/a&amp;gt; |
-  &amp;lt;a asp-action=&amp;quot;Details&amp;quot; asp-route-id=&amp;quot;@item.Movie_ID&amp;quot;
-     hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/details/@item.Movie_ID/&amp;quot;&amp;gt;Consulter&amp;lt;/a&amp;gt; |
-  &amp;lt;a asp-action=&amp;quot;Delete&amp;quot; asp-route-id=&amp;quot;@item.Movie_ID&amp;quot;
-     hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/delete/@item.Movie_ID/&amp;quot;&amp;gt;Supprimer&amp;lt;/a&amp;gt;
-&amp;lt;/td&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Etape 3 - Modifier les autres vues&lt;/h2&gt;
-&lt;p&gt;Les vues &amp;quot;Details.cshtml&amp;quot;, &amp;quot;Create.cshtml&amp;quot;, &amp;quot;Edit.cshtml&amp;quot; et &amp;quot;Delete.cshtml&amp;quot; contiennent toutes un lien &lt;code&gt;&amp;lt;a href=&amp;quot;/movies/&amp;quot;&amp;gt;Annuler&amp;lt;/a&amp;gt;&lt;/code&gt; pour quitter la page et revenir à la liste des films. Ce lien est généré via le TagHelper suivant :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a asp-action=&amp;quot;Index&amp;quot;&amp;gt;Annuler&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Que je remplace en :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a asp-action=&amp;quot;Index&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/&amp;quot;&amp;gt;Annuler&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;La vue &amp;quot;Details.cshtml&amp;quot; qui sert à consulter un film contient également un lien qui renvoie vers la page pour modifier le film en cours. Sa modification avec 3 attributs &amp;quot;hx-*&amp;quot; supplémentaires est désormais classique :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a asp-action=&amp;quot;Edit&amp;quot; asp-route-id=&amp;quot;@Model.Movie_ID&amp;quot; class=&amp;quot;btn btn-secondary&amp;quot;
-   hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/edit/@Model.Movie_ID/&amp;quot;&amp;gt;Modifier&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ensuite, la vue &amp;quot;Create.cshtml&amp;quot; contient un formulaire HTML pour envoyer les données saisies au serveur web afin qu&#39;il s&#39;occupe d&#39;insérer un nouveau film dans la base de données.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form asp-action=&amp;quot;Create&amp;quot; method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Personnellement, j&#39;ai enlevé le &lt;code&gt;asp-action=&amp;quot;Create&amp;quot;&lt;/code&gt; parce que je fais en sorte de toujours poster un formulaire sur la même URL que celle qui affiche ce formulaire. C&#39;est beaucoup mieux si jamais il y a des erreurs de saisie détectées après coup côté serveur.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Je complète le TagHelper pour qu&#39;il soit pris en compte par HTMX :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot; hx-post=&amp;quot;/movies/create/&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Dans ce cas, l&#39;attribut &amp;quot;hx-get&amp;quot; est remplacé par &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-post/&quot;&gt;hx-post&lt;/a&gt;&amp;quot; puisque le formulaire effectue une requête HTTP POST et pas une requête HTTP GET. Par ailleurs, les 2 attributs &amp;quot;hx-target&amp;quot; et &amp;quot;hx-push-url&amp;quot; n&#39;ayant pas d&#39;effet (quand j&#39;ai testé), je ne les ajoute pas.&lt;/p&gt;
-&lt;p&gt;Puis je fais pareil avec la vue &amp;quot;Edit.cshtml&amp;quot; qui sert à modifier un film :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot; hx-post=&amp;quot;/movies/edit/@Model.Movie_ID/&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et dans la vue &amp;quot;Delete.cshtml&amp;quot; qui sert pour supprimer un film :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot; hx-post=&amp;quot;/movies/delete/@Model.Movie_ID/&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Au passage, comme il s&#39;agit d&#39;une application MVC et pas d&#39;une API, je n&#39;utilise pas les méthodes HTTP PUT ou HTTP DELETE. Je respecte le système de routes &amp;quot;traditionnel&amp;quot; de ASP.NET MVC pour faire le lien entre les URLs et les actions d&#39;un contrôleur :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;GET /movies/ =&amp;gt; action &amp;quot;Index&amp;quot; pour afficher la liste des films&lt;/li&gt;
-&lt;li&gt;GET /movies/details/99/ =&amp;gt; action &amp;quot;Details&amp;quot; pour afficher le détail d&#39;un film&lt;/li&gt;
-&lt;li&gt;GET /movies/create/ =&amp;gt; action &amp;quot;Create&amp;quot; pour afficher le formulaire de création d&#39;un film&lt;/li&gt;
-&lt;li&gt;POST /movies/create/ =&amp;gt; action &amp;quot;Create&amp;quot; pour créer un nouveau film&lt;/li&gt;
-&lt;li&gt;GET /movies/edit/99/ =&amp;gt; action &amp;quot;Edit&amp;quot; pour afficher le formulaire de modification d&#39;un film&lt;/li&gt;
-&lt;li&gt;POST /movies/edit/99/ =&amp;gt; action &amp;quot;Edit&amp;quot; pour modifier un film&lt;/li&gt;
-&lt;li&gt;GET /movies/delete/99/ =&amp;gt; action &amp;quot;Delete&amp;quot; pour afficher le formulaire de suppression d&#39;un film&lt;/li&gt;
-&lt;li&gt;POST /movies/delete/99/ =&amp;gt; action &amp;quot;Delete&amp;quot; pour supprimer un film&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Note : Les &amp;quot;/&amp;quot; en fin d&#39;URL ne sont pas &amp;quot;standards&amp;quot;, c&#39;est moi qui préfère comme ça.&lt;/em&gt;&lt;/p&gt;
-&lt;h2&gt;Etape 4 - Renvoyer une vue partielle depuis le contrôleur&lt;/h2&gt;
-&lt;p&gt;Comme je n&#39;ai pas encore touché au code du contrôleur, celui-ci n&#39;est au courant de rien et ne sait pas qu&#39;il y a un nouvel HTMX. Par conséquent, ses différentes actions vont continuer à renvoyer des pages complètes au navigateur. La première modification indispensable, c&#39;est donc de faire en sorte que celles-ci ne renvoient plus que ce qui est spécifique et plus rien du tout pour la partie &amp;quot;layout&amp;quot;.&lt;/p&gt;
-&lt;p&gt;Etant donné que par défaut les applications ASP.NET Core MVC utilisent un &amp;quot;layout&amp;quot; pour éviter de répéter du code HTML, ça va être assez &amp;quot;facile&amp;quot;.&lt;/p&gt;
-&lt;p&gt;Actuellement, les actions se terminent généralement en renvoyant une vue à laquelle elles passent un modèle : &lt;code&gt;return View(data)&lt;/code&gt;. Le système de vues de ASP.NET Core combine alors les informations de ce modèle, le code Razor de la vue et le code Razor du layout pour générer une page HTML complète qu&#39;il renvoie au navigateur.&lt;/p&gt;
-&lt;p&gt;Plutôt que de faire un &lt;code&gt;return View(data)&lt;/code&gt;, on peut aussi faire un &lt;code&gt;return PartialView(data)&lt;/code&gt; et dans ce cas le layout n&#39;est pas pris en compte.&lt;/p&gt;
-&lt;p&gt;Cependant, lors du premier affichage de la page d&#39;index des films, il faut que l&#39;action &amp;quot;Index&amp;quot; renvoie une page complète. Il faut aussi renvoyer une page complète si jamais on arrive sur une des pages via un favori du navigateur ou via un lien qu&#39;on nous a donné.&lt;/p&gt;
-&lt;p&gt;Heureusement, HTMX a tout prévu et il est facile de savoir dans quelle condition l&#39;action est appelée grâce à l&#39;&lt;a href=&quot;https://htmx.org/docs/#request-header&quot;&gt;en-tête HTTP &amp;quot;HX-Request&amp;quot;&lt;/a&gt; présent dans la requête HTTP :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;if (Request.Headers.ContainsKey(&amp;quot;HX-Request&amp;quot;))
-{
-  // Cas où on vient depuis HTMX
-  return PartialView(model);
-}
-
-return View(model); // Cas où on n&#39;est pas passé par HTMX
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et si je mets ce bout de code dans une fonction &amp;quot;HtmxView()&amp;quot;, je peux faire un rechercher / remplacer de &amp;quot;return View(&amp;quot; par &amp;quot;return HtmxView(&amp;quot; et ça fait la rue Michel.&lt;/p&gt;
-&lt;h2&gt;Etape 5 - Gérer les RedirectToAction()&lt;/h2&gt;
-&lt;p&gt;Quelques essais dans tous les sens et ça fonctionne plutôt bien...&lt;/p&gt;
-&lt;p&gt;Par contre, quand on valide le formulaire des vues &amp;quot;Create.cshtml&amp;quot;, &amp;quot;Edit.cshtml&amp;quot; ou &amp;quot;Delete.cshtml&amp;quot;, la barre d&#39;adresse du navigateur reste sur l&#39;URL en cours au moment du POST alors qu&#39;il faudrait qu&#39;elle revienne à &amp;quot;https://localhost/movies/&amp;quot;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-3.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Le problème doit venir du fait qu&#39;il n&#39;est pas possible d&#39;utiliser les attributs &amp;quot;hx-target&amp;quot; et &amp;quot;hx-push-url&amp;quot; avec un &amp;quot;hx-post&amp;quot; (ou que je n&#39;ai pas réussi). Ou alors que ASP.NET Core s&#39;y perd un peu à la suite du RedirectToAction() qui vient conclure les POST réussis (pattern Post/Redirect/Get).&lt;/p&gt;
-&lt;p&gt;Mais je peux contourner ça en ajoutant l&#39;&lt;a href=&quot;https://htmx.org/docs/#response-header&quot;&gt;en-tête HTTP &amp;quot;HX-Push&amp;quot;&lt;/a&gt; à la réponse au moment de renvoyer la vue. Celui-ci indique à HTMX de définir une nouvelle URL dans la barre d&#39;adresse du navigateur.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;private IActionResult HtmxView(object model)
-{
-  if (Request.Headers.ContainsKey(&amp;quot;HX-Request&amp;quot;))
-  {
-    Response.Headers.Add(&amp;quot;HX-Push&amp;quot;, Request.Path.ToString());
-    return PartialView(model);
-  }
-
-  return View(model);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note : Bien évidemment, cette méthode mériterait d&#39;être dans un fichier &amp;quot;BaseController.cs&amp;quot;...&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Cerise sur le gateau !&lt;/strong&gt;  Comme je n&#39;ai pas fait dans la dentelle et que je renvoie l&#39;en-tête HTTP &amp;quot;HX-Push&amp;quot; avec toutes les vues partielles, je n&#39;ai plus besoin des &lt;code&gt;hx-push-url=&amp;quot;true&amp;quot;&lt;/code&gt; que j&#39;avais ajouté au niveau de chaque lien &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt;. Je peux donc les supprimer sans perdre en fonctionnalités.&lt;/p&gt;
-&lt;h2&gt;Récapitulatif&lt;/h2&gt;
-&lt;p&gt;Une fois qu&#39;on sait ce qu&#39;il faut faire, ça va vite :&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Ajouter &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; dans le layout.&lt;/li&gt;
-&lt;li&gt;Remplacer les liens &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt; par &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-get=&amp;quot;/movies/toto/&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Ajouter &lt;code&gt;hx-target=&amp;quot;main&amp;quot; hx-get=&amp;quot;/movies/toto/@Un_ID/&amp;quot;&lt;/code&gt; aux liens &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot; asp-route-id=&amp;quot;@Un_ID&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Transformer les &lt;code&gt;&amp;lt;form method=&amp;quot;post&amp;quot; ...&lt;/code&gt; en &lt;code&gt;&amp;lt;form method=&amp;quot;post&amp;quot; hx-post=&amp;quot;/movies/toto/xxx&amp;quot; ...&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Remplacer les &lt;code&gt;return View(model);&lt;/code&gt; par des &lt;code&gt;return HtmxView(model);&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Ajouter la méthode &lt;code&gt;private IActionResult HtmxView(object model) { ... }&lt;/code&gt; au contrôleur&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Pour bien visualiser et comprendre les différentes modifications apportées, leur détail est visible sous forme de diff au niveau du commit &amp;quot;&lt;a href=&quot;https://github.com/michelc/MvcHtmx/commit/a1a321ea16abf36ae39f5440db7936caa003985f&quot;&gt;Ajout HTMX le plus simplement possible&lt;/a&gt;&amp;quot; de la branche &amp;quot;2-ajout-htmx-basique&amp;quot; sur GitHub.&lt;/p&gt;
-&lt;h2&gt;Prochain épisode&lt;/h2&gt;
-&lt;p&gt;La prochaine fois, j&#39;expliquerai comme créer 2 nouveaux TagHelper &lt;code&gt;&amp;lt;a-htmx&amp;gt;&lt;/code&gt; et &lt;code&gt;&amp;lt;form-htmx&amp;gt;&lt;/code&gt; pour que toutes ces modifications soient moins tarabiscotées (et pour éviter les doublons entre &amp;quot;href&amp;quot; et &amp;quot;hx-get&amp;quot;).&lt;/p&gt;
-&lt;p&gt;Divulgachage : on passera de &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt; à &lt;code&gt;&amp;lt;a-htmx asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a-htmx&amp;gt;&lt;/code&gt; !&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2021/12/24/use-htmx-with-asp-net-core-mvc/&quot; hreflang=&quot;en-US&quot;&gt;Use HTMX with ASP.NET Core MVC&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
         </content>
         <category term="csharp" />
