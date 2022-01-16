@@ -23,7 +23,7 @@ Au départ, je m'étais contenté d'utiliser de simples caractères Ascii ou Uni
 
 C'est simple, ça marche et comme jusqu'à présent j'ai rarement eu l'occasion d'utiliser des icônes au format SVG, c'était la solution la plus pratique pour créer **LeMOT** super rapidement.
 
-![Les icônes d'origine](/public/2022/lemot-avant.png "Les «icônes» d'origine")
+![Les icônes d'origine](/public/2022/lemot-apres.png "Les «icônes» d'origine")
 
 C'était pas mal, mais ça ne rendait pas pareil selon sur quoi on joue : un PC sous Windows, un téléphone, un iPhone, ... Et puis j'avais dû bidouiller du CSS pour réussir à donner un aspect "bouton" aux icônes du menu.
 
@@ -81,7 +81,7 @@ svg {
 
 Cerise sur le gâteau, le fait d'utiliser l'unité de mesure "em" permet de les dimensionner proportionnellement à la taille de la police.
 
-![Les icônes SVG](/public/2022/lemot-icônes-svg.png "Les «icônes» SVG")
+![Les icônes SVG](/public/2022/lemot-icones-svg.png "Les «icônes» SVG")
 
 
 ## Un problème de clic sur les icônes SVG
@@ -98,7 +98,6 @@ Sur les téléphones, il n'était plus possible de revenir en arrière pour corr
   } else if (touche === "⌫") {
     retourArriere();
   }
-}
 ```
 
 Ou quelque chose dans le genre...
