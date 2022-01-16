@@ -3,12 +3,98 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-14T11:03:20.000Z</updated>
+    <updated>2022-01-16T08:26:09.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Ajout d&#39;icônes SVG à mon Wordle français</title>
+        <link href="https://blog.pagesd.info/2022/01/16/ajout-icones-svg_wordle-francais/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-01-16T08:26:09.000Z</updated>
+        <published>2022-01-16T08:26:09.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/16/ajout-icones-svg_wordle-francais/</id>
+        <summary>Juste après avoir modifié mon Wordle en français pour utiliser des couleurs accessibles, j&#39;ai pris un petit moment pour ajouter de véritables icônes SVG.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Juste après avoir modifié ma version de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt; pour utiliser des couleurs accessibles, j&#39;ai pris un petit moment pour ajouter de véritables icônes SVG.&lt;/p&gt;
+&lt;h2&gt;Mes premières &amp;quot;icônes&amp;quot;&lt;/h2&gt;
+&lt;p&gt;Au départ, je m&#39;étais contenté d&#39;utiliser de simples caractères Ascii ou Unicode pour représenter les actions du jeu ou les touches du clavier :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;quot;?&amp;quot; pour le menu Aide&lt;/li&gt;
+&lt;li&gt;&amp;quot;⚙&amp;quot; pour le menu paramétrage&lt;/li&gt;
+&lt;li&gt;&amp;quot;↵&amp;quot; pour la touche Entrée&lt;/li&gt;
+&lt;li&gt;&amp;quot;⌫&amp;quot; pour la touche Retour arrière&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;C&#39;est simple, ça marche et comme jusqu&#39;à présent j&#39;ai rarement eu l&#39;occasion d&#39;utiliser des icônes au format SVG, c&#39;était la solution la plus pratique pour créer &lt;strong&gt;LeMOT&lt;/strong&gt; super rapidement.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-avant.png&quot; alt=&quot;Les icônes d&#39;origine&quot; title=&quot;Les «icônes» d&#39;origine&quot;&gt;&lt;/p&gt;
+&lt;p&gt;C&#39;était pas mal, mais ça ne rendait pas pareil selon sur quoi on joue : un PC sous Windows, un téléphone, un iPhone, ... Et puis j&#39;avais dû bidouiller du CSS pour réussir à donner un aspect &amp;quot;bouton&amp;quot; aux icônes du menu.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.menu {
+  background-color: #ddd;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 24px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.menu:hover {
+  background-color: #bbb;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Changement pour des icônes SVG&lt;/h2&gt;
+&lt;p&gt;Malgré tout, j&#39;avais prévu dès le début de regarder du côté des icônes SVG pour améliorer &lt;strong&gt;LeMOT&lt;/strong&gt;. Comme j&#39;avais sous le coude un certain nombre de jeux d&#39;icônes SVG, j&#39;ai cherché lequel conviendrait mieux.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://feathericons.com/&quot;&gt;Feather – Simply beautiful open source icons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://antonreshetov.github.io/vue-unicons/&quot;&gt;Vue Unicons – 1000+ Pixel-perfect svg icons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://iconoir.com/&quot;&gt;Iconoir – An Open-Source SVG Icons Library&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://heroicons.com/&quot;&gt;Heroicons – Beautiful hand-crafted SVG icons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://phosphoricons.com/&quot;&gt;Phosphor Icons – A flexible icon family&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Même si au final ce ne sont pas les icônes que j&#39;ai sélectionnées, je les ai listées ici parce qu&#39;elles sont toutes très bien. Par contre j&#39;ai eu quelquefois un problème pour trouver des icônes qui représentent les touches Entrée et Retour arrière. En plus, juste à ce moment-là, Josh Wardle avait ajouté une nouvelle icône dans le menu pour consulter les statistiques.&lt;/p&gt;
+&lt;p&gt;Et aussi, comme j&#39;étais un peu impatient, j&#39;ai eu un peu de mal à trouver des explications pour savoir comment les colorer ou les dimensionner.&lt;/p&gt;
+&lt;p&gt;Par chance, j&#39;ai fini par tilter et j&#39;ai repensé aux &lt;a href=&quot;https://icons.getbootstrap.com/&quot;&gt;icônes Bootstrap&lt;/a&gt; que j&#39;utilise quelquefois sous forme de police d&#39;icônes ! Et là, il y avait tout ce dont j&#39;avais besoin et en plus elles étaient facilement personnalisables avec un peu de CSS.&lt;/p&gt;
+&lt;p&gt;Pour définir la couleur :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
+  fill: green;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pour les dimensionner :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
+  height: 1.75em;
+  width: 1.75em;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Cerise sur le gâteau, le fait d&#39;utiliser l&#39;unité de mesure &amp;quot;em&amp;quot; permet de les dimensionner proportionnellement à la taille de la police.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-ic%C3%B4nes-svg.png&quot; alt=&quot;Les icônes SVG&quot; title=&quot;Les «icônes» SVG&quot;&gt;&lt;/p&gt;
+&lt;h2&gt;Un problème de clic sur les icônes SVG&lt;/h2&gt;
+&lt;p&gt;Comme il était tard et que je n&#39;avais pas suffisamment (ou pas du tout ?) testé, ça a bugué :(&lt;/p&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;fr&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/ms_michel?ref_src=twsrc%5Etfw&quot;&gt;@ms_michel&lt;/a&gt; hello je te signale un bug impossible d’effacer des lettres le jeu est planté&lt;/p&gt;&amp;mdash; Guillaume (@yomz) &lt;a href=&quot;https://twitter.com/yomz/status/1481782505309192194?ref_src=twsrc%5Etfw&quot;&gt;January 14, 2022&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;p&gt;Sur les téléphones, il n&#39;était plus possible de revenir en arrière pour corriger une lettre ou de valider le mot saisi ! Tout ça parce que mon code se basait toujours sur les caractères Unicode &amp;quot;↵&amp;quot; et &amp;quot;⌫&amp;quot; pour détecter quelle touche avait été utilisée.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;  if (touche === &amp;quot;↵&amp;quot;) {
+    validerLigne();
+  } else if (touche === &amp;quot;⌫&amp;quot;) {
+    retourArriere();
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ou quelque chose dans le genre...&lt;/p&gt;
+&lt;p&gt;Qu&#39;à cela ne tienne, je n&#39;avais qu&#39;à ajouter un &lt;code&gt;data-attribut&lt;/code&gt; sur les 2 touches concernées et problème résolu !&lt;/p&gt;
+&lt;p&gt;Malheureusement, quand on clique sur un SVG, le &lt;code&gt;event.target&lt;/code&gt; que donne l&#39;évènement &amp;quot;click&amp;quot; ne correspond pas obligatoirement à l&#39;élément DOM &amp;quot;button&amp;quot; qui représente la touche. Cela peut être l&#39;élément &amp;quot;SVG&amp;quot; ou même l&#39;élément &amp;quot;PATH&amp;quot; en fonction de l&#39;endroit exact où on a cliqué...&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note : Très certainement que sur un téléphone ça tombe toujours sur le &amp;quot;button&amp;quot; (à moins d&#39;avoir un doigt super fin), mais autant ne rien laisser au hasard.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Heureusement, c&#39;est un problème bien connu que j&#39;avais d&#39;ailleurs déjà rencontré lors de mes précédents accrochages avec la délégation d&#39;évènement. Dans son article &amp;quot;&lt;a href=&quot;https://gomakethings.com/detecting-click-events-on-svgs-with-vanilla-js-event-delegation/&quot;&gt;Detecting click events on SVGs with vanilla JS event delegation&lt;/a&gt;&amp;quot;, Chris Ferdinandi donne deux solutions pour résoudre le problème.&lt;/p&gt;
+&lt;p&gt;Bien entendu, j&#39;ai pris la solution la plus simple et j&#39;ai ajouté un &lt;code&gt;pointer-events: none;&lt;/code&gt; à mon fichier CSS.&lt;/p&gt;
+&lt;p&gt;Et c&#39;est pour cela que maintenant, il est possible de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;jouer à Wordle en français&lt;/a&gt; sur un téléphone et avec de jolies icônes.&lt;/p&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+    </entry>
     <entry>
         <title type="html">Accessible colors for LeMOT</title>
         <link href="https://blog.pagesd.info/2022/01/14/accessibles-colors-lemot/" rel="alternate" hreflang="en-US" />
@@ -462,235 +548,5 @@ namespace MvcMovie.Models
         <category term="mvc" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/tada.jpg" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/tada.jpg" />
-    </entry>
-    <entry>
-        <title type="html">Use HTMX with ASP.NET Core MVC</title>
-        <link href="https://blog.pagesd.info/2021/12/24/use-htmx-with-asp-net-core-mvc/" rel="alternate" hreflang="en-US" />
-        <updated>2021-12-24T11:07:22.000Z</updated>
-        <published>2021-12-24T11:07:22.000Z</published>
-        <id>https://blog.pagesd.info/2021/12/24/use-htmx-with-asp-net-core-mvc/</id>
-        <summary>How to develop a CRUD application with HTMX + ASP.NET Core MVC. Essentially to avoid reloading / displaying full pages to manage CRUD functions.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;As I found the time to clean up my tests with &lt;a href=&quot;https://htmx.org/&quot;&gt;HTMX&lt;/a&gt;, I can finally note how I developed a simple CRUD application with HTMX and ASP.NET Core MVC. At first, my goal is not to make zip, shebam, pow, blop, wizz... but to avoid reloading / displaying pages entirely to manage the basic CRUD functions.&lt;/p&gt;
-&lt;h2&gt;Starting point&lt;/h2&gt;
-&lt;p&gt;I quickly create an ASP.NET Core MVC application to manage a Movies table in an SQLite database. So I have a &amp;quot;MoviesController&amp;quot; controller with the following methods:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;// GET: Movies
-public async Task&amp;lt;IActionResult&amp;gt; Index() { ... }
-
-// GET: Movies/Details/5
-public async Task&amp;lt;IActionResult&amp;gt; Details(int? id) { ... }
-
-// GET: Movies/Create
-public IActionResult Create() { ... }
-
-// POST: Movies/Create
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task&amp;lt;IActionResult&amp;gt; Create(MovieEditorViewModel model) { ... }
-
-// GET: Movies/Edit/5
-public async Task&amp;lt;IActionResult&amp;gt; Edit(int? id) { ... }
-
-// POST: Movies/Edit/5
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task&amp;lt;IActionResult&amp;gt; Edit(int id, MovieEditorViewModel model) { ... }
-
-// GET: Movies/Delete/5
-public async Task&amp;lt;IActionResult&amp;gt; Delete(int? id) { ... }
-
-// POST: Movies/Delete/5
-[HttpPost, ActionName(&amp;quot;Delete&amp;quot;)]
-[ValidateAntiForgeryToken]
-public async Task&amp;lt;IActionResult&amp;gt; DeleteConfirmed(int id) { ... }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And 5 views that correspond to these 5 actions: &amp;quot;Index.cshtml&amp;quot;, &amp;quot;Details.cshtml&amp;quot;, &amp;quot;Create.cshtml&amp;quot;, &amp;quot;Edit.cshtml&amp;quot; and &amp;quot;Delete.cshtml&amp;quot; (plus 2 partial views &amp;quot;_Display.cshtml&amp;quot; and &amp;quot;_Editor.cshtml&amp;quot; to avoid repeating code).&lt;/p&gt;
-&lt;p&gt;The code for this starter app is available on &lt;a href=&quot;https://github.com/michelc/MvcHtmx/tree/1-sans-htmx&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To test the application, you have to click on the &amp;quot;Movies&amp;quot; menu to navigate to the list of demo movies.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;From this index page, you can see that when you click on the links &amp;quot;Créer&amp;quot;, &amp;quot;Modifier&amp;quot;, &amp;quot;Consulter&amp;quot; or &amp;quot;Supprimer&amp;quot;, the page is completely reloaded: the time in the footer is updated each time.&lt;/p&gt;
-&lt;p&gt;In the same way, when you are in a detail page, the &amp;quot;Annuler&amp;quot; link to return to the movie list reloads the entire index page. Also, after submitting a form (to create, modify or delete data), it returns to the index page and fully reloads the page.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Now I will add HTMX to this app and then make some a few changes to use it and avoid to reload the whole pages every time.&lt;/p&gt;
-&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
-     style=&quot;display:block&quot;
-     data-ad-client=&quot;ca-pub-5475403929650645&quot;
-     data-ad-slot=&quot;8049019520&quot;
-     data-ad-format=&quot;auto&quot;
-     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
-&lt;h2&gt;Step 1 - Referencing HTMX&lt;/h2&gt;
-&lt;p&gt;There are several ways to &lt;a href=&quot;https://htmx.org/docs/#installing&quot;&gt;install HTMX&lt;/a&gt;, but to make it quick, I simply add the line &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; in my &amp;quot;/Views/Shared/_Layout.cshtml&amp;quot; file:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;        ...
-        &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt;
-            &amp;amp;copy; 2021 - MvcHtmx - @DateTime.Now.ToLongTimeString()
-        &amp;lt;/div&amp;gt;
-    &amp;lt;/footer&amp;gt;
-
-    &amp;lt;script src=&amp;quot;~/lib/jquery/dist/jquery.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-    &amp;lt;script src=&amp;quot;~/js/site.js&amp;quot; asp-append-version=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-    &amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-    @await RenderSectionAsync(&amp;quot;Scripts&amp;quot;, required: false)
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Step 2 - Update the &amp;quot;Index.cshtml&amp;quot; view&lt;/h2&gt;
-&lt;p&gt;The &amp;quot;Index.cshtml&amp;quot; view contains a link &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Create&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;&lt;/code&gt; in the table header to allow you to create a new movie.&lt;/p&gt;
-&lt;p&gt;It is a classic TagHelper that generates the following HTML code &lt;code&gt;&amp;lt;a href=&amp;quot;/movies/create/&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;&lt;/code&gt;. When the user clicks on this link, the browser hits the web server via an HTTP GET request and ASP.NET Core performs the &amp;quot;Create&amp;quot; action from the &amp;quot;MoviesController&amp;quot; controller which returns a new page to the browser.&lt;/p&gt;
-&lt;p&gt;As my application uses a &amp;quot;layout&amp;quot;, most of the new page corresponds verbatim to the content of the index page... In fact, the only thing that changes is generated by the Razor method &lt;code&gt;@RenderBody()&lt;/code&gt;. And from an HTML perspective, the change is in the content of the &lt;code&gt;&amp;lt;main&amp;gt;&lt;/code&gt; tag.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;    &amp;lt;/header&amp;gt;
-
-    &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt;
-        &amp;lt;main role=&amp;quot;main&amp;quot; class=&amp;quot;pb-3&amp;quot;&amp;gt;
-            @RenderBody()
-        &amp;lt;/main&amp;gt;
-    &amp;lt;/div&amp;gt;
-
-    &amp;lt;footer class=&amp;quot;border-top footer text-muted&amp;quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This is where HTMX comes in handy as it will allow me to return only the new content for the &lt;code&gt;&amp;lt;main&amp;gt;&lt;/code&gt; tag.&lt;/p&gt;
-&lt;p&gt;To do this, we need to add some information to our link, so that HTMX can do its work.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;an &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-get/&quot;&gt;hx-get&lt;/a&gt;&amp;quot; attribute : &lt;code&gt;hx-get=&amp;quot;/movies/create/&amp;quot;&lt;/code&gt; to indicate to HTMX that it will have to make an HTTP GET request on the URL &amp;quot;/movies/create/&amp;quot;, which corresponds to the &amp;quot;Create&amp;quot; action of the &amp;quot;MoviesController&amp;quot; controller.&lt;/li&gt;
-&lt;li&gt;an &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-target/&quot;&gt;hx-target&lt;/a&gt;&amp;quot; attribute : &lt;code&gt;hx-target=&amp;quot;main&amp;quot;&lt;/code&gt; to target where HTMX will have to insert the content returned by the action (instead of the current content of the tag &lt;code&gt;&amp;lt;main&amp;gt;&lt;/code&gt;).&lt;/li&gt;
-&lt;li&gt;an attribute &lt;code&gt;hx-push-url=&amp;quot;true&amp;quot;&lt;/code&gt; so that the browser address bar is updated.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-push-url/&quot;&gt;hx-push-url&lt;/a&gt;&amp;quot; attribute is interesting for several reasons:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Without it, the address bar would not change and would still contain &amp;quot;https://localhost/movies/&amp;quot; which is the URL of the index page.&lt;/li&gt;
-&lt;li&gt;With it, the address bar will display the URL of the page allowing to create a movie, namely &amp;quot;https://localhost/movies/create/&amp;quot;.&lt;/li&gt;
-&lt;li&gt;This is better if the user ever bookmarks this URL or gives it to someone.&lt;/li&gt;
-&lt;li&gt;And most importantly, it allows the ASP.NET Core route system to work  correctly, without having to change anything.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;em&gt;Note: A later modification will allow me to do without this attribute, without losing any of these 4 advantages.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;With these 3 new attributes, the TagHelper now looks like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;td&amp;gt;
-  &amp;lt;a asp-action=&amp;quot;Create&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/create/&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;
-&amp;lt;/td&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And it generates the following HTML code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;td&amp;gt;
-  &amp;lt;a href=&amp;quot;/movies/create/&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/create/&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;
-&amp;lt;/td&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note: I did a test and HTMX does not allow to write &lt;code&gt;&amp;lt;a href=&amp;quot;/movies/create/&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot;&amp;gt;Créer&amp;lt;/a&amp;gt;&lt;/code&gt; in order to avoid &amp;quot;href&amp;quot; and &amp;quot;hx-get&amp;quot; attributes being duplicated.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;In the same way, I can modify the  &amp;quot;Modifier&amp;quot;, &amp;quot;Consulter&amp;quot; and &amp;quot;Supprimer&amp;quot; links by adding the 3 HTMX specific attributes:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;td&amp;gt;
-  &amp;lt;a asp-action=&amp;quot;Edit&amp;quot; asp-route-id=&amp;quot;@item.Movie_ID&amp;quot;
-     hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/edit/@item.Movie_ID/&amp;quot;&amp;gt;Modifier&amp;lt;/a&amp;gt; |
-  &amp;lt;a asp-action=&amp;quot;Details&amp;quot; asp-route-id=&amp;quot;@item.Movie_ID&amp;quot;
-     hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/details/@item.Movie_ID/&amp;quot;&amp;gt;Consulter&amp;lt;/a&amp;gt; |
-  &amp;lt;a asp-action=&amp;quot;Delete&amp;quot; asp-route-id=&amp;quot;@item.Movie_ID&amp;quot;
-     hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/delete/@item.Movie_ID/&amp;quot;&amp;gt;Supprimer&amp;lt;/a&amp;gt;
-&amp;lt;/td&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Step 3 - Modify other views&lt;/h2&gt;
-&lt;p&gt;The &amp;quot;Details.cshtml&amp;quot;, &amp;quot;Create.cshtml&amp;quot;, &amp;quot;Edit.cshtml&amp;quot; and &amp;quot;Delete.cshtml&amp;quot; views all contain a link &lt;code&gt;&amp;lt;a href=&amp;quot;/movies/&amp;quot;&amp;gt;Annuler&amp;lt;/a&amp;gt;&lt;/code&gt; to exit the page and return to the movie list. This link is generated via the following TagHelper:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a asp-action=&amp;quot;Index&amp;quot;&amp;gt;Annuler&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;That I replace with:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a asp-action=&amp;quot;Index&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/&amp;quot;&amp;gt;Annuler&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The &amp;quot;Details.cshtml&amp;quot; view (which display a movie details) also contains a link to a new page to edit the current movie. This link is updated with the classic three &amp;quot;hx-*&amp;quot; attributes:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;a asp-action=&amp;quot;Edit&amp;quot; asp-route-id=&amp;quot;@Model.Movie_ID&amp;quot; class=&amp;quot;btn btn-secondary&amp;quot;
-   hx-target=&amp;quot;main&amp;quot; hx-push-url=&amp;quot;true&amp;quot; hx-get=&amp;quot;/movies/edit/@Model.Movie_ID/&amp;quot;&amp;gt;Modifier&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In addition, the &amp;quot;Create.cshtml&amp;quot; view contains an HTML form to send the entered data to the web server so that it can insert a new movie in the database.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form asp-action=&amp;quot;Create&amp;quot; method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Personally, I remove the &lt;code&gt;asp-action=&amp;quot;Create&amp;quot;&lt;/code&gt; because I make sure to always post a form on the same URL that displays this form. This is much better if there are any input errors detected afterwards on the server side.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I extend the TagHelper so that it is taken into account by HTMX:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot; hx-post=&amp;quot;/movies/create/&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this case, the &amp;quot;hx-get&amp;quot; attribute is replaced by &amp;quot;&lt;a href=&quot;https://htmx.org/attributes/hx-post/&quot;&gt;hx-post&lt;/a&gt;&amp;quot; since the form makes an HTTP POST request and not an HTTP GET request. Since the attributes &amp;quot;hx-target&amp;quot; and &amp;quot;hx-push-url&amp;quot; have no effect when I did the test, I don&#39;t add them to the &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; tag.&lt;/p&gt;
-&lt;p&gt;Then I do the same with the view &amp;quot;Edit.cshtml&amp;quot; which is used to modify a movie :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot; hx-post=&amp;quot;/movies/edit/@Model.Movie_ID/&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And in the &amp;quot;Delete.cshtml&amp;quot; view which is used to delete a movie:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;form method=&amp;quot;post&amp;quot; class=&amp;quot;form-horizontal&amp;quot; hx-post=&amp;quot;/movies/delete/@Model.Movie_ID/&amp;quot;&amp;gt;
-  ...
-&amp;lt;/form&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;By the way, this is an MVC application and not an API. That&#39;s why I don&#39;t use HTTP PUT or HTTP DELETE methods. I follow the &amp;quot;traditional&amp;quot; ASP.NET MVC route system to link URLs to controller actions:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;GET /movies/ =&amp;gt; action &amp;quot;Index&amp;quot; to display the list of movies&lt;/li&gt;
-&lt;li&gt;GET /movies/details/99/ =&amp;gt; &amp;quot;Details&amp;quot; action to display the details of a movie&lt;/li&gt;
-&lt;li&gt;GET /movies/create/ =&amp;gt; &amp;quot;Create&amp;quot; action to display a form for creating a movie&lt;/li&gt;
-&lt;li&gt;POST /movies/create/ =&amp;gt; &amp;quot;Create&amp;quot; action to create a new movie&lt;/li&gt;
-&lt;li&gt;GET /movies/edit/99/ =&amp;gt; &amp;quot;Edit&amp;quot; action to display a form for editing a movie&lt;/li&gt;
-&lt;li&gt;POST /movies/edit/99/ =&amp;gt; &amp;quot;Edit&amp;quot; action to modify a movie&lt;/li&gt;
-&lt;li&gt;GET /movies/delete/99/ =&amp;gt; &amp;quot;Delete&amp;quot; action to display a form for deleting a movie&lt;/li&gt;
-&lt;li&gt;POST /movies/delete/99/ =&amp;gt; &amp;quot;Delete&amp;quot; action to delete a movie&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Note: The trailing &amp;quot;/&amp;quot; in the URL are not &amp;quot;standard&amp;quot;, I prefer it that way.&lt;/em&gt;&lt;/p&gt;
-&lt;h2&gt;Step 4 - Return a partial view from the controller&lt;/h2&gt;
-&lt;p&gt;I haven&#39;t worked on the controller code yet. So the Movie controller doesn&#39;t know anything and especially that there is a new HTMX. And of course, all its action methods continue to return complete pages to the browser. The first required modification is that they only return what is specific and nothing at all for the &amp;quot;layout&amp;quot; part.&lt;/p&gt;
-&lt;p&gt;Thankfully, ASP.NET Core MVC applications use a &amp;quot;layout&amp;quot; template to avoid repeating HTML code, so it should be quite &amp;quot;easy&amp;quot;.&lt;/p&gt;
-&lt;p&gt;Currently, actions typically end by returning a view to which they pass a template with &lt;code&gt;return View(data)&lt;/code&gt;. The ASP.NET Core view system then combines the data from this model, the Razor code from the view and the Razor code from the layout to generate a full HTML page that it sends back to the browser.&lt;/p&gt;
-&lt;p&gt;Instead of doing a &lt;code&gt;return View(data)&lt;/code&gt;, we can also use &lt;code&gt;return PartialView(data)&lt;/code&gt; and in this case the layout is not included.&lt;/p&gt;
-&lt;p&gt;Be careful though, because the first time the movie list page is displayed, the &amp;quot;Index&amp;quot; action must return a full page (i.e. with the layout). It is also necessary to return a full page if you navigate on a page via a browser bookmark or by following a link someone gave you.&lt;/p&gt;
-&lt;p&gt;Fortunately, HTMX has anticipated all of this and it is easy to determine in which case called the action thanks to the &lt;a href=&quot;https://htmx.org/docs/#request-header&quot;&gt;HTTP header &amp;quot;HX-Request&amp;quot;&lt;/a&gt; available in the HTTP request:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;if (Request.Headers.ContainsKey(&amp;quot;HX-Request&amp;quot;))
-{
-  // When we respond to HTMX
-  return PartialView(model);
-}
-
-return View(model); // If we did not use HTMX
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And if I save this piece of code in a &amp;quot;HtmxView()&amp;quot; function, I can search/replace &amp;quot;return View()&amp;quot; with &amp;quot;return HtmxView(&amp;quot; and it will make Michel Street.&lt;/p&gt;
-&lt;h2&gt;Step 5 - Manage RedirectToAction()&lt;/h2&gt;
-&lt;p&gt;After a few different tests, it seems to work pretty well...&lt;/p&gt;
-&lt;p&gt;Although, when we validate the &amp;quot;Create.cshtml&amp;quot;, &amp;quot;Edit.cshtml&amp;quot; or &amp;quot;Delete.cshtml&amp;quot; view form, the browser address bar keeps the current URL from before the POST when it should become the index page URL, aka &amp;quot;https://localhost/movies/&amp;quot;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2021/htmx-essai-3.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;The problem must come from the fact that it is not possible to use the &amp;quot;hx-target&amp;quot; and &amp;quot;hx-push-url&amp;quot; attributes with &amp;quot;hx-post&amp;quot; (or that I did not succeed to do it). Another possibility is that ASP.NET Core gets a bit lost when following the RedirectToAction() which concludes the successful POSTs (Post / Redirect / Get pattern).&lt;/p&gt;
-&lt;p&gt;Anyway, I can fix this by adding a &lt;a href=&quot;https://htmx.org/docs/#response-header&quot;&gt;&amp;quot;HX-Push&amp;quot; HTTP header&lt;/a&gt; to the response when I send the view back. This tells HTMX to show a new URL in the browser address bar.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;private IActionResult HtmxView(object model)
-{
-  if (Request.Headers.ContainsKey(&amp;quot;HX-Request&amp;quot;))
-  {
-    Response.Headers.Add(&amp;quot;HX-Push&amp;quot;, Request.Path.ToString());
-    return PartialView(model);
-  }
-
-  return View(model);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note: Obviously, this method should be placed in a &amp;quot;BaseController.cs&amp;quot; file...&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;The icing on the cake!&lt;/strong&gt; Since I&#39;m not being picky and I&#39;m returning the HTTP header &amp;quot;HX-Push&amp;quot; with all partial views, I no longer need the &lt;code&gt;hx-push-url=&amp;quot;true&amp;quot;&lt;/code&gt; I have previously added to &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; links. Thus I can delete them without losing functionalities.&lt;/p&gt;
-&lt;h2&gt;Summary&lt;/h2&gt;
-&lt;p&gt;Once you know what to do, it goes pretty fast:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Add &lt;code&gt;&amp;lt;script src=&amp;quot;https://unpkg.com/htmx.org@1.6.1&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; in the layout.&lt;/li&gt;
-&lt;li&gt;Replace links &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt; with &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot; hx-target=&amp;quot;main&amp;quot; hx-get=&amp;quot;/movies/toto/&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;hx-target=&amp;quot;main&amp;quot; hx-get=&amp;quot;/movies/toto/@Un_ID/&amp;quot;&lt;/code&gt; to links &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot; asp-route-id=&amp;quot;@Un_ID&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Rewrite all &lt;code&gt;&amp;lt;form method=&amp;quot;post&amp;quot; ...&lt;/code&gt; with &lt;code&gt;&amp;lt;form method=&amp;quot;post&amp;quot; hx-post=&amp;quot;/movies/toto/xxx&amp;quot; ...&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Replace all &lt;code&gt;return View(model);&lt;/code&gt; with &lt;code&gt;return HtmxView(model);&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Add a method &lt;code&gt;private IActionResult HtmxView(object model) { ... }&lt;/code&gt; to the controller&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;In order to clearly visualize and understand all the modifications, their details are visible in the form of diffs in the commit &amp;quot;&lt;a href=&quot;https://github.com/michelc/MvcHtmx/commit/a1a321ea16abf36ae39f5440db7936caa003985f&quot;&gt;Add HTMX as simply as possible&lt;/a&gt;&amp;quot; in the branch &amp;quot;2-ajout-htmx-basic&amp;quot; on GitHub.&lt;/p&gt;
-&lt;h2&gt;To be continued&lt;/h2&gt;
-&lt;p&gt;Next time, I will explain how to create 2 new TagHelper &lt;code&gt;&amp;lt;a-htmx&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;form-htmx&amp;gt;&lt;/code&gt; so that all these modifications are less complicated (and to avoid duplicates between &amp;quot;href&amp;quot; and &amp;quot;hx-get&amp;quot;).&lt;/p&gt;
-&lt;p&gt;Spoiler: we will go from &lt;code&gt;&amp;lt;a asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a&amp;gt;&lt;/code&gt; to &lt;code&gt;&amp;lt;a-htmx asp-action=&amp;quot;Toto&amp;quot;&amp;gt;Tutu&amp;lt;/a-htmx&amp;gt;&lt;/code&gt;!&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2021/12/23/utiliser-htmx-avec-asp-net-core-mvc/&quot; hreflang=&quot;fr-FR&quot;&gt;Utiliser HTMX avec ASP.NET Core MVC&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-        </content>
-        <category term="csharp" />
-        <category term=".net" />
-        <category term="mvc" />
-        <category term="htmx" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2021/htmx-asp-net-core-mvc.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2021/htmx-asp-net-core-mvc.jpg" />
     </entry>
 </feed>
