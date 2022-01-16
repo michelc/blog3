@@ -61,7 +61,7 @@
 <li>&quot;⌫&quot; pour la touche Retour arrière</li>
 </ul>
 <p>C'est simple, ça marche et comme jusqu'à présent j'ai rarement eu l'occasion d'utiliser des icônes au format SVG, c'était la solution la plus pratique pour créer <strong>LeMOT</strong> super rapidement.</p>
-<p><img src="/public/2022/lemot-avant.png" alt="Les icônes d'origine" title="Les «icônes» d'origine"></p>
+<p><img src="/public/2022/lemot-apres.png" alt="Les icônes d'origine" title="Les «icônes» d'origine"></p>
 <p>C'était pas mal, mais ça ne rendait pas pareil selon sur quoi on joue : un PC sous Windows, un téléphone, un iPhone, ... Et puis j'avais dû bidouiller du CSS pour réussir à donner un aspect &quot;bouton&quot; aux icônes du menu.</p>
 <pre><code class="language-css">.menu {
   background-color: #ddd;
@@ -103,7 +103,7 @@
 }
 </code></pre>
 <p>Cerise sur le gâteau, le fait d'utiliser l'unité de mesure &quot;em&quot; permet de les dimensionner proportionnellement à la taille de la police.</p>
-<p><img src="/public/2022/lemot-ic%C3%B4nes-svg.png" alt="Les icônes SVG" title="Les «icônes» SVG"></p>
+<p><img src="/public/2022/lemot-icones-svg.png" alt="Les icônes SVG" title="Les «icônes» SVG"></p>
 <h2>Un problème de clic sur les icônes SVG</h2>
 <p>Comme il était tard et que je n'avais pas suffisamment (ou pas du tout ?) testé, ça a bugué :(</p>
 <blockquote class="twitter-tweet"><p lang="fr" dir="ltr"><a href="https://twitter.com/ms_michel?ref_src=twsrc%5Etfw">@ms_michel</a> hello je te signale un bug impossible d’effacer des lettres le jeu est planté</p>&mdash; Guillaume (@yomz) <a href="https://twitter.com/yomz/status/1481782505309192194?ref_src=twsrc%5Etfw">January 14, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -113,7 +113,6 @@
   } else if (touche === &quot;⌫&quot;) {
     retourArriere();
   }
-}
 </code></pre>
 <p>Ou quelque chose dans le genre...</p>
 <p>Qu'à cela ne tienne, je n'avais qu'à ajouter un <code>data-attribut</code> sur les 2 touches concernées et problème résolu !</p>

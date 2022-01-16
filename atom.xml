@@ -27,7 +27,7 @@
 &lt;li&gt;&amp;quot;⌫&amp;quot; pour la touche Retour arrière&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;C&#39;est simple, ça marche et comme jusqu&#39;à présent j&#39;ai rarement eu l&#39;occasion d&#39;utiliser des icônes au format SVG, c&#39;était la solution la plus pratique pour créer &lt;strong&gt;LeMOT&lt;/strong&gt; super rapidement.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-avant.png&quot; alt=&quot;Les icônes d&#39;origine&quot; title=&quot;Les «icônes» d&#39;origine&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;Les icônes d&#39;origine&quot; title=&quot;Les «icônes» d&#39;origine&quot;&gt;&lt;/p&gt;
 &lt;p&gt;C&#39;était pas mal, mais ça ne rendait pas pareil selon sur quoi on joue : un PC sous Windows, un téléphone, un iPhone, ... Et puis j&#39;avais dû bidouiller du CSS pour réussir à donner un aspect &amp;quot;bouton&amp;quot; aux icônes du menu.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.menu {
   background-color: #ddd;
@@ -69,7 +69,7 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Cerise sur le gâteau, le fait d&#39;utiliser l&#39;unité de mesure &amp;quot;em&amp;quot; permet de les dimensionner proportionnellement à la taille de la police.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-ic%C3%B4nes-svg.png&quot; alt=&quot;Les icônes SVG&quot; title=&quot;Les «icônes» SVG&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-icones-svg.png&quot; alt=&quot;Les icônes SVG&quot; title=&quot;Les «icônes» SVG&quot;&gt;&lt;/p&gt;
 &lt;h2&gt;Un problème de clic sur les icônes SVG&lt;/h2&gt;
 &lt;p&gt;Comme il était tard et que je n&#39;avais pas suffisamment (ou pas du tout ?) testé, ça a bugué :(&lt;/p&gt;
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;fr&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/ms_michel?ref_src=twsrc%5Etfw&quot;&gt;@ms_michel&lt;/a&gt; hello je te signale un bug impossible d’effacer des lettres le jeu est planté&lt;/p&gt;&amp;mdash; Guillaume (@yomz) &lt;a href=&quot;https://twitter.com/yomz/status/1481782505309192194?ref_src=twsrc%5Etfw&quot;&gt;January 14, 2022&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
@@ -79,7 +79,6 @@
   } else if (touche === &amp;quot;⌫&amp;quot;) {
     retourArriere();
   }
-}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Ou quelque chose dans le genre...&lt;/p&gt;
 &lt;p&gt;Qu&#39;à cela ne tienne, je n&#39;avais qu&#39;à ajouter un &lt;code&gt;data-attribut&lt;/code&gt; sur les 2 touches concernées et problème résolu !&lt;/p&gt;
