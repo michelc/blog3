@@ -81,7 +81,7 @@ svg {
 
 Cerise sur le gâteau, le fait d'utiliser l'unité de mesure "em" permet de les dimensionner proportionnellement à la taille de la police.
 
-![Les icônes SVG](/public/2022/lemot-icones-svg.png "Les «icônes» SVG")
+![Les icônes SVG](/public/2022/lemot-icones-svg.png "Les icônes SVG")
 
 
 ## Un problème de clic sur les icônes SVG
@@ -113,3 +113,10 @@ Heureusement, c'est un problème bien connu que j'avais d'ailleurs déjà rencon
 Bien entendu, j'ai pris la solution la plus simple et j'ai ajouté un `pointer-events: none;` à mon fichier CSS.
 
 Et c'est pour cela que maintenant, il est possible de [jouer à Wordle en français](https://www.solitaire-play.com/lemot/) sur un téléphone et avec de jolies icônes.
+
+
+<div class="encart">
+
+English version: {% goto_en "Adding SVG Icons to my French Wordle", "2022-01-17-adding-svg-icons-french-wordle" %}.
+
+</div>
