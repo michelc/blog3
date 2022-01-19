@@ -3,12 +3,99 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-16T08:26:09.000Z</updated>
+    <updated>2022-01-19T11:30:22.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Adding SVG Icons to my French Wordle</title>
+        <link href="https://blog.pagesd.info/2022/01/19/adding-svg-icons-french-wordle/" rel="alternate" hreflang="en-US" />
+        <updated>2022-01-19T11:30:22.000Z</updated>
+        <published>2022-01-19T11:30:22.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/19/adding-svg-icons-french-wordle/</id>
+        <summary>Just after I modified my French Wordle game to use accessible colors, I took a moment to add some SVG icons.</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Just after I modified my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt; game to use accessible colors, I took a little time to add SVG icons.&lt;/p&gt;
+&lt;h2&gt;My first &amp;quot;icons&amp;quot;&lt;/h2&gt;
+&lt;p&gt;Initially, I only used simple Ascii or Unicode characters to represent the game actions or the keyboard keys:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;quot;?&amp;quot; for the Help menu&lt;/li&gt;
+&lt;li&gt;&amp;quot;⚙&amp;quot; for the Settings menu&lt;/li&gt;
+&lt;li&gt;&amp;quot;↵&amp;quot; for Enter key&lt;/li&gt;
+&lt;li&gt;&amp;quot;⌫&amp;quot; for Backspace key&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It&#39;s simple, it works, and considering that I&#39;ve rarely had the opportunity to use SVG icons, this was the most practical solution to quickly create &lt;strong&gt;LeMOT&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;Original icons&quot; title=&quot;Original «icons»&quot;&gt;&lt;/p&gt;
+&lt;p&gt;It was decent, but it didn&#39;t look the same depending on what you&#39;re playing on: Windows PC, phone, iPhone, ... And then I had to tweak some CSS to give a &amp;quot;button&amp;quot; look to my menu icons.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.menu {
+  background-color: #ddd;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 24px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.menu:hover {
+  background-color: #bbb;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Switching to SVG icons&lt;/h2&gt;
+&lt;p&gt;Regardless, I had planned from the beginning to look at SVG icons to improve &lt;strong&gt;LeMOT&lt;/strong&gt;. As I had a number of SVG icon sets bookmarks, I looked for one that would be the best fit.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://feathericons.com/&quot;&gt;Feather – Simply beautiful open source icons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://antonreshetov.github.io/vue-unicons/&quot;&gt;Vue Unicons – 1000+ Pixel-perfect svg icons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://iconoir.com/&quot;&gt;Iconoir – An Open-Source SVG Icons Library&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://heroicons.com/&quot;&gt;Heroicons – Beautiful hand-crafted SVG icons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://phosphoricons.com/&quot;&gt;Phosphor Icons – A flexible icon family&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Though in the end these are not the icons I selected, I listed them here because they are all very good. But I had some difficulties finding icons to represent the Enter and Backspace keys. Also, just at that time, Josh Wardle had added a new icon in the menu to view stats.&lt;/p&gt;
+&lt;p&gt;Also, because I was impatient, I had trouble finding explanations for how to color or resize them.&lt;/p&gt;
+&lt;p&gt;Luckily, I finally tilted and thought again about &lt;a href=&quot;https://icons.getbootstrap.com/&quot;&gt;Bootstrap icons&lt;/a&gt; that I sometimes use as icon fonts! And there we are, everything I needed, plus they were easily customizable with a bit of CSS.&lt;/p&gt;
+&lt;p&gt;To set the color:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
+  fill: green;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To resize them:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
+  height: 1.75em;
+  width: 1.75em;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The icing on the cake, using the &amp;quot;em&amp;quot; unit allows them to be sized proportionally to the font size.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-icones-svg.png&quot; alt=&quot;SVG icons&quot; title=&quot;SVG icons&quot;&gt;&lt;/p&gt;
+&lt;h2&gt;Problem with clicking on SVG icons&lt;/h2&gt;
+&lt;p&gt;As it was late and I hadn&#39;t tested enough (or not at all?), it bugged :(&lt;/p&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;fr&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/ms_michel?ref_src=twsrc%5Etfw&quot;&gt;@ms_michel&lt;/a&gt; hello je te signale un bug impossible d’effacer des lettres le jeu est planté&lt;/p&gt;&amp;mdash; Guillaume (@yomz) &lt;a href=&quot;https://twitter.com/yomz/status/1481782505309192194?ref_src=twsrc%5Etfw&quot;&gt;January 14, 2022&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;p&gt;On the phones, it was no longer possible to go back and correct a letter or to validate the word entered! All of this because my code was still relying on the Unicode characters &amp;quot;↵&amp;quot; and &amp;quot;⌫&amp;quot; to detect which key had been used.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;  if (touche === &amp;quot;↵&amp;quot;) {
+    validerLigne();
+  } else if (touche === &amp;quot;⌫&amp;quot;) {
+    retourArriere();
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or something like that...&lt;/p&gt;
+&lt;p&gt;Never mind, I just had to add a &lt;code&gt;data-attribute&lt;/code&gt; on the 2 keys and problem solved!&lt;/p&gt;
+&lt;p&gt;Unfortunately, when you click on an SVG, the &lt;code&gt;event.target&lt;/code&gt; given by the &amp;quot;click&amp;quot; event doesn&#39;t necessarily correspond to the DOM element &amp;quot;button&amp;quot; that represents the key. It can be the &amp;quot;SVG&amp;quot; element or even the &amp;quot;PATH&amp;quot; element depending on the exact place where you clicked...&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: Most certainly on a phone it will always fall on the &amp;quot;button&amp;quot; (unless you have a super thin finger), but I don&#39;t want to leave anything to chance.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Fortunately, this is a well-known problem that I had already encountered in my previous run-ins with event delegation. In his post &amp;quot;&lt;a href=&quot;https://gomakethings.com/detecting-click-events-on-svgs-with-vanilla-js-event-delegation/&quot;&gt;Detecting click events on SVGs with vanilla JS event delegation&lt;/a&gt;&amp;quot;, Chris Ferdinandi gives two solutions to solve the problem.&lt;/p&gt;
+&lt;p&gt;Of course, I took the simpler solution and added a &lt;code&gt;pointer-events: none;&lt;/code&gt; to my CSS file.&lt;/p&gt;
+&lt;p&gt;And that&#39;s why it&#39;s now possible to play &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt; on a phone and with pretty icons.&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/16/ajout-icones-svg_wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Ajout d&#39;icônes SVG à mon Wordle français&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+    </entry>
     <entry>
         <title type="html">Ajout d&#39;icônes SVG à mon Wordle français</title>
         <link href="https://blog.pagesd.info/2022/01/16/ajout-icones-svg_wordle-francais/" rel="alternate" hreflang="fr-FR" />
@@ -69,7 +156,7 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Cerise sur le gâteau, le fait d&#39;utiliser l&#39;unité de mesure &amp;quot;em&amp;quot; permet de les dimensionner proportionnellement à la taille de la police.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-icones-svg.png&quot; alt=&quot;Les icônes SVG&quot; title=&quot;Les «icônes» SVG&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-icones-svg.png&quot; alt=&quot;Les icônes SVG&quot; title=&quot;Les icônes SVG&quot;&gt;&lt;/p&gt;
 &lt;h2&gt;Un problème de clic sur les icônes SVG&lt;/h2&gt;
 &lt;p&gt;Comme il était tard et que je n&#39;avais pas suffisamment (ou pas du tout ?) testé, ça a bugué :(&lt;/p&gt;
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;fr&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/ms_michel?ref_src=twsrc%5Etfw&quot;&gt;@ms_michel&lt;/a&gt; hello je te signale un bug impossible d’effacer des lettres le jeu est planté&lt;/p&gt;&amp;mdash; Guillaume (@yomz) &lt;a href=&quot;https://twitter.com/yomz/status/1481782505309192194?ref_src=twsrc%5Etfw&quot;&gt;January 14, 2022&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
@@ -87,6 +174,9 @@
 &lt;p&gt;Heureusement, c&#39;est un problème bien connu que j&#39;avais d&#39;ailleurs déjà rencontré lors de mes précédents accrochages avec la délégation d&#39;évènement. Dans son article &amp;quot;&lt;a href=&quot;https://gomakethings.com/detecting-click-events-on-svgs-with-vanilla-js-event-delegation/&quot;&gt;Detecting click events on SVGs with vanilla JS event delegation&lt;/a&gt;&amp;quot;, Chris Ferdinandi donne deux solutions pour résoudre le problème.&lt;/p&gt;
 &lt;p&gt;Bien entendu, j&#39;ai pris la solution la plus simple et j&#39;ai ajouté un &lt;code&gt;pointer-events: none;&lt;/code&gt; à mon fichier CSS.&lt;/p&gt;
 &lt;p&gt;Et c&#39;est pour cela que maintenant, il est possible de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;jouer à Wordle en français&lt;/a&gt; sur un téléphone et avec de jolies icônes.&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2022/01/17/adding-svg-icons-french-wordle/&quot; hreflang=&quot;en-US&quot;&gt;Adding SVG Icons to my French Wordle&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
 
         </content>
         <category term="javascript" />
@@ -303,249 +393,5 @@
         <category term="jeux" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Générer des fichiers pour le &quot;M&quot; de MVC avec Tada !</title>
-        <link href="https://blog.pagesd.info/2022/01/05/generer-fichiers-models-avec-tada/" rel="alternate" hreflang="fr-FR" />
-        <updated>2022-01-05T11:50:37.000Z</updated>
-        <published>2022-01-05T11:50:37.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/05/generer-fichiers-models-avec-tada/</id>
-        <summary>Ces derniers temps, j&#39;ai développé pour moi un petit programme qui permet de générer vite fait quelques un des fichiers pour la partie &quot;M&quot; d&#39;une application ASP.NET Core MVC. Cela me servira surtout pour développer des applications pour tester quelques trucs...</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;h2&gt;Un &amp;quot;problème&amp;quot; --uneenvie&lt;/h2&gt;
-&lt;p&gt;En ce moment, je (re)fais quelques tests pour savoir comment créer et organiser au plus simple
-une application ASP.NET Core MVC. J&#39;ai déjà plus ou moins trouvé comment faire en ligne de commande avec &amp;quot;dotnet&amp;quot;, l&#39;interface de ligne de commande (CLI) de .NET Core, pour :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Créer une solution pour la nouvelle application ASP.NET Core&lt;/li&gt;
-&lt;li&gt;Créer et ajouter un projet MVC à cette application&lt;/li&gt;
-&lt;li&gt;Installer et référencer Entity Framework Core pour SQL Server et SQLite&lt;/li&gt;
-&lt;li&gt;Faire un &lt;code&gt;dotnet build&lt;/code&gt; pour vérifier que tout est ok&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Puis vient le moment où il faut ajouter un modèle de données. Actuellement, je passe sous Visual Studio pour y coder les entités nécessaires puis j&#39;ajoute un &lt;code&gt;DbContext&lt;/code&gt;. Je trouve quand même que c&#39;est un peu lourd de devoir faire ça à chaque fois que je veux tester vite fait un truc (comme pour l&#39;application destinée à essayer &lt;a href=&quot;/2021/12/23/utiliser-htmx-avec-asp-net-core-mvc/&quot;&gt;HTMX avec ASP.NET Core MVC&lt;/a&gt; par exemple).&lt;/p&gt;
-&lt;p&gt;Je suppose qu&#39;il existe déjà des outils .NET Core ou des extensions Visual Studio tout prêts qui font plus ou moins ça, mais j&#39;ai quand même eu envie de tenter ça à ma façon.&lt;/p&gt;
-&lt;h2&gt;Une solution --pascompliquée&lt;/h2&gt;
-&lt;p&gt;Après quelques jours, j&#39;ai finalement obtenu une application console qui correspond assez bien à ce que je souhaitais faire et qui accepte 3 commandes :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;tada model NomEntite ...&lt;/code&gt; pour générer un fichier Models/NomEntite.cs&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tada enum NomEnum ...&lt;/code&gt; pour générer un fichier Models/NomEnum.cs&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tada context ...&lt;/code&gt; pour générer un fichier Models/ModelContext.cs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Pourquoi &amp;quot;tada&amp;quot; ? Parce que c&#39;est destiné à générer des fichiers liés au modèle de données. Et que &amp;quot;Donnée&amp;quot; = &amp;quot;Data&amp;quot; =&amp;gt; &amp;quot;Da-Ta&amp;quot; =&amp;gt; Tada !&lt;/p&gt;
-&lt;p&gt;Pourquoi &amp;quot;enum&amp;quot; en plus de &amp;quot;model&amp;quot; et &amp;quot;context&amp;quot; ? Parce que généralement mon modèle &amp;quot;Movie&amp;quot; contient une propriété &amp;quot;Rating&amp;quot; de type &lt;code&gt;Enum&lt;/code&gt;.&lt;/p&gt;
-&lt;h2&gt;tada --help&lt;/h2&gt;
-&lt;p&gt;Je me suis fait un peu plaisir et quand on lance &lt;code&gt;tada --help&lt;/code&gt; ou &lt;code&gt;tada&lt;/code&gt; sans autre paramètre, on tombe sur l&#39;aide du programme.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1)
-
-Utilisation : tada [options] [commande] [arguments]
-
-Options :
-  -h|--help                  Affiche l&#39;aide de la ligne de commande
-  -p|--project &amp;lt;PROJET&amp;gt;      Nom du projet pour définir le namespace
-  --version                  Affiche la version utilisée
-
-Commandes :
-  model                      Génère une classe Models/NomEntite.cs
-  enum                       Génère une classe Models/NomEnum.cs
-  context                    Génère une classe Models/ProjetContext.cs
-
-Pour plus d&#39;informations sur une commande, lancer &#39;tada [commande] --help&#39;.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note : Je gère les arguments de la ligne de commande à la main. Comparer les différentes solutions existantes et trouver celle qui (me) convient le plus me semble beaucoup trop de travail par rapport au temps que je souhaite consacrer à ce projet.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Si jamais la commande est lancée sans préciser l&#39;option &amp;quot;project&amp;quot; ou sans être dans un dossier contenant un fichier &amp;quot;*.csproj&amp;quot;, on obtient un message d&#39;erreur.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1)
-
-Projet introuvable :
-- L&#39;option --project &amp;lt;PROJET&amp;gt; n&#39;est pas définie
-- Il n&#39;existe pas de fichier PROJET.csproj dans le dossier en cours
-&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;pub&quot;&gt;&lt;ins class=&quot;adsbygoogle&quot;
-     style=&quot;display:block&quot;
-     data-ad-client=&quot;ca-pub-5475403929650645&quot;
-     data-ad-slot=&quot;8049019520&quot;
-     data-ad-format=&quot;auto&quot;
-     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;&lt;/div&gt;
-&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;
-&lt;h2&gt;tada model --help&lt;/h2&gt;
-&lt;p&gt;De la même façon, j&#39;ai pas mal travaillé sur l&#39;aide de la commande &lt;code&gt;tada model&lt;/code&gt;. Cela m&#39;a permis à la fois de mettre au point mais aussi de documenter la syntaxe particulière qui me sert à décrire le modèle de données en un minimum d&#39;information.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1) - Génère une classe Models/NomEntite.cs
-
-Utilisation : tada model [options] [arguments]
-
-Options :
-  -h|--help                  Affiche l&#39;aide de la ligne de commande
-  -p|--project &amp;lt;PROJET&amp;gt;      Nom du projet pour définir le namespace
-                             (obtenu depuis PROJET.csproj sinon)
-
-Arguments : Nom de l&#39;entité suivi de la description de ses propriétés (sous la forme Nom:{+}Type)
-
-Exemples :
-  tada model Genre Genre_ID:int Title:+string(30) --project MvcMovie
-  tada model Genre Genre_ID:int Title:+string(30)
-
-Exemple de code généré :
-  Movie_ID:int               [Key]       // première propriété avec un nom terminé par &amp;quot;_ID&amp;quot;
-                             public int Movie_ID { get; set; }
-  Title:+string(60)          [Required]  // le type est précédé par &amp;quot;+&amp;quot;
-                             [StringLength(60)]
-                             public string Title { get; set; }
-  ReleaseDate:DateTime       public DateTime ReleaseDate { get; set; }
-  Genre:Genre                public int Genre_ID { get; set; }
-                             [ForeignKey(&amp;quot;Genre_ID&amp;quot;)]
-                             public virtual Genre Genre { get; set; }
-  Price:decimal(18,2)        [Column(TypeName = &amp;quot;decimal(18, 2)&amp;quot;)]
-                             public decimal Price { get; set; }
-  Rating:+RatingEnum         [Required]
-                             public RatingEnum Rating { get; set; }
-  Directors:Director[]       public ICollection&amp;lt;Director&amp;gt; Directors { get; set; }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;C&#39;est un peu compact, mais c&#39;est suffisament clair pour moi. Peut-être parce que c&#39;est encore tout frais dans mon esprit... Pour récapituler (et ne pas oublier), chaque propriété du modèle est décrite sous la forme &amp;quot;Nom:{+}Type&amp;quot;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;La partie &amp;quot;Nom&amp;quot; (avant les deux points) sert à définir le nom de la propriété&lt;/li&gt;
-&lt;li&gt;Lorsque les deux points sont suivis d&#39;un &amp;quot;+&amp;quot;, cela signifie que la propriété est obligatoire (ce qui correspond au fait d&#39;ajouter une attribut &lt;code&gt;[Required]&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;La partie &amp;quot;Type&amp;quot; (après les deux points ou après &amp;quot;:+&amp;quot;) indique quel est le type de la propriété&lt;/li&gt;
-&lt;li&gt;Certain types de propriété peuvent être complétés par une ou deux valeurs entre parenthèses, pour définir :
-&lt;ul&gt;
-&lt;li&gt;leur longueur maximum dans le cas des chaines : &lt;code&gt;string(60)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;leur précision dans le cas des nombres : &lt;code&gt;decimal(18,2)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Lorsque le &amp;quot;Nom&amp;quot; et le &amp;quot;Type&amp;quot; sont identiques, cela sert à définir une clé étrangère vers une autre entité&lt;/li&gt;
-&lt;li&gt;Lorsque le &amp;quot;Type&amp;quot; est suivi de &amp;quot;[]&amp;quot;, cela indique qu&#39;il s&#39;agit d&#39;une propriété de navigation de type collection&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Dans le cas d&#39;un modèle simple style &lt;code&gt;tada model Genre Genre_ID:int Title:+string(30) Movies:Movie[]&lt;/code&gt;, on obtient le code source suivant (à condition de le lancer depuis le dossier du projet &amp;quot;MvcMovie&amp;quot;) :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MvcMovie.Models
-{
-  public class Genre
-  {
-    [Key]
-    public int Genre_ID { get; set; }
-
-    [Required, StringLength(30)]
-    public string Title { get; set; }
-
-    public ICollection&amp;lt;Movie&amp;gt; Movies { get; set; }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Avec le modèle &amp;quot;Movie&amp;quot; un peu plus compliqué, la commande est un peu plus verbeuse.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;c:\Code\MvcMovie\MvcMovie&amp;gt; tada model Movie Movie_ID:int Title:+string(60) ReleaseDate:DateTime Genre:Genre Price:decimal(18,2) Rating:+RatingEnum Directors:Director[]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et elle génère une classe avec d&#39;autant plus de code :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MvcMovie.Models
-{
-  public class Movie
-  {
-    [Key]
-    public int Movie_ID { get; set; }
-
-    [Required, StringLength(60)]
-    public string Title { get; set; }
-
-    public DateTime ReleaseDate { get; set; }
-
-    [ForeignKey(&amp;quot;Genre_ID&amp;quot;)]
-    public virtual Genre Genre { get; set; }
-    public int Genre_ID { get; set; }
-
-    [Column(TypeName = &amp;quot;decimal(18, 2)&amp;quot;)]
-    public decimal Price { get; set; }
-
-    [Required]
-    public RatingEnum Rating { get; set; }
-
-    public ICollection&amp;lt;Director&amp;gt; Directors { get; set; }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;tada enum --help&lt;/h2&gt;
-&lt;p&gt;A tant qu&#39;à faire, autant tout documenter.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1) - Génère une classe Models/NomEnum.cs
-
-Utilisation : tada enum [options] [arguments]
-
-Options :
-  -h|--help                  Affiche l&#39;aide de la ligne de commande
-  -p|--project &amp;lt;PROJET&amp;gt;      Nom du projet pour définir le namespace
-                             (obtenu depuis PROJET.csproj sinon)
-
-Arguments : Nom de l&#39;enum suivi de ses valeurs
-
-Exemples :
-  tada enum Rating Enfants Interdit_moins_13_ans Interdit_mineurs Tout_public --project MvcMovie
-  tada enum Rating Enfants Interdit_moins_13_ans Interdit_mineurs Tout_public
-  tada enum -p MvcFacture Tva Normal Intermédiaire Réduit Particulier Zéro
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Par exemple, la commande &lt;code&gt;enum Rating Enfants Interdit_moins_13_ans Interdit_mineurs Tout_public&lt;/code&gt; lancée depuis le dossier du projet &amp;quot;MvcMovie&amp;quot; afficher le code suivant :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;namespace MvcMovie.Models
-{
-  public enum Rating
-  {
-    Enfants,
-    Interdit_moins_13_ans,
-    Interdit_mineurs,
-    Tout_public
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;tada context --help&lt;/h2&gt;
-&lt;p&gt;Là aussi, c&#39;est une syntaxe assez simple.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Tada Command-Line Tools (0.0.1) - Génère une classe Models/ProjetContext.cs
-
-Utilisation : tada context [options] [arguments]
-
-Options :
-  -h|--help                Affiche l&#39;aide de la ligne de commande
-  -p|--project &amp;lt;PROJET&amp;gt;    Nom du projet pour définir le namespace
-                           (obtenu depuis PROJET.csproj sinon)
-
-Arguments : Liste des entités du DbContext.
-
-Exemples :
-  tada context Movie Genre Director --project MvcMovie
-  tada context Movie Genre Director
-  tada -p MvcBlog context Blog Post Comment
-  tada context -p MvcFacture Client Article Facture Ligne
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et donc, la commande &lt;code&gt;tada context Movie Genre Director&lt;/code&gt; lancée depuis le dossier du projet &amp;quot;MvcMovie&amp;quot; va afficher :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-
-namespace MvcMovie.Models
-{
-  public class MvcMovieContext : DbContext
-  {
-    public MvcMovieContext(DbContextOptions&amp;lt;MvcMovieContext&amp;gt; options) : base(options) { }
-
-    public DbSet&amp;lt;Movie&amp;gt; Movies { get; set; }
-    public DbSet&amp;lt;Genre&amp;gt; Genres { get; set; }
-    public DbSet&amp;lt;Director&amp;gt; Directors { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder) { }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Conclusion --àsuivre&lt;/h2&gt;
-&lt;p&gt;Le code source de la première &amp;quot;version&amp;quot; de mon application est disponible sur &lt;a href=&quot;https://github.com/michelc/Tada&quot;&gt;GitHub&lt;/a&gt;. Comme pour l&#39;instant, je suis en phase de mise au point et de tests, les fichiers générés ne sont pas réellement écrits sur le disque, mais seulement affichés à l&#39;écran. Cela fait donc parti des évolutions à venir, avec quelques petits trucs que j&#39;ai en tête pour mettre au propre ou simplifier le code actuel.&lt;/p&gt;
-&lt;p&gt;Comme un peu paresseusement je ne codais jusqu&#39;à présent que des applications console avec .NET Framework, j&#39;ai découvert au passage que ce n&#39;était pas si évident que ça d&#39;obtenir un &amp;quot;vrai&amp;quot; fichier &amp;quot;.EXE&amp;quot; avec .NET Core. J&#39;ai réussi à trouver comment faire, mais je vais essayer de creuser un peu plus et peut-être bien rédiger un autre billet pour expliquer comment cela fonctionne...&lt;/p&gt;
-&lt;p&gt;Je compte aussi regarder comment créer un &amp;quot;&lt;a href=&quot;https://docs.microsoft.com/fr-fr/dotnet/core/tools/global-tools&quot;&gt;.NET Core global tools
-&lt;/a&gt;&amp;quot; (pour pouvoir lancer via un &lt;code&gt;dotnet tada ...&lt;/code&gt;), mais je ne suis pas certain que cela en vaille la peine pour une utilisation personnelle.&lt;/p&gt;
-
-        </content>
-        <category term="csharp" />
-        <category term=".net" />
-        <category term="mvc" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/tada.jpg" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/tada.jpg" />
     </entry>
 </feed>
