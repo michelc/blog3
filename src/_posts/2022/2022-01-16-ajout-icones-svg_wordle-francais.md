@@ -117,6 +117,6 @@ Et c'est pour cela que maintenant, il est possible de [jouer à Wordle en franç
 
 <div class="encart">
 
-English version: {% goto_en "Adding SVG Icons to my French Wordle", "2022-01-17-adding-svg-icons-french-wordle" %}.
+English version: {% goto_en "Adding SVG Icons to my French Wordle", "2022-01-19-adding-svg-icons-french-wordle" %}.
 
 </div>
