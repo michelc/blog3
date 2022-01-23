@@ -3,12 +3,36 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-22T10:10:09.000Z</updated>
+    <updated>2022-01-23T17:36:31.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Share the French Wordle grid</title>
+        <link href="https://blog.pagesd.info/2022/01/23/share-french-wordle-grid/" rel="alternate" hreflang="en-US" />
+        <updated>2022-01-23T17:36:31.000Z</updated>
+        <published>2022-01-23T17:36:31.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/23/share-french-wordle-grid/</id>
+        <summary>Previously, it wasn&#39;t so obvious that we could share my French Wordle results. I just add a new page to solve this problem...</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Until last Sunday, it wasn&#39;t very clear that we could share the results in my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt; game. Thankfully, I just need a simple screen to solve this problem.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-partager.png&quot; alt=&quot;Share the LeMOT grid&quot; title=&quot;Share the LeMOT grid&quot;&gt;&lt;/p&gt;
+&lt;p&gt;At least now it is obvious for everyone that it&#39;s possible to share the result of his game. And even that you are strongly invited to do so :)&lt;/p&gt;
+&lt;p&gt;Before this update, I displayed a short message for 2 or 3 seconds that said &amp;quot;Bravo! Result copied to the clipboard&amp;quot;. So you had to be a bit careful to understand that it was possible to share your result, like with the original &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Not to mention that it&#39;s better than automatically paste the grid into the clipboard, without notifying the player. But that&#39;s okay, at first I wanted to deploy quickly.&lt;/p&gt;
+&lt;p&gt;And it&#39;s not to brag, but I do feel that shares on Twitter have increased after this small improvment :)&lt;/p&gt;
+&lt;p&gt;So, don&#39;t be afraid to play &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot; title=&quot;French Wordle&quot;&gt;LeMOT&lt;/a&gt; and share your game!&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/22/partage-grille-wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Partager la grille de Wordle en français&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+    </entry>
     <entry>
         <title type="html">Partager la grille de Wordle en français</title>
         <link href="https://blog.pagesd.info/2022/01/22/partage-grille-wordle-francais/" rel="alternate" hreflang="fr-FR" />
@@ -23,7 +47,10 @@
 &lt;p&gt;Avant, j&#39;affichais un simple message pendant 2 ou 3 secondes qui annonçait &amp;quot;Bravo ! Résultat copié dans le presse-papiers&amp;quot;. Il fallait donc être un peu attentif pour se rendre compte qu&#39;il était alors possible de partager son résultat comme avec le &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt; original.&lt;/p&gt;
 &lt;p&gt;Sans compter que c&#39;est quand même mieux que de coller automatiquement la grille de résultat dans le presse-papier, sans demander auparavant l&#39;avis du joueur. Mais bon, au début, j&#39;étais pressé...&lt;/p&gt;
 &lt;p&gt;Et ce n&#39;est pas pour me vanter, mais j&#39;ai bien l&#39;impression que les partages sur Twitter ont augmenté après cette petite modification :)&lt;/p&gt;
-&lt;p&gt;Alors, n&#39;hésitez pas à jouer à &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot; title=&quot;Wordle en français&quot;&gt;LeMOT&lt;/a&gt; et à pargager votre partie !&lt;/p&gt;
+&lt;p&gt;Alors, n&#39;hésitez pas à jouer à &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot; title=&quot;Wordle en français&quot;&gt;LeMOT&lt;/a&gt; et à partager votre partie !&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2022/01/23/share-french-wordle-grid/&quot; hreflang=&quot;en-US&quot;&gt;Share the French Wordle grid&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
 
         </content>
         <category term="javascript" />
@@ -309,58 +336,5 @@
         <category term="jeux" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
-    </entry>
-    <entry>
-        <title type="html">LeMOT to play WORDLE in French</title>
-        <link href="https://blog.pagesd.info/2022/01/11/le-mot-play-wordle-in-french/" rel="alternate" hreflang="en-US" />
-        <updated>2022-01-11T11:36:08.000Z</updated>
-        <published>2022-01-11T11:36:08.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/11/le-mot-play-wordle-in-french/</id>
-        <summary>This weekend, I started a French version of WORDLE. I developed my own code in Vanilla JS and most importantly, I found a great name &quot;LeMOT&quot;, and even a slogan &quot;One Word, One Day&quot;!</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;blockquote&gt;
-&lt;p&gt;TL;TR : Let me &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;play Wordle in French&lt;/a&gt;!&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Some time ago, I saw some funny pictures appear on Twitter. It looked a bit like GitHub&#39;s contributions, but over a single week?&lt;/p&gt;
-&lt;p&gt;I finally figured out what it was and discovered &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;WORDLE&lt;/a&gt;, a new word game, a kind of cross between Mastermind and Hangman, created by Josh Wardle. Wordle / Wardle: clever!&lt;/p&gt;
-&lt;p&gt;So of course, I played too, or rather I tried to play... Because I quickly had to admit that my English vocabulary was not enough to win regularly. Although I&#39;m proud to follow series or movies in VO with English subtitles! Or maybe I have a big problem when it comes to 5 letter English words?&lt;/p&gt;
-&lt;p&gt;2 or 3 years ago, I had collected some French word lists to write a program that would allow me to optimize my Scrabble level (or cheat, if you want). In the end, I had never programmed anything.&lt;/p&gt;
-&lt;p&gt;But this weekend, after getting up at dawn around 10am, I went for it! And just after midnight, I had already code something pretty good that I was able to put online on my solitaire games site: &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt;. I was very happy because I didn&#39;t just adapt Josh Wardle&#39;s code, but I wrote my own version in Vanilla JS. And on top of that, I had come up with a great name: &amp;quot;&lt;strong&gt;LeMOT&lt;/strong&gt;&amp;quot;. WORD-Le =&amp;gt; Le-WORD =&amp;gt; Le-MOT !&lt;/p&gt;
-&lt;p&gt;And I even had an idea for a slogan to complete the title: &amp;quot;One Word, One Day&amp;quot;, inspired by the french TV show &amp;quot;One Book, One Day&amp;quot;.&lt;/p&gt;
-&lt;p&gt;After that I went to sleep and the next day I just kept going and made a lot of improvements.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Adjusted the backup of the game in progress, to be able to come back to it later when you are stuck.&lt;/li&gt;
-&lt;li&gt;Added a &amp;quot;beta version&amp;quot; watermark under the game title because I&#39;m afraid of bugs :)&lt;/li&gt;
-&lt;li&gt;Minimized the JavaScript and CSS files to optimize loading.&lt;/li&gt;
-&lt;li&gt;Displayed the messages in some sort of &amp;quot;flash&amp;quot; popup (useful to tell if a word is unknown or to inform that the result at the end of the game has been copied to the clipboard to be pasted in Twitter or WhatsApp).&lt;/li&gt;
-&lt;li&gt;Updated the page content and the meta and Open Graph tags, with an image inspired by WORDLE.&lt;/li&gt;
-&lt;li&gt;Modified the export of the results in emoji to add the mention &amp;quot;(beta)&amp;quot; and a hashtag &amp;quot;#LeMotLeJeu&amp;quot;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This kept me busy until early afternoon. I didn&#39;t get back to it until the evening, to properly handle the color clues when there are duplicate letters, either in the word to guess or in the answers entered.&lt;/p&gt;
-&lt;p&gt;It was a lot of fun to do and no doubt I will continue to work on it.&lt;/p&gt;
-&lt;p&gt;Already, I have at least a couple of things to do to get my game right.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;On some phones, the last row of keys of the keyboard is not completely visible (especially when there are several tabs in a group and that partly hides the bottom of the keyboard).&lt;/li&gt;
-&lt;li&gt;To code quickly, I used Unicode characters to represent icons. They should be replaced by SVG to make it look nicer.&lt;/li&gt;
-&lt;li&gt;Check at what time the word is renewed. I use UTC dates and therefore in France, it should be at 1am.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Then there are a few things to add to try to reproduce the original game&#39;s features as well as possible.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Statistics: to make the game more attractive and encourage people to keep playing and seek for a great winning streak.&lt;/li&gt;
-&lt;li&gt;Have a button to explicitly share your result.&lt;/li&gt;
-&lt;li&gt;Handle settings to manage color sets adapted for people with visual difficulties or the &amp;quot;dark mode&amp;quot;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Another interesting task will be to limit the list of words offered as guesses. In the original version, Josh Wardle selected only 20% of the 12500 English 5-letter words to be among the happy few to guess. I&#39;m not sure why he did this, and on what criteria. Probably their frequency of use. So, how can I do this in French?&lt;/p&gt;
-&lt;p&gt;In the meantime, feel free to test your French vocabulary on &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;LeMOT - Un jeu de mot chaque jour&lt;/a&gt;, to see if you can do better than me!&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Who can do better?&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/10/le-mot-wordle-en-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;LeMOT pour jouer à WORDLE en français&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
     </entry>
 </feed>
