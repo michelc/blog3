@@ -21,4 +21,11 @@ Sans compter que c'est quand même mieux que de coller automatiquement la grille
 
 Et ce n'est pas pour me vanter, mais j'ai bien l'impression que les partages sur Twitter ont augmenté après cette petite modification :)
 
-Alors, n'hésitez pas à jouer à [LeMOT](https://www.solitaire-play.com/lemot/ "Wordle en français") et à pargager votre partie !
+Alors, n'hésitez pas à jouer à [LeMOT](https://www.solitaire-play.com/lemot/ "Wordle en français") et à partager votre partie !
+
+
+<div class="encart">
+
+English version: {% goto_en "Share the French Wordle grid", "2022-01-23-share-french-wordle-grid" %}.
+
+</div>
