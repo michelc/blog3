@@ -3,12 +3,62 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-23T17:36:31.000Z</updated>
+    <updated>2022-01-30T20:57:39.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Les mots du jour de Wordle en français</title>
+        <link href="https://blog.pagesd.info/2022/01/30/mots-du-jour-wordle-francais/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-01-30T20:57:39.000Z</updated>
+        <published>2022-01-30T20:57:39.000Z</published>
+        <id>https://blog.pagesd.info/2022/01/30/mots-du-jour-wordle-francais/</id>
+        <summary>Comment ont été choisis les mots du jour dans LeMOT et comment EPALE a réussi à s&#39;y faufiler...</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Suite à l&#39;apparition de &amp;quot;ÉPALE&amp;quot; hier comme mot à découvrir, voici quelques explications sur la façon dont les mots du jour sont choisis dans LeMOT, mon &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;. J&#39;ai essayé d&#39;expliquer ça sans faire trop technique et pour faire court, c&#39;est le fruit d&#39;un savant mélange de hasard, d&#39;un peu de choix personnel et de pas de chance...&lt;/p&gt;
+&lt;h2&gt;Wiktionnaire&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-21-epaler.jpg&quot; alt=&quot;Mesurer la capacité d&#39;un récipient, quoi&quot; title=&quot;Mesurer la capacité d&#39;un récipient, quoi&quot;&gt;&lt;/p&gt;
+&lt;h2&gt;Samedi 8 janvier&lt;/h2&gt;
+&lt;p&gt;Quand j&#39;ai commencé à développer LeMOT, j&#39;ai regardé les sources de Wordle et j&#39;ai vu que Josh Wardle avait 2 listes de mots. Une contenant une sélection de mots qu&#39;il utilise pour faire deviner et une seconde avec tous les autres mots anglais de 5 lettres.&lt;/p&gt;
+&lt;p&gt;J&#39;ai donc fait plus ou moins pareil, avec d&#39;un côté une petite liste de mots à deviner et de l&#39;autre une liste de mots valides contenant les 6812 mots de 5 lettres d&#39;un dictionnaire que j&#39;avais récupéré il y a 2 ou 3 ans.&lt;/p&gt;
+&lt;p&gt;Pendant mes tests, la liste des mots à deviner ne contenait d&#39;ailleurs que le mot &amp;quot;ABRIS&amp;quot;. Puis j&#39;ai ajouté à la main une dizaine de mots pour vérifier que le code JavaScript qui choisissait un mot au hasard en fonction du jour fonctionnait correctement.&lt;/p&gt;
+&lt;p&gt;Peu après minuit, j&#39;ai mis en ligne une première version du jeu en ajoutant une vingtaine de mots pour pouvoir tenir un mois avant d&#39;avoir à en trouver d&#39;autres. Ces premiers mots du jour ont été choisis plus ou moins au hasard. Pour cela, je suis parti de ma liste de 6000 et quelques mots, avec un mot par ligne, et j&#39;y suis allé à grand coups de Page bas, Page haut, Flèche bas, Flèche haut pour arriver sur une ligne &amp;quot;au hasard&amp;quot;. Puis à partir de là, je prenais éventuellement un mot aux alentours de cette ligne qui me plaisait...&lt;/p&gt;
+&lt;h2&gt;Dimanche 9&lt;/h2&gt;
+&lt;p&gt;Au début, j&#39;avais une fonction qui tirait au sort un nombre entre 1 et 33 et qui prenait le mot correspondant dans la liste des mots &amp;quot;gagnants&amp;quot;. La fonction JavaScript pour choisir un nombre au hasard était &amp;quot;initialisée&amp;quot; en fonction de la date du jour pour être certain que pour un jour donné, tous les joueurs auraient le même mot.&lt;/p&gt;
+&lt;p&gt;Mais avec une si petite liste, il y avait un risque assez important qu&#39;un mot déjà proposé ressorte un autre jour... Alors dès le dimanche soir, j&#39;ai complété vite fait ma liste des mots du jour en les piochant au hasard selon la même méthode mais en prenant le plus souvent ce qui me tombait sous la main. A la fin, je suis arrivé à une liste de 177 mots, dont certains de mon cru (ISARD entre autres, mais je suis à peu près certain d&#39;avoir fait pencher la balance pour MUSAI ou IDEAL aussi). Mais dans le tas et la précipitation, certains mots comme EPALE sont passés au travers et se sont retrouvés dans la liste des mots à deviner sans que je m&#39;en rende compte...&lt;/p&gt;
+&lt;h2&gt;Mardi 11&lt;/h2&gt;
+&lt;p&gt;Ce jour-là, j&#39;ai mis à jour ma liste de mots pour les transformer tous en majuscule sans accents. La liste des mots valides est alors passée de 6812 à 5891, puisque des mots comme &amp;quot;place&amp;quot; et &amp;quot;placé&amp;quot; donnent le même &amp;quot;PLACE&amp;quot; en majuscule.&lt;/p&gt;
+&lt;h2&gt;Samedi 15&lt;/h2&gt;
+&lt;p&gt;Le samedi suivant, j&#39;ai simplifié la façon de choisir un mot au hasard. Au lieu de tirer un nombre au hasard entre 1 et 177 puis de prendre le mot correspondant dans la liste des mots du jour, j&#39;ai pris le nième mot correspondant au nombre de jours entre la création de LeMOT et la date du jour.&lt;/p&gt;
+&lt;p&gt;Avantages :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Le code est beaucoup plus simple (et c&#39;est aussi ce que fait Josh Wardle).&lt;/li&gt;
+&lt;li&gt;En tirant un nombre au hasard, on peut éventuellement tomber sur un nombre déjà sorti un autre jour.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ainsi, au lieu de me compliquer la vie à tirer un nombre au hasard tous les jours, j&#39;ai laissé le hasard mélanger cette liste une fois pour toute et je peux maintenant prendre les mots au fur et à mesure sans risque de doublon.&lt;/p&gt;
+&lt;p&gt;Pour que cela fonctionne correctement, il fallait faire en sorte que ma liste des mots du jour soit totalement dans le désordre. Pour cela, j&#39;ai dû :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enlever de cette liste des mots gagnants les 8 mots déjà utilisés jusque là, à savoir ABRIS, ULTRA, GENIE, HERBE, VEXEZ, ALIZE, PLOUF et CAMUS.&lt;/li&gt;
+&lt;li&gt;Mélanger les 169 restant dans la liste.&lt;/li&gt;
+&lt;li&gt;Remettre les 8 premiers mots proposés au début de la liste.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Et tout ça les yeux fermés pour pouvoir moi aussi profiter du jeu :)&lt;/p&gt;
+&lt;h2&gt;Février, Mars, Avril...&lt;/h2&gt;
+&lt;p&gt;Maintenant, je suis &amp;quot;tranquille&amp;quot; jusqu&#39;à mi-juillet avant que ma liste des mots du jour soit épuisée. D&#39;ici là, il faudra surtout que je me décide pour savoir par quoi je remplace la liste des mots valides de LeMOT parce qu&#39;elle est un peu dépassée : elle ne contient ni TACLE, ni SALTO, ni APERO ! Et puis comme on s&#39;en est aperçu hier, elle contient au moins un mot inconnu.&lt;/p&gt;
+&lt;p&gt;C&#39;est quelque chose d&#39;assez urgent à faire, parce que c&#39;est un de mes critères pour faire sortir LeMOT de la phase bêta. A ce moment là, j&#39;en profiterai pour compléter la liste des mots du jour pour que le jeu puisse continuer après juillet. Et en même temps, je la relirai afin de m&#39;assurer qu&#39;elle ne contient pas d&#39;autres mots trop improbables...&lt;/p&gt;
+&lt;h2&gt;Epilogue&lt;/h2&gt;
+&lt;p&gt;C&#39;est évidemment ennuyeux qu&#39;un mot que personne ne connait se soit retrouvé dans la liste des mots du jour. Mais ce n&#39;est pas grave ! Pour moi, LeMOT (comme Wordle) sont des jeux. Le but c&#39;est uniquement de s&#39;amuser et de profiter d&#39;un petit moment de détente. Le fait de gagner ou de perdre n&#39;a pas vraiment d&#39;importance.&lt;/p&gt;
+&lt;p&gt;Je profite de ce billet pour dire merci à toutes celles et ceux qui me font le plaisir de jouer à ma version de Wordle en français. En tout cas, moi hier j&#39;ai passé une journée amusante, comme tous les autres jours. Merci à tous pour votre bonne humeur !&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-21-epale.jpg&quot; alt=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot; title=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot;&gt;&lt;/p&gt;
+
+        </content>
+        <category term="JavaScript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+    </entry>
     <entry>
         <title type="html">Share the French Wordle grid</title>
         <link href="https://blog.pagesd.info/2022/01/23/share-french-wordle-grid/" rel="alternate" hreflang="en-US" />
@@ -278,59 +328,6 @@
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/13/couleurs-accessibles-lemot/&quot; hreflang=&quot;fr-FR&quot;&gt;Des couleurs accessibles pour LeMOT&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
-    </entry>
-    <entry>
-        <title type="html">Des couleurs accessibles pour LeMOT</title>
-        <link href="https://blog.pagesd.info/2022/01/13/couleurs-accessibles-lemot/" rel="alternate" hreflang="fr-FR" />
-        <updated>2022-01-13T17:07:15.000Z</updated>
-        <published>2022-01-13T17:07:15.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/13/couleurs-accessibles-lemot/</id>
-        <summary>Je continue à faire évoluer ma version du jeu Wordle en français, en essayant de rendre ses couleurs plus accessibles pour les daltoniens.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;J&#39;ai bien réfléchi et j&#39;ai décidé de changer la couleur des indices dans ma version de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;/2022/01/10/le-mot-wordle-en-francais/&quot;&gt;Samedi&lt;/a&gt;, quand j&#39;ai créé &lt;strong&gt;LeMOT&lt;/strong&gt;, j&#39;ai repris les couleurs utilisées par Josh Wardle.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-avant.png&quot; alt=&quot;Les couleurs d&#39;origine&quot; title=&quot;Les couleurs d&#39;origine&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Dans le &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle original&lt;/a&gt;, il y a aussi un &amp;quot;Color Blind Mode&amp;quot; avec des couleurs plus constratées pour les personnes qui sont &lt;a href=&quot;https://fr.wikipedia.org/wiki/Daltonisme&quot;&gt;daltoniennes&lt;/a&gt; (color blind en anglais).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-color-blind-mode.png&quot; alt=&quot;&#39;Color Blind Mode&#39; dans Wordle&quot; title=&quot;&#39;Color Blind Mode&#39; dans Wordle&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Je ne le retrouve pas, mais j&#39;ai vu passer il y a quelques jours un tweet disant qu&#39;il serait plus simple d&#39;utiliser directement des couleurs adaptées pour tout le monde, plutôt que de les proposer via un paramétrage.&lt;/p&gt;
-&lt;p&gt;Comme mon jeu est encore récent, c&#39;est ce que j&#39;ai fait. Et désormais ma version de Wordle en français utilise directement des couleurs accessibles pour les personnes ayant des troubles de la vue.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;Les nouvelles couleurs&quot; title=&quot;Les nouvelles couleurs&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Je suis parti de la palette de couleurs &amp;quot;IBM Design Library&amp;quot; trouvé dans l&#39;article &lt;a href=&quot;https://davidmathlogic.com/colorblind/&quot;&gt;Coloring for Colorblindness&lt;/a&gt; de David Nichols. J&#39;ai ensuite testé ce que ça donnait grâce aux outils d&#39;accessibilité proposés par Firefox et j&#39;ai pu constater que tout allait bien.&lt;/p&gt;
-&lt;h2&gt;Démonstrations&lt;/h2&gt;
-&lt;h3&gt;Pas de rouge (protanopie)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/protanopie.png&quot; alt=&quot;protanopie&quot;&gt;&lt;/p&gt;
-&lt;h3&gt;Pas de vert (deutéranopie)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/deuteranopie.png&quot; alt=&quot;deutéranopie&quot;&gt;&lt;/p&gt;
-&lt;h3&gt;Pas de bleu (tritanopie)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/triteranopie.png&quot; alt=&quot;tritanopie&quot;&gt;&lt;/p&gt;
-&lt;h3&gt;Aucune couleur (achromatopsie)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/achromatopsie.png&quot; alt=&quot;achromatopsie&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note : J&#39;ai aussi profité de ce changement de couleurs pour augmenter la taille des caractères pour les myopes comme moi, avoir moins de nuances de gris et utiliser un noir plus foncé pour le texte des caractères.&lt;/em&gt;&lt;/p&gt;
-&lt;h2&gt;Impact sur la grille de résultat&lt;/h2&gt;
-&lt;p&gt;J&#39;ai bien entendu adapté la grille de résultat inventée par &lt;a href=&quot;https://twitter.com/irihapeta/status/1481336946190614531&quot;&gt;@irihapeta&lt;/a&gt; pour qu&#39;elle adopte le même jeu de couleur. Même si je sais que cela ne change rien aux problèmes que tous ces émojis génèrent pour les logiciels de lecteur d&#39;écran.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-grille.png&quot; alt=&quot;Grille LeMOT&quot; title=&quot;Ceci est un faux&quot;&gt;&lt;/p&gt;
-&lt;h2&gt;Avantages des couleurs accessibles&lt;/h2&gt;
-&lt;p&gt;En un, tout le monde peut directement jouer, sans avoir à chercher où et comment paramétrer le jeu.&lt;/p&gt;
-&lt;p&gt;En deux, c&#39;est des couleurs aussi jolies que celles d&#39;origine (si ce n&#39;est plus jolies).&lt;/p&gt;
-&lt;p&gt;En trois, je n&#39;ai pas besoin de coder un écran pour paramétrer ça, ni de sauvegarder ce réglage pour le réactiver à chaque visite.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note : Même si les couleurs sont désormais accessibles pour les daltoniens, d&#39;autres éléments du jeu ne sont pas accessibles.&lt;/em&gt;&lt;/p&gt;
-&lt;h2&gt;Inconvénients de changer de couleurs&lt;/h2&gt;
-&lt;p&gt;La couleur des émojis dans la grille de résultat va sans doute dérouter les gens, mais je ne sais pas trop quoi faire... A part bien sûr d&#39;en générer une plus accessible, ce qui n&#39;est pas un truc facile et donc réalisable dans l&#39;immédiat. Mais normalement, en voyant que la dernière ligne est peinte en orange, les gens comprendront vite qu&#39;il s&#39;agit de la couleur des lettres bien placées.&lt;/p&gt;
-&lt;p&gt;Ce qui est un peu plus embêtant, c&#39;est que les joueurs commencent à être habitués à ce que VERT = lettre bien placée et ORANGE = lettre mal placée. A part quelques débutants qui hésitent encore et doivent fréquemment afficher l&#39;aide :). Sans parler de la confusion pour ceux qui jouent à Wordle en français et en anglais.&lt;/p&gt;
-&lt;p&gt;Mais pour ça, j&#39;ai trouvé une super solution dont je suis fier comme un bar-tabac !&lt;/p&gt;
-&lt;p&gt;Quand une lettre est bien placée, je la répète en filigrane à la ligne suivante. Avec ça, on peut jouer immédiatement sans avoir à réfléchir au code couleur et concentrer tout son temps de cerveau humain disponible à trouver le bon mot.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-info.png&quot; alt=&quot;A la 2ème case, la lettre E bien placée&quot; title=&quot;A la 2ème case, la lettre &#39;E&#39; bien placée&quot;&gt;&lt;/p&gt;
-&lt;p&gt;C&#39;est pas tout ça, il est temps d&#39;aller &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;jouer à Wordle en français&lt;/a&gt; :)&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;&lt;img src=&quot;/public/2022/lemot2.png&quot; alt=&quot;LeMOT&quot; title=&quot;Qui fait mieux ?&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2022/01/14/accessibles-colors-lemot/&quot; hreflang=&quot;en-US&quot;&gt;Accessible colors for LeMOT&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
         </content>
         <category term="javascript" />
         <category term="jeux" />
