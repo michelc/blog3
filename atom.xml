@@ -3,12 +3,113 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-01-30T20:57:39.000Z</updated>
+    <updated>2022-02-01T10:28:57.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Mode sombre pour Wordle en français</title>
+        <link href="https://blog.pagesd.info/2022/02/01/mode-sombre-wordle-francais/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-02-01T10:28:57.000Z</updated>
+        <published>2022-02-01T10:28:57.000Z</published>
+        <id>https://blog.pagesd.info/2022/02/01/mode-sombre-wordle-francais/</id>
+        <summary>J&#39;ai ajouté un mode sombre sur LeMOT, l&#39;occasion pour moi de voir ce que cela implique comme modifications pour faire ça sans trop se comliquer la vie.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Dimanche dernier, j&#39;ai ajouté un thème sombre (dark mode en anglais) sur LeMOT, mon &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;. Certains joueurs semblaient y tenir et c&#39;était l&#39;occasion pour moi de voir comment faire ça sans trop me compliquer la vie.&lt;/p&gt;
+&lt;h2&gt;Couleurs en mode clair (light mode)&lt;/h2&gt;
+&lt;p&gt;Pour commencer, j&#39;ai recherché quelles étaient les couleurs utilisées dans mon fichier CSS et j&#39;en ai trouvé une dizaine. Mais en pratique, cela correspond aux 12 cas d&#39;utilisation suivants :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; pour le fond blanc général&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; pour le texte général en quasi noir&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; pour le texte un peu plus clair en italique&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; pour le texte en filigrane&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ccc&lt;/code&gt; du gris clair pour pour le fond des touches du clavier inutilisées&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; du blanc pour afficher les lettres une fois jouées dans les cases&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; le célèbre orange pour le fond des lettres bien placées :)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; le bleu pour le fond des lettres mal placées&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; un gris un peu plus clair pour pour le fond des lettres absentes du mot à deviner&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#bbb&lt;/code&gt; du gris pas très clair pour les icones&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; un fond mauve pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; le blanc du texte pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ca c&#39;est fait !&lt;/p&gt;
+&lt;h2&gt;Couleurs en mode sombre (dark mode)&lt;/h2&gt;
+&lt;p&gt;J&#39;ai ensuite recherché quelles couleurs utiliser quand on est en mode sombre. Ca n&#39;a pas été trop compliqué, puisqu&#39;il suffit de regarder du côté du &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt; d&#39;origine pour l&#39;inspiration... Après quelques essais, je suis arrivé à ces couleurs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;#222&lt;/code&gt; pour un fond général très noir&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; pour un texte général très blanc&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; pour un texte italique moins blanc&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; pour le texte des filigranes en gris / noir&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; du gris &amp;quot;moyen&amp;quot; pour pour le fond des touches du clavier inutilisées&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; du blanc pour afficher les lettres une fois jouées dans les cases&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; le célèbre orange pour le fond des lettres bien placées :)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; le bleu pour le fond des lettres mal placées&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; un gris / noir pour pour le fond des lettres absentes du mot à deviner&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; du gris &amp;quot;moyen&amp;quot; pour les icones&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; un fond mauve pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; le blanc du texte pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Comme jusqu&#39;à présent j&#39;affichais les liens en bleu pétant (&lt;code&gt;#00f&lt;/code&gt;), j&#39;ai dû en trouver un autre qui rendrait bien dans les deux modes sombres et clair. J&#39;ai repris le bleu &lt;code&gt;#2962ff&lt;/code&gt; d&#39;un de mes autres sites, mais sans doute à améliorer parce que je n&#39;en suis pas super satisfait...&lt;/p&gt;
+&lt;p&gt;Les couleurs sombres, c&#39;est fait !&lt;/p&gt;
+&lt;h2&gt;Paramétrage du thème clair ou sombre&lt;/h2&gt;
+&lt;p&gt;Là, ou bien j&#39;attaquais enfin l&#39;écran de paramétrage de LeMOT, ou bien je trichais en me basant sur la directive média &lt;code&gt;prefers-color-scheme&lt;/code&gt;. Celle-ci permet de détecter le choix de l&#39;utilisateur quant à ses préférences en ce qui concerne le thème à utiliser (sombre ou clair).&lt;/p&gt;
+&lt;p&gt;J&#39;ai bien entendu fait le plus facile des 2. Mais aussi le plus normal selon moi : pourquoi obliger les gens à devoir redire dans mon jeu ce qu&#39;ils ont déjà paramétré sur leur téléphone ou leur navigateur !&lt;/p&gt;
+&lt;p&gt;Et donc désormais, mon fichier CSS commence par une palanquée de variables CSS.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;/* Thèmes
+   ========================================================================== */
+
+:root {
+  --fond-general: #fff;      /* Fond blanc général */
+  --texte-normal: #333;      /* Texte quasi noir */
+  --texte-clair: #888;       /* Texte plus clair pour notes */
+  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
+  --filigrane: #ddd;         /* Couleur du texte en filigrane */
+  --message-fond: #dc267f;   /* Fond mauve pour les messages */
+  --message-texte: #fff;     /* Texte blanc pour les messages */
+  --touche-fond: #ccc;       /* Fond gris clair pour touche inutilisée */
+  --touche-texte: #333;      /* Texte quasi noir pour touche en général */
+  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
+  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
+  --fond-absent: #ddd;       /* Gris clair pour les lettres absentes */
+  --couleur-icone: #bbb;     /* Gris pas très clair pour icones */
+  --texte-lien: #2962ff;     /* Bleu pour les liens */
+}
+
+@media (prefers-color-scheme: dark) { :root {
+  --fond-general: #222;      /* Fond très noir général */
+  --texte-normal: #eee;      /* Texte très blanc */
+  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
+  --texte-clair: #888;       /* Texte moins blanc pour notes */
+  --filigrane: #444;         /* Couleur du texte en filigrane */
+  --message-fond: #dc267f;   /* Fond mauve pour les messages */
+  --message-texte: #fff;     /* Texte blanc pour les messages */
+  --touche-fond: #888;       /* Fond gris moyen pour touche inutilisée */
+  --touche-texte: #fff;      /* Texte blanc pour touche en général */
+  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
+  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
+  --fond-absent: #444;       /* Gris-noir pour les lettres absentes */
+  --couleur-icone: #888;     /* Gris moyen pour icones */
+  --texte-lien: #2962ff;     /* Bleu pour les liens */
+}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Une bonne chose de faite !&lt;/p&gt;
+&lt;h2&gt;Un petit dernier pour la route...&lt;/h2&gt;
+&lt;p&gt;J&#39;utilise une antiquité pour compresser les CSS (&lt;a href=&quot;https://github.com/Microsoft/ajaxmin&quot;&gt;Microsoft Ajax Minifier&lt;/a&gt;) et elle n&#39;a pas tenu le coup face aux variables CSS :( Alors pour l&#39;instant, je suis passé au premier venu, à savoir &lt;a href=&quot;https://github.com/css/csso&quot;&gt;CSSO&lt;/a&gt;, via sa version &lt;a href=&quot;https://github.com/css/csso-cli&quot;&gt;csso-cli&lt;/a&gt; pour faire le boulot.&lt;/p&gt;
+&lt;p&gt;Je me demande quand même s&#39;il ne lui serait pas possible de compresser le nom des variables CSS, pour que &lt;code&gt;--fond-general&lt;/code&gt; soit raccourci en &lt;code&gt;--a&lt;/code&gt;, &lt;code&gt;--texte-normal&lt;/code&gt; devienne &lt;code&gt;--b&lt;/code&gt;, etc...&lt;/p&gt;
+&lt;p&gt;De toute façon, c&#39;est un truc que je devrai revoir un jour ou l&#39;autre pour décider de façon éclairée de ce que je vais utiliser désormais...&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Quoiqu&#39;il en soit, encore un week-end bien employé, puisqu&#39;il est enfin possible d&#39;apprécier &lt;strong&gt;LeMOT&lt;/strong&gt; à sa juste valeur, même si vous préférez utiliser un mode sombre !&lt;/p&gt;
+&lt;p&gt;Et pour jouer, c&#39;est toujours par là : &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt; :)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-dark-mode.png&quot; alt=&quot;Le thème sombre de LeMOT&quot; title=&quot;Pas mal du tout, je trouve :)&quot;&gt;&lt;/p&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+    </entry>
     <entry>
         <title type="html">Les mots du jour de Wordle en français</title>
         <link href="https://blog.pagesd.info/2022/01/30/mots-du-jour-wordle-francais/" rel="alternate" hreflang="fr-FR" />
@@ -54,7 +155,7 @@
 &lt;p&gt;&lt;img src=&quot;/public/2022/lemot-21-epale.jpg&quot; alt=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot; title=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot;&gt;&lt;/p&gt;
 
         </content>
-        <category term="JavaScript" />
+        <category term="javascript" />
         <category term="jeux" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
@@ -282,56 +383,5 @@
         <category term="jeux" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Accessible colors for LeMOT</title>
-        <link href="https://blog.pagesd.info/2022/01/14/accessibles-colors-lemot/" rel="alternate" hreflang="en-US" />
-        <updated>2022-01-14T11:03:20.000Z</updated>
-        <published>2022-01-14T11:03:20.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/14/accessibles-colors-lemot/</id>
-        <summary>I continue to improv my French Wordle game, trying to make its colors more accessible to people with color blindness.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;I really thought about it and decided to change the color of the clues in my game &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle in French&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This past &lt;a href=&quot;/2022/01/11/le-mot-play-wordle-in-french/&quot;&gt;Saturday&lt;/a&gt;, when I created &lt;strong&gt;LeMOT&lt;/strong&gt;, I picked the colors used by Josh Wardle.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-avant.png&quot; alt=&quot;Original colors&quot; title=&quot;Original colors&quot;&gt;&lt;/p&gt;
-&lt;p&gt;In the &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;original Wordle&lt;/a&gt;, there is also a &amp;quot;Color Blind Mode&amp;quot; with more contrasting colors for people who are &lt;a href=&quot;https://en.wikipedia.org/wiki/Color_blindness&quot;&gt;color blind&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-color-blind-mode.png&quot; alt=&quot;&#39;Color Blind Mode&#39; in Wordle&quot; title=&quot;&#39;Color Blind Mode&#39; in Wordle&quot;&gt;&lt;/p&gt;
-&lt;p&gt;I can&#39;t find it, but a few days ago I saw a tweet saying that it would be easier to directly use colors suitable for everyone, rather than offering them through a setting.&lt;/p&gt;
-&lt;p&gt;Since my game is in its early days, that&#39;s what I did. And now my version of Wordle in French uses directly accessible colors for people with visual impairments.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;New colors&quot; title=&quot;New colors&quot;&gt;&lt;/p&gt;
-&lt;p&gt;I started with the &amp;quot;IBM Design Library&amp;quot; color palette found in the &lt;a href=&quot;https://davidmathlogic.com/colorblind/&quot;&gt;Coloring for Colorblindness&lt;/a&gt; article by David Nichols. I then tested it with the accessibility tools provided by Firefox and found that it was fine.&lt;/p&gt;
-&lt;h2&gt;Demonstrations&lt;/h2&gt;
-&lt;h3&gt;No red (protanopia)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/protanopie.png&quot; alt=&quot;protanopia&quot;&gt;&lt;/p&gt;
-&lt;h3&gt;No green (deuteranopia)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/deuteranopie.png&quot; alt=&quot;deuteranopia&quot;&gt;&lt;/p&gt;
-&lt;h3&gt;No blue (tritanopia)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/triteranopie.png&quot; alt=&quot;tritanopia&quot;&gt;&lt;/p&gt;
-&lt;h3&gt;No color (achromatopsia)&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/achromatopsie.png&quot; alt=&quot;achromatopsia&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Note: I also took the opportunity of this color change to increase the font size for nearsighted people like me, to have less shades of gray and to use a darker black font for the text.&lt;/p&gt;
-&lt;h2&gt;Impact on the result grid&lt;/h2&gt;
-&lt;p&gt;I have of course adapted the result grid invented by &lt;a href=&quot;https://twitter.com/irihapeta/status/1481336946190614531&quot;&gt;@irihapeta&lt;/a&gt; to adopt the same color scheme. Although I know it doesn&#39;t change the problems that all these emojis generate for screen reader software.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-grille.png&quot; alt=&quot;LeMOT grid&quot; title=&quot;This is a fake&quot;&gt;&lt;/p&gt;
-&lt;h2&gt;Advantages of accessible colors&lt;/h2&gt;
-&lt;p&gt;One, everyone can play directly, without having to think about where and how to set up the game.&lt;/p&gt;
-&lt;p&gt;Two, colors are as pretty as the original ones (if not prettier).&lt;/p&gt;
-&lt;p&gt;Three, I don&#39;t need to code a screen to set it up, nor to save this setting to reactivate it on each visit.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note: Colors are now accessible for colorblind people, other elements of the game are not accessible.&lt;/em&gt;&lt;/p&gt;
-&lt;h2&gt;Disadvantages of new colors&lt;/h2&gt;
-&lt;p&gt;The color of emojis in the result grid will probably confuse people, but I don&#39;t know what to do... Except of course to generate a more accessible one, which is not an easy thing to do right now. But normally, seeing the last line all orange, people will understand that it&#39;s represent correct letters.&lt;/p&gt;
-&lt;p&gt;What is a bit more annoying is that players are getting used to GREEN = correct letter and ORANGE = present letter. Except for some beginners who are still hesitant and frequently have to display help :). Not to mention the confusion for those who play Wordle in French and English.&lt;/p&gt;
-&lt;p&gt;But for that, I found a great solution that I&#39;m very proud of!&lt;/p&gt;
-&lt;p&gt;When a letter is correct, I repeat it as a watermark on the next line. With this, you can play immediately without having to think about the color code and concentrate all your available human brain time on finding the right word.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-info.png&quot; alt=&quot;In the 2nd box, letter E is correct&quot; title=&quot;In the 2nd box, letter E is correct&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Whatever! It&#39;s time to go &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;play Wordle in French&lt;/a&gt; :)&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/13/couleurs-accessibles-lemot/&quot; hreflang=&quot;fr-FR&quot;&gt;Des couleurs accessibles pour LeMOT&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-couleurs.png" />
     </entry>
 </feed>
