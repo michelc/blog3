@@ -1,6 +1,6 @@
 ---
 date: 2022-01-30 22:57:39 +02:00
-tags: [ JavaScript, jeux ]
+tags: [ javascript, jeux ]
 title: Les mots du jour de Wordle en français
 cover:
   image: /public/2022/lemot-wordle-fr.png
