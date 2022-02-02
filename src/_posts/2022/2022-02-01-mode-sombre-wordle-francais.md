@@ -120,3 +120,10 @@ Quoiqu'il en soit, encore un week-end bien employé, puisqu'il est enfin possibl
 Et pour jouer, c'est toujours par là : [https://www.solitaire-play.com/lemot/](https://www.solitaire-play.com/lemot/) :)
 
 ![Le thème sombre de LeMOT](/public/2022/wordle-fr-dark-mode.png "Pas mal du tout, je trouve :)")
+
+
+<div class="encart">
+
+English version: {% goto_en "Dark mode for French Wordle", "2022-02-02-dark-mode-french-wordle" %}.
+
+</div>
