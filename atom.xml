@@ -3,12 +3,116 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-02-01T10:28:57.000Z</updated>
+    <updated>2022-02-02T19:47:11.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Dark mode for French Wordle</title>
+        <link href="https://blog.pagesd.info/2022/02/02/dark-mode-french-wordle/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-02-02T19:47:11.000Z</updated>
+        <published>2022-02-02T19:47:11.000Z</published>
+        <id>https://blog.pagesd.info/2022/02/02/dark-mode-french-wordle/</id>
+        <summary>I&#39;ve added a dark mode to LeMOT, a way for me to see what modifications are required to do this without too many fuss.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Last Sunday, I added a dark theme to LeMOT, my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt;. Some players seemed to want it and it was a good opportunity for me to see how to do it without too many fuss.&lt;/p&gt;
+&lt;h2&gt;Colors for light mode&lt;/h2&gt;
+&lt;p&gt;To start with, I looked for the colors used in my CSS file and I found about ten of them. But in practice, this corresponds to the following 12 use cases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; for the general white background&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; for the general near-black text&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; for slightly lighter text in italics&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; for text watermark&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ccc&lt;/code&gt; light gray for the background of unused keyboard keys&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white to display the letters once played in the boxes&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; the famous orange for the background of well placed letters :)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; the blue for the background of misplaced letters&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; a slightly lighter gray for the background of the letters missing from the word to guess&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#bbb&lt;/code&gt; not very light gray for icons&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; a purple background for the &amp;quot;unknown word&amp;quot; message&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white text for the &amp;quot;unknown word&amp;quot; message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Done!&lt;/p&gt;
+&lt;h2&gt;Colors for dark mode&lt;/h2&gt;
+&lt;p&gt;I then searched what colors to use when in dark mode. It wasn&#39;t too difficult, since you just have to look at the original &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt; for inspiration... After a few tries, I came up with these colors:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;#222&lt;/code&gt; for a very black general background&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; for a very white general text&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; for a less white italic text&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; for the watermark text in grey / black&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; a &amp;quot;medium&amp;quot; gray for the background of the unused keyboard keys&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white to display the letters once played in the boxes&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; the famous orange for the background of well placed letters :)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; the blue for the background of misplaced letters&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; a gray / black for the background of the letters absent from the word to guess&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; a &amp;quot;medium&amp;quot; gray for the icons&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; a purple background for the message &amp;quot;unknown word&amp;quot;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white text for the &amp;quot;unknown word&amp;quot; message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As I display links in bright blue (&lt;code&gt;#00f&lt;/code&gt;), I had to find another one that would look good in both dark and light modes. I took the blue &lt;code&gt;#2962ff&lt;/code&gt; from one of my other sites, but I probably have to improve it because I&#39;m not very happy with it...&lt;/p&gt;
+&lt;p&gt;Dark colors, done!&lt;/p&gt;
+&lt;h2&gt;Setting light or dark theme&lt;/h2&gt;
+&lt;p&gt;Now, either I was finally starting to code a settings screen, or I was cheating by relying on the &lt;code&gt;prefers-color-scheme&lt;/code&gt; media directive. This directive detects the user&#39;s choice of theme preference (dark or light).&lt;/p&gt;
+&lt;p&gt;Of course I did the easiest one. But also the most normal one in my opinion: why force people to repeat in my game what they have already set on their phone or browser!&lt;/p&gt;
+&lt;p&gt;And so now, my CSS file starts with a bunch of CSS variables.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;/* Thèmes
+   ========================================================================== */
+
+:root {
+  --fond-general: #fff;      /* Fond blanc général */
+  --texte-normal: #333;      /* Texte quasi noir */
+  --texte-clair: #888;       /* Texte plus clair pour notes */
+  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
+  --filigrane: #ddd;         /* Couleur du texte en filigrane */
+  --message-fond: #dc267f;   /* Fond mauve pour les messages */
+  --message-texte: #fff;     /* Texte blanc pour les messages */
+  --touche-fond: #ccc;       /* Fond gris clair pour touche inutilisée */
+  --touche-texte: #333;      /* Texte quasi noir pour touche en général */
+  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
+  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
+  --fond-absent: #ddd;       /* Gris clair pour les lettres absentes */
+  --couleur-icone: #bbb;     /* Gris pas très clair pour icones */
+  --texte-lien: #2962ff;     /* Bleu pour les liens */
+}
+
+@media (prefers-color-scheme: dark) { :root {
+  --fond-general: #222;      /* Fond très noir général */
+  --texte-normal: #eee;      /* Texte très blanc */
+  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
+  --texte-clair: #888;       /* Texte moins blanc pour notes */
+  --filigrane: #444;         /* Couleur du texte en filigrane */
+  --message-fond: #dc267f;   /* Fond mauve pour les messages */
+  --message-texte: #fff;     /* Texte blanc pour les messages */
+  --touche-fond: #888;       /* Fond gris moyen pour touche inutilisée */
+  --touche-texte: #fff;      /* Texte blanc pour touche en général */
+  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
+  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
+  --fond-absent: #444;       /* Gris-noir pour les lettres absentes */
+  --couleur-icone: #888;     /* Gris moyen pour icones */
+  --texte-lien: #2962ff;     /* Bleu pour les liens */
+}}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A good thing done!&lt;/p&gt;
+&lt;h2&gt;A last one for the road...&lt;/h2&gt;
+&lt;p&gt;I use an antiquity to compress CSS (&lt;a href=&quot;https://github.com/Microsoft/ajaxmin&quot;&gt;Microsoft Ajax Minifier&lt;/a&gt;) and it didn&#39;t hold up against CSS variables :( So for now, I went to the first comer, namely &lt;a href=&quot;https://github.com/css/csso&quot;&gt;CSSO&lt;/a&gt;, via its &lt;a href=&quot;https://github.com/css/csso-cli&quot;&gt;csso-cli&lt;/a&gt; version to do the job.&lt;/p&gt;
+&lt;p&gt;I wonder if it would be possible to compress the CSS variable names, so that &lt;code&gt;--fond-general&lt;/code&gt; is shortened to &lt;code&gt;--a&lt;/code&gt;, &lt;code&gt;--texte-normal&lt;/code&gt; becomes &lt;code&gt;--b&lt;/code&gt;, etc...&lt;/p&gt;
+&lt;p&gt;This is something I&#39;ll definitely have to review some day to make an informed decision about what I&#39;ll use from now on...&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Anyway, another weekend well spent, since it is finally possible to enjoy &lt;strong&gt;LeMOT&lt;/strong&gt; to its fullest, even if you prefer to use a dark mode!&lt;/p&gt;
+&lt;p&gt;And to play, it&#39;s still there: &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt; :)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-dark.png&quot; alt=&quot;Dark mode for LeMOT&quot; title=&quot;Not so bad, i guess!&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2022/02/01/mode-sombre-wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Mode sombre pour Wordle en français&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
+    </entry>
     <entry>
         <title type="html">Mode sombre pour Wordle en français</title>
         <link href="https://blog.pagesd.info/2022/02/01/mode-sombre-wordle-francais/" rel="alternate" hreflang="fr-FR" />
@@ -103,6 +207,9 @@
 &lt;p&gt;Quoiqu&#39;il en soit, encore un week-end bien employé, puisqu&#39;il est enfin possible d&#39;apprécier &lt;strong&gt;LeMOT&lt;/strong&gt; à sa juste valeur, même si vous préférez utiliser un mode sombre !&lt;/p&gt;
 &lt;p&gt;Et pour jouer, c&#39;est toujours par là : &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt; :)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-dark-mode.png&quot; alt=&quot;Le thème sombre de LeMOT&quot; title=&quot;Pas mal du tout, je trouve :)&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2022/02/02/dark-mode-french-wordle/&quot; hreflang=&quot;en-US&quot;&gt;Dark mode for French Wordle&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
 
         </content>
         <category term="javascript" />
@@ -290,94 +397,6 @@
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/16/ajout-icones-svg_wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Ajout d&#39;icônes SVG à mon Wordle français&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Ajout d&#39;icônes SVG à mon Wordle français</title>
-        <link href="https://blog.pagesd.info/2022/01/16/ajout-icones-svg_wordle-francais/" rel="alternate" hreflang="fr-FR" />
-        <updated>2022-01-16T08:26:09.000Z</updated>
-        <published>2022-01-16T08:26:09.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/16/ajout-icones-svg_wordle-francais/</id>
-        <summary>Juste après avoir modifié mon Wordle en français pour utiliser des couleurs accessibles, j&#39;ai pris un petit moment pour ajouter de véritables icônes SVG.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Juste après avoir modifié ma version de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt; pour utiliser des couleurs accessibles, j&#39;ai pris un petit moment pour ajouter de véritables icônes SVG.&lt;/p&gt;
-&lt;h2&gt;Mes premières &amp;quot;icônes&amp;quot;&lt;/h2&gt;
-&lt;p&gt;Au départ, je m&#39;étais contenté d&#39;utiliser de simples caractères Ascii ou Unicode pour représenter les actions du jeu ou les touches du clavier :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;quot;?&amp;quot; pour le menu Aide&lt;/li&gt;
-&lt;li&gt;&amp;quot;⚙&amp;quot; pour le menu paramétrage&lt;/li&gt;
-&lt;li&gt;&amp;quot;↵&amp;quot; pour la touche Entrée&lt;/li&gt;
-&lt;li&gt;&amp;quot;⌫&amp;quot; pour la touche Retour arrière&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;C&#39;est simple, ça marche et comme jusqu&#39;à présent j&#39;ai rarement eu l&#39;occasion d&#39;utiliser des icônes au format SVG, c&#39;était la solution la plus pratique pour créer &lt;strong&gt;LeMOT&lt;/strong&gt; super rapidement.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;Les icônes d&#39;origine&quot; title=&quot;Les «icônes» d&#39;origine&quot;&gt;&lt;/p&gt;
-&lt;p&gt;C&#39;était pas mal, mais ça ne rendait pas pareil selon sur quoi on joue : un PC sous Windows, un téléphone, un iPhone, ... Et puis j&#39;avais dû bidouiller du CSS pour réussir à donner un aspect &amp;quot;bouton&amp;quot; aux icônes du menu.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.menu {
-  background-color: #ddd;
-  color: #fff;
-  border-radius: 50%;
-  font-size: 24px;
-  width: 35px;
-  height: 35px;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-}
-
-.menu:hover {
-  background-color: #bbb;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Changement pour des icônes SVG&lt;/h2&gt;
-&lt;p&gt;Malgré tout, j&#39;avais prévu dès le début de regarder du côté des icônes SVG pour améliorer &lt;strong&gt;LeMOT&lt;/strong&gt;. Comme j&#39;avais sous le coude un certain nombre de jeux d&#39;icônes SVG, j&#39;ai cherché lequel conviendrait mieux.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://feathericons.com/&quot;&gt;Feather – Simply beautiful open source icons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://antonreshetov.github.io/vue-unicons/&quot;&gt;Vue Unicons – 1000+ Pixel-perfect svg icons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://iconoir.com/&quot;&gt;Iconoir – An Open-Source SVG Icons Library&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://heroicons.com/&quot;&gt;Heroicons – Beautiful hand-crafted SVG icons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://phosphoricons.com/&quot;&gt;Phosphor Icons – A flexible icon family&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Même si au final ce ne sont pas les icônes que j&#39;ai sélectionnées, je les ai listées ici parce qu&#39;elles sont toutes très bien. Par contre j&#39;ai eu quelquefois un problème pour trouver des icônes qui représentent les touches Entrée et Retour arrière. En plus, juste à ce moment-là, Josh Wardle avait ajouté une nouvelle icône dans le menu pour consulter les statistiques.&lt;/p&gt;
-&lt;p&gt;Et aussi, comme j&#39;étais un peu impatient, j&#39;ai eu un peu de mal à trouver des explications pour savoir comment les colorer ou les dimensionner.&lt;/p&gt;
-&lt;p&gt;Par chance, j&#39;ai fini par tilter et j&#39;ai repensé aux &lt;a href=&quot;https://icons.getbootstrap.com/&quot;&gt;icônes Bootstrap&lt;/a&gt; que j&#39;utilise quelquefois sous forme de police d&#39;icônes ! Et là, il y avait tout ce dont j&#39;avais besoin et en plus elles étaient facilement personnalisables avec un peu de CSS.&lt;/p&gt;
-&lt;p&gt;Pour définir la couleur :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
-  fill: green;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Pour les dimensionner :&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
-  height: 1.75em;
-  width: 1.75em;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Cerise sur le gâteau, le fait d&#39;utiliser l&#39;unité de mesure &amp;quot;em&amp;quot; permet de les dimensionner proportionnellement à la taille de la police.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-icones-svg.png&quot; alt=&quot;Les icônes SVG&quot; title=&quot;Les icônes SVG&quot;&gt;&lt;/p&gt;
-&lt;h2&gt;Un problème de clic sur les icônes SVG&lt;/h2&gt;
-&lt;p&gt;Comme il était tard et que je n&#39;avais pas suffisamment (ou pas du tout ?) testé, ça a bugué :(&lt;/p&gt;
-&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;fr&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/ms_michel?ref_src=twsrc%5Etfw&quot;&gt;@ms_michel&lt;/a&gt; hello je te signale un bug impossible d’effacer des lettres le jeu est planté&lt;/p&gt;&amp;mdash; Guillaume (@yomz) &lt;a href=&quot;https://twitter.com/yomz/status/1481782505309192194?ref_src=twsrc%5Etfw&quot;&gt;January 14, 2022&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;p&gt;Sur les téléphones, il n&#39;était plus possible de revenir en arrière pour corriger une lettre ou de valider le mot saisi ! Tout ça parce que mon code se basait toujours sur les caractères Unicode &amp;quot;↵&amp;quot; et &amp;quot;⌫&amp;quot; pour détecter quelle touche avait été utilisée.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;  if (touche === &amp;quot;↵&amp;quot;) {
-    validerLigne();
-  } else if (touche === &amp;quot;⌫&amp;quot;) {
-    retourArriere();
-  }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ou quelque chose dans le genre...&lt;/p&gt;
-&lt;p&gt;Qu&#39;à cela ne tienne, je n&#39;avais qu&#39;à ajouter un &lt;code&gt;data-attribut&lt;/code&gt; sur les 2 touches concernées et problème résolu !&lt;/p&gt;
-&lt;p&gt;Malheureusement, quand on clique sur un SVG, le &lt;code&gt;event.target&lt;/code&gt; que donne l&#39;évènement &amp;quot;click&amp;quot; ne correspond pas obligatoirement à l&#39;élément DOM &amp;quot;button&amp;quot; qui représente la touche. Cela peut être l&#39;élément &amp;quot;SVG&amp;quot; ou même l&#39;élément &amp;quot;PATH&amp;quot; en fonction de l&#39;endroit exact où on a cliqué...&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note : Très certainement que sur un téléphone ça tombe toujours sur le &amp;quot;button&amp;quot; (à moins d&#39;avoir un doigt super fin), mais autant ne rien laisser au hasard.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Heureusement, c&#39;est un problème bien connu que j&#39;avais d&#39;ailleurs déjà rencontré lors de mes précédents accrochages avec la délégation d&#39;évènement. Dans son article &amp;quot;&lt;a href=&quot;https://gomakethings.com/detecting-click-events-on-svgs-with-vanilla-js-event-delegation/&quot;&gt;Detecting click events on SVGs with vanilla JS event delegation&lt;/a&gt;&amp;quot;, Chris Ferdinandi donne deux solutions pour résoudre le problème.&lt;/p&gt;
-&lt;p&gt;Bien entendu, j&#39;ai pris la solution la plus simple et j&#39;ai ajouté un &lt;code&gt;pointer-events: none;&lt;/code&gt; à mon fichier CSS.&lt;/p&gt;
-&lt;p&gt;Et c&#39;est pour cela que maintenant, il est possible de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;jouer à Wordle en français&lt;/a&gt; sur un téléphone et avec de jolies icônes.&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2022/01/19/adding-svg-icons-french-wordle/&quot; hreflang=&quot;en-US&quot;&gt;Adding SVG Icons to my French Wordle&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
         </content>
         <category term="javascript" />
         <category term="jeux" />
