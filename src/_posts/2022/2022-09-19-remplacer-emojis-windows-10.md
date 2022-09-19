@@ -180,10 +180,3 @@ Et je dimensionne les émojis dans mon CSS :
 ## Conclusion
 
 Au départ, je comptais remplacer les émojis de Windows 10 pour en utiliser de plus modernes (et les derniers de Microsoft m'allaient très bien). Mais devant les difficultés et pour éviter d'avoir à "hacker" mon système, j'ai préféré me contenter de modifier mon application pour qu'elle affiche les jolis émojis de Twitter à la place.
-
-
-<div class="encart">
-
-English version: {% goto_en "Replace Windows 10's emoji", "2022-09-20-replace-windows-10-emoji" %}.
-
-</div>
