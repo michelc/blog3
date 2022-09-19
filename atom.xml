@@ -3,20 +3,155 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-02-02T19:47:11.000Z</updated>
+    <updated>2022-09-19T11:07:24.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
     <entry>
+        <title type="html">Remplacer les émojis de Windows 10</title>
+        <link href="https://blog.pagesd.info/2022/09/19/remplacer-emojis-windows-10/" rel="alternate" hreflang="fr-FR" />
+        <updated>2022-09-19T11:07:24.000Z</updated>
+        <published>2022-09-19T11:07:24.000Z</published>
+        <id>https://blog.pagesd.info/2022/09/19/remplacer-emojis-windows-10/</id>
+        <summary>Il s&#39;avère que ce n&#39;est pas si simple que ça de remplacer les émojis à l&#39;ancienne de Windows 10 par quelque chose d&#39;un peu plus moderne et joyeux...</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Ces derniers temps, je me suis remis sur le développement d&#39;une sorte d&#39;application / client Twitter pour me faciliter le suivi des interactions autour de mon jeu de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt; (et des 3 autres que j&#39;ai développés depuis).&lt;/p&gt;
+&lt;p&gt;Ce week-end, pour me changer un peu les idées, j&#39;ai décidé d&#39;améliorer le rendu des émojis.&lt;/p&gt;
+&lt;p&gt;Au départ, comme il s&#39;agit d&#39;une application web, ils sont affichés avec la police par défaut de Windows 10 pour les émojis, ce qui n&#39;est pas super génial :&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Les émojis de base pour Windows 10&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;1er essai : &amp;quot;Segoe UI Emoji&amp;quot; de Windows 11&lt;/h2&gt;
+&lt;p&gt;Pour faire au plus simple, j&#39;ai essayé d&#39;installer la dernière version de la police &amp;quot;Segoe UI Emoji&amp;quot; de Windows 11 et de voir ce que ça donnait... Pas grand chose en fait !&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Toujours les émojis de la police &quot;Segoe UI Emoji&quot; d&#39;origine de Windows 10 :(&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;J&#39;ai maintenant deux polices &amp;quot;Segoe UI Emoji&amp;quot; sur mon PC qui ne semble pas très chaud pour utiliser la plus récente par défaut.&lt;/p&gt;
+&lt;p&gt;Malgré tout, Firefox s&#39;est montré plus malin :&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-firefox.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Les nouveaux émojis de la police &quot;Segoe UI Emoji&quot; de Windows 11 :)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;2ème essai : &amp;quot;Noto Color Emoji&amp;quot; de Google&lt;/h2&gt;
+&lt;p&gt;Puis j&#39;ai vu passer une nouvelle police de chez Google : &amp;quot;Noto Color Emoji&amp;quot; (&lt;a href=&quot;https://fonts.google.com/noto/specimen/Noto+Color+Emoji&quot;&gt;https://fonts.google.com/noto/specimen/Noto+Color+Emoji&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Après l&#39;avoir téléchargée, je pouvais essayer de l&#39;utiliser comme police &amp;quot;système&amp;quot; pour les émojis... Mais il n&#39;y avait pas de raison qu&#39;elle se débrouille mieux que la &amp;quot;Segoe UI Emoji&amp;quot; de Microsoft himself.&lt;/p&gt;
+&lt;p&gt;Et il n&#39;existe rien au niveau HTML / CSS pour indiquer qu&#39;il faut afficher les émojis en utilisant une police particulière. Si on veut y arriver, le plus simple est d&#39;englober les émojis à afficher dans une balise &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; avec une classe particulière pour pouvoir définir sa police. Quelque chose comme &lt;code&gt;&amp;lt;span class=&amp;quot;font-emoji&amp;quot;&amp;gt;🥳&amp;lt;/span&amp;gt;&lt;/code&gt; par exemple...&lt;/p&gt;
+&lt;p&gt;Alors j&#39;ai bricolé vite fait un truc pour que les émojis soient affichés en utilisant cette police. Pour cela, j&#39;ai encadré tous les émojis dans une &amp;quot;pseudo&amp;quot; balise &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; grâce à la fonction suivante :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private string MakePrettyEmojis(string content)
+{
+    var pretty = &amp;quot;&amp;quot;;
+    var runes = content.EnumerateRunes();
+    foreach (var r in runes)
+    {
+        var one = r.ToString();
+        if (one == &amp;quot;\u2b1c&amp;quot;)
+            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
+        else if (one == &amp;quot;\u26aa&amp;quot;)
+            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
+        else if (r.IsBmp == false)
+            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
+        else
+            pretty += r.ToString();
+    }
+    pretty = pretty.Replace(&amp;quot;&amp;lt;/e&amp;gt;&amp;lt;e&amp;gt;&amp;quot;, &amp;quot;&amp;quot;);
+    return pretty;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Note : Comme tous les émojis ne sont apparemment pas logés à la même enseigne, il faudra me creuser un peu plus les méninges pour réussir à gérer correctement tous les émojis existants (quelque chose dans le genre &lt;code&gt;Regex&lt;/code&gt; certainement).&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;La balise &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; n&#39;existe pas mais elle ne semble pas perturber les navigateurs. Et donc, &lt;code&gt;&amp;lt;e&amp;gt;🥳&amp;lt;/e&amp;gt;&lt;/code&gt; sera quand même plus &amp;quot;discret&amp;quot; qu&#39;un long &lt;code&gt;&amp;lt;span class=&amp;quot;font-emoji&amp;quot;&amp;gt;🥳&amp;lt;/span&amp;gt;&lt;/code&gt; :)&lt;/p&gt;
+&lt;p&gt;Je complète mon fichier CSS pour y indiquer que les éléments &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; doivent être affichés avec la police &amp;quot;Noto Color Emoji&amp;quot; :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;e {
+    font-family: &amp;quot;Noto Color Emoji&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et le résultat est enfin là, quelque soit le navigateur !&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-font-google.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Enfin de plus jolis émojis !!!&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Mais j&#39;aime moyen ce petit effet 3D. On se croirait revenu au temps de Windows 3.1 :)&lt;/p&gt;
+&lt;h2&gt;3ème essai : &amp;quot;Segoe UI Emoji&amp;quot; le retour&lt;/h2&gt;
+&lt;p&gt;Bien entendu je tente le coup avec :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;e {
+    font-family: &amp;quot;Segoe UI Emoji&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Mais comme il y a 2 polices &amp;quot;Segoe UI Emoji&amp;quot; sur mon Windows, la nouvelle ne prend toujours pas le dessus sur l&#39;ancienne... A moins qu&#39;il existe un &lt;code&gt;font-version&lt;/code&gt; quelque part...&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Retour à la case départ (à part Firefox)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;4ème essais : &amp;quot;Twitter Color Emoji SVGinOT Font&amp;quot; de ???&lt;/h2&gt;
+&lt;p&gt;Je cherche s&#39;il existe d&#39;autre polices d&#39;emojis et je tombe sur celle de Twitter, même si cela ressemble plus à du bricolage qu&#39;à un truc officiel : &lt;a href=&quot;https://github.com/eosrei/twemoji-color-font&quot;&gt;https://github.com/eosrei/twemoji-color-font&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Je télécharge, installe puis :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;e {
+    font-family: &amp;quot;Twitter Color Emoji&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et oups...&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-font-twitter.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Tous les émojis sont gris clair...&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;5ème essai : &amp;quot;Emoji for everyone&amp;quot; de Twitter !!!&lt;/h2&gt;
+&lt;p&gt;Par contre, ça m&#39;a conduit sur la page de &amp;quot;Twemoji&amp;quot; : &lt;a href=&quot;https://twemoji.twitter.com/&quot;&gt;https://twemoji.twitter.com/&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;L&#39;emoji open source de Twitter répond à tous les besoins de votre projet en
+matière d&#39;emoji. Il prend en charge la dernière spécification Unicode des
+emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Mais c&#39;est génial !&lt;/p&gt;
+&lt;p&gt;Il semblerait bien que cela soit pile ce que je cherche ! Quelque chose de pas compliqué du tout qui remplace tous les émojis d&#39;une page par l&#39;image de l&#39;émoji Twitter correspondant. Ca tombe bien, il me plaisent beaucoup les émojis de Twitter moi :)&lt;/p&gt;
+&lt;p&gt;Je vire ma fonction &amp;quot;MakePrettyEmojis&amp;quot; et mon bout de CSS pour revenir à la situation de départ.&lt;/p&gt;
+&lt;p&gt;J&#39;ajoute un peu de JavaScript dans mon fichier &amp;quot;_Layout.cshtml&amp;quot; :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;script src=&amp;quot;https://twemoji.maxcdn.com/v/latest/twemoji.min.js&amp;quot; crossorigin=&amp;quot;anonymous&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script&amp;gt;
+    window.onload = function () {
+        // https://gist.github.com/Armster15/db063ab0dc5be699ae07a067a7333752
+        // Parses the document body and
+        // inserts &amp;lt;img&amp;gt; tags in place of Unicode Emojis
+        twemoji.parse(document.body,
+            { folder: &#39;svg&#39;, ext: &#39;.svg&#39; } // This is to specify to Twemoji to use SVGs and not PNGs
+        );
+    }
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et je dimensionne les émojis dans mon CSS :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.emoji {
+    height: 1.2em;
+    width: 1.2em;
+    margin: 0 1px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-twitter.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Tada ! C&#39;est parfaitement parfait.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Au départ, je comptais remplacer les émojis de Windows 10 pour en utiliser de plus modernes (et les derniers de Microsoft m&#39;allaient très bien). Mais devant les difficultés et pour éviter d&#39;avoir à &amp;quot;hacker&amp;quot; mon système, j&#39;ai préféré me contenter de modifier mon application pour qu&#39;elle affiche les jolis émojis de Twitter à la place.&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2022/09/20/replace-windows-10-emoji/&quot; hreflang=&quot;en-US&quot;&gt;Replace Windows 10&#39;s emoji&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="twitter" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
+    </entry>
+    <entry>
         <title type="html">Dark mode for French Wordle</title>
-        <link href="https://blog.pagesd.info/2022/02/02/dark-mode-french-wordle/" rel="alternate" hreflang="fr-FR" />
+        <link href="https://blog.pagesd.info/2022/02/02/dark-mode-french-wordle/" rel="alternate" hreflang="en-US" />
         <updated>2022-02-02T19:47:11.000Z</updated>
         <published>2022-02-02T19:47:11.000Z</published>
         <id>https://blog.pagesd.info/2022/02/02/dark-mode-french-wordle/</id>
         <summary>I&#39;ve added a dark mode to LeMOT, a way for me to see what modifications are required to do this without too many fuss.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
 &lt;p&gt;Last Sunday, I added a dark theme to LeMOT, my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt;. Some players seemed to want it and it was a good opportunity for me to see how to do it without too many fuss.&lt;/p&gt;
 &lt;h2&gt;Colors for light mode&lt;/h2&gt;
 &lt;p&gt;To start with, I looked for the colors used in my CSS file and I found about ten of them. But in practice, this corresponds to the following 12 use cases:&lt;/p&gt;
@@ -310,93 +445,6 @@
 &lt;p&gt;English version: &lt;a href=&quot;/2022/01/23/share-french-wordle-grid/&quot; hreflang=&quot;en-US&quot;&gt;Share the French Wordle grid&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Adding SVG Icons to my French Wordle</title>
-        <link href="https://blog.pagesd.info/2022/01/19/adding-svg-icons-french-wordle/" rel="alternate" hreflang="en-US" />
-        <updated>2022-01-19T11:30:22.000Z</updated>
-        <published>2022-01-19T11:30:22.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/19/adding-svg-icons-french-wordle/</id>
-        <summary>Just after I modified my French Wordle game to use accessible colors, I took a moment to add some SVG icons.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Just after I modified my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt; game to use accessible colors, I took a little time to add SVG icons.&lt;/p&gt;
-&lt;h2&gt;My first &amp;quot;icons&amp;quot;&lt;/h2&gt;
-&lt;p&gt;Initially, I only used simple Ascii or Unicode characters to represent the game actions or the keyboard keys:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;quot;?&amp;quot; for the Help menu&lt;/li&gt;
-&lt;li&gt;&amp;quot;⚙&amp;quot; for the Settings menu&lt;/li&gt;
-&lt;li&gt;&amp;quot;↵&amp;quot; for Enter key&lt;/li&gt;
-&lt;li&gt;&amp;quot;⌫&amp;quot; for Backspace key&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;It&#39;s simple, it works, and considering that I&#39;ve rarely had the opportunity to use SVG icons, this was the most practical solution to quickly create &lt;strong&gt;LeMOT&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-apres.png&quot; alt=&quot;Original icons&quot; title=&quot;Original «icons»&quot;&gt;&lt;/p&gt;
-&lt;p&gt;It was decent, but it didn&#39;t look the same depending on what you&#39;re playing on: Windows PC, phone, iPhone, ... And then I had to tweak some CSS to give a &amp;quot;button&amp;quot; look to my menu icons.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;.menu {
-  background-color: #ddd;
-  color: #fff;
-  border-radius: 50%;
-  font-size: 24px;
-  width: 35px;
-  height: 35px;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-}
-
-.menu:hover {
-  background-color: #bbb;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Switching to SVG icons&lt;/h2&gt;
-&lt;p&gt;Regardless, I had planned from the beginning to look at SVG icons to improve &lt;strong&gt;LeMOT&lt;/strong&gt;. As I had a number of SVG icon sets bookmarks, I looked for one that would be the best fit.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://feathericons.com/&quot;&gt;Feather – Simply beautiful open source icons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://antonreshetov.github.io/vue-unicons/&quot;&gt;Vue Unicons – 1000+ Pixel-perfect svg icons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://iconoir.com/&quot;&gt;Iconoir – An Open-Source SVG Icons Library&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://heroicons.com/&quot;&gt;Heroicons – Beautiful hand-crafted SVG icons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://phosphoricons.com/&quot;&gt;Phosphor Icons – A flexible icon family&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Though in the end these are not the icons I selected, I listed them here because they are all very good. But I had some difficulties finding icons to represent the Enter and Backspace keys. Also, just at that time, Josh Wardle had added a new icon in the menu to view stats.&lt;/p&gt;
-&lt;p&gt;Also, because I was impatient, I had trouble finding explanations for how to color or resize them.&lt;/p&gt;
-&lt;p&gt;Luckily, I finally tilted and thought again about &lt;a href=&quot;https://icons.getbootstrap.com/&quot;&gt;Bootstrap icons&lt;/a&gt; that I sometimes use as icon fonts! And there we are, everything I needed, plus they were easily customizable with a bit of CSS.&lt;/p&gt;
-&lt;p&gt;To set the color:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
-  fill: green;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To resize them:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;svg {
-  height: 1.75em;
-  width: 1.75em;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The icing on the cake, using the &amp;quot;em&amp;quot; unit allows them to be sized proportionally to the font size.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-icones-svg.png&quot; alt=&quot;SVG icons&quot; title=&quot;SVG icons&quot;&gt;&lt;/p&gt;
-&lt;h2&gt;Problem with clicking on SVG icons&lt;/h2&gt;
-&lt;p&gt;As it was late and I hadn&#39;t tested enough (or not at all?), it bugged :(&lt;/p&gt;
-&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;fr&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/ms_michel?ref_src=twsrc%5Etfw&quot;&gt;@ms_michel&lt;/a&gt; hello je te signale un bug impossible d’effacer des lettres le jeu est planté&lt;/p&gt;&amp;mdash; Guillaume (@yomz) &lt;a href=&quot;https://twitter.com/yomz/status/1481782505309192194?ref_src=twsrc%5Etfw&quot;&gt;January 14, 2022&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;p&gt;On the phones, it was no longer possible to go back and correct a letter or to validate the word entered! All of this because my code was still relying on the Unicode characters &amp;quot;↵&amp;quot; and &amp;quot;⌫&amp;quot; to detect which key had been used.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;  if (touche === &amp;quot;↵&amp;quot;) {
-    validerLigne();
-  } else if (touche === &amp;quot;⌫&amp;quot;) {
-    retourArriere();
-  }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Or something like that...&lt;/p&gt;
-&lt;p&gt;Never mind, I just had to add a &lt;code&gt;data-attribute&lt;/code&gt; on the 2 keys and problem solved!&lt;/p&gt;
-&lt;p&gt;Unfortunately, when you click on an SVG, the &lt;code&gt;event.target&lt;/code&gt; given by the &amp;quot;click&amp;quot; event doesn&#39;t necessarily correspond to the DOM element &amp;quot;button&amp;quot; that represents the key. It can be the &amp;quot;SVG&amp;quot; element or even the &amp;quot;PATH&amp;quot; element depending on the exact place where you clicked...&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Note: Most certainly on a phone it will always fall on the &amp;quot;button&amp;quot; (unless you have a super thin finger), but I don&#39;t want to leave anything to chance.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Fortunately, this is a well-known problem that I had already encountered in my previous run-ins with event delegation. In his post &amp;quot;&lt;a href=&quot;https://gomakethings.com/detecting-click-events-on-svgs-with-vanilla-js-event-delegation/&quot;&gt;Detecting click events on SVGs with vanilla JS event delegation&lt;/a&gt;&amp;quot;, Chris Ferdinandi gives two solutions to solve the problem.&lt;/p&gt;
-&lt;p&gt;Of course, I took the simpler solution and added a &lt;code&gt;pointer-events: none;&lt;/code&gt; to my CSS file.&lt;/p&gt;
-&lt;p&gt;And that&#39;s why it&#39;s now possible to play &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt; on a phone and with pretty icons.&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/16/ajout-icones-svg_wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Ajout d&#39;icônes SVG à mon Wordle français&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
         </content>
         <category term="javascript" />
         <category term="jeux" />
