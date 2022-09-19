@@ -1,5 +1,6 @@
 ---
 date: 2022-02-02 21:47:11 +02:00
+lang: en-US
 tags: [ javascript, jeux ]
 title: Dark mode for French Wordle
 cover:
