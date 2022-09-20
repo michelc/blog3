@@ -3,12 +3,147 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-09-19T11:07:24.000Z</updated>
+    <updated>2022-09-20T17:31:55.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Replace Windows 10&#39;s emoji</title>
+        <link href="https://blog.pagesd.info/2022/09/20/replace-windows-10-emoji/" rel="alternate" hreflang="en-US" />
+        <updated>2022-09-20T17:31:55.000Z</updated>
+        <published>2022-09-20T17:31:55.000Z</published>
+        <id>https://blog.pagesd.info/2022/09/20/replace-windows-10-emoji/</id>
+        <summary>Turns out, it&#39;s not that easy to replace Windows 10&#39;s old-school emojis with something a little more modern and cheerful...</summary>
+        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Lately, I&#39;ve been back on developing a sort of Twitter client / application to help me track interactions around my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle game&lt;/a&gt; (and the 3 other games that I developed later).&lt;/p&gt;
+&lt;p&gt;This weekend, to take my mind off things a bit, I tried to improve the look of the emojis.&lt;/p&gt;
+&lt;p&gt;Initially, since it&#39;s a web application, they are displayed with the default Windows 10 font for emojis, which isn&#39;t super great:&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Basic emoji for Windows 10&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;1st try: &amp;quot;Segoe UI Emoji&amp;quot; from Windows 11&lt;/h2&gt;
+&lt;p&gt;To make it easier, I tried to install the latest version of the &amp;quot;Segoe UI Emoji&amp;quot; font from Windows 11 and see what happened... Not much actually!&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Still using the original Windows 10 &quot;Segoe UI Emoji&quot; font :(&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;I now have two &amp;quot;Segoe UI Emoji&amp;quot; fonts on my PC which doesn&#39;t seem to be ready to use the newer one by default.&lt;/p&gt;
+&lt;p&gt;However, Firefox has proved to be smarter:&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-firefox.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;The new &quot;Segoe UI Emoji&quot; font in Windows 11 :)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;2nd try: &amp;quot;Noto Color Emoji&amp;quot; from Google&lt;/h2&gt;
+&lt;p&gt;Then I saw a new font from Google: &amp;quot;Noto Color Emoji&amp;quot; (&lt;a href=&quot;https://fonts.google.com/noto/specimen/Noto+Color+Emoji&quot;&gt;https://fonts.google.com/noto/specimen/Noto+Color+Emoji&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;After downloading it, I could have try to use it as a &amp;quot;system&amp;quot; font for emojis... But there was no reason for it to do better than Microsoft&#39;s &amp;quot;Segoe UI Emoji&amp;quot;.&lt;/p&gt;
+&lt;p&gt;And there is nothing at the HTML/CSS level to indicate how emojis should be displayed using a particular font. If I want that, the easiest way is to include the emojis to be displayed inside a &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; tag with a class to later define its font. Something like &lt;code&gt;&amp;lt;span class=&amp;quot;font-emoji&amp;quot;&amp;gt;🥳&amp;lt;/span&amp;gt;&lt;/code&gt; for example...&lt;/p&gt;
+&lt;p&gt;I wrote a quick code so that the emojis would be displayed using this font. To do this, I wrapped all the emojis in a &amp;quot;pseudo&amp;quot; &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; tag by using the following function:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private string MakePrettyEmojis(string content)
+{
+    var pretty = &amp;quot;&amp;quot;;
+    var runes = content.EnumerateRunes();
+    foreach (var r in runes)
+    {
+        var one = r.ToString();
+        if (one == &amp;quot;\u2b1c&amp;quot;)
+            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
+        else if (one == &amp;quot;\u26aa&amp;quot;)
+            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
+        else if (r.IsBmp == false)
+            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
+        else
+            pretty += r.ToString();
+    }
+    pretty = pretty.Replace(&amp;quot;&amp;lt;/e&amp;gt;&amp;lt;e&amp;gt;&amp;quot;, &amp;quot;&amp;quot;);
+    return pretty;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Note: As all emojis are apparently not on the same boat, I will have to try a little harder to manage all the existing emojis (something like a &lt;code&gt;Regex&lt;/code&gt; certainly).&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; tag does not exist but browsers do not seem to be disturbed. And so, &lt;code&gt;&amp;lt;e&amp;gt;🥳&amp;lt;/e&amp;gt;&lt;/code&gt; will be  more &amp;quot;soft&amp;quot; than a long &lt;code&gt;&amp;lt;span class=&amp;quot;font-emoji&amp;quot;&amp;gt;🥳&amp;lt;/span&amp;gt;&lt;/code&gt; :)&lt;/p&gt;
+&lt;p&gt;I update my CSS to define that &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; elements must be displayed with the &amp;quot;Noto Color Emoji&amp;quot; font:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;e {
+    font-family: &amp;quot;Noto Color Emoji&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And the result is finally there, whatever the browser!&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-font-google.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Finally more cute emojis!!!&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;But I&#39;m not a big fan of this little 3D effect. It feels like being back in the days of Windows 3.1 :)&lt;/p&gt;
+&lt;h2&gt;3rd try: &amp;quot;Segoe UI Emoji&amp;quot; the return&lt;/h2&gt;
+&lt;p&gt;Of course, I&#39;ll take a chance on:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;e {
+    font-family: &amp;quot;Segoe UI Emoji&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But since there are 2 &amp;quot;Segoe UI Emoji&amp;quot; fonts on my Windows, the new one still doesn&#39;t override the old one... Unless there is a &lt;code&gt;font-version&lt;/code&gt; somewhere...&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Back to square one (except Firefox)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;4th try: &amp;quot;Twitter Color Emoji SVGinOT Font&amp;quot; by ???&lt;/h2&gt;
+&lt;p&gt;I&#39;m looking if there are other emoji fonts and I find one based on Twitter emojis, even though it looks more like DIY than official stuff: &lt;a href=&quot;https://github.com/eosrei/twemoji-color-font&quot;&gt;https://github.com/eosrei/twemoji-color-font&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I download, install and then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;e {
+    font-family: &amp;quot;Twitter Color Emoji&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And oops...&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-font-twitter.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;All emojis are light gray...&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;5th try: &amp;quot;Emoji for everyone&amp;quot; from Twitter!!!&lt;/h2&gt;
+&lt;p&gt;However, it led me to the &amp;quot;Twemoji&amp;quot; page: &lt;a href=&quot;https://twemoji.twitter.com/&quot;&gt;https://twemoji.twitter.com/&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Twitter&#39;s open source emoji has you covered for all your project&#39;s emoji
+needs. With support for the latest Unicode emoji specification, featuring
+3,245 emojis, and all for free.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Wait, that&#39;s awesome!&lt;/p&gt;
+&lt;p&gt;It looks like this is exactly what I&#39;m looking for! Something not complicated that can replace all the emojis of a page with the image of the corresponding Twitter emoji. That&#39;s good, cause I really like Twitter emojis :)&lt;/p&gt;
+&lt;p&gt;I delete my &amp;quot;MakePrettyEmojis&amp;quot; function and my piece of CSS to return to the starting situation.&lt;/p&gt;
+&lt;p&gt;I add some JavaScript to my &amp;quot;_Layout.cshtml&amp;quot; file:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;script src=&amp;quot;https://twemoji.maxcdn.com/v/latest/twemoji.min.js&amp;quot; crossorigin=&amp;quot;anonymous&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script&amp;gt;
+    window.onload = function () {
+        // https://gist.github.com/Armster15/db063ab0dc5be699ae07a067a7333752
+        // Parses the document body and
+        // inserts &amp;lt;img&amp;gt; tags in place of Unicode Emojis
+        twemoji.parse(document.body,
+            { folder: &#39;svg&#39;, ext: &#39;.svg&#39; } // This is to specify to Twemoji to use SVGs and not PNGs
+        );
+    }
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then I size the emojis with CSS:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.emoji {
+    height: 1.2em;
+    width: 1.2em;
+    margin: 0 1px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2022/emoji-twitter.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Tada! It&#39;s perfectly perfect.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Initially, my plan was to replace the Windows 10 emojis with more modern ones (and the latest ones from Microsoft were fine for me). But with the difficulties and to avoid having to &amp;quot;hack&amp;quot; my system, I preferred to just modify my application so that it displays the pretty emojis from Twitter instead.&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;Version en français : &lt;a href=&quot;/2022/09/19/remplacer-emojis-windows-10/&quot; hreflang=&quot;fr-FR&quot;&gt;Remplacer les émojis de Windows 10&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="twitter" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
+    </entry>
     <entry>
         <title type="html">Remplacer les émojis de Windows 10</title>
         <link href="https://blog.pagesd.info/2022/09/19/remplacer-emojis-windows-10/" rel="alternate" hreflang="fr-FR" />
@@ -134,6 +269,9 @@ emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
 &lt;/figure&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Au départ, je comptais remplacer les émojis de Windows 10 pour en utiliser de plus modernes (et les derniers de Microsoft m&#39;allaient très bien). Mais devant les difficultés et pour éviter d&#39;avoir à &amp;quot;hacker&amp;quot; mon système, j&#39;ai préféré me contenter de modifier mon application pour qu&#39;elle affiche les jolis émojis de Twitter à la place.&lt;/p&gt;
+&lt;div class=&quot;encart&quot;&gt;
+&lt;p&gt;English version: &lt;a href=&quot;/2022/09/20/replace-windows-10-emoji/&quot; hreflang=&quot;en-US&quot;&gt;Replace Windows 10&#39;s emoji&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
 
         </content>
         <category term="javascript" />
@@ -417,31 +555,6 @@ emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/22/partage-grille-wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Partager la grille de Wordle en français&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Partager la grille de Wordle en français</title>
-        <link href="https://blog.pagesd.info/2022/01/22/partage-grille-wordle-francais/" rel="alternate" hreflang="fr-FR" />
-        <updated>2022-01-22T10:10:09.000Z</updated>
-        <published>2022-01-22T10:10:09.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/22/partage-grille-wordle-francais/</id>
-        <summary>Avant, il n&#39;était pas super évident qu&#39;on pouvait partager les résultats de mon Wordle en français. Il a suffit d&#39;ajouter un écran tout simple pour résoudre ce problème...</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Jusqu&#39;à dimanche dernier, il n&#39;était pas super évident qu&#39;on pouvait partager les résultats dans mon &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;. Heureusement, il a suffit d&#39;ajouter un écran tout simple pour résoudre ce problème.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-partager.png&quot; alt=&quot;Partager la grille LeMOT&quot; title=&quot;Partager la grille LeMOT&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Au moins, maintenant il est clair pour tout le monde qu&#39;il est possible de partager le résultat de sa partie. Et même qu&#39;on y est fortement invité :)&lt;/p&gt;
-&lt;p&gt;Avant, j&#39;affichais un simple message pendant 2 ou 3 secondes qui annonçait &amp;quot;Bravo ! Résultat copié dans le presse-papiers&amp;quot;. Il fallait donc être un peu attentif pour se rendre compte qu&#39;il était alors possible de partager son résultat comme avec le &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt; original.&lt;/p&gt;
-&lt;p&gt;Sans compter que c&#39;est quand même mieux que de coller automatiquement la grille de résultat dans le presse-papier, sans demander auparavant l&#39;avis du joueur. Mais bon, au début, j&#39;étais pressé...&lt;/p&gt;
-&lt;p&gt;Et ce n&#39;est pas pour me vanter, mais j&#39;ai bien l&#39;impression que les partages sur Twitter ont augmenté après cette petite modification :)&lt;/p&gt;
-&lt;p&gt;Alors, n&#39;hésitez pas à jouer à &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot; title=&quot;Wordle en français&quot;&gt;LeMOT&lt;/a&gt; et à partager votre partie !&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2022/01/23/share-french-wordle-grid/&quot; hreflang=&quot;en-US&quot;&gt;Share the French Wordle grid&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
         </content>
         <category term="javascript" />
         <category term="jeux" />
