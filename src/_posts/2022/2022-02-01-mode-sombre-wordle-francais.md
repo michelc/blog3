@@ -5,7 +5,7 @@ title: Mode sombre pour Wordle en français
 cover:
   image: /public/2022/lemot-wordle-fr.png
   link: https://www.solitaire-play.com/lemot/
-  text: LeMOT - Un jeu de mot chaque jour
+  text: Fleurs de Tiaré tahiti, littéralement « fleur tahitienne »
 excerpt: J'ai ajouté un mode sombre sur LeMOT, l'occasion pour moi de voir ce que cela implique comme modifications pour faire ça sans trop se comliquer la vie.
 ---
 
