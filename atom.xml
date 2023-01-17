@@ -3,12 +3,72 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2022-09-20T17:31:55.000Z</updated>
+    <updated>2023-01-17T16:55:17.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Array.every() et new Set() sauvent LeMOT</title>
+        <link href="https://blog.pagesd.info/2023/01/17/array-every-new-set-sauvent-lemot/" rel="alternate" hreflang="fr-FR" />
+        <updated>2023-01-17T16:55:17.000Z</updated>
+        <published>2023-01-17T16:55:17.000Z</published>
+        <id>https://blog.pagesd.info/2023/01/17/array-every-new-set-sauvent-lemot/</id>
+        <summary>Hier j&#39;ai eu un petit problème dans mon jeu de Wordle en français. La solution à trouver n&#39;existait pas dans la liste des mots acceptés et il y a eu quelques parties qui se sont perdues injustement...</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;h2&gt;Y&#39;a comme un bug ?&lt;/h2&gt;
+&lt;p&gt;Hier j&#39;ai eu un petit problème dans mon jeu de Wordle en français. Comme dans le Wordle d&#39;origine, j&#39;utilise 2 listes de mots :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;la première avec tous les mots de 5 lettres acceptés par mon jeu : &amp;quot;jouables&amp;quot;&lt;/li&gt;
+&lt;li&gt;la seconde avec les mots à trouver : &amp;quot;gagnants&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Contrairement à Josh Wardle, je n&#39;ai pas préparé cette liste une fois pour toute lorsque j&#39;ai créé le jeu. Dans la pratique, je la complète tous les 2 ou 3 mois, en ajoutant entre 50 et 100 mots à chaque fois. Je prends des mots au hasard dans la liste principale et je fais quelques ajustements pour éviter les mots trop compliqués ou pas très heureux...&lt;/p&gt;
+&lt;p&gt;Une fois ces nouveaux mots trouvés, je vérifie qu&#39;ils n&#39;ont pas déjà été proposés (pas de doublons) et aussi qu&#39;ils existent bien dans la liste des mots acceptés (pas de mots introuvables). Je fais ça parce qu&#39;il m&#39;arrive de faire une faute de frappe quand je fais mes derniers petits ajustements.&lt;/p&gt;
+&lt;p&gt;Malheureusement c&#39;est quelque chose que je fais manuellement et la dernière fois, j&#39;ai dû rater une étape. Lundi, le mot à trouver était &amp;quot;MONOI&amp;quot; (&amp;quot;monoï&amp;quot; avec la bonne orthographe), mais bizarrement ce mot ne faisait pas parti de la liste des mots jouables reconnus par l&#39;application !&lt;/p&gt;
+&lt;p&gt;Et donc rien à faire, même en jouant bien on ne pouvait que perdre puis s&#39;entendre dire que la solution était &amp;quot;MONOI&amp;quot; alors que ça nous avait été refusé juste avant ! 😠😡&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/public/2023/lemot-monoi.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Le bug en action...&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;Prudence est mère de sûreté...&lt;/h2&gt;
+&lt;p&gt;Aussi pour éviter que cela ne se reproduise, j&#39;ai désormais automatisé ça directement dans le code. Cela affiche un message lorsque il y a des mots &amp;quot;gagnants&amp;quot; qui n&#39;existent pas dans la liste des mots &amp;quot;jouables&amp;quot; (donc des mots inconnus qui ne seront pas trouvables). Et un autre message si la liste des mots &amp;quot;gagnants&amp;quot; contient des doublons (en cas de mots déjà proposés).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;
+// Vérifie que tous les mots gagnants existent dans les mots jouables
+if (gagnants.every(elem =&amp;gt; jouables.includes(elem)) === false)
+  console.log(&amp;quot;gagnants inconnus !&amp;quot;);
+
+// Vérifie qu&#39;il n&#39;y a pas de doublon dans les mots gagnants
+if (gagnants.length !== [...new Set(gagnants)].length)
+  console.log(&amp;quot;gagnants doublons !&amp;quot;);
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Les zexplications de ChatGPT :&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;// Vérifie que tous les mots gagnants existent dans les mots jouables
+if (gagnants.every(elem =&amp;gt; jouables.includes(elem)) === false)
+  console.log(&amp;quot;gagnants inconnus !&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ce code vérifie si tous les éléments de l&#39;array &amp;quot;gagnants&amp;quot; apparaissent dans l&#39;array &amp;quot;jouables&amp;quot;. Si ce n&#39;est pas le cas, le message &amp;quot;gagnants inconnus !&amp;quot; est affiché dans la console. La méthode &amp;quot;every()&amp;quot; parcourt chaque élément de l&#39;array &amp;quot;gagnants&amp;quot; et vérifie si cet élément existe dans l&#39;array &amp;quot;jouables&amp;quot; en utilisant la méthode &amp;quot;includes()&amp;quot;. Si tous les éléments de &amp;quot;gagnants&amp;quot; existent dans &amp;quot;jouables&amp;quot;, la fonction &amp;quot;every()&amp;quot; renvoie &amp;quot;true&amp;quot; et le code dans la condition if ne sera pas exécuté, sinon elle renvoie &amp;quot;false&amp;quot; et le code dans la condition if sera exécuté.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;// Vérifie qu&#39;il n&#39;y a pas de doublon dans les mots gagnants
+if (gagnants.length !== [...new Set(gagnants)].length)
+  console.log(&amp;quot;gagnants doublons !&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Cette ligne de code vérifie s&#39;il y a des doublons dans l&#39;array &amp;quot;gagnants&amp;quot;. Elle utilise le &amp;quot;!==&amp;quot; pour vérifier si la longueur de l&#39;array &amp;quot;gagnants&amp;quot; est différente de celle de l&#39;array créé par la combinaison de &amp;quot;new Set()&amp;quot; et de l&#39;opérateur de décomposition &amp;quot;[...]&amp;quot;. La méthode &amp;quot;Set()&amp;quot; crée un nouvel objet Set qui contient les éléments uniques de l&#39;array passé en paramètre, l&#39;opérateur de décomposition &amp;quot;[...]&amp;quot; permet de convertir ce nouvel objet en array.
+Si la longueur de l&#39;array &amp;quot;gagnants&amp;quot; est égale à celle de l&#39;array créé par la combinaison de &amp;quot;new Set()&amp;quot; et de l&#39;opérateur de décomposition &amp;quot;[...]&amp;quot;, cela signifie qu&#39;il n&#39;y a pas de doublons dans &amp;quot;gagnants&amp;quot; et la condition if ne sera pas exécuté. Sinon, il y a des doublons dans &amp;quot;gagnants&amp;quot; et le message &amp;quot;gagnants doublons !&amp;quot; sera affiché dans la console.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Que le jeux continue !&lt;/h2&gt;
+&lt;p&gt;Heureusement, c&#39;est arrivé une seule fois en un peu plus d&#39;un an de jeu.&lt;/p&gt;
+&lt;p&gt;Mais au moins, maintenant, si on perd ça ne sera plus que la faute à pas de chance : &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt; :)&lt;/p&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/fleur-monoi.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/fleur-monoi.png" />
+    </entry>
     <entry>
         <title type="html">Replace Windows 10&#39;s emoji</title>
         <link href="https://blog.pagesd.info/2022/09/20/replace-windows-10-emoji/" rel="alternate" hreflang="en-US" />
@@ -531,30 +591,6 @@ emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
 &lt;p&gt;Je profite de ce billet pour dire merci à toutes celles et ceux qui me font le plaisir de jouer à ma version de Wordle en français. En tout cas, moi hier j&#39;ai passé une journée amusante, comme tous les autres jours. Merci à tous pour votre bonne humeur !&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/lemot-21-epale.jpg&quot; alt=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot; title=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot;&gt;&lt;/p&gt;
 
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Share the French Wordle grid</title>
-        <link href="https://blog.pagesd.info/2022/01/23/share-french-wordle-grid/" rel="alternate" hreflang="en-US" />
-        <updated>2022-01-23T17:36:31.000Z</updated>
-        <published>2022-01-23T17:36:31.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/23/share-french-wordle-grid/</id>
-        <summary>Previously, it wasn&#39;t so obvious that we could share my French Wordle results. I just add a new page to solve this problem...</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Until last Sunday, it wasn&#39;t very clear that we could share the results in my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt; game. Thankfully, I just need a simple screen to solve this problem.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-partager.png&quot; alt=&quot;Share the LeMOT grid&quot; title=&quot;Share the LeMOT grid&quot;&gt;&lt;/p&gt;
-&lt;p&gt;At least now it is obvious for everyone that it&#39;s possible to share the result of his game. And even that you are strongly invited to do so :)&lt;/p&gt;
-&lt;p&gt;Before this update, I displayed a short message for 2 or 3 seconds that said &amp;quot;Bravo! Result copied to the clipboard&amp;quot;. So you had to be a bit careful to understand that it was possible to share your result, like with the original &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Not to mention that it&#39;s better than automatically paste the grid into the clipboard, without notifying the player. But that&#39;s okay, at first I wanted to deploy quickly.&lt;/p&gt;
-&lt;p&gt;And it&#39;s not to brag, but I do feel that shares on Twitter have increased after this small improvment :)&lt;/p&gt;
-&lt;p&gt;So, don&#39;t be afraid to play &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot; title=&quot;French Wordle&quot;&gt;LeMOT&lt;/a&gt; and share your game!&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2022/01/22/partage-grille-wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Partager la grille de Wordle en français&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
         </content>
         <category term="javascript" />
         <category term="jeux" />
