@@ -3,7 +3,7 @@ date: 2023-01-17 18:55:17 +02:00
 tags: [ javascript, jeux ]
 title: "Array.every() et new Set() sauvent LeMOT"
 cover:
-  image: /public/2022/fleur-monoi.png
+  image: /public/2023/fleur-monoi.png
   text: Fleurs de Tiaré tahiti, littéralement « fleur tahitienne »
 excerpt: Hier j'ai eu un petit problème dans mon jeu de Wordle en français. La solution à trouver n'existait pas dans la liste des mots acceptés et il y a eu quelques parties qui se sont perdues injustement...
 ---
