@@ -130,7 +130,7 @@ En faisant au plus simple, la modification nécessaire pour remplacer les initia
 <div class="badge badge-avatar">AB</div>
 ```
 
-La ligne `background-position: center` permet de s'assurer que l'image est bien centrée. Et avec `background-size: cover`, la photo est redimensionnée au mieux pour être aussi grande que possible (et donc remplir au mieux le badge), tout en conservant ses proportions. 
+La ligne `background-position: center` permet de s'assurer que l'image est bien centrée. Et avec `background-size: cover`, la photo est redimensionnée au mieux pour être aussi grande que possible (et donc remplir au mieux le badge), tout en conservant ses proportions.
 
 ![](/public/2021/badge-04.png)
 
@@ -149,11 +149,11 @@ C'est quasi-terminé. Dans la pratique, un badge de 100 pixels de large (sans co
   .badge-75 {
     --badge-size: 75px;
   }
-  
+
   .badge-200 {
     --badge-size: 200px;
   }
-  
+
   .badge {
     /* Un rond vert */
     height: var(--badge-size);
@@ -171,7 +171,7 @@ C'est quasi-terminé. Dans la pratique, un badge de 100 pixels de large (sans co
     justify-content: center;
     align-items: center;
   }
-  
+
   .badge-avatar {
     /* Cacher les initiales */
     color: transparent;
@@ -191,6 +191,8 @@ C'est quasi-terminé. Dans la pratique, un badge de 100 pixels de large (sans co
 Et voilà ! A peine 30 lignes de CSS pour un résultat très satisfaisant. Maintenant, si jamais j'en ai à nouveau besoin, je saurais où retrouver ça.
 
 ![](/public/2021/badge-05.png)
+
+*Note : J'ai depuis testé une autre méthode "plus simple" pour pouvoir utiliser plus facilement des avatars sous forme d'images statiques ou dynamiques : "{% goto_fr "Générer un badge / avatar en C#", "2023-08-14-generer-avatar-csharp" %}".*.
 
 <div class="encart">
 
