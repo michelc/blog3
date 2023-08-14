@@ -17,7 +17,7 @@
         <id>https://blog.pagesd.info/2023/08/14/generer-avatar-csharp/</id>
         <summary>Une méthode simple pour afficher un avatar sans se péoccuper de savoir s&#39;il s&#39;agit d&#39;une image statique ou d&#39;une image dynamique générée en C#.</summary>
         <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;J&#39;ai récemment eu besoin d&#39;afficher à nouveau des avatars, et j&#39;ai voulu en profiter pour essayer une autre façon de faire par rapport à ce que j&#39;avais fait il y a 2 ans avec &amp;quot;&lt;a href=&quot;/2023/08/14/generer-avatar-csharp/&quot; hreflang=&quot;fr-FR&quot;&gt;Créer un badge / avatar en CSS&lt;/a&gt;&amp;quot;.&lt;/p&gt;
+&lt;p&gt;J&#39;ai récemment eu besoin d&#39;afficher à nouveau des avatars, et j&#39;ai voulu en profiter pour essayer une autre façon de faire par rapport à ce que j&#39;avais fait il y a 2 ans avec &amp;quot;&lt;a href=&quot;/2021/12/10/creer-badge-avatar-css/&quot; hreflang=&quot;fr-FR&quot;&gt;Créer un badge / avatar en CSS&lt;/a&gt;&amp;quot;.&lt;/p&gt;
 &lt;p&gt;Et donc, plutôt que de faire ça avec du bon vieux code HTML et CSS, je génère automatiquement une image pour les personnes qui n&#39;ont pas de &amp;quot;vrai&amp;quot; avatar.&lt;/p&gt;
 &lt;h2&gt;Renvoyer une image statique&lt;/h2&gt;
 &lt;p&gt;Les images des avatars sont stockées dans le dossier &amp;quot;/wwwroot/avatars&amp;quot; pour les cas où il existe un avatar.&lt;/p&gt;
