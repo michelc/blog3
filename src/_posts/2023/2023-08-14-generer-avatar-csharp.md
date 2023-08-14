@@ -7,7 +7,7 @@ cover:
 excerpt: Une méthode simple pour afficher un avatar sans se péoccuper de savoir s'il s'agit d'une image statique ou d'une image dynamique générée en C#.
 ---
 
-J'ai récemment eu besoin d'afficher à nouveau des avatars, et j'ai voulu en profiter pour essayer une autre façon de faire par rapport à ce que j'avais fait il y a 2 ans avec "{% goto_fr "Créer un badge / avatar en CSS", "2023-08-14-generer-avatar-csharp" %}".
+J'ai récemment eu besoin d'afficher à nouveau des avatars, et j'ai voulu en profiter pour essayer une autre façon de faire par rapport à ce que j'avais fait il y a 2 ans avec "{% goto_fr "Créer un badge / avatar en CSS", "2021-12-10-creer-badge-avatar-css" %}".
 
 Et donc, plutôt que de faire ça avec du bon vieux code HTML et CSS, je génère automatiquement une image pour les personnes qui n'ont pas de "vrai" avatar.
 
