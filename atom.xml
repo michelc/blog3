@@ -3,12 +3,134 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2023-01-17T16:55:17.000Z</updated>
+    <updated>2023-08-14T10:07:46.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Générer un badge / avatar en C#</title>
+        <link href="https://blog.pagesd.info/2023/08/14/generer-avatar-csharp/" rel="alternate" hreflang="fr-FR" />
+        <updated>2023-08-14T10:07:46.000Z</updated>
+        <published>2023-08-14T10:07:46.000Z</published>
+        <id>https://blog.pagesd.info/2023/08/14/generer-avatar-csharp/</id>
+        <summary>Une méthode simple pour afficher un avatar sans se péoccuper de savoir s&#39;il s&#39;agit d&#39;une image statique ou d&#39;une image dynamique générée en C#.</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;J&#39;ai récemment eu besoin d&#39;afficher à nouveau des avatars, et j&#39;ai voulu en profiter pour essayer une autre façon de faire par rapport à ce que j&#39;avais fait il y a 2 ans avec &amp;quot;&lt;a href=&quot;/2023/08/14/generer-avatar-csharp/&quot; hreflang=&quot;fr-FR&quot;&gt;Créer un badge / avatar en CSS&lt;/a&gt;&amp;quot;.&lt;/p&gt;
+&lt;p&gt;Et donc, plutôt que de faire ça avec du bon vieux code HTML et CSS, je génère automatiquement une image pour les personnes qui n&#39;ont pas de &amp;quot;vrai&amp;quot; avatar.&lt;/p&gt;
+&lt;h2&gt;Renvoyer une image statique&lt;/h2&gt;
+&lt;p&gt;Les images des avatars sont stockées dans le dossier &amp;quot;/wwwroot/avatars&amp;quot; pour les cas où il existe un avatar.&lt;/p&gt;
+&lt;p&gt;Chaque avatar est enregistré en JPG, avec un nom de la forme &amp;quot;trigramme.prenom.nom.jpg&amp;quot;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;trigramme = initiale du prénom + initiale du nom + lettre finale du nom (donc 3 lettres au total)&lt;/li&gt;
+&lt;li&gt;prenom = le prénom en minuscule sans accents, espaces, tirets... de la personne&lt;/li&gt;
+&lt;li&gt;nom = le nom en minuscule sans accents, espaces, tirets... de la personne&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Par conséquent, un nom de fichier est composé uniquement des 26 lettres &amp;quot;a&amp;quot; à &amp;quot;z&amp;quot;, avec un &amp;quot;.&amp;quot; pour séparer les différentes parties : &amp;quot;tsk.tony.stark.jpg&amp;quot;, &amp;quot;bbr.bruce.banner.jpg&amp;quot;, &amp;quot;srs.steve.rogers.jpg&amp;quot;, etc...&lt;/p&gt;
+&lt;p&gt;De cette façon, lorsqu&#39;il existe un &amp;quot;vrai&amp;quot; avatar pour une personne, j&#39;utilise simplement l&#39;URL de l&#39;image &amp;quot;/avatars/tsk.tony.stark.jpg&amp;quot; et le middleware &amp;quot;UseStaticFiles()&amp;quot; renvoie cette image sans chercher plus loin.&lt;/p&gt;
+&lt;h2&gt;Renvoyer une image dynamique&lt;/h2&gt;
+&lt;p&gt;Dans les cas où il n&#39;existe pas d&#39;image, j&#39;ai une route qui prend le relai et qui renvoie une image générée à la volée. Ce qui donne au niveau de mon fichier &amp;quot;Program.cs&amp;quot; :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;// Middleware pour les fichiers statiques
+// =&amp;gt; renvoie entre autre les images utilisées pour les avatars
+app.UseStaticFiles();
+
+...
+
+// Route par défaut pour une application MVC basique
+app.MapControllerRoute(
+    name: &amp;quot;default&amp;quot;,
+    pattern: &amp;quot;{controller=Home}/{action=Index}/{id?}&amp;quot;);
+
+// Route spécifique pour générer des avatars
+app.MapControllerRoute(
+    name: &amp;quot;avatars&amp;quot;,
+    pattern: &amp;quot;/avatars/{id}.jpg&amp;quot;,
+    defaults: new { controller = &amp;quot;Avatars&amp;quot;, action = &amp;quot;Index&amp;quot; });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis, dans le contrôleur &amp;quot;AvatarsController.cs&amp;quot;, je n&#39;ai plus qu&#39;à générer une image en fonction de l&#39;identifiant de l&#39;image, à savoir une chaine de la forme &amp;quot;trigramme.prenom.nom.jpg&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;public ActionResult Index(string id = &amp;quot;&amp;quot;)
+{
+    var trigramme = id.Substring(0, 3).ToUpper();
+
+    var color = GetColor(trigramme);
+    var avatar = GetBitmap(color, trigramme);
+
+    // Convertir l&#39;image en tableau de bytes (byte array)
+    using (MemoryStream ms = new MemoryStream())
+    {
+        avatar.Save(ms, ImageFormat.Jpeg);
+        byte[] imageBytes = ms.ToArray();
+
+        // Renvoyer l&#39;image directement comme réponse HTTP avec le type de contenu approprié
+        return File(imageBytes, &amp;quot;image/jpg&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Je commence par récupérer le trigramme de la personne car il va me permettre de générer une couleur de fond pour l&#39;avatar, via la fonction &lt;code&gt;GetColor(trigramme)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Puis j&#39;appelle la méthode &lt;code&gt;GetImage(color, trigramme)&lt;/code&gt; qui est chargée de générer l&#39;image correspondant à l&#39;avatar.&lt;/p&gt;
+&lt;p&gt;Et enfin, je renvoie cette image au navigateur. Je peux alors utiliser la route de cette image &amp;quot;/avatars/tsk.tony.stark.jpg&amp;quot; exactement comme si c&#39;état un fchier statique.&lt;/p&gt;
+&lt;h2&gt;Afficher l&#39;avatar&lt;/h2&gt;
+&lt;p&gt;Côté HTML, je n&#39;ai donc pas à me préoccuper de savoir s&#39;il s&#39;agit d&#39;une image statique ou dynamique et je peux me contenter d&#39;afficher une image basique :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;div class=&amp;quot;round-avatar&amp;quot;&amp;gt;
+    &amp;lt;img src=&amp;quot;/avatars/@(user.Trigramme).@(user.Prenom).@(user.Nom).jpg&amp;quot; /&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Puis quelques lignes de CSS pour donner un look &amp;quot;fini&amp;quot; à l&#39;avatar :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;/* Avatars ronds */
+.round-avatar img {
+    border-radius: 50%;
+    height: 64px;
+    width: 64px;
+}
+/* Bordure au survol */
+.round-avatar:hover img {
+    box-shadow: 0 0 0 4px #fff;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Générer l&#39;avatar en C#&lt;/h2&gt;
+&lt;p&gt;La fonction &lt;code&gt;GetColor()&lt;/code&gt; est un peu tarabiscottée et me permet de définir une couleur en fonction du trigramme. Je ferais peut-être un autre billet pour expliquer comment je procède...&lt;/p&gt;
+&lt;p&gt;La fonction &lt;code&gt;GetImage()&lt;/code&gt; génère un carré avec le fond de la couleur demandée et les initiales de la personne en blanc. Pour cela, j&#39;utilise &lt;code&gt;System.Drawing&lt;/code&gt; de façon assez basique :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+...
+
+private Bitmap GetBitmap (Color color, string trigramme)
+{
+    // Créer une image avec le fond de la couleur demandée
+    var image = new Bitmap(400, 400);
+    using (Graphics gfx = Graphics.FromImage(image))
+    {
+        gfx.SmoothingMode = SmoothingMode.AntiAlias;
+        gfx.Clear(color);
+    }
+
+    // Ajouter les 2 initiales du trigramme centré au milieu de l&#39;image
+    using (Graphics gfx = Graphics.FromImage(image))
+    {
+        Font font = new Font(&amp;quot;Calibri&amp;quot;, 128, FontStyle.Bold);
+        Brush brush = new SolidBrush(Color.White);
+        StringFormat format = new StringFormat();
+        format.Alignment = StringAlignment.Center;
+        format.LineAlignment = StringAlignment.Center;
+
+        gfx.DrawString(trigramme.Substring(0, 2), font, brush, new Rectangle(0, 0, 400, 400), format);
+    }
+
+    // Renvoie l&#39;image générée
+    return image;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;C&#39;était pas très compliqué à coder et c&#39;est amusant d&#39;avoir un truc simple capable d&#39;afficher des avatars sans avoir à faire la distinction entre les personnes pour lesquelles il existe un &amp;quot;vrai&amp;quot; avatar et celles pour lesquelles il n&#39;y en a pas.&lt;/p&gt;
+
+        </content>
+        <category term="javascript" />
+        <category term="jeux" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2023/avatars-csharp.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2023/avatars-csharp.png" />
+    </entry>
     <entry>
         <title type="html">Array.every() et new Set() sauvent LeMOT</title>
         <link href="https://blog.pagesd.info/2023/01/17/array-every-new-set-sauvent-lemot/" rel="alternate" hreflang="fr-FR" />
@@ -540,56 +662,6 @@ emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;English version: &lt;a href=&quot;/2022/02/02/dark-mode-french-wordle/&quot; hreflang=&quot;en-US&quot;&gt;Dark mode for French Wordle&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Les mots du jour de Wordle en français</title>
-        <link href="https://blog.pagesd.info/2022/01/30/mots-du-jour-wordle-francais/" rel="alternate" hreflang="fr-FR" />
-        <updated>2022-01-30T20:57:39.000Z</updated>
-        <published>2022-01-30T20:57:39.000Z</published>
-        <id>https://blog.pagesd.info/2022/01/30/mots-du-jour-wordle-francais/</id>
-        <summary>Comment ont été choisis les mots du jour dans LeMOT et comment EPALE a réussi à s&#39;y faufiler...</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Suite à l&#39;apparition de &amp;quot;ÉPALE&amp;quot; hier comme mot à découvrir, voici quelques explications sur la façon dont les mots du jour sont choisis dans LeMOT, mon &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;. J&#39;ai essayé d&#39;expliquer ça sans faire trop technique et pour faire court, c&#39;est le fruit d&#39;un savant mélange de hasard, d&#39;un peu de choix personnel et de pas de chance...&lt;/p&gt;
-&lt;h2&gt;Wiktionnaire&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-21-epaler.jpg&quot; alt=&quot;Mesurer la capacité d&#39;un récipient, quoi&quot; title=&quot;Mesurer la capacité d&#39;un récipient, quoi&quot;&gt;&lt;/p&gt;
-&lt;h2&gt;Samedi 8 janvier&lt;/h2&gt;
-&lt;p&gt;Quand j&#39;ai commencé à développer LeMOT, j&#39;ai regardé les sources de Wordle et j&#39;ai vu que Josh Wardle avait 2 listes de mots. Une contenant une sélection de mots qu&#39;il utilise pour faire deviner et une seconde avec tous les autres mots anglais de 5 lettres.&lt;/p&gt;
-&lt;p&gt;J&#39;ai donc fait plus ou moins pareil, avec d&#39;un côté une petite liste de mots à deviner et de l&#39;autre une liste de mots valides contenant les 6812 mots de 5 lettres d&#39;un dictionnaire que j&#39;avais récupéré il y a 2 ou 3 ans.&lt;/p&gt;
-&lt;p&gt;Pendant mes tests, la liste des mots à deviner ne contenait d&#39;ailleurs que le mot &amp;quot;ABRIS&amp;quot;. Puis j&#39;ai ajouté à la main une dizaine de mots pour vérifier que le code JavaScript qui choisissait un mot au hasard en fonction du jour fonctionnait correctement.&lt;/p&gt;
-&lt;p&gt;Peu après minuit, j&#39;ai mis en ligne une première version du jeu en ajoutant une vingtaine de mots pour pouvoir tenir un mois avant d&#39;avoir à en trouver d&#39;autres. Ces premiers mots du jour ont été choisis plus ou moins au hasard. Pour cela, je suis parti de ma liste de 6000 et quelques mots, avec un mot par ligne, et j&#39;y suis allé à grand coups de Page bas, Page haut, Flèche bas, Flèche haut pour arriver sur une ligne &amp;quot;au hasard&amp;quot;. Puis à partir de là, je prenais éventuellement un mot aux alentours de cette ligne qui me plaisait...&lt;/p&gt;
-&lt;h2&gt;Dimanche 9&lt;/h2&gt;
-&lt;p&gt;Au début, j&#39;avais une fonction qui tirait au sort un nombre entre 1 et 33 et qui prenait le mot correspondant dans la liste des mots &amp;quot;gagnants&amp;quot;. La fonction JavaScript pour choisir un nombre au hasard était &amp;quot;initialisée&amp;quot; en fonction de la date du jour pour être certain que pour un jour donné, tous les joueurs auraient le même mot.&lt;/p&gt;
-&lt;p&gt;Mais avec une si petite liste, il y avait un risque assez important qu&#39;un mot déjà proposé ressorte un autre jour... Alors dès le dimanche soir, j&#39;ai complété vite fait ma liste des mots du jour en les piochant au hasard selon la même méthode mais en prenant le plus souvent ce qui me tombait sous la main. A la fin, je suis arrivé à une liste de 177 mots, dont certains de mon cru (ISARD entre autres, mais je suis à peu près certain d&#39;avoir fait pencher la balance pour MUSAI ou IDEAL aussi). Mais dans le tas et la précipitation, certains mots comme EPALE sont passés au travers et se sont retrouvés dans la liste des mots à deviner sans que je m&#39;en rende compte...&lt;/p&gt;
-&lt;h2&gt;Mardi 11&lt;/h2&gt;
-&lt;p&gt;Ce jour-là, j&#39;ai mis à jour ma liste de mots pour les transformer tous en majuscule sans accents. La liste des mots valides est alors passée de 6812 à 5891, puisque des mots comme &amp;quot;place&amp;quot; et &amp;quot;placé&amp;quot; donnent le même &amp;quot;PLACE&amp;quot; en majuscule.&lt;/p&gt;
-&lt;h2&gt;Samedi 15&lt;/h2&gt;
-&lt;p&gt;Le samedi suivant, j&#39;ai simplifié la façon de choisir un mot au hasard. Au lieu de tirer un nombre au hasard entre 1 et 177 puis de prendre le mot correspondant dans la liste des mots du jour, j&#39;ai pris le nième mot correspondant au nombre de jours entre la création de LeMOT et la date du jour.&lt;/p&gt;
-&lt;p&gt;Avantages :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Le code est beaucoup plus simple (et c&#39;est aussi ce que fait Josh Wardle).&lt;/li&gt;
-&lt;li&gt;En tirant un nombre au hasard, on peut éventuellement tomber sur un nombre déjà sorti un autre jour.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ainsi, au lieu de me compliquer la vie à tirer un nombre au hasard tous les jours, j&#39;ai laissé le hasard mélanger cette liste une fois pour toute et je peux maintenant prendre les mots au fur et à mesure sans risque de doublon.&lt;/p&gt;
-&lt;p&gt;Pour que cela fonctionne correctement, il fallait faire en sorte que ma liste des mots du jour soit totalement dans le désordre. Pour cela, j&#39;ai dû :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Enlever de cette liste des mots gagnants les 8 mots déjà utilisés jusque là, à savoir ABRIS, ULTRA, GENIE, HERBE, VEXEZ, ALIZE, PLOUF et CAMUS.&lt;/li&gt;
-&lt;li&gt;Mélanger les 169 restant dans la liste.&lt;/li&gt;
-&lt;li&gt;Remettre les 8 premiers mots proposés au début de la liste.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Et tout ça les yeux fermés pour pouvoir moi aussi profiter du jeu :)&lt;/p&gt;
-&lt;h2&gt;Février, Mars, Avril...&lt;/h2&gt;
-&lt;p&gt;Maintenant, je suis &amp;quot;tranquille&amp;quot; jusqu&#39;à mi-juillet avant que ma liste des mots du jour soit épuisée. D&#39;ici là, il faudra surtout que je me décide pour savoir par quoi je remplace la liste des mots valides de LeMOT parce qu&#39;elle est un peu dépassée : elle ne contient ni TACLE, ni SALTO, ni APERO ! Et puis comme on s&#39;en est aperçu hier, elle contient au moins un mot inconnu.&lt;/p&gt;
-&lt;p&gt;C&#39;est quelque chose d&#39;assez urgent à faire, parce que c&#39;est un de mes critères pour faire sortir LeMOT de la phase bêta. A ce moment là, j&#39;en profiterai pour compléter la liste des mots du jour pour que le jeu puisse continuer après juillet. Et en même temps, je la relirai afin de m&#39;assurer qu&#39;elle ne contient pas d&#39;autres mots trop improbables...&lt;/p&gt;
-&lt;h2&gt;Epilogue&lt;/h2&gt;
-&lt;p&gt;C&#39;est évidemment ennuyeux qu&#39;un mot que personne ne connait se soit retrouvé dans la liste des mots du jour. Mais ce n&#39;est pas grave ! Pour moi, LeMOT (comme Wordle) sont des jeux. Le but c&#39;est uniquement de s&#39;amuser et de profiter d&#39;un petit moment de détente. Le fait de gagner ou de perdre n&#39;a pas vraiment d&#39;importance.&lt;/p&gt;
-&lt;p&gt;Je profite de ce billet pour dire merci à toutes celles et ceux qui me font le plaisir de jouer à ma version de Wordle en français. En tout cas, moi hier j&#39;ai passé une journée amusante, comme tous les autres jours. Merci à tous pour votre bonne humeur !&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/lemot-21-epale.jpg&quot; alt=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot; title=&quot;Ma soeur, qui s&#39;est pété le tendon en ski&quot;&gt;&lt;/p&gt;
 
         </content>
         <category term="javascript" />
