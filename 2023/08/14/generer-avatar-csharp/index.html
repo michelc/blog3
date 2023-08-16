@@ -103,7 +103,7 @@ app.MapControllerRoute(
 </code></pre>
 <p>Je commence par récupérer le trigramme de la personne car il va me permettre de générer une couleur de fond pour l'avatar, via la fonction <code>GetColor(trigramme)</code>.</p>
 <p>Puis j'appelle la méthode <code>GetImage(color, trigramme)</code> qui est chargée de générer l'image correspondant à l'avatar.</p>
-<p>Et enfin, je renvoie cette image au navigateur. Je peux alors utiliser la route de cette image &quot;/avatars/tsk.tony.stark.jpg&quot; exactement comme si c'état un fchier statique.</p>
+<p>Et enfin, je renvoie cette image au navigateur. Je peux alors utiliser la route de cette image &quot;/avatars/tsk.tony.stark.jpg&quot; exactement comme si c'était un fichier statique.</p>
 <h2>Afficher l'avatar</h2>
 <p>Côté HTML, je n'ai donc pas à me préoccuper de savoir s'il s'agit d'une image statique ou dynamique et je peux me contenter d'afficher une image basique :</p>
 <pre><code class="language-html">&lt;div class=&quot;round-avatar&quot;&gt;
@@ -123,7 +123,7 @@ app.MapControllerRoute(
 }
 </code></pre>
 <h2>Générer l'avatar en C#</h2>
-<p>La fonction <code>GetColor()</code> est un peu tarabiscottée et me permet de définir une couleur en fonction du trigramme. Je ferais peut-être un autre billet pour expliquer comment je procède...</p>
+<p>La fonction <code>GetColor()</code> est un peu tarabiscotée et me permet de définir une couleur en fonction du trigramme. Je ferais peut-être un autre billet pour expliquer comment je procède...</p>
 <p>La fonction <code>GetImage()</code> génère un carré avec le fond de la couleur demandée et les initiales de la personne en blanc. Pour cela, j'utilise <code>System.Drawing</code> de façon assez basique :</p>
 <pre><code class="language-csharp">using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -164,6 +164,7 @@ private Bitmap GetBitmap (Color color, string trigramme)
 
 </article><nav class="paginate">
   <a rel="prev" href="/2023/01/17/array-every-new-set-sauvent-lemot/" hreflang="fr-FR">Array.every() et new Set() sauvent LeMOT</a>
+  <a rel="next" href="/2023/08/16/sqlite-cles-etrangeres/" hreflang="fr-FR">Gérer des clés étrangères avec SQLite</a>
 </nav>
 
 

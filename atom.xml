@@ -3,12 +3,65 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2023-08-14T10:07:46.000Z</updated>
+    <updated>2023-08-16T17:08:22.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Gérer des clés étrangères avec SQLite</title>
+        <link href="https://blog.pagesd.info/2023/08/16/sqlite-cles-etrangeres/" rel="alternate" hreflang="fr-FR" />
+        <updated>2023-08-16T17:08:22.000Z</updated>
+        <published>2023-08-16T17:08:22.000Z</published>
+        <id>https://blog.pagesd.info/2023/08/16/sqlite-cles-etrangeres/</id>
+        <summary>Quelques particularités auxquelles il faut penser pour gérer des clés étrangères avec SQLite et C#</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;p&gt;Pour les petits trucs en .NET Core, le plus simple est d&#39;utiliser une base de données &lt;a href=&quot;https://www.sqlite.org/&quot;&gt;SQLite&lt;/a&gt;. Mais si on veut gérer correctement les clés étrangères, il faut penser à tenir compte de quelques particularités, d&#39;où ce billet pour ne pas oublier...&lt;/p&gt;
+&lt;p&gt;Dans l&#39;exemple qui suit, la clé étrangère permet de décrire la relation entre les deux tables &amp;quot;Blogs&amp;quot; (les parents) et &amp;quot;Posts&amp;quot; (les enfants) et d&#39;assurer l&#39;intégrité des données afin qu&#39;il n&#39;y ait pas d&#39;enfants sans un parent. Toute tentative d&#39;insertion d&#39;une ligne dans la table &amp;quot;Posts&amp;quot; qui ne correspondrait pas à une ligne de la table &amp;quot;Blogs&amp;quot; génèrera une erreur SQL. De la même façon, on provoquera une erreur SQL si on essaie de supprimer une ligne de la table &amp;quot;Blogs&amp;quot; alors qu&#39;il y a des données qui en dépendent dans la table &amp;quot;Posts&amp;quot;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sql&quot;&gt;CREATE TABLE Blogs
+(
+  Blog_ID     INTEGER PRIMARY KEY,
+  Title       TEXT
+);
+
+CREATE TABLE Posts
+(
+  Post_ID     INTEGER PRIMARY KEY,
+  Blog_ID     INTEGER,
+  Content     TEXT,
+  FOREIGN KEY (Blog_ID) REFERENCES Blogs (Blog_ID)
+);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;SQLite permet de définir des clés étrangères sans problème. La difficulté c&#39;est que par défaut les contraintes liées aux clés étrangères sont désactivées (pour rester compatible avec les premières versions de SQLite).&lt;/p&gt;
+&lt;p&gt;Concrètement, ça veut donc dire qu&#39;on peut créer des clés étrangères avec SQLite, mais qu&#39;elles ne servent à rien ! Et donc qu&#39;on pourra sans problème insérer des données sans clé étrangère &amp;quot;parent&amp;quot; ou supprimer des données &amp;quot;parents&amp;quot; pourtant utilisées par des enregistrements &amp;quot;enfants&amp;quot; :(&lt;/p&gt;
+&lt;p&gt;Heureusement, il est possible d&#39;activer les contraintes liées aux étrangères. On ne peut pas faire cela de façon &amp;quot;globale&amp;quot;, mais uniquement au niveau de la connexion à la base de données. Sous SQlite, on réalise ça avec la commande &amp;quot;PRAGMA&amp;quot; :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sql&quot;&gt;sqlite&amp;gt; PRAGMA foreign_keys = ON;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Avec ADO.NET ou Entity Framework, c&#39;est encore plus simple (ou pas) puisqu&#39;il suffit d&#39;ajouter &amp;quot;Foreign Keys=true&amp;quot; à la chaine de connexion. Ce qui a pour effet d&#39;envoyer automatiquement la commande &lt;code&gt;PRAGMA foreign_keys = 1&lt;/code&gt; immédiatement après l&#39;ouverture de la connexion à la base de données.&lt;/p&gt;
+&lt;p&gt;Grâce à cette modification toute simple, il ne sera plus possible d&#39;ajouter un &amp;quot;enfant&amp;quot; sans référencer un &amp;quot;parent&amp;quot; existant. Ou de supprimer un parent qui a un enfant...&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sql&quot;&gt;INSERT INTO Blogs (Blog_ID, Title) VALUES (1, &#39;Mon nouveau blogue&#39;);
+
+COMMIT
+
+INSERT INTO Posts (Post_ID, Blog_ID, Content) VALUES (1, 33, &#39;Mon premier billet&#39;);
+=&amp;gt; FOREIGN KEY constraint failed
+
+INSERT INTO Posts (Post_ID, Blog_ID, Content) VALUES (1, 1, &#39;Mon premier billet&#39;);
+
+COMMIT
+
+DELETE FROM Blogs WHERE Blog_ID = 1;
+=&amp;gt; FOREIGN KEY constraint failed
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Attention&lt;/strong&gt; : Avec EF Core, la clause &lt;code&gt;ON DELETE&lt;/code&gt; des clés étrangères est définie à &lt;code&gt;CASCADE&lt;/code&gt; par défaut... De quoi alimenter un autre billet de blogue !&lt;/p&gt;
+
+        </content>
+        <category term="sql" />
+        <category term="csharp" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2023/sqlite-foreign-keys.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2023/sqlite-foreign-keys.png" />
+    </entry>
     <entry>
         <title type="html">Générer un badge / avatar en C#</title>
         <link href="https://blog.pagesd.info/2023/08/14/generer-avatar-csharp/" rel="alternate" hreflang="fr-FR" />
@@ -69,7 +122,7 @@ app.MapControllerRoute(
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Je commence par récupérer le trigramme de la personne car il va me permettre de générer une couleur de fond pour l&#39;avatar, via la fonction &lt;code&gt;GetColor(trigramme)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Puis j&#39;appelle la méthode &lt;code&gt;GetImage(color, trigramme)&lt;/code&gt; qui est chargée de générer l&#39;image correspondant à l&#39;avatar.&lt;/p&gt;
-&lt;p&gt;Et enfin, je renvoie cette image au navigateur. Je peux alors utiliser la route de cette image &amp;quot;/avatars/tsk.tony.stark.jpg&amp;quot; exactement comme si c&#39;état un fchier statique.&lt;/p&gt;
+&lt;p&gt;Et enfin, je renvoie cette image au navigateur. Je peux alors utiliser la route de cette image &amp;quot;/avatars/tsk.tony.stark.jpg&amp;quot; exactement comme si c&#39;était un fichier statique.&lt;/p&gt;
 &lt;h2&gt;Afficher l&#39;avatar&lt;/h2&gt;
 &lt;p&gt;Côté HTML, je n&#39;ai donc pas à me préoccuper de savoir s&#39;il s&#39;agit d&#39;une image statique ou dynamique et je peux me contenter d&#39;afficher une image basique :&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt;&amp;lt;div class=&amp;quot;round-avatar&amp;quot;&amp;gt;
@@ -89,7 +142,7 @@ app.MapControllerRoute(
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Générer l&#39;avatar en C#&lt;/h2&gt;
-&lt;p&gt;La fonction &lt;code&gt;GetColor()&lt;/code&gt; est un peu tarabiscottée et me permet de définir une couleur en fonction du trigramme. Je ferais peut-être un autre billet pour expliquer comment je procède...&lt;/p&gt;
+&lt;p&gt;La fonction &lt;code&gt;GetColor()&lt;/code&gt; est un peu tarabiscotée et me permet de définir une couleur en fonction du trigramme. Je ferais peut-être un autre billet pour expliquer comment je procède...&lt;/p&gt;
 &lt;p&gt;La fonction &lt;code&gt;GetImage()&lt;/code&gt; génère un carré avec le fond de la couleur demandée et les initiales de la personne en blanc. Pour cela, j&#39;utilise &lt;code&gt;System.Drawing&lt;/code&gt; de façon assez basique :&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-csharp&quot;&gt;using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -557,110 +610,6 @@ emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-dark.png&quot; alt=&quot;Dark mode for LeMOT&quot; title=&quot;Not so bad, i guess!&quot;&gt;&lt;/p&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2022/02/01/mode-sombre-wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Mode sombre pour Wordle en français&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-    </entry>
-    <entry>
-        <title type="html">Mode sombre pour Wordle en français</title>
-        <link href="https://blog.pagesd.info/2022/02/01/mode-sombre-wordle-francais/" rel="alternate" hreflang="fr-FR" />
-        <updated>2022-02-01T10:28:57.000Z</updated>
-        <published>2022-02-01T10:28:57.000Z</published>
-        <id>https://blog.pagesd.info/2022/02/01/mode-sombre-wordle-francais/</id>
-        <summary>J&#39;ai ajouté un mode sombre sur LeMOT, l&#39;occasion pour moi de voir ce que cela implique comme modifications pour faire ça sans trop se comliquer la vie.</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Dimanche dernier, j&#39;ai ajouté un thème sombre (dark mode en anglais) sur LeMOT, mon &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt;. Certains joueurs semblaient y tenir et c&#39;était l&#39;occasion pour moi de voir comment faire ça sans trop me compliquer la vie.&lt;/p&gt;
-&lt;h2&gt;Couleurs en mode clair (light mode)&lt;/h2&gt;
-&lt;p&gt;Pour commencer, j&#39;ai recherché quelles étaient les couleurs utilisées dans mon fichier CSS et j&#39;en ai trouvé une dizaine. Mais en pratique, cela correspond aux 12 cas d&#39;utilisation suivants :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; pour le fond blanc général&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; pour le texte général en quasi noir&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; pour le texte un peu plus clair en italique&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; pour le texte en filigrane&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ccc&lt;/code&gt; du gris clair pour pour le fond des touches du clavier inutilisées&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; du blanc pour afficher les lettres une fois jouées dans les cases&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; le célèbre orange pour le fond des lettres bien placées :)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; le bleu pour le fond des lettres mal placées&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; un gris un peu plus clair pour pour le fond des lettres absentes du mot à deviner&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#bbb&lt;/code&gt; du gris pas très clair pour les icones&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; un fond mauve pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; le blanc du texte pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ca c&#39;est fait !&lt;/p&gt;
-&lt;h2&gt;Couleurs en mode sombre (dark mode)&lt;/h2&gt;
-&lt;p&gt;J&#39;ai ensuite recherché quelles couleurs utiliser quand on est en mode sombre. Ca n&#39;a pas été trop compliqué, puisqu&#39;il suffit de regarder du côté du &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt; d&#39;origine pour l&#39;inspiration... Après quelques essais, je suis arrivé à ces couleurs :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;#222&lt;/code&gt; pour un fond général très noir&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; pour un texte général très blanc&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; pour un texte italique moins blanc&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; pour le texte des filigranes en gris / noir&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; du gris &amp;quot;moyen&amp;quot; pour pour le fond des touches du clavier inutilisées&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; du blanc pour afficher les lettres une fois jouées dans les cases&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; le célèbre orange pour le fond des lettres bien placées :)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; le bleu pour le fond des lettres mal placées&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; un gris / noir pour pour le fond des lettres absentes du mot à deviner&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; du gris &amp;quot;moyen&amp;quot; pour les icones&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; un fond mauve pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; le blanc du texte pour le message &amp;quot;mot inconnu&amp;quot;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Comme jusqu&#39;à présent j&#39;affichais les liens en bleu pétant (&lt;code&gt;#00f&lt;/code&gt;), j&#39;ai dû en trouver un autre qui rendrait bien dans les deux modes sombres et clair. J&#39;ai repris le bleu &lt;code&gt;#2962ff&lt;/code&gt; d&#39;un de mes autres sites, mais sans doute à améliorer parce que je n&#39;en suis pas super satisfait...&lt;/p&gt;
-&lt;p&gt;Les couleurs sombres, c&#39;est fait !&lt;/p&gt;
-&lt;h2&gt;Paramétrage du thème clair ou sombre&lt;/h2&gt;
-&lt;p&gt;Là, ou bien j&#39;attaquais enfin l&#39;écran de paramétrage de LeMOT, ou bien je trichais en me basant sur la directive média &lt;code&gt;prefers-color-scheme&lt;/code&gt;. Celle-ci permet de détecter le choix de l&#39;utilisateur quant à ses préférences en ce qui concerne le thème à utiliser (sombre ou clair).&lt;/p&gt;
-&lt;p&gt;J&#39;ai bien entendu fait le plus facile des 2. Mais aussi le plus normal selon moi : pourquoi obliger les gens à devoir redire dans mon jeu ce qu&#39;ils ont déjà paramétré sur leur téléphone ou leur navigateur !&lt;/p&gt;
-&lt;p&gt;Et donc désormais, mon fichier CSS commence par une palanquée de variables CSS.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;/* Thèmes
-   ========================================================================== */
-
-:root {
-  --fond-general: #fff;      /* Fond blanc général */
-  --texte-normal: #333;      /* Texte quasi noir */
-  --texte-clair: #888;       /* Texte plus clair pour notes */
-  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
-  --filigrane: #ddd;         /* Couleur du texte en filigrane */
-  --message-fond: #dc267f;   /* Fond mauve pour les messages */
-  --message-texte: #fff;     /* Texte blanc pour les messages */
-  --touche-fond: #ccc;       /* Fond gris clair pour touche inutilisée */
-  --touche-texte: #333;      /* Texte quasi noir pour touche en général */
-  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
-  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
-  --fond-absent: #ddd;       /* Gris clair pour les lettres absentes */
-  --couleur-icone: #bbb;     /* Gris pas très clair pour icones */
-  --texte-lien: #2962ff;     /* Bleu pour les liens */
-}
-
-@media (prefers-color-scheme: dark) { :root {
-  --fond-general: #222;      /* Fond très noir général */
-  --texte-normal: #eee;      /* Texte très blanc */
-  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
-  --texte-clair: #888;       /* Texte moins blanc pour notes */
-  --filigrane: #444;         /* Couleur du texte en filigrane */
-  --message-fond: #dc267f;   /* Fond mauve pour les messages */
-  --message-texte: #fff;     /* Texte blanc pour les messages */
-  --touche-fond: #888;       /* Fond gris moyen pour touche inutilisée */
-  --touche-texte: #fff;      /* Texte blanc pour touche en général */
-  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
-  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
-  --fond-absent: #444;       /* Gris-noir pour les lettres absentes */
-  --couleur-icone: #888;     /* Gris moyen pour icones */
-  --texte-lien: #2962ff;     /* Bleu pour les liens */
-}}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Une bonne chose de faite !&lt;/p&gt;
-&lt;h2&gt;Un petit dernier pour la route...&lt;/h2&gt;
-&lt;p&gt;J&#39;utilise une antiquité pour compresser les CSS (&lt;a href=&quot;https://github.com/Microsoft/ajaxmin&quot;&gt;Microsoft Ajax Minifier&lt;/a&gt;) et elle n&#39;a pas tenu le coup face aux variables CSS :( Alors pour l&#39;instant, je suis passé au premier venu, à savoir &lt;a href=&quot;https://github.com/css/csso&quot;&gt;CSSO&lt;/a&gt;, via sa version &lt;a href=&quot;https://github.com/css/csso-cli&quot;&gt;csso-cli&lt;/a&gt; pour faire le boulot.&lt;/p&gt;
-&lt;p&gt;Je me demande quand même s&#39;il ne lui serait pas possible de compresser le nom des variables CSS, pour que &lt;code&gt;--fond-general&lt;/code&gt; soit raccourci en &lt;code&gt;--a&lt;/code&gt;, &lt;code&gt;--texte-normal&lt;/code&gt; devienne &lt;code&gt;--b&lt;/code&gt;, etc...&lt;/p&gt;
-&lt;p&gt;De toute façon, c&#39;est un truc que je devrai revoir un jour ou l&#39;autre pour décider de façon éclairée de ce que je vais utiliser désormais...&lt;/p&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Quoiqu&#39;il en soit, encore un week-end bien employé, puisqu&#39;il est enfin possible d&#39;apprécier &lt;strong&gt;LeMOT&lt;/strong&gt; à sa juste valeur, même si vous préférez utiliser un mode sombre !&lt;/p&gt;
-&lt;p&gt;Et pour jouer, c&#39;est toujours par là : &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt; :)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-dark-mode.png&quot; alt=&quot;Le thème sombre de LeMOT&quot; title=&quot;Pas mal du tout, je trouve :)&quot;&gt;&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2022/02/02/dark-mode-french-wordle/&quot; hreflang=&quot;en-US&quot;&gt;Dark mode for French Wordle&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
         </content>
