@@ -1,6 +1,6 @@
 ---
 date: 2023-08-14 12:07:46 +02:00
-tags: [ javascript, jeux ]
+tags: [ csharp, .net ]
 title: "Générer un badge / avatar en C#"
 cover:
   image: /public/2023/avatars-csharp.png
