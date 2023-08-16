@@ -5,11 +5,11 @@ title: "Gérer des clés étrangères avec SQLite"
 cover:
   image: /public/2023/sqlite-foreign-keys.png
   link: https://littlekendra.com/2016/09/22/indexing-foreign-keys-guidelines/
-  text: C'est quoi le pire : un index inutile ou une clé étrangère non indexée ?
+  text: "C'est quoi le pire : un index inutile ou une clé étrangère non indexée ?"
 excerpt: Quelques particularités auxquelles il faut penser pour gérer des clés étrangères avec SQLite et C#
 ---
 
-Pour les petits trucs en .NET Core, le plus simple est d'utiliser une base de données SQLite. Mais si on veut gérer correctement les clés étrangères, il faut penser à tenir compte de quelques particularités, d'où ce billet pour ne pas oublier...
+Pour les petits trucs en .NET Core, le plus simple est d'utiliser une base de données [SQLite](https://www.sqlite.org/). Mais si on veut gérer correctement les clés étrangères, il faut penser à tenir compte de quelques particularités, d'où ce billet pour ne pas oublier...
 
 Dans l'exemple qui suit, la clé étrangère permet de décrire la relation entre les deux tables "Blogs" (les parents) et "Posts" (les enfants) et d'assurer l'intégrité des données afin qu'il n'y ait pas d'enfants sans un parent. Toute tentative d'insertion d'une ligne dans la table "Posts" qui ne correspondrait pas à une ligne de la table "Blogs" génèrera une erreur SQL. De la même façon, on provoquera une erreur SQL si on essaie de supprimer une ligne de la table "Blogs" alors qu'il y a des données qui en dépendent dans la table "Posts".
 
