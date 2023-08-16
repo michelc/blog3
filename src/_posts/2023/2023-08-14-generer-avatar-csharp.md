@@ -76,7 +76,7 @@ Je commence par récupérer le trigramme de la personne car il va me permettre d
 
 Puis j'appelle la méthode `GetImage(color, trigramme)` qui est chargée de générer l'image correspondant à l'avatar.
 
-Et enfin, je renvoie cette image au navigateur. Je peux alors utiliser la route de cette image "/avatars/tsk.tony.stark.jpg" exactement comme si c'état un fchier statique.
+Et enfin, je renvoie cette image au navigateur. Je peux alors utiliser la route de cette image "/avatars/tsk.tony.stark.jpg" exactement comme si c'était un fichier statique.
 
 ## Afficher l'avatar
 
@@ -105,7 +105,7 @@ Puis quelques lignes de CSS pour donner un look "fini" à l'avatar :
 
 ## Générer l'avatar en C#
 
-La fonction `GetColor()` est un peu tarabiscottée et me permet de définir une couleur en fonction du trigramme. Je ferais peut-être un autre billet pour expliquer comment je procède...
+La fonction `GetColor()` est un peu tarabiscotée et me permet de définir une couleur en fonction du trigramme. Je ferais peut-être un autre billet pour expliquer comment je procède...
 
 La fonction `GetImage()` génère un carré avec le fond de la couleur demandée et les initiales de la personne en blanc. Pour cela, j'utilise `System.Drawing` de façon assez basique :
 
