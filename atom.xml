@@ -179,8 +179,8 @@ private Bitmap GetBitmap (Color color, string trigramme)
 &lt;p&gt;C&#39;était pas très compliqué à coder et c&#39;est amusant d&#39;avoir un truc simple capable d&#39;afficher des avatars sans avoir à faire la distinction entre les personnes pour lesquelles il existe un &amp;quot;vrai&amp;quot; avatar et celles pour lesquelles il n&#39;y en a pas.&lt;/p&gt;
 
         </content>
-        <category term="javascript" />
-        <category term="jeux" />
+        <category term="csharp" />
+        <category term=".net" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2023/avatars-csharp.png" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2023/avatars-csharp.png" />
     </entry>
