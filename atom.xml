@@ -3,12 +3,43 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2023-08-16T17:08:22.000Z</updated>
+    <updated>2025-05-08T08:11:55.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">C&#39;est tout pété</title>
+        <link href="https://blog.pagesd.info/2025/05/08/c-est-tout-pete/" rel="alternate" hreflang="fr-FR" />
+        <updated>2025-05-08T08:11:55.000Z</updated>
+        <published>2025-05-08T08:11:55.000Z</published>
+        <id>https://blog.pagesd.info/2025/05/08/c-est-tout-pete/</id>
+        <summary>C&#39;est les vacances, je me lève tôt et plus rien ne marche ?</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;h1&gt;C&#39;est tout pété&lt;/h1&gt;
+&lt;h2&gt;Français&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;L&#39;erreur suivante s&#39;est produite lors de l&#39;exécution de l&#39;outil dev-certs
+pour approuver le certificat de développement ASP.NET Core. Le délai
+d&#39;attente de l&#39;opération a expiré.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;English&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The following error running the dev-certs tool to trust the ASP.NET Core
+development certificate. The operation timeout has expired.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Command Line&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;C:\&amp;gt; dotnet dev-certs https --clean
+C:\&amp;gt; dotnet dev-certs https --trust
+&lt;/code&gt;&lt;/pre&gt;
+
+        </content>
+        <category term="csharp" />
+        <category term=".net" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2025/cody-putman-sleepy-kitten.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2025/cody-putman-sleepy-kitten.png" />
+    </entry>
     <entry>
         <title type="html">Gérer des clés étrangères avec SQLite</title>
         <link href="https://blog.pagesd.info/2023/08/16/sqlite-cles-etrangeres/" rel="alternate" hreflang="fr-FR" />
@@ -513,109 +544,5 @@ emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
         <category term="twitter" />
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
         <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
-    </entry>
-    <entry>
-        <title type="html">Dark mode for French Wordle</title>
-        <link href="https://blog.pagesd.info/2022/02/02/dark-mode-french-wordle/" rel="alternate" hreflang="en-US" />
-        <updated>2022-02-02T19:47:11.000Z</updated>
-        <published>2022-02-02T19:47:11.000Z</published>
-        <id>https://blog.pagesd.info/2022/02/02/dark-mode-french-wordle/</id>
-        <summary>I&#39;ve added a dark mode to LeMOT, a way for me to see what modifications are required to do this without too many fuss.</summary>
-        <content type="html" xml:lang="en-US" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Last Sunday, I added a dark theme to LeMOT, my &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;French Wordle&lt;/a&gt;. Some players seemed to want it and it was a good opportunity for me to see how to do it without too many fuss.&lt;/p&gt;
-&lt;h2&gt;Colors for light mode&lt;/h2&gt;
-&lt;p&gt;To start with, I looked for the colors used in my CSS file and I found about ten of them. But in practice, this corresponds to the following 12 use cases:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; for the general white background&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; for the general near-black text&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; for slightly lighter text in italics&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; for text watermark&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ccc&lt;/code&gt; light gray for the background of unused keyboard keys&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white to display the letters once played in the boxes&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; the famous orange for the background of well placed letters :)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; the blue for the background of misplaced letters&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ddd&lt;/code&gt; a slightly lighter gray for the background of the letters missing from the word to guess&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#bbb&lt;/code&gt; not very light gray for icons&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; a purple background for the &amp;quot;unknown word&amp;quot; message&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white text for the &amp;quot;unknown word&amp;quot; message&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Done!&lt;/p&gt;
-&lt;h2&gt;Colors for dark mode&lt;/h2&gt;
-&lt;p&gt;I then searched what colors to use when in dark mode. It wasn&#39;t too difficult, since you just have to look at the original &lt;a href=&quot;https://powerlanguage.co.uk/wordle/&quot;&gt;Wordle&lt;/a&gt; for inspiration... After a few tries, I came up with these colors:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;#222&lt;/code&gt; for a very black general background&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#333&lt;/code&gt; for a very white general text&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; for a less white italic text&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; for the watermark text in grey / black&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; a &amp;quot;medium&amp;quot; gray for the background of the unused keyboard keys&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white to display the letters once played in the boxes&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#ffb000&lt;/code&gt; the famous orange for the background of well placed letters :)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#648fff&lt;/code&gt; the blue for the background of misplaced letters&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#444&lt;/code&gt; a gray / black for the background of the letters absent from the word to guess&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#888&lt;/code&gt; a &amp;quot;medium&amp;quot; gray for the icons&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#dc267f&lt;/code&gt; a purple background for the message &amp;quot;unknown word&amp;quot;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#fff&lt;/code&gt; white text for the &amp;quot;unknown word&amp;quot; message&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;As I display links in bright blue (&lt;code&gt;#00f&lt;/code&gt;), I had to find another one that would look good in both dark and light modes. I took the blue &lt;code&gt;#2962ff&lt;/code&gt; from one of my other sites, but I probably have to improve it because I&#39;m not very happy with it...&lt;/p&gt;
-&lt;p&gt;Dark colors, done!&lt;/p&gt;
-&lt;h2&gt;Setting light or dark theme&lt;/h2&gt;
-&lt;p&gt;Now, either I was finally starting to code a settings screen, or I was cheating by relying on the &lt;code&gt;prefers-color-scheme&lt;/code&gt; media directive. This directive detects the user&#39;s choice of theme preference (dark or light).&lt;/p&gt;
-&lt;p&gt;Of course I did the easiest one. But also the most normal one in my opinion: why force people to repeat in my game what they have already set on their phone or browser!&lt;/p&gt;
-&lt;p&gt;And so now, my CSS file starts with a bunch of CSS variables.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;/* Thèmes
-   ========================================================================== */
-
-:root {
-  --fond-general: #fff;      /* Fond blanc général */
-  --texte-normal: #333;      /* Texte quasi noir */
-  --texte-clair: #888;       /* Texte plus clair pour notes */
-  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
-  --filigrane: #ddd;         /* Couleur du texte en filigrane */
-  --message-fond: #dc267f;   /* Fond mauve pour les messages */
-  --message-texte: #fff;     /* Texte blanc pour les messages */
-  --touche-fond: #ccc;       /* Fond gris clair pour touche inutilisée */
-  --touche-texte: #333;      /* Texte quasi noir pour touche en général */
-  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
-  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
-  --fond-absent: #ddd;       /* Gris clair pour les lettres absentes */
-  --couleur-icone: #bbb;     /* Gris pas très clair pour icones */
-  --texte-lien: #2962ff;     /* Bleu pour les liens */
-}
-
-@media (prefers-color-scheme: dark) { :root {
-  --fond-general: #222;      /* Fond très noir général */
-  --texte-normal: #eee;      /* Texte très blanc */
-  --texte-jouee: #fff;       /* Texte blanc une fois la lettre jouée */
-  --texte-clair: #888;       /* Texte moins blanc pour notes */
-  --filigrane: #444;         /* Couleur du texte en filigrane */
-  --message-fond: #dc267f;   /* Fond mauve pour les messages */
-  --message-texte: #fff;     /* Texte blanc pour les messages */
-  --touche-fond: #888;       /* Fond gris moyen pour touche inutilisée */
-  --touche-texte: #fff;      /* Texte blanc pour touche en général */
-  --fond-correct: #ffb000;   /* Orange pour les lettres bien placées */
-  --fond-present: #648fff;   /* Bleu pour les lettres mal placées */
-  --fond-absent: #444;       /* Gris-noir pour les lettres absentes */
-  --couleur-icone: #888;     /* Gris moyen pour icones */
-  --texte-lien: #2962ff;     /* Bleu pour les liens */
-}}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;A good thing done!&lt;/p&gt;
-&lt;h2&gt;A last one for the road...&lt;/h2&gt;
-&lt;p&gt;I use an antiquity to compress CSS (&lt;a href=&quot;https://github.com/Microsoft/ajaxmin&quot;&gt;Microsoft Ajax Minifier&lt;/a&gt;) and it didn&#39;t hold up against CSS variables :( So for now, I went to the first comer, namely &lt;a href=&quot;https://github.com/css/csso&quot;&gt;CSSO&lt;/a&gt;, via its &lt;a href=&quot;https://github.com/css/csso-cli&quot;&gt;csso-cli&lt;/a&gt; version to do the job.&lt;/p&gt;
-&lt;p&gt;I wonder if it would be possible to compress the CSS variable names, so that &lt;code&gt;--fond-general&lt;/code&gt; is shortened to &lt;code&gt;--a&lt;/code&gt;, &lt;code&gt;--texte-normal&lt;/code&gt; becomes &lt;code&gt;--b&lt;/code&gt;, etc...&lt;/p&gt;
-&lt;p&gt;This is something I&#39;ll definitely have to review some day to make an informed decision about what I&#39;ll use from now on...&lt;/p&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Anyway, another weekend well spent, since it is finally possible to enjoy &lt;strong&gt;LeMOT&lt;/strong&gt; to its fullest, even if you prefer to use a dark mode!&lt;/p&gt;
-&lt;p&gt;And to play, it&#39;s still there: &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;https://www.solitaire-play.com/lemot/&lt;/a&gt; :)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/public/2022/wordle-fr-dark.png&quot; alt=&quot;Dark mode for LeMOT&quot; title=&quot;Not so bad, i guess!&quot;&gt;&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;Version en français : &lt;a href=&quot;/2022/02/01/mode-sombre-wordle-francais/&quot; hreflang=&quot;fr-FR&quot;&gt;Mode sombre pour Wordle en français&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="javascript" />
-        <category term="jeux" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/lemot-wordle-fr.png" />
     </entry>
 </feed>
