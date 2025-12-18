@@ -3,12 +3,47 @@
     <title>blog.pagesd.info</title>
     <subtitle>Un peu de tout et n&#39;importe quoi...</subtitle>
     <link href="https://blog.pagesd.info/" rel="alternate" hreflang="fr-FR" />
-    <updated>2025-05-08T08:11:55.000Z</updated>
+    <updated>2025-12-18T09:40:38.000Z</updated>
     <id>https://blog.pagesd.info/atom.xml</id>
     <link href="https://blog.pagesd.info/atom.xml" rel="self" type="application/atom+xml" />
     <author>
         <name>Michel</name>
     </author>
+    <entry>
+        <title type="html">Mettre à jour Git for Windows</title>
+        <link href="https://blog.pagesd.info/2025/12/18/maj-git-for-windows/" rel="alternate" hreflang="fr-FR" />
+        <updated>2025-12-18T09:40:38.000Z</updated>
+        <published>2025-12-18T09:40:38.000Z</published>
+        <id>https://blog.pagesd.info/2025/12/18/maj-git-for-windows/</id>
+        <summary>C&#39;est bientôt les vacances, je procastine en attendant vendredi...</summary>
+        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
+&lt;h1&gt;Mettre à jour Git for Windows&lt;/h1&gt;
+&lt;p&gt;J&#39;ai &lt;a href=&quot;https://gitforwindows.org/&quot;&gt;Git for Windows&lt;/a&gt; installé sur mon portable,
+je ne sais plus trop pourquoi, mais je sais que j&#39;utilise
+&lt;a href=&quot;https://git-scm.com/docs/gitk&quot;&gt;gitk.exe&lt;/a&gt; de temps en temps...&lt;/p&gt;
+&lt;p&gt;Par contre la version installée est légèrement passée de date :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;C:\&amp;gt; git --version
+git version 2.36.1.windows.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alors bonne nouvelle, il existe une commande ultra simple pour installer une
+mise à jour de Git for Windows : &lt;code&gt;git update-git-for-windows&lt;/code&gt; !&lt;/p&gt;
+&lt;p&gt;Et en quelques minutes, je devient l&#39;heureux propriétaire d&#39;une version flambant
+neuve :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;C:\&amp;gt; git --version
+git version 2.52.0.windows.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;PS1 : J&#39;ai trouvé ça à l&#39;ancienne, directement sur Stack Overflow
+&lt;a href=&quot;https://stackoverflow.com/questions/13790592/how-to-upgrade-git-on-windows-to-the-latest-version&quot;&gt;How to upgrade Git on Windows to the latest version&lt;/a&gt;
+sans passer par Chat GPT :)&lt;/p&gt;
+&lt;p&gt;PS2 : Je savais pas quoi mettre alors j&#39;ai demandé à Chat GPT de m&#39;inspirer pour
+la description de l&#39;image en bannière :(&lt;/p&gt;
+
+        </content>
+        <category term="git" />
+        <category term="windows" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2025/patiences.png" />
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2025/patiences.png" />
+    </entry>
     <entry>
         <title type="html">C&#39;est tout pété</title>
         <link href="https://blog.pagesd.info/2025/05/08/c-est-tout-pete/" rel="alternate" hreflang="fr-FR" />
@@ -402,141 +437,6 @@ needs. With support for the latest Unicode emoji specification, featuring
 &lt;p&gt;Initially, my plan was to replace the Windows 10 emojis with more modern ones (and the latest ones from Microsoft were fine for me). But with the difficulties and to avoid having to &amp;quot;hack&amp;quot; my system, I preferred to just modify my application so that it displays the pretty emojis from Twitter instead.&lt;/p&gt;
 &lt;div class=&quot;encart&quot;&gt;
 &lt;p&gt;Version en français : &lt;a href=&quot;/2022/09/19/remplacer-emojis-windows-10/&quot; hreflang=&quot;fr-FR&quot;&gt;Remplacer les émojis de Windows 10&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-
-        </content>
-        <category term="javascript" />
-        <category term="twitter" />
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://blog.pagesd.info/public/2022/emoji-beebee.png" />
-    </entry>
-    <entry>
-        <title type="html">Remplacer les émojis de Windows 10</title>
-        <link href="https://blog.pagesd.info/2022/09/19/remplacer-emojis-windows-10/" rel="alternate" hreflang="fr-FR" />
-        <updated>2022-09-19T11:07:24.000Z</updated>
-        <published>2022-09-19T11:07:24.000Z</published>
-        <id>https://blog.pagesd.info/2022/09/19/remplacer-emojis-windows-10/</id>
-        <summary>Il s&#39;avère que ce n&#39;est pas si simple que ça de remplacer les émojis à l&#39;ancienne de Windows 10 par quelque chose d&#39;un peu plus moderne et joyeux...</summary>
-        <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;p&gt;Ces derniers temps, je me suis remis sur le développement d&#39;une sorte d&#39;application / client Twitter pour me faciliter le suivi des interactions autour de mon jeu de &lt;a href=&quot;https://www.solitaire-play.com/lemot/&quot;&gt;Wordle en français&lt;/a&gt; (et des 3 autres que j&#39;ai développés depuis).&lt;/p&gt;
-&lt;p&gt;Ce week-end, pour me changer un peu les idées, j&#39;ai décidé d&#39;améliorer le rendu des émojis.&lt;/p&gt;
-&lt;p&gt;Au départ, comme il s&#39;agit d&#39;une application web, ils sont affichés avec la police par défaut de Windows 10 pour les émojis, ce qui n&#39;est pas super génial :&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
-  &lt;figcaption&gt;Les émojis de base pour Windows 10&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;h2&gt;1er essai : &amp;quot;Segoe UI Emoji&amp;quot; de Windows 11&lt;/h2&gt;
-&lt;p&gt;Pour faire au plus simple, j&#39;ai essayé d&#39;installer la dernière version de la police &amp;quot;Segoe UI Emoji&amp;quot; de Windows 11 et de voir ce que ça donnait... Pas grand chose en fait !&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
-  &lt;figcaption&gt;Toujours les émojis de la police &quot;Segoe UI Emoji&quot; d&#39;origine de Windows 10 :(&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;J&#39;ai maintenant deux polices &amp;quot;Segoe UI Emoji&amp;quot; sur mon PC qui ne semble pas très chaud pour utiliser la plus récente par défaut.&lt;/p&gt;
-&lt;p&gt;Malgré tout, Firefox s&#39;est montré plus malin :&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/public/2022/emoji-firefox.png&quot; alt=&quot;&quot; /&gt;
-  &lt;figcaption&gt;Les nouveaux émojis de la police &quot;Segoe UI Emoji&quot; de Windows 11 :)&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;h2&gt;2ème essai : &amp;quot;Noto Color Emoji&amp;quot; de Google&lt;/h2&gt;
-&lt;p&gt;Puis j&#39;ai vu passer une nouvelle police de chez Google : &amp;quot;Noto Color Emoji&amp;quot; (&lt;a href=&quot;https://fonts.google.com/noto/specimen/Noto+Color+Emoji&quot;&gt;https://fonts.google.com/noto/specimen/Noto+Color+Emoji&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;Après l&#39;avoir téléchargée, je pouvais essayer de l&#39;utiliser comme police &amp;quot;système&amp;quot; pour les émojis... Mais il n&#39;y avait pas de raison qu&#39;elle se débrouille mieux que la &amp;quot;Segoe UI Emoji&amp;quot; de Microsoft himself.&lt;/p&gt;
-&lt;p&gt;Et il n&#39;existe rien au niveau HTML / CSS pour indiquer qu&#39;il faut afficher les émojis en utilisant une police particulière. Si on veut y arriver, le plus simple est d&#39;englober les émojis à afficher dans une balise &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; avec une classe particulière pour pouvoir définir sa police. Quelque chose comme &lt;code&gt;&amp;lt;span class=&amp;quot;font-emoji&amp;quot;&amp;gt;🥳&amp;lt;/span&amp;gt;&lt;/code&gt; par exemple...&lt;/p&gt;
-&lt;p&gt;Alors j&#39;ai bricolé vite fait un truc pour que les émojis soient affichés en utilisant cette police. Pour cela, j&#39;ai encadré tous les émojis dans une &amp;quot;pseudo&amp;quot; balise &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; grâce à la fonction suivante :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;private string MakePrettyEmojis(string content)
-{
-    var pretty = &amp;quot;&amp;quot;;
-    var runes = content.EnumerateRunes();
-    foreach (var r in runes)
-    {
-        var one = r.ToString();
-        if (one == &amp;quot;\u2b1c&amp;quot;)
-            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
-        else if (one == &amp;quot;\u26aa&amp;quot;)
-            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
-        else if (r.IsBmp == false)
-            pretty += &amp;quot;&amp;lt;e&amp;gt;&amp;quot; + one + &amp;quot;&amp;lt;/e&amp;gt;&amp;quot;;
-        else
-            pretty += r.ToString();
-    }
-    pretty = pretty.Replace(&amp;quot;&amp;lt;/e&amp;gt;&amp;lt;e&amp;gt;&amp;quot;, &amp;quot;&amp;quot;);
-    return pretty;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Note : Comme tous les émojis ne sont apparemment pas logés à la même enseigne, il faudra me creuser un peu plus les méninges pour réussir à gérer correctement tous les émojis existants (quelque chose dans le genre &lt;code&gt;Regex&lt;/code&gt; certainement).&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;La balise &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; n&#39;existe pas mais elle ne semble pas perturber les navigateurs. Et donc, &lt;code&gt;&amp;lt;e&amp;gt;🥳&amp;lt;/e&amp;gt;&lt;/code&gt; sera quand même plus &amp;quot;discret&amp;quot; qu&#39;un long &lt;code&gt;&amp;lt;span class=&amp;quot;font-emoji&amp;quot;&amp;gt;🥳&amp;lt;/span&amp;gt;&lt;/code&gt; :)&lt;/p&gt;
-&lt;p&gt;Je complète mon fichier CSS pour y indiquer que les éléments &lt;code&gt;&amp;lt;e&amp;gt;&lt;/code&gt; doivent être affichés avec la police &amp;quot;Noto Color Emoji&amp;quot; :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;e {
-    font-family: &amp;quot;Noto Color Emoji&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et le résultat est enfin là, quelque soit le navigateur !&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/public/2022/emoji-font-google.png&quot; alt=&quot;&quot; /&gt;
-  &lt;figcaption&gt;Enfin de plus jolis émojis !!!&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;Mais j&#39;aime moyen ce petit effet 3D. On se croirait revenu au temps de Windows 3.1 :)&lt;/p&gt;
-&lt;h2&gt;3ème essai : &amp;quot;Segoe UI Emoji&amp;quot; le retour&lt;/h2&gt;
-&lt;p&gt;Bien entendu je tente le coup avec :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;e {
-    font-family: &amp;quot;Segoe UI Emoji&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Mais comme il y a 2 polices &amp;quot;Segoe UI Emoji&amp;quot; sur mon Windows, la nouvelle ne prend toujours pas le dessus sur l&#39;ancienne... A moins qu&#39;il existe un &lt;code&gt;font-version&lt;/code&gt; quelque part...&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/public/2022/emoji-defaut.png&quot; alt=&quot;&quot; /&gt;
-  &lt;figcaption&gt;Retour à la case départ (à part Firefox)&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;h2&gt;4ème essais : &amp;quot;Twitter Color Emoji SVGinOT Font&amp;quot; de ???&lt;/h2&gt;
-&lt;p&gt;Je cherche s&#39;il existe d&#39;autre polices d&#39;emojis et je tombe sur celle de Twitter, même si cela ressemble plus à du bricolage qu&#39;à un truc officiel : &lt;a href=&quot;https://github.com/eosrei/twemoji-color-font&quot;&gt;https://github.com/eosrei/twemoji-color-font&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Je télécharge, installe puis :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;e {
-    font-family: &amp;quot;Twitter Color Emoji&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et oups...&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/public/2022/emoji-font-twitter.png&quot; alt=&quot;&quot; /&gt;
-  &lt;figcaption&gt;Tous les émojis sont gris clair...&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;h2&gt;5ème essai : &amp;quot;Emoji for everyone&amp;quot; de Twitter !!!&lt;/h2&gt;
-&lt;p&gt;Par contre, ça m&#39;a conduit sur la page de &amp;quot;Twemoji&amp;quot; : &lt;a href=&quot;https://twemoji.twitter.com/&quot;&gt;https://twemoji.twitter.com/&lt;/a&gt;.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;L&#39;emoji open source de Twitter répond à tous les besoins de votre projet en
-matière d&#39;emoji. Il prend en charge la dernière spécification Unicode des
-emojis et propose 3 245 emojis, le tout gratuitement.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Mais c&#39;est génial !&lt;/p&gt;
-&lt;p&gt;Il semblerait bien que cela soit pile ce que je cherche ! Quelque chose de pas compliqué du tout qui remplace tous les émojis d&#39;une page par l&#39;image de l&#39;émoji Twitter correspondant. Ca tombe bien, il me plaisent beaucoup les émojis de Twitter moi :)&lt;/p&gt;
-&lt;p&gt;Je vire ma fonction &amp;quot;MakePrettyEmojis&amp;quot; et mon bout de CSS pour revenir à la situation de départ.&lt;/p&gt;
-&lt;p&gt;J&#39;ajoute un peu de JavaScript dans mon fichier &amp;quot;_Layout.cshtml&amp;quot; :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;script src=&amp;quot;https://twemoji.maxcdn.com/v/latest/twemoji.min.js&amp;quot; crossorigin=&amp;quot;anonymous&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-
-&amp;lt;script&amp;gt;
-    window.onload = function () {
-        // https://gist.github.com/Armster15/db063ab0dc5be699ae07a067a7333752
-        // Parses the document body and
-        // inserts &amp;lt;img&amp;gt; tags in place of Unicode Emojis
-        twemoji.parse(document.body,
-            { folder: &#39;svg&#39;, ext: &#39;.svg&#39; } // This is to specify to Twemoji to use SVGs and not PNGs
-        );
-    }
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Et je dimensionne les émojis dans mon CSS :&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;.emoji {
-    height: 1.2em;
-    width: 1.2em;
-    margin: 0 1px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/public/2022/emoji-twitter.png&quot; alt=&quot;&quot; /&gt;
-  &lt;figcaption&gt;Tada ! C&#39;est parfaitement parfait.&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Au départ, je comptais remplacer les émojis de Windows 10 pour en utiliser de plus modernes (et les derniers de Microsoft m&#39;allaient très bien). Mais devant les difficultés et pour éviter d&#39;avoir à &amp;quot;hacker&amp;quot; mon système, j&#39;ai préféré me contenter de modifier mon application pour qu&#39;elle affiche les jolis émojis de Twitter à la place.&lt;/p&gt;
-&lt;div class=&quot;encart&quot;&gt;
-&lt;p&gt;English version: &lt;a href=&quot;/2022/09/20/replace-windows-10-emoji/&quot; hreflang=&quot;en-US&quot;&gt;Replace Windows 10&#39;s emoji&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
         </content>
