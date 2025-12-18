@@ -17,7 +17,6 @@
         <id>https://blog.pagesd.info/2025/12/18/maj-git-for-windows/</id>
         <summary>C&#39;est bientôt les vacances, je procastine en attendant vendredi...</summary>
         <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;h1&gt;Mettre à jour Git for Windows&lt;/h1&gt;
 &lt;p&gt;J&#39;ai &lt;a href=&quot;https://gitforwindows.org/&quot;&gt;Git for Windows&lt;/a&gt; installé sur mon portable,
 je ne sais plus trop pourquoi, mais je sais que j&#39;utilise
 &lt;a href=&quot;https://git-scm.com/docs/gitk&quot;&gt;gitk.exe&lt;/a&gt; de temps en temps...&lt;/p&gt;
@@ -52,7 +51,6 @@ la description de l&#39;image en bannière :(&lt;/p&gt;
         <id>https://blog.pagesd.info/2025/05/08/c-est-tout-pete/</id>
         <summary>C&#39;est les vacances, je me lève tôt et plus rien ne marche ?</summary>
         <content type="html" xml:lang="fr-FR" xml:base="https://blog.pagesd.info">
-&lt;h1&gt;C&#39;est tout pété&lt;/h1&gt;
 &lt;h2&gt;Français&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;L&#39;erreur suivante s&#39;est produite lors de l&#39;exécution de l&#39;outil dev-certs
