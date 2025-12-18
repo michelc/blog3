@@ -9,8 +9,6 @@ cover:
 excerpt: C'est bientôt les vacances, je procastine en attendant vendredi...
 ---
 
-# Mettre à jour Git for Windows
-
 J'ai [Git for Windows](https://gitforwindows.org/) installé sur mon portable,
 je ne sais plus trop pourquoi, mais je sais que j'utilise
 [gitk.exe](https://git-scm.com/docs/gitk) de temps en temps...

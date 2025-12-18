@@ -9,8 +9,6 @@ cover:
 excerpt: C'est les vacances, je me lève tôt et plus rien ne marche ?
 ---
 
-# C'est tout pété
-
 ## Français
 
 > L'erreur suivante s'est produite lors de l'exécution de l'outil dev-certs
